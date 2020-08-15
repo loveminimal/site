@@ -195,11 +195,14 @@ pre {
     margin: .16rem 0;
     padding: .14rem;
     padding-left: .08rem;
-    border: 2px solid #eee;
+    /* border: 2px solid #eee; */
     color: #135;
     font-size: 0.14rem;
     font-family: Monaco, Consolas, 'monospace', "kaiti";
     overflow: hidden;
+    /* monokai background */
+    color: #ccc;
+    background: #272822;    /* #1E1F1C 272822 */
 }
 
 pre:hover { overflow: auto; }
@@ -221,7 +224,6 @@ span.linenr {
     right: 0;
     margin: 0 .05rem;
     color: #999;
-    z-index: -1;
 }
 
 pre:hover .js-code-src { display: none; }
