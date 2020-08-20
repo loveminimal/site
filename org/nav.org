@@ -6,6 +6,7 @@
 |------+------------+--------------+----------------+----------------+----------------|
 | 我的 | [[./index.org][Virgo]]      | [[https://www.bilibili.com/][Bilibili]]     | [[https://emacs-china.org/][Emacs China]]    | [[https://github.com/loveminimal][Github]]         | [[https://www.zhihu.com/][知乎]]           |
 |      | [[https://cloud.huawei.com/home#/notepad/task/2f0739e3$ee3c$4049$8422$461c7e46d116/none][华为云]]     | [[https://cloud.tencent.com/developer/labs][腾讯云]]       | [[https://www.youtube.com/][YouTube]]        | [[https://www.icourse163.org/][MOOC]]           | [[https://juejin.im/timeline][掘金]]           |
+|      | [[https://twitter.com/home][Twitter]]    |              |                |                |                |
 |------+------------+--------------+----------------+----------------+----------------|
 | 工具 | [[http://fanyi.youdao.com/][有道翻译]]   | [[http://www.fhdq.net/][符号大全]]     | [[https://www.bejson.com/ui/compress_img/][图压缩]]         | [[https://man.linuxde.net/][Linux 命令大全]] |                |
 |      | [[http://tool.c7sky.com/webcolor/][Web Color]]  | [[https://pixabay.com/zh/][Pixabay]]      | [[http://www.fonts.net.cn/][字体之家]]       | [[http://tools.jb51.net/][脚本之家]]       | [[https://www.chinaz.com/][站长之家]]       |
@@ -26,3 +27,4 @@
 - [[https://www.cnblogs.com/kenshinobiy/p/10720151.html][javaScript -- touch事件详解（touchstart、touchmove和touchend）]]
 - [[https://endler.dev/2019/tinysearch/#searchbox]]
 - http://theory.people.com.cn/n/2015/0812/c40531-27449964.html
+- [[https://www.jianshu.com/p/5d492224c71e]]

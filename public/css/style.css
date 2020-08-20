@@ -12,7 +12,7 @@ html { font-size: 100px; }
 
 /* Background options */
 body, #content::before,#postamble::before {
-    background: url('../images/bg/rn.jpg') center center / cover no-repeat fixed;
+    background: url('../images/bg/rose.jpg') center center / cover no-repeat fixed;
 }
 
 #postamble::before,
