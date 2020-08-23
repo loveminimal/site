@@ -150,7 +150,7 @@ h2 { font-size: .20rem; }
 h2:before { content: "🐬 "; }
 h3:before { content: "💕 "; }
 h4:before { content: "🍁 "; }
-h5:before { content: "🌀 "; }
+h5:before { content: "🍀 "; }
 
 h2 code:last-child,
 h3 code:last-child,
