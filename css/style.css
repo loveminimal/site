@@ -146,6 +146,27 @@ h2, h3, h4, h5, h6 {
     color: transparent;
 }
 
+h3 { 
+    background: linear-gradient(to bottom, #FF9999, #996699);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+h4 { 
+    background: linear-gradient(to bottom, #669999, #336666);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+h5 { 
+    background: linear-gradient(to bottom, #FF6600, #999900);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
 h2 { font-size: .20rem; }
 h2:before { content: "🐬 "; }
 h3:before { content: "💕 "; }
