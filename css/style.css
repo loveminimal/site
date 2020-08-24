@@ -161,7 +161,7 @@ h4 {
 }
 
 h5 { 
-    background: linear-gradient(to bottom, #FF6600, #999900);
+    background: linear-gradient(to bottom, #CCCC66, #339933);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
