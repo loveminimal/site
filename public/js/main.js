@@ -131,6 +131,10 @@ $(document).ready(() => {
         $(this).addClass('js-note')
     })
 
+    $('essay').each(function() {
+        $(this).addClass('js-essay')
+    })
+
     // Customize contacts way
     $('.me .contact #weibo').attr('href', '//weibo.com/u/' + USERCONFIG.weibo)
     $('.me #wechat img').attr('src', '/images/' + USERCONFIG.wechat)

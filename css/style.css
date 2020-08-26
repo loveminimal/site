@@ -63,6 +63,23 @@ body, #content::before,#postamble::before {
     font-size: 32px;
 }
 
+.js-essay {
+    position: relative;
+    display: block;
+    margin: .16rem auto;
+    padding: .2rem;
+    font-size: .15rem;
+    background-color: rgba(255, 255, 230, .6);
+    color: #003333;
+}
+.js-essay::before {
+    content: '✍';
+    position: absolute;
+    font-size: .48rem;
+    right: 0;
+    top: -30px;
+}
+
 /* Page init style */
 /* ********************************* */
 p { margin: .16rem 0; }
