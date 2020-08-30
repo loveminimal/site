@@ -2,9 +2,9 @@
 
 // Init global variables
 // ------------------------------------------------------------------
-let ISHOME = false,
-    ISPC = false,
-    ISMB = false,
+let isHome = false,
+    isPC = false,
+    isMB = false,
     isZoom = false,
     isCard = false,
     cent = '',
@@ -13,7 +13,7 @@ let ISHOME = false,
 // ------------------------------------------------------------------
 // Pages array of card style
 // ---------------------------------
-let CARDPAGES = [
+const CARDPAGES = [
     'idea', 'diary', 'joker', 'gtd', 'story',
     'wiki',
     'web-developer-roadmap',
@@ -33,7 +33,7 @@ if([
         '/'
     ].includes(location.pathname)) {
 
-    ISHOME = true
+    isHome = true
 }
 
 if(isCurPage('joker')) {
@@ -53,9 +53,9 @@ if(isCurPage('joker')) {
 // Diff PC and Mobile
 // ---------------------------------
 if(browserRedirect() == 'PC') {
-    ISPC = true;
+    isPC = true;
 } else {
-    ISMB = true;
+    isMB = true;
 }
 
 // Customizations after DOM rendering
@@ -80,7 +80,7 @@ $(document).ready(() => {
     BODY.on('touchend', touchEnd);
 
     if(TOC) TOC.click(hideDir);                     // Hide directory when click it of Mobile.
-    if(ISPC && TOC) {                               // Auto adjust TOC width to avoid it hover the main contents.
+    if(isPC && TOC) {                               // Auto adjust TOC width to avoid it hover the main contents.
         let t_w = '' + -parseInt(TOC.width() / $(document).width() * 100) + '%';
         TOC.css('left', t_w)
         TOC.mouseenter(() => TOC.css('left', 0) );
@@ -89,7 +89,7 @@ $(document).ready(() => {
 
     // Customize home page style
     // ---------------------------------
-    if(ISHOME) {                                    // Hide nav and top button in index page.
+    if(isHome) {                                    // Hide nav and top button in index page.
         CONTENT.addClass('js-home-content')
 
         if(TOC)   TOC.css('display', 'none');       // Hide table of contents.
@@ -98,7 +98,7 @@ $(document).ready(() => {
 
         // Customize posts list showwing
         $('thead').each(function() {
-            if(ISPC) {
+            if(isPC) {
                 $(this).parent().hover(function() {
                     $(this).find('tbody').fadeToggle();
                 })
@@ -162,7 +162,7 @@ $(document).ready(() => {
 
     // Add mouse-click animation
     // ---------------------------------
-    if(ISPC) {
+    if(isPC) {
         $(document).click(e => {
             let size = 120                                      // size of water block
             BODY.append("<div class='water-animate'>")          // create a water block
@@ -190,7 +190,7 @@ $(document).ready(() => {
         })
     }
 
-    if(ISMB) {
+    if(isMB) {
         $('#postamble').css('display', 'none')
         $('body').append('<a class="js-footer-slogan" href="http://beian.miit.gov.cn/" target="_blank">' + USERCONFIG.icp +'</a>')
         // $('body').append('<div class="js-footer-slogan">Talk is cheap, show me the code.</div>')
@@ -303,7 +303,7 @@ $(document).ready(() => {
     }
 
     // Custom content and postamble margin but home&nav of PC
-//     if (ISPC && (!isCurPage('nav') && !ISHOME)) {
+//     if (isPC && (!isCurPage('nav') && !isHome)) {
 //         $('#content').css('margin-left', '10%')
 //         $('#postamble').css('margin-left', '10%')
 //     }
@@ -366,7 +366,7 @@ function browserRedirect() {
 // Hide directory when click it
 // ---------------------------------
 function hideDir() {
-    if(ISMB) {
+    if(isMB) {
         let ele = document.getElementById('table-of-contents');
         let _opacity = getComputedStyle(ele).opacity
 
@@ -473,7 +473,7 @@ function touchEnd(e) {
 
 // Show/Hide nav buttons
 function _showNav() {
-    if (ISMB) {
+    if (isMB) {
         $('.top-btn').css('opacity', '0.9');
         $('.nav-btn').css('opacity', '0.9');
     } else {
@@ -484,7 +484,7 @@ function _showNav() {
 
 // Reduce opaciry
 function _hideNav() {
-    if (ISMB) {
+    if (isMB) {
         $('.top-btn').css('opacity', '0.1');
         $('.nav-btn').css('opacity', '0.1');
     } else {
