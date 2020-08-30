@@ -53,6 +53,15 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 [[http://182.61.145.178:4000/][_Hurricane_]] [[https://www.thethingsengine.org/][_Tengine_]]
 
 #+BEGIN_EXPORT html
-<div id="jinrishici-sentence" style="font-weight: 700;">虚怀乃若谷，水深则流缓。</div>
-<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+<img
+src="/images/bg/motto.jpg"
+width="60%"
+style="
+opacity: .8;
+position: absolute;
+display: block;
+left: 2px;
+bottom: 24px;
+"
+/>
 #+END_EXPORT
