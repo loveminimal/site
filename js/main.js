@@ -32,18 +32,19 @@ if([
         '/index',
         '/'
     ].includes(location.pathname)) {
-
     isHome = true
 }
 
 if(isCurPage('joker')) {
     if(sessionStorage.getItem('pw')) {
         console.log('Welcome, Sir.')
+
     } else {
         let passwd = prompt('Sorry, you have no permissions！')
         if(passwd === 'just go out') {
             console.log('Welcome, Sir.')
             sessionStorage.setItem('pw', true)
+
         } else {
             window.location.pathname = '/'
         }
@@ -54,6 +55,7 @@ if(isCurPage('joker')) {
 // ---------------------------------
 if(browserRedirect() == 'PC') {
     isPC = true;
+
 } else {
     isMB = true;
 }
@@ -63,7 +65,7 @@ if(browserRedirect() == 'PC') {
 $(document).ready(() => {
     // Set local variables
     // ---------------------------------
-    let TOC = $('#table-of-contents'),
+    const TOC = $('#table-of-contents'),
         BODY = $('body'),
         TITLE = $('.title'),
         CONTENT = $('#content');
@@ -102,6 +104,7 @@ $(document).ready(() => {
                 $(this).parent().hover(function() {
                     $(this).find('tbody').fadeToggle();
                 })
+
             } else {
                 $(this).parent().click(function() {
                     $(this).find('tbody').fadeToggle();
@@ -358,6 +361,7 @@ function browserRedirect() {
 
     if ((bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM)) {
         return 'MB';
+
     } else {
         return 'PC';
     }
@@ -476,6 +480,7 @@ function _showNav() {
     if (isMB) {
         $('.top-btn').css('opacity', '0.9');
         $('.nav-btn').css('opacity', '0.9');
+
     } else {
         $('.top-btn').addClass('nav-show-hide');
         $('.nav-btn').addClass('nav-show-hide');
@@ -487,6 +492,7 @@ function _hideNav() {
     if (isMB) {
         $('.top-btn').css('opacity', '0.1');
         $('.nav-btn').css('opacity', '0.1');
+
     } else {
         $('.top-btn').removeClass('nav-show-hide');
         $('.nav-btn').removeClass('nav-show-hide');
