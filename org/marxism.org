@@ -6,11 +6,13 @@
 <img
 src="/images/book/marxism.jpg"
 width="40%"
-style="float: right;"
+style="float: right; margin-left: 8px;"
 />
 #+END_EXPORT
 
 ** 绪论 马克思主义是关于工人阶级和人类解放的科学
+
+马克思主义从根本上动摇了人们的传统观念，改变了人们观察自然、社会和人自身的思维方式，开辟了人类思想史的新纪元。
 
 *** 马克思主义的产生和发展
 
