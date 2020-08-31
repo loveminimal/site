@@ -1,0 +1,18 @@
+#+SETUPFILE: ../theme-rose.setup
+#+DATE: <2020-08-31 Mon 18:58>
+#+TITLE: 饮食调整
+
+#+BEGIN_EXPORT html
+<essay>
+饮食调整，贵在平衡。保证必需营养吸收，减少不必要的食物摄入。
+</essay>
+#+END_EXPORT
+
+** 七分饱[fn:1] [fn:2]
+
+* Footnotes
+
+[fn:2] https://mini.eastday.com/mobile/171210000039438.html
+
+[fn:1] https://jingyan.baidu.com/article/fcb5aff7c2e094adaa4a71b1.html
+
