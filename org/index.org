@@ -12,6 +12,8 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 
 [[./nav.org][_Nav_]] ➭ [[./idea.org][_Idea_]] ➯ [[./wiki.org][_Wiki_]]
 
+ ░ 文章列表 ❐ ⓛⓞⓥⓔ
+
 | Misc                |
 |---------------------|
 | [[./tmux.org][Tmux]]                |
