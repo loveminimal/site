@@ -12,12 +12,15 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 
 [[./nav.org][_Nav_]] ➭ [[./idea.org][_Idea_]] ➯ [[./wiki.org][_Wiki_]]
 
+ ░ 文章列表 ❐ ⓛⓞⓥⓔ
+
 | Misc                |
 |---------------------|
 | [[./tmux.org][Tmux]]                |
 | [[./manjaro-linux.org][Manjaro Linux]]       |
 | [[./source-code-compile.org][Source Code Compile]] |
 | [[./marxism.org][Marxism]]             |
+| [[./diet-modification.org][饮食调整]]            |
 
 | GTD             |
 |-----------------|

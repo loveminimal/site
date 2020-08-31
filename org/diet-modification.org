@@ -1,0 +1,66 @@
+#+SETUPFILE: ../theme-rose.setup
+#+DATE: <2020-08-31 Mon 18:58>
+#+TITLE: 饮食调整
+
+#+BEGIN_EXPORT html
+<essay>
+饮食调整，贵在平衡。保证必需营养吸收，减少不必要的食物摄入。
+</essay>
+#+END_EXPORT
+
+** 七分饱[fn:1] [fn:2]
+
+#+BEGIN_EXPORT html
+<img
+src="/images/diet/seven.jpg"
+width="40%"
+style=""
+/>
+#+END_EXPORT
+
+*什么是七分饱呢？*
+
+#+BEGIN_EXPORT html
+<img
+src="/images/diet/level.jpg"
+width="60%"
+style=""
+/>
+#+END_EXPORT
+
+*如何把握七分饱呢？*
+
+七成饱，大部分人找不到这个点，经常把胃里感觉满的八成饱当成最低标准，甚至到了多吃一口就觉得胀的九成饱。
+
+#+BEGIN_EXPORT html
+<img
+src="/images/diet/seven-way1.jpg"
+width="60%"
+style=""
+/>
+#+END_EXPORT
+
+因为大多数人都边吃边说笑，边吃边谈生意，边吃边上网看电视，分散注意力后，就很难感受到饱感的变化，不知不觉地饮食过量。
+
+#+BEGIN_EXPORT html
+<img
+src="/images/diet/seven-way2.jpg"
+width="60%"
+style=""
+/>
+#+END_EXPORT
+
+*怎么能感觉这么细致的差异呢？*
+
+专心致志细嚼慢咽，放慢速度是关键。
+
+从第一口开始，感受自己对食物的急迫感，每吃一口后感受饥饿感的逐渐消退，胃里面逐渐的充实，体会这些不同饱感程度的区别。
+
+然后，找到七成饱的点，把它作为自己的日常食量，就能预防饮食过量。
+
+* Footnotes
+
+[fn:2] https://mini.eastday.com/mobile/171210000039438.html
+
+[fn:1] https://jingyan.baidu.com/article/fcb5aff7c2e094adaa4a71b1.html
+
