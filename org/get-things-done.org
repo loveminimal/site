@@ -72,7 +72,7 @@ _3.管理_
 #+BEGIN_EXPORT html
 <img
 src="/images/gtd/sxq.jpg"
-width="40%"
+width="400"
 style=""
 />
 #+END_EXPORT
@@ -122,7 +122,7 @@ _5.行动_
 #+BEGIN_EXPORT html
 <img
 src="/images/gtd/gxn.jpg"
-width="50%"
+width="500"
 style=""
 />
 #+END_EXPORT
@@ -150,7 +150,7 @@ _2.前景/结果_
 #+BEGIN_EXPORT html
 <img
 src="/images/gtd/jujiao.jpg"
-width="30%"
+width="300"
 style=""
 />
 #+END_EXPORT
@@ -164,7 +164,7 @@ style=""
 #+BEGIN_EXPORT html
 <img
 src="/images/gtd/xyl.jpg"
-width="60%"
+width="600"
 style=""
 />
 #+END_EXPORT

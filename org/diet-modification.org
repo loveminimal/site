@@ -13,7 +13,7 @@
 #+BEGIN_EXPORT html
 <img
 src="/images/diet/seven.jpg"
-width="40%"
+width="300"
 style=""
 />
 #+END_EXPORT
@@ -23,7 +23,7 @@ style=""
 #+BEGIN_EXPORT html
 <img
 src="/images/diet/level.jpg"
-width="60%"
+width="500"
 style=""
 />
 #+END_EXPORT
@@ -35,7 +35,7 @@ style=""
 #+BEGIN_EXPORT html
 <img
 src="/images/diet/seven-way1.jpg"
-width="60%"
+width="400"
 style=""
 />
 #+END_EXPORT
@@ -45,7 +45,7 @@ style=""
 #+BEGIN_EXPORT html
 <img
 src="/images/diet/seven-way2.jpg"
-width="60%"
+width="400"
 style=""
 />
 #+END_EXPORT

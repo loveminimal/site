@@ -5,7 +5,7 @@
 #+BEGIN_EXPORT html
 <img
 src="/images/os/compile.png"
-width="76%"
+width="600"
 style=""
 />
 #+END_EXPORT
@@ -64,7 +64,7 @@ Linux 下源代码的编译安装，及其编译过程和可能遇到的问题�
 #+BEGIN_EXPORT html
 <img
 src="/images/os/cmake.png"
-width="80%"
+width="600"
 style=""
 />
 #+END_EXPORT
@@ -83,7 +83,7 @@ style=""
 #+BEGIN_EXPORT html
 <img
 src="/images/os/c-compile.jpg"
-width="50%"
+width="400"
 style=""
 />
 #+END_EXPORT
