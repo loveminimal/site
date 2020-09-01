@@ -64,6 +64,26 @@ style=""
 
 *** 鸡蛋猪排三明治[fn:3]
 
+#+BEGIN_EXPORT html
+<img
+src="/images/diet/breakfast-1.jpg"
+width=""
+height="200"
+style=""
+/>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<img
+src="/images/diet/breakfast-2.jpg"
+width=""
+height="200"
+style=""
+/>
+#+END_EXPORT
+
+简单的早餐也会有大营养，简易三明治加一杯热牛奶一份水果，这样食材很普遍却是可以满足人体内需求的重要营养。早餐一定要吃，而且要吃的丰富，别再用没时间找借口伤害你的身体。
+
 * Footnotes
 
 [fn:3] https://baijiahao.baidu.com/s?id=1626245545642571828&wfr=spider&for=pc
