@@ -19,7 +19,6 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./tmux.org][Tmux]]                |
 | [[./manjaro-linux.org][Manjaro Linux]]       |
 | [[./source-code-compile.org][Source Code Compile]] |
-| [[./marxism.org][Marxism]]             |
 | [[./diet-modification.org][饮食调整]]            |
 
 | GTD             |
@@ -29,6 +28,19 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | Web                   |
 |-----------------------|
 | [[./web-developer-roadmap.org][Web Developer Roadmap]] |
+
+| 马克思主义                                    |
+|-----------------------------------------------|
+| [[./marxism.org][Marxism]]                                       |
+| [[./marxism-0.org][绪论 马克思主义是关于工人阶级和人类解放的科学]] |
+| [[./marxism-1.org][第一卷 物质世界及其发展规律]]                   |
+| [[./marxism-2.org][第二卷 认识的本质及其发展规律]]                 |
+| [[./marxism-3.org][第三卷 人类社会及其发展规律]]                   |
+| [[./marxism-4.org][第四卷 资本主义的形成及其本质]]                 |
+| [[./marxism-5.org][第五卷 资本的流通过程和剩余价值的分配]]         |
+| [[./marxism-6.org][第六卷 资本主义发展的历史进程]]                 |
+| [[./marxism-7.org][第七卷 社会主义社会及其发展]]                   |
+| [[./marxism-8.org][第八卷 共产主义社会是人类最崇高的社会理想]]     |
 
 | 读书 |
 |------|

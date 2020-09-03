@@ -1,0 +1,4 @@
+#+SETUPFILE: ../theme-rose.setup
+#+DATE: <2020-09-03 Thu 17:52>
+#+TITLE: 第五卷 资本的流通过程和剩余价值的分配
+
