@@ -31,7 +31,6 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 
 | 马克思主义                                    |
 |-----------------------------------------------|
-| [[./marxism.org][Marxism]]                                       |
 | [[./marxism-0.org][绪论 马克思主义是关于工人阶级和人类解放的科学]] |
 | [[./marxism-1.org][第一卷 物质世界及其发展规律]]                   |
 | [[./marxism-2.org][第二卷 认识的本质及其发展规律]]                 |
