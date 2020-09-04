@@ -433,7 +433,7 @@ NOTE: 这个章节只是补充，可以不了解。
 #+BEGIN_EXPORT html
 <img
 src="/images/tutor/page1.jpg"
-width="49%"
+width="390"
 style="box-shadow: 3px 3px 5px #aaa;"
 />
 #+END_EXPORT
@@ -441,7 +441,7 @@ style="box-shadow: 3px 3px 5px #aaa;"
 #+BEGIN_EXPORT html
 <img
 src="/images/tutor/page2.jpg"
-width="49%"
+width="390"
 style="box-shadow: 3px 3px 5px #aaa; float: right;"
 />
 #+END_EXPORT
@@ -457,7 +457,7 @@ _2. 主题切换_
 #+BEGIN_EXPORT html
 <img
 src="/images/tutor/page3.jpg"
-width="49%"
+width="390"
 style="box-shadow: 3px 3px 5px #aaa;"
 />
 #+END_EXPORT
@@ -465,7 +465,7 @@ style="box-shadow: 3px 3px 5px #aaa;"
 #+BEGIN_EXPORT html
 <img
 src="/images/tutor/page4.jpg"
-width="49%"
+width="390"
 style="box-shadow: 3px 3px 5px #aaa; float: right;"
 />
 #+END_EXPORT
