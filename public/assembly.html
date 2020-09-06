@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2020-09-06 Sun 21:12 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assembly</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
+<link rel="stylesheet" href="/css/animate.min.css" />
+<link rel="stylesheet" href="/css/all.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script src="/js/jquery.min.js"></script>
+<script src="/js/darkreader.js"></script>
+<script src="/user.config.js"></script>
+<script src="/js/main.js"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Assembly</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgdbbb4fa">汇编语言基本概念简介</a>
+<ul>
+<li><a href="#org5ba11f2">汇编语言是一种什么程序设计语言</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+→ 摘自 <a href="http://c.biancheng.net/asm/">汇编语言程序指南</a>
+</p>
+
+<p>
+汇编语言是一种最低级、最古老、不具有移植性的编程语言，它能够直接访问计算机硬件，所以执行效率极高，占用资源极少，一般用于嵌入式设备、驱动程序、实时应用、核心算法等。
+</p>
+
+<div id="outline-container-orgdbbb4fa" class="outline-2">
+<h2 id="orgdbbb4fa">汇编语言基本概念简介</h2>
+<div class="outline-text-2" id="text-orgdbbb4fa">
+<essay>
+虚拟机的概念在理解软件与硬件之间的关系时非常重要。
+</essay>
+</div>
+
+<div id="outline-container-org5ba11f2" class="outline-3">
+<h3 id="org5ba11f2">汇编语言是一种什么程序设计语言</h3>
+<div class="outline-text-3" id="text-org5ba11f2">
+<p>
+本文主要介绍与运行 Windows 32 位和 64 位系统的 Intel 和 AMD 处理器相兼容的微处理器编程，文中使用了 Microsoft 宏汇编器（MASM）。
+</p>
+
+<note>
+<p>MS Visual Studio 的大多数版本都包含 MASM 。</p>
+
+在运行 MS Windows 的 x86 系统中，其他一些有名的汇编器包括：TASM（Turbo 汇编器），NASM（Netwide 汇编器）和 MASM32（MASM 的一种变体）。
+
+<p>在 Linux 上有 GAS（GNU 汇编器）和 NASM 两种汇编器。</p>
+</note>
+
+<p>
+汇编语言是最古老的编程语言，在所有语言中，它与原生机器语言最为接近。它能直接访问计算机硬件，要求用户了解计算机架构和操作系统。
+</p>
+
+<p>
+通过学习汇编语言，有助于了解计算机体系结构、机器语言和底层编程的基本原理。
+</p>
+
+<p>
+<b>什么是汇编器和链接器？</b>
+</p>
+
+<p>
+<span class="underline">汇编器</span> （assembler）是一种工具程序，用于将汇编语言源程序转换为机器语言。 <span class="underline">链接器</span> （linker）也是一种工具程序，它把汇编器生成的单个文件组合为一个可执行程序。还有一个相关工具，称为 <span class="underline">调试器</span> （debugger），使程序员可以在程序运行时，单步执行程序并检查寄存器和内存状态。
+</p>
+
+<p>
+<b>汇编语言与机器语言有什么关系？</b>
+</p>
+
+<p>
+<span class="underline">机器语言</span> （machine language）是一种数字语言，专门设计成能被计算机处理器（CPU）理解。所有 x86 处理器都理解共同的机器语言。
+</p>
+
+<p>
+汇编语言（assembly language）包含用短助记符如 <code>ADD、MOV、SUB 和 CALL</code> 书写的语句。汇编语言与机器语言是一对一（one-to-one） 的关系： <b>每一条汇编语言指令对应一条机器语言指令。</b>
+</p>
+
+<p>
+<b>C++ 和 Java 与汇编语言有什么关系？</b>
+</p>
+
+<p>
+高级语言如 Python 、C++ 和 Java 与汇编语言的关系是一对多（one-to-many）。比如，C++ 的一条语句就会扩展为多条汇编指令或机器指令。
+</p>
+
+<p>
+来看个例子吧，将 C++ 代码转化为与之等价的汇编语言，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-c++"><span class="linenr">1: </span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">Y</span>;
+<span class="linenr">2: </span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">X</span> = <span style="color: #AE81FF;">(</span>Y + 4<span style="color: #AE81FF;">)</span> * 3;
+</pre>
+</div>
+
+<p>
+↓ ↓ ↓ 这种转换需要多条语句，因为每条汇编语句只对应一条机器指令：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm"><span class="linenr">1: </span><span style="color: #A6E22E;">mov</span> <span style="color: #F92672;">eax</span>,Y                       <span style="color: #75715E;">; </span><span style="color: #75715E;">Y &#36865;&#20837; EAX &#23492;&#23384;&#22120;</span>
+<span class="linenr">2: </span><span style="color: #A6E22E;">add</span> <span style="color: #F92672;">eax</span>,4                       <span style="color: #75715E;">; </span><span style="color: #75715E;">EAX &#23492;&#23384;&#22120;&#20869;&#23481;&#21152; 4</span>
+<span class="linenr">3: </span><span style="color: #A6E22E;">mov</span> <span style="color: #F92672;">ebx</span>,3                       <span style="color: #75715E;">; </span><span style="color: #75715E;">3 &#36865;&#20837; EBX &#23492;&#23384;&#22120;</span>
+<span class="linenr">4: </span><span style="color: #A6E22E;">imul</span> <span style="color: #F92672;">ebx</span>                        <span style="color: #75715E;">; </span><span style="color: #75715E;">EAX &#19982; EBX &#30456;&#20056;</span>
+<span class="linenr">5: </span><span style="color: #A6E22E;">mov</span> <span style="color: #F92672;">x</span>,eax                       <span style="color: #75715E;">; </span><span style="color: #75715E;">EAX &#30340;&#20540;&#36865;&#20837; X</span>
+</pre>
+</div>
+
+<note>
+寄存器（register）是 CPU 中被命名的存储位置，用于保存操作的中间结果。
+</note>
+
+<p>
+<b>汇编语言可移植吗？</b>
+</p>
+
+<p>
+一种语言，如果它的源码程序能够在各种各样的计算机系统中进行编译和运行，那么这各语言被称为 <span class="underline">可移植的</span> （portable）。例如，一个 C++ 程序，除非需要特别引用某种操作系统的库函数，否则它就几乎可以在任何一台计算机上编译和运行。Java 语言的一大特点就是，其编译好的程序几乎能在所有计算机系统中运行。
+</p>
+
+<p>
+<b>汇编语言不是可移植的</b> ，因为它是为特定处理器系列设计的。
+</p>
+
+<note>
+对于一些广为人知的处理器系列如 Motorola 68x00、x86、SUN Sparc、Vax 和 IBM-370 ，汇编语言指令会直接与该计算机体系结构相匹配，或者在执行时用一种被称为微代码解释器（microcode interpreter）的处理器内置程序来进行转换。
+</note>
+
+<p>
+<b>为什么要学习汇编语言？</b>
+</p>
+
+<p>
+第一，写嵌入式（embedded）程序，是指一些存放在专用设备中小容量存储器内的短程序，如电话、汽车燃油和点火系统、空调控制系统、安全系统、数据采集仪器、显卡、声卡、硬盘驱动器、调制解调器和打印机。由于汇编语言占用内存少，因此它是编写嵌入式程序的理想工具。
+</p>
+
+<p>
+第二，处理仿真和硬件监控的实时应用程序要求精确定时和响应。高级语言不会让程序员对编译器生成的机器代码进行精确控制，而汇编语言则允许程序员精确指定程序的可执行代码。
+</p>
+
+<p>
+第三，电脑游戏需求软件在减少代码大小和加快执行速度方面进行高度优化。就针对一个目标系统编写能够充分利用其硬件特性的代码而言，游戏程序员经常选择汇编语言，因为汇编语言允许直接访问计算机硬件，可以对代码进行手工优化以提高速度。
+</p>
+
+<p>
+第四，汇编语言有助于形成对计算机硬件、操作系统和应用程序之间交互的全面理解。使用汇编语言，可以运用并检验计算机体系结构和操作系统中的理论知识。
+</p>
+
+<p>
+第五，一些高级语言对其数据表示进行了抽象，这使得它们在执行底层任务时显得有些不便，如位控制。在这各情况下，程序员可以调用使用汇编语言写的子程序来完成任务。
+</p>
+
+<p>
+第六，硬件制造商为其销售的设备创建设备驱动程序。设备驱动程序（device driver）是一种程序，它把通用操作系统指令转换为对硬件细节的具体引用。比如，打印机制造商就为他们销售的每一种型号都创建了一种不同的 MS-Windows 设备驱动程序。通常，这些设备驱动程序包含了大量的汇编语言代码。
+</p>
+
+<p>
+<b>汇编语言有规则吗？</b>
+</p>
+
+<p>
+大多数汇编语言规则都是以目标处理器及其机器语言的物理局限性为基础的。比如，CPU 要求两个指令操作数的大小相同，与 C++ 或 Java 相比，汇编语言的规则较少，因为，前者是用语法规则来减少意外的逻辑错误，而这是以限制底层数据访问为代价的。
+</p>
+
+<p>
+汇编语言程序员可以很容易地绕过高级语言的限制性特征。例如，Java 就不允许访问特定的内存地址，程序员可以使用 JNI（Java Native Interface）类来调用 C 函数绕过这处限制，可结果会使得程序不容易维护。
+</p>
+
+<p>
+反之，汇编语言可以访问所有的内存地址。但这种自由的代价也很高：汇编语言程序员需要花费大量的时间进行调试。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-09-06 Sun 19:16</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2020-09-06 Sun 21:12</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
