@@ -9,7 +9,7 @@
 |      | [[https://twitter.com/home][Twitter]]    | [[https://gitee.com/loveminimal][Gitee]]        | [[https://www.quora.com/][Quora]]          |                |                |
 |------+------------+--------------+----------------+----------------+----------------|
 | 工具 | [[http://fanyi.youdao.com/][有道翻译]]   | [[http://www.fhdq.net/][符号大全]]     | [[https://www.bejson.com/ui/compress_img/][图压缩]]         | [[https://man.linuxde.net/][Linux 命令大全]] |                |
-|      | [[http://tool.c7sky.com/webcolor/][Web Color]]  | [[https://pixabay.com/zh/][Pixabay]]      | [[http://www.fonts.net.cn/][字体之家]]       | [[http://tools.jb51.net/][脚本之家]]       | [[https://www.chinaz.com/][站长之家]]       |
+|      | [[http://tool.c7sky.com/webcolor/][Web Color]]  | [[https://pixabay.com/zh/][Pixabay]]      | [[http://www.fonts.net.cn/][字体之家]]       | [[http://tools.jb51.net/][脚本之家]]       | [[http://www.china.com.cn/aboutchina/zhuanti/zgdsrw/node_7054044.htm][认识中国]]       |
 |------+------------+--------------+----------------+----------------+----------------|
 | 娱乐 | [[http://www.etymon.cn/index.html][英语字根]]   | [[https://www.hanjutv.com/][韩剧]]         | [[http://www.musictool.top/][音乐聚合]]       | [[https://www.meijutt.tv/][天天美剧]]       | [[https://www.gushiwen.org/][古诗文网]]       |
 |------+------------+--------------+----------------+----------------+----------------|
@@ -28,3 +28,5 @@
 - [[https://endler.dev/2019/tinysearch/#searchbox]]
 - http://theory.people.com.cn/n/2015/0812/c40531-27449964.html
 - [[https://www.jianshu.com/p/5d492224c71e]]
+- [[http://www.china.com.cn/aboutchina/zhuanti/zgzyldz/2007-09/18/content_8905717.htm]]
+- http://www.360doc.com/content/18/0904/13/10340385_783788813.shtml

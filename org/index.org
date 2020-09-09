@@ -19,7 +19,6 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./tmux.org][Tmux]]                |
 | [[./manjaro-linux.org][Manjaro Linux]]       |
 | [[./source-code-compile.org][Source Code Compile]] |
-| [[./diet-modification.org][饮食调整]]            |
 | [[./assembly.org][Assembly]]            |
 
 | GTD             |
@@ -29,6 +28,12 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | Web                   |
 |-----------------------|
 | [[./web-developer-roadmap.org][Web Developer Roadmap]] |
+
+| 休闲     |
+|----------|
+| [[./diet-modification.org][饮食调整]] |
+| [[./billiards.org][台球]]     |
+| [[./flute.org][箫笛]]     |
 
 | 马克思主义                                    |
 |-----------------------------------------------|
