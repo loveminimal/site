@@ -104,7 +104,7 @@ title="黑格尔"
 src="/images/book/feuerbach.jpg"
 width="200"
 height=""
-style="float: left;"
+style="float: left; margin-right: 8px;"
 title="费尔巴哈"
 />
 #+END_EXPORT
@@ -126,7 +126,7 @@ _2. 英国古典经济学_
 src="/images/book/smith.jpg"
 width="200"
 height=""
-style="float: left;"
+style="float: left; margin-right: 8px;"
 title="亚当·斯密"
 />
 #+END_EXPORT
@@ -256,7 +256,7 @@ _3. 生物进化论_
 src="/images/book/lenin.jpg"
 width="220"
 height=""
-style="float: left;"
+style="float: left; margin-right: 8px;"
 title=""
 />
 #+END_EXPORT
@@ -280,7 +280,7 @@ title=""
 src="/images/book/maozhuxi.jpg"
 width="300"
 height=""
-style="float: left;"
+style="float: left; margin-right: 8px;"
 title=""
 />
 #+END_EXPORT

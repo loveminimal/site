@@ -83,7 +83,7 @@ body, #content::before,#postamble::before {
 /* Page init style */
 /* ********************************* */
 p { margin: .16rem 0; }
-img { max-width: 100%; margin: .16rem; }
+img { max-width: 100%; }
 
 a { color: #19f; }
 a:hover { color:#E69; text-shadow: 0px 0px 1px #E69;}
