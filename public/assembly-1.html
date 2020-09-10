@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-09-10 Thu 20:46 -->
+<!-- 2020-09-10 Thu 20:53 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Assembly</title>
+<title>汇编语言基本概念简介</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
@@ -18,23 +18,19 @@
 </head>
 <body>
 <div id="content">
-<h1 class="title">Assembly</h1>
+<h1 class="title">汇编语言基本概念简介</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org6dd0a95">汇编语言基本概念简介</a>
+<li><a href="#org4b862e2">汇编语言是一种什么程序设计语言</a></li>
+<li><a href="#org543083c">虚拟机是什么</a></li>
+<li><a href="#orgbc580e7">汇编语言的数据表示</a>
 <ul>
-<li><a href="#org58703fb">汇编语言是一种什么程序设计语言</a></li>
-<li><a href="#orge123ffd">虚拟机是什么</a></li>
-<li><a href="#org37fde29">汇编语言的数据表示</a>
-<ul>
-<li><a href="#orgfab0366">二进制整数</a></li>
-<li><a href="#orgb2a2b76">二进制加法运算</a></li>
-<li><a href="#org1319a72">字节</a></li>
-<li><a href="#orgdbfd614">十六进制整数</a></li>
-</ul>
-</li>
+<li><a href="#org0d4008e">二进制整数</a></li>
+<li><a href="#org1c82732">二进制加法运算</a></li>
+<li><a href="#orgb6337f5">字节</a></li>
+<li><a href="#org1bf98df">十六进制整数</a></li>
 </ul>
 </li>
 </ul>
@@ -48,17 +44,13 @@
 汇编语言是一种最低级、最古老、不具有移植性的编程语言，它能够直接访问计算机硬件，所以执行效率极高，占用资源极少，一般用于嵌入式设备、驱动程序、实时应用、核心算法等。
 </p>
 
-<div id="outline-container-org6dd0a95" class="outline-2">
-<h2 id="org6dd0a95">汇编语言基本概念简介</h2>
-<div class="outline-text-2" id="text-org6dd0a95">
 <essay>
 虚拟机的概念在理解软件与硬件之间的关系时非常重要。
 </essay>
-</div>
 
-<div id="outline-container-org58703fb" class="outline-3">
-<h3 id="org58703fb">汇编语言是一种什么程序设计语言</h3>
-<div class="outline-text-3" id="text-org58703fb">
+<div id="outline-container-org4b862e2" class="outline-2">
+<h2 id="org4b862e2">汇编语言是一种什么程序设计语言</h2>
+<div class="outline-text-2" id="text-org4b862e2">
 <p>
 本文主要介绍与运行 Windows 32 位和 64 位系统的 Intel 和 AMD 处理器相兼容的微处理器编程，文中使用了 Microsoft 宏汇编器（MASM）。
 </p>
@@ -240,9 +232,9 @@
 </div>
 </div>
 
-<div id="outline-container-orge123ffd" class="outline-3">
-<h3 id="orge123ffd">虚拟机是什么</h3>
-<div class="outline-text-3" id="text-orge123ffd">
+<div id="outline-container-org543083c" class="outline-2">
+<h2 id="org543083c">虚拟机是什么</h2>
+<div class="outline-text-2" id="text-org543083c">
 <p>
 虚拟机概念（virtual machine machine）是一种说明计算机硬件和软件关系的有效方法。要说明这个概念，先从计算机的最基本的功能开始，即执行程序。
 </p>
@@ -330,9 +322,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org37fde29" class="outline-3">
-<h3 id="org37fde29">汇编语言的数据表示</h3>
-<div class="outline-text-3" id="text-org37fde29">
+<div id="outline-container-orgbc580e7" class="outline-2">
+<h2 id="orgbc580e7">汇编语言的数据表示</h2>
+<div class="outline-text-2" id="text-orgbc580e7">
 <p>
 汇编语言程序员处理的是物理级数据，因此他们必须善于检查内存和寄存器。通常，二进制数被用于描述计算机内容，有时也使用十进制和十六进制数。
 </p>
@@ -395,9 +387,9 @@ title=""
 </p>
 </div>
 
-<div id="outline-container-orgfab0366" class="outline-4">
-<h4 id="orgfab0366">二进制整数</h4>
-<div class="outline-text-4" id="text-orgfab0366">
+<div id="outline-container-org0d4008e" class="outline-3">
+<h3 id="org0d4008e">二进制整数</h3>
+<div class="outline-text-3" id="text-org0d4008e">
 <p>
 计算机以电子电荷集合的形式在内存中保存指令和数据。用数字来表示这些内容就需要系统能够适应 <b>开/关（on/off）</b> 或 <b>真/假（true/false）</b> 概念。
 </p>
@@ -609,9 +601,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgb2a2b76" class="outline-4">
-<h4 id="orgb2a2b76">二进制加法运算</h4>
-<div class="outline-text-4" id="text-orgb2a2b76">
+<div id="outline-container-org1c82732" class="outline-3">
+<h3 id="org1c82732">二进制加法运算</h3>
+<div class="outline-text-3" id="text-org1c82732">
 <p>
 两个二进制整数相加时，是位对位处理的，从最低的一位（右边）开始，依序将每一对位进行加法运算。两个二进制数字相加，有四种结果，如下所示：
 </p>
@@ -654,9 +646,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org1319a72" class="outline-4">
-<h4 id="org1319a72">字节</h4>
-<div class="outline-text-4" id="text-org1319a72">
+<div id="outline-container-orgb6337f5" class="outline-3">
+<h3 id="orgb6337f5">字节</h3>
+<div class="outline-text-3" id="text-orgb6337f5">
 <p>
 在 x86 计算机中，所有数据存储的基本单位都是字节（byte），一个字节有 8 位。
 </p>
@@ -716,16 +708,15 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgdbfd614" class="outline-4">
-<h4 id="orgdbfd614">十六进制整数</h4>
-</div>
+<div id="outline-container-org1bf98df" class="outline-3">
+<h3 id="org1bf98df">十六进制整数</h3>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-06 Sun 19:16</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-09-10 Thu 20:46</p>
+<p class="date">Created: 2020-09-10 Thu 20:53</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
