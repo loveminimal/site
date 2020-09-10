@@ -71,17 +71,3 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 *Others using it.*
 
 [[http://182.61.145.178:4000/][_Hurricane_]] [[https://www.thethingsengine.org/][_Tengine_]]
-
-#+BEGIN_EXPORT html
-<img
-src="/images/bg/motto.jpg"
-width="60%"
-style="
-opacity: .8;
-position: absolute;
-display: block;
-left: 2px;
-bottom: 24px;
-"
-/>
-#+END_EXPORT
