@@ -32,6 +32,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 |---------------------------|
 | [[./assembly-1.org][第一章 汇编语言的基本概念]] |
 | [[./assembly-2.org][第二章 x86 处理器架构]]     |
+| [[./assembly-3.org][第三章 汇编语言基础]]       |
 
 | 休闲     |
 |----------|
