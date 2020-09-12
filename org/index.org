@@ -28,7 +28,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 |-----------------------|
 | [[./web-developer-roadmap.org][Web Developer Roadmap]] |
 
-| ASM                       |
+| Asm                       |
 |---------------------------|
 | [[./assembly-1.org][第一章 汇编语言的基本概念]] |
 | [[./assembly-2.org][第二章 x86 处理器架构]]     |
