@@ -136,3 +136,87 @@ title=""
 - JDK = JRE + 多种 Java 开发工具；
 - JRE = JVM + 各种类库；
 - 这三者的关系是一层层的嵌套关系，JDK > JRE > JVM 。
+
+** Java 程序的运行过程
+
+#+BEGIN_EXPORT html
+<essay>
+老规矩，先和这个世界打个招呼吧。
+</essay>
+#+END_EXPORT
+
+#+BEGIN_SRC java -n
+  /*
+   ,* 第一个 Java 程序 HelloWorld.java
+   ,*/
+  public class HelloWorld {
+      // 程序入口
+      public static void main(String[] args) {
+          // 输出字符串
+          System.out.println("Hello World.");
+      }
+  }
+#+END_SRC
+
+Java 程序的运行必须经过编写、编译和运行 3 个步骤：
+1. 编写，是指在 Java 开发环境中进行程序代码的输入，最终形成后缀名为 =.java= 的 Java 源文件；
+2. 编译，是指用 Java 编译器对源文件进行错误排查的过程，编译后将生成后缀名为 =.class= 的字节码文件，而不是像 C 语言那样生成可执行文件；
+3. 运行，是指使用 Java 解释器将字节码文件翻译成机器代码，执行并显示结果。
+
+#+BEGIN_EXPORT html
+<img
+src="/images/java/java-4.png"
+width="100%"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+_字节码文件_ 是一种和任何具体机器环境及操作系统环境无关的中间代码。它是一种二进制文件，是 Java 源文件由 Java 编译器编译后生成的目标代码文件。编程人员和计算机都无法直接读懂字节码文件，它必须由专用的 Java 解释器来解释执行，因此 Java 是一种在编译基础上进行解释运行的语言。
+
+_Java 解释器_ 负责将字节码文件翻译成具体硬件环境和操作系统平台下的机器代码，以便执行。因此 Java 程序不能直接运行在现有的操作系统平台上，它必须运行在被称为 Java 虚拟机的软件平台之上。
+
+_Java 虚拟机_ （JVM）是运行 Java 程序的软件环境，Java 解释器是 Java 虚拟机的一部分。
+
+在运行 Java 程序时，首先会启动 JVM ，然后由它来负责执行 Java 的字节码程序，并且 Java 字节码程序只能运行于 JVM 上。
+
+这样，利用 JVM 就可以把 Java 字节码程序和具体的硬件平台及操作系统分隔开来，只要在不同的计算机上安装了针对特定平台的 JVM ，Java 程序就可以运行，而不用考虑具体的硬件平台及操作系统环境，也不用考虑字节码文件是何种平台上生成的。
+
+JVM 把这种不同软硬件平台的具体差别隐藏起来，从而实现了真正的二进制代码级的跨平台移植。JVM 是 Java 平台架构的基础，Java 的跨平台特性正是通过在 JVM 中运行 Java 程序实现的。如下：
+
+#+BEGIN_EXPORT html
+<img
+src="/images/java/java-5.png"
+width="100%"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+Java 语言这种“一次编写，到处运行”的方式，有效地解决了目前大多数高级程序设计语言需要针对不同系统来编译产生不同机器代码的问题，即硬件环境和操作平台的异构问题，大大降低了程序开发、维护和管理的开销。
+
+*注意：Java 程序通过 JVM 可以实现跨平台特性，但 JVM 是不跨平台的。也就是说，不同操作系统之上的 JVM 是不同的，Windows 平台之上的 JVM 不能用在 Linux 平台，反之亦然。
+
+** Java 的学习路线
+
+学习 Java 的第一步，就是制定自己的 Java 学习路线。对于学习 JavaSE 的读者，分为 JavaSE 初级、中级和高级水平，下面分别介绍达到这些水平需要掌握什么。
+
+_1. 初级水平_
+
+JavaSE 初级水平要求掌握计算机入门：DOS 命令，什么是程序，如何配置 Java 环境，Java 编程的过程是怎样的，Java 有什么特点，程序是如何运行的。
+
+编程基础：变量，基本数据类型，进制，转义字符，运算符，分支语句和循环语句等。方法与数组，还有彻底掌握面向对象的思想。
+
+如果能掌握这些，你已经入门 Java 语言了。
+
+_2. 中级水平_
+
+JavaSE 中级水平是要求掌握 Eclipse 用法（编辑器）与异常处理技术，Debug 调试技术，Java 常用类库，文件与 IO ，集合框架，多线程并发技术，网络编程，反射和泛型特点，正则表达式，枚举和注解，XML 和 JSON ，GUI 事件处理，Web 前端开发基础和框架，Servlet 和 JSP 在 Web 后端的应用，MVC 和分层架构，以及项目开发流程及 CASE 工具的使用。
+
+_3. 高级水平_
+
+JavaSE 高级水平便是要掌握 Mybatis 框架，Spring 框架，使用 Hibernate 实现持久层 RESTful 架构和移动端接口，设计第三方接口和在线支付功能，MyBatis 的应用和 SSM 整合。
+
+分布式基础知识点：Linux 常见命令，JDK、tomcat 配置，Maven 私服，阿里云配置 redis 和 mysql 等，JVM 高级特性，JVM 性能监控和调优等等。主要都是向着 Web 开发方面的技术加深。
