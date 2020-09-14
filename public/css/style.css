@@ -511,7 +511,7 @@ th:last-child, td:last-child { border-right: rgba(255, 255, 255, 0); }
 /* Mobile UI */
 /* ****************************************************************** */
 @media screen and (max-width: 1026px) {
-    body, #content::before, #postamble::before { background: url('../images/bg/rose.jpg') center center / cover no-repeat fixed; }
+    /* body, #content::before, #postamble::before { background: url('../images/bg/rose.jpg') center center / cover no-repeat fixed; } */
 
     #content, #postamble { width: 91%; }
     #postamble::before,
