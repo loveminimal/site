@@ -188,7 +188,7 @@ JVM 把这种不同软硬件平台的具体差别隐藏起来，从而实现了�
 #+BEGIN_EXPORT html
 <img
 src="/images/java/java-5.png"
-width="100%"
+width="660"
 height=""
 style=""
 title=""

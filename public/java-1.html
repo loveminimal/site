@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-09-13 Sun 18:04 -->
+<!-- 2020-09-14 Mon 10:38 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java 程序简介</title>
@@ -23,18 +23,18 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb8c61c7">什么是 Java 语言</a></li>
-<li><a href="#org7b1be34">Java 语言的特点</a></li>
-<li><a href="#org1cc8e32">JDK、JRE、JVM</a></li>
-<li><a href="#org66b9407">Java 程序的运行过程</a></li>
-<li><a href="#org200a5f2">Java 的学习路线</a></li>
+<li><a href="#org01154ed">什么是 Java 语言</a></li>
+<li><a href="#org6b44625">Java 语言的特点</a></li>
+<li><a href="#orge2a10ba">JDK、JRE、JVM</a></li>
+<li><a href="#org658cbd7">Java 程序的运行过程</a></li>
+<li><a href="#org0ea0d7b">Java 的学习路线</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb8c61c7" class="outline-2">
-<h2 id="orgb8c61c7">什么是 Java 语言</h2>
-<div class="outline-text-2" id="text-orgb8c61c7">
+<div id="outline-container-org01154ed" class="outline-2">
+<h2 id="org01154ed">什么是 Java 语言</h2>
+<div class="outline-text-2" id="text-org01154ed">
 <img
 src="/images/java/java-0.png"
 width="50"
@@ -105,9 +105,9 @@ Java ME 包括灵活的用户界面、健壮的安全模型、丰富的内置网
 </div>
 </div>
 
-<div id="outline-container-org7b1be34" class="outline-2">
-<h2 id="org7b1be34">Java 语言的特点</h2>
-<div class="outline-text-2" id="text-org7b1be34">
+<div id="outline-container-org6b44625" class="outline-2">
+<h2 id="org6b44625">Java 语言的特点</h2>
+<div class="outline-text-2" id="text-org6b44625">
 <p>
 Java 语言的风格很像 C 语言和 C++ 语言，是一种纯粹的面向对象语言，它继承了 C++ 语言面向对象的技术核心，但是拋弃了 C++ 的一些缺点，比如说容易引起错误的指针以及多继承等，同时也增加了垃圾回收机制，释放掉不被使用的内存空间，解决了管理内存空间的烦恼。
 </p>
@@ -202,9 +202,9 @@ Java 语言的众多特性使其在众多的编程语言中占有较大的市场
 </div>
 </div>
 
-<div id="outline-container-org1cc8e32" class="outline-2">
-<h2 id="org1cc8e32">JDK、JRE、JVM</h2>
-<div class="outline-text-2" id="text-org1cc8e32">
+<div id="outline-container-orge2a10ba" class="outline-2">
+<h2 id="orge2a10ba">JDK、JRE、JVM</h2>
+<div class="outline-text-2" id="text-orge2a10ba">
 <blockquote>
 <p>
 任何语言或者软件的运行环境都需要环境，就像人要生活在空气中，鱼要活在水中，喜阴植物就不能放在阳光下暴晒一样，任何对象个体的存在都离不开其所需要的环境，编程语言亦是一样的。
@@ -254,24 +254,24 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org66b9407" class="outline-2">
-<h2 id="org66b9407">Java 程序的运行过程</h2>
-<div class="outline-text-2" id="text-org66b9407">
+<div id="outline-container-org658cbd7" class="outline-2">
+<h2 id="org658cbd7">Java 程序的运行过程</h2>
+<div class="outline-text-2" id="text-org658cbd7">
 <essay>
 老规矩，先和这个世界打个招呼吧。
 </essay>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #75715E;">/*</span>
-<span class="linenr"> 2: </span><span style="color: #75715E;"> * &#31532;&#19968;&#20010; Java &#31243;&#24207; HelloWorld.java</span>
-<span class="linenr"> 3: </span><span style="color: #75715E;"> */</span>
-<span class="linenr"> 4: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">HelloWorld</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 5: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#31243;&#24207;&#20837;&#21475;</span>
-<span class="linenr"> 6: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr"> 7: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#36755;&#20986;&#23383;&#31526;&#20018;</span>
-<span class="linenr"> 8: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"Hello World."</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr"> 9: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">10: </span><span style="color: #AE81FF;">}</span>
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #8B8878;">/*</span>
+<span class="linenr"> 2: </span><span style="color: #8B8878;"> * &#31532;&#19968;&#20010; Java &#31243;&#24207; HelloWorld.java</span>
+<span class="linenr"> 3: </span><span style="color: #8B8878;"> */</span>
+<span class="linenr"> 4: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">HelloWorld</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 5: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#31243;&#24207;&#20837;&#21475;</span>
+<span class="linenr"> 6: </span>    <span style="color: #FF1493;">public</span> <span style="color: #FF1493;">static</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">main</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">String</span><span style="color: #87D700;">[]</span> <span style="color: #FF8C00;">args</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 7: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#36755;&#20986;&#23383;&#31526;&#20018;</span>
+<span class="linenr"> 8: </span>        System.out.println<span style="color: #87D700;">(</span><span style="color: #CDC673;">"Hello World."</span><span style="color: #87D700;">)</span>;
+<span class="linenr"> 9: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">10: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -318,7 +318,7 @@ JVM 把这种不同软硬件平台的具体差别隐藏起来，从而实现了�
 
 <img
 src="/images/java/java-5.png"
-width="100%"
+width="660"
 height=""
 style=""
 title=""
@@ -334,9 +334,9 @@ Java 语言这种“一次编写，到处运行”的方式，有效地解决了
 </div>
 </div>
 
-<div id="outline-container-org200a5f2" class="outline-2">
-<h2 id="org200a5f2">Java 的学习路线</h2>
-<div class="outline-text-2" id="text-org200a5f2">
+<div id="outline-container-org0ea0d7b" class="outline-2">
+<h2 id="org0ea0d7b">Java 的学习路线</h2>
+<div class="outline-text-2" id="text-org0ea0d7b">
 <p>
 学习 Java 的第一步，就是制定自己的 Java 学习路线。对于学习 JavaSE 的读者，分为 JavaSE 初级、中级和高级水平，下面分别介绍达到这些水平需要掌握什么。
 </p>
@@ -382,7 +382,7 @@ JavaSE 高级水平便是要掌握 Mybatis 框架，Spring 框架，使用 Hiber
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-12 Sat 18:42</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-09-13 Sun 18:04</p>
+<p class="date">Created: 2020-09-14 Mon 10:38</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
