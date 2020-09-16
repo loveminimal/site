@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2020-09-16 Wed 18:02 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java 流程控制语句</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
+<link rel="stylesheet" href="/css/animate.min.css" />
+<link rel="stylesheet" href="/css/all.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script src="/js/jquery.min.js"></script>
+<script src="/js/darkreader.js"></script>
+<script src="/user.config.js"></script>
+<script src="/js/main.js"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Java 流程控制语句</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org7963c2f">Java 语句</a></li>
+<li><a href="#orgd6366e0">选择结构</a></li>
+</ul>
+</div>
+</div>
+<p>
+从结构化程序设计角度出发，程序有 3 种结构：顺序结构、选择结构和循环结构。
+</p>
+
+<p>
+若是在程序中没有给出特别的执行目标，系统则默认自上而下一行一行地执行程序，这类程序的结构就称为 <span class="underline">顺序结构</span> 。
+</p>
+
+<div id="outline-container-org7963c2f" class="outline-2">
+<h2 id="org7963c2f">Java 语句</h2>
+<div class="outline-text-2" id="text-org7963c2f">
+<p>
+按照语句的组成部分，可以将顺序结构中语句分为 3 大类：表达式语句、空语句和复合语句。
+</p>
+
+<p>
+<b>在 Java 中，语句是最小的组成单位，每个语句必须使用分号作为结束符。</b> 除此这外，Java 对语句无任何其他限制。
+</p>
+
+<p>
+<span class="underline">1. 空语句</span>
+</p>
+
+<p>
+所谓空语句（Empty Statement），它在程序中什么都不做，也不包含具有实际性的语句。在程序中，空语句主要用来作为空循环体。格式如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span>;                               <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20854;&#23454;&#23601;&#26159;&#19968;&#20010;&#20998;&#21495;</span>
+</pre>
+</div>
+
+<p>
+<span class="underline">2. 表达式语句</span>
+</p>
+
+<p>
+以下是一些表达式的示例语句：
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span>3.1415926;
+<span class="linenr">2: </span><span style="color: #AF87FF;">(</span>a+b<span style="color: #AF87FF;">)</span>/2;
+<span class="linenr">3: </span>x*y*z-y+<span style="color: #AF87FF;">(</span>20-x<span style="color: #AF87FF;">)</span>;
+</pre>
+</div>
+
+<p>
+这些表达式能够被 Java 编译器识别，但是由于没有对程序进行任何操作，因此无任何意义。
+</p>
+
+<p>
+一般表达式语句应该能完成一个操作，如修改变量的值或作为函数参数等。具体方法是，在表达式的左侧指定一个变量来存储表达式的值，或者将表达式传递给函数。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span>pi = 3.1415926;
+<span class="linenr">2: </span>output<span style="color: #AF87FF;">(</span>pi<span style="color: #AF87FF;">)</span>;                      <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#23558;pi&#30340;&#20540;&#20256;&#36882;&#21040;output()&#20989;&#25968;&#20013;&#20316;&#20026;&#21442;&#25968;</span>
+<span class="linenr">3: </span>sum = <span style="color: #AF87FF;">(</span>a + b<span style="color: #AF87FF;">)</span> / 2;
+<span class="linenr">4: </span>printf<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">"%f"</span>, sum<span style="color: #AF87FF;">)</span>;               <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#23558;sum&#30340;&#20540;&#20256;&#36882;&#21040;printf()&#20989;&#25968;&#36755;&#20986;</span>
+<span class="linenr">5: </span>temp = x * y * z - y + <span style="color: #AF87FF;">(</span>20 - x<span style="color: #AF87FF;">)</span>; <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#23558;&#34920;&#36798;&#24335;&#30340;&#20540;&#20445;&#23384;&#21040;temp&#21464;&#37327;&#20013;</span>
+</pre>
+</div>
+
+<p>
+<span class="underline">3. 复合语句</span>
+</p>
+
+<p>
+复合语句又称为语句块，是很多个语句的组合，从而可以将多个语句看作单个语句。格式如下：
+</p>
+
+<pre class="example">
+{
+    statement-list  // 语句列表
+}
+</pre>
+
+<p>
+其中， <code>statement-list</code> 是由一个或多个语句组成的列表，如果不存在 <code>statement-list</code> ，则称该语句是空的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd6366e0" class="outline-2">
+<h2 id="orgd6366e0">选择结构</h2>
+<div class="outline-text-2" id="text-orgd6366e0">
+<p>
+i.e. 分支结构
+</p>
+
+<p>
+Java 支持两种选择语句： <code>if</code> 语句和 <code>switch</code> 语句。其中 <code>if</code> 语句使用布尔表达式或布尔值作为分支条件来进行分支控制，而 <code>switch</code> 语句则用于对多个整型值进行匹配，从而实现分支控制。这些语句允许你只有在程序运行时才能知道其状态的情况下，控制程序的执行过程。
+</p>
+
+<p>
+选择结构（也叫分支结构）解决了顺序结构不能判断的缺点，可以根据一个条件执行哪些语句块。
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-09-16 Wed 17:23</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2020-09-16 Wed 18:02</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
