@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2020-09-17 Thu 11:11 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java 字符串处理</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
+<link rel="stylesheet" href="/css/animate.min.css" />
+<link rel="stylesheet" href="/css/all.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script src="/js/jquery.min.js"></script>
+<script src="/js/darkreader.js"></script>
+<script src="/user.config.js"></script>
+<script src="/js/main.js"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Java 字符串处理</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org77a0ab1">定义字符串</a></li>
+<li><a href="#org81ff971">String 和 int 的相互转换</a></li>
+<li><a href="#orgaaaab14">字符串拼接</a></li>
+<li><a href="#org06b32da">字符串的若干操作</a>
+<ul>
+<li><a href="#orga6b7c7e">获取字符串长度</a></li>
+<li><a href="#org9bd4e6d">字符串的大小写转换</a></li>
+<li><a href="#org4ec7a1d">去除字符串中的空格</a></li>
+<li><a href="#orgf359eb4">截取子字符串</a></li>
+<li><a href="#org5092c1a">分割字符串</a></li>
+<li><a href="#org0991717">字符串的替换</a></li>
+<li><a href="#orgbe3f86b">字符串比较</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+一般程序需要处理大量文本数据，Java 语言的文本数据被保存为字符或字符串类型。关于字符及字符串的操作主要用到 String 类和 StringBuffer 类，如连接、修改、替换、比较和查找等。
+</p>
+
+<blockquote>
+<p>
+字符串是 Java 程序中经常处理的对象之一，因此如果字符串运用得不好，将影响程序的运行效率。
+</p>
+</blockquote>
+
+<div id="outline-container-org77a0ab1" class="outline-2">
+<h2 id="org77a0ab1">定义字符串</h2>
+<div class="outline-text-2" id="text-org77a0ab1">
+<p>
+字符串是 Java 中特殊的类，使用方法像一般的基本数据类型，被广泛应用在 Java 编程中。 <b>Java 没有内置的字符类型，而是在标准 Java 类库中提供了一个 <code>String</code> 类来创建和操作字符串。</b>
+</p>
+
+<p>
+我们有两种方式定义字符串（如下），并且无论使用哪种形式创建字符串，字符串对象一旦被创建，其值是不能改变的，但可以使用其他变量重新赋值的方式进行更改。
+</p>
+
+<p>
+<span class="underline">1. 直接定义字符串</span>
+</p>
+
+<p>
+在 Java 中定义字符串最简单的方法是用双引号把它包围起来，这种用双引号括起来的一串字符实际上都是 String 对象，如字符串 <code>"Hello"</code> 在编译后即成为 String 对象。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">str1</span> = <span style="color: #E6DB74;">"Hello Java"</span>;
+<span class="linenr">2: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">OR</span>
+<span class="linenr">3: </span><span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">str2</span>;
+<span class="linenr">4: </span>str = <span style="color: #E6DB74;">"Hello Java"</span>;             <span style="color: #75715E;">// </span><span style="color: #75715E;">&#24517;&#39035;&#21021;&#22987;&#21270;&#21734;</span>
+</pre>
+</div>
+
+<p>
+<b>*注意：字符串变量必须经过初始化才能使用。</b>
+</p>
+
+<p>
+<span class="underline">2. 使用 String 类定义</span>
+</p>
+
+<p>
+前面提到在 Java 中每个双引号定义的字符串都是一个 String 类的对象，因此，可以通过使用 String 类的构造方法来创建字符串，该类位于 <code>java.lang</code> 包中。
+</p>
+
+<p>
+String 类的构造方法有多种重载形式，每种形式都可以定义字符串。
+</p>
+
+<note>
+具有和类名相同的名称，而且没有返回类型的方法称为构造方法。重载是指在一个类中定义多个同名的方法，但要求每个方法具有不同的参数的类型或参数的个数。
+</note>
+
+<p>
+<span class="underline">2.1 String()</span>
+</p>
+
+<p>
+初始化一个新创建的 String 对象，表示一个空字符序列。
+</p>
+
+<p>
+<span class="underline">2.2 String(String original)</span>
+</p>
+
+<p>
+初始化一个新创建的 String 对象，使其表示一个与参数相同的字符序列。换句话说，新创建的字符串是该参数字符串的副本。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">str1</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">String</span><span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">"Hello Java"</span><span style="color: #AE81FF;">)</span>;
+<span class="linenr">2: </span><span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">str2</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">String</span><span style="color: #AE81FF;">(</span>str1<span style="color: #AE81FF;">)</span>;
+</pre>
+</div>
+
+<p>
+这里 <code>str1</code> 和 <code>str2</code> 的值是相等的。
+</p>
+
+<p>
+<span class="underline">2.3 String(char[] value)</span>
+</p>
+
+<p>
+分配一个新的字符串，将参数中的字符数组元素全部变为字符串。该字符数组的内容已被复制，后续对字符数组的修改不会影响新创建的字符串。例如：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">char</span><span style="color: #AE81FF;">[]</span> <span style="color: #FD971F;">a</span> = <span style="color: #AE81FF;">{</span><span style="color: #E6DB74;">'H'</span>, <span style="color: #E6DB74;">'e'</span>, <span style="color: #E6DB74;">'l'</span>, <span style="color: #E6DB74;">'l'</span>, <span style="color: #E6DB74;">'o'</span><span style="color: #AE81FF;">}</span>;
+<span class="linenr">2: </span><span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">sChar</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">String</span><span style="color: #AE81FF;">(</span>a<span style="color: #AE81FF;">)</span>;
+<span class="linenr">3: </span>a<span style="color: #AE81FF;">[</span>1<span style="color: #AE81FF;">]</span> = <span style="color: #E6DB74;">'s'</span>;                     <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23545;&#25968;&#32452; a &#20013;&#20803;&#32032;&#30340;&#26356;&#25913;&#24182;&#19981;&#20250;&#24433;&#21709; sChar &#30340;&#20540;&#65288;&#27605;&#31455;&#26159;&#25335;&#36125;&#20102;&#65289;</span>
+</pre>
+</div>
+
+<p>
+<span class="underline">2.4 String(char[] value, int offset, int count)</span>
+</p>
+
+<p>
+分配一个新的 String ，它包含来自该字符数组参数一个子数组的字符。 <code>offset</code> 参数是子数组第一个字符的索引， <code>count</code> 参数指定子数组的长度。该子数组的内容已被赋值，后续对字符数组的修改不会影响新创建的字符串。例如：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">char</span><span style="color: #AE81FF;">[]</span> <span style="color: #FD971F;">a</span> = <span style="color: #AE81FF;">{</span><span style="color: #E6DB74;">'H'</span>, <span style="color: #E6DB74;">'e'</span>, <span style="color: #E6DB74;">'l'</span>, <span style="color: #E6DB74;">'l'</span>, <span style="color: #E6DB74;">'o'</span><span style="color: #AE81FF;">}</span>;
+<span class="linenr">2: </span><span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">sChar</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">String</span><span style="color: #AE81FF;">(</span>a, 1, 4<span style="color: #AE81FF;">)</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; "ello"</span>
+<span class="linenr">3: </span>a<span style="color: #AE81FF;">[</span>1<span style="color: #AE81FF;">]</span> = <span style="color: #E6DB74;">'s'</span>;                         <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23545; sChar &#30340;&#20540;&#20063;&#27809;&#26377;&#20219;&#20309;&#24433;&#21709;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org81ff971" class="outline-2">
+<h2 id="org81ff971">String 和 int 的相互转换</h2>
+<div class="outline-text-2" id="text-org81ff971">
+<p>
+String 在编程中被广泛使用，所以掌握 String 和 int 的相互转换方法是极其重要的。
+</p>
+
+<p>
+<span class="underline">1. String 转换为 int</span>
+</p>
+
+<p>
+String 字符串转整型 int 有以下两种方式：
+</p>
+<ul class="org-ul">
+<li><code>Integer.parseInt(str)</code></li>
+<li><code>Integer.valueOf(str).intValue()</code></li>
+</ul>
+
+<blockquote>
+<p>
+*注：Integer 是一个类，是 int 基本数据类型的封装类。
+</p>
+</blockquote>
+
+<p>
+在 String 转换 int 时，String 的值一定是整数，否则会报数字转换异常（ <code>java.lang.NumberFormatException</code> ）。
+</p>
+
+<p>
+<span class="underline">2. int 转换为 String</span>
+</p>
+
+<p>
+整型 int 转 String 字符串类型有以下 3 种方法：
+</p>
+<ul class="org-ul">
+<li><code>String s = String.valueOf(i);</code> ，注意 <code>valueOf</code> 括号中的值不能为空，否则会报空指针异常；</li>
+<li><code>String s = Integer.toString(i);</code> ；</li>
+<li><code>String s = "" + i;</code> ，相对耗时较大。</li>
+</ul>
+
+<p>
+<span class="underline">3. valueOf()、parse() 和 toString()</span>
+</p>
+
+<p>
+<span class="underline">3.1 valueOf()</span>
+</p>
+
+<p>
+<b><code>valueOf()</code> 方法将数据的内部格式转换为可读的形式。</b>
+</p>
+
+<p>
+它是一种静态方法，对于所有 Java 内置的类型，在字符串内被重载，以便每一种类型都能被转换成字符串。 <code>valueOf()</code> 方法还被 Object 重载，所以创建的任何形式类的对象也可被用作一个参数。
+</p>
+
+<p>
+以下为 <code>valueOf</code> 的几种形式：
+</p>
+<pre class="example">
+- static String valueOf(double num)
+- static String valueOf(long num)
+- static String valueOf(Object obj)
+- static String valueOf(char[] chars)
+</pre>
+
+<p>
+对各种数据类型，可以直接调用 <code>valueOf()</code> 方法得到合理的字符串形式：
+</p>
+<ul class="org-ul">
+<li>所的有简单类型数据转换成相应于它们的普通字符串形式；</li>
+<li>任何传递给该方法的对象都将返回对象的 <code>toString()</code> 方法调用的结果。</li>
+</ul>
+
+<blockquote>
+<p>
+事实上，也可以直接调用 <code>toString()</code> 方法而得到相同的结果。
+</p>
+</blockquote>
+
+<p>
+对大多数数组， <code>valueOf()</code> 方法返回一个相当晦涩的字符串，说明它是一个某种类型的数组。然而，对于字符数组，它创建一个包含了字符数组中的字符的字符串对象。
+</p>
+
+<essay>
+字符串，无疑是很重要的，毕竟数字之上就是它了，然而这些稀奇古怪的方法却不用太在意的，只需要掌握一种通用的性能较好的就可以了，关键在于理解它们在编译器和内存中所作的动作。
+</essay>
+
+<p>
+<span class="underline">3.2 parse()</span>
+</p>
+
+<p>
+<code>parseXxx(String)</code> 这种形式，是指把字符串转换为数值型，其中 <code>Xxx</code> 对应不同的数据类型，如 <code>int</code> 型和 <code>float</code> 型。
+</p>
+
+<p>
+<span class="underline">3.3 toString()</span>
+</p>
+
+<p>
+<code>toString()</code> 可以把一个引用类型转换为 String 字符串类型，是 sun 公司开发 Java 的时候为了方便所有类的字符串操作而特意加入的一个方法。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgaaaab14" class="outline-2">
+<h2 id="orgaaaab14">字符串拼接</h2>
+<div class="outline-text-2" id="text-orgaaaab14">
+<p>
+通过字符串连接，可以将两个或多个字符串、字符、整数和浮点数等类型的数据连成一个更大的字符，String 字符串拼接可以使用 <code>+</code> 运算符或 String 的 <code>concat(String str)</code> 方法。
+</p>
+
+<p>
+*注： <code>+</code>  运算符的优势是可以连接任何类型数据拼接为字符串，而 <code>concat</code> 方法只能拼接 String 类型字符串。
+</p>
+
+<p>
+<span class="underline">1. 使用连接运算符 <code>+</code></span>
+</p>
+
+<p>
+<code>+</code> 运算符是最简单、最快捷，也是使用最多的字符串连接方式。
+</p>
+
+<p>
+*注：在使用 <code>+</code> 运算符连接字符串和 int 型（或 double 型）数据时，会自动将它们转换成 String 类型。
+</p>
+
+<p>
+<span class="underline">2. 使用 <code>concat()</code> 方法</span>
+</p>
+
+<p>
+在 java 中，String 类的 <code>concat()</code> 方法实现了将一个字符串连接到另一个字符串的后面。语法格式如下：
+</p>
+
+<pre class="example">
+str1.concat(str2)
+</pre>
+
+<p>
+*注： <code>concat()</code> 方法一次只能连接两个字符串，如果需要连接多个字符串，需要调用多次 <code>concat()</code> 方法。
+</p>
+
+<p>
+<span class="underline">3. 连接其他类型数据</span>
+</p>
+
+<p>
+字符串也可同其他基本数据类型进行连接，如果将字符串同这些数据类型数据进行连接，此时会将这些数据直接转换成字符串。
+</p>
+
+<p>
+*注：只要 <code>+</code> 运算符的一个操作数是字符串，编译器就会将另一个操作数转换成字符串形式，所以应该谨慎地将其他数据类型与字符串相连，以免出现意想不到的结果。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org06b32da" class="outline-2">
+<h2 id="org06b32da">字符串的若干操作</h2>
+<div class="outline-text-2" id="text-org06b32da">
+</div>
+<div id="outline-container-orga6b7c7e" class="outline-3">
+<h3 id="orga6b7c7e">获取字符串长度</h3>
+<div class="outline-text-3" id="text-orga6b7c7e">
+<p>
+在 Java 中，要获取字符串的长度，可以使用 String 类的 <code>length()</code> 方法，其语法形式如下：
+</p>
+
+<pre class="example">
+字符串名.length();
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org9bd4e6d" class="outline-3">
+<h3 id="org9bd4e6d">字符串的大小写转换</h3>
+<div class="outline-text-3" id="text-org9bd4e6d">
+<p>
+String 类的 <code>toLowerCase()</code> 方法可以将字符串中的所有字符全部转换成小写，而非字母的字符不受影响。语法格式如下：
+</p>
+
+<pre class="example">
+字符串名.toLowerCase();
+</pre>
+
+<p>
+<code>toUpperCase()</code> 则将字符串中的所有字符全部转换成大写，而非字母的字符不受影响。语法格式如下：
+</p>
+
+<pre class="example">
+字符串名.toUpperCase();
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org4ec7a1d" class="outline-3">
+<h3 id="org4ec7a1d">去除字符串中的空格</h3>
+<div class="outline-text-3" id="text-org4ec7a1d">
+<p>
+字符串中存在的首尾空格一般情况下都没有任何意义，如字符串 <code>“ Hello ”</code> ，但是这些空格会影响到字符串的操作，如连接字符串或比较字符串等，所以应该去掉字符串中的首尾空格，这需要使用 String 类提供的 <code>trim()</code> 方法。语法格式如下：
+</p>
+
+<pre class="example">
+字符串名.trim();
+</pre>
+
+<p>
+*注：如果不确定要操作的字符串首尾是否有空格，最好在操作之前调用该字符串的 <code>trim()</code> 方法去除首尾空格，然后再对其进行操作。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf359eb4" class="outline-3">
+<h3 id="orgf359eb4">截取子字符串</h3>
+<div class="outline-text-3" id="text-orgf359eb4">
+<p>
+形式如下：
+</p>
+
+<pre class="example">
+字符串名.substring(int beginIndex[, int endIndex]);
+</pre>
+
+<p>
+其中：
+</p>
+<ul class="org-ul">
+<li><code>beginIndex</code> 表示截取的起始索引，截取的字符串中 <b>包括</b> 起始索引对应的字符；</li>
+<li><code>endIndex</code> 表示结束索引，截取的字符串中 <b>不包括</b> 结束索引对应的字符；</li>
+<li>如果不指定 <code>endIndex</code> ，则表示截取到目标字符串末尾。</li>
+</ul>
+
+<p>
+*注： <code>substring()</code> 方法是按字符截取，而不是按字节截取。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5092c1a" class="outline-3">
+<h3 id="org5092c1a">分割字符串</h3>
+<div class="outline-text-3" id="text-org5092c1a">
+<p>
+String 类的 <code>split()</code> 方法可以按指定的分割符对目标字符串进行分割，分割后的内容存放在字符串数组中。该方法主要有以下两种重载形式：
+</p>
+
+<pre class="example">
+str.split(String sign)
+str.split(String sign, int limit)
+</pre>
+
+<p>
+其中：
+</p>
+<ul class="org-ul">
+<li><code>str</code> 为需要分割的目标字符串；</li>
+<li><code>sign</code> 为指定的分割符，可以是任意字符串；</li>
+<li><code>limit</code> 表示分割后生成的字符串的限制个数，如果不指定，则表示不限制，直到将整个目标字符串完全分割为止。</li>
+</ul>
+
+<p>
+使用分隔符需要注意：
+</p>
+<ul class="org-ul">
+<li><code>.</code> 和 <code>|</code>  都是转义字符，必须得加 <code>\\</code> ；</li>
+<li>如果在一个字符串中有多个分隔符，可以用 <code>|</code> 作为连字符，如要把 <code>acount=? and uu=? or n=?</code> 分隔出来，可以用 <code>String.split("and|or")</code> 。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0991717" class="outline-3">
+<h3 id="org0991717">字符串的替换</h3>
+<div class="outline-text-3" id="text-org0991717">
+<p>
+<span class="underline">1. replace()</span>
+</p>
+
+<p>
+<code>replace()</code> 方法用于将目标字符串中的指定字符（串）替换成新的字符（串），语法格式如下：
+</p>
+
+<pre class="example">
+字符串.replace(String oldChar, String newChar);
+</pre>
+
+<p>
+其中：
+</p>
+<ul class="org-ul">
+<li>oldChar 表示被替换的字符串；</li>
+<li>newChar 表示用于替换的字符串。</li>
+</ul>
+
+<p>
+*注： <code>replace()</code> 方法会将字符串中所有 <code>oldChar</code> 替换成 <code>newChar</code> 。
+</p>
+
+<p>
+<span class="underline">2. replaceFirst()</span>
+</p>
+
+<p>
+<code>replaceFirst()</code> 方法将目标字符串中匹配某正则表达式的第一个字条串替换成新的字符串，语法格式如下：
+</p>
+
+<pre class="example">
+字符串.replaceFirst(String regex, String replacement);
+</pre>
+
+<p>
+<span class="underline">3. replaceAll()</span>
+</p>
+
+<p>
+<code>replaceAll()</code> 方法用于将目标字符串匹配某正则表达式的所有子字符串替换成新的字符串，语法格式如下：
+</p>
+
+<pre class="example">
+字符串.replaceAll(String regex, String replacement);
+</pre>
+
+<essay>
+正则表达式，以后专题再说……
+</essay>
+</div>
+</div>
+
+<div id="outline-container-orgbe3f86b" class="outline-3">
+<h3 id="orgbe3f86b">字符串比较</h3>
+<div class="outline-text-3" id="text-orgbe3f86b">
+<p>
+字符串比较是常见的操作，包括比较相等、大小、前缀和后缀等。
+</p>
+
+<p>
+在 Java 中，比较字符串的常用方法有 3 个： <code>equals()</code> 方法、 <code>equalsIgnoreCase()</code> 方法、 <code>compareTo()</code> 方法。
+</p>
+
+<p>
+<span class="underline">1. equals()</span>
+</p>
+
+<p>
+<code>equals()</code> 方法将逐个地比较两个字符串的每个字符是否相同（大小写也在检查范围之内），语法格式如下：
+</p>
+
+<pre class="example">
+str1.equals(str2);
+</pre>
+
+<p>
+当相等时，返回 <code>true</code> ，否则返回 <code>false</code> 。
+</p>
+
+<p>
+<span class="underline">2. equalsIgnoreCase()</span>
+</p>
+
+<p>
+<code>equalsIgnoreCase()</code> 方法的作用和语法与 equals() 方法完全相同，唯一不同的是 <code>equalsIgnoreCase()</code> 比较时 <b>不区分大小写</b> 。
+</p>
+
+<p>
+<span class="underline">3. equals() 与 == 的比较</span>
+</p>
+
+<p>
+理解 <code>equals()</code> 方法和 <code>==</code> 运算符执行的是两个不同的操作是重要的：
+</p>
+<ul class="org-ul">
+<li><code>equals()</code> 方法比较字符串对象中的字符；</li>
+<li><code>==</code> 运算符比较两个对象引用看它们是否引用相同的实例。</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-09-17 Thu 07:54</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2020-09-17 Thu 11:11</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

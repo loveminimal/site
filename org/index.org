@@ -39,6 +39,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./java-1.org][第一章 Java 程序简介]]     |
 | [[./java-2.org][第二章 Java 程序设计基础]] |
 | [[./java-3.org][第三章 Java 流程控制语句]] |
+| [[./java-4.org][第四章 Java 字符串处理]]   |
 
 | 休闲     |
 |----------|
