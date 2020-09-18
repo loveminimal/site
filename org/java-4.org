@@ -480,6 +480,8 @@ StringBuffer 就是为了解决大量拼接字符串时产生很多中间对象�
 
 ** 正则表达式
 
+*** 理解正则表达式
+
 正则表达式（Regular Expression）是一个强大的字符串处理工具，可以对字符进行查找、提取、分割、替换等操作，是一种用于模式匹配和替换的规范。
 
 一个正则表达式就是由普通的字符（ =a~z= ）以及特殊字符（元字符）组成的文字模式，它用以描述在查找文字主体时待匹配的一个或多个字符串。
@@ -584,18 +586,236 @@ Java 中的正则表达式和 Emacs Lisp 中的一样让人感到…… xx?+-^|.
 在一些特殊情况下，例如，若只想匹配 =a-f= 的字母，或者匹配除 =ab= 之外的所有小写字母，或者匹配中文字符，上面这些预定义字符就无能为力了，此时就需要使用方括号表达式。
 
 #+CAPTION: 方括号表达式
-| 方括号表达式      | 说明                                                                    |
-|-------------------+-------------------------------------------------------------------------|
-| 表示枚举          | 如 =[abc]= 表示 a、b、c 其中的任意一个字符                              |
-|-------------------+-------------------------------------------------------------------------|
-| 表示范围 =-=      | 如 =[a-f]= 表示 =a~f= 范围内的任意字符；                                |
-|                   | 如 =[\\u0041-\\u0056]= 表示十六进制字符 =\u0041= 到 =\u0056= 范围的字符 |
-|                   | 范围可以和枚举结合使用，如 =[a-cx-x]= 表示 =a~c、x~z= 范围内的任意字符  |
-|-------------------+-------------------------------------------------------------------------|
-| 表示求否 =^=      | 如 =[^abc]= 表示非 =a、b、c= 的任意字符                                 |
-|-------------------+-------------------------------------------------------------------------|
-| 表示“与”运算 =&&= |                                                                         |
-|                   |                                                                         |
-|                   |                                                                         |
-|-------------------+-------------------------------------------------------------------------|
-| 表示“并”运算      |                                                                         |
+| 方括号表达式      | 说明                                                                      |
+|-------------------+---------------------------------------------------------------------------|
+| 表示枚举          | 如 =[abc]= 表示 a、b、c 其中的任意一个字符                                |
+|-------------------+---------------------------------------------------------------------------|
+| 表示范围 =-=      | 如 =[a-f]= 表示 =a~f= 范围内的任意字符；                                  |
+|                   | 如 =[\\u0041-\\u0056]= 表示十六进制字符 =\u0041= 到 =\u0056= 范围的字符   |
+|                   | 范围可以和枚举结合使用，如 =[a-cx-x]= 表示 =a~c、x~z= 范围内的任意字符    |
+|-------------------+---------------------------------------------------------------------------|
+| 表示求否 =^=      | 如 =[^abc]= 表示非 =a、b、c= 的任意字符                                   |
+|                   | 如 =[^a-f]= 表示不是 =a-f= 范围内的任意字符                               |
+|-------------------+---------------------------------------------------------------------------|
+| 表示“与”运算 =&&= | 如 =[a-x&&^bc]= 是 =a~z= 范围内的所有字符，除 =b、c= 之外                 |
+|                   | 如 =[a-z&&[def]]= 是 =a~z= 和 =[def]= 的交集                              |
+|                   | 如 =[a-z][a-z&&[m-p]]= 是 =a~z= 范围内的所有字符，除 =m~p= 范围之外的字符 |
+|-------------------+---------------------------------------------------------------------------|
+| 表示“并”运算      | 并运算与前面的枚举类似，如 =[a-d[m-p]]= 表示 =[a-dm-p]=                   |
+
+方括号表达式比前面的预定义字符灵活多了，几乎可以匹配任何字符。
+
+例如，若需要匹配所有的中文字符，就可以利用 =[\\u0041-\\u0056]= 形式 -- 因为所有中文字符的 Unicode 值是连续的，只要找出所有中文字符中最小、最大的 Unicode 值，就可以利用上面的形式来匹配所有的中文字符。
+
+正则表达式还支持圆括号，用于将多个表达式组成一个子表达式，圆括号中可以使用或运算符 =|= 。如正则表达式 ="((public)|(protected)|(private))"= 用于匹配 Java 的三个访问控制符其中之一。
+
+除此之外，Java 正则表达式还支持如下表所示的几个边界匹配符：
+
+#+CAPTION: 边界匹配符
+| 边界匹配符 | 说明                           |
+|------------+--------------------------------|
+| =^=        | 行的开头                       |
+| =$=        | 行的结尾                       |
+| =\b=       | 单词的边界                     |
+| =\B=       | 非单词的边界                   |
+| =\A=       | 输入的开头                     |
+| =\G=       | 前一个匹配的结尾               |
+| =\Z=       | 输入的结尾，仅用于最后的结束符 |
+| =\z=       | 输入的结尾                     |
+
+前面例子中需要建立一个匹配 =000-000-0000= 形式的电话号码时，使用了 =\\d\\d\\d-\\d\\d\\d-\\d\\d\\d\\d= 正则表达式，这看起来比较烦琐。实际上，正则表达式还提供了数量标识符，正则表达式支持的数量标识符有如下几种模式：
+- Greedy（贪婪模式）：数量表示符默认采用贪婪模式，除非另有表示.
+
+#+BEGIN_QUOTE
+贪婪模式的表达式会一直匹配下去，直到无法匹配为止。如果你发现表达式匹配的结果与预期不符，很可能是因为你以为表达式只会匹配前面几个字符，而实际上它是贪婪模式，会一直匹配下去。
+#+END_QUOTE
+
+- Reluctant（勉强模式）：用问号后缀（ =?= ）表示，它只匹配最少的字符，也称为最小匹配；
+- Possessive（占有模式）：用加号后缀（ =+= ）表示，目前只有 Java 支持占有模式，通常很少使用。
+
+#+CAPTION: 三种模式的数量表示符
+| 贪婪模式  | 勉强模式   | 占用模式   | 说明                                 |
+|-----------+------------+------------+--------------------------------------|
+| =X?=      | =X??=      | =X?+=      | X 表达式出现零次或一次               |
+| =X*=      | =X*?=      | =X*+=      | X 表达式出现零次或多次               |
+| =X+=      | =X+?=      | =X++=      | X 表达式出现一次或多次               |
+| =X{n}=    | =X{n}?=    | =X{n}+=    | X 表达式出现 n 次                    |
+| =X{n,}=   | =X{n,}?=   | =X{n,}+=   | X 表达式最少出现 n 次                |
+| =X{n, m}= | =X{n, m}?= | =X{n, m}+= | X 表达式最少出现 n 次，最多出现 m 次 |
+
+关于贪婪模式和勉强模式的对比，还是来看段代码吧，如下：
+
+#+BEGIN_SRC java -n
+  String str = "hello, java";
+  // 贪婪模式的正则表达式
+  System.out.println(str.replaceFirst("\\w*", "■"));  // → ■, java!
+  // 勉强模式的正则表达式
+  System.out.println(str.replaceFirst("\\w*?", "■")); // → ■hello, java!
+#+END_SRC
+*** Pattern 类和 Matcher 类
+
+=java.util.regex= 是一个用正则表达式所订制的模式来对字符串进行匹配工作的类库包，它包括两个类： =Pattern= 和 =Matcher= 。
+
+Pattern 对象是正则表达式编译后在内存中的表示形式，因此，正则表达式字符串必须先被编译为 Pattern 对象，然后再利用该 Pattern 对象创建对应的 Matcher 对象。执行匹配所涉及的状态保留在 Matcher 对象中，多个 Matcher 对象可共享同一个 Pattern 对象。
+
+因此，典型的调用顺序如下：
+
+#+BEGIN_SRC java -n
+  // 将一个字符串编译成 Pattern 对象
+  Pattern p = Pattern.compile("a*b");
+  // 使用 Pattern 对象创建 Matcher 对象
+  Matcher m = p.matcher("aaaaab");
+  boolean b = m.mathces();       // → true
+#+END_SRC
+
+上面定义的 Pattern 对象可以多次重复使用。如果某个正则表达式仅需一次使用，则可直接使用 Patter 类的静态 =matches= 方法，此方法自动把指定字符串编译成匿名的 Patther 对象，并执行匹配，如下所示：
+
+#+BEGIN_SRC java -n
+  boolean b = Patter.matches("a*b", "aaaaab"); // → true
+#+END_SRC
+
+上面语句等效于前面的三条语句，但采用这种语句每次都需要重新编译新的 Pattern 对象，不能重复利用已编译的 Patter 对象，所以效率不高。Pattern 是不可变类，可供多个并发线程安全使用。
+
+#+CAPTION: Matcher 类的几个常用方法
+| 名称          | 说明                                                        |
+|---------------+-------------------------------------------------------------|
+| =find()=      | 返回目标字符串是否包含与 Pattern 匹配的子串                 |
+| =group()=     | 返回上一次与 Pattern 匹配的子串                             |
+| =start()=     | 返回上一次与 Pattern 匹配的子串在目标字符串中的开始位置     |
+| =end()=       | 返回上一次与 Pattern 匹配的子串在目标字符串中的结束位置加 1 |
+| =lookingAt()= | 返回目标字符串前面部分与 Pattern 是否匹配                   |
+| =matches()=   | 返回整个目标字符串与 Pattern 是否匹配                       |
+| =reset()=     | 将现有的 Matcher 对象应用于一个新的字符序列                 |
+
+#+BEGIN_QUOTE
+在 =Pattern、Matcher= 类的介绍中经常会看到一个 =CharSequence= 接口，该接口代表一个字符序列，其中 =CharBuffer、String、StringBuffer、StringBuilder= 都是它的实现类。简单地说， =CharSequence= 代表一个各种形式的字符串。
+#+END_QUOTE
+
+通过 Matcher 类的 =find()= 和 =group()= 方法可以从目标字符串中依次取出特定子串（匹配正则表达式的子串），例如互联网的网络爬虫，它们可以自动从网页中识别出所有的电话号码。
+
+下面的程序示范了如何从大段的字符串中找出电话号码。
+
+#+BEGIN_SRC java -n
+  public class FindGroup {
+      public static void main(String[] args) {
+          // 使用字符串横批从网络上得到的网页源码
+          String str = "我想找一套适合自己的JAVA教程，尽快联系我13500006666" + "交朋友，电话号码是13611125565" + "出售二手电脑，联系方式15899903312";
+          // 创建一个 Pattern 对象，并用它建立一个 Matcher 对象
+          // 该正则表达式只抓取 13X 和 15X 段的手机号
+          // 实际要抓取哪些电话号码，只要修改正则表达式好可
+          Matcher m = Pattern.compile("((13\\d)|(15\\d))\\d{8}").matcher(str);
+          // 将所有符合正则表达式的子串（电话号码）全部输出
+          while (m.find()) {
+              System.out.println(m.group());
+          }
+      }
+  }
+  // → 13500006666
+  // → 13611125565
+  // → 15899903312
+#+END_SRC
+
+从上面运行结果可以看出， =find()= 方法依次查找字符串与 Pattern 匹配的子串，一旦找到对应的子串，下次调用 =find()= 方法时将接着向下查找。
+
+#+BEGIN_QUOTE
+*注：通过程序运行结果不难看出，使用正则表达式可以提取网页上的电话号码，也可以提取邮件地址等信息。如果程序再进一步，可以从网页上提取超链接信息，再根据超链接打开其他网页，然后在其他网页一重复这个过程就可以实现简单的网络爬虫了。
+#+END_QUOTE
+
+=find()= 方法还可以传入一个 =int= 类型的参数，带 =int= 参数的 =find()= 方法将从该 =int= 索引处向下搜索。 =start()= 和 =end()= 方法主要用于确定在目标字符串的位置，如下程序所示：
+
+#+BEGIN_SRC java -n
+  public class StartEnd {
+      public static void main(String[] args) {
+          // 创建一个 Pattern 对象，并用它建立一个 Matcher 对象
+          String regStr = "Java is very easy!";
+          System.out.println("目标字符串是：" + regStr);
+          Matcher m = Pattern.compile("\\w+").matcher(regStr);
+          while (m.find()) {
+              System.out.println(m.group() + "子串的起始位置：" + m.start() + "，其结束位置：" + m.end());
+          }
+      }
+  }
+#+END_SRC
+
+运行结果如下：
+
+#+BEGIN_EXAMPLE
+目标字符串是：Java is very easy!
+Java子串的起始位置：0，其结束位置：4
+is子串的起始位置：5，其结束位置：7
+very子串的起始位置：8，其结束位置：12
+easy子串的起始位置：13，其结束位置：17
+#+END_EXAMPLE
+
+=matches()= 和 =lookingAt()= 方法有点相似，只是 =matches()= 方法要求整个字符串和 Pattern 完全匹配时才返回 =true= ，而 =lookingAt()= 只要字符串以 Pattern 开头就会返回 =true= 。
+
+=reset()= 方法可将现有的 Matcher 对象应用于新的字符序列。
+
+#+BEGIN_SRC java -n
+  public class MatchesTest {
+      public static void main(String[] args) {
+          String[] mails = {"kongyeeku@163.com", "kongyeeku@gmail.com", "ligang@crazyit.org", "wawa@abc.xx"};
+          String mailRegEx = "\\w{3, 20}@\\w+\\.(com|org|cn|net|gov)";
+          Pattern mailPattern = Pattern.compile(mailRegEx);
+          Matcher matcher = null;
+
+          for (String mail : mails) {
+              if (matcher == null) {
+                  matcher = mailPattern.matcher(mail);
+              } else {
+                  matcher.reset(mail);
+              }
+
+              String result = mail + (matcher.matches() ? "是" : "不是" + "一个有效的邮件地址！");
+              System.out.println(result);
+          }
+      }
+  }
+#+END_SRC
+
+上面程序创建了一个邮件地址的 Pattern ，接着用这个 Pattern 与多个邮件地址进行匹配。当程序中的 =Matcher= 为 =null= 时，程序调用 =matcher()= 方法来创建一个 Matcher 对象，一旦 Matcher 对象被创建，程序就调用 Matcher 的 =reset()= 方法将该 Matcher 应用于新的字符序列。
+
+从某个角度来看，Matcher 的 =matches()、lookingAt()= 和 String 类的 =equals= 有点相似。区别是后者都是与字符串进行比较，而前者则是与正则表达式进行匹配。
+
+事实上，String 类里面也提供了 =matches()= 方法，该方法返回该字符串是否匹配指定的正则表达式。如：
+
+#+BEGIN_SRC java -n
+  "kongyeeku@163.com".matches("\\w{3, 20}@\\w+\\.(com|org|cn|net|gov)"); // → true
+#+END_SRC
+
+除此之外，还可以利用正则表达式对目标字符串进行分割、查找、替换等操作，如下：
+
+#+BEGIN_SRC java -n
+  public class ReplaceTest {
+      public static void main(String[] args) {
+          String[] msgs = { "Java has regular expressions in 1.4", "regular expressions now expressing in Java"};
+          Pattern p = Pattern.compile("re\\w*");
+          Matcher matcher = null;
+
+          for (int i = 0; i < msgs.length; i++) {
+              if (matcher == null) {
+                  matcher = p.matcher(msgs[i]);
+              } else {
+                  matcher.reset(msgs[i]);
+              }
+
+              System.out.println(matcher.replaceAll("哈哈 :)"));
+          }
+      }
+  }
+#+END_SRC
+
+实际上，String 类中也提供了 =replaceAll()、replaceFirst()、split()= 等方法。
+
+#+BEGIN_SRC java -n
+  public class StringReg {
+      public static void main(String[] args) {
+          String[] msgs = { "Java has regular expressions in 1.4", "regular expressions now expressing in Java", "Java represses oracular expressions"};
+
+          for (String msg : msgs) {
+              System.out.println(msg.replaceFirst("re\\w*", "哈哈:)"));
+              System.out.println(Arrays.toString(msg.split(" ")));
+          }
+      }
+  }
+#+END_SRC
