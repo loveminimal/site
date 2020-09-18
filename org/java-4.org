@@ -295,3 +295,307 @@ _3. equals() 与 == 的比较_
 理解 =equals()= 方法和 ~==~ 运算符执行的是两个不同的操作是重要的：
 - =equals()= 方法比较字符串对象中的字符；
 - ~==~ 运算符比较两个对象引用看它们是否引用相同的实例。
+
+#+BEGIN_SRC java -n
+  String s1 = "Hello";
+  String s2 = new String(s1);
+  System.out.println(s1.equals(s2)); // → true
+  System.out.println(s1 == s2);      // → false
+#+END_SRC
+
+**注：千万不要使用 ~==~ 运算符测试字符串的相等性，以免在程序中出现糟糕的 bug。*
+
+C++ 的 String 类重载了 == 运算符以便检测字符串内容的相等性，可惜 Java 没有采用这种方式，它的字符串“看起来、感觉起来”与数值一样，但进行相等性测试时，其操作方式又类似于指针。
+
+当然，每一种语言都会存在一些不太一致的地方。比如，C 程序员从不使用 ~==~ 对字符串进行比较，而使用 =strcmp= 函数。
+
+_4. compareTo()_
+
+#+BEGIN_QUOTE
+Java 的 =compareTo= 方法与 =strcmp= 完全类似。
+#+END_QUOTE
+
+通常，仅仅知道两个字符串是否相同是不够的。对于排序应用来说，必须知道一个字符串是大于、等于还是小于另一个。一个字符串小于另一个指的是它在字典中先出现，而一个字符串大于另一个指的是它在字典中后出现。
+
+=compareTo()= 方法用于按字典顺序比较两个字符串的大小，该比较是基于字符串各个字符的 Unicode 值，语法格式如下：
+
+#+BEGIN_EXAMPLE
+str.compartTo(String otherstr);
+#+END_EXAMPLE
+
+如果按字典顺序 =str= 位于 =otherster= 参数之前，比较结果为一个负整数；如果 =str= 位于 =otherstr= 之后，比较结果为一个正整数；如果两个字符串相等，则结果为 =0= 。
+
+*注：如果两个字符串调用 =equals()= 方法返回 =true= ，那么调用 =compareTo()= 方法会返回 =0= 。
+
+*** 字符串查找
+
+在给定的字符串中查找字符或字符串是比较常见的操作。字符串查找分为两种形式：
+- 一种是在字符串中获取匹配字符（串）的索引值 -- 根据字符查找索引；
+- 另一种是在字符串中获取指定索引位置的字符 -- 根据索引查找字符。
+
+_1. 根据字符查找_
+
+_1.1 indexOf()_
+
+=indexOf()= 方法用于返回字符（串）在指定字符串中首次出现的索引位置，如果能找到，则返回索引值，否则返回 =-1= 。该方法主要有以下两种重载形式：
+
+#+BEGIN_EXAMPLE
+str.indexOf(value)
+str.indexOf(value, int fromIndex)
+#+END_EXAMPLE
+
+其中：
+- =str= 表示指定字符串；
+- =value= 表示待查找的字符（串）；
+- =fromIndex= 表示查找时的起始索引，缺省为 0 。
+
+_1.2 lastIndexOf()_
+
+=lastIndexOf()= 方法用于返回字符（串）在指定字符串中最后一次出现的索引位置，如果能找到则返回索引值，否则返回 =-1= 。该方法也有两种重载形式：
+
+#+BEGIN_EXAMPLE
+str.lastIndexOf(value)
+str.lastIndexOf(value, int fromIndex)
+#+END_EXAMPLE
+
+*注： =lastIndexOf()= 方法的查找策略是从右往左查找，如果不指定起始索引，则默认从字符串的末尾开始查找。
+
+来看个例子吧。
+
+#+BEGIN_SRC java -n
+  // 原始字符串是 "today,monday,sunday"
+  indexOf("day");                 // → 2
+  indexOf("day", 5);              // → 9
+  indexOf("o");                   // → 1
+  indexOf("o", 6);                // → 7
+
+  lastIndexOf("day");             // → 16
+  lastIndexOf("day", 5);          // → 2
+  lastIndexOf("o");               // → 7
+  lastIndexOf("o", 6);            // → 1
+#+END_SRC
+
+_2. 根据索引查找_
+
+String 类的 =charAt()= 方法可以在字符串内根据指定的索引查找字符，该方法的语法形式如下：
+
+#+BEGIN_EXAMPLE
+字符串名.charAt(索引值)
+#+END_EXAMPLE
+
+*注：字符串本质上是字符数组，因此它也有索引，索引从零开始。
+
+** StringBuffer 类
+
+在 Java 中，除了通过 String 类创建和处理字符串之外，还可以使用 StringBuffer 类来处理字符串，它可以比 String 类更高效地处理字符串。
+
+因为 StringBuffer 类是 *可变字符串类* ，创建 StringBuffer 类的对象后可以随意修改字符串的内容。每个 StringBuffer 类的对象都能够存储指定容量的字符串，如果字符串的长度超过了 StringBuffer 类对象的容量，则该对象的容量会自动扩大。
+
+_1. 创建 StringBuffer 类_
+
+StringBuffer 类提供了 3 个构造方法来创建一个字符串：
+- =StringBuffer()= 构造一个空的字符串缓冲区，并且初始化为 16 个字符的容量；
+- =StringBuffer(int length)= 创建一个空的字符串缓冲区，并且初始化为指定长度 =length= 的容量；
+- =StringBuffer(String str)= 创建一个字符串缓冲区，并将其内容初始化为指定的字符串内容 =str= ，字符串缓冲区的初始化容量为 16 加上字符串 =str= 的长度。
+
+_2. 追加字符串_
+
+StringBuffer 类的 =append()= 方法用于向原有 =StringBuffer= 对象中追加字符串，语法格式如下：
+
+#+BEGIN_EXAMPLE
+StringBuffer 对象.append(String str)
+#+END_EXAMPLE
+
+该方法的作用是追加内容到当前 StringBuffer 对象的末尾，类似于字符串的连接。调用该方法以后，StringBuffer 对象的内容也发生了改变。
+
+_3. 替换字符_
+
+StringBuffer 类的 =setCharAt()= 方法用于在字符串的指定索引位置替换一个字符。语法格式如下：
+
+#+BEGIN_EXAMPLE
+StringBuffer 对象.setCharAt(int index, char ch);
+#+END_EXAMPLE
+
+#+BEGIN_SRC java -n
+  StringBuffer sb = new StringBuffer("hello");
+  sb.setCharAt(1, 'E');           // → hEllo
+  sb.setCharAt(0, 'H');           // → HEllo
+  sb.Setcharat(2, 'p');           // → HEplo
+#+END_SRC
+
+_4. 反转字符串_
+
+StringBuffer 类中的 =reverse()= 方法用于将字符串序列用其反转的形式取代。语法格式如下：
+#+BEGIN_EXAMPLE
+StringBuffer 对象.reverse()
+#+END_EXAMPLE
+
+_5. 删除字符串_
+
+StringBuffer 类提供了 =deleteCharAt()= 和 =delete()= 两个删除字符串的方法，语法格式如下：
+
+#+BEGIN_EXAMPLE
+StringBuffer 对象.deleteCharAt(int index);
+StringBuffer 对象.delete(int start, int end);
+#+END_EXAMPLE
+
+_6. String、StringBugger 和 StringBuilder 类的区别_
+
+在 Java 中字符串属于对象。
+
+Java 提供了 String 类来创建和操作字符串，String 类是不可变类，即一旦一个 String 对象补创建以后，包含在这个对象中的字符序列是不可变的，直至这个对象被销毁。
+
+Java 提供了两个可变字符串类 StringBuffer 和 StringBuilder ，即字符串缓冲区。
+
+StringBuilder 类是 JDK 1.5 新增的类，它也代表可变字符串对象，它与 StringBuffer 功能基本相似，方法也差不多。不同的是，StringBuffer 是线程安全的，而 StringBuilder 则没有实现线程安全功能（所以性能略高）。通常情况下，如果需要创建一个内容可变的字符串对象，则应该优先考虑 StringBuilder 类。
+
+StringBuffer、StringBuilder、String 中都实现了 =CharSequnce= 接口。 =CharSequnce= 是一个定义字符串操作的接口，它只包括 =length()、CharAt(int index)、subSequnce(int start, int end)= 这几个 API 。
+
+StringBuffer、StringBuilder、String 对 =CharSequnce= 接口的实现过程不一样，如下图所示：
+
+#+BEGIN_EXPORT html
+<img
+src="/images/java/java-6.png"
+width="400"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+可见，String 直接实现了 =CharSequence= 接口，StringBuilder 和 StringBuffer 都是可变的字符序列，它们都继承于 =AbstractStringBuilder= ，实现了 =CharSequence= 接口。
+
+_7. 小结_
+
+String 是 Java 中基础且重要的类，被声明为 =final class= ，是不可变字符串。因为它的不变性，所以拼接字符串时会产生很多无用的中间对象，如果频繁的进行这样的操作对性能有所影响。
+
+StringBuffer 就是为了解决大量拼接字符串时产生很多中间对象问题而提供的一个类，它提供了 =append= 和 =add= 方法，可以将字符串添加到已有序列的末尾或指定位置，它的本质是一个线程安全的那部分，减少了开销。
+
+什么情况下用什么呢？
+- 操作少量的数据使用 String ；
+- 单线程操作大量数据使用 StringBuilder ；
+- 多线程操作大量数据使用 StringBuffer 。
+
+速度方面，一般情况下，速度从快到慢为 StringBuilder > StringBuffer > String，当然这是相对的，不是绝对的。
+
+** 正则表达式
+
+正则表达式（Regular Expression）是一个强大的字符串处理工具，可以对字符进行查找、提取、分割、替换等操作，是一种用于模式匹配和替换的规范。
+
+一个正则表达式就是由普通的字符（ =a~z= ）以及特殊字符（元字符）组成的文字模式，它用以描述在查找文字主体时待匹配的一个或多个字符串。
+
+#+BEGIN_QUOTE
+很多读者都会觉得正则表达式是一个非常神奇、高级的知识，其实正则表达式是一种非常简单而且非常实用的工具。
+
+*正则表达式是一个用于匹配字符串的模板。* 实际上，任意字符串都可以当成正则表达式使用，例如 ="abc"= 也是一个正则表达式，只是它只能匹配 ="abc"= 字符串而已。
+#+END_QUOTE
+
+#+BEGIN_EXPORT html
+<essay>
+普通字符串是正则表达式的一种特殊形式，字符串统一于正则表达式。哎，哲学这个诱人的小妞，哪儿都有你。
+</essay>
+#+END_EXPORT
+
+String 类里也提供了如下几个特殊的方法：
+| =boolean matches(String regex)=                         | 判断该字符串是否匹配指定的正则表达式                      |
+| =String replaceAll(String regex, String replacement)=   | 将该字符串中匹配 =regex= 的子串替换成 =replacement=       |
+| =String replaceFirsr(String regex, String replacement)= | 将该字符串中第一个匹配 =regex= 的子串替换成 =replacement= |
+| =String[] split(String regex)=                          | 以 =regex= 作为分隔符，把该字符串分割成多个子串           |
+
+*创建正则表达式就是创建一个特殊的字符串。*
+
+#+CAPTION: 正则表达式所支持的合法字符
+| 字符     | 解释                                                                             |
+|----------+----------------------------------------------------------------------------------|
+| =x=      | 字符 =x= （ =x= 可代表任何合法的字符 ）                                          |
+| =\0mnn=  | 八进制数 =0mnn= 所表示的字符                                                     |
+| =\xhh=   | 十六进制值 =0xhh= 所表示的字符                                                   |
+| =\uhhhh= | 十六进制值 =0xhhhh= 所表示的 Unicode 字符                                        |
+| =\t=     | 制表符（ ='\u0009'= ）                                                           |
+| =\n=     | 新行（换行）符（ ='\u000A'=  ）                                                  |
+| =\r=     | 回车符（ ='\u000D'= ）                                                           |
+| =\f=     | 换页符（ ='\u000C'= ）                                                           |
+| =\a=     | 报警（bell）符（ ='\u0007'= ）                                                   |
+| =\e=     | Escape 符（ ='\u001B'= ）                                                        |
+| =\cx=    | ~x~ 对应的控制符。例如， ~\cM~ 匹配 =Ctrl-M= ， =x= 值必须为 =A~Z= 或 =a~z= 之一 |
+
+除此这外，正则表达式中有一下些特殊字符，它们在正则表达式中有其特殊用途，比如前面介绍的反斜线 =\= 。如果需要匹配这些特殊字符， *就必须首先将这些字符转义* ，也就是在前面添加一个反斜线 =\= 。
+
+#+CAPTION: 正则表达式中的特殊字符
+| 特殊字符 | 说明                                           |
+|----------+------------------------------------------------|
+| =$=      | 匹配一行的结尾                                 |
+| =^=      | 匹配一行的开头                                 |
+| =()=     | 标记子表达式的开始和结束位置                   |
+| =[]=     | 用于确定中括号表达式的开始和结束位置           |
+| ={}=     | 用于标记前面子表达式的出现频度                 |
+| =*=      | 指定前面子表达式可以出现零次或多次             |
+| =+=      | 指定前面子表达式可以出现一次或多次             |
+| =?=      | 指定前面子表达式可以出现零次或一次             |
+| =.=      | 匹配除换行符 =\n= 之外的任何单字符             |
+| =\=      | 用于转义下一个字符，或指定八进制、十六进制字符 |
+| =I=      | 指定两项之间任选一项                           |
+
+*注：最后的 =I= 是 =|= ，只不过在 Emacs 的表格中敲不出来。
+
+将上面多个字符拼起来，就可以创建一个正则表达式，还是来看几个例子吧：
+#+BEGIN_SRC java -n
+  "\u0041\\\\"                    // → 匹配 A\
+  "\u0061\t"                      // → 匹配 a<制表符>
+  "\\?\\["                        // → 匹配 ?[
+#+END_SRC
+
+为什么第一行的正则表达式会有那么多反斜杠？这是由于 Java 字符串中反斜杠本身需要转义，因此两个反斜杠（ =\\= ）实际上相当于一个（前一个用于转义）。
+
+#+BEGIN_EXPORT html
+<essay>
+Java 中的正则表达式和 Emacs Lisp 中的一样让人感到…… xx?+-^|...
+</essay>
+#+END_EXPORT
+
+*上面的正则表达式依然只能匹配单个字符，这是因为还未在表达式中使用“通配符”。*
+
+通配符是什么呢？它是可以匹配多个字符的特殊字符。正则表达式中的“通配符”远远超出了普通通配符的功能，它被称为预定义符。
+
+#+CAPTION: 预定义符
+| 预定义符 | 说明                                                               |
+|----------+--------------------------------------------------------------------|
+| =.=      | 可以匹配任何字符                                                   |
+| =\d=     | 匹配 =0~9= 的所有数字                                              |
+| =\D=     | 匹配非数字                                                         |
+| =\s=     | 匹配所有的空白字符，包括空格、制表符、回车符、换页符、换行符等     |
+| =\S=     | 匹配所有的非空白字符                                               |
+| =\w=     | 匹配所有的单词字符，包括 =0~9= 所有数字、26 个英文字母和下划线 =_= |
+| =\W=     | 匹配所有的非单词字符                                               |
+
+上面的 7 个预定义字符其实很容易记忆，其中：
+- =d= 是 digit 的意思，代表数字；
+- =s= 是 space 的意思，代表空白；
+- =w= 是 word 的意思，代表单词；
+- =d、s、w= 的大写形式恰好匹配与之相反的字符。
+
+有了预定义符后，接下来就可以创建更强大的正则表达式了，例如：
+
+#+BEGIN_SRC java -n
+  "c\\wt"                            // → 可以匹配 cat cbt cct cOt c9t 等一批字符串
+  "\\d\\d\\d-\\d\\d\\d-\\d\\d\\d\\d" // → 匹配 000-000-0000 形式的电话号码
+#+END_SRC
+
+在一些特殊情况下，例如，若只想匹配 =a-f= 的字母，或者匹配除 =ab= 之外的所有小写字母，或者匹配中文字符，上面这些预定义字符就无能为力了，此时就需要使用方括号表达式。
+
+#+CAPTION: 方括号表达式
+| 方括号表达式      | 说明                                                                    |
+|-------------------+-------------------------------------------------------------------------|
+| 表示枚举          | 如 =[abc]= 表示 a、b、c 其中的任意一个字符                              |
+|-------------------+-------------------------------------------------------------------------|
+| 表示范围 =-=      | 如 =[a-f]= 表示 =a~f= 范围内的任意字符；                                |
+|                   | 如 =[\\u0041-\\u0056]= 表示十六进制字符 =\u0041= 到 =\u0056= 范围的字符 |
+|                   | 范围可以和枚举结合使用，如 =[a-cx-x]= 表示 =a~c、x~z= 范围内的任意字符  |
+|-------------------+-------------------------------------------------------------------------|
+| 表示求否 =^=      | 如 =[^abc]= 表示非 =a、b、c= 的任意字符                                 |
+|-------------------+-------------------------------------------------------------------------|
+| 表示“与”运算 =&&= |                                                                         |
+|                   |                                                                         |
+|                   |                                                                         |
+|-------------------+-------------------------------------------------------------------------|
+| 表示“并”运算      |                                                                         |
