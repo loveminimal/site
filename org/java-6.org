@@ -1,0 +1,50 @@
+#+SETUPFILE: ../theme-rose.setup
+#+DATE: <2020-09-18 Fri 19:08>
+#+TITLE: 内置包装类
+
+Java 是一种面向对象的编程语言， *Java 中的类把方法与数据类型连接在一起，构成了自包含式的处理单元* 。但在 Java 中不能定义基本类型对象，为了能将基本类型视为对象处理，并能连接相关方法，Java 为每个基本类型都提供了包装类，如 int 型数值的包装类 Integer ，boolean 型数值的包装类 Boolean 等，这样便可以把这些基本类型转换为对象来处理了。
+
+*注：虽然 Java 可以直接处理基本类型，但是在有些情况下需要将其作为对象来处理，这时就需要将其转换为包装类。
+
+** 包装类、装箱和拆箱
+
+在 Java 的设计中提倡一种思想，即一切皆对象。
+
+_1. 包装类_
+
+但是从数据类型的划分中，Java 中的数据类型又分为基本数据类型和引用数据类型，但是基本数据类型怎么能够称为对象呢？于是 Java 为每种基本数据类型分别设计了对应的类，称之为 _包装类_ （Wrapper Classes）。
+
+#+CAPTION: 基本数据类型及对应的包装类
+| 序号 | 基本数据类型 | 包装类    |
+|------+--------------+-----------|
+|    1 | byte         | Byte      |
+|    2 | short        | Short     |
+|    3 | int          | Integer   |
+|    4 | long         | Long      |
+|    5 | char         | Character |
+|    6 | float        | Float     |
+|    7 | double       | Double    |
+|    8 | boolean      | Boolean   |
+
+_2. 装箱和拆箱_
+
+基本数据类型转换为包装类的过程称为 _装箱_ ，如把 int 包装成 Integer 类的对象；包装类变为基本数据类型的过程称为 _拆箱_ ，如把 Integer 类的对象重新简化为 int 。
+
+手动实例化一个包装类称为手动拆箱装箱，Java 1.5 之后实现了自动拆装箱，更加方便。
+
+#+BEGIN_SRC java -n
+  public class Demo {
+      public static void main(String[] args) {
+          int m = 500;
+          Integer obj = m;                // 自动装箱
+          int n = obj;                    // 自动拆箱
+          System.out.println("n = " + n); // → n = 500
+
+          Integer obj1 = 500;
+          System.out.println("obj 等价于 obj1 返回结果为" + obj.equals(obj1));
+          // → obj等价于obj1返回结果为true
+      }
+  }
+#+END_SRC
+
+*注：自动拆装箱是常用的一个功能，需要重点掌握。

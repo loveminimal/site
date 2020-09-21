@@ -1,0 +1,369 @@
+#+SETUPFILE: ../theme-rose.setup
+#+DATE: <2020-09-18 Fri 19:37>
+#+TITLE: 数组处理
+
+在某些情况下，虽然可以使用单个变量来存储信息，但是如果需要存储的信息较多（例如存储 50 名学生的成绩），这时再依次创建变量声明并赋值显得非常麻烦。
+
+随着处理的信息量越来越大，工作也就越来越烦琐，这时可以使用数组或集合来存储信息。通过使用数组，可以在很大程度上缩短和简化程序代码，从而提高应用程序的效率。
+
+** 数组是什么
+
+_数组_ （array）是一种最简单的复合数据类型，它是有序数据的集合，数组中的每个元素具有相同的数据类型，可以用一个统一的数组名和不同的下标来确定数组中唯一的元素。根据数组的维度，可以将其分为一维数组、二维数组和多维数组等。
+
+数组是非常重要的集合类型，具有如下三个基本特性：
+- 一致性：数组只能保存相同数据类型元素（数据类型可以是任何相同的数据类型）；
+- 有序性：数组中的元素是有序的，通过下标访问；
+- 不可变性：数组一旦初始化，则长度（数组中元素的个数）不可变。
+
+#+BEGIN_EXPORT html
+<essay>
+其实，以上种种的限制都是由数组在内存中的存储方式所决定的。
+</essay>
+#+END_EXPORT
+
+*注：数值数组元素的默认值为 =0= ，而引用元素的默认值为 =null= 。
+
+*数组是引用数据类型，引用数据类型在使用之前一定要做两件事情：声明和初始化。*
+
+_1. 一维数组_
+
+当数组中每个元素都只带有一个下标时，这种数组就是“一维数组”，实质上是一组相同类型数据的线性集合，是数组中最简单的一种数组。
+
+_1.1 创建数组_
+
+为了在程序中使用一个数组，必须声明一个引用该数组的变量，并指明整个变量可以引用的数组类型。语法格式如下：
+
+#+BEGIN_EXAMPLE
+  type[] arrayName;               // 数据类型[] 数组名;
+  // OR
+  type arrayName[];               // （不推荐）
+#+END_EXAMPLE
+
+*注： =type[]= 确实是一种新类型，与 =type= 类型不同（如 =int= 类型是基本类型，但 =int[]= 是引用类型）。
+
+_1.2 分配空间_
+
+*声明了数组，只是得到了一个存放数组的变量，并没有为数组元素分配内存空间，不能使用。* 因此，要为数组分配内存空间，数组的每一个元素才有一个空间进行存储。
+
+#+BEGIN_QUOTE
+*注：分配空间就是要告诉计算机在内存中为它分配几个连续的位置来存储数据。
+#+END_QUOTE
+
+在 Java 中可以使用 =new= 关键字来分配空间，语法格式如下：
+
+#+BEGIN_EXAMPLE
+  arrayName = new type[size];     // 数组名 = new 数据类型[数组长度];
+#+END_EXAMPLE
+
+其中， =arrayName= 是已经声明过的 =int[]= 类型的变量，当然也可以在声明数组时就给它分配空间，语法格式如下：
+
+#+BEGIN_EXAMPLE
+  type[] arrayName = new type[size]; // 数据类型[] 数组名 = new 数据类型[数组长度];
+#+END_EXAMPLE
+
+**注：一旦声明了数组的大小，就不能再修改。这里的数组长度也是必需的，不能少。*
+
+_1.3 初始化一维数组_
+
+Java 语言中数组必须先初始化，然后才可以使用。所谓初始化，就是为数组的数组元素分配内存空间，并为每个数组元素初始值。
+
+能不能只分配内存空间，不赋初始值呢？
+
+不行，一旦为数组的每个元素分配了内存空间，每个内存空间里存储的内容就是该数组元素的值，即使这个内存空间存储的内容为空，这个空也是一个值（ =null= ）。
+
+不管以哪种方式来初始化数组，只要为数组元素分配了内存空间，数组元素就具有了初始值。初始值的获得有两种形式，一种由系统自动分配，另一种由程序员指定。
+
+*数组在初始化的同时，可以指定数组的大小，也可以分别初始化数组中的每一个元素。* 在 Java 语言中，初始化数组有以下 3 种方式。
+
+_1.3.1 使用 new 指定数组大小后进行初始化_
+
+#+BEGIN_SRC java -n
+  // type[] arrayName = new int[size]
+  int[] number = new int[5];
+  number[0] = 1;
+  number[1] = 2;
+  number[2] = 3;
+  number[3] = 5;
+  number[4] = 8;
+#+END_SRC
+
+如果程序员只指定了数组和长度，那么系统将负责为这些数组元素分配初始值。指定初始值时，系统按如下规则分配初始值。
+| 数组元素的类型 | 类型                   | 自动分配初始值 |
+|----------------+------------------------+----------------|
+| 整数类型       | byte、short、int、long | =0=            |
+| 浮点类型       | float、double          | =0.0=          |
+| 字符类型       | char                   | ='\u0000'=     |
+| 引用类型       | 类、接口、数组         | =null=         |
+
+_1.3.2 使用 new 指定数组元素的值_
+
+#+BEGIN_SRC java -n
+  // type[] arrayName = new type[]{val1, val2, val3, ..., vlaN};
+  int[] number = new int[]{1, 2, 3, 5, 8};
+#+END_SRC
+
+*注：不要在进行数组初始化时，既指定数组的长度，也为每个数组元素分配初始值，这样会造成代码错误。
+
+#+BEGIN_SRC java -n
+  int[] number = new int[5]{1, 2, 3, 4, 5}; // ✘
+#+END_SRC
+
+_1.3.3 直接指定数组元素的值_
+
+#+BEGIN_SRC java -n
+  // type[] arrayName = {val1, val2, val3, ..., valN};
+  int[] number = {1, 2, 3, 5, 8};
+  // OR
+  int[] number;
+  number = {1, 2, 3, 5, 8};
+#+END_SRC
+
+_1.4 获取数组元素_
+
+获取单个元素的方法非常简单，指定元素所在数组的下标即可。语法如下：
+
+#+BEGIN_EXAMPLE
+arrayName[index];
+#+END_EXAMPLE
+
+*注：当指定的下标值超出数组的总长度时，会抛出 =ArrayIndexOutOfBoundsException= 异常。
+
+如果数组中的元素过多，再使用单个下标则显得烦琐，此时使用一种简单的方法可以获取全部元素——使用循环语句。
+
+#+BEGIN_SRC java -n
+  int[] number = {1, 2, 3, 5 ,8};
+
+  // 1. for
+  for (int i = 0; i < number.length; i++) {
+      System.out.println("第" + (i + 1) + "元素的值是：" + number[i]);
+  }
+
+  // 2. foreach
+  for (int val:number) {
+      System.out.print("元素的值依次是："+val+"\t");
+  }
+#+END_SRC
+
+_2. 二维数组_
+
+在 Java 中二维数组被看作数组的数组，即二维数组为一个特殊的一维数组，其每个元素又是一个一维数组。
+
+除了一维数组和二维数组外，Java 中还支持更多维的数组，如三维数组、四维数组和五维数组等，它们都属于多维数组。
+
+_3. 不规则数组_
+
+Java 实际上没有多维数组，只有一维数组。多维数组被解释为是数组的数组，所以因此会衍生出一种不规则数组。
+
+规则的 4×3 二维数组有 12 个元素，而不规则数组就不一定了。如下代码静态初始化了一个不规则数组。
+
+#+BEGIN_EXAMPLE
+int intArray[][] = {{1,2}, {11}, {21,22,23}, {31,32,33}};
+#+END_EXAMPLE
+
+动态初始化不规则数组比较麻烦，不能使用 =new int[4][3]= 语句，而是先初始化高维数组，然后再分别逐个初始化低维数组。代码如下：
+
+#+BEGIN_SRC java -n
+  //先初始化高维数组为4
+  int intArray[][] = new int[4][];
+  // 逐一初始化低维数组
+  intArray[0] = new int[2];
+  intArray[1] = new int[1];
+  intArray[2] = new int[3];
+  intArray[3] = new int[3];
+#+END_SRC
+
+** 数组也是一种数据类型
+
+Java 的数组要求所有的数组元素具有相同的数据类型。
+
+因此，在一个数组中，数组元素的类型是唯一的，即一个数组里只能存储一种数据类型的数据，而不能存储多种数据类型的数据。
+
+一旦数组的初始化完成，数组在内存中所占的空间将被固定下来，因此数组的长度将不可改变。即使把某个数组元素的数据清空，但它所占的空间依然被保留，依然属于该数组，数组的长度依然不变。
+
+Java 的数组既可以存储基本类型的数据，也可以存储引用类型的数据，只要所有的数组元素具有相同的类型即可。
+
+值得指出的是，数组也是一种数据类型，它本身是一种引用类型。例如 =int= 是一个基本类型，但 =int[]= （这是定义数组的一种方式）就是一种引用类型了。
+
+=int[]= 是一种类型吗？怎么使用这种类型呢？
+
+没错， =int[]= 就是一种数据类型，与 int 类型、String 类型相似，一样可以使用该类型来定义变量，也可以使用该类型进行类型转换等。 =int[]= 类型是一种引用类型，创建 =int[]= 类型的对象也就是创建数组，需要使用创建数组的语法。
+
+** TODO Arrays 工具类
+
+Arrays 类是一个工具类，其中包含了数组操作的很多方法。这个 Arrays 类里均为 =static= 修饰的方法（ =static= 修饰的方法可以直接通过类名调用），可以直接通过 =Arrays.xxx(xxx)= 的形式调用方法。
+
+*** 数组比较
+
+数组相等的条件下不仅要求数组元素的个数必须相等，而且要求对应位置的元素也相等，Arrays 类提供了 =equals()= 方法比较整个数组。
+
+#+BEGIN_EXAMPLE
+Arrays.equals(arrayA, arrayB);
+#+END_EXAMPLE
+
+*** 数组填充
+
+Arrays 类提供了一个 =fill()= 方法，可以在指定位置进行数值填充。 =fill()= 方法虽然可以填充数组，但是它的功能有限制，只能使用同一个数值进行填充。
+
+#+BEGIN_EXAMPLE
+Arrays.fill(array, value);
+#+END_EXAMPLE
+
+其中， =array= 表示数组， =value= 表示填充的值。
+
+*** 数组查找
+
+查找数组是指从数组中查询指定位置的元素，或者查询某元素在指定数组中的位置。
+
+使用 Arrays 类的 =binarySearch()= 方法可以实现数组的查找，该方法可使用二分搜索法指定数组，以获得指定对象，该方法返回要搜索元素的索引值。
+
+=binarySearch()= 方法有多种重载形式来满足不同类型数组的查找需要，常用的重载形式有两种。
+
+#+BEGIN_EXAMPLE
+binarySearch(Object[] arr, Object key);
+// OR
+binarySearch(Object[] arr, int fromIndex, int toIndex, Object key);
+#+END_EXAMPLE
+
+如果 =key= 包含在数组中，则返回搜索值的索引；否则返回 =-1= 或 =-插入点= 。插入点指搜索键将要插入数组的位置，即第一个大于此键的元素索引。
+
+*注：在进行数组查询之前，必须对数组进行排序（可以使用 =sort()= 方法）。如果没有对数组进行排序，则结果是不确定的。如果数组包含多个带有指定值的元素，则无法确认找到的是哪一个。
+
+*** 数组复制
+
+所谓复制数组，是指将一个数组中的元素在另一个数组中进行复制。
+
+在 Java 中实现数组复制分别有以下 4 种方法：
+- Arrays 类的 =copyOf()= 方法；
+- Arrays 类的 =copyOfRange()= 方法；
+- System 类的 =arraycopy()= 方法；
+- Object 类的 =clone()= 方法。
+
+_1. 使用 copyOf() 方法和 copyOfRange() 方法_
+
+=copyOf()= 方法是复制数组至指定长度， =copyOfRange()= 方法则将指定数组的指定长度复制到一个新数组中。
+
+#+BEGIN_EXAMPLE
+Arrays.copyOf(dataType[] srcArray, int length);
+#+END_EXAMPLE
+
+其中， =srcArray=  表示要进行复制的数组， =length= 表示复制后的新数组的长度。
+
+使用这种方法复制数组时，默认从原数组的第一个元素（索引值为 0 ）开始复制，目标数组的长度为 length 。如果 length 大于 =srcArray.length= ，则目标数组中采用默认值填充；如果 length 小于 =srcArray.length= ，则复制到第 =length= 个元素（索引值为 =length - 1= ）即止。
+
+*注意：目标数组如果已经存在，将会被重构。
+
+#+BEGIN_EXAMPLE
+Arrays.copyOfRange(dataType[] srcArray, int startIndex, int endIndex)
+#+END_EXAMPLE
+
+其中：
+- =srcArray= 表示原数组；
+- =startIndex= 表示开始复制的起始索引，目标数组中将包含起始索引对应的元素，另外， =startIndex= 必须在 =0= 到 =srcArray.length= 之间；
+- =endIndex= 表示终止索引，目标数组中将不包含终止索引对应的元素， =endIndex= 必须大于等于 =startIndex= ，可以大于 =srcArray.length= ，如果大于 =srcArray.length= ，则目标数组中使用默认值填充。
+
+_2. 使用 arraycopy() 方法_
+
+=arraycopy()= 方法位于 =java.lang.System= 类中，其语法形式如下：
+
+#+BEGIN_EXAMPLE
+System.arraycopy(dataType[] arcArray, int srcIndex, int destArray, int destIndex, int length)
+#+END_EXAMPLE
+
+其中：
+- =srcArray= 表示原始数组；
+- =srcIndex= 表示开始复制的起始索引；
+- =destArray= 表示目标数组；
+- =destIndex= 表示目标数组中的起始索引；
+- =length= 表示要复制的数组的长度。
+
+使用此方法复制数组时， =length+srcIndex= 必须小于等于 =srcArray.length= ，同时 =length+destIndex= 必须小于等于 =destArray.length= 。
+
+*注：目标数组必须已经存在，且不会被重构，相当于替换目标数组中的部分元素。
+
+_3. 使用 clone() 方法_
+
+=clone()= 方法也可以实现复制数组，该方法是类 Object 中的方法，可以创建一个有单独内存空间的对象。
+
+=clone()= 方法的返回值是 Object 类型，要使用强制类型转换为适当的类型。示例语句如下：
+
+#+BEGIN_SRC java -n
+  int[] targetArray = (int[])sourceArray.clone();
+#+END_SRC
+
+*注：目标数组如果已经存在，将会被重构。
+
+#+BEGIN_QUOTE
+*注：以上几种方法都是浅拷贝。浅拷贝只是复制了对象的引用地址，两个对象指向同一个内存地址，修改其中任意的值，另一个值都会随之变化；深拷贝是将对象及值复制过来，两个对象修改其中任意的值，另一个值不会改变。
+#+END_QUOTE
+
+*** 数组排序
+
+Java 语言中使用 Arrays 类提供的 =sort()= 方法来对数组进行排序。
+
+_1. 升序_
+
+使用 =java.util.Arrays= 类中的 =sort()= 方法对数组进行升序：
+1. 导入 =java.util.Arrays= 包；
+2. 使用 =Arrays.sort(数组名)= 语法对数组进行排序，排序规则是从小到大，即升序。
+
+_2. 降序_
+
+在 Java 语言中使用 =sort()= 实现降序两种方法。
+
+_2.1 利用 =Collections.reverseOrder()= 方法（Collections 是一个包装类）_
+
+#+BEGIN_SRC java -n
+  public static void main(String[] args) {
+      Integer[] arr = {9, 8, 7, 2, 3, 4, 1, 0, 6, 5}; // 数组类型为 Integer
+      Arrays.sort(arr, Collections.reverseOrder());
+
+      for (int item : arr) {
+          System.out.print(item + " ");
+      }
+  }
+  // → 9 8 7 6 5 4 3 2 1 0
+#+END_SRC
+
+_2.2 实现 =Comparator= 接口的复写 =compare()= 方法_
+
+#+BEGIN_SRC java -n
+  public class Test {
+      public static void main(String[] args) {
+          // 注意，要想改变默认的排列顺序，不能使用基本类型（int, double, char）而要使用它们对就的类
+          Integer[] arr = {9, 8, 7, 2, 3, 4, 1, 0, 6, 5};
+          // 定义一个自定义类 MyComparator 的对象
+          Comparator cmp = new MyComparator();
+
+          Array.sort(arr, cmp);
+          for (int item : arr) {
+              System.out.print(item + " ");
+          }
+      }
+  }
+
+  // 实现 Comparator 接口
+  class MyComparator implements Comparator<Integer> {
+      @Override
+      public int compare(Integer o1, Integer o2) {
+          // 如果 o1 小于 o2 ，就返回正值；
+          // 如果 o1 大于 o2 ，就返回负值；
+          // 如此，颠倒一下，就可以实现降序排序了，反之即可自定义升序排序了
+          return o2 - o1;
+      }
+  }
+
+  // → 9 8 7 6 5 4 3 2 1 0
+#+END_SRC
+
+**注：使用以上两种方法时，数组必须是包装类型，否则编译不通过。*
+
+*** 冒泡排序
+
+i.e. Bubble Sort
+
+冒泡排序的 _基本思想_ 是：对比相邻的元素值，如果满足条件就交换元素值，把较小的元素值移到数组前面，把大的元素值移动到数组后面（也就是交换两个元素的位置），这样数组就像气泡一样从底部上升到顶部。
+
+冒泡排序的算法比较简单，排序的结果稳定，但时间效率不太高。
+
+Java 中的冒泡排序在双层循环中实现，其中外层循环控制排序轮数，总循环次数为要排序数组的长度减 1 ；而内层循环主要用于对比相邻元素的大小，以确定是否交换位置，对比和交换次数排序轮数而减少。
+

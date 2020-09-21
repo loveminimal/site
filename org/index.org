@@ -41,6 +41,8 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./java-3.org][第三章 Java 流程控制语句]]   |
 | [[./java-4.org][第四章 Java 字符串处理]]     |
 | [[./java-5.org][第五章 Java 数字和日期处理]] |
+| [[./java-6.org][第六章 Java 内置包装类]]     |
+| [[./java-7.org][第七章 Java 数组处理]]       |
 
 | 休闲     |
 |----------|

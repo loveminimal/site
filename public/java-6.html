@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2020-09-18 Fri 19:36 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>内置包装类</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
+<link rel="stylesheet" href="/css/animate.min.css" />
+<link rel="stylesheet" href="/css/all.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script src="/js/jquery.min.js"></script>
+<script src="/js/darkreader.js"></script>
+<script src="/user.config.js"></script>
+<script src="/js/main.js"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">内置包装类</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org0203cb2">包装类、装箱和拆箱</a></li>
+</ul>
+</div>
+</div>
+<p>
+Java 是一种面向对象的编程语言， <b>Java 中的类把方法与数据类型连接在一起，构成了自包含式的处理单元</b> 。但在 Java 中不能定义基本类型对象，为了能将基本类型视为对象处理，并能连接相关方法，Java 为每个基本类型都提供了包装类，如 int 型数值的包装类 Integer ，boolean 型数值的包装类 Boolean 等，这样便可以把这些基本类型转换为对象来处理了。
+</p>
+
+<p>
+*注：虽然 Java 可以直接处理基本类型，但是在有些情况下需要将其作为对象来处理，这时就需要将其转换为包装类。
+</p>
+
+<div id="outline-container-org0203cb2" class="outline-2">
+<h2 id="org0203cb2">包装类、装箱和拆箱</h2>
+<div class="outline-text-2" id="text-org0203cb2">
+<p>
+在 Java 的设计中提倡一种思想，即一切皆对象。
+</p>
+
+<p>
+<span class="underline">1. 包装类</span>
+</p>
+
+<p>
+但是从数据类型的划分中，Java 中的数据类型又分为基本数据类型和引用数据类型，但是基本数据类型怎么能够称为对象呢？于是 Java 为每种基本数据类型分别设计了对应的类，称之为 <span class="underline">包装类</span> （Wrapper Classes）。
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 1:</span> 基本数据类型及对应的包装类</caption>
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">序号</th>
+<th scope="col" class="org-left">基本数据类型</th>
+<th scope="col" class="org-left">包装类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">byte</td>
+<td class="org-left">Byte</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">short</td>
+<td class="org-left">Short</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">int</td>
+<td class="org-left">Integer</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-left">long</td>
+<td class="org-left">Long</td>
+</tr>
+
+<tr>
+<td class="org-right">5</td>
+<td class="org-left">char</td>
+<td class="org-left">Character</td>
+</tr>
+
+<tr>
+<td class="org-right">6</td>
+<td class="org-left">float</td>
+<td class="org-left">Float</td>
+</tr>
+
+<tr>
+<td class="org-right">7</td>
+<td class="org-left">double</td>
+<td class="org-left">Double</td>
+</tr>
+
+<tr>
+<td class="org-right">8</td>
+<td class="org-left">boolean</td>
+<td class="org-left">Boolean</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<span class="underline">2. 装箱和拆箱</span>
+</p>
+
+<p>
+基本数据类型转换为包装类的过程称为 <span class="underline">装箱</span> ，如把 int 包装成 Integer 类的对象；包装类变为基本数据类型的过程称为 <span class="underline">拆箱</span> ，如把 Integer 类的对象重新简化为 int 。
+</p>
+
+<p>
+手动实例化一个包装类称为手动拆箱装箱，Java 1.5 之后实现了自动拆装箱，更加方便。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Demo</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">m</span> = 500;
+<span class="linenr"> 4: </span>        <span style="color: #66D9EF;">Integer</span> <span style="color: #FD971F;">obj</span> = m;                <span style="color: #75715E;">// </span><span style="color: #75715E;">&#33258;&#21160;&#35013;&#31665;</span>
+<span class="linenr"> 5: </span>        <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">n</span> = obj;                    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#33258;&#21160;&#25286;&#31665;</span>
+<span class="linenr"> 6: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"n = "</span> + n<span style="color: #A6E22E;">)</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; n = 500</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>        <span style="color: #66D9EF;">Integer</span> <span style="color: #FD971F;">obj1</span> = 500;
+<span class="linenr"> 9: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"obj &#31561;&#20215;&#20110; obj1 &#36820;&#22238;&#32467;&#26524;&#20026;"</span> + obj.equals<span style="color: #E6DB74;">(</span>obj1<span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">10: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; obj&#31561;&#20215;&#20110;obj1&#36820;&#22238;&#32467;&#26524;&#20026;true</span>
+<span class="linenr">11: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">12: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+*注：自动拆装箱是常用的一个功能，需要重点掌握。
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-09-18 Fri 19:08</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2020-09-18 Fri 19:36</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
