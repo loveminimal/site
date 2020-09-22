@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-09-21 Mon 08:44 -->
+<!-- 2020-09-21 Mon 18:04 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>数组处理</title>
@@ -23,16 +23,19 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org2706f48">数组是什么</a></li>
-<li><a href="#orged61473">数组也是一种数据类型</a></li>
-<li><a href="#org891e34a"><span class="todo TODO">TODO</span> Arrays 工具类</a>
+<li><a href="#org90124cf">数组是什么</a></li>
+<li><a href="#orga402590">数组也是一种数据类型</a></li>
+<li><a href="#org65062dc"><span class="todo TODO">TODO</span> Arrays 工具类</a>
 <ul>
-<li><a href="#org988b756">数组比较</a></li>
-<li><a href="#orgc698885">数组填充</a></li>
-<li><a href="#org658e0dd">数组查找</a></li>
-<li><a href="#org009493c">数组复制</a></li>
-<li><a href="#orgc0b262b">数组排序</a></li>
-<li><a href="#org66fc4ca">冒泡排序</a></li>
+<li><a href="#org41c368c">数组比较</a></li>
+<li><a href="#org1fd33e7">数组填充</a></li>
+<li><a href="#org783010b">数组查找</a></li>
+<li><a href="#orgee686b4">数组复制</a></li>
+<li><a href="#org0a14a9d">数组排序</a></li>
+<li><a href="#org8a9afbd">冒泡排序</a></li>
+<li><a href="#orge9d4d37"><span class="todo TODO">TODO</span> 快速排序</a></li>
+<li><a href="#orgf6580d0"><span class="todo TODO">TODO</span> 选择排序</a></li>
+<li><a href="#org09505f1"><span class="todo TODO">TODO</span> 插入排序</a></li>
 </ul>
 </li>
 </ul>
@@ -46,9 +49,9 @@
 随着处理的信息量越来越大，工作也就越来越烦琐，这时可以使用数组或集合来存储信息。通过使用数组，可以在很大程度上缩短和简化程序代码，从而提高应用程序的效率。
 </p>
 
-<div id="outline-container-org2706f48" class="outline-2">
-<h2 id="org2706f48">数组是什么</h2>
-<div class="outline-text-2" id="text-org2706f48">
+<div id="outline-container-org90124cf" class="outline-2">
+<h2 id="org90124cf">数组是什么</h2>
+<div class="outline-text-2" id="text-org90124cf">
 <p>
 <span class="underline">数组</span> （array）是一种最简单的复合数据类型，它是有序数据的集合，数组中的每个元素具有相同的数据类型，可以用一个统一的数组名和不同的下标来确定数组中唯一的元素。根据数组的维度，可以将其分为一维数组、二维数组和多维数组等。
 </p>
@@ -163,13 +166,13 @@ Java 语言中数组必须先初始化，然后才可以使用。所谓初始化
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">type[] arrayName = new int[size]</span>
-<span class="linenr">2: </span><span style="color: #66D9EF;">int</span><span style="color: #AE81FF;">[]</span> <span style="color: #FD971F;">number</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">int</span><span style="color: #AE81FF;">[</span>5<span style="color: #AE81FF;">]</span>;
-<span class="linenr">3: </span>number<span style="color: #AE81FF;">[</span>0<span style="color: #AE81FF;">]</span> = 1;
-<span class="linenr">4: </span>number<span style="color: #AE81FF;">[</span>1<span style="color: #AE81FF;">]</span> = 2;
-<span class="linenr">5: </span>number<span style="color: #AE81FF;">[</span>2<span style="color: #AE81FF;">]</span> = 3;
-<span class="linenr">6: </span>number<span style="color: #AE81FF;">[</span>3<span style="color: #AE81FF;">]</span> = 5;
-<span class="linenr">7: </span>number<span style="color: #AE81FF;">[</span>4<span style="color: #AE81FF;">]</span> = 8;
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">type[] arrayName = new int[size]</span>
+<span class="linenr">2: </span><span style="color: #5FD7FF;">int</span><span style="color: #AF87FF;">[]</span> <span style="color: #FF8C00;">number</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">int</span><span style="color: #AF87FF;">[</span>5<span style="color: #AF87FF;">]</span>;
+<span class="linenr">3: </span>number<span style="color: #AF87FF;">[</span>0<span style="color: #AF87FF;">]</span> = 1;
+<span class="linenr">4: </span>number<span style="color: #AF87FF;">[</span>1<span style="color: #AF87FF;">]</span> = 2;
+<span class="linenr">5: </span>number<span style="color: #AF87FF;">[</span>2<span style="color: #AF87FF;">]</span> = 3;
+<span class="linenr">6: </span>number<span style="color: #AF87FF;">[</span>3<span style="color: #AF87FF;">]</span> = 5;
+<span class="linenr">7: </span>number<span style="color: #AF87FF;">[</span>4<span style="color: #AF87FF;">]</span> = 8;
 </pre>
 </div>
 
@@ -224,8 +227,8 @@ Java 语言中数组必须先初始化，然后才可以使用。所谓初始化
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">type[] arrayName = new type[]{val1, val2, val3, ..., vlaN};</span>
-<span class="linenr">2: </span><span style="color: #66D9EF;">int</span><span style="color: #AE81FF;">[]</span> <span style="color: #FD971F;">number</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">int</span><span style="color: #AE81FF;">[]{</span>1, 2, 3, 5, 8<span style="color: #AE81FF;">}</span>;
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">type[] arrayName = new type[]{val1, val2, val3, ..., vlaN};</span>
+<span class="linenr">2: </span><span style="color: #5FD7FF;">int</span><span style="color: #AF87FF;">[]</span> <span style="color: #FF8C00;">number</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">int</span><span style="color: #AF87FF;">[]{</span>1, 2, 3, 5, 8<span style="color: #AF87FF;">}</span>;
 </pre>
 </div>
 
@@ -234,7 +237,7 @@ Java 语言中数组必须先初始化，然后才可以使用。所谓初始化
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">int</span><span style="color: #AE81FF;">[]</span> <span style="color: #FD971F;">number</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">int</span><span style="color: #AE81FF;">[</span>5<span style="color: #AE81FF;">]{</span>1, 2, 3, 4, 5<span style="color: #AE81FF;">}</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#10008;</span>
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #5FD7FF;">int</span><span style="color: #AF87FF;">[]</span> <span style="color: #FF8C00;">number</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">int</span><span style="color: #AF87FF;">[</span>5<span style="color: #AF87FF;">]{</span>1, 2, 3, 4, 5<span style="color: #AF87FF;">}</span>; <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#10008;</span>
 </pre>
 </div>
 
@@ -243,11 +246,11 @@ Java 语言中数组必须先初始化，然后才可以使用。所谓初始化
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">type[] arrayName = {val1, val2, val3, ..., valN};</span>
-<span class="linenr">2: </span><span style="color: #66D9EF;">int</span><span style="color: #AE81FF;">[]</span> <span style="color: #FD971F;">number</span> = <span style="color: #AE81FF;">{</span>1, 2, 3, 5, 8<span style="color: #AE81FF;">}</span>;
-<span class="linenr">3: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">OR</span>
-<span class="linenr">4: </span><span style="color: #66D9EF;">int</span><span style="color: #AE81FF;">[]</span> <span style="color: #FD971F;">number</span>;
-<span class="linenr">5: </span>number = <span style="color: #AE81FF;">{</span>1, 2, 3, 5, 8<span style="color: #AE81FF;">}</span>;
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">type[] arrayName = {val1, val2, val3, ..., valN};</span>
+<span class="linenr">2: </span><span style="color: #5FD7FF;">int</span><span style="color: #AF87FF;">[]</span> <span style="color: #FF8C00;">number</span> = <span style="color: #AF87FF;">{</span>1, 2, 3, 5, 8<span style="color: #AF87FF;">}</span>;
+<span class="linenr">3: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">OR</span>
+<span class="linenr">4: </span><span style="color: #5FD7FF;">int</span><span style="color: #AF87FF;">[]</span> <span style="color: #FF8C00;">number</span>;
+<span class="linenr">5: </span>number = <span style="color: #AF87FF;">{</span>1, 2, 3, 5, 8<span style="color: #AF87FF;">}</span>;
 </pre>
 </div>
 
@@ -272,17 +275,17 @@ arrayName[index];
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #66D9EF;">int</span><span style="color: #AE81FF;">[]</span> <span style="color: #FD971F;">number</span> = <span style="color: #AE81FF;">{</span>1, 2, 3, 5 ,8<span style="color: #AE81FF;">}</span>;
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #5FD7FF;">int</span><span style="color: #AF87FF;">[]</span> <span style="color: #FF8C00;">number</span> = <span style="color: #AF87FF;">{</span>1, 2, 3, 5 ,8<span style="color: #AF87FF;">}</span>;
 <span class="linenr"> 2: </span>
-<span class="linenr"> 3: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">1. for</span>
-<span class="linenr"> 4: </span><span style="color: #F92672;">for</span> <span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">i</span> = 0; i &lt; number.<span style="color: #66D9EF;">length</span>; i++<span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 5: </span>    System.out.println<span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">"&#31532;"</span> + <span style="color: #A6E22E;">(</span>i + 1<span style="color: #A6E22E;">)</span> + <span style="color: #E6DB74;">"&#20803;&#32032;&#30340;&#20540;&#26159;&#65306;"</span> + number<span style="color: #A6E22E;">[</span>i<span style="color: #A6E22E;">]</span><span style="color: #66D9EF;">)</span>;
-<span class="linenr"> 6: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr"> 3: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">1. for</span>
+<span class="linenr"> 4: </span><span style="color: #FF1493;">for</span> <span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">i</span> = 0; i &lt; number.<span style="color: #5FD7FF;">length</span>; i++<span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 5: </span>    System.out.println<span style="color: #5FD7FF;">(</span><span style="color: #CDC673;">"&#31532;"</span> + <span style="color: #87D700;">(</span>i + 1<span style="color: #87D700;">)</span> + <span style="color: #CDC673;">"&#20803;&#32032;&#30340;&#20540;&#26159;&#65306;"</span> + number<span style="color: #87D700;">[</span>i<span style="color: #87D700;">]</span><span style="color: #5FD7FF;">)</span>;
+<span class="linenr"> 6: </span><span style="color: #AF87FF;">}</span>
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">2. foreach</span>
-<span class="linenr"> 9: </span><span style="color: #F92672;">for</span> <span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">val</span>:number<span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr">10: </span>    System.out.print<span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">"&#20803;&#32032;&#30340;&#20540;&#20381;&#27425;&#26159;&#65306;"</span>+val+<span style="color: #E6DB74;">"\t"</span><span style="color: #66D9EF;">)</span>;
-<span class="linenr">11: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr"> 8: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">2. foreach</span>
+<span class="linenr"> 9: </span><span style="color: #FF1493;">for</span> <span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">val</span>:number<span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">10: </span>    System.out.print<span style="color: #5FD7FF;">(</span><span style="color: #CDC673;">"&#20803;&#32032;&#30340;&#20540;&#20381;&#27425;&#26159;&#65306;"</span>+val+<span style="color: #CDC673;">"\t"</span><span style="color: #5FD7FF;">)</span>;
+<span class="linenr">11: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -319,21 +322,21 @@ int intArray[][] = {{1,2}, {11}, {21,22,23}, {31,32,33}};
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #75715E;">//</span><span style="color: #75715E;">&#20808;&#21021;&#22987;&#21270;&#39640;&#32500;&#25968;&#32452;&#20026;4</span>
-<span class="linenr">2: </span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">intArray</span><span style="color: #AE81FF;">[][]</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">int</span><span style="color: #AE81FF;">[</span>4<span style="color: #AE81FF;">][]</span>;
-<span class="linenr">3: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#36880;&#19968;&#21021;&#22987;&#21270;&#20302;&#32500;&#25968;&#32452;</span>
-<span class="linenr">4: </span>intArray<span style="color: #AE81FF;">[</span>0<span style="color: #AE81FF;">]</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">int</span><span style="color: #AE81FF;">[</span>2<span style="color: #AE81FF;">]</span>;
-<span class="linenr">5: </span>intArray<span style="color: #AE81FF;">[</span>1<span style="color: #AE81FF;">]</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">int</span><span style="color: #AE81FF;">[</span>1<span style="color: #AE81FF;">]</span>;
-<span class="linenr">6: </span>intArray<span style="color: #AE81FF;">[</span>2<span style="color: #AE81FF;">]</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">int</span><span style="color: #AE81FF;">[</span>3<span style="color: #AE81FF;">]</span>;
-<span class="linenr">7: </span>intArray<span style="color: #AE81FF;">[</span>3<span style="color: #AE81FF;">]</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">int</span><span style="color: #AE81FF;">[</span>3<span style="color: #AE81FF;">]</span>;
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #8B8878;">//</span><span style="color: #8B8878;">&#20808;&#21021;&#22987;&#21270;&#39640;&#32500;&#25968;&#32452;&#20026;4</span>
+<span class="linenr">2: </span><span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">intArray</span><span style="color: #AF87FF;">[][]</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">int</span><span style="color: #AF87FF;">[</span>4<span style="color: #AF87FF;">][]</span>;
+<span class="linenr">3: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#36880;&#19968;&#21021;&#22987;&#21270;&#20302;&#32500;&#25968;&#32452;</span>
+<span class="linenr">4: </span>intArray<span style="color: #AF87FF;">[</span>0<span style="color: #AF87FF;">]</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">int</span><span style="color: #AF87FF;">[</span>2<span style="color: #AF87FF;">]</span>;
+<span class="linenr">5: </span>intArray<span style="color: #AF87FF;">[</span>1<span style="color: #AF87FF;">]</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">int</span><span style="color: #AF87FF;">[</span>1<span style="color: #AF87FF;">]</span>;
+<span class="linenr">6: </span>intArray<span style="color: #AF87FF;">[</span>2<span style="color: #AF87FF;">]</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">int</span><span style="color: #AF87FF;">[</span>3<span style="color: #AF87FF;">]</span>;
+<span class="linenr">7: </span>intArray<span style="color: #AF87FF;">[</span>3<span style="color: #AF87FF;">]</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">int</span><span style="color: #AF87FF;">[</span>3<span style="color: #AF87FF;">]</span>;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orged61473" class="outline-2">
-<h2 id="orged61473">数组也是一种数据类型</h2>
-<div class="outline-text-2" id="text-orged61473">
+<div id="outline-container-orga402590" class="outline-2">
+<h2 id="orga402590">数组也是一种数据类型</h2>
+<div class="outline-text-2" id="text-orga402590">
 <p>
 Java 的数组要求所有的数组元素具有相同的数据类型。
 </p>
@@ -364,17 +367,17 @@ Java 的数组既可以存储基本类型的数据，也可以存储引用类型
 </div>
 </div>
 
-<div id="outline-container-org891e34a" class="outline-2">
-<h2 id="org891e34a"><span class="todo TODO">TODO</span> Arrays 工具类</h2>
-<div class="outline-text-2" id="text-org891e34a">
+<div id="outline-container-org65062dc" class="outline-2">
+<h2 id="org65062dc"><span class="todo TODO">TODO</span> Arrays 工具类</h2>
+<div class="outline-text-2" id="text-org65062dc">
 <p>
 Arrays 类是一个工具类，其中包含了数组操作的很多方法。这个 Arrays 类里均为 <code>static</code> 修饰的方法（ <code>static</code> 修饰的方法可以直接通过类名调用），可以直接通过 <code>Arrays.xxx(xxx)</code> 的形式调用方法。
 </p>
 </div>
 
-<div id="outline-container-org988b756" class="outline-3">
-<h3 id="org988b756">数组比较</h3>
-<div class="outline-text-3" id="text-org988b756">
+<div id="outline-container-org41c368c" class="outline-3">
+<h3 id="org41c368c">数组比较</h3>
+<div class="outline-text-3" id="text-org41c368c">
 <p>
 数组相等的条件下不仅要求数组元素的个数必须相等，而且要求对应位置的元素也相等，Arrays 类提供了 <code>equals()</code> 方法比较整个数组。
 </p>
@@ -385,9 +388,9 @@ Arrays.equals(arrayA, arrayB);
 </div>
 </div>
 
-<div id="outline-container-orgc698885" class="outline-3">
-<h3 id="orgc698885">数组填充</h3>
-<div class="outline-text-3" id="text-orgc698885">
+<div id="outline-container-org1fd33e7" class="outline-3">
+<h3 id="org1fd33e7">数组填充</h3>
+<div class="outline-text-3" id="text-org1fd33e7">
 <p>
 Arrays 类提供了一个 <code>fill()</code> 方法，可以在指定位置进行数值填充。 <code>fill()</code> 方法虽然可以填充数组，但是它的功能有限制，只能使用同一个数值进行填充。
 </p>
@@ -402,9 +405,9 @@ Arrays.fill(array, value);
 </div>
 </div>
 
-<div id="outline-container-org658e0dd" class="outline-3">
-<h3 id="org658e0dd">数组查找</h3>
-<div class="outline-text-3" id="text-org658e0dd">
+<div id="outline-container-org783010b" class="outline-3">
+<h3 id="org783010b">数组查找</h3>
+<div class="outline-text-3" id="text-org783010b">
 <p>
 查找数组是指从数组中查询指定位置的元素，或者查询某元素在指定数组中的位置。
 </p>
@@ -433,9 +436,9 @@ binarySearch(Object[] arr, int fromIndex, int toIndex, Object key);
 </div>
 </div>
 
-<div id="outline-container-org009493c" class="outline-3">
-<h3 id="org009493c">数组复制</h3>
-<div class="outline-text-3" id="text-org009493c">
+<div id="outline-container-orgee686b4" class="outline-3">
+<h3 id="orgee686b4">数组复制</h3>
+<div class="outline-text-3" id="text-orgee686b4">
 <p>
 所谓复制数组，是指将一个数组中的元素在另一个数组中进行复制。
 </p>
@@ -531,7 +534,7 @@ System.arraycopy(dataType[] arcArray, int srcIndex, int destArray, int destIndex
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">int</span><span style="color: #AE81FF;">[]</span> <span style="color: #FD971F;">targetArray</span> = <span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">int</span><span style="color: #66D9EF;">[]</span><span style="color: #AE81FF;">)</span>sourceArray.clone<span style="color: #AE81FF;">()</span>;
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #5FD7FF;">int</span><span style="color: #AF87FF;">[]</span> <span style="color: #FF8C00;">targetArray</span> = <span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">int</span><span style="color: #5FD7FF;">[]</span><span style="color: #AF87FF;">)</span>sourceArray.clone<span style="color: #AF87FF;">()</span>;
 </pre>
 </div>
 
@@ -547,9 +550,9 @@ System.arraycopy(dataType[] arcArray, int srcIndex, int destArray, int destIndex
 </div>
 </div>
 
-<div id="outline-container-orgc0b262b" class="outline-3">
-<h3 id="orgc0b262b">数组排序</h3>
-<div class="outline-text-3" id="text-orgc0b262b">
+<div id="outline-container-org0a14a9d" class="outline-3">
+<h3 id="org0a14a9d">数组排序</h3>
+<div class="outline-text-3" id="text-org0a14a9d">
 <p>
 Java 语言中使用 Arrays 类提供的 <code>sort()</code> 方法来对数组进行排序。
 </p>
@@ -579,15 +582,15 @@ Java 语言中使用 Arrays 类提供的 <code>sort()</code> 方法来对数组�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #66D9EF;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr">2: </span>    <span style="color: #66D9EF;">Integer</span><span style="color: #66D9EF;">[]</span> <span style="color: #FD971F;">arr</span> = <span style="color: #66D9EF;">{</span>9, 8, 7, 2, 3, 4, 1, 0, 6, 5<span style="color: #66D9EF;">}</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#25968;&#32452;&#31867;&#22411;&#20026; Integer</span>
-<span class="linenr">3: </span>    Arrays.sort<span style="color: #66D9EF;">(</span>arr, Collections.reverseOrder<span style="color: #A6E22E;">()</span><span style="color: #66D9EF;">)</span>;
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">static</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">main</span><span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">String</span><span style="color: #5FD7FF;">[]</span> <span style="color: #FF8C00;">args</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #5FD7FF;">Integer</span><span style="color: #5FD7FF;">[]</span> <span style="color: #FF8C00;">arr</span> = <span style="color: #5FD7FF;">{</span>9, 8, 7, 2, 3, 4, 1, 0, 6, 5<span style="color: #5FD7FF;">}</span>; <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#25968;&#32452;&#31867;&#22411;&#20026; Integer</span>
+<span class="linenr">3: </span>    Arrays.sort<span style="color: #5FD7FF;">(</span>arr, Collections.reverseOrder<span style="color: #87D700;">()</span><span style="color: #5FD7FF;">)</span>;
 <span class="linenr">4: </span>
-<span class="linenr">5: </span>    <span style="color: #F92672;">for</span> <span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">item</span> : arr<span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">6: </span>        System.out.print<span style="color: #A6E22E;">(</span>item + <span style="color: #E6DB74;">" "</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">7: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">8: </span><span style="color: #AE81FF;">}</span>
-<span class="linenr">9: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; 9 8 7 6 5 4 3 2 1 0</span>
+<span class="linenr">5: </span>    <span style="color: #FF1493;">for</span> <span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">item</span> : arr<span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">6: </span>        System.out.print<span style="color: #87D700;">(</span>item + <span style="color: #CDC673;">" "</span><span style="color: #87D700;">)</span>;
+<span class="linenr">7: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">8: </span><span style="color: #AF87FF;">}</span>
+<span class="linenr">9: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#8594; 9 8 7 6 5 4 3 2 1 0</span>
 </pre>
 </div>
 
@@ -596,32 +599,32 @@ Java 语言中使用 Arrays 类提供的 <code>sort()</code> 方法来对数组�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Test</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr"> 3: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#27880;&#24847;&#65292;&#35201;&#24819;&#25913;&#21464;&#40664;&#35748;&#30340;&#25490;&#21015;&#39034;&#24207;&#65292;&#19981;&#33021;&#20351;&#29992;&#22522;&#26412;&#31867;&#22411;&#65288;int, double, char&#65289;&#32780;&#35201;&#20351;&#29992;&#23427;&#20204;&#23545;&#23601;&#30340;&#31867;</span>
-<span class="linenr"> 4: </span>        <span style="color: #66D9EF;">Integer</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">arr</span> = <span style="color: #A6E22E;">{</span>9, 8, 7, 2, 3, 4, 1, 0, 6, 5<span style="color: #A6E22E;">}</span>;
-<span class="linenr"> 5: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23450;&#20041;&#19968;&#20010;&#33258;&#23450;&#20041;&#31867; MyComparator &#30340;&#23545;&#35937;</span>
-<span class="linenr"> 6: </span>        <span style="color: #66D9EF;">Comparator</span> <span style="color: #FD971F;">cmp</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">MyComparator</span><span style="color: #A6E22E;">()</span>;
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">Test</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #FF1493;">public</span> <span style="color: #FF1493;">static</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">main</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">String</span><span style="color: #87D700;">[]</span> <span style="color: #FF8C00;">args</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#27880;&#24847;&#65292;&#35201;&#24819;&#25913;&#21464;&#40664;&#35748;&#30340;&#25490;&#21015;&#39034;&#24207;&#65292;&#19981;&#33021;&#20351;&#29992;&#22522;&#26412;&#31867;&#22411;&#65288;int, double, char&#65289;&#32780;&#35201;&#20351;&#29992;&#23427;&#20204;&#23545;&#23601;&#30340;&#31867;</span>
+<span class="linenr"> 4: </span>        <span style="color: #5FD7FF;">Integer</span><span style="color: #87D700;">[]</span> <span style="color: #FF8C00;">arr</span> = <span style="color: #87D700;">{</span>9, 8, 7, 2, 3, 4, 1, 0, 6, 5<span style="color: #87D700;">}</span>;
+<span class="linenr"> 5: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#23450;&#20041;&#19968;&#20010;&#33258;&#23450;&#20041;&#31867; MyComparator &#30340;&#23545;&#35937;</span>
+<span class="linenr"> 6: </span>        <span style="color: #5FD7FF;">Comparator</span> <span style="color: #FF8C00;">cmp</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">MyComparator</span><span style="color: #87D700;">()</span>;
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span>        Array.sort<span style="color: #A6E22E;">(</span>arr, cmp<span style="color: #A6E22E;">)</span>;
-<span class="linenr"> 9: </span>        <span style="color: #F92672;">for</span> <span style="color: #A6E22E;">(</span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">item</span> : arr<span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
-<span class="linenr">10: </span>            System.out.print<span style="color: #E6DB74;">(</span>item + <span style="color: #E6DB74;">" "</span><span style="color: #E6DB74;">)</span>;
-<span class="linenr">11: </span>        <span style="color: #A6E22E;">}</span>
-<span class="linenr">12: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">13: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr"> 8: </span>        Array.sort<span style="color: #87D700;">(</span>arr, cmp<span style="color: #87D700;">)</span>;
+<span class="linenr"> 9: </span>        <span style="color: #FF1493;">for</span> <span style="color: #87D700;">(</span><span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">item</span> : arr<span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr">10: </span>            System.out.print<span style="color: #CDC673;">(</span>item + <span style="color: #CDC673;">" "</span><span style="color: #CDC673;">)</span>;
+<span class="linenr">11: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr">12: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">13: </span><span style="color: #AF87FF;">}</span>
 <span class="linenr">14: </span>
-<span class="linenr">15: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#23454;&#29616; Comparator &#25509;&#21475;</span>
-<span class="linenr">16: </span><span style="color: #F92672;">class</span> <span style="color: #66D9EF;">MyComparator</span> <span style="color: #F92672;">implements</span> <span style="color: #66D9EF;">Comparator</span><span style="color: #AE81FF;">&lt;</span><span style="color: #66D9EF;">Integer</span><span style="color: #AE81FF;">&gt;</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr">17: </span>    <span style="color: #AE81FF;">@Override</span>
-<span class="linenr">18: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">int</span> <span style="color: #A6E22E;">compare</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">Integer</span> <span style="color: #FD971F;">o1</span>, <span style="color: #66D9EF;">Integer</span> <span style="color: #FD971F;">o2</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">19: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22914;&#26524; o1 &#23567;&#20110; o2 &#65292;&#23601;&#36820;&#22238;&#27491;&#20540;&#65307;</span>
-<span class="linenr">20: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22914;&#26524; o1 &#22823;&#20110; o2 &#65292;&#23601;&#36820;&#22238;&#36127;&#20540;&#65307;</span>
-<span class="linenr">21: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22914;&#27492;&#65292;&#39072;&#20498;&#19968;&#19979;&#65292;&#23601;&#21487;&#20197;&#23454;&#29616;&#38477;&#24207;&#25490;&#24207;&#20102;&#65292;&#21453;&#20043;&#21363;&#21487;&#33258;&#23450;&#20041;&#21319;&#24207;&#25490;&#24207;&#20102;</span>
-<span class="linenr">22: </span>        <span style="color: #F92672;">return</span> o2 - o1;
-<span class="linenr">23: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">24: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">15: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#23454;&#29616; Comparator &#25509;&#21475;</span>
+<span class="linenr">16: </span><span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">MyComparator</span> <span style="color: #FF1493;">implements</span> <span style="color: #5FD7FF;">Comparator</span><span style="color: #AF87FF;">&lt;</span><span style="color: #5FD7FF;">Integer</span><span style="color: #AF87FF;">&gt;</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">17: </span>    <span style="color: #AF87FF;">@Override</span>
+<span class="linenr">18: </span>    <span style="color: #FF1493;">public</span> <span style="color: #5FD7FF;">int</span> <span style="color: #87D700;">compare</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">Integer</span> <span style="color: #FF8C00;">o1</span>, <span style="color: #5FD7FF;">Integer</span> <span style="color: #FF8C00;">o2</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">19: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22914;&#26524; o1 &#23567;&#20110; o2 &#65292;&#23601;&#36820;&#22238;&#27491;&#20540;&#65307;</span>
+<span class="linenr">20: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22914;&#26524; o1 &#22823;&#20110; o2 &#65292;&#23601;&#36820;&#22238;&#36127;&#20540;&#65307;</span>
+<span class="linenr">21: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22914;&#27492;&#65292;&#39072;&#20498;&#19968;&#19979;&#65292;&#23601;&#21487;&#20197;&#23454;&#29616;&#38477;&#24207;&#25490;&#24207;&#20102;&#65292;&#21453;&#20043;&#21363;&#21487;&#33258;&#23450;&#20041;&#21319;&#24207;&#25490;&#24207;&#20102;</span>
+<span class="linenr">22: </span>        <span style="color: #FF1493;">return</span> o2 - o1;
+<span class="linenr">23: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">24: </span><span style="color: #AF87FF;">}</span>
 <span class="linenr">25: </span>
-<span class="linenr">26: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; 9 8 7 6 5 4 3 2 1 0</span>
+<span class="linenr">26: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#8594; 9 8 7 6 5 4 3 2 1 0</span>
 </pre>
 </div>
 
@@ -631,9 +634,9 @@ Java 语言中使用 Arrays 类提供的 <code>sort()</code> 方法来对数组�
 </div>
 </div>
 
-<div id="outline-container-org66fc4ca" class="outline-3">
-<h3 id="org66fc4ca">冒泡排序</h3>
-<div class="outline-text-3" id="text-org66fc4ca">
+<div id="outline-container-org8a9afbd" class="outline-3">
+<h3 id="org8a9afbd">冒泡排序</h3>
+<div class="outline-text-3" id="text-org8a9afbd">
 <p>
 i.e. Bubble Sort
 </p>
@@ -647,16 +650,77 @@ i.e. Bubble Sort
 </p>
 
 <p>
-Java 中的冒泡排序在双层循环中实现，其中外层循环控制排序轮数，总循环次数为要排序数组的长度减 1 ；而内层循环主要用于对比相邻元素的大小，以确定是否交换位置，对比和交换次数排序轮数而减少。
+Java 中的冒泡排序在双层循环中实现，其中外层循环控制排序轮数，总循环次数为要排序数组的长度减 1 ；而内层循环主要用于对比相邻元素的大小，以确定是否交换位置，对比和交换次数依排序轮数而减少。
+</p>
+
+<p>
+来看个例子吧。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">static</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">main</span><span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">String</span><span style="color: #5FD7FF;">[]</span> <span style="color: #FF8C00;">args</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #5FD7FF;">double</span><span style="color: #5FD7FF;">[]</span> <span style="color: #FF8C00;">score</span> = <span style="color: #5FD7FF;">{</span>80, 78, 92, 65, 59, 100<span style="color: #5FD7FF;">}</span>;
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>    <span style="color: #FF1493;">for</span> <span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">i</span> = 0; i &lt; score.<span style="color: #5FD7FF;">length</span> - 1; i++<span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 5: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#27604;&#36739;&#30456;&#20449;&#20004;&#20010;&#20803;&#32032;&#65292;&#36739;&#22823;&#30340;&#25968;&#24448;&#21518;&#20882;&#27873;</span>
+<span class="linenr"> 6: </span>        <span style="color: #FF1493;">for</span> <span style="color: #87D700;">(</span><span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">j</span> = 0; j &lt; score.<span style="color: #5FD7FF;">length</span> - 1 - i; j++<span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr"> 7: </span>            <span style="color: #FF1493;">if</span> <span style="color: #CDC673;">(</span>score<span style="color: #FF8C00;">[</span>j<span style="color: #FF8C00;">]</span> &gt; score<span style="color: #FF8C00;">[</span>j + 1<span style="color: #FF8C00;">]</span><span style="color: #CDC673;">)</span> <span style="color: #CDC673;">{</span>
+<span class="linenr"> 8: </span>                <span style="color: #5FD7FF;">double</span> <span style="color: #FF8C00;">temp</span> = score<span style="color: #FF8C00;">[</span>j + 1<span style="color: #FF8C00;">]</span>;
+<span class="linenr"> 9: </span>                score<span style="color: #FF8C00;">[</span>j + 1<span style="color: #FF8C00;">]</span> = score<span style="color: #FF8C00;">[</span>j<span style="color: #FF8C00;">]</span>;
+<span class="linenr">10: </span>                score<span style="color: #FF8C00;">[</span>j<span style="color: #FF8C00;">]</span> = temp;
+<span class="linenr">11: </span>            <span style="color: #CDC673;">}</span>
+<span class="linenr">12: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr">13: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">14: </span>
+<span class="linenr">15: </span>    <span style="color: #FF1493;">for</span> <span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">s</span> : score<span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">16: </span>        System.out.println<span style="color: #87D700;">(</span>s<span style="color: #87D700;">)</span>;
+<span class="linenr">17: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">18: </span><span style="color: #AF87FF;">}</span>
+<span class="linenr">19: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#8594; 59 65 78 80 92 100</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge9d4d37" class="outline-3">
+<h3 id="orge9d4d37"><span class="todo TODO">TODO</span> 快速排序</h3>
+<div class="outline-text-3" id="text-orge9d4d37">
+<p>
+i.e. Quick Sort
+</p>
+
+<p>
+快速排序是对冒泡排序的一种改进，是一种排序执行效率很高的排序算法。
+</p>
+
+<p>
+快速排序的 <span class="underline">基本思想</span> ：通过一趟排序，将要排序的数据分隔成独立的两部分，其中一部分的所有数据比另外一部分的所有数据都要小，然后按照此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此使整个数据变成有序序列。
+</p>
+
+<p>
+具体做法：假设要对某个数组进行排序，首先需要任意选取一个数据（通常选用第一个数据）作为关键数据，然后将所有比它小的数都放到它的前面，所有比它大的数都放到它的后面。这个过程称为一趟快速排序；递归调用此过程，即可实现数据的快速排序。
 </p>
 </div>
+</div>
+
+<div id="outline-container-orgf6580d0" class="outline-3">
+<h3 id="orgf6580d0"><span class="todo TODO">TODO</span> 选择排序</h3>
+<div class="outline-text-3" id="text-orgf6580d0">
+<p>
+选择排序是指每一趟从待排序的数据中选出最大（或最小）的一个元素，顺序放在已排好序的数列的最后，直到全部待排序的数据元素排完。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org09505f1" class="outline-3">
+<h3 id="org09505f1"><span class="todo TODO">TODO</span> 插入排序</h3>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-18 Fri 19:37</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-09-21 Mon 08:44</p>
+<p class="date">Created: 2020-09-21 Mon 18:04</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

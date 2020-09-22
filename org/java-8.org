@@ -1,0 +1,626 @@
+#+SETUPFILE: ../theme-rose.setup
+#+DATE: <2020-09-21 Mon 18:05>
+#+TITLE: 类和对象
+
+** 面向对象简介
+
+面向对象简称 OO（Object Oriented），20 世纪 80 年代，有了面向对象分析（OOA）、面向对象设计（OOD）、面向对象程序设计（OOP）等新的系统开发方式模型的研究。
+
+*** 对象的概念
+
+对 Java 语言来说，一切皆是对象，对象就是面向对象程序设计的核心。那么到底什么是对象呢？
+
+所谓对象就是真实世界中的实体，对象与实体是一一对应的，也就是说现实世界中的每一个实体都是一个对象，它是一种具体的概念。对象有以下特点：
+- 对象具有属性和行为；
+- 对象具有变化的状态；
+- 对象具有唯一性；
+- 对象都是某个类别的实例。
+
+面向对象开发模式，在具体的开发过程中便于程序的划分，方便程序员分工合作，提高开发效率。
+
+#+BEGIN_EXPORT html
+<essay>
+Hmm... 对企业来说，效率是关键啊。
+</essay>
+#+END_EXPORT
+
+面向对象程序设计（OOP）有以下优点：
+- 可重用性：代码重复使用，减少代码量，提高开发效率。
+
+#+BEGIN_QUOTE
+面向对象的三大核心特性：继承、封装和多态，都是围绕这个核心。
+#+END_QUOTE
+
+- 可扩展性：指新的功能可以很容易地加入到系统中来，便于软件的修改；
+- 可管理性：能够将功能与数据结合，方便管理。
+
+该开发模式之所以使程序设计更加完善和强大，主要是因为面向对象具有继承、封装和多态 3 个核心特性。
+
+_1. 继承性_
+
+程序中的继承性，是指子类拥有父类的全部特征和行为，这是类之间的一种关系。
+
+*注：C++ 支持多继承，即一个子类可有多个父类，多继承会引起很多冲突问题。Java 语言是单继承的，即一个子类只能有一个父类，但 Java 可以实现多个接口。
+
+#+BEGIN_QUOTE
+接口类似于类，但接口的成员没有执行体。
+#+END_QUOTE
+
+_2. 封装性_
+
+封装是将代码及其处理的数据绑定在一起的一种编程机制，该机制保证了程序和数据都不受外部干扰且不被误用。
+
+#+BEGIN_QUOTE
+封装的目的在于保护信息。
+#+END_QUOTE
+
+使用它的主要优点如下：
+- 保护类中的信息，它可以阻止在外部定义的代码随意访问内部代码和数据；
+- 隐藏细节信息，用记只需要知道如何操作，不需要知道是如何运行的；
+- 有助于建立各个系统之间的松耦合关系，提高系统的使用；
+- 提高软件的复用率，降低成本。
+
+*Java 语言的基本封装单位是类。* 由于类的用途是封装复杂性，所以类的内部有隐藏实现复杂性的机制。
+
+Java 提供了私有和公有的访问模式，类的公有接口代表外部的用户应该知道或可以知道的每件东西，私有方法数据只能通过该类的成员代码来访问，这就可以确保不会发生不希望的事情。
+
+_3. 多态性_
+
+面向对象的多态性，即“一个接口，多个方法”。多态性体现在父类中定义的属性和方法被子类继承后，可以具有不同的属性或表现方式。 *多态性允许一个接口被多个同类使用* ，弥补了单继承的不足。
+
+*** 认识类和对象
+
+*在面向对象中，类和对象是最基本、最重要的组成单元。*
+
+类实际上是表示一个客观世界某类群体的一些基本特征抽象，对象就是表示一个个具体的东西，所以说类是对象的抽象，对象是类的具体。
+
+#+BEGIN_EXPORT html
+<essay>
+看，哲学小妞又来了。
+</essay>
+#+END_EXPORT
+
+类是概念模型，定义对象的所有特性和所需的操作，对象是真实的模型，是一个具体的实体。
+
+由此可见，类是描述了一组有相同特性（属性）和相同行为（方法）的一组对象的集合。
+
+类是构造面向对象程序的基本单位，是抽取了同类对象的共同属性和方法所形成的对象或实体的“模板”。而对象是现实世界中实体的描述，对象要创建才存在，有了对象才能对对象进行操作。类是对象的模板，对象是类的实例。
+
+** 类
+
+类是 Java 中的一种重要的引用数据类型，也是组成 Java 程序的基本要素，因为 Java 程序都是基于类的。
+
+在 Java 中定义一个类，需要使用 =class= 关键字、一个自定义的类名和一对表示程序体的大括号。完整语法如下：
+
+#+BEGIN_EXAMPLE
+  [public] [abstrct|final] class <class_name> [extends <class_name>] [implements <interface_name>] {
+      // 定义属性部分
+      <propery_type> <property1>;
+      <propery_type> <property2>;
+      <propery_type> <property3>;
+      ...
+      // 定义方法部分
+      function1();
+      function2();
+      function3();
+      ...
+  }
+#+END_EXAMPLE
+
+上述语法中各关键字的描述如下：
+- =public= ：表示“共有”的意思；
+
+#+BEGIN_QUOTE
+如果使用 =public= 修饰，则可以被其他类和程序访问。每个 Java 程序的主类都必须是 public 类，作为公共工具供其他类和程序使用的类应定义为 public 类。
+#+END_QUOTE
+
+- =abstract= ：如果类被 =abstract= 修饰，则该类为抽象类；
+
+#+BEGIN_QUOTE
+抽象类不能被实例化，但抽象类中可以有抽象方法（使用 =abstract= 修饰的方法 ）和具体方法（没有使用 =abstract= ）修饰的方法。
+
+*注：继承该抽象类的所有子类都必须实现该抽象类是的所有抽象方法（除非了类也是抽象类）。
+#+END_QUOTE
+
+- =final= ：如果类被 =final= 修饰，则不允许被继承；
+- =class= ：声明类的关键字；
+- =class_name= ：类的名称；
+- =extends= ：表示继承其他类；
+- =implements= ：表示实现某些接口；
+- =property_type= ：表示成员变量的类型；
+- =property= ：表示成员变量名称；
+- =function()= ：表示成员方法名称。
+
+Java 类名的命名规则：
+- 类名应该以下划线（ =_= ）或字母开头，最好以字母开头；
+- 第一个字母最好大写，如果类名由多个单词组成，则每个单词的首字母最好都大写；
+- 类名不能为 Java 中的关键字，例如 =boolean、this、int= 等；
+- 类名不能包含任何嵌入的空格或点号以及除了下划线（ =_= ）和美元符号（ =$= ）字符之外的特殊字符。
+
+来定义一个简单的 Person 类，如下：
+
+#+BEGIN_SRC java -n
+  public class Person {
+      private String name;        // 姓名
+      private int age;            // 年龄
+      public void tell() {
+          // 定义说话的方法
+          System.out.println(name + "今年" + age + "岁！");
+      }
+  }
+#+END_SRC
+
+*** 成员变量
+
+在 Java 中类的成员变量定义了类的属性。声明成员变量的语法如下：
+
+#+BEGIN_EXAMPLE
+  [public|protected|private] [static] [final] <type> <variable_name>
+#+END_EXAMPLE
+
+各参数的含义如下：
+- =public、protected、private= ：用于表示成员变量的访问权限；
+- =static= ：表示该成员变量为类变量，也称为静态变量；
+- =final= ：表示将该成员变量声明为常量，其值无法更改；
+- =type= ：表示变量的类型；
+- =variable_name= ：表示变量名称。
+
+可以在声明成员变量的同时对其他进行初始化，如果声明成员变量时没有对其初始化，则系统会使用默认值初始化成员变量。
+
+| 类型         |                        | 默认值     |
+|--------------+------------------------+------------|
+| 整数型       | byte、short、int、long | =0=        |
+| 单精度浮点型 | float                  | =0.0f=     |
+| 双精度浮点型 | double                 | =0.0d=     |
+| 字符型       | char                   | ='\u0000'= |
+| 布尔型       |                        | =false=    |
+| 引用类型     |                        | =null=     |
+
+*** 成员方法
+
+声明成员方法可以定义类的行为，行为表示一个对象能够做的事情或者能够从一个对象取得的信息。类的各种功能操作都是用方法来实现的，属性只不过提供了相应的数据。
+
+*一个完整的方法通常包括：方法名称、方法主体、方法参数和方法返回值类型。*
+
+成员方法一旦被定义，便可以在程序中多次调用，提高了编程效率。声明成员方法的语法格式如下：
+
+#+BEGIN_EXAMPLE
+  public class Test {
+      [public|private|protected] [static] <void|return_type> <method_name> ([paramList]) {
+          // 方法体
+      }
+  }
+#+END_EXAMPLE
+
+上述代码中一个方法包含 4 部分：方法的返回值、方法名称、方法的参数和方法体。其中：
+
+_1. 返回类型_
+
+ =return_type= 是方法返回值的数据类型，数据类型可以是原始的数据类型，也可以一个引用数据类型，如一个类、接口和数组等。除了这些，一个方法还可以没有返回值，即返回类型为 =void= 。
+
+若方法有返回值，则在方法体中用 =return= 语句指明要返回的值，格式如下：
+
+#+BEGIN_EXAMPLE
+return 表达式
+// OR
+return (表达式)
+#+END_EXAMPLE
+
+其中，表达式可以是常量、变量、对象等。
+
+**注：表达式的数据类型必须与声明成员方法时给出的返回值类型一致。*
+
+_2. 参数列表_
+
+=paramList= 表示参数列表，这些变量都要有自己的数据类型，可以是原始类型，也可以是复杂数据类型，一个方法主要依靠参数来传递消息。方法主体是方法中执行功能操作的语句。
+
+*注：形参是定义方法时参数列表中出现的参数，实参是调用方法时为方法传递的参数。
+
+方法的形参和实参具有以下特点：
+
+（1）形参变量只有在被调用时才分配内存单元，在调用结束时，即刻释放所分配的内存单元。因此，形参只有在方法内部才有效，方法调用结束返回主调方法后则不能再使用该形参变量。
+
+#+BEGIN_EXPORT html
+<essay>
+一切的机理，最终都要回到内存去解释，也只有如此，才能理解它的本质。
+</essay>
+#+END_EXPORT
+
+（2）实参可以是常量、变量、表达式、方法等，无论实参是何种类型的量，在时行方法调用时，它们都必须具有确定的值，以便把这些值传送给形参。因此，应预先用赋值、输入等办法使实参获得确定的值。
+
+（3）实参和形参在数量、类型和顺序上应严格一致，否则 会发生“类型不匹配”的错误。
+
+（4）方法调用中发生的数据传送是单向的，即只能把实参的值传送给形参，而不能把形参的值反射地传送给实参。因此，在方法调用过程中，形参的值发生改变，而实参的值不会变化。
+
+_3. 修饰符_
+
+其他各修饰符的含义如下：
+- =public、private、protected= ：表示成员方法的访问权限；
+- =static= ：表示限定该成员方法为静态方法；
+- =final= ：表示限定该成员方法不能被重写或重载；
+- =abstract= ：表示限定该成员方法为抽象方法（不提供具体的实现，并且所属类型必须为抽象类）。
+
+_4.成员方法调用_
+
+在调用成员方法时应注意以下 4 点：
+
+（1）对无参成员方法来说，是没有实际参数列表的，但方法名后的括号不能省略。
+
+（2）对带参数的成员方法来说，实参的个数、顺序以及它们的数据类型必须与形式参数的个数、顺序以及它们的数据类型保持一致，各个实参间用逗号分隔，实参名与形参名可同可不同。
+
+（3）实参也可以是表达式，此时一定要注意使表达式的数据类型与形参的数据类型相同，或者使表达式的类型按 Java 类型转换规则达到形参指明的数据类型。
+
+（4）实参变量对形参变量的数据传递是“值传递”，程序在执行到调用成员方法时，Java 把实参值复制到一个临时的存储区（栈）中，形参有任何修改都在栈中进行，当退出该成员方法时，Java 自动清除栈中的内容。
+
+_5. 方法体中的局部变量_
+
+在方法体内可以定义本方法所使用的变量，称为局部变量。它的生存期与作用域是在本方法内，就开本方法则会被自动释放。
+
+在方法体内定义变量时，变量前不能加修饰符。局部变量在使用前必须明确赋值，否则编译时会出错。
+
+另外，在一个方法内部，可以在复合语句（把多个语句用括号 ={}= 括起来组成的一个语句称复合语句）中定义变量，这些变量只在复合语句中有效。
+
+#+BEGIN_EXPORT html
+<essay>
+其实，说了那么多，说到底不过是一个作用域的问题，作用域的还是要回归到内存中去找寻终极答案。
+</essay>
+#+END_EXPORT
+
+*** this
+
+=this= 关键字是 Java 常用的关键字，可用于任何实例方法内指向当前对象，也可指向对其调用当前方法的对象，或者在需要当前类型对象引用时使用。
+
+_1. this.属性名_
+
+大部分时候，普通方法访问其他方法、成员变量时无须使用 =this= 前缀，但如果方法里有个局部变量和成员变量同名，但程序又需要在该方法里访问这个被覆盖的成员变量，则必须使用 =this= 前缀。
+
+来看个例子。
+
+#+BEGIN_SRC java -n
+  public class Teacher {
+      private String name;
+      private double salary;
+      private int age;
+
+      public Teacher(String name, double salary, int age) {
+          this.name = name;
+          this.salary = salary;
+          this.age = age;
+      }
+  }
+#+END_SRC
+
+在 Teacher 类的构造方法中使用了 =this= 关键字对属性 =name、salary、age= 赋值， =this= 表示当前对象。如 =this.name=name= 语句表示一个赋值语句，等号左边的 =this.name= 是指当前对象具有的变量 =name= ，等号右边的 =name= 表示参数传递过来的数值。
+
+#+BEGIN_QUOTE
+*注：当一个类的属性（成员变量）名与访问该属性的方法参数名相同时，则需要使用 =this= 关键字来访问类中的属性，以区分类的属性和方法中的参数。
+#+END_QUOTE
+
+_2. this.方法名_
+
+=this= 关键字最大的作用就是让类中一个方法，访问类里的另一个方法或实例变量。
+
+=this= 可以代表任何对象，当 =this= 出现在某个方法中时，它所代表的对象是不确定的，但它的类型是确定的，它所代表的只能是当前类的实例。只有当这个方法被调用时，它所代表的对象被确定下来，谁在调用这个方法， =this= 就代表谁。
+
+#+BEGIN_EXPORT html
+<essay>
+这话怎么读着有点抽象…… 来看一个具体的例子吧。很多时候都是这样，当你对所知理论感到困惑的时候，就回归到它所描述的具体的事物吧，因为那才是具体的、可感知的。
+</essay>
+#+END_EXPORT
+
+假设定义了一个 Dog 类，这个 Dog 对象的 =run()= 方法需要调用它的 =jump()= 方法，Dog 类的代码如下所示：
+
+#+BEGIN_SRC java -n
+  /**
+   ,* 第一种定义 Dog 类方法
+   ,**/
+  public class Dog {
+      // 定义一个 jump() 方法
+      public void jump() {
+          System.out.println("正在执行 jump 方法");
+      }
+
+      // 定义一个 run() 方法，run() 方法需要借助 jump() 方法
+      public void run() {
+          Dog d = new Dog();
+          d.jump();
+          System.out.println("正在执行 run 方法");
+      }
+  }
+#+END_SRC
+
+像上面这种方式来定义这个 Dog 类，确实可以实现在 =run()= 方法中调用 =jump()= 方法。下面再提供一个程序来创建 Dog 对象，并调用该对象的 =run()= 方法。
+
+#+BEGIN_SRC java -n
+  public class DogTest {
+      public static void main(String[] args) {
+          // 创建 Dog 对象
+          Dog dog = new Dog();
+          // 调用 Dog 对象的 run() 方法
+          dog.run();
+      }
+  }
+#+END_SRC
+
+你看，在上面的程序中，一共产生了两个 Dog 对象，在 Dog 类的 =run()= 方法中，程序创建了一个 Dog 对象，并使用名为 =d= 的引用变量来指向该 Dog 对象。在 DogTest 的 =main()= 方法中，程序再次创建了一个 Dog 对象，并使用名为 =dog= 的引用变量来指向该 Dog 对象。
+
+下面我们思考两个问题。
+
+（1）在 =run()= 方法中调用 =jump()= 方法时是否一定需要一个 Dog 对象？
+
+答案的肯定的，因为没有使用 =static= 修饰的成员变量和方法都必须使用对象来调用。
+
+（2）是否一定需要重新创建一个 Dog 对象？
+
+不一定，因为当程序调用 =run()= 方法时，一定会提供一个 Dog 对象，这样就可以直接使用这个已经存在的 Dog 对象，而无须重新创建新的 Dog 对象了。因此需要在 =run()= 方法中获得调用该方法的对象，通过  =this= 关键字就可以满足这个要求。
+
+#+BEGIN_QUOTE
+this 可以代表任何对象，当 this 出现在某个方法体中时，它所代表的对象是不确定的，但它的类型是确定的，它所代表的只能是当前类的实例。只有当这个方法被调用时，它所代表的对象才被确定下来，谁在调用这个方法，this 就代表谁。
+#+END_QUOTE
+
+#+BEGIN_EXPORT html
+<essay>
+现在再看这段话，是不是容易理解一些了呢？好的，让我们继续。
+</essay>
+#+END_EXPORT
+
+将前面的 Dog 类的 =run()= 方法改为如下形式会更加合适， =run()= 方法代码修改如下：
+
+#+BEGIN_SRC java -n
+  /**
+   ,* 第二种定义 Dog 类方法
+   ,**/
+
+  // 定义一个 run() 方法，run() 方法需要借助 jump() 方法
+  public void run() {
+      // 使用 this 引导调用 run() 方法的对象
+      this.jump();
+      System.out.println("正在执行 run 方法");
+  }
+#+END_SRC
+
+其实想一下，也不难明白，在第一种 Dog 类定义中，在 Dog 对象的 =run()= 方法内重新创建了一个新的 Dog 对象，并调用它的 =jump()= 方法，这意味着一个 Dog 对象的 =run()= 方法需要依赖于另一个 Dog 对象的 =jump()= 方法，这显然是不符合逻辑的。
+
+第二种 Dog 类定义是当一个 Dog 对象调用 =run()= 方法时， =run()= 方法需要依赖它自己的 =jump()= 方法，与第一个定义类的方法相比，更符合实际情形。
+
+在现实世界里，对象的一个方法依赖于另一个方法的情形很常见。例如，吃饭方法依赖于拿筷子方法，写程序方法依赖于敲键盘方法。这种依赖都是同一个对象两个方法之间的依赖。因此，Java 允许对象的一个成员直接调用另一个成员，可以省略 =this= 前缀。也就是说，将上面的 =run()= 方法必为如下形式也完全正确。
+
+#+BEGIN_SRC java -n
+  public void run() {
+      jump();
+      System.out.println("正在执行 run 方法");
+  }
+#+END_SRC
+
+*注：大部分时候，一个方法访问该类中的定义的其他方法、成员变量时加不加 =this= 前缀的效果的是完全一样的。
+
+对于 =static= 修饰的方法而言，可以使用类来直接调用该方法，如果在 =static= 修饰的方法中使用 =this= 关键字，则这个关键字就无法指向合适的对象。所以， *static 修饰的方法中不能使用 this 引用。* 并且 Java 语法规定，静态成员不能直接访问非静态成员。
+
+*注：省略 this 前缀只是一种假象，虽然程序员省略了调用 =jump()= 方法之前的 =this= ，但实际上这个 =this= 依然的存在的。
+
+_3. this() 访问构造方法_
+
+=this()= 用来访问本类的构造方法（构造方法是类的一种特殊方法，方法名称和类名相同，没有返回值），括号中可以有参数，如果有参数就是调用指定的有参构造方法。
+
+**注： =this()= 不能在普通方法中使用，只能写在构造方法中；且在构造方法中使用时，必须是第一条语句。*
+
+#+BEGIN_SRC java -n
+  public class Student {
+      String name;
+
+      // 无参构造方法
+      public Student() {
+          this("张三");
+      }
+
+      // 有参构造方法
+      public Student(String name) {
+          this.name = name;
+      }
+
+      // 输出 name 和 age
+      public void print() {
+          System.out.println("姓名：" + name);
+      }
+
+      public static void main(String[] args) {
+          Student stu = new Student();
+          stu.print();
+      }
+  }
+  // → 姓名：张三
+#+END_SRC
+
+** 对象
+
+对象是对类的实例化。对象具有状态和行为，变量用来表明对象的状态，方法表明对象所具有的行为。Java 对象的生命周期包括创建、使用和清除。
+
+*** 对象创建
+
+在 Java 语言中创建对象分显示创建与隐含创建两种情况。
+
+_1. 显示创建对象_
+
+对象的显示创建方式有 4 种。
+
+_1.1 使用 new 关键字创建对象_
+
+语法格式如下：
+
+#+BEGIN_EXAMPLE
+类名 对象名 = new 类名();
+#+END_EXAMPLE
+
+_1.2 调用 java.lang.Class 或者 java.lang.reflect.Constructor 类的 newInstance() 实例方法_
+
+代码格式如下：
+
+#+BEGIN_EXAMPLE
+java.lang.Class Class类对象名称 = java.lang.Class.forName(要实例化的类全称);
+
+类名 对象名 = (类名)Class类对象名称.newInstance();
+#+END_EXAMPLE
+
+调用 =java.lang.Class= 类中的 =forName()= 方法时，需要将要实例化的类的全称（比如 =com.mxl.package.Student= ）作为参数传递过去，然后再调用 =java.lang.Class= 类对象的 =newInstance()= 方法创建对象。
+
+_1.3 调用对象的 clone() 方法_
+
+该方法不常用，使用该方法创建对象时，要实例化的类必须继承 =java.lang.Cloneable= 接口，语法格式如下：
+
+#+BEGIN_EXAMPLE
+类名对象名 = (类名)已创建好的类对象名.clone();
+#+END_EXAMPLE
+
+_1.4 调用 java.io.ObjectInputStream 对旬的 readObject() 方法_
+
+#+BEGIN_EXPORT html
+<essay>
+创建方式千千万，掌握最基本的就可以了。
+</essay>
+#+END_EXPORT
+
+#+BEGIN_SRC java -n
+  public class Student implements Cloneable {
+      // 实现 Cloneable 接口
+      private String Name;
+      private int age;
+
+      public Student(String name, int age) {
+          // 构造方法
+          this.Name = name;
+          this.age = age;
+      }
+
+      public Student() {
+          this.Name = "name";
+          this.age = 0;
+      }
+
+      public String toString() {
+          return "学生名字：" + Name + "，年龄：" + age;
+      }
+
+      public static void main(String[] args) throws Exception {
+          System.out.println("------ 使用 new 关键字创建对象 ------");
+          Student student1 = new Student("小刘", 22);
+          System.out.println(student1);
+
+          System.out.println("------ 调用 java.lang.Class 的 newInstance() 方法创建对象 ------");
+          Class c1 = Class.forName("Student");
+          Student student2 = (Student)c1.newInstance();
+          System.out.println(student2);
+
+          System.out.println("------ 调用对象的 clone() 方法创建对象 ------");
+          Student student3 = (Student)student2.clone();
+          System.out.println(student3);
+      }
+  }
+#+END_SRC
+
+我们对上述示例作一下说明：
+
+（1）使用 =new= 关键字或 Class 对象的 =newInstance()= 方法创建对象时，都会调用类的构造方法。
+
+（2）使用 Class 类的 =newInstance()= 方法创建对象时，会调用类的默认构造方法，即无参构造方法。
+
+（3）使用 Object 类的 =clone()= 方法创建对象时，不会调用类的构造方法，它会创建一个复制的对象，这个对象和原来的对象具有不同的内存地址，但它们的属性值相同。
+
+（4）如果类没有实现 =Cloneable= 接口，则 =clone()= 方法会抛出 =java.lang.CloneNotSupportedException= 异常。
+
+上述程序执行结果如下：
+
+#+BEGIN_EXAMPLE
+------ 使用 new 关键字创建对象 -------
+学生名字：小刘，年龄：22
+------ 调用 java.lang.Class 的 newInstance() 方法创建对象 --------
+学生名字：name，年龄：0
+------ 调用对象的done()方法创建对象 -------
+学生名字：name，年龄：0
+#+END_EXAMPLE
+
+_2. 隐含创建对象_
+
+除了显示创建对象以外，在 Java 程序中还可以隐含地创建对象。如下面这几种情况：
+
+（1） =String strName = "strValue"= ，其中的 =strValue= 就是一个 String 对象，由 Java 虚拟机隐含地创建。
+
+（2）字符串的 =+= 运算符的结果为一个新的 String 对象。
+
+#+BEGIN_SRC java -n
+  String str1 = "Hello";
+  String str2 = "Java";
+  String str3 = str1 + str2;      // str3 引用一个新的 String 对象
+#+END_SRC
+
+（3）当 Java 虚拟机加载一个类时，会隐含地创建描述这个类的 Class 实例。
+
+*注：类的加载是指把类的 =.class= 文件中的二进制数据读入内存中，把它存放在运行时数据区的方法区内，然后在堆区创建一个 =java.lang.Class= 对象，用来封装类在方法区的数据结构。
+
+无论采用哪种方式创建对象，Java 虚拟机在创建一个对象时都包含以下步骤：
+- 给对象分配内存；
+- 将对象的实例变量自动初始化为其变量类型的默认值；
+- 初始化对象，给实例变量赋予正确的初始值。
+
+#+BEGIN_QUOTE
+*注：每个对象都是相互独立的，在内存中占有独立的内存地址，并且每个对象都具有自己的生命周期，当一个对象的生命周期结束时，对象就变成了垃圾，由 Java 虚拟机自带的垃圾回收机制处理。
+#+END_QUOTE
+
+*** 匿名对象
+
+前面我们已经知道，创建对象的标准格式如下：
+
+#+BEGIN_EXAMPLE
+类名称 对象名 = new 类名称();
+#+END_EXAMPLE
+
+每次 =new= 都相当于开辟了一个新的对象，并开辟了一个新的物理空间。
+
+匿名对象就是没有明确给出名字的对象，是对象的一种简写形式。一般匿名对象只使用一次，而且匿名对象只在堆内存中开辟空间，而不存在栈内存的引用，在使用一次后就等待被 GC（垃圾收集机制）回收。
+
+匿名对象在实际开发中基本都是作为其他类实例化对象的参数传递的，它实际上就是个堆内存空间。对象不管匿名与否，都必须在开辟空间之后才可以使用。
+
+*** 属性行为
+
+每个对象都有自己的属性和行为，这些属性和行为在类中体现为成员变量和成员方法，其中成员变量对应对象的属性，成员方法对应对象的行为。
+
+在 Java 中，要引用对象的属性和行为，需要使用点（ =.= ）操作符来访问。对象名在圆点左边，而成员变量或成员方法的名称在圆点的右边。语法格式如下：
+
+#+BEGIN_EXAMPLE
+  对象名.属性(成员变量)    // 访问对象的属性
+  对象名.成员方法名()      // 访问对象的方法
+#+END_EXAMPLE
+
+例如，定义一个 Student 类，创建该类的对象 =stu= ，再对该对象的属性赋值，代码如下：
+
+#+BEGIN_SRC java -n
+  tudent stu = new Student();    // 创建 Student 类的对象 stu
+  stu.Name = "李子文";           // 调用stu对象的Name属性并赋值
+  stu.Sex = true;                // 调用stu对象的Sex属性并赋值
+  stu.Age = 15;                  // 调用stu对象的Age属性并赋值
+#+END_SRC
+
+如果一个对象要被使用，则对象必须被实例化，如果一个对象没有被实例化而直接调用了对象中的属性或方法，如下代码所示：
+
+#+BEGIN_SRC java -n
+  tudent stu = null;
+  stu.Name = "李子文";
+  stu.Sex = true;
+  stu.Age = 15;
+#+END_SRC
+
+则程序运行时会出现以下异常：
+
+#+BEGIN_EXAMPLE
+Exception in thread "main" java.lang.NullPointerException
+#+END_EXAMPLE
+
+*注：此异常是开发中最常见的异常，也会始终伴随着每位开发人员，使用了未实例化的对象则肯定会出现此异常。
+
+#+BEGIN_EXPORT html
+<essay>
+嗯，这件事还挺扯淡的…… ^_||
+</essay>
+#+END_EXPORT
+
+*** 对象销毁
+
