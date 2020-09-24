@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-09-23 Wed 10:13 -->
+<!-- 2020-09-24 Thu 10:04 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>类和对象</title>
@@ -46,6 +46,7 @@
 <li><a href="#orgfc18af8">访问控制修饰符</a></li>
 <li><a href="#org9f54d30">static</a></li>
 <li><a href="#org83ec9d0">静态导入</a></li>
+<li><a href="#orgbef99d2">final</a></li>
 </ul>
 </li>
 </ul>
@@ -1343,13 +1344,252 @@ Java 语言的内存自动回收称为 <span class="underline">垃圾回收（Ga
 
 <div id="outline-container-org83ec9d0" class="outline-3">
 <h3 id="org83ec9d0">静态导入</h3>
+<div class="outline-text-3" id="text-org83ec9d0">
+<p>
+在 JDK 1.5 之后增加了一种静态导入的语法，用于导入指定类的某个或全部静态成员变量、方法。如果一个类中的方法全部是使用 <code>static</code> 声明的静态方法，则在导入时就可以直接使用 <code>import static</code> 的方式导入。
+</p>
+
+<p>
+静态导入使用 <code>import static</code> 语句，静态导入也有两种语法：
+</p>
+
+<p>
+（1）导入指定类的单个静态成员变量、方法，语法格式如下：
+</p>
+
+<pre class="example">
+import static package.ClassName.fieldName|methodName;
+</pre>
+
+<p>
+（2）导入指定类的全部静态就是、方法，语法格式如下：
+</p>
+
+<pre class="example">
+import static package.ClassName.*;
+</pre>
+
+<p>
+*注： <code>*</code> 代表静态成员变量或方法名。
+</p>
+
+<blockquote>
+<p>
+用一句话来归纳 <code>import</code> 和 <code>import static</code> 的作用，使用 <code>import</code> 可以省略写包名，而使用 <code>import static</code> 可以省略类名。
+</p>
+</blockquote>
+
+<p>
+来看个例子吧，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">import</span> <span style="color: #F92672;">static</span> <span style="color: #AE81FF;">java</span>.<span style="color: #AE81FF;">lang</span>.<span style="color: #AE81FF;">System</span>.*;
+<span class="linenr"> 2: </span><span style="color: #F92672;">import</span> <span style="color: #F92672;">static</span> <span style="color: #AE81FF;">java</span>.<span style="color: #AE81FF;">lang</span>.<span style="color: #AE81FF;">Math</span>.*;
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">StaticImportTest</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 5: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 6: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">out &#26159; java.lang.System &#31867;&#30340;&#38745;&#24577;&#25104;&#21592;&#21464;&#37327;&#65292;&#20195;&#34920;&#26631;&#20934;&#36755;&#20986;</span>
+<span class="linenr"> 7: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">PI &#26159; java.lang.Math &#31867;&#30340;&#38745;&#24577;&#25104;&#21592;&#21464;&#37327;&#65292;&#34920;&#31034; &#960; &#24120;&#37327;</span>
+<span class="linenr"> 8: </span>        out.println<span style="color: #A6E22E;">(</span>PI<span style="color: #A6E22E;">)</span>;
+<span class="linenr"> 9: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#30452;&#25509;&#35843;&#29992; Math &#31867;&#30340;&#38745;&#24577;&#26041;&#27861;</span>
+<span class="linenr">10: </span>        out.println<span style="color: #A6E22E;">(</span>sqrt<span style="color: #E6DB74;">(</span>256<span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">11: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">12: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+从上面程序不难看出， <code>import</code> 和 <code>import static</code> 的功能非常相似，只是它们导入的对象不一样而已。 <code>import</code> 语句和 <code>import static</code> 语句都是用于减少程序中代码编写量的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbef99d2" class="outline-3">
+<h3 id="orgbef99d2">final</h3>
+<div class="outline-text-3" id="text-orgbef99d2">
+<p>
+<code>final</code> 应用于类、方法和变量时意义是不同的，但本质是一样的，都表示不可改变，类似 C# 里的 <code>sealed</code> 关键字。
+</p>
+
+<p>
+（1） <code>final</code> 用在变量的前面表示变量的值不可以改变，此时该变量可以被称为常量。
+</p>
+
+<p>
+（2） <code>final</code> 用在方法的前面表示方法不可以被重写。
+</p>
+
+<blockquote>
+<p>
+*注：子类中如果创建了一个与父类中相同名称、相同返回类型、相同参数列表的方法，只是方法体中的实现不同，以实现不同于父类的功能，这种方式称为 <span class="underline">方法重写</span> ，又称为方法覆盖。
+</p>
+</blockquote>
+
+<p>
+（3） <code>final</code> 用在类的前面表示该类不能有子类，即该类不可以被继承。
+</p>
+
+<p>
+<span class="underline">1. final 修饰变量</span>
+</p>
+
+<p>
+<code>final</code> 修饰的变量即成为常量，只能赋值一次，但是 <code>final</code> 所修饰局部变量和成员变量有所不同，如下：
+</p>
+<ul class="org-ul">
+<li><code>final</code> 修饰的局部变量必须使用之前被赋值一次才能使用；</li>
+<li><code>final</code> 修饰的成员变量在声明时没有赋值的叫“空白 final 变量”，它必须在构造方法或静态代码块中初始化。</li>
+</ul>
+
+<note>
+空白 final 实例变量在构造方法中初始化；空白 final 静态变量在静态代码块中初始化。
+</note>
+
+<p>
+*注： <code>final</code> 修饰的变量不能被赋值这种说法是错误的，严格的说法是， <code>final</code> 修饰的变量不可被改变，一旦获得了初始值，该 <code>final</code> 变量的值就不能被重新赋值。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">FinalDemo</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">doSomething</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#27809;&#26377;&#22312;&#22768;&#26126;&#30340;&#21516;&#26102;&#36171;&#20540;</span>
+<span class="linenr"> 4: </span>        <span style="color: #F92672;">final</span> <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">e</span>;
+<span class="linenr"> 5: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21482;&#33021;&#36171;&#20540;&#19968;&#27425;</span>
+<span class="linenr"> 6: </span>        e = 100;
+<span class="linenr"> 7: </span>        System.out.println<span style="color: #A6E22E;">(</span>e<span style="color: #A6E22E;">)</span>;
+<span class="linenr"> 8: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22768;&#26126;&#30340;&#21516;&#26102;&#36171;&#20540;</span>
+<span class="linenr"> 9: </span>        <span style="color: #F92672;">final</span> <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">f</span> = 200;
+<span class="linenr">10: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23454;&#20363;&#24120;&#37327;</span>
+<span class="linenr">13: </span>    <span style="color: #F92672;">final</span> <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">a</span> = 5;            <span style="color: #75715E;">// </span><span style="color: #75715E;">&#30452;&#25509;&#36171;&#20540;</span>
+<span class="linenr">14: </span>    <span style="color: #F92672;">final</span> <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">b</span>;                <span style="color: #75715E;">// </span><span style="color: #75715E;">&#31354;&#30333; final &#21464;&#37327;</span>
+<span class="linenr">15: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#38745;&#24577;&#24120;&#37327;</span>
+<span class="linenr">16: </span>    <span style="color: #F92672;">final</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">c</span> = 12;    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#30452;&#25509;&#36171;&#20540;</span>
+<span class="linenr">17: </span>    <span style="color: #F92672;">final</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">d</span>;         <span style="color: #75715E;">// </span><span style="color: #75715E;">&#31354;&#30333; final &#21464;&#37327;</span>
+<span class="linenr">18: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#38745;&#24577;&#20195;&#30721;&#22359;</span>
+<span class="linenr">19: </span>    <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">20: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21021;&#22987;&#21270;&#38745;&#24577;&#21464;&#37327;</span>
+<span class="linenr">21: </span>        d = 32;
+<span class="linenr">22: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">23: </span>
+<span class="linenr">24: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#26500;&#36896;&#26041;&#27861;</span>
+<span class="linenr">25: </span>    <span style="color: #A6E22E;">FinalDemo</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">26: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21021;&#22987;&#21270;&#23454;&#20363;&#21464;&#37327;</span>
+<span class="linenr">27: </span>        b = 3;
+<span class="linenr">28: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#31532;&#20108;&#27425;&#36171;&#20540;&#65292;&#20250;&#21457;&#29983;&#32534;&#35793;&#38169;&#35823;</span>
+<span class="linenr">29: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">b = 4;</span>
+<span class="linenr">30: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">31: </span>
+<span class="linenr">32: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+<b>final 修饰基本类型变量和引用类型变量的区别</b>
+</p>
+
+<p>
+当使用 <code>final</code> 修饰基本类型变量时，不能对基本类型变量重新赋值，因此基本类型变量不能被改变。但对于引用类型变量而言，它保存的仅仅是一个引用， <code>final</code> 只保证这个引用类型变量所引用的地址不会改变，即一直引用同一个对象，但这个对象完全可以发生改变。
+</p>
+
+<p>
+*注：在使用 final 声明变量时，要求全部的字母大写，这是一种好习惯。
+</p>
+
+<p>
+<span class="underline">2. final 修饰方法</span>
+</p>
+
+<p>
+<code>final</code> 修饰的方法不可被重写，如果出于某些原因，不希望任何类重写这个方法，则可以使用 <code>final</code> 修饰该方法。
+</p>
+
+<p>
+Java 提供的 Object 类里就有一个 <code>final</code> 方法 <code>getClass()</code> ，因为 Java 不希望任何类重写这个方法，所以使用 <code>final</code> 把这个方法密封起来。但对于该类提供的 <code>toString()</code> 和 <code>equals()</code> 方法，都允许子类重写，因此没有使用 <code>final</code> 修饰它们。
+</p>
+
+<p>
+*注：试图重写 <code>final</code> 方法，会引发编译错误。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">FinalMethodTest</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">final</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">test</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 3: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr"> 4: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span><span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Sub</span> <span style="color: #F92672;">extends</span> <span style="color: #66D9EF;">FinalMethodTest</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 7: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#19979;&#38754;&#26041;&#27861;&#23450;&#20041;&#23558;&#20986;&#29616;&#32534;&#35793;&#38169;&#35823;&#65292;&#19981;&#33021;&#37325;&#20889; final &#26041;&#27861;</span>
+<span class="linenr"> 8: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">test</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 9: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">10: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+对于一个 <code>private</code> 方法，因为它仅在当前类中可见，其子类无法访问该方法，所以子类无法重写该方法 &#x2013; 如果子类中定义一个与父类 <code>private</code> 方法有相同方法名、相同形参列表、相同返回值类型的方法，也不是方法重写，只是重新定义了一个新方法。因此，即使使用 <code>final</code> 修饰一个 <code>private</code> 访问权限的方法，依然可以在子类中定义与该方法具有相同方法名、相同形参列表、相同返回值类型的方法。
+</p>
+
+<p>
+<b><code>final</code> 修饰的方法仅仅是不能被重写，并不是不能被重载</b> ，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">FinalOverload</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">final &#20462;&#39280;&#30340;&#26041;&#27861;&#21482;&#26159;&#19981;&#33021;&#34987;&#37325;&#20889;&#65292;&#23436;&#20840;&#21487;&#20197;&#34987;&#37325;&#36733;</span>
+<span class="linenr">3: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">final</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">test</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{}</span>
+<span class="linenr">4: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">final</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">test</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">arg</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{}</span>
+<span class="linenr">5: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<essay>
+方法重载 - 同类同名不同参，一般同返回；<br/>
+方法重写 - 用在继承中，异类同名同参同返回。
+</essay>
+
+<blockquote>
+<p>
+<code>final</code> 修饰类中的方法，说明这种方法提供的功能已经满足当前要求，不需要进行扩展，并且也不允许从此类继承的类来重写这种方法，但是继承仍然可以继承这个方法，也就是说可以直接使用。在声明类中，一个 <code>final</code> 方法只被实现一次。
+</p>
+</blockquote>
+
+<p>
+<span class="underline">3. final 修饰类</span>
+</p>
+
+<p>
+<code>final</code> 修饰的类不能被继承，当子类继承父类时，将可以访问到父类内部数据，并可通过重写父类方法来改变父类方法的实现细节，这可能导致一些不安全的因素。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">final</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">SuperClass</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">3: </span>
+<span class="linenr">4: </span><span style="color: #F92672;">class</span> <span style="color: #66D9EF;">SubClass</span> <span style="color: #F92672;">extends</span> <span style="color: #66D9EF;">SuperClass</span> <span style="color: #AE81FF;">{</span> <span style="color: #75715E;">// </span><span style="color: #75715E;">&#32534;&#35793;&#38169;&#35823;</span>
+<span class="linenr">5: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<blockquote>
+<p>
+<code>final</code> 修饰类是无法被任何其他类继承的，意味着此类在一个继承树中是一个叶子类，并且此类的设计已被认为很完美而不需要进行修改或扩展。
+</p>
+</blockquote>
+
+<p>
+对于 <code>final</code> 类中的成员，可以定义其为 final ，也可以不是 final 。而对于方法，由于所属类为 final 关系，自然也就成了 final 型。当然，也可以明确地给 final 类中的方法加上一个 final ，但显然没有任何意义。
+</p>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-21 Mon 18:05</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-09-23 Wed 10:13</p>
+<p class="date">Created: 2020-09-24 Thu 10:04</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
