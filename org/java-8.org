@@ -1017,3 +1017,51 @@ _3. final 修饰类_
 
 *** 可变参数
 
+在具体实际开发过程中，有时方法在参数的个数是不确定的，这时就需要可变参数了，其语法格式如下：
+
+#+BEGIN_EXAMPLE
+methodName({paramList}, paramType...paramName)
+#+END_EXAMPLE
+
+其中：
+- =methodName=  表示方法名称；
+- =paramList= 表示方法的固定参数列表；
+- =paramType= 表示可变参数的类型；
+- =...= 是声明可变参数的标识；
+- =paramName= 表示可变参数名称。
+
+*注：可变参数必须定义在参数列表的最后。
+
+#+BEGIN_SRC java -n
+  public class StudentTestMethod {
+      public void print(String...names) {
+          int count = names.length;
+          System.out.println("本次参加考试的有 " + count + " 人，名单如下：");
+          for(int i = 0; i < names.length; i++) {
+              System.out.println(names[i]);
+          }
+      }
+
+      public static void main(String[] args) {
+          StudentTestMethod student = new StudentTestMethod();
+          student.print("Amy", "Lucy", "Jessica");
+          student.print("小明", "小红");
+      }
+  }
+
+#+END_SRC
+
+运行结果如下：
+
+#+BEGIN_EXAMPLE
+本次参加考试的有 3 人，名单如下：
+Amy
+Lucy
+Jessica
+本次参加考试的有 2 人，名单如下：
+小明
+小红
+#+END_EXAMPLE
+
+*** 构造方法
+
