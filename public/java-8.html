@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-09-24 Thu 10:04 -->
+<!-- 2020-09-24 Thu 10:41 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>类和对象</title>
@@ -47,6 +47,8 @@
 <li><a href="#org9f54d30">static</a></li>
 <li><a href="#org83ec9d0">静态导入</a></li>
 <li><a href="#orgbef99d2">final</a></li>
+<li><a href="#org33479d2">main()</a></li>
+<li><a href="#orga288e13">可变参数</a></li>
 </ul>
 </li>
 </ul>
@@ -1176,7 +1178,7 @@ Java 语言的内存自动回收称为 <span class="underline">垃圾回收（Ga
 <essay>
 所谓访问控制修饰符，说白了，就是禁止你使用业务以后可能需要修改的数据，否则就会造成“你已经用了，我改了，你的就可能出现异常”这种状况。
 
-<p>另外，所谓控制就是基于作用域的概念，从这个角度就很容易理解这些修饰符了。比如，<code>private<code/> 就是类作用域；<code>friendly</code> 就是包作用域，之所以友好就是你不用去写它也可以（毕竟默认就是它）；<code>protected</code> 就是继承链作用域了，俗称一条绳子上的蚂蚱；<code>public</code> 很容易理解了，就是公共的。</p>
+<p>另外，所谓控制就是基于作用域的概念，从这个角度就很容易理解这些修饰符了。比如，private 就是类作用域；friendly 就是包作用域，之所以友好就是你不用去写它也可以（毕竟默认就是它）；protected 就是继承链作用域了，俗称一条绳子上的蚂蚱；public 很容易理解了，就是公共的。</p>
 </essay>
 </div>
 </div>
@@ -1584,12 +1586,81 @@ Java 提供的 Object 类里就有一个 <code>final</code> 方法 <code>getClas
 </p>
 </div>
 </div>
+
+<div id="outline-container-org33479d2" class="outline-3">
+<h3 id="org33479d2">main()</h3>
+<div class="outline-text-3" id="text-org33479d2">
+<p>
+在 Java 中， <code>main()</code> 方法是 Java 应用程序的入口方法，程序在运行的时候，第一个执行的方法就是 <code>main()</code> 方法，它和其他的方法有很大的不同。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">HelloWorld</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">3: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"Hello World!"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">4: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">5: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+其中，使用 <code>main()</code> 方法时应该注意如下几点：
+</p>
+<ul class="org-ul">
+<li>访问控制权限是公有的（ <code>public</code> ）；</li>
+<li>该方法是静态的 （ <code>static</code> ）。如果要在该方法中调用本类中的其他方法，则调用的其他方法也必须是静态的，否则需要先使用创建本类的实例对象，然后再通过对象调用成员方法；</li>
+<li>该方法没有返回值，只能使用 <code>void</code> ；</li>
+<li>该方法具有一个字符串参数，用来 <b>接收执行 Java 程序的命令行参数</b> 。命令行参数作为字符串，按照顺序依次对应字符串数组中的元素；</li>
+<li>字符串数组的（代码中的 <code>args</code> ）可以任意设置，但一般约定为 <code>args</code> ；</li>
+<li>它的定义必须是 <code>public static void main(String[] args)</code> ；</li>
+<li>一个类只能有一个 <code>main()</code> 方法，这是一个常用于对类进行单元测试（对软件中的最小可测试单元进行检查和验证）的技巧。</li>
+</ul>
+
+<p>
+下面我们来一个关于 <code>args</code> 的例子：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">TestMain</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">n</span> = args.length;    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#33719;&#21462;&#21442;&#25968;&#25968;&#37327;</span>
+<span class="linenr"> 4: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"&#19968;&#20849;&#26377; "</span> + n + <span style="color: #E6DB74;">" &#20010;&#21442;&#25968;"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr"> 5: </span>        <span style="color: #F92672;">if</span> <span style="color: #A6E22E;">(</span>n &gt; 0<span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 6: </span>            <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21028;&#26029;&#21442;&#25968;&#20010;&#25968;&#26159;&#21542;&#22823;&#20110; 0</span>
+<span class="linenr"> 7: </span>            <span style="color: #F92672;">for</span> <span style="color: #E6DB74;">(</span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">i</span> = 0; i &lt; <span style="color: #66D9EF;">n</span>; i++<span style="color: #E6DB74;">)</span> <span style="color: #E6DB74;">{</span>
+<span class="linenr"> 8: </span>                System.out.println<span style="color: #FD971F;">(</span>args<span style="color: #F92672;">[</span>i<span style="color: #F92672;">]</span><span style="color: #FD971F;">)</span>;
+<span class="linenr"> 9: </span>            <span style="color: #E6DB74;">}</span>
+<span class="linenr">10: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">11: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">12: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+假设我们编译上述程序后执行如下 Java 命令：
+</p>
+
+<pre class="example">
+java TestMain                            // 一共有 0 个参数
+java TestMain apple banana               // 一共有 2 个参数
+java TestMain one two three for five six // 一共有 6 个参数
+</pre>
+
+<p>
+可见， <code>main()</code> 方法可以以字符串的形式接收命令行参数，然后在方法体内进行处理。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga288e13" class="outline-3">
+<h3 id="orga288e13">可变参数</h3>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-21 Mon 18:05</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-09-24 Thu 10:04</p>
+<p class="date">Created: 2020-09-24 Thu 10:41</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
