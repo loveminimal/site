@@ -1065,3 +1065,120 @@ Jessica
 
 *** 构造方法
 
+构造方法是类的一种特殊方法，用来初始化类的一个新的对象，在创建对象（ =new= 运算符 ）之后自动调用。Java 中的每个类都有一个默认构造方法，并且可以有一个以上的构造方法。
+
+Java 构造方法有以下特点：
+- 方法名必须与类名相同；
+- 可以有 0 个、1 个或多个参数；
+- 没有任何返回值，包括 =void= ；
+- 默认返回类型就是对象类型本身；
+- 只能与 =new= 运算符结合使用。
+
+*注：如果为构造方法定义了返回值类型或使用 =void= 声明构造方法没有返回值，编译时不会出错，但 Java 会把这个所谓的构造方法当成普通方法来处理。
+
+*构造方法不是没有返回值吗？为什么不能用 =void= 声明呢？*
+
+简单地说，这是 Java 的 *语法规定* 。
+
+实际上，类的构造方法是有返回值的，当使用 =new= 关键字来调用构造方法时，构造方法返回该类的实例，可以把这个类的实例当成构造器的返回值，因此构造器的返回值类型总是当前类，无须定义返回值类型。但必须注意不要在构造方法里使用 =return= 来返回当前类的对象，因为构造方法的返回值是隐式的。
+
+构造方法不能被 =staic、final、synchronized、abstract= 和 =native= （类似于 =abstract= ）修饰。
+
+构造方法用于初始化一个新对象，所以用 =static= 修饰没有意义。构造方法不能被子类继承，所以用 =final= 和 =abstract= 修饰没有意义。多个线程不会同时创建内存地址相同的同一个对象，所以用 =synchronized= 修饰没有必要。
+
+构造方法的语法格式如下：
+
+#+BEGIN_EXAMPLE
+  public ClassName {
+      public ClassName() {}            // 默认无参构造方法
+      public ClassName([paramList]) {} // 定义有参构造方法
+      ...
+      // 类主体
+  }
+#+END_EXAMPLE
+
+*注：类的构造方法不是必须定义的。如果在类中没有定义任何一个构造方法，则 Java 会自动为该类生成一个默认的构造方法。默认的构造方法不包含任何参数，并且方法体为空。如果类中显示地定义了一个或多个构造方法，则 Java 不再提供默认构造方法。
+
+#+BEGIN_QUOTE
+*提示：无参数的构造方法也被称为 Nullary 构造方法。只有编译程序自动加入的构造方法，才称为默认构造函数。如果自行编写无参数、没有内容的构造函数，就不称为默认构造函数了（只是 Nullary 构造函数）。
+#+END_QUOTE
+
+要在不同的条件下使用不同的初始化行为创建类的对象，这时候就需要在一个类中创建多个构造方法。如下：
+
+#+BEGIN_SRC java -n
+  public class Worker {
+      public String name;
+      private int age;
+      // 定义带有一个参数的构造方法
+      public Worker(String name) {
+          this.name = name;
+      }
+      // 定义带有两个参数的构造方法
+      public Worker(String name, int age) {
+          this.name = name;
+          this.age = age;
+      }
+      public String toString() {
+          return "大家好！我叫" + name + "，今年" + age + "岁。";
+      }
+  }
+#+END_SRC
+
+*提示：Object 类具有一个 =toString()= 方法，该方法是个特殊的方法，创建的每个类都会继承该方法，它返回一个 String 类型的字符串。如果一个类中定义了该方法，则在调用该类对象时，将会自动调用该类对象的 =toString()= 方法返回一个字符串，然后使用 =System.out.println(对象名)= 就可以将返回的字符串内容打印出来。
+
+通过调用带参数的构造方法，在创建对象时，一并完成了对象成员的初始化工作，简化了对象初始化的代码。
+
+*** 析构方法
+
+析构方法与构造方法相反，当对象脱离其作用域时（例如对象所在的方法已调用完毕），系统自动执行析构方法。析构方法往往用来做清理垃圾碎片的工作，例如在建立对象时用 =new= 开辟了一片内存空间，应退出前在析构方法中将其释放。
+
+在 Java 的 Object 类中还提供了一个 protected 类型的 =finalize()= 方法，因此任何 Java 类都可以覆盖这个方法，在这个方法中进行释放对象所占有的相关资源的操作。
+
+对象的 =finalize()= 方法具有如下特点：
+- 垃圾回收器是否会执行该方法以及何时执行该方法，都是不确定的；
+- =finalize()= 方法有可能使用对象复活，使对象恢复到可触及状态；
+- 垃圾回收器在执行 =finalize()= 方法时，如果出现异常，垃圾回收器不会报告异常，程序继续正常运行。
+
+来看个例子吧，如下：
+
+#+BEGIN_SRC java -n
+  public class Counter {
+      private static int count = 0; // 计数器变量
+      public Counter() {
+          // 构造方法
+          this.count++;             // 创建实例时增加值
+      }
+      public int getCount() {
+          return this.count;
+      }
+      protected void finalize() {
+          // 析构方法
+          this.count--;             // 实例销毁时减少值
+          System.out.println("对象销毁");
+      }
+  }
+#+END_SRC
+
+下面创建一个对应的测试类：
+
+#+BEGIN_SRC java -n
+  public class TestCounter {
+      public static void main(String[] args) {
+          Counter cnt1 = new Counter();
+          System.out.println(cnt1.getCount());     // → 1
+          Counter cnt2 = new Counter();
+          System.out.println(cnt2.getCount());     // → 2
+          cnt2 = null;                             // 销毁实例 cnt2
+
+          try {
+              System.gc();                         // 清理内存
+              Thread.currentThread().sleep(1000);  // 延时 1000 ms
+              System.out.println(cnt1.getCount()); // → 1
+          } catch(InterruptedException e) {
+              e.printStackTrace();
+          }
+      }
+  }
+#+END_SRC
+
+*注：由于 =finalize()= 方法的不确定性，所以在程序中可以调用 =System.gc()= 或者 =Runtime.gc()= 方法提示垃圾回收器尽快执行垃圾回收操作。
