@@ -44,6 +44,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./java-6.org][第六章 Java 内置包装类]]     |
 | [[./java-7.org][第七章 Java 数组处理]]       |
 | [[./java-8.org][第八章 Java 类和对象]]       |
+| [[./java-9.org][第九章 Java 继承和多态]]     |
 
 | 休闲     |
 |----------|

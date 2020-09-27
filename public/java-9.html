@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2020-09-27 Sun 09:29 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>继承和多态</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
+<link rel="stylesheet" href="/css/animate.min.css" />
+<link rel="stylesheet" href="/css/all.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script src="/js/jquery.min.js"></script>
+<script src="/js/darkreader.js"></script>
+<script src="/user.config.js"></script>
+<script src="/js/main.js"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">继承和多态</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org0e5b6db">封装</a></li>
+<li><a href="#org9d7b123">继承</a>
+<ul>
+<li><a href="#org4e35285">单继承</a></li>
+<li><a href="#org23ca1c1">super</a></li>
+<li><a href="#org642d4df">对象类型转型</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+继承机制的使用可以复用一些定义好的类，减少重复代码的编写。多态机制可以动态调整对象的调用，降低对象之间的依存关系。
+</p>
+
+<div id="outline-container-org0e5b6db" class="outline-2">
+<h2 id="org0e5b6db">封装</h2>
+<div class="outline-text-2" id="text-org0e5b6db">
+<p>
+封装将类的某个信息隐藏在类内部，不允许外部程序直接访问，只能通过该类提供的方法来实现对隐藏信息的操作和访问。
+</p>
+
+<blockquote>
+<p>
+例如：一台计算机内部极其复杂，有主板、CPU、硬盘和内存，而一般用户不需要了解它的内部细节，不需要知道主板的型号、CPU 主频、硬盘和内存的大小，于是计算机制造商将用机箱把计算机封装起来，对外提供了一些接口，如鼠标、键盘和显示器等，方便用户使用计算机。
+</p>
+</blockquote>
+
+<p>
+封装的特点：
+</p>
+<ul class="org-ul">
+<li>只能通过规定的方法访问数据；</li>
+<li>隐藏类的实例细节，方便修改和实现。</li>
+</ul>
+
+<p>
+实现封装的具体步骤如下：
+</p>
+<ol class="org-ol">
+<li>修改属性的可见性来限制对属性的访问，一般设为 <code>private</code> ；</li>
+<li>为每个属性创建一对赋值（ <code>setter</code> ）方法和取值（ <code>getter</code> ）方法，一般设为 <code>public</code> ，用于属性的读写；</li>
+<li>在赋值和取值方法中，加入属性控制语句（对属性值的合法性进行判断）。</li>
+</ol>
+
+<p>
+下面我们来看一个完整的例子，要求编写表示图书的 <code>Book</code> 类，实现以下需求：
+</p>
+<ul class="org-ul">
+<li>基本信息包括图书名称（ <code>bookName</code> ）、总页数（ <code>bookTotalNum</code> ），其中页数不能少于 200 页，否则输出错误信息，并赋予默认值 200 ；</li>
+<li>为各个属性设置赋值和取值方法；</li>
+<li>具有 <code>details()</code> 方法，该方法在控制台输出每本图书的名称和总页数。</li>
+</ul>
+
+<p>
+编写 <code>BookTest</code> 测试类，为 <code>Book</code> 对象的属性赋予初始值，并调用 <code>details()</code> 方法输出详细信息。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Book</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">private</span> <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">bookName</span>;
+<span class="linenr"> 3: </span>    <span style="color: #F92672;">private</span> <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">bookTotalNum</span>;
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">String</span> <span style="color: #A6E22E;">getBookName</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 6: </span>        <span style="color: #F92672;">return</span> bookName;
+<span class="linenr"> 7: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr"> 8: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">setBookName</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">bookName</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 9: </span>        <span style="color: #F92672;">this</span>.bookName = bookName;
+<span class="linenr">10: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">int</span> <span style="color: #A6E22E;">getBookTotalNum</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">13: </span>        <span style="color: #F92672;">return</span> bookTotalNum
+<span class="linenr">14: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">15: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">setBookTotalNum</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">bookTotalNum</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">16: </span>        <span style="color: #F92672;">if</span> <span style="color: #A6E22E;">(</span>bookTotalNum &lt; 200<span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr">17: </span>            System.out.println<span style="color: #E6DB74;">(</span><span style="color: #F92672;">this</span>.bookName + <span style="color: #E6DB74;">"&#36825;&#26412;&#20070;&#30340;&#39029;&#25968;&#19981;&#33021;&#23569;&#20110; 200 &#39029;"</span><span style="color: #E6DB74;">)</span>;
+<span class="linenr">18: </span>            <span style="color: #F92672;">this</span>.bookTotalNum = 200;
+<span class="linenr">19: </span>        <span style="color: #A6E22E;">}</span> <span style="color: #F92672;">else</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr">20: </span>            <span style="color: #F92672;">this</span>.bookTotalNum = bookTotalNum;
+<span class="linenr">21: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">22: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">23: </span>
+<span class="linenr">24: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">details</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">25: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #F92672;">this</span>.bookName + <span style="color: #E6DB74;">"&#36825;&#26412;&#20070;&#30340;&#24635;&#39029;&#25968;&#26159;&#65306;"</span> + <span style="color: #F92672;">this</span>.bookTotalNum<span style="color: #A6E22E;">)</span>;
+<span class="linenr">26: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">27: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+测试类如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">BookTest</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #66D9EF;">Book</span> <span style="color: #FD971F;">book1</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Book</span><span style="color: #A6E22E;">()</span>;
+<span class="linenr"> 4: </span>        book1.setBookName<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"&#12298;&#32418;&#19982;&#40657;&#12299;"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr"> 5: </span>        book1.setBookTotalNum<span style="color: #A6E22E;">(</span>190<span style="color: #A6E22E;">)</span>;
+<span class="linenr"> 6: </span>        book1.details<span style="color: #A6E22E;">()</span>;
+<span class="linenr"> 7: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"**********************"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr"> 8: </span>        <span style="color: #66D9EF;">Book</span> <span style="color: #FD971F;">book2</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Book</span><span style="color: #A6E22E;">()</span>;
+<span class="linenr"> 9: </span>        book2.setBookName<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"&#12298;&#26684;&#26519;&#31461;&#35805;&#12299;"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">10: </span>        book2.setBookTotalNum<span style="color: #A6E22E;">(</span>520<span style="color: #A6E22E;">)</span>;
+<span class="linenr">11: </span>        book2.details<span style="color: #A6E22E;">()</span>;
+<span class="linenr">12: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">13: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+代码执行结果如下：
+</p>
+
+<pre class="example">
+《红与黑》这本书的页数不能少于 200 页
+《红与黑》这本书的总页数是：200
+************************************
+《格林童话》这本书的总页数是：520
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org9d7b123" class="outline-2">
+<h2 id="org9d7b123">继承</h2>
+<div class="outline-text-2" id="text-org9d7b123">
+<p>
+Java 中的继承就是在已经存在类的基础上进行扩展，从而产生新的类。已经存在的类称为 <span class="underline">父类、基类或超类</span> ，而新产生的类称为 <span class="underline">子类或派生类</span> 。在子类中，不仅包含父类的属性和方法，还可以增加新的属性和方法。
+</p>
+
+<p>
+Java 中子类继承父类的语法格式如下：
+</p>
+
+<pre class="example">
+修饰符 class class_name extends extend_class {
+       //  类的主体
+}
+</pre>
+
+<p>
+其中， <code>class_name</code> 表示子类（派生类）的名称； <code>extend_class</code> 表示父类（基类）的名称； <code>extends</code> 关键字直接跟在子类名之后，其后面是该类要继承的父类的名称。
+</p>
+
+<blockquote>
+<p>
+Java 与 C++ 定义继承类的方式十分相似。Java 用关键字 <code>extends</code> 代替了 C++ 中的冒号（ <code>：</code> ）。在 Java 中，所有的继承都是公有继承， 而没有 C++ 中的私有继承和保护继承。
+</p>
+</blockquote>
+
+<p>
+类的继承不改变类成员的访问权限，也就是说，如果父类的成员是公有的、被保护的或默认的，它的子类仍具有相应的这些特性，并且子类不能获得父类的构造方法。
+</p>
+
+<p>
+<b>*注：如果父类中存在有参的构造方法而并没有重载无参的构造方法，那么在子类中必须含有有参的构造方法。因为如果在子类中不含有构造方法，默认会调用父类中无参的构造方法，而在父类中并没有无参的构造方法，因此会出错。</b>
+</p>
+</div>
+
+<div id="outline-container-org4e35285" class="outline-3">
+<h3 id="org4e35285">单继承</h3>
+<div class="outline-text-3" id="text-org4e35285">
+<p>
+Java 语言摒弃了 C++ 中难以理解的多继承特征，即 Java 不支持多继承，只允许一个类直接继承另一个类，即子类只能有一个直接父类， <code>extends</code> 关键字后面只能有一个类名。
+</p>
+
+<p>
+如果定义一个 Java 类时并未显示指定这个类的直接父类，则这个类默认继承 <code>java.lang.Object</code> 类。
+</p>
+
+<p>
+使用继承的注意点：
+</p>
+<ul class="org-ul">
+<li>子类一般比父类包含更多的属性和方法；</li>
+<li>父类中的 <code>private</code> 成员在子类中是不可见的，因此在子类中不能直接使用它们；</li>
+<li>父类和其子类间必须存在“是一个”即 <code>is-a</code> 的关系，否则不能用继承；</li>
+<li>Java 只允许单一继承。</li>
+</ul>
+
+<p>
+在面向对象语言中，继承是必不可少的、非常优秀的语言机制，它有如下优点：
+</p>
+<ul class="org-ul">
+<li>实现代码共享，减少创建类的工作量，使子类可以拥有父类的方法和属性；</li>
+<li>提高代码维护性和可重用性；</li>
+<li>提高代码的可扩展性，更好的实现父类的方法。</li>
+</ul>
+
+<p>
+所有事物有其好的一面，也有其不好的一面，继承的缺点如下：
+</p>
+<ul class="org-ul">
+<li>继承是侵入性的，只要继承，就必须拥有父类的属性和方法；</li>
+<li>降低代码灵活性，子类拥有父类的属性和方法后多了些约束；</li>
+<li>增强代码耦合性（ <b>开发项目的原则为高内聚低耦合</b> ），当父类的常量、变量和方法被修改时，需要考虑子类的修改，有可能导致大段的代码重构。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org23ca1c1" class="outline-3">
+<h3 id="org23ca1c1">super</h3>
+<div class="outline-text-3" id="text-org23ca1c1">
+<p>
+由于子类不能继承父类的构造方法，因此，如果要调用父类的构造方法，可以使用 <code>super</code> 关键字。 <code>super</code> 可以用来访问父类的构造方法、普通方法和属性。
+</p>
+
+<p>
+<code>super</code> 关键字的功能：
+</p>
+<ul class="org-ul">
+<li>在子类的构造方法中显示的调用父类构造方法；</li>
+<li>访问父类的成员方法和变量。</li>
+</ul>
+
+<p>
+<span class="underline">1. super 调用父类构造方法</span>
+</p>
+
+<p>
+<code>super</code> 关键字可以在子类的构造方法中显式地调用父类的构造方法，基本格式如下：
+</p>
+
+<pre class="example">
+super(parameter-list);
+</pre>
+
+<p>
+其中， <code>parameter-list</code> 指定了父类构造方法中的所有参数。 <b><code>super()</code> 必须在子类构造方法的方法体的第一行。</b>
+</p>
+
+<p>
+我们来看一段代码，声明父类 Person 和子类 Student ，在 Person 类中定义一个带有参数的构造方法，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Person</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #F92672;">public</span> <span style="color: #A6E22E;">Person</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">name</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">3: </span>
+<span class="linenr">4: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">5: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">6: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Student</span> <span style="color: #F92672;">extends</span> <span style="color: #66D9EF;">Person</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">7: </span>
+<span class="linenr">8: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+上述代码会出现 <code>Student</code> 类的编译错误，提示必须显式定义构造方法，错误信息如下：
+</p>
+
+<pre class="example">
+Implicit super constructor Person() is undefined for default constructor. Must define an explicit constructor.
+</pre>
+
+<p>
+为什么会出现这个错误呢？
+</p>
+
+<p>
+本例中，JVM 默认给 <code>Student</code> 类加了一个无参构造方法，而在这个方法中默认调用了 <code>super()</code> ，但是 Person 类中并不存在该构造方法，所以会编译错误。
+</p>
+
+<blockquote>
+<p>
+*小结一下：<br>
+如果一个类中没有写任何的构造方法，JVM 会生成一个默认的无参构造方法。在继承关系中，由于在子类的构造方法中，第一条语句默认为调用父类的无参构造方法（即默认为 <code>super()</code> ，一般这行代码省略了）。所以当在父类中定义了有参构造方法，但是没有定义无参构造方法时，编译器会强制要求我们定义一个相同参数类型的构造方法。
+</p>
+</blockquote>
+
+<p>
+<span class="underline">2. super 访问父类成员</span>
+</p>
+
+<p>
+当子类的成员变量或方法与父类同名时，可以使用 <code>super</code> 关键字来访问。
+</p>
+
+<p>
+如果子类重写了父类的某一个方法，即子类和父类有相同的方法定义，但是有不同的方法体，此时，我们可能通过 <code>super</code> 来调用父类里面的这个方法。
+</p>
+
+<p>
+<b>使用 super 访问父类中的成员与 this 关键字的使用类似，只不过它引用的是子类的父类</b> ，语法格式如下：
+</p>
+
+<pre class="example">
+super.member
+</pre>
+
+<p>
+<span class="underline">3. super 和 this 的区别</span>
+</p>
+
+<p>
+<code>this</code> 指的是当前对象的引用， <code>super</code> 是当前对象的父对象的引用。如果构造方法的第一行代码不是 <code>this()</code> 和 <code>super()</code> ，则系统会默认添加 <code>super()</code> 。
+</p>
+
+<p>
+关于 Java 中 <code>super</code> 和 <code>this</code> 关键字的异同，可简单总结为以下几条：
+</p>
+
+<p>
+（1）子类和父类中变量或方法名称相同时，用 <code>super</code> 关键字来访问。可以理解为 <code>super</code> 是指向自己父类对象的一个指针，在子类中调用父类的构造方法。
+</p>
+
+<p>
+（2） <code>this</code> 是自身的一个对象，代表对象本身，可以理解为 <code>this</code> 是指向对象本身的一个指针，在同一个类中调用其它方法。
+</p>
+
+<p>
+（3） <code>this</code> 和 <code>super</code> 不能同时出现在一个构造方法里面，因为 <code>this</code> 必然会调用其它的构造方法，其它构造方法中肯定会有 <code>super</code> 语句存在，所以在同一个构造方法里面有相同的语句，就失去了语句的意义，编译器也不会通过。
+</p>
+
+<p>
+（4） <code>this()</code> 和 <code>super()</code> 都指的是对象，所以，均不可以在 <code>static</code> 环境中使用，包括 <code>static</code> 变量、 <code>static</code> 方法和 <code>static</code> 语句块。
+</p>
+
+<p>
+（5）从本质上讲， <code>this</code> 是一个指向对象本身的指针，然而 <code>super</code> 是一个 Java 关键字。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org642d4df" class="outline-3">
+<h3 id="org642d4df">对象类型转型</h3>
+<div class="outline-text-3" id="text-org642d4df">
+<p>
+将一个类型强制转换成另一个类型的过程被称为 <span class="underline">类型转型</span> ，这里所说的 <span class="underline">对象类型转型</span> ，是指存在继承关系的对象，不是任意类型的对象。当对不存在继承关系的对象进行强制类型转换时，会抛出 Java 强制类型转换（ <code>java.lang.ClassCastException</code> ）异常。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-09-26 Sat 11:27</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2020-09-27 Sun 09:29</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
