@@ -205,4 +205,96 @@ _3. super 和 this 的区别_
 
 *** 对象类型转型
 
-将一个类型强制转换成另一个类型的过程被称为 _类型转型_ ，这里所说的 _对象类型转型_ ，是指存在继承关系的对象，不是任意类型的对象。当对不存在继承关系的对象进行强制类型转换时，会抛出 Java 强制类型转换（ =java.lang.ClassCastException= ）异常。
+将一个类型强制转换成另一个类型的过程被称为 _类型转型_ ，这里所说的 _对象类型转型_ ，是指 *存在继承关系* 的对象，不是任意类型的对象。当对不存在继承关系的对象进行强制类型转换时，会抛出 Java 强制类型转换（ =java.lang.ClassCastException= ）异常。
+
+Java 语言允许某个类型的引用变量引用子类的实例，而且可以对这个变量进行转换。
+
+Java 中引用类型之间的类型转换（前提是两个类是父子关系）主要有两种，分别的向上转型（upcasting）和向下转型（downcasting）。
+
+（1）向上转型
+
+父类引用指向子类对象为向上转型，语法格式如下：
+
+#+BEGIN_EXAMPLE
+fatherClass obj = new sonClass();
+#+END_EXAMPLE
+
+其中， =fahterClass= 是父类名称或接口名称， =obj= 是创建的对象， =sonClass= 是子类名称。
+
+向上转型就是把子类对象赋给父类引用，不用强制转换。使用向上转型可以调用父类类型中的所有成员， *不能调用子类类型中特有成员* ，最终运行效果看子类的具体实现。
+
+（2）向下转型
+
+与向上转型相反，子类对象指向父类引用向下转型，语法格式如下：
+
+#+BEGIN_EXAMPLE
+sonClass obj = (sonClass) fahterClass;
+#+END_EXAMPLE
+
+向下转型可以调用子类类型中所有成员，不过需要注意的是：
+
+如果父类引用对象指向的是子类对象，那么在向下转型的过程中是安全的，也就是编译是不会出错误。
+
+但是如果父类引用对象是父类本身，那么在向下转型的过程中是不安全的，编译不会出错，但是运行时会出现我们开始提到的 Java 强制类型转换异常，一般使用 =instanceof= 运算符来避免出此类错误。
+
+例如，Animal 类表示动物类，该类对应的子类有 Dog 类，使用对象类型表示如下：
+
+#+BEGIN_SRC java -n
+  Animal animal = new Dog();      // 向上转型，把 Dog 类型转换为 Animal 类型
+  Dog dog = (Dog) animal;         // 向下转型，把 Animal 类型转换为 Dog 类型
+#+END_SRC
+
+我们来看一个具体的示例演示对象类型的转换。例如，父类 Animal 和子类 Cat 中都定义了实例变量 =name= 、静态变量 =staicName= 、实例方法 =eat()= 和静态方法 =staticEat()= 。此外，子类 Cat 中还定义了实例变量 =str= 和实例方法 =eatMethod()= 。
+
+父类 Animal 的代码如下：
+
+#+BEGIN_SRC java -n
+  public class Animal {
+      public string name = "Animal: 动物";
+      public static String staticName = "Animal: 可爱的动物";
+
+      public void eat() {
+          System.out.println("Animal: 吃饭");
+      }
+
+      public static void staticEat() {
+          System.out.println("Animal: 动物在吃饭");
+      }
+  }
+#+END_SRC
+
+子类 Cat 的代码如下：
+
+#+BEGIN_SRC java -n
+  public class Cat extends Animal {
+      public String name = "Cat: 猫";
+      public String str = "Cat: 可爱的小猫";
+      public static String staticName = "Dog: 我是喵星人";
+
+      public void eat() {
+          System.out.println("Cat: 吃饭");
+      }
+
+      public static void staticEat() {
+          System.out.println("Cat: 猫在吃饭");
+      }
+
+      public void eatMethod() {
+          System.out.println("Cat: 猫喜欢吃鱼");
+      }
+
+      public static void main(String[] args) {
+          Animal animal = new Cat();
+          Cat cat = (Cat) animal;                // 向下转型
+
+          System.out.println(animal.name);       // 输出 Animal 类的 name 变量 → Animal: 动物
+          System.out.println(animal.staticName); // 输出 Animal 类的 staticName 变量 → Animal: 可爱的动物
+
+          animal.eat();                          // 输出 Cat 类的 eat() 方法 → Cat: 吃饭
+          animal.staticEat();                    // 输出 Animal 类的 staticEat() 方法 → Cat: 动物在吃饭
+
+          System.out.println(cat.str);           // → 调用 Cat 类的 str 变量 → Cat: 可爱的小猫
+          cat.eatMethod();                       // → 调用 Cat 类的 eatMethod 变量 → Cat: 猫喜欢吃鱼
+      }
+  }
+#+END_SRC
