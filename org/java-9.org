@@ -581,3 +581,275 @@ Java 语言提供了两种类，分别为具体类和抽象类。
 #+END_SRC
 
 在 Shape 类的最后定义了一个抽象方法 =area()= ，用来计算图形的面积。在这里，Shape 类只是定义了计算图形面积的方法，而对于如何计算并没有任何限制。也可以这样理解，抽象类 Shape 仅定义了子类的一般形式。
+
+** 接口
+
+抽象类是从多个类中抽象出来的模板，如果将这种抽象进行的更彻底，则可以提炼出一种更加特殊的“抽象类” -- _接口_ （Interface）。
+
+接口是 Java 中最重要的概念之一，它可以被理解为一种特殊的类，不同的是接口没有执行体，是由全局常量和公共抽象方法所组成。
+
+*** 定义接口
+
+Java 接口的定义方式与类基本相同，不过接口定义的关键字是 =interface= ，接口定义的语法格式如下：
+
+#+BEGIN_EXAMPLE
+  [public] interface interface_name [extends interface1_name[, interface2_name,...]] {
+      // 接口体，其中可以包含定义常量和声明方法
+      [public] [static] [final] type constant_name = value;        //定义常量
+      [public] [abstract] returnType method_name (parameter_list); //声明方法
+  }
+#+END_EXAMPLE
+
+下面对以上语法做一些说明：
+- =public= 表示接口的修饰符，当没有修饰符时，则使用默认的修饰符，此时该接口的访问权限仅局限于所属的包；
+- =interface_name= 表示接口的名称；
+- =extents= 表示接口的继承关系；
+- =interface1_name= 表示要继承的接口名称；
+- =constant_name= 表示变量名称，一般是 =static= 和 =final= 型的；
+- =return_type= 表示方法返回值的类型；
+- =parameter_list= 表示参数列表，在接口中的方法是没有方法体的。
+
+*注：一个接口可以有多个直接父接口，但接口只能继承接口，不能继承类。
+
+接口对于其声明、变量和方法都做了许多限制，这些限制作为 _接口的特征_ 如下：
+- 具有 =public= 访问控制符的接口，允许任何类使用，否则其访问权限局限 于所属的包；
+- 方法的声明不需要其他修饰符，在接口中声明的方法，将隐式地声明为公有的（ =public= ）和抽象的（ =abstract= ）；
+- 在 Java 接口中声明的变量其实都是常量，接口中的变量声明，将隐式地声明为 =public、static= 和 =final= ，即常量，所以接口中定义的变量 *必须初始化* ；
+- 接口没有构造方法，不能被实例化。
+
+*注：一个接口不能够实现另一个接口，只可以继承接口，子接口可以对父接口的方法和常量进行重写。
+
+#+BEGIN_SRC java -n
+  public interfact StudentInterface extends PeopleInterface {
+      int age = 25;               // 常量 age 重写父类接口中的 age 常量
+      void getInfo();             // 方法 getInfo() 重写父接口中的 getInfo() 方法
+  }
+#+END_SRC
+
+*** 实现接口
+
+*接口的主要用途就是被实现类实现* ，一个类可以实现一个或多个接口，继承使用 =extends= 关键字，实现则使用 =implements= 关键字。一个类可以实现多个接口，类实现接口的语法格式如下：
+
+#+BEGIN_EXAMPLE
+  <public> class <class_name> [extends superclass_name] [implements interface1_name[, interface2_name...]] {
+      // 主体
+  }
+#+END_EXAMPLE
+
+实现接口需要注意以下几点：
+- 实现接口与继承父类相似，一样可以获得所实现接口里定义的常量和方法。如果一个类需要实现多个接口，则多个接口之间可以逗号分隔；
+- 一个类可以继承一个父类，并同时实现多个接口， =implements= 部分必须放在 =extends= 部分之后；
+- 一个类实现了一个或多个接口之后，这个类必须完全实现这些接口里所定义的全部抽象方法（也就是重写这些抽象方法）；否则，该类将保留从父接口那里继承到的抽象方法，该类也必须定义成抽象类。
+
+来看一个具体的例子吧。
+
+在程序的开发中，需要完成两个数的求和运算和比较运算功能的类非常多，所以可以定义一个接口来将类似的功能组织在一起。
+
+（1）创建一个名称为 IMath 的接口：
+
+#+BEGIN_SRC java -n
+  public interface IMath {
+      public int sum();                // 完成两个数的相加
+      public int maxNum(int a, int b); // 获取较大的数
+  }
+#+END_SRC
+
+（2）定义一个 MathClass 类并实现 IMath 接口：
+
+#+BEGIN_SRC java -n
+  public class MathClass implements IMath {
+      private int num1;
+      private int num2;
+      public MathClass(int num1, int num2) {
+          // 构造方法
+          this.num1 = num1;
+          this.num2 = num2;
+      }
+      // 实现接口中的求和方法
+      public int sum() {
+          return num1 + num2;
+      }
+      // 实现接口中的获取较大数的方法
+      public int maxNum(int a, intb) {
+          if (a >= b) {
+              return a;
+          } else {
+              return b;
+          }
+      }
+  }
+#+END_SRC
+
+在实现类中，所有的方法都使用了 =public= 访问修饰符声明。无论何时实现一个由接口定义的方法，它都必须实现为 =public= ，因为接口中的所有成员都显示声明为 =public= 。
+
+（3）最后创建一个测试类 NumTest ，实例化接口的实现类 MathClass ，调用该类中的方法并输出结果：
+
+#+BEGIN_SRC java -n
+  public class NumTest {
+      public static void main(String[] args) {
+          MathClass calc = new MathClass(100, 300);
+          System.out.println(calc.sum());            // → 400
+          System.out.println(calc.maxNum(100, 300)); // → 300
+      }
+  }
+#+END_SRC
+
+** TODO 内部类
+
+** TODO 匿名类
+
+匿名类是指没有类名的内部类，必须在创建时使用 =new= 语句来声明类，语法形式如下：
+
+#+BEGIN_EXAMPLE
+new <类或接口> () {
+    // 类的主体
+}
+#+END_EXAMPLE
+
+** Lambda 表达式
+
+（Java 8 新特性）Lambda 表达式是一个匿名函数，它允许把函数作为一个方法的参数。
+
+来看一个具体的应用例子：
+
+先定义一个计算数值的接口，代码如下：
+
+#+BEGIN_SRC java -n
+  // 可计算接口
+  public interface Calculable {
+      // 计算两个 int 数值
+      int calculateInt(int a, int b);
+  }
+#+END_SRC
+
+实现方法代码如下：
+
+#+BEGIN_SRC java -n
+  public class Test {
+      /**
+         通过操作符，进行计算
+
+         @param opr 操作符
+         @return 实现 Calculable 接口对象
+       ,*/
+      public static Calculable calculate(char opr) {
+          Calculable result;
+          if (opr == '+') {
+              // 匿名内部类实现 Calculable 接口
+              result = new Calculable() {
+                  // 实现加法运算
+                  @Override
+                  public int calculateInt(int a, int b) {
+                      return a + b;
+                  }
+              };
+          } else {
+              // 匿名内部类实现 Calculable 接口
+              result = new Calculable() {
+                  // 实现减法运算
+                  @Override
+                  public int calculateInt(int a, int b) {
+                      return a - b;
+                  }
+              }
+          }
+          return result;
+      }
+  }
+#+END_SRC
+
+方法 =calculate= 中 =opr= 参数是运算符，返回值是实现 =Calculable= 接口对象。
+
+#+BEGIN_SRC java -n
+  public static void main(String[] args) {
+      int n1 = 10;
+      int n2 = 5;
+      // 实现加法计算 Calculable 对象
+      Calculable f1 = calculate('+');
+      // 实现加法计算 Calculable 对象
+      Calculable f2 = calculate('-');
+      // 调用 calculateInt 方法进行加法计算
+      System.out.println(f1.calculateInt(n1, n2)); // → 15
+      // 调用 calculateInt 方法进行减法运算
+      System.out.println(f2.calculateInt(n1, n2)); // → 5
+  }
+#+END_SRC
+
+*不难看出，使用匿名内部类的方法 =calculate= 代码很臃肿* ，Java 8 采用 Lambda 表达式可以替代匿名内部类，修改之后的通用方法 =calculate= 代码如下：
+
+#+BEGIN_SRC java -n
+  /**
+     通过操作符，进行计算
+     @param opr 操作符
+     @return 实现 Calculable 接口对象
+   ,*/
+  public static Calculable calculate(char opr) {
+      Calculable result;
+      if (opr == '+') {
+          // Lambda 表达式实现 Calculable 接口
+          result = (int a, int b) -> {
+              return a + b;
+          }
+      } else {
+          // Lambda 表达式实现 Calculable 接口
+          result = (int a, int b) -> {
+              return a - b;
+          }
+      }
+      return result;
+  }
+#+END_SRC
+
+第 10 行和第 15 行用 Lambda 表达式替代匿名内部类，代码变得简洁多了。
+
+通过以上示例我们发现，Lambda 表达式是一个匿名函数（方法）代码块，可以作为表达式、方法参数和方法返回值类型。
+
+Lambda 表达式标准语法形式如下：
+
+#+BEGIN_EXAMPLE
+(参数列表) -> {
+    // Lambda 表达式
+}
+#+END_EXAMPLE
+
+Java Lambda 表达式的优点：
+- 代码简洁，开发迅速；
+- 方便函数式编程；
+- 非常容易进行并行计算；
+- Java 引入 Lambda ，改善了八集合操作（引入 Stream API）。
+
+当然也有缺点：
+- 代码可读性变差；
+- 在非并行计算中，很多计算未必有传统的 for 性能要高；
+- 不容易进行调试。
+
+_#. 函数式接口_
+
+Lambda 表达式实现的接口不是普通的接口，而是函数式接口。
+
+如果一个接口中，有且只有一个抽象的方法（Oject 类中的方法不包括在内），那这个接口就可以被看做是 _函数式接口_ 。这种接口只能有一个方法，如果接口中声明多个抽象方法，那么 Lambda 表达式会发生编译错误。
+
+#+BEGIN_EXAMPLE
+The target type of this expression must be a functional interface
+#+END_EXAMPLE
+
+说明该接口不是函数式接口，为了防止在函数式接口中声明多个抽象方法，Java 8 提供了一个声明函数式接口注解 =@FunctionalInterface= ，示例代码如下：
+
+#+BEGIN_SRC java -n
+  // 可计算接口
+  @FunctionalInterface
+  public interface Calculable {
+      // 计算两个 int 数值
+      int calculateInt(int a, int b);
+  }
+#+END_SRC
+
+在接口之前使用 =@FunctionalInterface= 注解修饰，那么试图增加一个抽象方法时会发生编译错误，但可以添加默认方法和静态方法。
+
+#+BEGIN_QUOTE
+=@FunctionalInterface= 注解与 =@Override= 注解的作用类似。Java 8 中专门为函数式接口引入了一个新的注解 =@FunctionalInterface= 。该注解可用于一个接口的定义上，一旦使用该注解来定义接口，编译器将会强制检查接口是否确实有且仅有一个抽象方法，否则将会报错。
+#+END_QUOTE
+
+*注：即使不使用该注解，只要满足函数式接口的定义，这仍然是一个函数式接口，使用起来都一样。
+
+提示：Lambda 表达式是一个匿名方法代码，Java 中的方法必须声明在类或接口中，那么 Lambda 表达式所实现的匿名方法是在函数式接口中声明的。
