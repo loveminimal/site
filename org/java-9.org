@@ -298,3 +298,286 @@ sonClass obj = (sonClass) fahterClass;
       }
   }
 #+END_SRC
+
+通过引用类型变量来访问所引用的属性和方法时，Java 虚拟机将采用以下绑定规则：
+- 实例方法与引用变量实际引用的对象的方法进行绑定，这种绑定属于 *动态绑定* ，因为是在 *运行时* 由 Java 虚拟机动态决定的。例如， =animal.eat()= 是将 =eat()= 方法与 Cat 类相绑定；
+- 静态方法与引用变量所声明的类型的方法绑定，这种绑定属于静态绑定，因为是在 *编译阶段* 已经做了绑定。例如， =animal.staticEat()= 是将 =staticEat()= 方法与 Animal 类进行绑定；
+- 成员变量（包括静态变量和实例变量）与引用变量所声明的成员变量绑定，这种绑定属于静态绑定，因为在编译阶段已经做了绑定。例如， =animal.name= 和 =animal.staticName= 都是与 Animal 类进行绑定。
+
+*** 方法重载
+
+Java 允许同一个类中定义多个同名方法，只要它们的形参列表不同即可。
+
+*如果同一个类中包含了两个或两个以上方法名相同，但形参列表不同的方法，这种情况称为 _方法重载_ （overload）。*
+
+如：在 JDK 的 =java.io.PrintStream= 中定义了十多个同名的 =println()= 方法。
+
+#+BEGIN_SRC java -n
+  public void println(int i) { ... }
+  public void println(double d) { ... }
+  public void println(String s) { ... }
+#+END_SRC
+
+这些方法完成的功能类似，都是格式化输出。根据参数的不同来区分它们，以进行不同的格式化处理和输出。它们之间就构成了方法的重载。实际调用时，根据实参的类型来决定调用哪一个方法。
+
+*注：方法重载的要求是两同一不同：同一个类中方法名相同，参数列表不同。至于方法的其他部分，如方法返回值、修饰符等，与方法重载没有任何关系。
+
+#+BEGIN_QUOTE
+使用方法重载其实就是避免出现繁多的方法名，有些方法的功能是相似的，如果重新建立一个方法，重新取个方法名称，会降低程序可读性。
+#+END_QUOTE
+
+#+BEGIN_EXPORT html
+<essay>
+方法重载，其实就是同类同名不同参啦，别的木有什么要求。
+</essay>
+#+END_EXPORT
+
+*** 方法重写
+
+在子类中如果创建一个与父类中相同名称、相同返回值类型、相同参数列表的方法，只是方法体中的实现不同，以实现不同于父类的功能，这种方式被称为 _方法重写_ （override），又称为方法覆盖。
+
+当父类中的方法无法满足子类需求或子类具有特有功能的时候，就需要方法重写。子类可以根据需要，定义特定于自己的行为。既沿袭了父类的功能名称，又根据子类的需要重新实现父类方法，从而进行扩展增强。
+
+在重写方法时，需要遵循下面的规则：
+- 参数列表必须完全与被重写的方法参数列表相同；
+- 返回的类型必须与重写的方法的返回类型相同（Java 1.5 之后放宽了限制，返回值类型必须小于或等于父类方法的返回值类型）；
+- 访问权限不能比父类中被重写方法的访问权限更低（public > protected > default > private）；
+- 重写方法一定不能抛出新的检查异常或者比被重写方法声明更加宽泛的检查型异常。例如，父类的一个方法声明了一个检查异常 =IOException= ，在重写这个方法时就不能抛出 =Exception= ，只能抛出 =IOExeption= 的子类异常，可以抛出非检查异常。
+
+另外还要注意以下几条：
+- 重写的方法可以使用 =@Override= 注解来标识；
+- 父类的成员方法只能被它的子类重写；
+- 声明为 =final= 的方法不能被重写；
+- 声明为 =static= 的方法不能被重写，但是能够再再次声明；
+- 构造方法不能被重写；
+- 子类和父类在同一个包中时，子类可以重写父类的所有方法，除了声明为 =private= 和 =final= 的方法；
+- 子类和父类不在同一个包中时，子类只能重写父类的声明为 =public= 和 =protected= 的非 =final= 方法；
+- 如果不能继承一个方法，则不能重写这个方法。
+
+如果子类中创建了一个成员变量，而该变量的类型和名称都与父类中的同名成员变量相同，我们则称作变量隐藏。
+
+** 多态
+
+多态性是面向对象编程的又一个重要特征，它是指在父类中定义的属性和方法被子类继承之后，可以具有不同的数据类型或表现出不同的行为，这使得同一个属性或方法在父类及其各个子类中具有不同的含义。
+
+*对面向对象来说，多态分为编译时多态和运行时多态。*
+
+其中：
+- 编译时多态是静态的，主要是指方法的重载，它是根据参数列表的不同来区分不同的方法。通过编译之后会变成两个不同的方法，在运行时谈不上多态；
+- 运行时多态是动态的，它是通过动态绑定来实现的，也就是大家通常所说的多态性。
+
+*Java 实现多态有 3 个必要的条件：继承、重写和向上转型。*
+- 继承：在多态中必须存在有继承关系的子类和父类；
+- 重写：子类对父类中某些方法进行重新定义，在调用这些方法时变会调用子类的方法；
+- 向上转型：在多态中需要将子类的引用赋给父类对象，只有这们该引用才既能可以调用父类的方法，又能调用子类的方法。
+
+只有满足这 3 个条件，开发人员才能够在同一个继承结构中使用统一的逻辑实现代码处理不同的对象，从而执行不同的行为。
+
+_#. intanceof 关键字_
+
+在 Java 中可以用 =instanceof= 关键字判断一个对象是否为一个类（或接口、抽象类、父类）的实例，语法格式如下：
+
+#+BEGIN_EXAMPLE
+boolean result = obj instanceof Class
+#+END_EXAMPLE
+
+其中， =obj= 是一个对象， =Class= 表示一个类或接口， =obj= 是 class 类（或接口）的实例或者子类实例时，结果 =result= 返回 =true= ，否则返回 =false= 。
+
+下面介绍 Java =instanceof= 关键字的几种用法。
+
+（1）声明一个 class 类的对象，判断 =obj= 是否为 class 类的实例对象（很普遍的一种用法），如下：
+
+#+BEGIN_SRC java -n
+  Integer integer = new Integer(1);
+  System.out.println(integer instanceof Integer); // true
+#+END_SRC
+
+（2）声明一个 class 接口实现类的对象 =obj= ，判断 =obj= 是否为 class 接口实现类的实例对象，如下：
+
+Java 集合中的 List 接口有个典型实现类 =ArrayList= 。
+
+#+BEGIN_SRC java -n
+  public class ArrayList<E> extends AbstractList<E>
+      implements List<E>, RandomAccess, Cloneable, java.io.Serializable
+#+END_SRC
+
+所以我们可以用 =instanceof= 运算符判断 =ArrayList= 类的对象是否属于 =List= 接口的实例，如果是返回 =true= ，否则返回 =false= 。
+
+#+BEGIN_SRC java -n
+  ArrayList arrayList = new ArrayList();
+  System.out.println(arrayList instanceof List); // true
+  // 反过来也是 true
+  List list = new ArrayList();
+  System.out.println(list instanceof ArrayList); // true
+#+END_SRC
+
+（3）obj 是 class 类的直接或间接子类
+
+假设 Man 类是 Person 类的子类，代码如下：
+
+#+BEGIN_SRC java -n
+  Person p1 = new Person();
+  Person p2 = new Man();
+  Man m1 = new Man();
+  System.out.println(p1 instanceof Man); // → false
+  System.out.println(p2 instanceof Man); // → true
+  System.out.println(m1 instanceof Man); // → true
+#+END_SRC
+
+其中第 4 行，Man 是 Person 的子类，Person 不是 Man 的子类，所以返回结果为 =false= 。
+
+**注： obj 必须为引用类型，不能是基本类型。*
+
+#+BEGIN_SRC java -n
+  int i = 0;
+  System.out.println(i instanceof Integer); // 编译不通过
+  System.out.println(i instanceof Object);  // 编译不通过
+#+END_SRC
+
+所以， =instanceof= 运算符只能用作对象的判断。
+
+当 =obj= 为 =null= 时，直接返回 =false= ，因为 =null= 没有引用任何对象，所以 =obj= 的类型必须是引用类型或空类型，否则会编译错误。
+
+另外，当 =class= 为 =null= 时，会发生编译错误，如下：
+
+#+BEGIN_EXAMPLE
+  Syntax error on token "null", invalid ReferenceType
+#+END_EXAMPLE
+
+所以， =class= 只能是类或者接口。
+
+编译器会检查 =obj= 能否转换成右边的 class 类型，如果不能转换则直接报错，如果不能确定类型，则通过编译。来看个例子：
+
+#+BEGIN_SRC java -n
+  Person p1 = new Person();
+  System.out.println(p1 instanceof String);       // 编译报错
+  System.out.println(p1 instanceof List);         // false
+  System.out.println(p1 instanceof List<?>);      // false
+  System.out.println(p1 instanceof List<Person>); // 编译错误
+#+END_SRC
+
+上述代码中， =Person= 的对象 =p1= 很明显不能转换为 =String= 对象，那么 =p1 instanceof String= 不能通过编译，但 =p1 instanceof List= 却能通过编译，而 =instanceof List<Person>= 又不能通过编译了。
+
+为什么呢？
+
+#+BEGIN_SRC java -n
+  boolean result;
+  if (obj == null) {
+      result = false;             // 当 obj 为 null 时，直接返回 false
+  } else {
+      try {
+          // 判断 obj 是否可以强制转换为 T
+          T temp = (T) obj;
+          result = true;
+      } catch (ClassCastException e) {
+          result = false;
+      }
+  }
+#+END_SRC
+
+可见，在 =T= 不为 =null= 和 =obj= 不为 =null= 时，如果 =obj= 可以转换为 =T= 而不引发异常（ =ClassCastException= ），则该表达式的结果为 =true= ，否则值为 =false= 。
+
+由此，可见， =p1 instanceof String= 会报编译错误，就是因为 =(String) p1= 是不能通过编译的，而 =(List) p1=   可以通过编译。
+
+** 抽象类
+
+Java 语言提供了两种类，分别为具体类和抽象类。
+
+在面向对象的概念中，所有的对象都是通过类来描绘的，但是反过来，并不是所有的类都是用来描绘对象的，如果一个类中没有包含足够的信息来描绘一个具体的对象，那么这样的类称为 _抽象类_ 。
+
+在 Java 中抽象类的语法格式如下：
+
+#+BEGIN_EXAMPLE
+  <abstract> class <class_name> {
+      <abstract> <type> <method_name> (parameter-list);
+  }
+#+END_EXAMPLE
+
+如果一个方法使用 =abstract= 来修饰，则说明该方法是 _抽象方法_ ，抽象方法只有声明没有实现。
+
+*注：需要注意的是 =abstract= 关键字只能用于普通方法，不能用于 =static= 方法或者构造方法中。
+
+#+BEGIN_EXPORT html
+<essay>
+因为，静态方法和构造方法都是要用来使用和实现的，抽象方法只有声明没有实现，肯定是不行的啊。
+</essay>
+#+END_EXPORT
+
+抽象方法的 3 个特征如下：
+1. 抽象方法没有方法体；
+2. 抽象方法必须存在于抽象类中；
+3. 子类重写父类时，必须重写父类的所有的抽象方法。
+
+*注：在使用 =abstract= 关键字修饰抽象方法时不能使用 =private= 修饰，因为抽象方法必须被子类重写。
+
+抽象类的定义和使用规则如下：
+- 抽象类和抽象方法都要使用 =abstract= 关键字声明；
+- 如果一个方法被声明为抽象的，那么这个类也必须声明为抽象的，而一个抽象类中，也可以包含具体方法；
+- 抽象类不能被实例化，也就是不能使用 =new= 关键字创建对象。
+
+来看一个具体的例子吧。
+
+不同几何图形的面积计算公式是不同的，但是它们具有的特性是相同的，都具有长和宽这两个属性，也都具有面积计算的方法。那么可以定义一个抽象类，在该抽象类中含有两个属性（ =width= 和 =height= ）和一个抽象方法 =area()= ，具体步骤如下：
+
+（1）首先创建一个表示图形的抽象类 Shape ，代码如下：
+
+#+BEGIN_SRC java -n
+  public abstract class Shape {
+      public int width;             // 宽
+      public int height;            // 高
+
+      public Shape (int width, int height) {
+          this.width = width;
+          this.height = height;
+      }
+
+      public abstract double area(); // 定义抽象方法，计算面积
+  }
+#+END_SRC
+
+（2）定义一个正方形类，该类继承自形状类 Shape ，并重写了 =area()= 抽象方法，代码如下：
+
+#+BEGIN_SRC java -n
+  public class Square extends Shape {
+      public Square (int width, int height) {
+          super(width, height);
+      }
+
+      // 重写父类中的抽象方法，实现计算正方形面积的功能
+      @Override
+      public double area() {
+          return width * height;
+      }
+  }
+#+END_SRC
+
+（3）定义一个三角形，也继承自形状类 Shape ，并重写父类中的抽象方法 =area()= ，代码如下：
+
+#+BEGIN_SRC java -n
+  public class Triangle extends Shape {
+      public Triangle (int width, int height) {
+          super(width, height);
+      }
+
+      // 重写父类中的抽象方法，实现计算三角形面积的功能
+      @Override
+      public double area() {
+          return 0.5 * width * height;
+      }
+  }
+#+END_SRC
+
+（4）最后创建一个测试类，分别创建正方形类和三角形类的对象，并调用各类中的 =area()= 方法，打印出不同形状的几何图形的面积，代码如下：
+
+#+BEGIN_SRC java -n
+  public class ShapeTest {
+      public static void main(String[] args) {
+          Square square = new Square(5, 4);
+          System.out.println("正方形的面积为：" + square.area());   // → 20.0
+          Triangle triangle = new Triangle(2, 5);
+          System.out.println("三角形的面积为：" + triangle.area()); // → 5.0
+      }
+  }
+#+END_SRC
+
+在 Shape 类的最后定义了一个抽象方法 =area()= ，用来计算图形的面积。在这里，Shape 类只是定义了计算图形面积的方法，而对于如何计算并没有任何限制。也可以这样理解，抽象类 Shape 仅定义了子类的一般形式。
