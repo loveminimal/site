@@ -1,0 +1,149 @@
+#+SETUPFILE: ../theme-rose.setup
+#+DATE: <2020-09-28 Mon 19:23>
+#+TITLE: 异常处理
+
+Java 提供了异常处理机制来帮助程序员检查可能出现的错误，以保证程序的可读性和可维护性。Java 将异常封装到一个类中，出现错误时就会拋出异常。
+
+** 异常处理
+
+异常（exception）是在运行程序时产生的一种异常情况，已经成为了衡量一门语言是否成熟的标准之一。
+
+*** 异常简介
+
+*Java 中的异常又称为例外，是一个在程序执行期间发生的事件，它中断正在执行程序的正常指令流。* 为了能够及时有效地处理程序中的运行错误，必须使用异常类，这可以让程序具有极好的容错性且更加健壮。
+
+在 Java 中一个异常的产生，主要有如下三种原因：
+1. Java 内部错误发生异常，Java 虚拟机产生的异常；
+2. 编写的程序代码中的错误所产生的异常，例如空指针异常、数组越界异常等；
+3. 通过 =throw= 语句手动生成的异常，一般用来告知该方法的调用者一些必要信息。
+
+Java 通过面向对象的方法来处理异常。在一个方法的运行过程中，如果发生了异常，则这个方法会产生代表该异常的一个对象，并把它交给运行时的系统，运行时系统寻找相应的代码来处理这一异常。
+
+我们把生成异常对象，并把它提交给运行时系统的过程称为 =抛出（throw）异常= ；运行时系统在方法的调用栈中查找，直至找到能够处理该类型的对象，这一个过程称为 =捕获（catch）异常= 。
+
+*** 异常类型
+
+为了能够及时有效地处理程序中的运行错误，Java 专门引入了异常类。
+
+在 Java 中所有异常类型都是内置类 =java.lang.Throwable= 类的子类，即 =Throwable= 位于异常类层次结构的顶层。
+
+#+BEGIN_EXPORT html
+<img
+src="/images/java/java-7.jpg"
+width="380"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+由上图可知， =Throwable= 类是所有异常和错误的超类，下面有 =Error= 和 =Exception= 现个子类分别表示错误和异常：
+- =Exception= 类用于用户程序可能出现的异常情况，它也是用来创建自定义异常类型类的类；
+- =Error= 定义了在通常环境下不希望被程序捕获的异常，一般指的是 JVM 错误，如堆栈溢出。
+
+其中异常类 =Exception= 又分为运行时异常（aka.不检查异常）和错误异常（aka.检查异常），这两种异常有很大的区别。
+
+运行时异常都是 =RuntimeException= 类及其子类异常，如 =NullPointerException、IndexOutOfBoundsException= 等，这些异常是不检查异常，程序中可以选择捕获处理，也可以不处理。这些异常一般由程序逻辑错误引起，程序应该从逻辑角度尽可能避免这类异常的发生。
+
+#+CAPTION: Java 中常见运行时异常
+| 异常类型                        | 说明                                                |
+|---------------------------------+-----------------------------------------------------|
+| =ArithmeticException=           | 算术错误异常，如以零做除数                          |
+| =ArrayIndexOutOfBoundException= | 数组索引越界                                        |
+| =ArrayStoreException=           | 向类型不兼容的数组元素赋值                          |
+| =ClassCastException=            | 类型转换异常                                        |
+| =IllegalArgumentException=      | 使用非法实参调用方法                                |
+| =IllegalStateException=         | 环境或应用程序处于不正确的状态                      |
+| =IllegalThreadStateException=   | 被请求的操作与当前线程状态不兼容                    |
+| =IndexOutOfBoundsException=     | 某种类型的索引异常                                  |
+| =NullPointerException=          | 尝试访问 null 对象成员，空指针异常                  |
+| =NegativeArraySizeException=    | 再负数范围内创建的数组                              |
+| =NumberFormatException=         | 数学转化格式异常，比如字符串到 float 型数字转换无效 |
+| =TypeNotPresentException=       | 类型未找到                                               |
+
+非运行时异常是指 =RuntimeException= 以外的异常，类型上都属于 =Exception= 类及其子类。从程序语法角度讲是必须进行处理的异常，如果不处理，程序就不能编译通过。如 =IOException、ClassNotFoundException= 等以及用户自定义的 =Exception= 异常（一般情况下不自定义检查异常）。
+
+#+CAPTION: Java 常见非运行时异常
+| 异常类型                       | 说明                       |
+|--------------------------------+----------------------------|
+| =ClassNotFoundException=       | 没有找到类                 |
+| =IllegalAccessException=       | 访问类被拒绝               |
+| =InstantiationException=       | 试图创建抽象类或接口的对象 |
+| =InterruptedException=         | 线程被另一个线程中断       |
+| =NoSuchFieldException=         | 请求的域不存在             |
+| =NoSuchMethodException=        | 请求的方法不存在           |
+| =ReflectiveOperationException= | 与反射有关的异常的超类     |
+
+*** Error VS Exception
+
+Error（错误）和 Exception（异常）都是 =java.lang.Throwable= 类的子类，在 Java 代码中只有继承了 =Throwable= 类的实例才能被 =throw=  或者 =catch= 。
+
+Exception 和 Error 体现了 Java 平台设计者对不同异常情况的分类。Exception 是程序正常运行过程中可以预料到的意外情况，并且应该被开发者捕获，进行相应的处理；Error 是指正常情况下不大可能出现的情况，绝大部分的 Error 都会导致程序处于非正常、不可恢复状态，所以不需要被开发者捕获。
+
+Error 错误是任何处理技术都无法恢复的情况，肯定会导致程序非正常终止，并且 Error 错误属于未检查类型，大多数发生在运行时。
+
+Exception 又分为可检查（checked）异常和不检查（unchecked）异常，可检查异常在源码里必须显示的进行捕获处理，这里是编译期检查的一部分。不检查异常就是所谓的运行时异常，通常是可以编码避免的逻辑错误，具体根据需要来判断是否需要捕获，并不会在编译器强制要求。
+
+#+CAPTION: Java 中几个常见的错误
+| Error                  | 说明                           |
+|------------------------+--------------------------------|
+| =NoClassDefFoundError= | 找不到 class 定义异常          |
+| =StackOverflowError=   | 深递归导致栈被耗尽而抛出的异常 |
+| =OutOfMemoryError=     | 内存溢出异常                   |
+
+** 异常处理机制
+
+前面介绍了异常的产生是不可避免的，那么为了保证程序有效地执行，需要对发生的异常进行相应的处理。
+
+Java 的异常处理通过 5 个关键字来实现： =try、catch、throw、throws= 和 =finally= ，具体如下：
+- =try catch= 语句用于捕获并处理异常；
+- =finally= 语句用于在任何情况下（除特殊情况外）都必须执行的代码；
+- =throw= 语句用于抛出异常；
+- =throws= 语句用于声明可能会出现的异常。
+
+Java 的异常处理机制提供了一种结构性和控制性的方式来处理程序执行期间发生的事件。异常处理的机制如下：
+- 在方法中用 =try catch= 语句捕获并处理异常， =catch= 语句可以有多个，用来匹配多个异常；
+- 对于处理不了的异常或者要转型的异常，在方法的声明处通过 =throws= 语句抛出异常，即由上层的调用方法来处理。
+
+以下代码是异常处理程序的基本结构：
+
+#+BEGIN_SRC java -n
+  try {
+      // 逻辑程序块
+  } catch (ExceptionType1 e) {
+      // 处理代码块1
+  } catch (ExceptionType2 e) {
+      // 处理代码块2
+      throw(e);                   // 再抛出这个异常
+  } finally {
+      // 释放资源代码块
+  }
+#+END_SRC
+
+*** try catch 语句
+
+=try catch= 语句用于捕获并处理异常， =finally= 语句用于在任何情况下（除特殊情况外）都必须执行的代码， =throw= 语句用于拋出异常， =throws= 语句用于声明可能会出现的异常。
+
+在 Java 中通常采用 =try catch= 语句来捕获异常并处理，语法格式如下：
+
+#+BEGIN_SRC java -n
+  try {
+      // 可能发生异常的语句
+  } catch (ExceptionType e) {
+      // 处理异常语句
+  }
+#+END_SRC
+
+在以上语法中，把可能引发异常的语句封装在 =try= 语句块中，用以捕获可能发生的异常。 =catch= 后的 =()= 里放匹配的异常类，指明 =catch= 语句可以处理的异常类型，发生异常时产生异常类的实例化对象。
+
+#+BEGIN_QUOTE
+在上面语法的处理代码块 1 中，可以使用以下 3 个方法输出相应的异常信息：
+- =printStackTrace()= 方法：指出异常的类型、性质、栈层次及出现在程序中的位置；
+- =getMessage()= 方法：输出错误的性质；
+- =toString()= 方法：给出异常的类型与性质。
+#+END_QUOTE
+
+如果 =try= 语句块中发生异常，那么一个相应的异常对象就会被抛出，然后 =catch= 语句就会依据所抛出异常对象的类型进行捕获，并处理。处理之后，程序会跳过 =try= 语句块中剩余的语句，转到 =catch= 语句块后面的第一条语句开始执行。
+
+如果 =try= 语句块没有异常发生，那么 =try= 块正常结束，后面的 =catch= 语句块被跳过，程序将从 =catch= 语句块后的第一条语句开始执行。
+

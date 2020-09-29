@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2020-09-29 Tue 09:04 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>异常处理</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
+<link rel="stylesheet" href="/css/animate.min.css" />
+<link rel="stylesheet" href="/css/all.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script src="/js/jquery.min.js"></script>
+<script src="/js/darkreader.js"></script>
+<script src="/user.config.js"></script>
+<script src="/js/main.js"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">异常处理</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org3f069e3">异常处理</a>
+<ul>
+<li><a href="#orgefcecd9">异常简介</a></li>
+<li><a href="#orgfadc906">异常类型</a></li>
+<li><a href="#orgcae549f">Error VS Exception</a></li>
+</ul>
+</li>
+<li><a href="#org8910e83">异常处理机制</a>
+<ul>
+<li><a href="#org61808a9">try catch 语句</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+Java 提供了异常处理机制来帮助程序员检查可能出现的错误，以保证程序的可读性和可维护性。Java 将异常封装到一个类中，出现错误时就会拋出异常。
+</p>
+
+<div id="outline-container-org3f069e3" class="outline-2">
+<h2 id="org3f069e3">异常处理</h2>
+<div class="outline-text-2" id="text-org3f069e3">
+<p>
+异常（exception）是在运行程序时产生的一种异常情况，已经成为了衡量一门语言是否成熟的标准之一。
+</p>
+</div>
+
+<div id="outline-container-orgefcecd9" class="outline-3">
+<h3 id="orgefcecd9">异常简介</h3>
+<div class="outline-text-3" id="text-orgefcecd9">
+<p>
+<b>Java 中的异常又称为例外，是一个在程序执行期间发生的事件，它中断正在执行程序的正常指令流。</b> 为了能够及时有效地处理程序中的运行错误，必须使用异常类，这可以让程序具有极好的容错性且更加健壮。
+</p>
+
+<p>
+在 Java 中一个异常的产生，主要有如下三种原因：
+</p>
+<ol class="org-ol">
+<li>Java 内部错误发生异常，Java 虚拟机产生的异常；</li>
+<li>编写的程序代码中的错误所产生的异常，例如空指针异常、数组越界异常等；</li>
+<li>通过 <code>throw</code> 语句手动生成的异常，一般用来告知该方法的调用者一些必要信息。</li>
+</ol>
+
+<p>
+Java 通过面向对象的方法来处理异常。在一个方法的运行过程中，如果发生了异常，则这个方法会产生代表该异常的一个对象，并把它交给运行时的系统，运行时系统寻找相应的代码来处理这一异常。
+</p>
+
+<p>
+我们把生成异常对象，并把它提交给运行时系统的过程称为 <code>抛出（throw）异常</code> ；运行时系统在方法的调用栈中查找，直至找到能够处理该类型的对象，这一个过程称为 <code>捕获（catch）异常</code> 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfadc906" class="outline-3">
+<h3 id="orgfadc906">异常类型</h3>
+<div class="outline-text-3" id="text-orgfadc906">
+<p>
+为了能够及时有效地处理程序中的运行错误，Java 专门引入了异常类。
+</p>
+
+<p>
+在 Java 中所有异常类型都是内置类 <code>java.lang.Throwable</code> 类的子类，即 <code>Throwable</code> 位于异常类层次结构的顶层。
+</p>
+
+<img
+src="/images/java/java-7.jpg"
+width="380"
+height=""
+style=""
+title=""
+/>
+
+<p>
+由上图可知， <code>Throwable</code> 类是所有异常和错误的超类，下面有 <code>Error</code> 和 <code>Exception</code> 现个子类分别表示错误和异常：
+</p>
+<ul class="org-ul">
+<li><code>Exception</code> 类用于用户程序可能出现的异常情况，它也是用来创建自定义异常类型类的类；</li>
+<li><code>Error</code> 定义了在通常环境下不希望被程序捕获的异常，一般指的是 JVM 错误，如堆栈溢出。</li>
+</ul>
+
+<p>
+其中异常类 <code>Exception</code> 又分为运行时异常（aka.不检查异常）和错误异常（aka.检查异常），这两种异常有很大的区别。
+</p>
+
+<p>
+运行时异常都是 <code>RuntimeException</code> 类及其子类异常，如 <code>NullPointerException、IndexOutOfBoundsException</code> 等，这些异常是不检查异常，程序中可以选择捕获处理，也可以不处理。这些异常一般由程序逻辑错误引起，程序应该从逻辑角度尽可能避免这类异常的发生。
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 1:</span> Java 中常见运行时异常</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">异常类型</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>ArithmeticException</code></td>
+<td class="org-left">算术错误异常，如以零做除数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>ArrayIndexOutOfBoundException</code></td>
+<td class="org-left">数组索引越界</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>ArrayStoreException</code></td>
+<td class="org-left">向类型不兼容的数组元素赋值</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>ClassCastException</code></td>
+<td class="org-left">类型转换异常</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>IllegalArgumentException</code></td>
+<td class="org-left">使用非法实参调用方法</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>IllegalStateException</code></td>
+<td class="org-left">环境或应用程序处于不正确的状态</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>IllegalThreadStateException</code></td>
+<td class="org-left">被请求的操作与当前线程状态不兼容</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>IndexOutOfBoundsException</code></td>
+<td class="org-left">某种类型的索引异常</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>NullPointerException</code></td>
+<td class="org-left">尝试访问 null 对象成员，空指针异常</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>NegativeArraySizeException</code></td>
+<td class="org-left">再负数范围内创建的数组</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>NumberFormatException</code></td>
+<td class="org-left">数学转化格式异常，比如字符串到 float 型数字转换无效</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>TypeNotPresentException</code></td>
+<td class="org-left">类型未找到</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+非运行时异常是指 <code>RuntimeException</code> 以外的异常，类型上都属于 <code>Exception</code> 类及其子类。从程序语法角度讲是必须进行处理的异常，如果不处理，程序就不能编译通过。如 <code>IOException、ClassNotFoundException</code> 等以及用户自定义的 <code>Exception</code> 异常（一般情况下不自定义检查异常）。
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 2:</span> Java 常见非运行时异常</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">异常类型</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>ClassNotFoundException</code></td>
+<td class="org-left">没有找到类</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>IllegalAccessException</code></td>
+<td class="org-left">访问类被拒绝</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>InstantiationException</code></td>
+<td class="org-left">试图创建抽象类或接口的对象</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>InterruptedException</code></td>
+<td class="org-left">线程被另一个线程中断</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>NoSuchFieldException</code></td>
+<td class="org-left">请求的域不存在</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>NoSuchMethodException</code></td>
+<td class="org-left">请求的方法不存在</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>ReflectiveOperationException</code></td>
+<td class="org-left">与反射有关的异常的超类</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgcae549f" class="outline-3">
+<h3 id="orgcae549f">Error VS Exception</h3>
+<div class="outline-text-3" id="text-orgcae549f">
+<p>
+Error（错误）和 Exception（异常）都是 <code>java.lang.Throwable</code> 类的子类，在 Java 代码中只有继承了 <code>Throwable</code> 类的实例才能被 <code>throw</code>  或者 <code>catch</code> 。
+</p>
+
+<p>
+Exception 和 Error 体现了 Java 平台设计者对不同异常情况的分类。Exception 是程序正常运行过程中可以预料到的意外情况，并且应该被开发者捕获，进行相应的处理；Error 是指正常情况下不大可能出现的情况，绝大部分的 Error 都会导致程序处于非正常、不可恢复状态，所以不需要被开发者捕获。
+</p>
+
+<p>
+Error 错误是任何处理技术都无法恢复的情况，肯定会导致程序非正常终止，并且 Error 错误属于未检查类型，大多数发生在运行时。
+</p>
+
+<p>
+Exception 又分为可检查（checked）异常和不检查（unchecked）异常，可检查异常在源码里必须显示的进行捕获处理，这里是编译期检查的一部分。不检查异常就是所谓的运行时异常，通常是可以编码避免的逻辑错误，具体根据需要来判断是否需要捕获，并不会在编译器强制要求。
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 3:</span> Java 中几个常见的错误</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Error</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>NoClassDefFoundError</code></td>
+<td class="org-left">找不到 class 定义异常</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>StackOverflowError</code></td>
+<td class="org-left">深递归导致栈被耗尽而抛出的异常</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>OutOfMemoryError</code></td>
+<td class="org-left">内存溢出异常</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8910e83" class="outline-2">
+<h2 id="org8910e83">异常处理机制</h2>
+<div class="outline-text-2" id="text-org8910e83">
+<p>
+前面介绍了异常的产生是不可避免的，那么为了保证程序有效地执行，需要对发生的异常进行相应的处理。
+</p>
+
+<p>
+Java 的异常处理通过 5 个关键字来实现： <code>try、catch、throw、throws</code> 和 <code>finally</code> ，具体如下：
+</p>
+<ul class="org-ul">
+<li><code>try catch</code> 语句用于捕获并处理异常；</li>
+<li><code>finally</code> 语句用于在任何情况下（除特殊情况外）都必须执行的代码；</li>
+<li><code>throw</code> 语句用于抛出异常；</li>
+<li><code>throws</code> 语句用于声明可能会出现的异常。</li>
+</ul>
+
+<p>
+Java 的异常处理机制提供了一种结构性和控制性的方式来处理程序执行期间发生的事件。异常处理的机制如下：
+</p>
+<ul class="org-ul">
+<li>在方法中用 <code>try catch</code> 语句捕获并处理异常， <code>catch</code> 语句可以有多个，用来匹配多个异常；</li>
+<li>对于处理不了的异常或者要转型的异常，在方法的声明处通过 <code>throws</code> 语句抛出异常，即由上层的调用方法来处理。</li>
+</ul>
+
+<p>
+以下代码是异常处理程序的基本结构：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">try</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#36923;&#36753;&#31243;&#24207;&#22359;</span>
+<span class="linenr"> 3: </span><span style="color: #AE81FF;">}</span> <span style="color: #F92672;">catch</span> <span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">ExceptionType1</span> <span style="color: #FD971F;">e</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22788;&#29702;&#20195;&#30721;&#22359;1</span>
+<span class="linenr"> 5: </span><span style="color: #AE81FF;">}</span> <span style="color: #F92672;">catch</span> <span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">ExceptionType2</span> <span style="color: #FD971F;">e</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 6: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22788;&#29702;&#20195;&#30721;&#22359;2</span>
+<span class="linenr"> 7: </span>    <span style="color: #F92672;">throw</span><span style="color: #66D9EF;">(</span>e<span style="color: #66D9EF;">)</span>;                   <span style="color: #75715E;">// </span><span style="color: #75715E;">&#20877;&#25243;&#20986;&#36825;&#20010;&#24322;&#24120;</span>
+<span class="linenr"> 8: </span><span style="color: #AE81FF;">}</span> <span style="color: #F92672;">finally</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 9: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#37322;&#25918;&#36164;&#28304;&#20195;&#30721;&#22359;</span>
+<span class="linenr">10: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org61808a9" class="outline-3">
+<h3 id="org61808a9">try catch 语句</h3>
+<div class="outline-text-3" id="text-org61808a9">
+<p>
+<code>try catch</code> 语句用于捕获并处理异常， <code>finally</code> 语句用于在任何情况下（除特殊情况外）都必须执行的代码， <code>throw</code> 语句用于拋出异常， <code>throws</code> 语句用于声明可能会出现的异常。
+</p>
+
+<p>
+在 Java 中通常采用 <code>try catch</code> 语句来捕获异常并处理，语法格式如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">try</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21487;&#33021;&#21457;&#29983;&#24322;&#24120;&#30340;&#35821;&#21477;</span>
+<span class="linenr">3: </span><span style="color: #AE81FF;">}</span> <span style="color: #F92672;">catch</span> <span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">ExceptionType</span> <span style="color: #FD971F;">e</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">4: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22788;&#29702;&#24322;&#24120;&#35821;&#21477;</span>
+<span class="linenr">5: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+在以上语法中，把可能引发异常的语句封装在 <code>try</code> 语句块中，用以捕获可能发生的异常。 <code>catch</code> 后的 <code>()</code> 里放匹配的异常类，指明 <code>catch</code> 语句可以处理的异常类型，发生异常时产生异常类的实例化对象。
+</p>
+
+<blockquote>
+<p>
+在上面语法的处理代码块 1 中，可以使用以下 3 个方法输出相应的异常信息：
+</p>
+<ul class="org-ul">
+<li><code>printStackTrace()</code> 方法：指出异常的类型、性质、栈层次及出现在程序中的位置；</li>
+<li><code>getMessage()</code> 方法：输出错误的性质；</li>
+<li><code>toString()</code> 方法：给出异常的类型与性质。</li>
+</ul>
+</blockquote>
+
+<p>
+如果 <code>try</code> 语句块中发生异常，那么一个相应的异常对象就会被抛出，然后 <code>catch</code> 语句就会依据所抛出异常对象的类型进行捕获，并处理。处理之后，程序会跳过 <code>try</code> 语句块中剩余的语句，转到 <code>catch</code> 语句块后面的第一条语句开始执行。
+</p>
+
+<p>
+如果 <code>try</code> 语句块没有异常发生，那么 <code>try</code> 块正常结束，后面的 <code>catch</code> 语句块被跳过，程序将从 <code>catch</code> 语句块后的第一条语句开始执行。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-09-28 Mon 19:23</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2020-09-29 Tue 09:04</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
