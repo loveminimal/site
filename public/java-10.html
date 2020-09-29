@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-09-29 Tue 09:04 -->
+<!-- 2020-09-29 Tue 17:21 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>异常处理</title>
@@ -23,16 +23,25 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3f069e3">异常处理</a>
+<li><a href="#org2cffc36">异常处理</a>
 <ul>
-<li><a href="#orgefcecd9">异常简介</a></li>
-<li><a href="#orgfadc906">异常类型</a></li>
-<li><a href="#orgcae549f">Error VS Exception</a></li>
+<li><a href="#org7a727c9">异常简介</a></li>
+<li><a href="#org8c4285f">异常类型</a></li>
+<li><a href="#org3039acc">Error VS Exception</a></li>
 </ul>
 </li>
-<li><a href="#org8910e83">异常处理机制</a>
+<li><a href="#orgb9a6703">异常处理机制</a>
 <ul>
-<li><a href="#org61808a9">try catch 语句</a></li>
+<li><a href="#orgc5aedba">try catch 语句</a></li>
+<li><a href="#org4abc9d5">多重 catch 语句</a></li>
+<li><a href="#org8122ba6">try catch finally 语句</a></li>
+<li><a href="#org68ab1cc"><span class="todo TODO">TODO</span> 自动资源管理</a></li>
+</ul>
+</li>
+<li><a href="#org04e37f1">throws 和 throw</a>
+<ul>
+<li><a href="#org5982fbd">throws 声明异常</a></li>
+<li><a href="#org9fd0b99">throw 抛出异常</a></li>
 </ul>
 </li>
 </ul>
@@ -42,17 +51,17 @@
 Java 提供了异常处理机制来帮助程序员检查可能出现的错误，以保证程序的可读性和可维护性。Java 将异常封装到一个类中，出现错误时就会拋出异常。
 </p>
 
-<div id="outline-container-org3f069e3" class="outline-2">
-<h2 id="org3f069e3">异常处理</h2>
-<div class="outline-text-2" id="text-org3f069e3">
+<div id="outline-container-org2cffc36" class="outline-2">
+<h2 id="org2cffc36">异常处理</h2>
+<div class="outline-text-2" id="text-org2cffc36">
 <p>
 异常（exception）是在运行程序时产生的一种异常情况，已经成为了衡量一门语言是否成熟的标准之一。
 </p>
 </div>
 
-<div id="outline-container-orgefcecd9" class="outline-3">
-<h3 id="orgefcecd9">异常简介</h3>
-<div class="outline-text-3" id="text-orgefcecd9">
+<div id="outline-container-org7a727c9" class="outline-3">
+<h3 id="org7a727c9">异常简介</h3>
+<div class="outline-text-3" id="text-org7a727c9">
 <p>
 <b>Java 中的异常又称为例外，是一个在程序执行期间发生的事件，它中断正在执行程序的正常指令流。</b> 为了能够及时有效地处理程序中的运行错误，必须使用异常类，这可以让程序具有极好的容错性且更加健壮。
 </p>
@@ -76,9 +85,9 @@ Java 通过面向对象的方法来处理异常。在一个方法的运行过程
 </div>
 </div>
 
-<div id="outline-container-orgfadc906" class="outline-3">
-<h3 id="orgfadc906">异常类型</h3>
-<div class="outline-text-3" id="text-orgfadc906">
+<div id="outline-container-org8c4285f" class="outline-3">
+<h3 id="org8c4285f">异常类型</h3>
+<div class="outline-text-3" id="text-org8c4285f">
 <p>
 为了能够及时有效地处理程序中的运行错误，Java 专门引入了异常类。
 </p>
@@ -246,9 +255,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgcae549f" class="outline-3">
-<h3 id="orgcae549f">Error VS Exception</h3>
-<div class="outline-text-3" id="text-orgcae549f">
+<div id="outline-container-org3039acc" class="outline-3">
+<h3 id="org3039acc">Error VS Exception</h3>
+<div class="outline-text-3" id="text-org3039acc">
 <p>
 Error（错误）和 Exception（异常）都是 <code>java.lang.Throwable</code> 类的子类，在 Java 代码中只有继承了 <code>Throwable</code> 类的实例才能被 <code>throw</code>  或者 <code>catch</code> 。
 </p>
@@ -300,9 +309,9 @@ Exception 又分为可检查（checked）异常和不检查（unchecked）异常
 </div>
 </div>
 
-<div id="outline-container-org8910e83" class="outline-2">
-<h2 id="org8910e83">异常处理机制</h2>
-<div class="outline-text-2" id="text-org8910e83">
+<div id="outline-container-orgb9a6703" class="outline-2">
+<h2 id="orgb9a6703">异常处理机制</h2>
+<div class="outline-text-2" id="text-orgb9a6703">
 <p>
 前面介绍了异常的产生是不可避免的，那么为了保证程序有效地执行，需要对发生的异常进行相应的处理。
 </p>
@@ -330,23 +339,23 @@ Java 的异常处理机制提供了一种结构性和控制性的方式来处理
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">try</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#36923;&#36753;&#31243;&#24207;&#22359;</span>
-<span class="linenr"> 3: </span><span style="color: #AE81FF;">}</span> <span style="color: #F92672;">catch</span> <span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">ExceptionType1</span> <span style="color: #FD971F;">e</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 4: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22788;&#29702;&#20195;&#30721;&#22359;1</span>
-<span class="linenr"> 5: </span><span style="color: #AE81FF;">}</span> <span style="color: #F92672;">catch</span> <span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">ExceptionType2</span> <span style="color: #FD971F;">e</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 6: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22788;&#29702;&#20195;&#30721;&#22359;2</span>
-<span class="linenr"> 7: </span>    <span style="color: #F92672;">throw</span><span style="color: #66D9EF;">(</span>e<span style="color: #66D9EF;">)</span>;                   <span style="color: #75715E;">// </span><span style="color: #75715E;">&#20877;&#25243;&#20986;&#36825;&#20010;&#24322;&#24120;</span>
-<span class="linenr"> 8: </span><span style="color: #AE81FF;">}</span> <span style="color: #F92672;">finally</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 9: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#37322;&#25918;&#36164;&#28304;&#20195;&#30721;&#22359;</span>
-<span class="linenr">10: </span><span style="color: #AE81FF;">}</span>
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #FF1493;">try</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#36923;&#36753;&#31243;&#24207;&#22359;</span>
+<span class="linenr"> 3: </span><span style="color: #AF87FF;">}</span> <span style="color: #FF1493;">catch</span> <span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">ExceptionType1</span> <span style="color: #FF8C00;">e</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22788;&#29702;&#20195;&#30721;&#22359;1</span>
+<span class="linenr"> 5: </span><span style="color: #AF87FF;">}</span> <span style="color: #FF1493;">catch</span> <span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">ExceptionType2</span> <span style="color: #FF8C00;">e</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 6: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22788;&#29702;&#20195;&#30721;&#22359;2</span>
+<span class="linenr"> 7: </span>    <span style="color: #FF1493;">throw</span><span style="color: #5FD7FF;">(</span>e<span style="color: #5FD7FF;">)</span>;                   <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20877;&#25243;&#20986;&#36825;&#20010;&#24322;&#24120;</span>
+<span class="linenr"> 8: </span><span style="color: #AF87FF;">}</span> <span style="color: #FF1493;">finally</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 9: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#37322;&#25918;&#36164;&#28304;&#20195;&#30721;&#22359;</span>
+<span class="linenr">10: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org61808a9" class="outline-3">
-<h3 id="org61808a9">try catch 语句</h3>
-<div class="outline-text-3" id="text-org61808a9">
+<div id="outline-container-orgc5aedba" class="outline-3">
+<h3 id="orgc5aedba">try catch 语句</h3>
+<div class="outline-text-3" id="text-orgc5aedba">
 <p>
 <code>try catch</code> 语句用于捕获并处理异常， <code>finally</code> 语句用于在任何情况下（除特殊情况外）都必须执行的代码， <code>throw</code> 语句用于拋出异常， <code>throws</code> 语句用于声明可能会出现的异常。
 </p>
@@ -356,11 +365,11 @@ Java 的异常处理机制提供了一种结构性和控制性的方式来处理
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">try</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr">2: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21487;&#33021;&#21457;&#29983;&#24322;&#24120;&#30340;&#35821;&#21477;</span>
-<span class="linenr">3: </span><span style="color: #AE81FF;">}</span> <span style="color: #F92672;">catch</span> <span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">ExceptionType</span> <span style="color: #FD971F;">e</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr">4: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22788;&#29702;&#24322;&#24120;&#35821;&#21477;</span>
-<span class="linenr">5: </span><span style="color: #AE81FF;">}</span>
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #FF1493;">try</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#21487;&#33021;&#21457;&#29983;&#24322;&#24120;&#30340;&#35821;&#21477;</span>
+<span class="linenr">3: </span><span style="color: #AF87FF;">}</span> <span style="color: #FF1493;">catch</span> <span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">ExceptionType</span> <span style="color: #FF8C00;">e</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">4: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22788;&#29702;&#24322;&#24120;&#35821;&#21477;</span>
+<span class="linenr">5: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -388,12 +397,249 @@ Java 的异常处理机制提供了一种结构性和控制性的方式来处理
 </p>
 </div>
 </div>
+
+<div id="outline-container-org4abc9d5" class="outline-3">
+<h3 id="org4abc9d5">多重 catch 语句</h3>
+<div class="outline-text-3" id="text-org4abc9d5">
+<p>
+如果 try 代码块中有很多语句会发生异常，而且发生的异常种类又很多。那么可以在 try 后面跟有多个 catch 代码块。多 catch 代码块语法如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #FF1493;">try</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#21487;&#33021;&#20250;&#21457;&#29983;&#24322;&#24120;&#30340;&#35821;&#21477;</span>
+<span class="linenr"> 3: </span><span style="color: #AF87FF;">}</span> <span style="color: #FF1493;">catch</span><span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">ExceptionType</span> <span style="color: #FF8C00;">e</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22788;&#29702;&#24322;&#24120;&#35821;&#21477;</span>
+<span class="linenr"> 5: </span><span style="color: #AF87FF;">}</span> <span style="color: #FF1493;">catch</span><span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">ExceptionType</span> <span style="color: #FF8C00;">e</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 6: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22788;&#29702;&#24322;&#24120;&#35821;&#21477;</span>
+<span class="linenr"> 7: </span><span style="color: #AF87FF;">}</span> <span style="color: #FF1493;">catch</span><span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">ExceptionType</span> <span style="color: #FF8C00;">e</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 8: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22788;&#29702;&#24322;&#24120;&#35821;&#21477;</span>
+<span class="linenr"> 9: </span>...
+<span class="linenr">10: </span><span style="color: #AF87FF;">}</span>
+</pre>
+</div>
+
+<p>
+在多个 catch 代码块的情况下，当一个 catch 代码块捕获到一个异常时，其它的 catch 代码块就不再进行匹配。
+</p>
+
+<p>
+*注：当捕获的多个异常类之间存在父子关系时，捕获异常时一般先捕获子类，再捕获父类，否则异常会被父类拦截，导致子类捕获不到。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8122ba6" class="outline-3">
+<h3 id="org8122ba6">try catch finally 语句</h3>
+<div class="outline-text-3" id="text-org8122ba6">
+<p>
+在实际开发中，根据 <code>try catch</code> 语句的执行过程， try 语句块和 catch 语句块有可能不被完全执行，而有些处理代码则要求必须执行。例如，程序在 try 块里打开了一些物理资源（如数据库连接、网络连接和磁盘文件等），这些物理资源都必须显式回收。
+</p>
+
+<blockquote>
+<p>
+Java 的垃圾回收机制不会回收任何物理资源，垃圾回收机制只回收内存中对象所占用的内存。
+</p>
+</blockquote>
+
+<p>
+所以为了确保一定回收 try 块中打开的物理资源，异常处理机制提供了 finally 代码块，并且 Java 7 之后提供了自动资源管理（Automatic Resource Management）技术。
+</p>
+
+<p>
+<code>finally</code> 语句可以与前面介绍的 <code>try catch</code> 语句块匹配使用，语法格式如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #FF1493;">try</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#21487;&#33021;&#20250;&#21457;&#29983;&#24322;&#24120;&#30340;&#35821;&#21477;</span>
+<span class="linenr">3: </span><span style="color: #AF87FF;">}</span> <span style="color: #FF1493;">catch</span><span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">ExceptionType</span> <span style="color: #FF8C00;">e</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">4: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22788;&#29702;&#24322;&#24120;&#35821;&#21477;</span>
+<span class="linenr">5: </span><span style="color: #AF87FF;">}</span> <span style="color: #FF1493;">finally</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">6: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#28165;&#29702;&#20195;&#30721;&#22359;</span>
+<span class="linenr">7: </span><span style="color: #AF87FF;">}</span>
+</pre>
+</div>
+
+<p>
+使用 <code>try-catch-finally</code> 语句需注意以下几点：
+</p>
+<ul class="org-ul">
+<li>try 块是必需的；</li>
+<li>catch 块和 finally 块至少出现其中之一。</li>
+</ul>
+
+<p>
+<b>一般情况下，无论是否有异常抛出，都会执行 finally 语句块中的语句。</b>
+</p>
+
+<p>
+除非在 try 块、catch 块中调用了退出虚拟机的方法 <code>System.exit(int status)</code> ，否则不管在 try 块或者 catch 块中执行怎样的代码，出现怎样的情况，异常处理的 finally 块总会执行。
+</p>
+
+<p>
+通常情况下不在 finally 代码块中作用 <code>return</code> 或 <code>throw</code> 等导致方法终止的语句，否则将会导致 try 和 catch 代码块中的 <code>return</code> 和 <code>throw</code> 语句失效。
+</p>
+
+<p>
+来看一段代码吧：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #FF1493;">import</span> <span style="color: #AF87FF;">java</span>.<span style="color: #AF87FF;">util</span>.<span style="color: #5FD7FF;">Scanner</span>;
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">Test</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #FF1493;">public</span> <span style="color: #FF1493;">static</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">main</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">String</span><span style="color: #87D700;">[]</span> <span style="color: #FF8C00;">args</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 5: </span>        <span style="color: #5FD7FF;">Scanner</span> <span style="color: #FF8C00;">input</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Scanner</span><span style="color: #87D700;">(</span>System.in<span style="color: #87D700;">)</span>;
+<span class="linenr"> 6: </span>        System.out.println<span style="color: #87D700;">(</span><span style="color: #CDC673;">"Windows &#31995;&#32479;&#24050;&#21551;&#21160;&#65281;"</span><span style="color: #87D700;">)</span>;
+<span class="linenr"> 7: </span>        <span style="color: #5FD7FF;">String</span><span style="color: #87D700;">[]</span> <span style="color: #FF8C00;">pros</span> = <span style="color: #87D700;">{</span><span style="color: #CDC673;">"&#35760;&#20107;&#26412;"</span>, <span style="color: #CDC673;">"&#35745;&#31639;&#22120;"</span>, <span style="color: #CDC673;">"&#27983;&#35272;&#22120;"</span><span style="color: #87D700;">}</span>;
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>        <span style="color: #FF1493;">try</span> <span style="color: #87D700;">{</span>
+<span class="linenr">10: </span>            <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#24490;&#29615;&#36755;&#20986; pros &#25968;&#32452;&#20013;&#30340;&#20803;&#32032;</span>
+<span class="linenr">11: </span>            <span style="color: #FF1493;">for</span> <span style="color: #CDC673;">(</span><span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">i</span> = 0; i &lt; pros.<span style="color: #5FD7FF;">length</span>; i++<span style="color: #CDC673;">)</span> <span style="color: #CDC673;">{</span>
+<span class="linenr">12: </span>                System.out.println<span style="color: #FF8C00;">(</span>i + 1 + <span style="color: #CDC673;">"&#65306;"</span> + pros<span style="color: #FF1493;">[</span>i<span style="color: #FF1493;">]</span><span style="color: #FF8C00;">)</span>;
+<span class="linenr">13: </span>            <span style="color: #CDC673;">}</span>
+<span class="linenr">14: </span>            System.out.println<span style="color: #CDC673;">(</span><span style="color: #CDC673;">"&#26159;&#21542;&#36816;&#34892;&#31243;&#24207;&#65306;"</span><span style="color: #CDC673;">)</span>;
+<span class="linenr">15: </span>            <span style="color: #5FD7FF;">String</span> <span style="color: #FF8C00;">answer</span> = input.next<span style="color: #CDC673;">()</span>;
+<span class="linenr">16: </span>            <span style="color: #FF1493;">if</span> <span style="color: #CDC673;">(</span>answer.equals<span style="color: #FF8C00;">(</span><span style="color: #CDC673;">"y"</span><span style="color: #FF8C00;">)</span><span style="color: #CDC673;">)</span> <span style="color: #CDC673;">{</span>
+<span class="linenr">17: </span>                System.out.println<span style="color: #FF8C00;">(</span><span style="color: #CDC673;">"&#35831;&#36755;&#20837;&#31243;&#24207;&#32534;&#21495;&#65306;"</span><span style="color: #FF8C00;">)</span>;
+<span class="linenr">18: </span>                <span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">no</span> = input.nextInt<span style="color: #FF8C00;">()</span>;
+<span class="linenr">19: </span>                System.out.println<span style="color: #FF8C00;">(</span><span style="color: #CDC673;">"&#27491;&#22312;&#36816;&#34892;&#31243;&#24207;["</span> + pros<span style="color: #FF1493;">[</span>no - 1<span style="color: #FF1493;">]</span> + <span style="color: #CDC673;">"]"</span><span style="color: #FF8C00;">)</span>;
+<span class="linenr">20: </span>            <span style="color: #CDC673;">}</span>
+<span class="linenr">21: </span>        <span style="color: #87D700;">}</span> <span style="color: #FF1493;">catch</span> <span style="color: #87D700;">(</span><span style="color: #5FD7FF;">Exception</span> <span style="color: #FF8C00;">e</span><span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr">22: </span>            e.printStackTrace<span style="color: #CDC673;">()</span>;
+<span class="linenr">23: </span>        <span style="color: #87D700;">}</span> <span style="color: #FF1493;">finally</span> <span style="color: #87D700;">{</span>
+<span class="linenr">24: </span>            System.out.println<span style="color: #CDC673;">(</span><span style="color: #CDC673;">"&#35874;&#35874;&#20351;&#29992;&#65281;"</span><span style="color: #CDC673;">)</span>;
+<span class="linenr">25: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr">26: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">27: </span><span style="color: #AF87FF;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org68ab1cc" class="outline-3">
+<h3 id="org68ab1cc"><span class="todo TODO">TODO</span> 自动资源管理</h3>
+</div>
+</div>
+
+<div id="outline-container-org04e37f1" class="outline-2">
+<h2 id="org04e37f1">throws 和 throw</h2>
+<div class="outline-text-2" id="text-org04e37f1">
+<p>
+Java 中的异常处理除了捕获异常和处理异常之外，还包括声明异常和抛出异常。
+</p>
+
+<p>
+实现声明和抛出异常的关键字非常相似，它们是 <code>throws</code> 和 <code>throw</code> 。可以通过 <code>throws</code> 关键字在方法上声明该方法要抛出的异常，然后在方法内部通过 <code>throw</code> 抛出异常对象。
+</p>
+</div>
+
+<div id="outline-container-org5982fbd" class="outline-3">
+<h3 id="org5982fbd">throws 声明异常</h3>
+<div class="outline-text-3" id="text-org5982fbd">
+<p>
+当一个方法产生一个它不处理的异常时，那么就需要在该方法的头部声明这个异常，以便将该异常传递到方法的外部进行处理。使用 <code>throws</code> 声明的方法表示不处理异常，具体格式如下：
+</p>
+
+<pre class="example">
+returnType method_name(paramList) throws Exception 1, Exception2, ... {...}
+</pre>
+
+<p>
+如果有多个异常类，它们之间用逗号分隔。这些异常类可以是方法中调用了可能抛出异常的方法而产生的异常，也可以是方法体中生成并抛出的异常。
+</p>
+
+<p>
+使用 <code>throws</code> 声明抛出异常的思路是：
+</p>
+<ol class="org-ol">
+<li>当前方法不知道如何处理这种类型的异常，该异常应该由向上一级的调用者处理；</li>
+<li>如果 <code>main</code> 方法也不知道如何处理这种类型的异常，也可以使用 <code>throws</code> 声明抛出异常，该异常将交给 JVM 处理；</li>
+<li>JVM 对异常的处理方法是，打印异常的跟踪栈信息，并中止程序运行，这就是前面程序在遇到异常后自动结束的原因。</li>
+</ol>
+
+<p>
+来看一个例子吧。
+</p>
+
+<p>
+假设，创建一个 <code>readFile()</code> 方法，该方法用于读取文件内容，在读取的过程中可能会产生 <code>IOException</code> 异常，但是在该方法中不做任何处理，而将可能发生的异常交给调用者处理。在 <code>main()</code> 方法中使用 <code>try catch</code> 捕获异常，并输出异常信息，代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #FF1493;">import</span> <span style="color: #AF87FF;">java</span>.<span style="color: #AF87FF;">io</span>.<span style="color: #5FD7FF;">FileInputStream</span>;
+<span class="linenr"> 2: </span><span style="color: #FF1493;">import</span> <span style="color: #AF87FF;">java</span>.<span style="color: #AF87FF;">io</span>.<span style="color: #5FD7FF;">IOException</span>;
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">Test</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 5: </span>    <span style="color: #FF1493;">public</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">readFile</span><span style="color: #5FD7FF;">()</span> <span style="color: #FF1493;">throws</span> <span style="color: #5FD7FF;">IOException</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 6: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#23450;&#20041;&#26041;&#27861;&#26102;&#22768;&#26126;&#24322;&#24120;</span>
+<span class="linenr"> 7: </span>        <span style="color: #5FD7FF;">FileInputStream</span> <span style="color: #FF8C00;">file</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">FileInputStream</span><span style="color: #87D700;">(</span><span style="color: #CDC673;">"read.txt"</span><span style="color: #87D700;">)</span>; <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#21019;&#24314; FileInputStream &#23454;&#20363;&#23545;&#35937;</span>
+<span class="linenr"> 8: </span>        <span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">f</span>;
+<span class="linenr"> 9: </span>        <span style="color: #FF1493;">while</span> <span style="color: #87D700;">(</span><span style="color: #CDC673;">(</span>f = file.read<span style="color: #FF8C00;">()</span><span style="color: #CDC673;">)</span> != -1<span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr">10: </span>            System.out.println<span style="color: #CDC673;">(</span><span style="color: #FF8C00;">(</span><span style="color: #5FD7FF;">char</span><span style="color: #FF8C00;">)</span> f<span style="color: #CDC673;">)</span>;
+<span class="linenr">11: </span>            f = file.read<span style="color: #CDC673;">()</span>;
+<span class="linenr">12: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr">13: </span>        file.close<span style="color: #87D700;">()</span>;
+<span class="linenr">14: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>    <span style="color: #FF1493;">public</span> <span style="color: #FF1493;">static</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">main</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">String</span><span style="color: #87D700;">[]</span> <span style="color: #FF8C00;">args</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">17: </span>        <span style="color: #5FD7FF;">Throws</span> <span style="color: #FF8C00;">t</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Test</span><span style="color: #87D700;">()</span>;
+<span class="linenr">18: </span>        <span style="color: #FF1493;">try</span> <span style="color: #87D700;">{</span>
+<span class="linenr">19: </span>            t.readFile<span style="color: #CDC673;">()</span>;       <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#35843;&#29992; readFile() &#26041;&#27861;</span>
+<span class="linenr">20: </span>        <span style="color: #87D700;">}</span> <span style="color: #FF1493;">catch</span> <span style="color: #87D700;">(</span><span style="color: #5FD7FF;">IOException</span> <span style="color: #FF8C00;">e</span><span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr">21: </span>            <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#25429;&#33719;&#24322;&#24120;</span>
+<span class="linenr">22: </span>            System.out.println<span style="color: #CDC673;">(</span>e<span style="color: #CDC673;">)</span>;
+<span class="linenr">23: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr">24: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">25: </span><span style="color: #AF87FF;">}</span>
+</pre>
+</div>
+
+<p>
+以上代码，首先在定义 <code>readFile()</code> 方法时用 <code>throws</code> 关键字声明在该方法中可能产生的异常，然后在 <code>main()</code> 方法中调用 <code>readFile()</code> 方法，并使用 <code>catch</code> 语句捕获产生的异常。
+</p>
+
+<p>
+<b>方法重写时声明抛出异常的限制：</b>
+</p>
+<ul class="org-ul">
+<li>子类方法声明抛出的异常类型应该是父类方法声明抛出的异常类型的子类或相同；</li>
+<li>子类方法声明抛出的异常不允许比父类方法声明抛出的异常多。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9fd0b99" class="outline-3">
+<h3 id="org9fd0b99">throw 抛出异常</h3>
+<div class="outline-text-3" id="text-org9fd0b99">
+<p>
+与 <code>throws</code> 不同的是， <code>throw</code> 语句用来直接抛出一个异常，后接一个可抛出的异常类对象，语法格式如下：
+</p>
+
+<pre class="example">
+throw ExceptionObject;
+</pre>
+
+<p>
+其中， <code>ExceptionObject</code> 必须是 <code>Throwable</code> 类或其子类的对象。
+</p>
+
+<p>
+当 <code>throw</code> 语句执行时，它后面的语句将不执行，此时程序转向调用者程序，寻找与之相匹配的 <code>catch</code> 语句，执行相应的异常处理程序。如果没有找到相匹配的 <code>catch</code> 语句，则再转向上一层的调用程序。这样逐层向上，直到最外层的异常处理程序终止程序并打印出调用栈情况。
+</p>
+
+<p>
+<code>throw</code> 关键字不会单独使用，它的使用完全符合异常的处理机制，但是，一般来讲用户都在避免异常的产生，所以不会手工抛出一个新的异常类实例，而往往会抛出程序中已经产生的异常类的实例。
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-28 Mon 19:23</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-09-29 Tue 09:04</p>
+<p class="date">Created: 2020-09-29 Tue 17:21</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
