@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-09-30 Wed 12:07 -->
+<!-- 2020-09-30 Wed 19:06 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>集合、泛型和枚举</title>
@@ -43,8 +43,12 @@
 <li><a href="#org5ce4b13">泛型</a>
 <ul>
 <li><a href="#org9c583b1">泛型集合</a></li>
+<li><a href="#orga8101d4">泛型类</a></li>
+<li><a href="#org89c270a">泛型方法</a></li>
+<li><a href="#orgf317e0d"><span class="todo TODO">TODO</span> 泛型的高级用法</a></li>
 </ul>
 </li>
+<li><a href="#org4f15560">图书信息查询</a></li>
 </ul>
 </div>
 </div>
@@ -959,14 +963,264 @@ Java 集合之所以被设计成这样，是因为集合的设计者不知道我
 <span class="linenr">28: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
+
+<p>
+在该示例中，第 8 行代码创建了一个键类型为 <code>Integer</code> 、值类型为 <code>Book</code> 的泛型集合，即该 <code>Map</code> 集合中存放的键必须是 <code>Integer</code> 类型、值必须为 <code>Book</code> 类型，否则编译出错。在获取 <code>Map</code> 集合中的元素时，不需要将 <code>books.get(id);</code> 获取的值强制转换为 <code>Book</code> 类型，程序会隐式转换。
+</p>
+
+<p>
+第 19 行代码在创建 <code>List</code> 集合时，同样使用了泛型，因此在获取集合中的元素时也不需要将 <code>bookList.get(i)</code> 代码强制转换为 <code>Book</code> 类型，程序会隐式转换。
+</p>
 </div>
+</div>
+
+<div id="outline-container-orga8101d4" class="outline-3">
+<h3 id="orga8101d4">泛型类</h3>
+<div class="outline-text-3" id="text-orga8101d4">
+<p>
+除了可以定义泛型集合之外，还可以直接限定泛型类的类型参数，语法格式如下：
+</p>
+
+<pre class="example">
+public class class_name&lt;data_type1, data_type2, ...&gt; {}
+</pre>
+
+<p>
+其中， <code>class_name</code> 表示类的名称， <code>data_type1</code> 等表示类型参数。Java 泛型支持声明一个以上的类型参数，只需要将类型用逗号隔开即可。
+</p>
+
+<p>
+<b>泛型类一般用于类中的属性类型不确定的情况下。</b> 在声明属性时，使用下面的语句：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">private</span> <span style="color: #66D9EF;">data_type1</span> <span style="color: #FD971F;">property_name1</span>;
+<span class="linenr">2: </span><span style="color: #F92672;">private</span> <span style="color: #66D9EF;">data_type2</span> <span style="color: #FD971F;">property_name2</span>;
+</pre>
+</div>
+
+<p>
+该语句中的 <code>data_type1</code> 与类声明中的 <code>data_type1</code> 表示的是同一种数据类型。
+</p>
+
+<p>
+<b>在实例化泛型类时，需要指明泛型类中的类型参数，并赋予泛型类属性相应类型的值。</b>
+</p>
+
+<p>
+下面我们来看一个例子，创建了一个表示学生的泛型类，该类中包括 3 个属性，分别是姓名、年龄和性别。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Stu</span><span style="color: #AE81FF;">&lt;</span><span style="color: #66D9EF;">N</span>, <span style="color: #66D9EF;">A</span>, <span style="color: #66D9EF;">S</span><span style="color: #AE81FF;">&gt;</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">private</span> <span style="color: #66D9EF;">N</span> <span style="color: #FD971F;">name</span>;
+<span class="linenr"> 3: </span>    <span style="color: #F92672;">private</span> <span style="color: #66D9EF;">A</span> <span style="color: #FD971F;">age</span>;
+<span class="linenr"> 4: </span>    <span style="color: #F92672;">private</span> <span style="color: #66D9EF;">S</span> <span style="color: #FD971F;">sex</span>;
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21019;&#24314;&#31867;&#30340;&#26500;&#36896;&#20989;&#25968;</span>
+<span class="linenr"> 7: </span>    <span style="color: #F92672;">public</span> <span style="color: #A6E22E;">Stu</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">N</span> <span style="color: #FD971F;">name</span>, <span style="color: #66D9EF;">A</span> <span style="color: #FD971F;">age</span>, <span style="color: #66D9EF;">S</span> <span style="color: #FD971F;">sex</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 8: </span>        <span style="color: #F92672;">this</span>.name = name;
+<span class="linenr"> 9: </span>        <span style="color: #F92672;">this</span>.age = age;
+<span class="linenr">10: </span>        <span style="color: #F92672;">this</span>.sex = sex;
+<span class="linenr">11: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">12: </span>
+<span class="linenr">13: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#19979;&#38754;&#26159;&#19978;&#38754; 3 &#20010;&#23646;&#24615;&#30340; setter/getter &#26041;&#27861;</span>
+<span class="linenr">14: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">N</span> <span style="color: #A6E22E;">getName</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">15: </span>        <span style="color: #F92672;">return</span> name;
+<span class="linenr">16: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">17: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">setName</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">N</span> <span style="color: #FD971F;">name</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">18: </span>        <span style="color: #F92672;">this</span>.name = name;
+<span class="linenr">19: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">20: </span>
+<span class="linenr">21: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">A</span> <span style="color: #A6E22E;">getAge</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">22: </span>        <span style="color: #F92672;">return</span> age;
+<span class="linenr">23: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">24: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">setAge</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">A</span> <span style="color: #FD971F;">age</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">25: </span>        <span style="color: #F92672;">this</span>.age = age;
+<span class="linenr">26: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">27: </span>
+<span class="linenr">28: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">S</span> <span style="color: #A6E22E;">getSex</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">29: </span>        <span style="color: #F92672;">return</span> sex;
+<span class="linenr">30: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">31: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">setSex</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">S</span> <span style="color: #FD971F;">sex</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">32: </span>        <span style="color: #F92672;">this</span>.sex = sex;
+<span class="linenr">33: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">34: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+接着创建测试类，在测试类中调用 Stu 类的构造方法实例化 Stu 对象，并给该类中的 3 个属性赋初始值，最终需要输出学生信息，代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Test</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #66D9EF;">Stu</span><span style="color: #A6E22E;">&lt;</span><span style="color: #66D9EF;">String</span>, <span style="color: #66D9EF;">Integer</span>, <span style="color: #66D9EF;">Character</span><span style="color: #A6E22E;">&gt;</span> <span style="color: #FD971F;">stu</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Stu</span><span style="color: #A6E22E;">&lt;</span><span style="color: #66D9EF;">String</span>, <span style="color: #66D9EF;">Integer</span>, <span style="color: #66D9EF;">Character</span><span style="color: #A6E22E;">&gt;(</span><span style="color: #E6DB74;">"Amy"</span>, 32, <span style="color: #E6DB74;">"Female"</span> <span style="color: #A6E22E;">)</span>;
+<span class="linenr"> 4: </span>        <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">name</span> = stu.getName<span style="color: #A6E22E;">()</span>;
+<span class="linenr"> 5: </span>        <span style="color: #66D9EF;">Integer</span> <span style="color: #FD971F;">age</span> = stu.getAge<span style="color: #A6E22E;">()</span>;
+<span class="linenr"> 6: </span>        <span style="color: #66D9EF;">Character</span> <span style="color: #FD971F;">sex</span> = stu.getSex<span style="color: #A6E22E;">()</span>;
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"NAME: "</span> + name + <span style="color: #E6DB74;">", AGE: "</span> + age + <span style="color: #E6DB74;">", SEX: "</span> + sex<span style="color: #A6E22E;">)</span>;
+<span class="linenr"> 9: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; NAME: Amy, AGE: 32, SEX: Female</span>
+<span class="linenr">10: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">11: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+在程序的 Stu 类中，定义了 3 个类型参数，分别使用 <code>N、A</code> 和 <code>S</code> 来代替，同时实现了这 3 个属性的 <code>setter/getter</code> 方法。在主类中，调用 Stu 类的构造函数创建了 Stu 类的对象，同时指定 3 个类型参数，分别为 <code>String、Integer</code> 和 <code>Character</code> 。在获取学生姓名、年龄和性别时，不需要类型转换，程序隐式地将 Object 类型的数据转换为相应的数据类型。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org89c270a" class="outline-3">
+<h3 id="org89c270a">泛型方法</h3>
+<div class="outline-text-3" id="text-org89c270a">
+<p>
+泛型同样可以应用在类中包含参数化的方法，而方法所在的类可以是泛型类，也可以不是泛型类。
+</p>
+
+<p>
+泛型方法使得该方法能够独立于类而产生变化，如果使用泛型方法可以取代类泛型化，那么就应该只使用泛型方法。另外，对一个 <code>static</code> 的方法而言，无法访问泛型类的类型参数。因此，如果 <code>static</code> 方法需要使用泛型能力，就必须使其成为泛型方法。
+</p>
+
+<p>
+定义泛型方法的语法格式如下：
+</p>
+
+<pre class="example">
+[访问权限修饰符] [static] [final] &lt;类型参数列表&gt; 返回值类型方法名([形式参数列表])
+</pre>
+
+<p>
+如：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">List</span><span style="color: #AE81FF;">&lt;</span><span style="color: #66D9EF;">T</span><span style="color: #AE81FF;">&gt;</span> <span style="color: #A6E22E;">find</span><span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">Class</span><span style="color: #66D9EF;">&lt;</span><span style="color: #66D9EF;">T</span><span style="color: #66D9EF;">&gt;</span><span style="color: #F92672;">class</span>, <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">userId</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{}</span>
+</pre>
+</div>
+
+<p>
+一般来说编写 Java 泛型方法，其返回值类型至少有一个参数类型应该是泛型，而且类型应该是一致的，如果只有返回值类型或参数类型之一使用了泛型，那么这个泛型方法的使用就被限制了。
+</p>
+
+<p>
+下面来定义一个泛型方法，具体介绍泛型方法的创建和使用。
+</p>
+
+<p>
+定义泛型方法，参数类型使用 <code>T</code> 来代替，在方法的主体中打印出图书信息，代码实现如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Test</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">&lt;</span><span style="color: #66D9EF;">T</span><span style="color: #66D9EF;">&gt;</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">List</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">T</span> <span style="color: #FD971F;">book</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span> <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23450;&#20041;&#27867;&#22411;&#26041;&#27861;</span>
+<span class="linenr"> 3: </span>        <span style="color: #F92672;">if</span> <span style="color: #A6E22E;">(</span>book != <span style="color: #AE81FF;">null</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 4: </span>            System.out.println<span style="color: #E6DB74;">(</span>book<span style="color: #E6DB74;">)</span>;
+<span class="linenr"> 5: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr"> 6: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 9: </span>        <span style="color: #66D9EF;">Book</span> <span style="color: #FD971F;">stu</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Book</span><span style="color: #A6E22E;">(</span>1, <span style="color: #E6DB74;">"Learn Coding"</span>, 28<span style="color: #A6E22E;">)</span>;
+<span class="linenr">10: </span>        <span style="color: #66D9EF;">List</span><span style="color: #A6E22E;">(</span><span style="color: #66D9EF;">stu</span><span style="color: #A6E22E;">)</span>;                       <span style="color: #75715E;">// </span><span style="color: #75715E;">&#35843;&#29992;&#27867;&#22411;&#26041;&#27861;</span>
+<span class="linenr">11: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; 1, Learn Coding, 28</span>
+<span class="linenr">12: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">13: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+该程序中的 Book 类为前面示例中使用到的 Book 类。在该程序中定义了一个名称为 <code>List</code> 的方法，该方法的返回值类型为 <code>void</code> ，类型参数使用 <code>T</code> 来代替。在调用该泛型方法时，将一个 Book 对象作为参数传递到该方法中，相当于指明了该泛型方法的参数类型为 Book 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf317e0d" class="outline-3">
+<h3 id="orgf317e0d"><span class="todo TODO">TODO</span> 泛型的高级用法</h3>
+</div>
+</div>
+
+<div id="outline-container-org4f15560" class="outline-2">
+<h2 id="org4f15560">图书信息查询</h2>
+<div class="outline-text-2" id="text-org4f15560">
+<p>
+在实际开发中，泛型集合是较常用的，一般定义集合都会使用泛型来定义。
+</p>
+
+<p>
+下面我们使用泛型集合来模拟实现某图书管理系统的查询功能 &#x2013; 在图书管理系统中为了方便管理图书，将图书划分为几个类别，每个类别对应多本图书，这就具备了一对多的关系映射。
+</p>
+
+<p>
+在这种情况下就可以使用 Map 映射来存储类别和图书信息，其键为 <code>Category</code> （类别）类型，值为 <code>List&lt;Book&gt;</code> 类型（Book 类为图书类），然后使用嵌套循环遍历输出每个类别所对应的多个图书信息。具体的实现步骤如下：
+</p>
+
+<p>
+（1）创建表示图书类的 Category 类，在该类中有两个属性： <code>id</code> 和 <code>name</code> ，分别表示编号和类别名称，并实现了它们的 <code>setter/getter</code> ，具体内容如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Category</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">private</span> <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">id</span>;             <span style="color: #75715E;">// </span><span style="color: #75715E;">&#31867;&#21035;&#32534;&#21495;</span>
+<span class="linenr"> 3: </span>    <span style="color: #F92672;">private</span> <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">name</span>;        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#31867;&#21035;&#21517;&#31216;</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>    <span style="color: #F92672;">public</span> <span style="color: #A6E22E;">Category</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">id</span>, <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">name</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 6: </span>        <span style="color: #F92672;">this</span>.id = id;
+<span class="linenr"> 7: </span>        <span style="color: #F92672;">this</span>.name = name;
+<span class="linenr"> 8: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">String</span> <span style="color: #A6E22E;">toString</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">11: </span>        <span style="color: #F92672;">return</span> <span style="color: #E6DB74;">"&#25152;&#23646;&#20998;&#31867;&#65306;"</span> + <span style="color: #F92672;">this</span>.name;
+<span class="linenr">12: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">getter/setter</span>
+<span class="linenr">15: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">...</span>
+<span class="linenr">16: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+（2）创建表示图书明细信息的 BookInfo 类，在该类中包含 5 个属性： <code>id、name、price、author</code> 和 <code>startTime</code> ，分另表示图书编号、名称、价格、作者和出版时间，同样实现的 <code>getter/setter</code> ，具体内容如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">BookInfo</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">private</span> <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">id</span>;             <span style="color: #75715E;">// </span><span style="color: #75715E;">&#32534;&#21495;</span>
+<span class="linenr"> 3: </span>    <span style="color: #F92672;">private</span> <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">name</span>;        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21517;&#31216;</span>
+<span class="linenr"> 4: </span>    <span style="color: #F92672;">private</span> <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">price</span>;          <span style="color: #75715E;">// </span><span style="color: #75715E;">&#20215;&#26684;</span>
+<span class="linenr"> 5: </span>    <span style="color: #F92672;">private</span> <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">author</span>;      <span style="color: #75715E;">// </span><span style="color: #75715E;">&#20316;&#32773;</span>
+<span class="linenr"> 6: </span>    <span style="color: #F92672;">private</span> <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">startTime</span>;   <span style="color: #75715E;">// </span><span style="color: #75715E;">&#20986;&#29256;&#26102;&#38388;</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>    <span style="color: #F92672;">public</span> <span style="color: #A6E22E;">BookInfo</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">id</span>, <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">name</span>, <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">price</span>, <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">author</span>, <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">startTime</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 9: </span>        <span style="color: #F92672;">this</span>.id = id;
+<span class="linenr">10: </span>        <span style="color: #F92672;">this</span>.name = name;
+<span class="linenr">11: </span>        <span style="color: #F92672;">this</span>.price = price;
+<span class="linenr">12: </span>        <span style="color: #F92672;">this</span>.author = author;
+<span class="linenr">13: </span>        <span style="color: #F92672;">this</span>.startTime = startTime;
+<span class="linenr">14: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">String</span> <span style="color: #A6E22E;">toString</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">17: </span>        <span style="color: #F92672;">return</span> <span style="color: #F92672;">this</span>.id + <span style="color: #E6DB74;">"\t\t"</span> + <span style="color: #F92672;">this</span>.name + <span style="color: #E6DB74;">"\t\t"</span> + <span style="color: #F92672;">this</span>.price + <span style="color: #E6DB74;">"\t\t"</span> + <span style="color: #F92672;">this</span>.author + <span style="color: #E6DB74;">"\t\t"</span> + <span style="color: #F92672;">this</span>.startTime;
+<span class="linenr">18: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">19: </span>
+<span class="linenr">20: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#19978;&#38754; 5 &#20010;&#23646;&#24615;&#30340; setter/getter</span>
+<span class="linenr">21: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">...</span>
+<span class="linenr">22: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+（3）创建 CategoryDao 类，在该类中定义了一个泛型的 Map 映射，其键为 Category 类型的对象，值为 <code>List&lt;BookInfo&gt;</code> 类型的对象，并定义 <code>printCategoryInfo()</code> 方法，用于打印类别和图书明细，具体代码如下：
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-29 Tue 19:05</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-09-30 Wed 12:07</p>
+<p class="date">Created: 2020-09-30 Wed 19:06</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

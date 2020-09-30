@@ -215,7 +215,7 @@ $(document).ready(() => {
 
             setTimeout(function() {
                 _this.removeClass('js-pre-dblclick')
-            }, 5000)
+            }, 10000)
         })
     })
 

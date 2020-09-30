@@ -392,3 +392,188 @@ Java 集合之所以被设计成这样，是因为集合的设计者不知道我
       }
   }
 #+END_SRC
+
+在该示例中，第 8 行代码创建了一个键类型为 =Integer= 、值类型为 =Book= 的泛型集合，即该 =Map= 集合中存放的键必须是 =Integer= 类型、值必须为 =Book= 类型，否则编译出错。在获取 =Map= 集合中的元素时，不需要将 =books.get(id);= 获取的值强制转换为 =Book= 类型，程序会隐式转换。
+
+第 19 行代码在创建 =List= 集合时，同样使用了泛型，因此在获取集合中的元素时也不需要将 =bookList.get(i)= 代码强制转换为 =Book= 类型，程序会隐式转换。
+
+*** 泛型类
+
+除了可以定义泛型集合之外，还可以直接限定泛型类的类型参数，语法格式如下：
+
+#+BEGIN_EXAMPLE
+public class class_name<data_type1, data_type2, ...> {}
+#+END_EXAMPLE
+
+其中， =class_name= 表示类的名称， =data_type1= 等表示类型参数。Java 泛型支持声明一个以上的类型参数，只需要将类型用逗号隔开即可。
+
+*泛型类一般用于类中的属性类型不确定的情况下。* 在声明属性时，使用下面的语句：
+
+#+BEGIN_SRC java -n
+  private data_type1 property_name1;
+  private data_type2 property_name2;
+#+END_SRC
+
+该语句中的 =data_type1= 与类声明中的 =data_type1= 表示的是同一种数据类型。
+
+*在实例化泛型类时，需要指明泛型类中的类型参数，并赋予泛型类属性相应类型的值。*
+
+下面我们来看一个例子，创建了一个表示学生的泛型类，该类中包括 3 个属性，分别是姓名、年龄和性别。
+
+#+BEGIN_SRC java -n
+  public class Stu<N, A, S> {
+      private N name;
+      private A age;
+      private S sex;
+
+      // 创建类的构造函数
+      public Stu(N name, A age, S sex) {
+          this.name = name;
+          this.age = age;
+          this.sex = sex;
+      }
+
+      // 下面是上面 3 个属性的 setter/getter 方法
+      public N getName() {
+          return name;
+      }
+      public void setName(N name) {
+          this.name = name;
+      }
+
+      public A getAge() {
+          return age;
+      }
+      public void setAge(A age) {
+          this.age = age;
+      }
+
+      public S getSex() {
+          return sex;
+      }
+      public void setSex(S sex) {
+          this.sex = sex;
+      }
+  }
+#+END_SRC
+
+接着创建测试类，在测试类中调用 Stu 类的构造方法实例化 Stu 对象，并给该类中的 3 个属性赋初始值，最终需要输出学生信息，代码如下：
+
+#+BEGIN_SRC java -n
+  public class Test {
+      public static void main(String[] args) {
+          Stu<String, Integer, Character> stu = new Stu<String, Integer, Character>("Amy", 32, "Female" );
+          String name = stu.getName();
+          Integer age = stu.getAge();
+          Character sex = stu.getSex();
+
+          System.out.println("NAME: " + name + ", AGE: " + age + ", SEX: " + sex);
+          // → NAME: Amy, AGE: 32, SEX: Female
+      }
+  }
+#+END_SRC
+
+在程序的 Stu 类中，定义了 3 个类型参数，分别使用 =N、A= 和 =S= 来代替，同时实现了这 3 个属性的 =setter/getter= 方法。在主类中，调用 Stu 类的构造函数创建了 Stu 类的对象，同时指定 3 个类型参数，分别为 =String、Integer= 和 =Character= 。在获取学生姓名、年龄和性别时，不需要类型转换，程序隐式地将 Object 类型的数据转换为相应的数据类型。
+
+*** 泛型方法
+
+泛型同样可以应用在类中包含参数化的方法，而方法所在的类可以是泛型类，也可以不是泛型类。
+
+泛型方法使得该方法能够独立于类而产生变化，如果使用泛型方法可以取代类泛型化，那么就应该只使用泛型方法。另外，对一个 =static= 的方法而言，无法访问泛型类的类型参数。因此，如果 =static= 方法需要使用泛型能力，就必须使其成为泛型方法。
+
+定义泛型方法的语法格式如下：
+
+#+BEGIN_EXAMPLE
+[访问权限修饰符] [static] [final] <类型参数列表> 返回值类型方法名([形式参数列表])
+#+END_EXAMPLE
+
+如：
+
+#+BEGIN_SRC java -n
+  public static List<T> find(Class<T>class, int userId) {}
+#+END_SRC
+
+一般来说编写 Java 泛型方法，其返回值类型至少有一个参数类型应该是泛型，而且类型应该是一致的，如果只有返回值类型或参数类型之一使用了泛型，那么这个泛型方法的使用就被限制了。
+
+下面来定义一个泛型方法，具体介绍泛型方法的创建和使用。
+
+定义泛型方法，参数类型使用 =T= 来代替，在方法的主体中打印出图书信息，代码实现如下：
+
+#+BEGIN_SRC java -n
+  public class Test {
+      public static <T> void List(T book) { // 定义泛型方法
+          if (book != null) {
+              System.out.println(book);
+          }
+      }
+
+      public static void main(String[] args) {
+          Book stu = new Book(1, "Learn Coding", 28);
+          List(stu);                       // 调用泛型方法
+          // → 1, Learn Coding, 28
+      }
+  }
+#+END_SRC
+
+该程序中的 Book 类为前面示例中使用到的 Book 类。在该程序中定义了一个名称为 =List= 的方法，该方法的返回值类型为 =void= ，类型参数使用 =T= 来代替。在调用该泛型方法时，将一个 Book 对象作为参数传递到该方法中，相当于指明了该泛型方法的参数类型为 Book 。
+
+*** TODO 泛型的高级用法
+
+** 图书信息查询
+
+在实际开发中，泛型集合是较常用的，一般定义集合都会使用泛型来定义。
+
+下面我们使用泛型集合来模拟实现某图书管理系统的查询功能 -- 在图书管理系统中为了方便管理图书，将图书划分为几个类别，每个类别对应多本图书，这就具备了一对多的关系映射。
+
+在这种情况下就可以使用 Map 映射来存储类别和图书信息，其键为 =Category= （类别）类型，值为 =List<Book>= 类型（Book 类为图书类），然后使用嵌套循环遍历输出每个类别所对应的多个图书信息。具体的实现步骤如下：
+
+（1）创建表示图书类的 Category 类，在该类中有两个属性： =id= 和 =name= ，分别表示编号和类别名称，并实现了它们的 =setter/getter= ，具体内容如下：
+
+#+BEGIN_SRC java -n
+  public class Category {
+      private int id;             // 类别编号
+      private String name;        // 类别名称
+
+      public Category(int id, String name) {
+          this.id = id;
+          this.name = name;
+      }
+
+      public String toString() {
+          return "所属分类：" + this.name;
+      }
+
+      // getter/setter
+      // ...
+  }
+#+END_SRC
+
+（2）创建表示图书明细信息的 BookInfo 类，在该类中包含 5 个属性： =id、name、price、author= 和 =startTime= ，分另表示图书编号、名称、价格、作者和出版时间，同样实现的 =getter/setter= ，具体内容如下：
+
+#+BEGIN_SRC java -n
+  public class BookInfo {
+      private int id;             // 编号
+      private String name;        // 名称
+      private int price;          // 价格
+      private String author;      // 作者
+      private String startTime;   // 出版时间
+
+      public BookInfo(int id, String name, int price, String author, String startTime) {
+          this.id = id;
+          this.name = name;
+          this.price = price;
+          this.author = author;
+          this.startTime = startTime;
+      }
+
+      public String toString() {
+          return this.id + "\t\t" + this.name + "\t\t" + this.price + "\t\t" + this.author + "\t\t" + this.startTime;
+      }
+
+      // 上面 5 个属性的 setter/getter
+      // ...
+  }
+#+END_SRC
+
+（3）创建 CategoryDao 类，在该类中定义了一个泛型的 Map 映射，其键为 Category 类型的对象，值为 =List<BookInfo>= 类型的对象，并定义 =printCategoryInfo()= 方法，用于打印类别和图书明细，具体代码如下：
+
