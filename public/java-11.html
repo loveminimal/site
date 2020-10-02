@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-09-30 Wed 19:06 -->
+<!-- 2020-10-02 Fri 11:45 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>集合、泛型和枚举</title>
@@ -49,6 +49,14 @@
 </ul>
 </li>
 <li><a href="#org4f15560">图书信息查询</a></li>
+<li><a href="#orgca2d9ab">枚举</a>
+<ul>
+<li><a href="#orgc01bae6">声明枚举</a></li>
+<li><a href="#org2457886">枚举类型</a></li>
+<li><a href="#orga6cded0">为枚举添加方法</a></li>
+<li><a href="#org13f6fca">EnumMap 与 EnumSet</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -1214,13 +1222,497 @@ public class class_name&lt;data_type1, data_type2, ...&gt; {}
 <p>
 （3）创建 CategoryDao 类，在该类中定义了一个泛型的 Map 映射，其键为 Category 类型的对象，值为 <code>List&lt;BookInfo&gt;</code> 类型的对象，并定义 <code>printCategoryInfo()</code> 方法，用于打印类别和图书明细，具体代码如下：
 </p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">CategoryDao</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23450;&#20041;&#27867;&#22411; Map &#65292;&#23384;&#20648;&#22270;&#20070;&#20449;&#24687;</span>
+<span class="linenr"> 3: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">Map</span><span style="color: #66D9EF;">&lt;</span><span style="color: #66D9EF;">Category</span>, <span style="color: #66D9EF;">List</span><span style="color: #A6E22E;">&lt;</span><span style="color: #66D9EF;">BookInfo</span><span style="color: #A6E22E;">&gt;</span><span style="color: #66D9EF;">&gt;</span> <span style="color: #FD971F;">categoryMap</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">HashMap</span><span style="color: #66D9EF;">&lt;</span><span style="color: #66D9EF;">Category</span>, <span style="color: #66D9EF;">List</span><span style="color: #A6E22E;">&lt;</span><span style="color: #66D9EF;">BookInfo</span><span style="color: #A6E22E;">&gt;</span><span style="color: #66D9EF;">&gt;()</span>;
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">printDeptmentInfo</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 6: </span>        <span style="color: #F92672;">for</span> <span style="color: #A6E22E;">(</span><span style="color: #66D9EF;">Category</span> <span style="color: #A6E22E;">cate</span> : categoryMap.keySet<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 7: </span>            System.out.println<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"&#25152;&#23646;&#31867;&#21035;&#65306;"</span> + cate.getName<span style="color: #FD971F;">()</span><span style="color: #E6DB74;">)</span>;
+<span class="linenr"> 8: </span>            <span style="color: #66D9EF;">List</span><span style="color: #E6DB74;">&lt;</span><span style="color: #66D9EF;">BookInfo</span><span style="color: #E6DB74;">&gt;</span> <span style="color: #FD971F;">books</span> = categoryMap.get<span style="color: #E6DB74;">(</span>cate<span style="color: #E6DB74;">)</span>;
+<span class="linenr"> 9: </span>            System.out.println<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"&#22270;&#20070;&#32534;&#21495;\t\t&#22270;&#20070;&#21517;&#31216;\t\t&#22270;&#20070;&#20215;&#26684;\t\t&#22270;&#20070;&#20316;&#32773;\t\t&#20986;&#29256;&#26102;&#38388;"</span><span style="color: #E6DB74;">)</span>;
+<span class="linenr">10: </span>            <span style="color: #F92672;">for</span> <span style="color: #E6DB74;">(</span>inti = 0; i &lt; books.<span style="color: #66D9EF;">size</span><span style="color: #FD971F;">()</span>; i++<span style="color: #E6DB74;">)</span> <span style="color: #E6DB74;">{</span>
+<span class="linenr">11: </span>                <span style="color: #66D9EF;">BookInfo</span> <span style="color: #FD971F;">b</span> = books.get<span style="color: #FD971F;">(</span>i<span style="color: #FD971F;">)</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#33719;&#21462;&#22270;&#20070;</span>
+<span class="linenr">12: </span>                System.out.println<span style="color: #FD971F;">(</span>b.getId<span style="color: #F92672;">()</span> + <span style="color: #E6DB74;">"\t\t"</span> + b.getName<span style="color: #F92672;">()</span> + <span style="color: #E6DB74;">"\t\t"</span> + b.getPrice<span style="color: #F92672;">()</span> + <span style="color: #E6DB74;">"\t\t"</span> + b.getAuthor<span style="color: #F92672;">()</span> + <span style="color: #E6DB74;">"\t\t"</span> + b.getStartTime<span style="color: #F92672;">()</span><span style="color: #FD971F;">)</span>;
+<span class="linenr">13: </span>            <span style="color: #E6DB74;">}</span>
+<span class="linenr">14: </span>            System.out.println<span style="color: #E6DB74;">()</span>;
+<span class="linenr">15: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">16: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">17: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+（4）创建测试类 Test
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Test</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21019;&#24314;&#31867;&#21035;&#20449;&#24687;</span>
+<span class="linenr"> 4: </span>        <span style="color: #66D9EF;">Category</span> <span style="color: #FD971F;">category1</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Category</span><span style="color: #A6E22E;">(</span>1, <span style="color: #E6DB74;">"&#31243;&#24207;&#35774;&#35745;"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr"> 5: </span>        <span style="color: #66D9EF;">Category</span> <span style="color: #FD971F;">category2</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Category</span><span style="color: #A6E22E;">(</span>2, <span style="color: #E6DB74;">"&#25968;&#25454;&#24211;"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr"> 6: </span>        <span style="color: #66D9EF;">Category</span> <span style="color: #FD971F;">category3</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Category</span><span style="color: #A6E22E;">(</span>3, <span style="color: #E6DB74;">"&#24179;&#38754;&#35774;&#35745;"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21019;&#24314;&#22270;&#20070;&#20449;&#24687;</span>
+<span class="linenr"> 9: </span>        <span style="color: #66D9EF;">BookInfo</span> <span style="color: #FD971F;">book1</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">BookInfo</span><span style="color: #A6E22E;">(</span>1, <span style="color: #E6DB74;">"&#32454;&#35828; Java &#32534;&#31243;"</span>, 25, <span style="color: #E6DB74;">"&#24352;&#26195;&#29618;"</span>, <span style="color: #E6DB74;">"2012-01-01"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">10: </span>        <span style="color: #66D9EF;">BookInfo</span> <span style="color: #FD971F;">book2</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">BookInfo</span><span style="color: #A6E22E;">(</span>2, <span style="color: #E6DB74;">"&#24433;&#35270;&#21518;&#26399;&#22788;&#29702;&#23453;&#20856;"</span>, 78, <span style="color: #E6DB74;">"&#21016;&#27700;&#27874;"</span>, <span style="color: #E6DB74;">"2012-10-05"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">11: </span>        <span style="color: #66D9EF;">BookInfo</span> <span style="color: #FD971F;">book3</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">BookInfo</span><span style="color: #A6E22E;">(</span>3, <span style="color: #E6DB74;">"MySQL &#20174;&#20837;&#38376;&#21040;&#31934;&#36890;"</span>, 41, <span style="color: #E6DB74;">"&#29579;&#24535;&#20142;"</span>, <span style="color: #E6DB74;">"2012-03-02"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">12: </span>        <span style="color: #66D9EF;">BookInfo</span> <span style="color: #FD971F;">book4</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">BookInfo</span><span style="color: #A6E22E;">(</span>4, <span style="color: #E6DB74;">"Java &#20174;&#20837;&#38376;&#21040;&#31934;&#36890;"</span>, 27, <span style="color: #E6DB74;">"&#38472;&#22874;&#38745;"</span>, <span style="color: #E6DB74;">"2012-11-01"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">13: </span>        <span style="color: #66D9EF;">BookInfo</span> <span style="color: #FD971F;">book5</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">BookInfo</span><span style="color: #A6E22E;">(</span>5, <span style="color: #E6DB74;">"SQL Server &#19968;&#30334;&#20363;"</span>, 68, <span style="color: #E6DB74;">"&#24352;&#26195;&#29618;"</span>, <span style="color: #E6DB74;">"2012-01-01"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">14: </span>
+<span class="linenr">15: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21521;&#31867;&#21035; 1 &#28155;&#21152;&#22270;&#20070;</span>
+<span class="linenr">16: </span>        <span style="color: #66D9EF;">List</span><span style="color: #A6E22E;">&lt;</span><span style="color: #66D9EF;">BookInfo</span><span style="color: #A6E22E;">&gt;</span> <span style="color: #FD971F;">pList1</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">ArrayList</span><span style="color: #A6E22E;">&lt;</span><span style="color: #66D9EF;">BookInfo</span><span style="color: #A6E22E;">&gt;()</span>;
+<span class="linenr">17: </span>        pList1.add<span style="color: #A6E22E;">(</span>book1<span style="color: #A6E22E;">)</span>;
+<span class="linenr">18: </span>        pList1.add<span style="color: #A6E22E;">(</span>book4<span style="color: #A6E22E;">)</span>;
+<span class="linenr">19: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21521;&#31867;&#21035; 2 &#28155;&#21152;&#22270;&#20070;</span>
+<span class="linenr">20: </span>        <span style="color: #66D9EF;">List</span><span style="color: #A6E22E;">&lt;</span><span style="color: #66D9EF;">BookInfo</span><span style="color: #A6E22E;">&gt;</span> <span style="color: #FD971F;">pList2</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">ArrayList</span><span style="color: #A6E22E;">&lt;</span><span style="color: #66D9EF;">BookInfo</span><span style="color: #A6E22E;">&gt;()</span>;
+<span class="linenr">21: </span>        pList2.add<span style="color: #A6E22E;">(</span>book3<span style="color: #A6E22E;">)</span>;
+<span class="linenr">22: </span>        pList2.add<span style="color: #A6E22E;">(</span>book5<span style="color: #A6E22E;">)</span>;
+<span class="linenr">23: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21521;&#31867;&#21035; 3 &#28155;&#21152;&#22270;&#20070;</span>
+<span class="linenr">24: </span>        <span style="color: #66D9EF;">List</span><span style="color: #A6E22E;">&lt;</span><span style="color: #66D9EF;">BookInfo</span><span style="color: #A6E22E;">&gt;</span> <span style="color: #FD971F;">pList3</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">ArrayList</span><span style="color: #A6E22E;">&lt;</span><span style="color: #66D9EF;">BookInfo</span><span style="color: #A6E22E;">&gt;()</span>;
+<span class="linenr">25: </span>        pList.add<span style="color: #A6E22E;">(</span>book2<span style="color: #A6E22E;">)</span>;
+<span class="linenr">26: </span>
+<span class="linenr">27: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#26144;&#23556;</span>
+<span class="linenr">28: </span>        CategoryDao.categoryMap.put<span style="color: #A6E22E;">(</span>category1, pList1<span style="color: #A6E22E;">)</span>;
+<span class="linenr">29: </span>        CategoryDao.categoryMap.put<span style="color: #A6E22E;">(</span>category2, pList2<span style="color: #A6E22E;">)</span>;
+<span class="linenr">30: </span>        CategoryDao.categoryMap.put<span style="color: #A6E22E;">(</span>category3, pList3<span style="color: #A6E22E;">)</span>;
+<span class="linenr">31: </span>
+<span class="linenr">32: </span>        CategoryDao.printDeptmentInfo<span style="color: #A6E22E;">()</span>;
+<span class="linenr">33: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">34: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+在该程序中，使用了泛型 List 和泛型 Map 分别存储图书类别和特定类别下的图书明信息。可见，使用泛型不仅减少了代码的编写量，也提高了类型的安全性。
+</p>
+
+<p>
+运行该程序，输出结果如下：
+</p>
+
+<pre class="example">
+所属类别：程序设计
+图书编号  图书名称  图书价格  图书作者  出版时间
+3  MySQL 从入门到精通  41  王志亮  2012-3-2
+5  SQL Server 一百例   68  张晓玲  2012-01-01
+
+所属类别：数据库
+图书编号  图书名称  图书价格  图书作者  出版时间
+1  细说 Java 编程     25  张晓玲  2012-01-01
+4  Java 从入门到精通  27  陈奚静  2012-11-01
+
+所属类别：平面设计
+图书编号  图书名称  图书价格  图书作者  出版时间
+2  影视后期处理宝典   78  刘水波  2012-10-05
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgca2d9ab" class="outline-2">
+<h2 id="orgca2d9ab">枚举</h2>
+<div class="outline-text-2" id="text-orgca2d9ab">
+<p>
+<b>枚举是一个被命名的整型常数的集合，用于声明一组带标识符的常数。</b>
+</p>
+
+<p>
+枚举在日常生活中很常见，例如一个人的性别只能是“男”或者“女”，一周的星期只能是 7 天中的一个等。类似这种当一个变量有几种固定可能的取值时，就可以将它定义为枚举类型。
+</p>
+
+<blockquote>
+<p>
+在 JDK 1.5 之前没有枚举类型，那时候一般用接口常量来代替，而使用 Java 枚举类型 enum 可以更贴近地表示这种常量。
+</p>
+</blockquote>
+</div>
+
+<div id="outline-container-orgc01bae6" class="outline-3">
+<h3 id="orgc01bae6">声明枚举</h3>
+<div class="outline-text-3" id="text-orgc01bae6">
+<p>
+<b>声明枚举必须使用 <code>enum</code> 关键字</b> ，然后定义枚举的名称、可访问性、基础类型和成员等，语法格式如下：
+</p>
+
+<pre class="example">
+enum-modifiers enum enumname:enum-base {
+    enum-body;
+}
+</pre>
+
+<p>
+其中：
+</p>
+<ul class="org-ul">
+<li><code>enum-modifiers</code> 表示枚举的修饰符主要包括 <code>public、private</code> 和 <code>internal</code> ；</li>
+<li><code>enumname</code> 表示声明的枚举名称；</li>
+<li><code>enum-base</code> 表示基础类型；</li>
+<li><code>enum-body</code> 表示枚举的成员，它是枚举类型的命名常数。</li>
+</ul>
+
+<p>
+任意两个枚举成员不能具有相同的名称，且它的常数值必须在该枚举的基础类型的范围之内，多个枚举成员之间使用逗号分隔。
+</p>
+
+<p>
+*注：如果没有显式地声明基础类型的枚举，那么意味着它所对应的基础类型是 <code>int</code> 。
+</p>
+
+<p>
+来看几个例子吧。
+</p>
+
+<p>
+如需要定义一个表示性别的枚举类型 <code>SexEnum</code> 和一个表示颜色的枚举类型 <code>Color</code> ，代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">enum</span> <span style="color: #66D9EF;">SexEnum</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #FD971F;">male</span>, <span style="color: #FD971F;">female</span>;
+<span class="linenr">3: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">4: </span>
+<span class="linenr">5: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">enum</span> <span style="color: #66D9EF;">Color</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">6: </span>    <span style="color: #FD971F;">RED</span>, <span style="color: #FD971F;">BLUE</span>, <span style="color: #FD971F;">GREEN</span>, <span style="color: #FD971F;">BLACK</span>;
+<span class="linenr">7: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+<b>之后便可以通过枚举类型名直接引用常量</b> ，如 <code>SexEnum.male、Color.RED</code> 。
+</p>
+
+<p>
+使用枚举还可以使 <code>switch</code> 语句的可读性更强，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">enum</span> <span style="color: #66D9EF;">Signal</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23450;&#20041;&#19968;&#20010;&#26522;&#20030;&#31867;&#22411;</span>
+<span class="linenr"> 3: </span>    <span style="color: #FD971F;">GREEN</span>, <span style="color: #FD971F;">YELLOW</span>, <span style="color: #FD971F;">RED</span>;
+<span class="linenr"> 4: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr"> 5: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">TrafficLight</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 6: </span>    <span style="color: #66D9EF;">Signal</span> <span style="color: #FD971F;">color</span> = <span style="color: #AE81FF;">Signal</span>.RED;
+<span class="linenr"> 7: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">change</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 8: </span>        <span style="color: #F92672;">switch</span><span style="color: #A6E22E;">(</span>color<span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 9: </span>        <span style="color: #F92672;">case</span> RED:
+<span class="linenr">10: </span>            color = <span style="color: #AE81FF;">Signal</span>.GREEN;
+<span class="linenr">11: </span>            <span style="color: #F92672;">break</span>;
+<span class="linenr">12: </span>        <span style="color: #F92672;">case</span> YELLOW:
+<span class="linenr">13: </span>            color = <span style="color: #AE81FF;">Signal</span>.RED;
+<span class="linenr">14: </span>            <span style="color: #F92672;">break</span>;
+<span class="linenr">15: </span>        <span style="color: #F92672;">case</span> GREEN:
+<span class="linenr">16: </span>            color = <span style="color: #AE81FF;">Signal</span>.YELLOW;
+<span class="linenr">17: </span>            <span style="color: #F92672;">break</span>;
+<span class="linenr">18: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">19: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">20: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2457886" class="outline-3">
+<h3 id="org2457886">枚举类型</h3>
+<div class="outline-text-3" id="text-org2457886">
+<p>
+<b>Java 中的每一个枚举类都继承自 <code>java.lang.Enum</code> 类</b> 。
+</p>
+
+<p>
+当定义一个枚举类型时，每一个枚举类型成员都可以看作是 <code>Enum</code> 类的实例，这些枚举成员默认都被 <code>final、public、static</code> 修饰，当使用枚举类型成员时，直接使用枚举名称调用成员即可。
+</p>
+
+<p>
+*所有枚举实例都可以调用 Enum 类的方法*，如下：
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 9:</span> Enum 类的常用方法</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">方法名称</th>
+<th scope="col" class="org-left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>values()</code></td>
+<td class="org-left">以数组形式返回枚举类型的所有成员</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>valueOf()</code></td>
+<td class="org-left">将普通字符串转换为枚举实例</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>compateTo()</code></td>
+<td class="org-left">比较两个枚举成员在定义时的顺序</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>ordinal()</code></td>
+<td class="org-left">获取枚举成员的索引位置</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+来看一个例子吧，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">TestEnum</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">enum</span> <span style="color: #66D9EF;">Sex</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23450;&#20041;&#19968;&#20010;&#26522;&#20030;</span>
+<span class="linenr"> 4: </span>        <span style="color: #FD971F;">male</span>, <span style="color: #FD971F;">female</span>;
+<span class="linenr"> 5: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 8: </span>        compare<span style="color: #A6E22E;">(</span>Sex.valueOf<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"male"</span><span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23558;&#21464;&#36890;&#23383;&#31526;&#20018;&#36716;&#25442;&#20026;&#26522;&#20030;&#23454;&#20363;</span>
+<span class="linenr"> 9: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">10: </span>
+<span class="linenr">11: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">compare</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">Sex</span> <span style="color: #FD971F;">s</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">12: </span>        <span style="color: #F92672;">for</span> <span style="color: #A6E22E;">(</span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">i</span> = 0; i &lt; Sex.<span style="color: #66D9EF;">values</span><span style="color: #E6DB74;">()</span>.length; i++<span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr">13: </span>            System.out.println<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"&#32034;&#24341;"</span> + Signal.values<span style="color: #FD971F;">()[</span>i<span style="color: #FD971F;">]</span>.ordinal<span style="color: #FD971F;">()</span> + <span style="color: #E6DB74;">"&#65292;"</span> + s + <span style="color: #E6DB74;">"&#19982;"</span> + Sex.values<span style="color: #FD971F;">()[</span>i<span style="color: #FD971F;">]</span> + <span style="color: #E6DB74;">"&#30340;&#27604;&#36739;&#32467;&#26524;&#26159;&#65306;"</span> + s.compareTo<span style="color: #FD971F;">(</span>Sex.values<span style="color: #F92672;">()[</span>i<span style="color: #F92672;">]</span><span style="color: #FD971F;">)</span><span style="color: #E6DB74;">)</span>;
+<span class="linenr">14: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">15: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; &#32034;&#24341;0&#65292;male&#19982;male&#30340;&#27604;&#36739;&#32467;&#26524;&#26159;&#65306;0</span>
+<span class="linenr">18: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; &#32034;&#24341;1&#65292;male&#19982;female&#30340;&#27604;&#36739;&#32467;&#26524;&#26159;&#65306;-1</span>
+<span class="linenr">19: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga6cded0" class="outline-3">
+<h3 id="orga6cded0">为枚举添加方法</h3>
+<div class="outline-text-3" id="text-orga6cded0">
+<p>
+Java 为枚举类型提供了一些内置方法，同时枚举常量也可以有自己的方法。要注意，必须在枚举实例的最后一个成员后添加分号，而且必须先定义枚举实例。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">enum</span> <span style="color: #66D9EF;">WeekDay</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #A6E22E;">Mon</span><span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">"Monday"</span><span style="color: #66D9EF;">)</span>, <span style="color: #A6E22E;">Tue</span><span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">"Tuesday"</span><span style="color: #66D9EF;">)</span>, <span style="color: #A6E22E;">Wed</span><span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">"Wednesday"</span><span style="color: #66D9EF;">)</span>, <span style="color: #A6E22E;">Thu</span><span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">"Thursday"</span><span style="color: #66D9EF;">)</span>, <span style="color: #A6E22E;">Fri</span><span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">"Friday"</span><span style="color: #66D9EF;">)</span>, <span style="color: #A6E22E;">Sat</span><span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">"Saturday"</span><span style="color: #66D9EF;">)</span>, <span style="color: #A6E22E;">Sun</span><span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">"Sunday"</span><span style="color: #66D9EF;">)</span>;
+<span class="linenr"> 3: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#20197;&#19978;&#26159;&#26522;&#20030;&#30340;&#25104;&#21592;&#65292;&#24517;&#39035;&#20808;&#23450;&#20041;&#65292;&#32780;&#19988;&#20351;&#29992;&#20998;&#21495;&#32467;&#26463;</span>
+<span class="linenr"> 4: </span>    <span style="color: #F92672;">private</span> <span style="color: #F92672;">final</span> <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">day</span>;
+<span class="linenr"> 5: </span>    <span style="color: #F92672;">private</span> <span style="color: #A6E22E;">WeekDay</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">day</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 6: </span>        <span style="color: #F92672;">this</span>.day = day;
+<span class="linenr"> 7: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">printDay</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">i</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">10: </span>        <span style="color: #F92672;">switch</span><span style="color: #A6E22E;">(</span>i<span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr">11: </span>            <span style="color: #F92672;">case</span> 1:
+<span class="linenr">12: </span>                System.out.println<span style="color: #E6DB74;">(</span><span style="color: #AE81FF;">WeekDay</span>.Mon<span style="color: #E6DB74;">)</span>;
+<span class="linenr">13: </span>                <span style="color: #F92672;">break</span>;
+<span class="linenr">14: </span>            <span style="color: #F92672;">case</span> 2:
+<span class="linenr">15: </span>                System.out.println<span style="color: #E6DB74;">(</span><span style="color: #AE81FF;">WeekDay</span>.Tue<span style="color: #E6DB74;">)</span>;
+<span class="linenr">16: </span>                <span style="color: #F92672;">break</span>;
+<span class="linenr">17: </span>            ...
+<span class="linenr">18: </span>            <span style="color: #F92672;">case</span> 7:
+<span class="linenr">19: </span>                System.out.println<span style="color: #E6DB74;">(</span><span style="color: #AE81FF;">WeekDay</span>.Sun<span style="color: #E6DB74;">)</span>;
+<span class="linenr">20: </span>                <span style="color: #F92672;">break</span>;
+<span class="linenr">21: </span>            <span style="color: #F92672;">default</span>:
+<span class="linenr">22: </span>                System.out.println<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"wrong number!"</span><span style="color: #E6DB74;">)</span>;
+<span class="linenr">23: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">24: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">25: </span>
+<span class="linenr">26: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">String</span> <span style="color: #A6E22E;">getDay</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">27: </span>        <span style="color: #F92672;">return</span> day;
+<span class="linenr">28: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">29: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+上面创建了 <code>WeekDay</code> 枚举类型，下面遍历该枚举中的所有成员，并调用 <code>printDay()</code> 方法，代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #66D9EF;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">for</span> <span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">WeekDay</span> <span style="color: #A6E22E;">day</span> : WeekDay.values<span style="color: #A6E22E;">()</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 3: </span>        System.out.println<span style="color: #A6E22E;">(</span>day + <span style="color: #E6DB74;">"&#8594; "</span> + day.getDay<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr"> 4: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr"> 5: </span>    WeekDay.printDay<span style="color: #66D9EF;">(</span>5<span style="color: #66D9EF;">)</span>;
+<span class="linenr"> 6: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; Mon &#8594; Monday</span>
+<span class="linenr"> 9: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; Tue &#8594; Tuesday</span>
+<span class="linenr">10: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">...</span>
+<span class="linenr">11: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; Sum &#8594; Sunday</span>
+<span class="linenr">12: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; Fri</span>
+</pre>
+</div>
+
+<p>
+Java 中的 enum 还可以跟 Class 类一样的覆盖基类的方法，如下创建的 Color 枚举类型覆盖了 <code>toString()</code> 方法：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Test</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">enum</span> <span style="color: #66D9EF;">Color</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #A6E22E;">RED</span><span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"&#32418;&#33394;"</span>, 1<span style="color: #A6E22E;">)</span>, <span style="color: #A6E22E;">GREEN</span><span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"&#32511;&#33394;"</span>, 2<span style="color: #A6E22E;">)</span>, <span style="color: #A6E22E;">WHITE</span><span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"&#30333;&#33394;"</span>, 3<span style="color: #A6E22E;">)</span>, <span style="color: #A6E22E;">YELLOW</span><span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"&#40644;&#33394;"</span>, 4<span style="color: #A6E22E;">)</span>;
+<span class="linenr"> 4: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#25104;&#21592;&#21464;&#37327;</span>
+<span class="linenr"> 5: </span>        <span style="color: #F92672;">private</span> <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">name</span>;
+<span class="linenr"> 6: </span>        <span style="color: #F92672;">private</span> <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">index</span>;
+<span class="linenr"> 7: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#26500;&#36896;&#26041;&#27861;</span>
+<span class="linenr"> 8: </span>        <span style="color: #F92672;">private</span> <span style="color: #A6E22E;">Color</span><span style="color: #A6E22E;">(</span><span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">name</span>, <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">index</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 9: </span>            <span style="color: #F92672;">this</span>.name = name;
+<span class="linenr">10: </span>            <span style="color: #F92672;">this</span>.index = index;
+<span class="linenr">11: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">12: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#35206;&#30422;&#26041;&#27861;</span>
+<span class="linenr">13: </span>        <span style="color: #AE81FF;">@Override</span>
+<span class="linenr">14: </span>        <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">String</span> <span style="color: #A6E22E;">toString</span><span style="color: #A6E22E;">()</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr">15: </span>            <span style="color: #F92672;">return</span> <span style="color: #F92672;">this</span>.index + <span style="color: #E6DB74;">"-"</span> + <span style="color: #F92672;">this</span>.name;
+<span class="linenr">16: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">17: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">18: </span>
+<span class="linenr">19: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">20: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #AE81FF;">Color</span>.RED.toString<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; 1-&#32418;&#33394;</span>
+<span class="linenr">21: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">22: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org13f6fca" class="outline-3">
+<h3 id="org13f6fca">EnumMap 与 EnumSet</h3>
+<div class="outline-text-3" id="text-org13f6fca">
+<p>
+为了更好地支持枚举类型， <code>java.util</code> 中添加了现个新类： <code>EnumMap</code> 和 <code>EnumSet</code> ，使用它们可以更高效地操作枚举类型。
+</p>
+
+<p>
+<span class="underline">1. EnumMap 类</span>
+</p>
+
+<p>
+<code>EnumMap</code> 是专门为枚举类型量身定做的 Map 实现。虽然使用其他的 Map （如 <code>HashMap</code> ）实现也能完成枚举类型实例到值的映射，但是使用 <code>EnumMap</code> 会更加高效。
+</p>
+
+<p>
+<code>HashMap</code> 只能接收同一枚举类型的实例作为键值，并且由于枚举类型实例的数量相对固定并且有限，所以 <code>EnumMap</code> 使用数组来存放与枚举类型对应的值，使得 <code>EnumMap</code> 的效率非常高。
+</p>
+
+<p>
+下面是使用 <code>EnumMap</code> 的一个代码示例，枚举类型 <code>DataBaseType</code> 里存放了现在支持的所有数据库类型，针对不同的数据库，一些数据库相关的方法需要返回不一样的值，如示例中 <code>getURL()</code> 方法：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#23450;&#20041;&#25968;&#25454;&#24211;&#31867;&#22411;&#26522;&#20030;</span>
+<span class="linenr"> 2: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">enum</span> <span style="color: #66D9EF;">DataBaseType</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 3: </span>    <span style="color: #FD971F;">MYSQL</span>, <span style="color: #FD971F;">ORACLE</span>, <span style="color: #FD971F;">DB2</span>, <span style="color: #FD971F;">SQLSERVER</span>;
+<span class="linenr"> 4: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr"> 5: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#26576;&#31867;&#20013;&#23450;&#20041;&#30340;&#33719;&#21462;&#25968;&#25454;&#24211; URL &#30340;&#26041;&#27861;&#20197;&#21450; EnumMap &#30340;&#22768;&#26126;</span>
+<span class="linenr"> 6: </span><span style="color: #F92672;">private</span> <span style="color: #66D9EF;">EnumMap</span><span style="color: #AE81FF;">&lt;</span><span style="color: #66D9EF;">DataBaseType</span>, <span style="color: #66D9EF;">String</span><span style="color: #AE81FF;">&gt;</span> <span style="color: #FD971F;">urls</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">EnumMap</span><span style="color: #AE81FF;">&lt;</span><span style="color: #66D9EF;">DataBaseType</span>, <span style="color: #66D9EF;">String</span><span style="color: #AE81FF;">&gt;(</span>DataBaseType.<span style="color: #F92672;">class</span><span style="color: #AE81FF;">)</span>;
+<span class="linenr"> 7: </span><span style="color: #F92672;">public</span> <span style="color: #A6E22E;">DataBaseInfo</span><span style="color: #AE81FF;">()</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 8: </span>    urls.put<span style="color: #66D9EF;">(</span><span style="color: #AE81FF;">DataBaseType</span>.DB2, <span style="color: #E6DB74;">"jdbc:db2://localhost:5000/sample"</span><span style="color: #66D9EF;">)</span>;
+<span class="linenr"> 9: </span>    urls.put<span style="color: #66D9EF;">(</span><span style="color: #AE81FF;">DataBaseType</span>.MYSQL, <span style="color: #E6DB74;">"jdbc:mysql://localhost/mydb"</span><span style="color: #66D9EF;">)</span>;
+<span class="linenr">10: </span>    urls.put<span style="color: #66D9EF;">(</span><span style="color: #AE81FF;">DataBaseType</span>.ORACLE, <span style="color: #E6DB74;">"jdbc:oracle:thin:@localhost:1521:sample"</span><span style="color: #66D9EF;">)</span>;
+<span class="linenr">11: </span>    urls.put<span style="color: #66D9EF;">(</span><span style="color: #AE81FF;">DataBaseType</span>.SQLSEVER, <span style="color: #E6DB74;">"jdbc:microsoft:sqlserver://sql:1433;Database=mydb"</span><span style="color: #66D9EF;">)</span>;
+<span class="linenr">12: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">13: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#26681;&#25454;&#19981;&#21516;&#30340;&#25968;&#25454;&#24211;&#31867;&#22411;&#65292;&#36820;&#22238;&#23545;&#24212;&#30340; URL</span>
+<span class="linenr">14: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">@param type DataBaseType &#26522;&#20030;&#31867;&#26032;&#23454;&#20363;</span>
+<span class="linenr">15: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">@return</span>
+<span class="linenr">16: </span><span style="color: #F92672;">public</span> <span style="color: #66D9EF;">String</span> <span style="color: #A6E22E;">getURL</span><span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">DataBaseType</span> <span style="color: #FD971F;">type</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">17: </span>    <span style="color: #F92672;">return</span> <span style="color: #F92672;">this</span>.urls.get<span style="color: #66D9EF;">(</span>type<span style="color: #66D9EF;">)</span>;
+<span class="linenr">18: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+在实际使用中，EnumMap 对象 <code>urls</code> 往往是由外部负责整个应用初始化的代码来填充的。这里为了演示方便，类自己做了内容填充。
+</p>
+
+<p>
+从本例中可以看出，使用 EnumMap 可以很方便地为枚举类型在不同的环境中绑定到不同的值上。本例子中 <code>getURL</code> 绑定到 <code>URL</code> 上，在其他的代码中可能又被绑定到数据库驱动上去。
+</p>
+
+<p>
+<span class="underline">2. EnumSet 类</span>
+</p>
+
+<p>
+<b>EnumSet 是枚举类型的高性能 Set 实现，它要求放入它的枚举常量必须属于同一枚举类型。</b> EnumSet 提供了许多工厂方法以便于初始化，如下：
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 10:</span> EnumSet 类的常用方法</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">方法名称</th>
+<th scope="col" class="org-left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>allOf(Class&lt;E&gt; element type)</code></td>
+<td class="org-left">创建一个包含指定枚举类型中所有枚举成员的 EnumSet 对象</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>complementOf(EnumSet&lt;E&gt; s)</code></td>
+<td class="org-left">创建一个与指定 EnumSet 对象 s 相同的枚举类型 EnumSet 对象，并包含所有 s 中未包含的枚举成员</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>copyOf(EnumSet&lt;E&gt; s)</code></td>
+<td class="org-left">创建一个与指定 EnumSet 对象 s 相同的枚举类型 EnumSet 对象，并与 s 包含相同的枚举成员</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>noneOf(&lt;Class E&gt; elementType)</code></td>
+<td class="org-left">创建指定枚举类型的空 EnumSet 对象</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>of(E first, e...rest)</code></td>
+<td class="org-left">创建包含指定枚举成员的 EnumSet 对象</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>range(E from, E to)</code></td>
+<td class="org-left">创建一个 EnumSet 对象，该对象包含了 from 到 to 之间的所有枚举成员</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+EnumSet 作为 Set 接口实现，它支持对包含的枚举常量的遍历。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">for</span> <span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">Operation</span> <span style="color: #A6E22E;">op</span>:EnumSet.range<span style="color: #66D9EF;">(</span><span style="color: #AE81FF;">Operation</span>.PLUS, <span style="color: #AE81FF;">Operation</span>.MULTIPLY<span style="color: #66D9EF;">)</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span>    doSomeThing<span style="color: #66D9EF;">(</span>op<span style="color: #66D9EF;">)</span>;
+<span class="linenr">3: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-29 Tue 19:05</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-09-30 Wed 19:06</p>
+<p class="date">Created: 2020-10-02 Fri 11:45</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

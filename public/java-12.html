@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2020-10-02 Fri 15:08 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>反射机制</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
+<link rel="stylesheet" href="/css/animate.min.css" />
+<link rel="stylesheet" href="/css/all.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script src="/js/jquery.min.js"></script>
+<script src="/js/darkreader.js"></script>
+<script src="/user.config.js"></script>
+<script src="/js/main.js"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">反射机制</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgab4667d">反射机制是什么</a></li>
+<li><a href="#org9f8ce6c">反射机制 API</a></li>
+<li><a href="#orge97104e"><span class="todo TODO">TODO</span> 通过反射访问构造方法</a></li>
+<li><a href="#org32f9659"><span class="todo TODO">TODO</span> 通过反射访问方法</a></li>
+<li><a href="#org5ac510f"><span class="todo TODO">TODO</span> 通过反射方法成员变量</a></li>
+</ul>
+</div>
+</div>
+<p>
+通过 Java 的反射机制，程序员可以更深入地控制程序的运行过程。例如，在程序运行时由用户输入一个类名，然后动态获取该类拥有的构造、属性和方法，甚至调用任意类的任意方法。
+</p>
+
+<div id="outline-container-orgab4667d" class="outline-2">
+<h2 id="orgab4667d">反射机制是什么</h2>
+<div class="outline-text-2" id="text-orgab4667d">
+<p>
+Java 反射机制是 Java 语言的一个重要特性。在学习 Java 反射机制前，我们先来了解两个概念：编译期和运行期。
+</p>
+
+<p>
+<span class="underline">编译期</span> 是指把源码交给编译器编译成计算机可以执行的文件的过程。在 Java 中也就是把 Java 代码编成 class 文件的过程。编译期只是做了一些翻译功能， <b>并没有</b> 把代码放在内存中运行起来，而只是把代码当成文本进行操作，比如检查错误。
+</p>
+
+<p>
+<span class="underline">运行期</span> 是把编译后的文件交给计算机执行，直至程序运行结束。所谓运行期就把在磁盘中的代码放到内存中执行起来。
+</p>
+
+<p>
+Java 反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意属性和方法；这种动态获取信息以及动态调用对象方法的功能称为 <span class="underline">Java 语言的反射机制</span> 。简单来说，反射机制指的是程序在运行时能够获取自身的信息。在 Java 中，只要给定类的名字，就可以通过反射机制来获得类的所有信息。
+</p>
+
+<p>
+Java 反射机制在服务器和中间程序中得到了广泛运用。在服务端，往往需要根据客户的请求，动态调用某一个对象的特定方法。此外，在 ORM 中间件的实现中，运用 Java 反射机制可以读取任意一个 JavaBean 的所有属性，或者给这些属性赋值。
+</p>
+
+<img
+src="/images/java/java-10.png"
+width="560"
+height=""
+style=""
+title=""
+/>
+
+<p>
+Java 反射机制主要提供了以下功能，这些功能都位于 <code>java.lang.reflect</code> 包：
+</p>
+<ul class="org-ul">
+<li>在运行时判断任意一个对象所属的类；</li>
+<li>在运行时构造任意一个类的对象；</li>
+<li>在运行时判断任意一个类所具有的成员变量和方法；</li>
+<li>在运行时调用任意一个对象的方法；</li>
+<li>生成动态代理。</li>
+</ul>
+
+<p>
+要想知道一个类的属性和方法，必须先获取该类的字节码文件对象。获取类的信息时，使用的就是 Class 类中的方法。所以，先要获取到每一个字节码文件（ <code>.class</code> ）对应的 Class 类型的对象。
+</p>
+
+<p>
+我们知道， <b>所有 Java 类均继承了 Object 类</b> ，在 Object 类中定义了一个 <code>getClass()</code> 方法，该方法返回同一个类型为 Class 的对象，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">Class</span> <span style="color: #FD971F;">labelCls</span> = label1.getClass<span style="color: #AE81FF;">()</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">label1 &#20026; JLabel &#31867;&#30340;&#23545;&#35937;</span>
+</pre>
+</div>
+
+<p>
+利用 Class 类的对象 <code>labelCls</code> 可以访问 <code>labelCls</code> 对象的描述信息、 <code>JLabel</code> 类的信息以及基类 Object 的信息。
+</p>
+
+<p>
+下表列出了通过反射可以访问的信息：
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 1:</span> 反射可访问的常用信息</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">类型</th>
+<th scope="col" class="org-left">访问方法</th>
+<th scope="col" class="org-left">返回值类型</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">包路径</td>
+<td class="org-left"><code>getPackage()</code></td>
+<td class="org-left">Package 对象</td>
+<td class="org-left">获取该类的存放路径</td>
+</tr>
+
+<tr>
+<td class="org-left">类名称</td>
+<td class="org-left"><code>getName()</code></td>
+<td class="org-left">String 对象</td>
+<td class="org-left">获取该类的名称</td>
+</tr>
+
+<tr>
+<td class="org-left">继承类</td>
+<td class="org-left"><code>getSuperclass()</code></td>
+<td class="org-left">Class 对象</td>
+<td class="org-left">获取该类继承的类</td>
+</tr>
+
+<tr>
+<td class="org-left">实现接口</td>
+<td class="org-left"><code>getInterfaces()</code></td>
+<td class="org-left">Class 型数组</td>
+<td class="org-left">获取该类实现的所有接口</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">构造方法</td>
+<td class="org-left"><code>getConstructors()</code></td>
+<td class="org-left">Constructor 型数组</td>
+<td class="org-left">获取所有权限为 public 的构造方法</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>getDeclaredContructors()</code></td>
+<td class="org-left">Constructor 对象</td>
+<td class="org-left">获取当前对象的所有构造方法</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">方法</td>
+<td class="org-left"><code>getMethods()</code></td>
+<td class="org-left">Methods 型数组</td>
+<td class="org-left">获取所有权限为 public 的方法</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>getDeclaredMethods()</code></td>
+<td class="org-left">Methods 对象</td>
+<td class="org-left">获取当前对象的所有方法</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">成员变量</td>
+<td class="org-left"><code>getFileds()</code></td>
+<td class="org-left">Field 型数组</td>
+<td class="org-left">获取所有权限为 public 的成员变量</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>getDeclaredFields()</code></td>
+<td class="org-left">Field 对象</td>
+<td class="org-left">获取当前对象的所有成员变量</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">内部类</td>
+<td class="org-left"><code>getClasses()</code></td>
+<td class="org-left">Class 型数组</td>
+<td class="org-left">获取所有权限为 public 的内部类</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>getDelaredClasses()</code></td>
+<td class="org-left">Class 型数组</td>
+<td class="org-left">获取所有内部类</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">内部类的声明类</td>
+<td class="org-left"><code>getDeclaringClass()</code></td>
+<td class="org-left">Class 对象</td>
+<td class="org-left">如果该类为内部类，则返回它的成员类，否则返回 null</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+*注：上表中，在调用 <code>getFileds()</code> 和 <code>getMethods()</code> 方法时将会依次获取权限为 <code>public</code> 的字段和变量，然后将包含从超类中继承到的成员变量和方法，而通过 <code>getDeclaredFields()</code> 和 <code>getDeclaredMethods()</code> 中只是获取在本类中定义的成员变量和方法。
+</p>
+
+<p>
+Java 反射机制的优点：
+</p>
+<ul class="org-ul">
+<li>能够运行时动态获取类的实例，大大提高系统的灵活性和扩展性；</li>
+<li>与 Java 动态编译相结合，可以实现无比强大的功能；</li>
+<li>对于 Java 这种先编译再运行的语言，能够让我们很方便的创建灵活的代码，这些代码可以在运行时装配，无需在组件之间进行源代码的链接，更加容易实现面向对象。</li>
+</ul>
+
+<p>
+Java 反射机制的缺点：
+</p>
+<ul class="org-ul">
+<li>反射会消耗一定的系统资源，因此，如果不需要动态地创建一个对象，那么就不需要用反射；</li>
+<li>反射调用方法时可以忽略权限检查，获取这个类的私有方法和属性，因此可能会破坏类的封装性而导致安全问题。</li>
+</ul>
+
+<p>
+*注：Java 反射机制在一般的 Java 应用开发中很少使用，即便是 Java EE 阶段也很少使用。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9f8ce6c" class="outline-2">
+<h2 id="org9f8ce6c">反射机制 API</h2>
+<div class="outline-text-2" id="text-org9f8ce6c">
+<p>
+实现 Java 反射机制的类都位于 <code>java.lang.reflect</code> 包中， <code>java.lang.Class</code> 类是 Java 反射机制 API 中的核心类。
+</p>
+
+<p>
+<span class="underline">1. java.lang.Class 类</span>
+</p>
+
+<p>
+<code>java.lang.Class</code> 类是实现反射的关键所在，Class 类的一个实例表示 Java 的一种数据类型，包括类、接口、枚举、注解（Annotation）、数组、基本数据类型和 void 。Class 没有公有的构造方法，Class 实例是由 JVM 在类加载时自动创建的。
+</p>
+
+<p>
+在程序代码中获得 Class 实例可以通过如下代码实现：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">1. &#36890;&#36807;&#31867;&#22411; class &#38745;&#24577;&#21464;&#37327;</span>
+<span class="linenr">2: </span><span style="color: #66D9EF;">Class</span> <span style="color: #FD971F;">clz1</span> = String.<span style="color: #F92672;">class</span>;
+<span class="linenr">3: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">2. &#36890;&#36807;&#23545;&#35937;&#30340; getClass() &#26041;&#27861;</span>
+<span class="linenr">4: </span><span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">str</span> = <span style="color: #E6DB74;">"Hello"</span>;
+<span class="linenr">5: </span><span style="color: #66D9EF;">Class</span> <span style="color: #FD971F;">clz2</span> = str.getClass<span style="color: #AE81FF;">()</span>;
+</pre>
+</div>
+
+<p>
+每一种类型包括类和接口等，都有一个 <code>class</code> 静态变量可以获得 Class 实例。另外，每一个对象都有 <code>getClass()</code> 方法获得 Class 实例，该方法是由 Object 类提供的实例方法。
+</p>
+
+<p>
+Class 类提供了很多方法可以获得运行时对象的相关信息，下面的程序代码展示了其中一些方法。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">ReflectionTest</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#33719;&#24471; Class &#23454;&#20363;</span>
+<span class="linenr"> 4: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">1. &#36890;&#36807;&#31867;&#22411; class &#38745;&#24577;&#21464;&#37327;</span>
+<span class="linenr"> 5: </span>        <span style="color: #66D9EF;">Class</span> <span style="color: #FD971F;">clz1</span> = String.<span style="color: #F92672;">class</span>;
+<span class="linenr"> 6: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">2. &#36890;&#36807;&#23545;&#35937;&#30340; getClass() &#26041;&#27861;</span>
+<span class="linenr"> 7: </span>        <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">str</span> = <span style="color: #E6DB74;">"Hello"</span>;
+<span class="linenr"> 8: </span>        <span style="color: #66D9EF;">Class</span> <span style="color: #FD971F;">clz2</span> = str.getClass<span style="color: #A6E22E;">()</span>;
+<span class="linenr"> 9: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#33719;&#24471; int &#31867;&#22411;&#30340; Class &#23454;&#20363;</span>
+<span class="linenr">10: </span>        <span style="color: #66D9EF;">Class</span> <span style="color: #FD971F;">clz3</span> = <span style="color: #66D9EF;">int</span>.<span style="color: #F92672;">class</span>;
+<span class="linenr">11: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#33719;&#24471; Integer &#31867;&#22411; Class &#23454;&#20363;</span>
+<span class="linenr">12: </span>        <span style="color: #66D9EF;">Class</span> <span style="color: #FD971F;">clz4</span> = Integer.<span style="color: #F92672;">class</span>;
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"clz2 &#31867;&#21517;&#31216;&#65306;"</span> + clz2.getName<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">15: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"clz2 &#26159;&#21542;&#20026;&#25509;&#21475;&#65306;"</span> + clz2.isInterface<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">16: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"clz2 &#26159;&#21542;&#20026;&#25968;&#32452;&#23545;&#35937;&#65306;"</span> + clz2.isArray<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">17: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"clz2 &#29238;&#31867;&#21517;&#31216;&#65306;"</span> + clz2.getSuperclass<span style="color: #E6DB74;">()</span>.getName<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">18: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"clz2 &#26159;&#21542;&#20026;&#22522;&#26412;&#31867;&#22411;&#65306;"</span> + clz2.isPrimitive<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">19: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"clz3 &#26159;&#21542;&#20026;&#22522;&#26412;&#31867;&#22411;&#65306;"</span> + clz3.isPrimitive<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">20: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"clz4 &#26159;&#21542;&#20026;&#22522;&#26412;&#31867;&#22411;&#65306;"</span> + clz4.isPrimitive<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">21: </span>
+<span class="linenr">22: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; clz2 &#31867;&#21517;&#31216;&#65306; java.lang.String</span>
+<span class="linenr">23: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; clz2 &#26159;&#21542;&#20026;&#25509;&#21475;&#65306; false</span>
+<span class="linenr">24: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; clz2 &#26159;&#21542;&#20026;&#25968;&#32452;&#23545;&#35937;&#65306; false</span>
+<span class="linenr">25: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; clz2 &#29238;&#31867;&#21517;&#31216;&#65306; java.lang.Object</span>
+<span class="linenr">26: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; clz2 &#26159;&#21542;&#20026;&#22522;&#26412;&#31867;&#22411;&#65306;false</span>
+<span class="linenr">27: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; clz3 &#26159;&#21542;&#20026;&#22522;&#26412;&#31867;&#22411;&#65306;true</span>
+<span class="linenr">28: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; clz4 &#26159;&#21542;&#20026;&#22522;&#26412;&#31867;&#22411;&#65306;false</span>
+<span class="linenr">29: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">30: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">31: </span>
+</pre>
+</div>
+
+<p>
+<span class="underline">2. java.lang.reflect 包</span>
+</p>
+
+<p>
+<code>java.lang.reflect</code> 包提供了反射中用到的类，主要的类说明如下：
+</p>
+<ul class="org-ul">
+<li>Constructor 类：提供类的构造方法信息；</li>
+<li>Field 类：提供类或接口中成员变量信息；</li>
+<li>Mehtod 类：提供类或接口成员方法信息；</li>
+<li>Array 类：提供了动态创建和访问 Java 数组的方法；</li>
+<li>Modifer 类：提供类和成员访问修饰符信息。</li>
+</ul>
+
+<p>
+示例代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">ReflectionTest</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #F92672;">try</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 4: </span>            <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21160;&#24577;&#21152;&#36733; xx &#31867;&#30340;&#36816;&#34892;&#26102;&#23545;&#35937;</span>
+<span class="linenr"> 5: </span>            <span style="color: #66D9EF;">Class</span> <span style="color: #FD971F;">c</span> = Class.forName<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"java.lang.String"</span><span style="color: #E6DB74;">)</span>;
+<span class="linenr"> 6: </span>            <span style="color: #75715E;">// </span><span style="color: #75715E;">&#33719;&#21462;&#25104;&#21592;&#26041;&#27861;&#38598;&#21512;</span>
+<span class="linenr"> 7: </span>            <span style="color: #66D9EF;">Method</span><span style="color: #E6DB74;">[]</span> <span style="color: #FD971F;">methods</span> = c.getDeclaredMethods<span style="color: #E6DB74;">()</span>;
+<span class="linenr"> 8: </span>            <span style="color: #75715E;">// </span><span style="color: #75715E;">&#36941;&#21382;&#25104;&#21592;&#26041;&#27861;&#38598;&#21512;</span>
+<span class="linenr"> 9: </span>            <span style="color: #F92672;">for</span> <span style="color: #E6DB74;">(</span><span style="color: #66D9EF;">Method</span> <span style="color: #FD971F;">method</span> : methods<span style="color: #E6DB74;">)</span> <span style="color: #E6DB74;">{</span>
+<span class="linenr">10: </span>                <span style="color: #75715E;">// </span><span style="color: #75715E;">&#25171;&#21360;&#26435;&#38480;&#20462;&#39280;&#31526;&#65292;&#22914; public&#12289;protected&#12289;private</span>
+<span class="linenr">11: </span>                System.out.println<span style="color: #FD971F;">(</span>Modifier.toString<span style="color: #F92672;">(</span>method.getModifiers<span style="color: #AE81FF;">()</span><span style="color: #F92672;">)</span><span style="color: #FD971F;">)</span>;
+<span class="linenr">12: </span>                <span style="color: #75715E;">// </span><span style="color: #75715E;">&#25171;&#21360;&#36820;&#22238;&#20540;&#31867;&#22411;&#21517;&#31216;</span>
+<span class="linenr">13: </span>                System.out.println<span style="color: #FD971F;">(</span>method.getReturnType<span style="color: #F92672;">()</span>.getName<span style="color: #F92672;">()</span><span style="color: #FD971F;">)</span>;
+<span class="linenr">14: </span>                <span style="color: #75715E;">// </span><span style="color: #75715E;">&#25171;&#21360;&#26041;&#27861;&#21517;&#31216;</span>
+<span class="linenr">15: </span>                System.out.println<span style="color: #FD971F;">(</span>method.getName<span style="color: #F92672;">()</span> + <span style="color: #E6DB74;">"()"</span><span style="color: #FD971F;">)</span>;
+<span class="linenr">16: </span>            <span style="color: #E6DB74;">}</span>
+<span class="linenr">17: </span>        <span style="color: #A6E22E;">}</span> <span style="color: #F92672;">catch</span> <span style="color: #A6E22E;">(</span><span style="color: #66D9EF;">ClassNotFoundException</span> <span style="color: #FD971F;">e</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr">18: </span>            System.out.println<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"&#25214;&#19981;&#21040;&#25351;&#23450;&#31867;"</span><span style="color: #E6DB74;">)</span>;
+<span class="linenr">19: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">20: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">21: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+上述代码第 5 行是通过 Class 的静态方法 <code>forName(String)</code> 创建某个类的运行时对象，其中的参数是类全名字符串，如果在类路径中找不到这个类则抛出 <code>ClassNotFoundException</code> 异常，见代码第 17 行。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge97104e" class="outline-2">
+<h2 id="orge97104e"><span class="todo TODO">TODO</span> 通过反射访问构造方法</h2>
+</div>
+
+<div id="outline-container-org32f9659" class="outline-2">
+<h2 id="org32f9659"><span class="todo TODO">TODO</span> 通过反射访问方法</h2>
+</div>
+
+<div id="outline-container-org5ac510f" class="outline-2">
+<h2 id="org5ac510f"><span class="todo TODO">TODO</span> 通过反射方法成员变量</h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-10-02 Fri 11:51</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2020-10-02 Fri 15:08</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

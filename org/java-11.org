@@ -577,3 +577,331 @@ public class class_name<data_type1, data_type2, ...> {}
 
 （3）创建 CategoryDao 类，在该类中定义了一个泛型的 Map 映射，其键为 Category 类型的对象，值为 =List<BookInfo>= 类型的对象，并定义 =printCategoryInfo()= 方法，用于打印类别和图书明细，具体代码如下：
 
+#+BEGIN_SRC java -n
+  public class CategoryDao {
+      // 定义泛型 Map ，存储图书信息
+      public static Map<Category, List<BookInfo>> categoryMap = new HashMap<Category, List<BookInfo>>();
+
+      public static void printDeptmentInfo() {
+          for (Category cate : categoryMap.keySet()) {
+              System.out.println("所属类别：" + cate.getName());
+              List<BookInfo> books = categoryMap.get(cate);
+              System.out.println("图书编号\t\t图书名称\t\t图书价格\t\t图书作者\t\t出版时间");
+              for (inti = 0; i < books.size(); i++) {
+                  BookInfo b = books.get(i); // 获取图书
+                  System.out.println(b.getId() + "\t\t" + b.getName() + "\t\t" + b.getPrice() + "\t\t" + b.getAuthor() + "\t\t" + b.getStartTime());
+              }
+              System.out.println();
+          }
+      }
+  }
+#+END_SRC
+
+（4）创建测试类 Test
+
+#+BEGIN_SRC java -n
+  public class Test {
+      public static void main(String[] args) {
+          // 创建类别信息
+          Category category1 = new Category(1, "程序设计");
+          Category category2 = new Category(2, "数据库");
+          Category category3 = new Category(3, "平面设计");
+
+          // 创建图书信息
+          BookInfo book1 = new BookInfo(1, "细说 Java 编程", 25, "张晓玲", "2012-01-01");
+          BookInfo book2 = new BookInfo(2, "影视后期处理宝典", 78, "刘水波", "2012-10-05");
+          BookInfo book3 = new BookInfo(3, "MySQL 从入门到精通", 41, "王志亮", "2012-03-02");
+          BookInfo book4 = new BookInfo(4, "Java 从入门到精通", 27, "陈奚静", "2012-11-01");
+          BookInfo book5 = new BookInfo(5, "SQL Server 一百例", 68, "张晓玲", "2012-01-01");
+
+          // 向类别 1 添加图书
+          List<BookInfo> pList1 = new ArrayList<BookInfo>();
+          pList1.add(book1);
+          pList1.add(book4);
+          // 向类别 2 添加图书
+          List<BookInfo> pList2 = new ArrayList<BookInfo>();
+          pList2.add(book3);
+          pList2.add(book5);
+          // 向类别 3 添加图书
+          List<BookInfo> pList3 = new ArrayList<BookInfo>();
+          pList.add(book2);
+
+          // 映射
+          CategoryDao.categoryMap.put(category1, pList1);
+          CategoryDao.categoryMap.put(category2, pList2);
+          CategoryDao.categoryMap.put(category3, pList3);
+
+          CategoryDao.printDeptmentInfo();
+      }
+  }
+#+END_SRC
+
+在该程序中，使用了泛型 List 和泛型 Map 分别存储图书类别和特定类别下的图书明信息。可见，使用泛型不仅减少了代码的编写量，也提高了类型的安全性。
+
+运行该程序，输出结果如下：
+
+#+BEGIN_EXAMPLE
+所属类别：程序设计
+图书编号  图书名称  图书价格  图书作者  出版时间
+3  MySQL 从入门到精通  41  王志亮  2012-3-2
+5  SQL Server 一百例   68  张晓玲  2012-01-01
+
+所属类别：数据库
+图书编号  图书名称  图书价格  图书作者  出版时间
+1  细说 Java 编程     25  张晓玲  2012-01-01
+4  Java 从入门到精通  27  陈奚静  2012-11-01
+
+所属类别：平面设计
+图书编号  图书名称  图书价格  图书作者  出版时间
+2  影视后期处理宝典   78  刘水波  2012-10-05
+#+END_EXAMPLE
+
+** 枚举
+
+*枚举是一个被命名的整型常数的集合，用于声明一组带标识符的常数。*
+
+枚举在日常生活中很常见，例如一个人的性别只能是“男”或者“女”，一周的星期只能是 7 天中的一个等。类似这种当一个变量有几种固定可能的取值时，就可以将它定义为枚举类型。
+
+#+BEGIN_QUOTE
+在 JDK 1.5 之前没有枚举类型，那时候一般用接口常量来代替，而使用 Java 枚举类型 enum 可以更贴近地表示这种常量。
+#+END_QUOTE
+
+*** 声明枚举
+
+*声明枚举必须使用 =enum= 关键字* ，然后定义枚举的名称、可访问性、基础类型和成员等，语法格式如下：
+
+#+BEGIN_EXAMPLE
+enum-modifiers enum enumname:enum-base {
+    enum-body;
+}
+#+END_EXAMPLE
+
+其中：
+- =enum-modifiers= 表示枚举的修饰符主要包括 =public、private= 和 =internal= ；
+- =enumname= 表示声明的枚举名称；
+- =enum-base= 表示基础类型；
+- =enum-body= 表示枚举的成员，它是枚举类型的命名常数。
+
+任意两个枚举成员不能具有相同的名称，且它的常数值必须在该枚举的基础类型的范围之内，多个枚举成员之间使用逗号分隔。
+
+*注：如果没有显式地声明基础类型的枚举，那么意味着它所对应的基础类型是 =int= 。
+
+来看几个例子吧。
+
+如需要定义一个表示性别的枚举类型 =SexEnum= 和一个表示颜色的枚举类型 =Color= ，代码如下：
+
+#+BEGIN_SRC java -n
+  public enum SexEnum {
+      male, female;
+  }
+
+  public enum Color {
+      RED, BLUE, GREEN, BLACK;
+  }
+#+END_SRC
+
+*之后便可以通过枚举类型名直接引用常量* ，如 =SexEnum.male、Color.RED= 。
+
+使用枚举还可以使 =switch= 语句的可读性更强，如下：
+
+#+BEGIN_SRC java -n
+  enum Signal {
+      // 定义一个枚举类型
+      GREEN, YELLOW, RED;
+  }
+  public class TrafficLight {
+      Signal color = Signal.RED;
+      public void change() {
+          switch(color) {
+          case RED:
+              color = Signal.GREEN;
+              break;
+          case YELLOW:
+              color = Signal.RED;
+              break;
+          case GREEN:
+              color = Signal.YELLOW;
+              break;
+          }
+      }
+  }
+#+END_SRC
+
+*** 枚举类型
+
+*Java 中的每一个枚举类都继承自 =java.lang.Enum= 类* 。
+
+当定义一个枚举类型时，每一个枚举类型成员都可以看作是 =Enum= 类的实例，这些枚举成员默认都被 =final、public、static= 修饰，当使用枚举类型成员时，直接使用枚举名称调用成员即可。
+
+*所有枚举实例都可以调用 Enum 类的方法*，如下：
+
+#+CAPTION: Enum 类的常用方法
+| 方法名称      | 描述                             |
+|---------------+----------------------------------|
+| =values()=    | 以数组形式返回枚举类型的所有成员 |
+| =valueOf()=   | 将普通字符串转换为枚举实例       |
+| =compateTo()= | 比较两个枚举成员在定义时的顺序   |
+| =ordinal()=   | 获取枚举成员的索引位置           |
+
+来看一个例子吧，如下：
+
+#+BEGIN_SRC java -n
+  public class TestEnum {
+      public enum Sex {
+          // 定义一个枚举
+          male, female;
+      }
+
+      public static void main(String[] args) {
+          compare(Sex.valueOf("male")); // 将变通字符串转换为枚举实例
+      }
+
+      public static void compare(Sex s) {
+          for (int i = 0; i < Sex.values().length; i++) {
+              System.out.println("索引" + Signal.values()[i].ordinal() + "，" + s + "与" + Sex.values()[i] + "的比较结果是：" + s.compareTo(Sex.values()[i]));
+          }
+      }
+
+      // → 索引0，male与male的比较结果是：0
+      // → 索引1，male与female的比较结果是：-1
+  }
+#+END_SRC
+
+*** 为枚举添加方法
+
+Java 为枚举类型提供了一些内置方法，同时枚举常量也可以有自己的方法。要注意，必须在枚举实例的最后一个成员后添加分号，而且必须先定义枚举实例。
+
+#+BEGIN_SRC java -n
+  enum WeekDay {
+      Mon("Monday"), Tue("Tuesday"), Wed("Wednesday"), Thu("Thursday"), Fri("Friday"), Sat("Saturday"), Sun("Sunday");
+      // 以上是枚举的成员，必须先定义，而且使用分号结束
+      private final String day;
+      private WeekDay(String day) {
+          this.day = day;
+      }
+
+      public static void printDay(int i) {
+          switch(i) {
+              case 1:
+                  System.out.println(WeekDay.Mon);
+                  break;
+              case 2:
+                  System.out.println(WeekDay.Tue);
+                  break;
+              ...
+              case 7:
+                  System.out.println(WeekDay.Sun);
+                  break;
+              default:
+                  System.out.println("wrong number!");
+          }
+      }
+
+      public String getDay() {
+          return day;
+      }
+  }
+#+END_SRC
+
+上面创建了 =WeekDay= 枚举类型，下面遍历该枚举中的所有成员，并调用 =printDay()= 方法，代码如下：
+
+#+BEGIN_SRC java -n
+  public static void main(String[] args) {
+      for (WeekDay day : WeekDay.values()) {
+          System.out.println(day + "→ " + day.getDay());
+      }
+      WeekDay.printDay(5);
+  }
+
+  // → Mon → Monday
+  // → Tue → Tuesday
+  // ...
+  // → Sum → Sunday
+  // → Fri
+#+END_SRC
+
+Java 中的 enum 还可以跟 Class 类一样的覆盖基类的方法，如下创建的 Color 枚举类型覆盖了 =toString()= 方法：
+
+#+BEGIN_SRC java -n
+  public class Test {
+      public enum Color {
+          RED("红色", 1), GREEN("绿色", 2), WHITE("白色", 3), YELLOW("黄色", 4);
+          // 成员变量
+          private String name;
+          private int index;
+          // 构造方法
+          private Color(String name, int index) {
+              this.name = name;
+              this.index = index;
+          }
+          // 覆盖方法
+          @Override
+          public String toString() {
+              return this.index + "-" + this.name;
+          }
+      }
+
+      public static void main(String[] args) {
+          System.out.println(Color.RED.toString()); // → 1-红色
+      }
+  }
+#+END_SRC
+
+*** EnumMap 与 EnumSet
+
+为了更好地支持枚举类型， =java.util= 中添加了现个新类： =EnumMap= 和 =EnumSet= ，使用它们可以更高效地操作枚举类型。
+
+_1. EnumMap 类_
+
+=EnumMap= 是专门为枚举类型量身定做的 Map 实现。虽然使用其他的 Map （如 =HashMap= ）实现也能完成枚举类型实例到值的映射，但是使用 =EnumMap= 会更加高效。
+
+=HashMap= 只能接收同一枚举类型的实例作为键值，并且由于枚举类型实例的数量相对固定并且有限，所以 =EnumMap= 使用数组来存放与枚举类型对应的值，使得 =EnumMap= 的效率非常高。
+
+下面是使用 =EnumMap= 的一个代码示例，枚举类型 =DataBaseType= 里存放了现在支持的所有数据库类型，针对不同的数据库，一些数据库相关的方法需要返回不一样的值，如示例中 =getURL()= 方法：
+
+#+BEGIN_SRC java -n
+  // 定义数据库类型枚举
+  public enum DataBaseType {
+      MYSQL, ORACLE, DB2, SQLSERVER;
+  }
+  // 某类中定义的获取数据库 URL 的方法以及 EnumMap 的声明
+  private EnumMap<DataBaseType, String> urls = new EnumMap<DataBaseType, String>(DataBaseType.class);
+  public DataBaseInfo() {
+      urls.put(DataBaseType.DB2, "jdbc:db2://localhost:5000/sample");
+      urls.put(DataBaseType.MYSQL, "jdbc:mysql://localhost/mydb");
+      urls.put(DataBaseType.ORACLE, "jdbc:oracle:thin:@localhost:1521:sample");
+      urls.put(DataBaseType.SQLSEVER, "jdbc:microsoft:sqlserver://sql:1433;Database=mydb");
+  }
+  // 根据不同的数据库类型，返回对应的 URL
+  // @param type DataBaseType 枚举类新实例
+  // @return
+  public String getURL(DataBaseType type) {
+      return this.urls.get(type);
+  }
+#+END_SRC
+
+在实际使用中，EnumMap 对象 =urls= 往往是由外部负责整个应用初始化的代码来填充的。这里为了演示方便，类自己做了内容填充。
+
+从本例中可以看出，使用 EnumMap 可以很方便地为枚举类型在不同的环境中绑定到不同的值上。本例子中 =getURL= 绑定到 =URL= 上，在其他的代码中可能又被绑定到数据库驱动上去。
+
+_2. EnumSet 类_
+
+*EnumSet 是枚举类型的高性能 Set 实现，它要求放入它的枚举常量必须属于同一枚举类型。* EnumSet 提供了许多工厂方法以便于初始化，如下：
+
+#+CAPTION: EnumSet 类的常用方法
+| 方法名称                        | 描述                                                                                       |
+|---------------------------------+--------------------------------------------------------------------------------------------|
+| =allOf(Class<E> element type)=  | 创建一个包含指定枚举类型中所有枚举成员的 EnumSet 对象                                      |
+| =complementOf(EnumSet<E> s)=    | 创建一个与指定 EnumSet 对象 s 相同的枚举类型 EnumSet 对象，并包含所有 s 中未包含的枚举成员 |
+| =copyOf(EnumSet<E> s)=          | 创建一个与指定 EnumSet 对象 s 相同的枚举类型 EnumSet 对象，并与 s 包含相同的枚举成员       |
+| =noneOf(<Class E> elementType)= | 创建指定枚举类型的空 EnumSet 对象                                                          |
+| =of(E first, e...rest)=         | 创建包含指定枚举成员的 EnumSet 对象                                                        |
+| =range(E from, E to)=           | 创建一个 EnumSet 对象，该对象包含了 from 到 to 之间的所有枚举成员                          |
+
+EnumSet 作为 Set 接口实现，它支持对包含的枚举常量的遍历。
+
+#+BEGIN_SRC java -n
+  for (Operation op:EnumSet.range(Operation.PLUS, Operation.MULTIPLY)) {
+      doSomeThing(op);
+  }
+#+END_SRC

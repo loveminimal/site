@@ -1,0 +1,340 @@
+#+SETUPFILE: ../theme-rose.setup
+#+DATE: <2020-10-02 Fri 15:09>
+#+TITLE: 输入/输出流
+
+在变量、数组、对象和集合中存储的数据是暂时存在的，一旦程序结束它们就会丢失。为以能够永久地保存程序创建的数据，需要将其保存到磁盘文件中，这样就可以在其他程序中使用它们。Java 的 I/O （输入输出）技术可以将数据保存到文本文件和二进制文件中，以达到永久保存数据的要求。
+
+** 流的概念
+
+在 Java 中所有数据都是使用流读写的。流是一组有序的数据序列，将数据从一个地方带到另一个地方。根据数据流向的不同，可以分为输入流（Input）和输出流（Output）两种。
+
+在学习输入和输出流之前，我们要明白为什么应用程序需要输入和输出流。
+
+我们平时用的 Office 软件，对于 Word、Excel 和 PPT 文件，我们需要打开文件并读取这些文本，和编辑输入一些文本，这都需要利用输入和输出的功能。
+
+我们经常使用 =System.out.println= 方法，它就是一个输出方法。
+
+*** 什么是输入/输出流
+
+*Java 程序通过流来完成输入/输出，所有的输入/输出以流的形式处理。*
+
+_输入_ 就是将数据从各种输入设备（包括文件、键盘等）中读取到内存中， _输出_ 则正好相反，是将数据写入到各种输出设备（比如文件、显式器、磁盘等）。
+
+数据流是 Java 进行 I/O 操作的对象，它按照不同的标准可以分为不同的类别：
+- 按照流的方向主要分为输入流和输出流两大类；
+- 按照数据单位的不同分为字节流和字符流；
+- 按照功能可以分为节点流和处理流。
+
+数据流的处理只能按照数据序列的顺序来进行，即前一个数据处理完之后才能处理后一个数据。数据流以输入流的形式被程序获取，再以输出流的形式将数据输出到其它设备。
+
+#+BEGIN_EXPORT html
+<img
+src="/images/java/java-11.png"
+width="360"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<img
+src="/images/java/java-12.png"
+width="360"
+height=""
+style="float: right;"
+title=""
+/>
+#+END_EXPORT
+
+*** 输入流
+
+Java 流相关的类都封装在 =java.io= 包中，而且每个数据流都是一个对象。所有输入流都是 InputStream 抽象类（字节输入流）和 Reader 抽象类（字符输入流）的子类。其中 InputStream 类是字节输入流的抽象类，是所有字节输入流的父类，其层次结构如图所示：
+
+#+BEGIN_EXPORT html
+<img
+src="/images/java/java-13.png"
+width=""
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+InputStream 类中所有方法遇到错误时都会引发 IOException 异常。
+
+#+CAPTION: InputStream 类常用方法
+| 名称                                   | 作用                                                                                                                                                                                    |
+|----------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| =int read()=                           | 从输入流读入一个 8 字节的数据，将它转换一个 0~255 的整数，返回一个整数，如果遇到输入流的结尾返回 -1                                                                                     |
+| =int read(byte[] b)=                   | 从输入流读取若干字节的数据保存到参数 b 指定的字节数组中，返回的字节数表示读取的字节数，如果遇到输入流的结尾返回 -1                                                                      |
+| =int read(byte[] b, int off, int len)= | 从输入流读取若干字节的数据保存到参数 b 指定的字节数组中，其中 off 是指在数组中开始保存数据位置的起始下标，len 是指读取字节的位数。返回的是实际读取的字节数，如果遇到输入流的结尾返回 -1 |
+| =void close()=                         | 关闭数据流，当完成对数据流的操作之后需要关闭数据流                                                                                                                                      |
+| =int available()=                      | 返回右以从数据源读取的数据流的位数                                                                                                                                                      |
+| =skip(long n)=                         | 从输入流跳过参数 n 指定的字节数目                                                                                                                                                       |
+|----------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| =boolean markSupported()=              | 判断输入流是否可以重复读取，如果可以就返回 true                                                                                                                                         |
+| =void mark(int readLimit)=             | 如果输入流是否可被重复读取，从流的当前位置开始设置标记， readLimit 指定可以设置标记的字节数                                                                                             |
+| =void reset()=                         | 使输入流重新定位到刚才被标记的位置，这样可以重新读取标记过和数据                                                                                                                        |
+
+上述最后 3 个方法一般会结合在一起使用，首先使用 =markSupported()= 判断，如果可以重复读取，则使用 =mark(int readLimit)= 方法进行标记，标记完成之后可以使用 =read()= 方法读取标记范围内的字节数，最后使用 =reset()= 方法使输入流重新定位到标记的位置，继而完成重复读取操作。
+
+Java 中字符是 Unicode 编码，即双字节的，而 InputStream 是用来处理字节的，在处理字符文本时不是很方便。这时可以使用 Java 的文本输入流 Reader 类，该类是字符输入流的抽象类，即所有字符输入流的实现都是它的子类，该类的方法与 InputStream 类的方法类似。
+
+*** 输出流
+
+在 Java 中所有输出流都是 OutputStream 抽象类（字节输出流）和 Writer 抽象类（字符输出流）的子类。其中 OutputStream 类是字节输出流的抽象类，是所有字节输出流的父类。
+
+#+BEGIN_EXPORT html
+<img
+src="/images/java/java-14.png"
+width=""
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+OutputStream 类是所有字节输出流的超类，用于以二进制的形式将数据写入目标设备，该类是抽象类，不能被实例化。
+
+#+CAPTION: OutputStream 类的常用方法
+| 名称                                    | 作用                                                     |
+|-----------------------------------------+----------------------------------------------------------|
+| =int write(b)=                          | 将指定字节的数据写入到输出流                             |
+| =int write(byte[] b)=                   | 将指定字节数组的内容写入输出流                           |
+| =int write(byte[] b, int off, int len)= | 将指定字节数组从 off 位置开始的 len 字节的内容写入输出流 |
+| =close()=                               | 关闭数据流，当完成对数据流的操作之后需要关闭数据流       |
+| =flush()=                               | 刷新输出流，强行将缓冲区写入输出流                       |
+
+** 系统流
+
+每个 Java 程序运行时都带有一个系统流，系统流对应的类为 =java.lang.System= 。System 类封装了 Java 程序运行时的 3 个系统流，分别通过 =in、out= 和 =err= 变量来引用：
+- =System.in= ：标准输入流，默认设备是键盘；
+- =System.out= ：标准输出流，默认设备是控制台；
+- =System.err= ：标准错误流，默认设备是控制台。
+
+以上变量的作用域为 public 和 static ，因此在程序的任何部分都不需引用 System 对象就可以使用它们。
+
+来看一个例子吧，下面的程序演示了如何使用 =System.in= 读取字节数组，使用 =System.out= 输出字节数组：
+
+#+BEGIN_SRC java -n
+  public class Test {
+      public static void main(String[] args) {
+          byte[] byteData = new byte[100]; // 声明一个字节数组
+          System.out.println("请输入英文：");
+          try {
+              System.in.read(byteData);
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
+          System.out.println("您输入的内容如下：");
+          for (int i = 0; i < byteData.length; i++) {
+              System.out.println((char) byteData[i]);
+          }
+      }
+  }
+#+END_SRC
+
+=System.in= 是 InputStream 类的一个对象，因此上述代码的 =System.in.read()= 方法实际是访问 InputStream 类定义的 =read()= 方法。该方法可以从键盘读取一个或多个字符，对于 =System.out= 输出流主要用于将指定内容输出到控制台。
+
+=System.out= 和 =System.err= 是 PrintStream 类的对象。因为 printStream 是一个从 OutputStream 派生的输出流，所以它还执行低级别的 =write()= 方法。因此， =System.out= 还可以调用 =write()= 方法实现控制台输出。
+
+=write()= 方法的简单形式如下：
+
+#+BEGIN_EXAMPLE
+void write(int byteval) throws IOException
+#+END_EXAMPLE
+
+该方法通过 =byteval= 参数向文件写入指定的字节。在实际操作中， =print()= 方法和 =println()= 方法比 =write()= 方法更常用。
+
+*注：尽管它们通常用于对控制台进行读取和写入字符，但是这些都是字节流。因为预定义流是没有引入字符流的 Java 原始规范的一部分，所以它们不是字符流而是字节流，但是在 Java 中可以将它们打包到基于字符的流中使用。
+
+** TODO 字符编码
+
+** File 类
+
+在 Java 中， *File 类是 =java.io= 包中唯一代表磁盘文件本身的对象* ，也就是说，如果希望在程序中操作文件和目录，则都可以通过 File 类来完成。File 类定义了一些方法来操作文件，比如新建、删除、重命名文件和目录等。
+
+File 类不能访问文件内容本身，如果需要访问文件内容本身，则需要使用输入/输出流。
+
+File 类提供了如下三种形式构造方法：
+- =File(String path)= ：如果 =path= 是实际存在的路径，则该 =File= 对象表示的是目录；如果 =path= 是文件名，则该 =File= 对象表示的是文件；
+- =File(String path, String name)= ： =path= 是路径名， =name= 是文件名；
+- =File(File dir, String name)= ： =dir= 是路径对象， =name= 是文件名。
+
+使用任意一个构造方法都可以创建一个 =File= 对象，然后调用其提供的方法对文件进行操作。
+
+#+CAPTION: File 类的常用方法
+| 方法名称                        | 说明                                                                           |
+|---------------------------------+--------------------------------------------------------------------------------|
+| =boolean canRead()=             | 测试应用程序是否能从指定的文件中进行读取                                       |
+| =boolean canWrite()=            | 测试应用程序是否能定当前文件                                                   |
+| =boolean delete()=              | 删除当前对象指定的文件                                                         |
+| =boolean exists()=              | 测试当前 File 是否存在                                                         |
+| =String getAbsolutePath()=      | 返回由该对象表示的文件的绝对路径名                                             |
+| =String getName()=              | 返回表示当前对象的文件名或路径名（如果中路径，则返回最后一级子路径名）         |
+| =String getParent()=            | 返回当前 File 对象所对应目录（最后一级子目录）的父目录名                       |
+| =boolean isAbsolute()=          | 测试当前 File 对象表示的文件是否为一个绝对路径名（该方法消除了不同平台的差异） |
+| =boolean isDirectory()=         | 测试当前 File 对象表示的文件是否为一个路径                                     |
+| =boolean isFile()=              | 测试当前 File 对象表示的文件是否为一个“普通”文件                               |
+| =long lastModified()=           | 返回当前 File 对象表示的文件最后修改的时间                                     |
+| =long length()=                 | 返回当前 File 对象指定的路径长度                                               |
+| =String[] list()=               | 返回当前 File 对象指定的路径文件列表                                           |
+| =String[] list(FilenameFilter)= | 返回当前 File 对象指定的目录中满足指定过滤器的文件列表                         |
+| =boolean mkdir()=               | 创建一个目录，它的路径名由当前 File 对象指定                                   |
+| =boolean renameTo(File)=        | 将当前 file 对象指定的文件更名为给定参数 File 指定的路径名                     |
+
+File 类中有以下两个常用常量：
+- =public static final String pathSeparator= ：指的是分隔连续多个路径字符串的分隔符，Windows 下指 =;= ，如 =java -cp test.jar;abc.jar HelloWorld= ；
+- =public static final String separator= ：用来分隔同一个路径字符串中的目录的，Windows 下指 =/= ，如 =C:/Program Files/Common Files= 。
+
+#+BEGIN_EXPORT html
+<note>
+注意：可以看到 File 类的常量定义的命名规则不符合标准命名规则，常量名没有全部大写，这是因为 Java 的发展经过了一段相当长的时间，而命名规范也是逐步形成的，File 类出现较早，所以当时并没有对命名规范有严格的要求，这些都属于 Java 的历史遗留问题。
+</note>
+#+END_EXPORT
+
+Windows 的路径分隔符使用反斜线 =\= ，而 Java 程序中的反斜线表示转义字符，所以如果需要在 Windows 的路径下包括反斜线，则应该使用两条反斜线或直接使用斜线 =/= 也可以。Java 程序支持将斜线当成平台无关的路径分隔符。
+
+例如，假设在 Windows 操作系统中有一文件 =D:\javaspace\hello.java= ，在 Java 中使用的时候，其路径的写法应该为 =D:/javaspace/hello.java= 或者 =D:\\javaspace\\hello.java= 。
+
+*** 获取文件属性
+
+在 Java 中获取文件属性信息的第一步是先创建一个 File 类对象并指向一个已存在的文件，然后再调用上表中的方法进行操作。
+
+假设有一个文件位于 =C:\windows\notepad.exe= 。
+
+#+BEGIN_SRC java -n
+  public class Test {
+      public static void main(String[] args) {
+          String path = "C:/windows/";            // 指定文件所在的目录
+          File f = new File(path, "notepad.exe"); // 建立 File 目录，并设定由 f 变量引用
+          System.out.println("C:\\windows\\notepad.exe文件信息如下：");
+          System.out.println("============================================");
+          System.out.println("文件长度：" + f.length() + "字节");
+          System.out.println("文件或者目录：" + (f.isFile() ? "是文件" : "不是文件"));
+          ...
+          System.out.println("绝对路径：" + f.getAbsolutePath());
+
+          // → C:\windows\notepad.exe文件信息如下：
+          // → ============================================
+          // → 文件长度：193536字节
+          // → 文件或者目录：是文件
+          // ...
+          // → 绝对路径：C:\windows\notepad.exe
+      }
+  }
+#+END_SRC
+
+*** 创建和删除文件
+
+File 类不仅可以获取已知文件的属性信息，还可以在指定路径创建文件，以及删除一个文件。创建文件需要调用 =createNewFile()= 方法，删除文件需要调用 =delete()= 方法。
+
+*注：无论是创建还是删除文件通常都先调用 =exists()= 方法判断文件是否存在。
+
+#+BEGIN_SRC java -n
+  public class Test {
+      public static void main(String[] args) throws IOException {
+          // File f = new File("C:\\test.txt");             // （不推荐） 创建指向文件的 File 文件
+          String path = "C:" + File.separator + "test.txt"; // （推荐）拼凑出可以适应操作系统的路径
+          Fiel f = new File(path);
+
+          if (f.exists()) {       // 判断文件是否存在
+              f.delete();         // 存在则先删除
+          }
+          f.createNewFile();      // 再创建
+      }
+  }
+#+END_SRC
+
+*注意，在操作文件时一定要使用 =File.separator= 表示分隔符* （为了更好地移植跨平台）。
+
+*** 创建和删除目录
+
+直接用示例来说明吧。
+
+#+BEGIN_SRC java -n
+  public class Test {
+      public static void main(String[] args) {
+          String path = "C:" + File.separator + "config" + File.separator; // 指定目录位置
+          File f = new File(path); // 创建 File 对象
+
+          if (f.exists()) {
+              f.delete();
+          }
+          f.mkdir();               // 创建目录
+      }
+  }
+#+END_SRC
+
+*** 遍历目录
+
+通过遍历目录可以在指定目录中查找文件，或者显示所有的文件列表。
+
+File 类的 =list()= 方法提供了遍历目录功能，该方法有如下两种重载形式。
+
+_1. String[] list()_
+
+该方法表示返回由 File 对象表示目录中所有文件和子目录名称组成的字符串数组，如果调用的 File 对象不是目录，则返回 =null= 。
+
+*注： =list()= 方法返回的数组中仅包含文件名称，而不包含路径。但不保证所得数组中相同字符串将以特定顺序出现，特别是不保证它们按字母顺序出现。
+
+_2. String[] list(FilenameFilter filter)_
+
+该方法的作用与 =list()= 方法相同，不同的是返回数组中仅包含符合 =filter= 过滤器的文件和目录，如果 =filter= 为 =null= ，则接受所有名称。
+
+假设要遍历 C 盘根目录下的所有文件和目录，并显示文件或目录名称、类型及大小，使用 =list()= 方法的实现代码如下：
+
+#+BEGIN_SRC java -n
+  public class Test {
+      public static void main(String[] args) {
+          String path = "C:" + File.separator;
+          File f = new File(path);
+          System.out.println("文件名称\t\t文件类型\t\t文件大小");
+          System.out.println("================================");
+          String[] fileList = f.list();               // 调用不带参数的 list() 方法
+          for (int i = 0; i < fileList.length; i++) { // 遍历返回的字符数组
+              System.out.println(fileList[i] + "\t\t");
+              System.out.println((new File(("C:" + File.separator)), fileList[i]).isFile() ? "文件" + "\t\t" : "文件夹" + "\t\t");
+              System.out.println((new File(("C:" + File.separator)), fileList[i]).length() + "字节");
+          }
+      }
+  }
+
+  // → 文件名称  文件类型  文件大小
+  // → ===================================================
+  // → $Recycle.Bin  文件夹  4096字节
+  // → Documents and Settings  文件夹  0字节
+  // ...
+  // → news.template  文件  417字节
+  // ...
+#+END_SRC
+
+假设希望只列出目录下的某些文件，这就需要调用过滤器的 =list()= 方法。首先，需要创建文件过滤器，该过滤器必须实现 =java.io.FilenameFilter= 掊，并在 =accept()= 方法中指定允许的文件类型。
+
+如下所示允许 SYS、TXT 和 BAK 格式文件的过滤器实现代码：
+
+#+BEGIN_SRC java -n
+  public class ImageFilter implements FilenameFilter {
+      // 实现 FilenameFileter 接口
+      @Override
+      public boolean accept(File dir, String name) {
+          // 指定允许的文件类型
+          return name.endsWith(".sys") || name.endsWith(".txt") || name.endsWith(".bak");
+      }
+  }
+#+END_SRC
+
+上述代码创建的过滤器名称为 ImageFilter ，拉下来只需要将该名称传递给 =list()= 方法即可实现筛选文件。如下所示：
+
+#+BEGIN_EXAMPLE
+String[] fileList = f.list(new ImageFilter());
+#+END_EXAMPLE
+
+** TODO 字节流的使用
+
+** TODO 字符流的使用
+
+** TODO 转换流
+
+** TODO 保存图书信息
