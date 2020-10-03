@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2020-10-03 Sat 16:22 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java 快速入门</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
+<link rel="stylesheet" href="/css/animate.min.css" />
+<link rel="stylesheet" href="/css/all.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script src="/js/jquery.min.js"></script>
+<script src="/js/darkreader.js"></script>
+<script src="/user.config.js"></script>
+<script src="/js/main.js"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Java 快速入门</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org4e3795c">简介</a>
+<ul>
+<li><a href="#org84b3004">JDK 的安装和配置</a></li>
+<li><a href="#org1029e85">第一个 Java 程序</a></li>
+<li><a href="#org5b35fba">使用 IDE</a></li>
+</ul>
+</li>
+<li><a href="#orgb655346">程序基础</a>
+<ul>
+<li><a href="#org968701c">变量和数据类型</a></li>
+<li><a href="#org7586d6b">字符和字符串</a></li>
+</ul>
+</li>
+<li><a href="#orgc9baa34">流程控制</a></li>
+</ul>
+</div>
+</div>
+<p>
+摘录自 → <a href="https://www.liaoxuefeng.com/wiki/1252599548343744">廖雪峰老师的 Java 教程</a> 。
+</p>
+
+<img
+src="https://www.liaoxuefeng.com/files/attachments/1259577026801664/l"
+width="300"
+height=""
+style="float: right;"
+title=""
+/>
+
+<div id="outline-container-org4e3795c" class="outline-2">
+<h2 id="org4e3795c">简介</h2>
+<div class="outline-text-2" id="text-org4e3795c">
+<p>
+<b>Java 介于编译型语言和解释型语言之间。</b>
+</p>
+
+<p>
+编译型语言如 C、C++ ，代码是直接编译成机器执行，但是不同的平台（x86、ARM 等）CPU 的指令集不同，因此，需要编译出每一种不同平台的对应机器码。
+</p>
+
+<p>
+解释型语言如 Python、Ruby 则是由解释器直接加载源码后运行，代价是运行效率太低。
+</p>
+
+<p>
+Java 是将代码编译成一种“字节码”，它类似于抽象的 CPU 指令，然后，针对不同平台编写虚拟机，不同平台的虚拟机负责加载字节码并执行，这样便实现了“一次编写，到处运行”的效果。
+</p>
+
+<blockquote>
+<p>
+*注：对于虚拟机，需要为每个平台分别开发。为了保证不同平台、不同公司开发的虚拟机都能正确执行 Java字节码，SUN 公司制定了一系列的 Java 虚拟机规范。
+</p>
+</blockquote>
+
+<p>
+图解：
+</p>
+
+<img
+src="/images/java/java-15.png"
+width=""
+height=""
+style=""
+title="Java 三个版本"
+/>
+
+<img
+src="/images/java/java-16.png"
+width=""
+height=""
+style=""
+title="JDK、JRE、JVM 的关系"
+/>
+
+<p>
+Java SE 是整个平台的核心，Java EE 是进一步学习 Web 应用所必须的，我们熟悉的 Spring 等框架都是 Java EE 开源生态系统的一部分。
+</p>
+
+<p>
+<b>关于 JSR、JCP、RI、TCK 是什么？</b>
+</p>
+
+<p>
+为了保证 Java 语言的规范性，SUN 公司搞了一个 <span class="underline">JSR（Java Sepecification Request）</span> ，它是一系列的规范，从 JVM 的内存模型到 Web 程序接口，全部都标准化了。 <span class="underline">JCP（Java Community Process）</span> 就是负责审核 JSR 的组织。
+</p>
+
+<p>
+凡是想给 Java 平台加一个功能，比如说访问数据库的功能，大家要先创建一个 JSR 规范，定义好接口，这样，各个数据库厂商都按照规范写出 Java 驱动程序，开发者就不用担心自己写的数据库代码在 MySQL 上能跑，却不能跑在 PostgreSQL 上了。
+</p>
+
+<p>
+一个 JSR 规范发布时，为了让大家有个参考，还要同时发布一个“参考实现” <span class="underline">RI（Reference Implementation）</span> ，以及一个“兼容性测试套件” <span class="underline">TCK（Technology Compatibility Kit）</span> 。
+</p>
+
+<p>
+比如有人提议要搞一个基于 Java 开发的消息服务器，但光有提议不行，得有真正能跑的代码 &#x2013; RI ；如果其他人也想开发这样一个消息服务器，如何保证这些消息服务器对开发者来说接口、功能都相同？因此还得提供 TCK 。
+</p>
+
+<p>
+<b>推荐的 Java 学习路线：</b>
+</p>
+<ol class="org-ol">
+<li>首先要学习 Java SE，掌握 Java 语言本身、Java 核心开发技术以及 Java 标准库的使用；</li>
+<li>如果继续学习 Java EE，那么 Spring 框架、数据库开发、分布式架构就是需要学习的；</li>
+<li>如果要学习大数据开发，那么 Hadoop、Spqrk、Flink 这些大数据平台就是需要学习的（Java 或 Scala）；</li>
+<li>如果想要学习移动开发，那么就深入 Android 平台，掌握 Andriod App 开发。</li>
+</ol>
+</div>
+
+<div id="outline-container-org84b3004" class="outline-3">
+<h3 id="org84b3004">JDK 的安装和配置</h3>
+<div class="outline-text-3" id="text-org84b3004">
+<p>
+安装&#x2026;
+</p>
+
+<p>
+安装完 JDK 后，需要设置一个 <code>JAVA_HOME</code> 的环境变量，它指向 JDK 的安装目录。
+</p>
+
+<p>
+具体可参考： <a href="https://www.java.com/zh-CN/download/help/path.html">https://www.java.com/zh-CN/download/help/path.html</a>
+</p>
+
+<p>
+在 <code>JAVA_HOME</code> 的 <code>bin</code> 目录下找到很多可执行文件：
+</p>
+<ul class="org-ul">
+<li><code>java</code> ：这个可执行程序其实就是 JVM ，运行 Java 程序，就是启动 JVM ，然后让 JVM 执行指定的编译后的代码；</li>
+<li><code>javac</code> ：这是 Java 的编译器，它用于把 Java 源码文件（以 <code>.java</code> 后缀结尾 ）编译为 Java 字节码文件（以 <code>.class</code> 后缀结尾 ）；</li>
+<li><code>jar</code> ：用于把一组 <code>.class</code> 文件打包成一个 <code>.jar</code> 文件，便于发布；</li>
+<li><code>javadoc</code> ：用于从 Java 源码中自动提取注释并生成文档；</li>
+<li><code>jdb</code> ：Java 调试器，用于开发阶段的运行调试。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1029e85" class="outline-3">
+<h3 id="org1029e85">第一个 Java 程序</h3>
+<div class="outline-text-3" id="text-org1029e85">
+<p>
+经典的 <code>HelloWorld</code> ：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Hello</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">3: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"Hello World"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">4: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">5: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<essay>
+永远不要小看最简单的这段代码，它包含了许多的东西。
+</essay>
+
+<p>
+<b>如何运行 Java 程序？</b>
+</p>
+
+<p>
+Java 源码本质上是一个文本文件，我们需要先用 <code>javac</code> 把 <code>Hello.java</code> 编译成字节码文件 <code>Hello.class</code> ，然后，用 <code>java</code> 命令执行这个字节码文件：
+</p>
+
+<img
+src="/images/java/java-17.png"
+width=""
+height=""
+style=""
+title=""
+/>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr">1: </span>javac HelloWorld.java           <span style="color: #75715E;"># </span><span style="color: #75715E;">&#8594; &#32534;&#35793;&#20026; HelloWorld.class</span>
+<span class="linenr">2: </span>java HelloWorld                 <span style="color: #75715E;"># </span><span style="color: #75715E;">&#8594; Hello World</span>
+</pre>
+</div>
+
+<p>
+*注：给虚拟机传递的参数 <code>HelloWorld</code> 是我们定义的类名，虚拟机自动查找对应的 <code>.class</code> 文件并执行。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5b35fba" class="outline-3">
+<h3 id="org5b35fba">使用 IDE</h3>
+<div class="outline-text-3" id="text-org5b35fba">
+<p>
+IDE（Integrated Development Environment），集成开发环境。
+</p>
+
+<p>
+使用 IDE 的好处在于，可以把编写代码、组织项目、编译、运行、调试等放到一个环境中运行，能极大地提高开发效率。
+</p>
+
+<p>
+&#x2026;
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb655346" class="outline-2">
+<h2 id="orgb655346">程序基础</h2>
+<div class="outline-text-2" id="text-orgb655346">
+<img
+src="https://www.liaoxuefeng.com/files/attachments/1261130330665024/l"
+width=""
+height=""
+style=""
+title=""
+/>
+
+<p>
+Java 是面向对象的语言，一个程序的基本单位就是 <code>class</code> 。
+</p>
+</div>
+
+<div id="outline-container-org968701c" class="outline-3">
+<h3 id="org968701c">变量和数据类型</h3>
+<div class="outline-text-3" id="text-org968701c">
+<p>
+在 Java 中，变量分为两种：基本类型的变量和引用类型的变量。变量必须先定义后使用，在定义变量的时候，可以给它一个初始值。
+</p>
+
+<p>
+<span class="underline">1. 基本数据类型</span>
+</p>
+
+<p>
+基本数据类型是 CPU 可以直接进行运算的类型。Java定义了以下几种基本数据类型：
+</p>
+<ul class="org-ul">
+<li>整数类型： <code>byte，short，int，long</code> ；</li>
+<li>浮点数类型： <code>float，double</code> ；</li>
+<li>字符类型： <code>char</code> ；</li>
+<li>布尔类型： <code>boolean</code> 。</li>
+</ul>
+
+<p>
+<span class="underline">2. 引用类型</span>
+</p>
+
+<p>
+除了上述基本类型的变量，剩下的都是引用类型。引用类型的变量类似于C语言的指针，它内部存储一个“地址”，指向某个对象在内存的位置。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7586d6b" class="outline-3">
+<h3 id="org7586d6b">字符和字符串</h3>
+<div class="outline-text-3" id="text-org7586d6b">
+<p>
+在 Java 中，字符和字符串是两个不同的类型。
+</p>
+
+<p>
+<span class="underline">1. 字符类型</span>
+</p>
+
+<p>
+字符类型 <code>char</code> 是基本数据类型，它是 <code>character</code> 的缩写。因为 Java 在内存中总是使用 <code>Unicode</code> 表示字符，所以，一个英文字符和一个中文字符都用一个 <code>char</code> 类型表示，它们都占用两个字节。要显示一个字符的 <code>Unicode</code> 编码，只需将 <code>char</code> 类型直接赋值给 <code>int</code> 类型即可，还可以直接用转义字符 <code>\u + Unicode</code> 编码来表示一个字符。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">char</span> <span style="color: #FD971F;">c1</span> = <span style="color: #E6DB74;">'A'</span>;
+<span class="linenr">2: </span><span style="color: #66D9EF;">char</span> <span style="color: #FD971F;">c2</span> = <span style="color: #E6DB74;">'&#20013;'</span>;
+<span class="linenr">3: </span>
+<span class="linenr">4: </span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">c3</span> = <span style="color: #E6DB74;">'A'</span>;
+<span class="linenr">5: </span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">c4</span> = <span style="color: #E6DB74;">'&#20013;'</span>;
+<span class="linenr">6: </span>
+<span class="linenr">7: </span><span style="color: #66D9EF;">char</span> <span style="color: #FD971F;">c5</span> = <span style="color: #FD971F; font-weight: bold; font-style: italic; text-decoration: underline;">'</span>\u0041<span style="color: #FD971F; font-weight: bold; font-style: italic; text-decoration: underline;">'</span>;
+<span class="linenr">8: </span><span style="color: #66D9EF;">char</span> <span style="color: #FD971F;">c6</span> = <span style="color: #FD971F; font-weight: bold; font-style: italic; text-decoration: underline;">'</span>\u4e2d<span style="color: #FD971F; font-weight: bold; font-style: italic; text-decoration: underline;">'</span>;
+</pre>
+</div>
+
+<p>
+<span class="underline">2. 字符串类型</span>
+</p>
+
+<p>
+和 <code>char</code> 类型不同，字符串类型 <code>String</code> 是引用类型，在 Java 中使用双引号 <code>"..."</code> 表示字符串，一个字符串可以存储 0 个到任意个字符。
+</p>
+
+<p>
+Java 的编译器对字符串做了特殊照顾，可以使用 <code>+</code> 连接任意字符串和其他数据类型，编译器会将其他数据类型先自动转型为字符串，再连接。
+</p>
+
+<p>
+从 Java 13 开始，字符串可以用 <code>"""..."""</code> 表示多行字符串。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc9baa34" class="outline-2">
+<h2 id="orgc9baa34">流程控制</h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-10-03 Sat 11:59</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2020-10-03 Sat 16:22</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
