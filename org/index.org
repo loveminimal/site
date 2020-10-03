@@ -55,6 +55,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | 休闲     |
 |----------|
 | [[./diet-modification.org][饮食调整]] |
+| [[./fat-burn.org][燃脂运动]] |
 | [[./billiards.org][台球]]     |
 | [[./flute.org][箫笛]]     |
 
