@@ -1,0 +1,6 @@
+#+SETUPFILE: ../theme-rose.setup
+#+DATE: <2020-10-03 Sat 20:01>
+#+TITLE: Fat Burn
+
+i.e. slim
+
