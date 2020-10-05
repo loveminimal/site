@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2020-10-05 Mon 19:02 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Socket</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
+<link rel="stylesheet" href="/css/animate.min.css" />
+<link rel="stylesheet" href="/css/all.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script src="/js/jquery.min.js"></script>
+<script src="/js/darkreader.js"></script>
+<script src="/user.config.js"></script>
+<script src="/js/main.js"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Socket</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org7ffe4e6">socket 是什么</a></li>
+<li><a href="#org70d2db8">socket 的类型</a></li>
+<li><a href="#org10721ad">OSI、TCP/IP 网络模型</a></li>
+</ul>
+</div>
+</div>
+<p>
+摘录自 → <a href="http://c.biancheng.net/socket/">http://c.biancheng.net/socket/</a>
+</p>
+
+<p>
+socket 是“套接字”的意思，学习 socket 编程，也就是学习计算机之间如何通信，并用编程语言来实现它。
+</p>
+
+<p>
+<span class="underline">socket 通信技术</span> 就是两台联网的计算机之间 <b>交换数据的技术</b> ，这就是 socket 的全部内容了吗？是的！
+</p>
+
+<div id="outline-container-org7ffe4e6" class="outline-2">
+<h2 id="org7ffe4e6">socket 是什么</h2>
+<div class="outline-text-2" id="text-org7ffe4e6">
+<p>
+<b>网络编程就是编写程序使两台联网的计算机相互交换数据，</b> 这就是全部内容了！
+</p>
+
+<p>
+那么，两台计算机之间用什么传输数据呢？
+</p>
+
+<p>
+首先需要物理连接。如今大部分计算机都已经连接到互联网，因此不用担心这一点。在此基础上，只需要考虑如何编写数据传输程序。因为操作系统已经提供了 socket ，所以即使对网络数据传输的原理不太熟悉，也能通过 socket 来编程。
+</p>
+
+<p>
+<b>那么什么到底是 socket 呢？</b>
+</p>
+
+<img
+src="/images/java/java-21.jpg"
+width=""
+height=""
+style=""
+title=""
+/>
+
+<p>
+<b>socket 的愿意是“插座”，在计算机通信领域，socket 被翻译为“套接字”，它是计算机之间进行通信的一种约定或一种方式。通过 socket 这种约定，一台计算机可以接收其他计算机的数据，也可以向其他计算机发送数据。</b>
+</p>
+
+<p>
+为了与远程计算机进行数据传输，需要连接到因特网，而 socket 就是用来连接到因特网的工具。
+</p>
+
+<p>
+socket 的典型应用就是 Web 服务器和浏览器：浏览器获取用户输入的 URL ，向服务器发起请求，服务器分析接收到的 URL ，将对应的网页内容返回给浏览器，浏览器再经过解析和渲染，就将文字、图片、视频等元素呈现给用户。
+</p>
+
+<p>
+<span class="underline">1. UNIX/Linux 中的 socket 是什么？</span>
+</p>
+
+<p>
+在 UNIX/Linux 系统中，为了统一对各种硬件的操作，简化接口，不同的硬件设备也都被看成一个文件。对这些文件的操作，等同于对磁盘上普通文件的操作。
+</p>
+
+<p>
+<b>是的，在 UNIX/Linux 中，一切都是文件！</b>
+</p>
+
+<p>
+为了表示和区分已经打开的文件，UNIX/Linux 会给每个文件分配一个 ID ，这个 ID 就是一个整数，被称为文件描述符（File Descriptor），例如：
+</p>
+<ul class="org-ul">
+<li>通常用 <code>0</code> 来表示标准输入文件（ <code>stdin</code> ），它对应的硬件设备就是键盘；</li>
+<li>通常用 <code>1</code> 来表示标准输出文件（ <code>stdout</code> ），它对应的硬件就是显示器。</li>
+</ul>
+
+<p>
+UNIX/Linux 程序在执行任何形式的 I/O 操作时，都是在读取或者写入一个文件描述符。一个文件描述符只是一个和打开的文件相关联的整数，它的背后可能是一个硬盘上的普通文件、FIFO、管道、终端、键盘、显示器，甚至是一个网络连接。
+</p>
+
+<p>
+<b>请注意，网络连接也是一个文件，它也有文件描述符！你必须理解这句话。</b>
+</p>
+
+<p>
+我们可以通过 <code>socket()</code> 函数来创建一个网络连接，或者说打开一个网络文件， <code>socket()</code> 返回值就是文件描述符。有了文件描述符，我们就可以使用普通的文件操作函数来传输数据了，例如：
+</p>
+<ul class="org-ul">
+<li>用 <code>read()</code> 读取从远程计算机传来的数据；</li>
+<li>用 <code>write()</code> 向远程计算机写入数据。</li>
+</ul>
+
+<p>
+你看，只要用 <code>socket()</code> 创建了连接，剩下的就是文件操作了，网络编程原来就是如此简单！
+</p>
+
+<p>
+<span class="underline">2. Windows 系统中的 socket 是什么？</span>
+</p>
+
+<p>
+Windows 也有类似“文件描述符”的概念，但通常被称为“文件句柄”。
+</p>
+
+<p>
+与 UNIX/Linux 不同的是，Windows 会区分 socket 和文件，Windows 就把 socket 当做一个网络连接来对待，因此需要调用专门针对 socket 而设计的数据传输函数，针对普通文件的输入输出函数就无效了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org70d2db8" class="outline-2">
+<h2 id="org70d2db8">socket 的类型</h2>
+<div class="outline-text-2" id="text-org70d2db8">
+<p>
+这个世界上有很多种套接字（socket），比如 DARPA Internet 地址（Internet 套接字）、本地节点的路径名（Unix 套接字）、CCITT X.25 地址（X.25 套接字）等。
+</p>
+
+<p>
+这里只了解 Internet 套接字，它是最具有代表性的，也是最经典常用的。
+</p>
+
+<p>
+根据数据的传输方式，可以将 Internet 套接字分成两种类型（其实更多）。通过 <code>socket()</code> 函数创建连接时，必须告诉它使用哪种数据传输方式。
+</p>
+
+<essay>
+了解本质，举一反三，万变不离其宗。
+</essay>
+
+<p>
+<span class="underline">1. 流格式套接字（ <code>SOCK_STREAM</code> ）</span>
+</p>
+
+<p>
+流格式套接字（Stream Sockets）也叫“面向连接的套接字”，在代码中使用 <code>SOCK_STREAM</code> 表示。
+</p>
+
+<p>
+<b><code>SOCK_STREAM</code> 是一种可靠的、双向的通信数据流，数据可以准确无误到达另一台计算机，如果损坏或丢失，可以重新发送。</b>
+</p>
+
+<p>
+<code>SOCK_STREAM</code> 有以下几个特征：
+</p>
+<ul class="org-ul">
+<li>数据在传输过程中不会消失；</li>
+<li>数据是按照顺序传输的；</li>
+<li>数据的发送和接收不是同步的（有的教程也称“不存在数据边界”）。</li>
+</ul>
+
+<p>
+可以将 <code>SOCK_STREAM</code> 比喻成一条传送带，只要传送带本身没有问题（不会断网），就能保证数据不丢失；同时，较晚传送的数据不会先达到，较早传送的数据不会晚到达，这就保证了数据是按照顺序传递的。
+</p>
+
+<img
+src="/images/java/java-22.gif"
+width=""
+height=""
+style=""
+title=""
+/>
+
+<p>
+为什么流格式套接字可以达到高质量的数据传输呢？这是因为它使用了 TCP 协议（The Transmission Control Protocol，传输控制协议），TCP 协议会控制你的数据按照顺序到达并且没有错误。
+</p>
+
+<blockquote>
+<p>
+TCP 用来确保数据的正确性，IP（Internet Protocol，网络协议）用来控制数据如何从源头到达目的地，也就是学说的“路由”。
+</p>
+</blockquote>
+
+<p>
+<b>什么是“数据的发送和接收不同步”呢？</b>
+</p>
+
+<p>
+假设传送带传送的是水果，接收者需要凑齐 100 个后才能装袋，但是传送带可能把这 100 个水果分批传送，比如第一批传送 20 个，第二批传送 50 个，第三批传送 30 个。接收者不需要和传送带保持同步，只要根据自己的节奏来装袋即可，不用管传送带传送了几批，也不用每到一批就装袋一次，可以等到凑够了 100 个水果再装袋。
+</p>
+
+<essay>
+所谓不同步，其实就是“节奏的不同步”。你发任你发，我收按我需。
+</essay>
+
+<p>
+流格式的套接字的内部有一个缓冲区（也就是字符数组），通过 socket 传输的数据将保存到这个缓冲区。接收端在收到数据后并不一定立即读取，只要数据不超过缓冲区数量，接收端有可能在缓冲区被填满以后一次地读取，也可能分成好几次读取。
+</p>
+
+<p>
+也就是说，不管数据分几次传送过来，接收端只需要根据自己的要求读取，不用非得在数据到达时立即读取。传送端有自己的节奏，接收端也有自己的节奏，它们是不一致的。
+</p>
+
+<p>
+流格式套接字有什么 <b>实际的应用场景</b> 吗？浏览器所使用的 http 协议就基于面向连接的套接字，因为必须要确保数据准确无误，否则加载的 HTML 将无法解析。
+</p>
+
+<p>
+<span class="underline">2. 数据报格式套接字（ <code>SOCK_DGRAM</code> ）</span>
+</p>
+
+<p>
+数据报格式套接字（Datagram Sockets）也叫“无连接的套接字”，在代码中使用 <code>SOCK_DGRAM</code> 表示。
+</p>
+
+<p>
+计算机只管传输数据，不作数据校验，如果数据在传输中损坏，或者没有到达另一台计算机，是没有办法补救的。也就是说，数据错了就错了，无法重传。
+</p>
+
+<p>
+因为数据格式套接字所做的校验工作少，所以在传输效率方面比流格式套接字要高。
+</p>
+
+<p>
+可以将 <code>SOCK_DGRAM</code> 比喻成高速移动的摩托车快递，它有以下特征：
+</p>
+<ul class="org-ul">
+<li>强调快速传输而非传输顺序；</li>
+<li>传输的数据可能丢失也可能损毁；</li>
+<li>限制每次传输的数据大小；</li>
+<li>数据的发送和接收是同步的（有的教程也称“存在数据边界”）。</li>
+</ul>
+
+<p>
+众所周知，速度是快递行业的生命。用摩托车发往同一地点的两件包裹无需保证顺序，只要以最快的速度交给客户就行。这种方式存在损坏或丢失的风险，而且包裹大小有一定限制。因此，想要传递大量包裹，就得分配发送。
+</p>
+
+<p>
+另外，用两辆摩托车分别发送两件包裹，那么接收者也需要分两次接收，所以“数据的发送和接收是同步的”；换句话说，接收次数应该和发送次数相同。
+</p>
+
+<img
+src="/images/java/java-23.gif"
+width=""
+height=""
+style=""
+title=""
+/>
+
+<p>
+<b>总之，数据报套接字是一种不可靠的、不按顺序传递的、以追求速度为目的的套接字。</b>
+</p>
+
+<p>
+数据报套接字也使用 IP 协议作路由，但是它不使用 TCP 协议，而是使用 UDP 协议（User Datagram Protocol，用户数据报协议）。
+</p>
+
+<p>
+QQ 视频聊天和语音聊天就使用 <code>SOCK_DGRAM</code> 来传输数据，因为首先要保证通信的效率，尽量减小延迟，而数据的正确性是次要的，即使丢失很小的一部分数据，视频和音频也可以正常解析，最多出现噪点或杂音，不会对通信质量有实质的影响。
+</p>
+
+<p>
+*注意： <code>SOCK_DGRAM</code> 没有想象中的糟糕，不会频繁的丢失数据，数据错误只是小概率事件。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org10721ad" class="outline-2">
+<h2 id="org10721ad">OSI、TCP/IP 网络模型</h2>
+<div class="outline-text-2" id="text-org10721ad">
+<p>
+i.e. Open System Interconnection 开放式系统互联
+</p>
+
+<p>
+OSI 只是存在于概念和理论上的一种模型，它的缺点是分层太多，增加了网络工作的复杂性，所以没有大规模应用。后来人们对 OSI 进行了简化，合并了一些层，最终只保留了 4 层，从下到上分别是接口层、网络层、传输层和应用层，这就是大名鼎鼎的 TCP/IP 模型。
+</p>
+
+<img
+src="/images/java/java-24.jpg"
+width="500"
+height=""
+style=""
+title=""
+/>
+<p>
+<code>Figure: OSI 七层网络模型和 TCP/IP 四层网络模型的对比</code>
+</p>
+
+<p>
+<b>这个网络模型究竟是干什么呢？简而言之就是进行数据封装的。</b>
+</p>
+
+<p>
+我们平常使用的程序（或者说软件）一般都是通过应用层来访问网络的，程序产生的数据会一层一层地往下传输，直到最后的网络接口层，就通过网线或其他媒介发送到互联网上去了。数据每往下走一层，就会被这一层的协议增加一层包装，等到发送到互联网上时，已经比原始数据多了四层包装。
+</p>
+
+<p>
+整个数据封装的过程就像俄罗斯套娃。
+</p>
+
+<p>
+当另一台计算机接收数据包时，会从网络接口再一层一层往上传输，每传输一层就拆开一层包装，直到最后的应用层，就得到了最原始的数据，这才是程序要使用的数据。
+</p>
+
+<p>
+给数据加包装的过程，实际上就是在数据的头部增加一个标志（一个数据块），表示数据经过了这一层，已经处理过了；给数据拆包装的过程正好相反，就是去掉数据头部的标志，让它逐渐现出原形。
+</p>
+
+<essay>
+你看，在互联网上传输一份数据是多么地复杂啊，而我们却感受不到，这就是网络模型的厉害之处。我们只需要在代码中调用一个函数，就能让下面的所有网络层为我们工作。
+<p>这就是封装和抽象的威力所在！</p>
+</essay>
+
+<p>
+我们所说的 socket 编程，是站在传输层的基础上，所以可以使用 TCP/UDP 协议，但是不能干“访问网页”这样的事情，因为访问网页所需要的 http 协议位于应用层。
+</p>
+
+<p>
+两台计算机进行通信时，必须遵守以下原则：
+</p>
+<ul class="org-ul">
+<li>必须是同一层次进行通信，比如，A 计算机的应用层和 B 计算机的传输层就不能通信，因为它们不在一个层次，数据的拆包会遇到问题；</li>
+<li>每一层的功能都必须相同，也就是拥有完全相同的网络模型。如果网络模型都不同，那就乱套了，互不相识；</li>
+<li>数据只能逐层传输，不能跃层；</li>
+<li>每一层可以使用下层提供的服务，并向上层提供服务。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-10-05 Mon 16:29</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2020-10-05 Mon 19:02</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
