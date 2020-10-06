@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-10-05 Mon 19:02 -->
+<!-- 2020-10-06 Tue 13:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Socket</title>
@@ -23,9 +23,28 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7ffe4e6">socket 是什么</a></li>
-<li><a href="#org70d2db8">socket 的类型</a></li>
-<li><a href="#org10721ad">OSI、TCP/IP 网络模型</a></li>
+<li><a href="#org8c6e63b">Socket 是什么</a></li>
+<li><a href="#org89b5aa6">Socket 原理</a>
+<ul>
+<li><a href="#org19c5cf8">网络中进程之间如何通信</a></li>
+<li><a href="#orge60f6a9">Socket 的理解</a></li>
+</ul>
+</li>
+<li><a href="#org9714b0c">Socket 的基本函数</a>
+<ul>
+<li><a href="#orga43386b">socket() 函数</a></li>
+<li><a href="#orgb482795">bind() 和 connect() 函数</a></li>
+<li><a href="#orgd0a56a7">listen() 和 accept() 函数</a></li>
+<li><a href="#org9b11642">send()/recv() 和 write()/read() 函数</a></li>
+</ul>
+</li>
+<li><a href="#org0e3be0f">Socket 的类型</a></li>
+<li><a href="#org0b5025b">Socket 缓冲区及阻塞模式</a>
+<ul>
+<li><a href="#org0fda808">Socket 缓冲区</a></li>
+<li><a href="#org824963a">阻塞模式</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -41,9 +60,9 @@ socket 是“套接字”的意思，学习 socket 编程，也就是学习计�
 <span class="underline">socket 通信技术</span> 就是两台联网的计算机之间 <b>交换数据的技术</b> ，这就是 socket 的全部内容了吗？是的！
 </p>
 
-<div id="outline-container-org7ffe4e6" class="outline-2">
-<h2 id="org7ffe4e6">socket 是什么</h2>
-<div class="outline-text-2" id="text-org7ffe4e6">
+<div id="outline-container-org8c6e63b" class="outline-2">
+<h2 id="org8c6e63b">Socket 是什么</h2>
+<div class="outline-text-2" id="text-org8c6e63b">
 <p>
 <b>网络编程就是编写程序使两台联网的计算机相互交换数据，</b> 这就是全部内容了！
 </p>
@@ -131,12 +150,334 @@ Windows 也有类似“文件描述符”的概念，但通常被称为“文件
 <p>
 与 UNIX/Linux 不同的是，Windows 会区分 socket 和文件，Windows 就把 socket 当做一个网络连接来对待，因此需要调用专门针对 socket 而设计的数据传输函数，针对普通文件的输入输出函数就无效了。
 </p>
+
+<essay>
+Hmmm... 说了那么多，有点懂，又好像不太懂，有点隔靴搔痒…… 看一下原理吧。
+</essay>
 </div>
 </div>
 
-<div id="outline-container-org70d2db8" class="outline-2">
-<h2 id="org70d2db8">socket 的类型</h2>
-<div class="outline-text-2" id="text-org70d2db8">
+<div id="outline-container-org89b5aa6" class="outline-2">
+<h2 id="org89b5aa6">Socket 原理<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-org89b5aa6">
+<essay>
+在上个章节中，我们提到了许多概念，但不具体，你其实很难去凭空理解一个从未在你脑海中具象化或相关具象化过的事物。
+</essay>
+
+<p>
+<b>Socket 在哪儿？如何使用它？</b>
+</p>
+
+<blockquote>
+<p>
+TCP/IP（Transimission Control Protocol/Internet Protocol）即传输控制协议/网间协议，是一个工业标准的协议集，它是为广域网设计的。UDP（User Data Protocol，用户数据报协议）是与 TCP 相对应的协议，它是属于 TCP/IP 协议族中的一种。
+</p>
+</blockquote>
+
+<img
+src="/images/java/java-25.png"
+width="500"
+height=""
+style=""
+title=""
+/>
+<p>
+<code>Figure: TCP/IP 协议族中的协议关系</code>
+</p>
+
+<p>
+<b>咦？Socket 在哪儿呢？？？</b> 来张图看看吧。
+</p>
+
+<img
+src="/images/java/java-26.png"
+width="500"
+height=""
+style=""
+title=""
+/>
+
+<p>
+哦！原来 Socket 在这里！！！
+</p>
+
+<p>
+<b>Socket 是应用层与 TCP/IP 协议族通信的中间软件抽象层，它是一组接口。</b>
+</p>
+
+<p>
+在设计模式中，Socket 其实就是一个门面模式，它把复杂的 TCP/IP 协议族隐藏在 Socket 接口后面，对用户来说，一组简单的接口就是全部，让 Socket 去组织数据，以符合指定的协议。
+</p>
+
+<p>
+如何使用它们呢？
+</p>
+
+<p>
+前人已经给我们做了好多的事了，网络间的通信也就简单了许多，但毕竟还是有挺多工作要做的。以前听到 Socket 编程，觉得它是比较高深的编程知识，但是只要弄清Socket编程的工作原理，神秘的面纱也就揭开了。
+</p>
+
+<img
+src="/images/java/java-27.png"
+width="500"
+height=""
+style=""
+title=""
+/>
+
+<p>
+先从服务器说起。服务器端先初始化 socket ，然后与端口绑定（ <code>bind</code> ），对端口进行监听（ <code>listen</code> ），调用 <code>accept</code> 阻塞，等待客户端连接。
+</p>
+
+<p>
+在这时，如果有个客户端初始化一个 socket ，然后连接服务器（ <code>connect</code> ），如果连接成功，客户端与服务器端的连接就建立了。
+</p>
+
+<p>
+客户端发送数据请求，服务器端接收并处理请求，然后把回应数据发送给客户端，客户端读取数据，最后关闭连接，一次交互结束。
+</p>
+
+<p>
+网络中进程之间是如何通信的呢？如，使用浏览器浏览网页时，浏览器的进程是如何通信的？使用 QQ 聊天时，QQ 进程是如何与服务器或你的好友所在的 QQ 进程通信的？
+</p>
+
+<p>
+这些都得依靠 socket ！
+</p>
+</div>
+
+<div id="outline-container-org19c5cf8" class="outline-3">
+<h3 id="org19c5cf8">网络中进程之间如何通信</h3>
+<div class="outline-text-3" id="text-org19c5cf8">
+<p>
+本地的进程间通信（IPC，Inter-Process Communication，进程间通信）有很多种方式，可以总结为下面 4 类：
+</p>
+<ul class="org-ul">
+<li>消息传递（管道、FIFO、消息队列）；</li>
+<li>同步（互斥量、条件变量、读写锁、文件和写记录锁、信号量）；</li>
+<li>共享内存（匿名的和具名的）；</li>
+<li>远程过程调用（Solaris 门和 Sun PRC）。</li>
+</ul>
+
+<p>
+这是本地进程之间的通信，那么网络进程之间是如何通信的呢？
+</p>
+
+<p>
+首要解决的问题是如何唯一标识一个里程，否则通信无人谈起。在本地可以通过进程 PID 来唯一标识一个进程，但是在网络中这是行不通的。
+</p>
+
+<p>
+幸运地是，TCP/IP 协议族已经帮我们解决了这个问题，网络层的 <b>“IP 地址”</b> 可以唯一标识网络中的主机，而传输层的的 <b>“协议+端口”</b> 可以唯一标识主机中的应用程序（进程）。如此，利用三元组（IP 地址、协议、端口）就可以标识网络的进程了，网络中的进程通信就可以利用这个标志与其它进程进行交互。
+</p>
+
+<p>
+使用 TCP/IP 协议的应用程序通常采用应用编程接口：UNIX BSD 的套接字（socket）和 UNIX System V 的 TLI（已淘汰），来实现网络进程之间的通信。
+</p>
+
+<p>
+目前而言，几乎所有的应用程序都是采用 socket ，网络时代下网络中进程通信是无所不在的，所以说“一切皆 socket” 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge60f6a9" class="outline-3">
+<h3 id="orge60f6a9">Socket 的理解</h3>
+<div class="outline-text-3" id="text-orge60f6a9">
+<p>
+Socket 起源于 UNIX，而 UNIX/Linux 基本哲学之一就是 <b>“一切皆文件”</b> ，都可以用 <span class="underline">“打开 open → 读写 write/read → 关闭 close”</span> 模式来操作。Socket 自然也是该模式的一个实现，socket 也是文件，一些 socket 函数就是对其进行的操作（读/写 IO，打开，关闭）。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9714b0c" class="outline-2">
+<h2 id="org9714b0c">Socket 的基本函数</h2>
+<div class="outline-text-2" id="text-org9714b0c">
+</div>
+<div id="outline-container-orga43386b" class="outline-3">
+<h3 id="orga43386b">socket() 函数</h3>
+<div class="outline-text-3" id="text-orga43386b">
+<p>
+不管是 Windows 还 Linux ，都使用 <code>socket()</code> 函数来创建套接字。 <code>socket()</code> 在两个平台下的参数是相同的，不同的是返回值。
+</p>
+
+<p>
+Linux 中的一切都的文件，每个文件都有一个整数类型的文件描述符；socket 也是一个文件，也有文件描述符。使用 <code>socket()</code> 函数创建套接字以后，返回值就是一个 int 类型的文件描述符。
+</p>
+
+<p>
+Windows 会区分 socket 和普通文件，它把 socket 当做一个网络连接来对待，调用 <code>socket()</code> 以后，返回值是 SOCKET 类型，用来表示一个套接字。
+</p>
+
+<p>
+<span class="underline">1. Linux 下的 socket() 函数</span>
+</p>
+
+<p>
+在 Linux 下使用 <code>&lt;sys/socket.h&gt;</code> 头文件中 <code>socket()</code> 函数来创建套接字，原型为：
+</p>
+
+<pre class="example">
+int socket(int af, int type, int protocol);
+</pre>
+
+<p>
+其中：
+</p>
+
+<ul class="org-ul">
+<li><code>af</code> 为地址族（ <code>Address Family</code> ），也就是 IP 地址类型，常用的有 <code>AF_INET</code> 和 <code>AF_INET6</code> ；</li>
+</ul>
+
+<note>
+INET 是 “Internet” 的简写；AF_INET（i.e. PF_INET） 表示 IPv4f 地址，如 127.0.0.1；AF_INET6（i.e. PF_INET6） 表示 IPv6 地址，如 1030::C9B4:FF12:48AA:1A2B 。
+</note>
+
+<ul class="org-ul">
+<li><code>type</code> 为数据传输方式/套接字，常用的有 <code>SOCK_STREAM</code> （流格式套接字/面向连接的套接字）和 <code>SOCK_DGRAM</code> （数据报套接字/无连接的套接字）；</li>
+
+<li><code>protocol</code> 表示传输协议，常用的有 <code>IPPROTO_TCP</code> 和 <code>IPPROTO_UDP</code> ，分别表示 TCP 传输协议和 UDP 传输协议。</li>
+</ul>
+
+<p>
+有了地址类型和数据传输方式，还不足以决定采用哪种协议吗？为会么还需要第三个参数（ <code>protocol</code> ）呢？
+</p>
+
+<p>
+其实，一般情况下有 <code>af</code> 和 <code>type</code> 两个参数就可以创建套接字了，操作系统会自动推演出协议类型。但是，也有特殊情况，比如有两种不同的协议支持同一种地址类型和数据传输类型。如果不指明使用哪种协议，操作系统是没办法自动推演的。
+</p>
+
+<p>
+假如，使用 IPv4 地址，参数 <code>af</code> 的值为 <code>PF_INET</code> ，使用 <code>SOCK_STREAM</code> 传输数据，那么满足这两个条件的协议只有 TCP ，因此可以这样来调用 <code>socket()</code> 函数：
+</p>
+
+<pre class="example">
+int tcp_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);  // IPPROTO_TCP 表示 TCP 协议
+</pre>
+
+<p>
+这种套接字称为 TCP 套接字。
+</p>
+
+<p>
+如果使用 <code>SOCK_DGRAM</code> 传输方式，那么满足这两个条件的协议只有 UDP ，因此可以这样来调用 <code>socket()</code> 函数：
+</p>
+
+<pre class="example">
+int udp_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);  // IPPROTO_UDP 表示 UDP 协议
+</pre>
+
+<p>
+这种套接字称为 UDP 套接字。
+</p>
+
+<p>
+因为上面两情况都只有一种协议满足条件，故可以将 <code>protocol</code> 的值高为 <code>0</code> ，系统会自动推演出应该使用什么协议，如下：
+</p>
+
+<pre class="example">
+int tcp_socket = socket(AF_INET, SOCK_STREAM, 0);  //创建TCP套接字
+int udp_socket = socket(AF_INET, SOCK_DGRAM , 0);  //创建UDP套接字
+</pre>
+
+<p>
+<span class="underline">2. 在 Windows 下创建 socket</span>
+</p>
+
+<p>
+Windows 下也使用 <code>socket()</code> 函数来创建套接字，原型为：
+</p>
+
+<pre class="example">
+SOCKET socket(int af, int type, int protocol);
+</pre>
+
+<p>
+除了返回值类型不同，其他都是相同的。Windows 不把套接字作为变通文件对待，而是返回 SOCKET 类型的句柄。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb482795" class="outline-3">
+<h3 id="orgb482795">bind() 和 connect() 函数</h3>
+<div class="outline-text-3" id="text-orgb482795">
+<p>
+<code>socket()</code> 函数用来创建套接字，确定套接字的各种属性，然后服务器要用 <code>bind()</code> 函数将套接字与特定的 IP 地址和端口绑定起来，只有这样，流经该 IP 地址和端口的数据才能交给套接字处理。类似地，客户端也要用 <code>connect()</code> 函数建立连接。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd0a56a7" class="outline-3">
+<h3 id="orgd0a56a7">listen() 和 accept() 函数</h3>
+<div class="outline-text-3" id="text-orgd0a56a7">
+<p>
+对于服务端程序，使用 <code>bind()</code> 绑定套接字后，还需要使用 <code>listen()</code> 函数让套接字进入被动监听状态，再调用 <code>accept()</code> 函数，就可以随时响应客户端的请求了。
+</p>
+
+<blockquote>
+<p>
+所谓被动监听，是指当没有客户端请求时，套接字处于“睡眠”状态，只有当接收到客户端请求时，套接字才会被“唤醒”来响应请求。
+</p>
+</blockquote>
+
+<p>
+当套接字正在处理客户端请求时，如果有新的请求进来，套接字是没法处理的，只能把它放进缓冲区，待当前请求处理完毕后，再从缓冲区中读取出来处理。如果不断有新的请求进来，它们就按照先后顺序在缓冲区中排队，直至缓冲区满了。这个缓冲区，就称为 <span class="underline">请求队列</span> （Request Queue）。
+</p>
+
+<p>
+*注： <code>listen()</code> 只是让套接字处于监听状态，并没有接收请求。接收请求需要使用 <code>accept()</code> 函数。
+</p>
+
+<p>
+<code>accept()</code> 返回一个新的套接字来和客户端通信，它会阻塞程序执行（后面代码不能被执行），直到有新的请求到来。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9b11642" class="outline-3">
+<h3 id="org9b11642">send()/recv() 和 write()/read() 函数</h3>
+<div class="outline-text-3" id="text-org9b11642">
+<p>
+在 Linux 和 Windows 平台下，使用不同的函数发送和接收 socket 数据。
+</p>
+
+<p>
+<span class="underline">1. Linux 下数据的接收和发送</span>
+</p>
+
+<p>
+Linux 不区分套接字文件和普通文件，使用 <code>write()</code> 可以向套接字中写入数据，使用 <code>read()</code> 可以从套接字中读取数据。
+</p>
+
+<blockquote>
+<p>
+两台计算机之间的通信相当于两个套接字之间的通信，在服务器端用 <code>write()</code> 向套接字写入数据，客户端就能收到，然后再使用 <code>read()</code> 从套接字中读取出来，就完成了一次通信。
+</p>
+</blockquote>
+
+<p>
+<span class="underline">2. Windows 数据的接收和发送</span>
+</p>
+
+<p>
+Windows 和 Linux 不同，Windows 区分普通文件和套接字，并定义了专门的接收和发送的函数。
+</p>
+
+<p>
+从服务器端发送数据使用 <code>send()</code> 函数，在客户端接收数据使用 <code>recv()</code> 函数。
+</p>
+
+<essay>
+这里只是建立一个初步概念，知道有这回事就行了，毕竟日常开发中，你是不直接接触这些的，当然，无聊的时候可以深入了解下。
+</essay>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0e3be0f" class="outline-2">
+<h2 id="org0e3be0f">Socket 的类型</h2>
+<div class="outline-text-2" id="text-org0e3be0f">
 <p>
 这个世界上有很多种套接字（socket），比如 DARPA Internet 地址（Internet 套接字）、本地节点的路径名（Unix 套接字）、CCITT X.25 地址（X.25 套接字）等。
 </p>
@@ -280,73 +621,125 @@ QQ 视频聊天和语音聊天就使用 <code>SOCK_DGRAM</code> 来传输数据�
 </div>
 </div>
 
-<div id="outline-container-org10721ad" class="outline-2">
-<h2 id="org10721ad">OSI、TCP/IP 网络模型</h2>
-<div class="outline-text-2" id="text-org10721ad">
+<div id="outline-container-org0b5025b" class="outline-2">
+<h2 id="org0b5025b">Socket 缓冲区及阻塞模式</h2>
+<div class="outline-text-2" id="text-org0b5025b">
 <p>
-i.e. Open System Interconnection 开放式系统互联
+在 socket 中，可以使用 <code>write()/send()</code> 函数发送数据，使用 <code>read()/recv()</code> 函数接收数据，下面我们就来看看数据是如何传递的。
+</p>
+</div>
+
+<div id="outline-container-org0fda808" class="outline-3">
+<h3 id="org0fda808">Socket 缓冲区</h3>
+<div class="outline-text-3" id="text-org0fda808">
+<p>
+<b>每个 socket 被创建后，都会分配两个缓冲区，输入缓冲区和输出缓冲区。</b>
 </p>
 
 <p>
-OSI 只是存在于概念和理论上的一种模型，它的缺点是分层太多，增加了网络工作的复杂性，所以没有大规模应用。后来人们对 OSI 进行了简化，合并了一些层，最终只保留了 4 层，从下到上分别是接口层、网络层、传输层和应用层，这就是大名鼎鼎的 TCP/IP 模型。
+<code>write()/send()</code> 并不立即向网络中传输数据，而是先将数据写入缓冲区中，再由 TCP 协议将数据从缓冲区发送到目标机器。一旦将数据写入到缓冲区，函数就可以成功返回，不管它们有没有到达目标机器，也不管它们何时被发送到网络，因为这些都是 TCP 协议负责的事情了。
+</p>
+
+<p>
+TCP 协议独立于 <code>write()/send()</code> 函数，数据有可能刚被写入缓冲区就发送到网络，也可能在缓冲区中不断积压，多次写入的数据被一次性发送到网络，这取决于当时的网络情况、当前线程是否空闲等诸多因素，不由程序员控制。
+</p>
+
+<p>
+<code>read()/recv()</code> 函数也是如此，也从输入缓冲区读取数据，而不是直接从网络中读取。
 </p>
 
 <img
-src="/images/java/java-24.jpg"
-width="500"
+src="/images/java/java-28.jpg"
+width=""
 height=""
 style=""
 title=""
 />
 <p>
-<code>Figure: OSI 七层网络模型和 TCP/IP 四层网络模型的对比</code>
+<code>Figure: TCP 套接字的 I/O 缓冲区示意图</code>
 </p>
 
 <p>
-<b>这个网络模型究竟是干什么呢？简而言之就是进行数据封装的。</b>
-</p>
-
-<p>
-我们平常使用的程序（或者说软件）一般都是通过应用层来访问网络的，程序产生的数据会一层一层地往下传输，直到最后的网络接口层，就通过网线或其他媒介发送到互联网上去了。数据每往下走一层，就会被这一层的协议增加一层包装，等到发送到互联网上时，已经比原始数据多了四层包装。
-</p>
-
-<p>
-整个数据封装的过程就像俄罗斯套娃。
-</p>
-
-<p>
-当另一台计算机接收数据包时，会从网络接口再一层一层往上传输，每传输一层就拆开一层包装，直到最后的应用层，就得到了最原始的数据，这才是程序要使用的数据。
-</p>
-
-<p>
-给数据加包装的过程，实际上就是在数据的头部增加一个标志（一个数据块），表示数据经过了这一层，已经处理过了；给数据拆包装的过程正好相反，就是去掉数据头部的标志，让它逐渐现出原形。
-</p>
-
-<essay>
-你看，在互联网上传输一份数据是多么地复杂啊，而我们却感受不到，这就是网络模型的厉害之处。我们只需要在代码中调用一个函数，就能让下面的所有网络层为我们工作。
-<p>这就是封装和抽象的威力所在！</p>
-</essay>
-
-<p>
-我们所说的 socket 编程，是站在传输层的基础上，所以可以使用 TCP/UDP 协议，但是不能干“访问网页”这样的事情，因为访问网页所需要的 http 协议位于应用层。
-</p>
-
-<p>
-两台计算机进行通信时，必须遵守以下原则：
+这些 I/O 缓冲区特性可整理如下：
 </p>
 <ul class="org-ul">
-<li>必须是同一层次进行通信，比如，A 计算机的应用层和 B 计算机的传输层就不能通信，因为它们不在一个层次，数据的拆包会遇到问题；</li>
-<li>每一层的功能都必须相同，也就是拥有完全相同的网络模型。如果网络模型都不同，那就乱套了，互不相识；</li>
-<li>数据只能逐层传输，不能跃层；</li>
-<li>每一层可以使用下层提供的服务，并向上层提供服务。</li>
+<li>I/O 缓冲区在每个 TCP 套接字中单独存在；</li>
+<li>I/O 缓冲区在创建套接字时自动生成；</li>
+<li>即使关闭套接字也会继续传送输出缓冲区中遗留的数据；</li>
+<li>关闭套接字丢失输入缓冲区中的数据。</li>
 </ul>
+
+<p>
+*注：输入输出缓冲区的默认大小一般都是 8K 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org824963a" class="outline-3">
+<h3 id="org824963a">阻塞模式</h3>
+<div class="outline-text-3" id="text-org824963a">
+<p>
+<b>所谓阻塞，就是上一步动作没有完成，下一步动作将暂停，直到上一步动作完成后才能继续，以保持同步性。</b>
+</p>
+
+<p>
+对于 TCP 套接字，当使用 <code>write()/send()</code> 发送数据时：
+</p>
+
+<p>
+（1）首先会检查缓冲区，如果缓冲区的可用空间长度小于要发送的数据，那么 <code>write()/send()</code> 会被阻塞（暂停执行），直至缓冲区中的数据被发送到目标机器，腾出足够的空间，才唤醒 <code>write()/send()</code> 函数继续写入数据。
+</p>
+
+<p>
+（2）如果 TCP 协议正在向网络发送数据，那么输出缓冲区会被锁定，不允许写入， <code>write()/send()</code> 也会被阻塞，直到数据发送完毕缓冲区解锁， <code>write()/send()</code> 都会被唤醒。
+</p>
+
+<p>
+（3）如果要写入的数据大于缓冲区的最大长度，那么将分批写入。
+</p>
+
+<p>
+（4）直到所有数据被写入缓冲区， <code>write()/send()</code> 才能返回。
+</p>
+
+<p>
+当使用 <code>read()/recv()</code> 读取数据时：
+</p>
+
+<p>
+（1）首先会检查缓冲区，如果缓冲区中有数据，那么就读取，否则函数会被阻塞，直到网络上有数据到来。
+</p>
+
+<p>
+（2）如果要读取的数据长度小于缓冲区中的数据长度，那么就不能一次性将缓冲区中的所有数据读出，剩余数据将不断积压，直到有 <code>read()/recv()</code> 函数再次读取。
+</p>
+
+<p>
+（3）直到读取到数据后 <code>read()/recv()</code> 函数才会返回，否则就一直被阻塞。
+</p>
+
+<blockquote>
+<p>
+TCP套接字默认情况下是阻塞模式，也是最常用的，当然你也可以更改为非阻塞模式。
+</p>
+</blockquote>
 </div>
 </div>
 </div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://blog.csdn.net/pashanhu6402/article/details/96428887">https://blog.csdn.net/pashanhu6402/article/details/96428887</a>
+</p></div></div>
+
+</div>
+</div></div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-05 Mon 16:29</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-10-05 Mon 19:02</p>
+<p class="date">Created: 2020-10-06 Tue 13:27</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
