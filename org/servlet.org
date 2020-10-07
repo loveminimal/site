@@ -424,7 +424,7 @@ title=""
 
 如上图中，Servlet 的请求首先会被 HTTP 服务器（如 Apache、Nginx）接收，HTTP 服务器只负责静态 HTML 页面的解析，而 Servlet 的请求会转交给 Servlet 容器，Servlet 容器会根据 =web.xml= 文件中的映射关系，调用相应的 Servlet ，Servlet 再将处理的结果返回给 Servlet 容器，并通过 HTTP 服务器将响应传输给客户端。
 
-** 与 Servlet 相关的接口和类
+** Servlet 相关的接口和类
 
 SUN 公司提供了一系列的接口和类用于 Servlet 技术的开发（缅怀一下 SUN 公司吧），其中最重要的接口是 =javax.servlet.Servlet= 。在 Servlet 接口中定义了 5 个抽象方法，如下表：
 #+CAPTION: Servlet 接口的抽象方法
@@ -442,7 +442,7 @@ SUN 公司提供了一系列的接口和类用于 Servlet 技术的开发（缅�
 
 在表中，列举了 Servlet 接口中的五个方法，其中 =init()、service()= 和 =destroy()= 方法可以表现 Servlet 的生命周期，它们会在某个特定的时刻被调用。
 
-针对 Servlet 的接口，SUN 公司提供了现个默认的接口实现类： =GenericServlet= 和 =HttpServlet= 。其中：
+*针对 Servlet 的接口，SUN 公司提供了现个默认的接口实现类： =GenericServlet= 和 =HttpServlet= 。* 其中：
 - =GenericServlet= 是一个抽象类，该类为 Servlet 接口提供了部分实现，它并没有实现 HTTP 请求处理；
 - =HttpServlet= 是 =GenericServlet= 的子类，它继承了 =GenericServlet= 的所有方法，并且为 HTTP 请求中的 GET 和 POST 等类型提供了具体的操作方法。
 
@@ -458,8 +458,518 @@ HttpServlet 主要有两大功能，具体如下：
 - 根据用户请求方式的不同，定义相应的 =doXxx()= 方法处理用户请求，例如，与 GET 请求方式对应的 =doGet()= 方法，与 POST 方式对应的 =doPost()= 方法；
 - 通过 =service()= 方法将 HTTP 请求和响应分别强转为 =HttpServletRequest= 和 =HttpServletResponse= 类型的对象。
 
-需要注意的是，由于 HttpServlet 类在重写的 =service()= 方法，为每一种 HTTP 请求方式都定义了对应的 =doXxx()= 方法，因此，当定义的类的继承 HttpServlet 后，只需要根据请求方式重写对应的 =doXxx()= 方法即可，而不需要重写 =service()= 方法。
+*注：需要注意的是，由于 HttpServlet 类在重写的 =service()= 方法，为每一种 HTTP 请求方式都定义了对应的 =doXxx()= 方法，因此，当定义的类的继承 HttpServlet 后，只需要根据请求方式重写对应的 =doXxx()= 方法即可，而不需要重写 =service()= 方法。
+
+** Servlet 生命周期
+
+在 Java 中，任何对象都有生命周期，Servlet 也不例外，其生命周期如下：
+
+#+BEGIN_EXPORT html
+<img
+src="/images/java/java-35.png"
+width="510"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+按照功能的不同，大致可以将 Servlet 的生命周期分为三个阶段，分别是初始化阶段、运行阶段和销毁阶段。
+
+_1. 初始化阶段_
+
+当客户端向 Servlet 容器发出 HTTP 请求要求访问 Servlet 时，Servlet 容器首先会解析请求，检查内存中是否已经有了该 Servlet 对象，如果有，则直接使用该 Servlet 对象，如果没有，则创建 Servlet 实例对象，然后通过调用 =init()= 方法实现 Servlet 的初始化工作。
+
+*注：在 Servlet 的整个生命周期内，它的 =init()= 方法只能被调用一次。
+
+_2. 运行阶段_
+
+这是 Servlet 生命周期中最重要的阶段，在这个阶段中，Servlet 容器会为这个请求创建代表 HTTP 请求的 =ServletRequest= 对象和代表 HTTP 响应的 =ServletResponse= 对象，然后将它们作为参数传递给 Servlet 的 =service()= 方法。
+
+=service()= 方法从 =ServletRequest= 对象中获得请求信息并处理该请求，通过 =ServletResponse= 对象生成响应结果。
+
+在 Servlet 的整个生命周期内，对于 Servlet 的每一次访问请求，Servlet 容器都会调用一次 Servlet 的 =service()= 方法，并且创建新的 =ServletRequest= 和 =ServletResponse= 对象。
+
+*注：也就是说， =service()= 方法在 Servlet 的整个生命周期中会被调用多次。
+
+_3. 销毁阶段_
+
+当服务器关闭或 Web 应用被移除出容器时，Servlet 随着 Web 应用的关闭而销毁。在销毁 Servlet 之前，Servlet 容器会调用 Servlet 的 =destroy()= 方法，以便让 Servlet 对象释放它所占用的资源（Servlet 对象一旦创建就会驻留在内存中等待客户端的访问）。
+
+*注：在 Servlet 的整个生命周期中， =destroy()= 方法也只能被调用一次。
+
+** 第一个 Servlet 程序
+
+_1. 创建 Web 项目_
+
+_2. 创建 Servlet 程序_
+
+_3. 部署和访问 Servlet_
+
+#+BEGIN_EXPORT html
+<essay>
+Hmmm... 大致就是这么个过程，具体如何结合的，找个专题慢慢聊。
+</essay>
+#+END_EXPORT
+
+** Servlet 虚拟路径映射的配置
+
+在 =web.xml= 文件中，一个 =<servlet-mapping>= 元素用于映射一个 Servlet 的对外访问路径，该路径也称为虚拟路径。
+
+#+BEGIN_SRC xml -n
+  <!-- web.xml -->
+  ...
+  <servlet-mapping>
+    <servlet-name>TestServlet01</servlet-name>
+    <url-pattern>/TestServlet01</url-pattern>
+  </servlet-mapping>
+  ...
+#+END_SRC
+
+如上，  =TestServlet01= 所映射的虚拟路径为 =/TestServlet01= 。
+
+*注：创建好的 Servlet 只有映射成虚拟路径，客户端才能对其进行访问。
+
+#+BEGIN_QUOTE
+在映射 Servlet 时，需要了解 Servlet 的多重映射、在映射路径中使用通配符、配置默认的 Servlet 等。
+#+END_QUOTE
+
+*** Servlet 的多重映射
+
+Servlet 的多重映射指同一个 Servlet 可以被映射成多条虚拟路径。也就是说，客户端可以通过多条路径实现对同一个 Servlet 的访问。
+
+那么，如何 Servlet 多重映射的实现方式有哪些呢？两种。
+
+_1. 配置多个 <servlet-mapping> 元素_
+
+#+BEGIN_SRC xml -n
+  <!-- web.xml -->
+  ...
+  <servlet-mapping>
+    <servlet-name>TestServlet01</servlet-name>
+    <url-pattern>/TestServlet01</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TestServlet01</servlet-name>
+    <url-pattern>/Test01</url-pattern>
+  </servlet-mapping>
+  ...
+#+END_SRC
+
+_2. 配置多个 <url-pattern> 子元素_
+
+#+BEGIN_SRC xml -n
+  <!-- web.xml -->
+  ...
+  <servlet-mapping>
+      <!-- 映射为TestServlet01和Test02 -->
+      <servlet-name>TestServlet01</servlet-name>
+      <url-pattern>/TestServlet01</url-pattern>
+      <url-pattern>/Test02</url-pattern>
+  </servlet-mapping>
+  ...
+#+END_SRC
+
+*** Servlet 映射路径中使用通配符
+
+在实际开发过程中，开发者有时会希望某个目录下的所有路径都可以访问同一个 Servlet ，这时，可以在 Servlet 映射的路径中使用通配符 =*= 。
+
+通配符的格式有两种：
+- 格式为 =*.扩展名= ，例如 =*.do= 匹配以 =.do= 结尾的所有 URL 地址；
+- 格式为 =/*= ，例如 =/abc/*= 匹配以 =/abc= 开始的所有 URL 地址。
+
+但是，这两种通配符的格式 *不能混合使用* ，例如， =/abc/*.do= 是不合法的映射路径。
+
+当客户端访问一个 Servlet 时，如果请求的 URL 地址能够匹配多条虚拟路径，那么 Tomcat 将采取最具体匹配原则查找与请求 URL *最接近的* 虚拟映射路径。
+
+*** 默认 Servlet
+
+如果某个 Servlet 的映射路径仅仅是一个正斜线（ =/= ），那么这个 Servlet 就是当前 Web 应用的默认 Servlet。Servlet 服务器在接收到访问请求时，如果在 =web.xml= 文件中找不到匹配的 =<servlet-mapping>= 元素的 URL ，则会将访问请求交给默认 Servlet 处理。
+
+** ServletConfig 和 ServletContext 接口
+
+*** ServletConfig 接口
+
+在运行 Servlet 程序时，可能需要一些辅助信息，例如，文件使用的编码、使用 Servlet 程序的共享信息等，这些信息可以在 web.xml 文件中使用一个或多个 =<init-param>= 元素进行配置。
+
+当 Tomcat 初始化一个 Servlet 时，会将该 Servlet 的配置信息封装到 =ServletConfig= 对象中，此时可以通过调用 =init(ServletConfig config)= 方法将 =ServletConfig= 对象传递给 Servlet 。
+
+#+CAPTION: ServletConfig 接口的常用方法
+| 方法说明                               | 功能描述                                                       |
+|----------------------------------------+----------------------------------------------------------------|
+| =String getInitParameter(String name)= | 根据初始化参数名返回对应的初始化参数值                         |
+| =Enumeration getInitParameterNames()=  | 返回一个 =Enumeration= 对象，其中包含了所有的初始化参数名      |
+| =ServletContext getServletContext()=   | 返回一个代表当前 Web 应用的 =ServletContext= 对象              |
+| =String getServletName()=              | 返回 Servlet 的名字，即 =web.xml= 中 =<servlet-name>= 元素的值 |
+
+*** ServletContext 接口
+
+当 Tomcat 启动时，Tomcat 会为每个 Web 应用创建一个唯一的 =ServletContext= 对象代表当前的 Web 应用，该对象封装了当前 Web 应用的所有信息。可以利用该对象获取 Web 应用程序的初始化信息、读取资源文件等。
+
+_1. 获取 Web 应用程序的初始化参数_
+
+在 web.xml 文件中，不仅可以配置 Servlet 的映射信息，还可以配置整个 Web 应用的初始化信息。
+
+Web 应用初始化参数的配置方式具体如下：
+
+#+BEGIN_SRC xml -n
+  <!-- web.xml -->
+  ...
+  <context-param>
+      <param-name>XXX</param-name>
+      <param-value>xxx</param-value>
+  </context-param>
+  <context-param>
+      <param-name>AAA</param-name>
+      <param-value>aaa</param-value>
+  </context-param>
+  ...
+#+END_SRC
+
+在上面的示例中， =<context-param>= 元素位于根元素 =<web-app>= 中，它的子元素 =<param-name>= 和 =<param-value>= 分别用于指定参数的名字和参数值。
+
+要想获取这些参数名和参数值的信息，可以使用 =ServletContext= 接口中定义的 =getInitParameterNames()= 和 =getInitParameter(String name)= 方法分别获取。
+
+#+BEGIN_SRC java -n
+  public class TestServlet extends HttpServlet {
+      public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+          res.setContentType("text/html;charset=utf-8");
+          PrintWriter out = resp.getWriter();
+          // 得到 ServletContext 对象
+          ServletContext context = this.getServletContext();
+          // 得到包含所有初始化参数名的 Enumeration 对象
+          Enumeration<String> paramNames = context.getInitParameterNames();
+          // 遍历所有的初始化参数名，得到相应的参数值并打印
+          while (paramNames.hasMoreElements()) {
+              String name = paramNames.nextElement();
+              String value = context.getInitparameter(name);
+              out.println(name + ":" + value);
+              out.println("<br/>");
+          }
+      }
+      ...
+  }
+#+END_SRC
+
+_2.TODO 读取 Web 应用下的资源文件_
+
+在实际开发中，有时会需要读取 Web 应用中的一些资源文件，如配置文件和日志文件等。为此，在 =ServletContext= 接口中定义了一些读取 Web 资源的方法，这些方法是依靠 Servlet 容器实现的。
+
+Servlet 容器根据资源文件相对于 Web 应用的路径，返回关联资源文件的 I/O 流或资源文件在系统的绝对路径等。
+
+** Servlet 处理用户请求的完整流程
+
+针对 Servlet 的每次请求，Web 服务器在调用 =service()= 方法之前，都会创建 =HttpServletRequest= 和 =HttpServletResponse= 对象。其中， =HttpServletRequest= 对象用于封装 HTTP 请求消息，简称 =request= 对象。 =HttpServletResponse= 对象用于封装 HTTP 响应信息，简称 =response= 对象。
+
+#+BEGIN_EXPORT html
+<img
+src="/images/java/java-36.png"
+width="600"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+=Figure: 浏览器访问 Servlet 过程=
+
+如图，首先浏览器向 Web 服务器发送了一个 HTTP 请求，Web 服务器根据收到的请求，会先创建一个 =HttpServletRequest= 和 =HttpServletResponse= 对象，然后再调用相应的 Servlet 程序。
+
+在 Servlet 程序运行时，它首先会从 =HttpServletRequest= 对象中读取数据信息，然后通过 =service()= 方法处理请求消息，并将处理后的响应数据写入到 =HttpServletResponse= 对象中。最后，Web 服务器会从 =HttpServletResponse= 对象中读取到响应数据，并发送给浏览器。
+
+需要注意的是，在 Web 服务器运行阶段，每个 Servlet 都只会创建一个实例对象，针对每次 HTTP 请求，Web 服务器都会调用所请求 Servlet 实例的 =service(HttpServletRequest request, HttpServletResponse response)= 方法，并重新创建一个 =request= 对象和一个 =response= 对象。
+
+** HttpServletRequest
+
+=HttpServletRequest= 接口继承处 =ServletRequest= 接口，其主要使用是封装 HTTP 请求信息。
+
+由于 HTTP 请求消息分为请求行、请求消息头和请求消息体三部分。因此，在 =HttpServletRequest= 接口中定义了获取请求行、请求头和请求消息体的相关方法。
+
+*** 获取请求行信息的相关方法[fn:2]
+
+当访问 Servlet 时，所有请求消息将被封装到 =HttpServletRequest= 对象中，请求消息的请求行中包含请求方法、请求资源名、请求路径等信息，为了获取这些信息， =HttpServletRequest= 接口定义了一系列方法。
+
+#+BEGIN_EXPORT html
+<essay>
+具体的属性表格，用的时候再查就好了。
+</essay>
+#+END_EXPORT
+
+*** 获取请求消息头的相关方法
+
+当浏览器发送 Servlet 请求时，需要通过请求消息头向服务器传递附加信息，例如，客户端可以接收的数据类型、压缩方式、语言等。为此，在 =HttpServletRequest= 接口中定义了一系列获取 HTTP 请求字段的方法。
+
+*** TODO Servlet 获取 form 表单数据
+
+Request 对象不仅可以获取一系列数据，还可以通过属性传递数据。
+
+*** RequestDispatcher 实现请求转发[fn:3]
+
+当一个 Web 资源收到客户端的请求后，如果希望服务器通知另外一个资源处理请求，可以通过 =RequestDispatcher= 接口的实例对象实现。
+
+#+BEGIN_EXPORT html
+<essay>
+老规矩喽，相关具体的属性列表有些了解就好，用的时候再查就行了，不经过反复的实践，你也记不住。
+</essay>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<img
+src="/images/java/java-37.png"
+width="420"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+=Figure：forward() 方法的工作原理=
+
+在 =RequestDispatcher= 接口中， =forward()= 方法可以实现请求转发， =include()= 方法可以实现请求包含。
+
+如图：当客户端访问 Servlet1 时，可以通过 =forward()= 方法将请求转发给其他 Web 资源，其他 Web 资源处理完请求后，直接将响应结果返回到客户端。
+
+** HttpServletResponse
+
+=HttpServletResponse= 接口继承自 =ServletResponse= 接口，主要用于封装 HTTP 响应消息。
+
+由于 HTTP 响应消息分为状态行、响应消息头、消息体三部分。因此，在 =HttpServletResponse= 接口中定义了向客户端发送响应状态码、响应消息头、响应消息体的方法。
+
+*** 发送状态码相关的方法
+
+当 Servlet 向客户端回送响应消息时，需要在响应消息中设置状态码。因此， =HttpServletResponse= 接口定义了两个发送状态码的方法。
+
+_1. setStatus(int status) 方法_
+
+该方法用于设置 HTTP 响应消息的状态码，并生成响应状态行。
+
+由于响应状态行中的状态描述信息直接与状态码相关，而 HTTP 版本由服务器确定，因此，只要通过 =setStatus(ini status)= 方法设置了状态码，即可实现状态行的发送。
+
+*注：在正常情况下，Web 服务器会默认产生一个状态码为 =200= 的状态行。
+
+_2. sendError(int sc) 方法_
+
+该方法用于发送表示错误信息的状态码。例如， =404= 状态码表示找不到客户端请求的资源。
+
+=response= 对象提供了现个重载的 =sendError(int sc)= 方法，具体如下：
+
+#+BEGIN_EXAMPLE
+public void sendError(int code) throws java.io.IOException
+public void sendError(int code, String message) throws java.io.IOException
+#+END_EXAMPLE
+
+在上面重载的两个方法中，第一个方法只发送错误信息的状态码，而第二个方法除了发送状态以外，还可以增加一条用于提示说明的文本信息，该文本信息将出现在发送给客户端的正文内容中。
+
+*** 发送响应消息头相关的方法
+
+Servlet 向客户端发送的响应消息中包含响应头字段，由于 HTTP 协议的响应头字段有很多种，因此， =HttpServletResponse= 接口定义了一系列设置 HTTP 响应头字段的方法。
+
+*** 发送响应消息体相关的方法
+
+由于在 HTTP 响应消息中，大量的数据都是通过响应消息体传递的，因此， =ServletResponse= 遵循以 I/O 流传递大量数据的设计理念。在发送响应消息体时，定义了两个与输出流相关的方法。
+
+_1. getOutputStream() 方法_
+
+该方法所获取的字节输出流对象为 =ServletOutputStream= 类型。
+
+由于 =ServletOutputStream= 是 =OutputStream= 的子类，它可以直接输出字节数组中的二进制数据。因此，要想输出二进制格式的响应正文，就需要使用 =getOutputStream()= 方法。
+
+_2. getWriter() 方法_
+
+该方法所获取的字符输出流对象为 =PrintWriter= 类型。
+
+由于 PrintWriter 类型的对象可以直接输出字符文本内容，因此，要想输出内容全部为字符文本的网页文档，则需要使用 =getWriter()= 方法。
+
+*注：虽然 =response= 对象的 =getOutputStream()= 和 =getWriter()= 方法都可以发送响应消息体，但是，它们之间互相排斥，不可同时使用，否则会发生 =IllegalStateException= 异常。
+
+*** sendRedirect() 实现重写向
+
+在某些情况下，针对客户端的请求，一个 Servlet 类可能无法完成全部工作，这时，可以使用请求重定向完成这一工作。
+
+_请求重定向_ 指 Web 服务器接收到客户端的请求后，可能由于某些条件的限制，不能访问当前请求 URL 所指向的 Web 资源，而是指定了一个新的资源路径，让客户端重新发送请求。
+
+为了实现请求重定向， =HttpServletResponse= 接口定义了一个 =sendRedirect()= 方法，该方法用于生成 =302= 响应码和 =Location= 响应头，从而通知客户端重新访问 =Location= 响应中指定的 URL ， =sendRedirect()= 方法的完整语法如下所示：
+
+#+BEGIN_EXAMPLE
+public void sendRedirect(java.lang.String.location) throws java.io.IOException
+#+END_EXAMPLE
+
+在上述方法代码中，参数 =location= 可以使用相对  URL ，Web 服务器会自动将相对 URL 翻译成绝对 URL，再生成 =Location= 头字段。
+
+#+BEGIN_EXPORT html
+<img
+src="/images/java/java-38.png"
+width="550"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+=Figure：sendRedirect() 方法的工作原理=
+
+如图：当客户端访问 =Servlet1= 时，由于在 =Servlet1= 中调用了 =sendRedirect()= 方法将请求重定向到 =Servlet2= ，因此，浏览器收到 =Servlet1= 的响应消息后，立刻向 =Servlet2= 发送请求， =Servlet2= 对请求处理完毕后，再将响应消息回送给客户端浏览器并显示。
+
+下面通过一个用户登录的案例分步骤讲解 sendRedirect() 方法的使用。
+
+_1. 创建页面文件_
+
+在servletDemo 项目的 WebContent 目录下创建一个用户登录的页面 =login.html= 和登录成功的页面 =welcome.html= ，如下：
+
+#+BEGIN_SRC html -n
+  <!-- login.html -->
+  <!doctype html>
+  <html>
+    <head>
+      <meta charset="UTF-8"/>
+      <title>用户登录</title>
+    </head>
+    <body>
+      <!-- 把表单内容提交到 servletDemo 工程下的 LoginServlet -->
+      <form action="/servletDemo/LoginServlet" method="POST">
+        账号: <input name="username" type="text"  /><br/>
+        密码: <input name="password" type="password" /><br/>
+        <br/>
+        <input type="submit" value="登录" />
+      </form>
+    </body>
+  </html>
+#+END_SRC
+
+#+BEGIN_SRC html -n
+  <!doctype html>
+  <html>
+    <head>
+      <meta charset="UTF-8"/>
+      <title>欢迎页面</title>
+    </head>
+    <body>
+      欢迎你，登陆成功！
+    </body>
+  </html>
+#+END_SRC
+
+_2. 创建 Servlet_
+
+在 servletDemo 项目的 =com.mengma.response= 包中创建一个名为 =LoginServlet= 的 =Servlet= 类，用于处理用户登录请求，如下：
+
+#+BEGIN_SRC java -n
+  package com.mengma.servlet;
+
+  import java.io.IOException;
+
+  import javax.servlet.ServletException;
+  import javax.servlet.http.HttpServlet;
+  import javax.servlet.http.HttpServletRequest;
+  import javax.servlet.http.HttpServletResponse;
+
+  public class LoginServlet extends HttpServlet {
+      public void doGet(HttpServletRequest request, HttpServletResponse response)
+          throws ServletException, IOException {
+          response.setContentType("text/html;charset=utf-8");
+          // 用 HttpServletRequest 对象的 getParameter() 方法获取用户名和密码
+          String username = request.getParameter("username");
+          String password = request.getParameter("password");
+          // 假设用户名和密码分别为 admin 和 123456
+          if ("admin".equals(username) && ("123456").equals(password)) {
+              // 如果用户名和密码正确，重定向到 welcome.html
+              response.sendRedirect("/servletDemo/welcome.html");
+          } else {
+              // 如果用户名和密码错误，重定向到 login.html
+              response.sendRedirect("/servletDemo/login.html");
+          }
+      }
+
+      public void doPost(HttpServletRequest request, HttpServletResponse response)
+          throws ServletException, IOException {
+          doGet(request, response);
+      }
+  }
+#+END_SRC
+
+在上述代码中，首先通过 =getParameter()= 方法分别获取用户名和密码，然后判断表单中输入的用户名和密码是否为指定的 =“admin”= 和 =“123456”= ，如果是，则将请求重定向到 =welcome.html= 页面，否则重定向到 =login.html= 页面。
+
+_3. 运行项目并查看结果_
+
+...
+
+** request/response 中文乱码问题
+
+*** request 中文乱码问题以及解决方案
+
+在填写表单数据时，难免需要输入中文，如用户名和公司名称，提交后控制台的显示乱码，如 =é??é??...= 。
+
+#+BEGIN_EXPORT html
+<img
+src="/images/java/java-39.png"
+width="500"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+在 =HttpServletRequest= 接口中提供了一个 =setCharacterEncoding()= 方法，该方法用于设置 =request= 对象的解码方式。
+
+#+BEGIN_EXAMPLE
+request.setCharacterEncoding("utf-8");    // 设置 request 对象的解码方式
+#+END_EXAMPLE
+
+重启 Tomcat 服务器后，再次输入中文即可正确解码。
+
+#+BEGIN_EXPORT html
+<img
+src="/images/java/java-40.gif"
+width="500"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+*注：这种解决乱码的方式只对 POST 方式有效，而对 GET 方式无效。
+
+那么，如何解决 GET 方式提交表单时出现的中文乱码问题，可以先使用错误码表 =ISO-8859-1= 将用户名重新编码，然后使用码表 =UTF-8= 进行解码。
+
+#+BEGIN_EXAMPLE
+  name = new String(name.getBytes("iso8859-1"),"utf-8");
+#+END_EXAMPLE
+
+重启 Tomcat 服务器后，再次输入中文即可正确解码。
+
+*** response中文乱码问题以及解决方案
+
+由于计算机中的数据都是以二进制形式存储的，因此，当传输文本数据时，会发生字符和字节的转换。
+
+字符和字节的转换是通过查码表完成的，将字符转换成字节的过程称为 _编码_ ，将字节转换成字符的过程称为 _解码_ ，如果编码和解码使用的码表不一致，则会导致乱码问题。
+
+#+BEGIN_EXPORT html
+<img
+src="/images/java/java-41.gif"
+width="600"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+=Figure：编码错误分析=
+
+为了解决上述编码错误，HttpServletResponse 对象提供了两种解决乱码的方式，具体如下：
+
+#+BEGIN_EXAMPLE
+  response.setCharacterEncoding("utf-8");                        // 设置 HttpServletResponse 使用 utf-8 编码
+  response.setHeader("Content-Type", "text/html;charset=utf-8"); // 通知浏览器使用 utf-8 解码
+#+END_EXAMPLE
+
+或
+
+#+BEGIN_EXAMPLE
+  response.setContentType("text/html;charset=utf-8");            // 包含第一种方式的两个功能（推荐）
+#+END_EXAMPLE
+
+重启 Tomcat 服务器服务器并使用浏览器访问，即可正确解码。
 
 * Footnotes
+
+[fn:3] http://c.biancheng.net/view/4013.html
+
+[fn:2] http://c.biancheng.net/view/4008.html
 
 [fn:1] https://www.liaoxuefeng.com/wiki/1252599548343744/1304265903570978

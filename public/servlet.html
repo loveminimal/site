@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-10-06 Tue 18:33 -->
+<!-- 2020-10-07 Wed 18:48 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Servlet 是什么</title>
@@ -23,18 +23,56 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org400dcd0">Web 开发</a></li>
-<li><a href="#org1b4375c">Servlet 入门</a></li>
-<li><a href="#org7c1e8b3">Servlet 开发</a></li>
-<li><a href="#org37de4ed">Servlet 是什么</a></li>
-<li><a href="#org3b20181">与 Servlet 相关的接口和类</a></li>
+<li><a href="#org00ec675">Web 开发</a></li>
+<li><a href="#orgda162d3">Servlet 入门</a></li>
+<li><a href="#org993d8b2">Servlet 开发</a></li>
+<li><a href="#org4f2e6b6">Servlet 是什么</a></li>
+<li><a href="#org8caff6a">Servlet 相关的接口和类</a></li>
+<li><a href="#org863af58">Servlet 生命周期</a></li>
+<li><a href="#org1d7c57f">第一个 Servlet 程序</a></li>
+<li><a href="#org4a30b02">Servlet 虚拟路径映射的配置</a>
+<ul>
+<li><a href="#org9ff7fb0">Servlet 的多重映射</a></li>
+<li><a href="#org6bcd272">Servlet 映射路径中使用通配符</a></li>
+<li><a href="#orgfa95d30">默认 Servlet</a></li>
+</ul>
+</li>
+<li><a href="#orgf0264fb">ServletConfig 和 ServletContext 接口</a>
+<ul>
+<li><a href="#orgf36789b">ServletConfig 接口</a></li>
+<li><a href="#org4b38eb9">ServletContext 接口</a></li>
+</ul>
+</li>
+<li><a href="#org5573327">Servlet 处理用户请求的完整流程</a></li>
+<li><a href="#org6fa569b">HttpServletRequest</a>
+<ul>
+<li><a href="#org2e6eb50">获取请求行信息的相关方法</a></li>
+<li><a href="#org6b85d99">获取请求消息头的相关方法</a></li>
+<li><a href="#org9212f46"><span class="todo TODO">TODO</span> Servlet 获取 form 表单数据</a></li>
+<li><a href="#org430f353">RequestDispatcher 实现请求转发</a></li>
+</ul>
+</li>
+<li><a href="#orge72f188">HttpServletResponse</a>
+<ul>
+<li><a href="#org2312f82">发送状态码相关的方法</a></li>
+<li><a href="#orgdb6e6ac">发送响应消息头相关的方法</a></li>
+<li><a href="#orgad43dd1">发送响应消息体相关的方法</a></li>
+<li><a href="#orga6b9181">sendRedirect() 实现重写向</a></li>
+</ul>
+</li>
+<li><a href="#orgebe1723">request/response 中文乱码问题</a>
+<ul>
+<li><a href="#orge56bbcf">request 中文乱码问题以及解决方案</a></li>
+<li><a href="#org1709055">response中文乱码问题以及解决方案</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org400dcd0" class="outline-2">
-<h2 id="org400dcd0">Web 开发<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-org400dcd0">
+<div id="outline-container-org00ec675" class="outline-2">
+<h2 id="org00ec675">Web 开发<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-org00ec675">
 <p>
 JavaEE 是什么？它并不是一个软件产品，更多的是一种软件架构和设计思想，它是在 JavaSE 的基础上，开发的一系列基于服务的组件、API 标准和通用架构。
 </p>
@@ -210,9 +248,9 @@ HTTP 3.0 为了进一步提高速度，将抛弃 TCP 协议，改为使用无需
 </div>
 </div>
 
-<div id="outline-container-org1b4375c" class="outline-2">
-<h2 id="org1b4375c">Servlet 入门</h2>
-<div class="outline-text-2" id="text-org1b4375c">
+<div id="outline-container-orgda162d3" class="outline-2">
+<h2 id="orgda162d3">Servlet 入门</h2>
+<div class="outline-text-2" id="text-orgda162d3">
 <p>
 在上一节中，可见，编写 HTTP 服务器其实是非常简单的，只需要先编写基于多线程的 TCP 服务，然后在一个 TCP 连接中读取 HTTP 请求，发送 HTTP 响应即可。
 </p>
@@ -351,9 +389,9 @@ Servlet API 是一个 jar 包，我们需要通过 Maven 来引入它，才能�
 </div>
 </div>
 
-<div id="outline-container-org7c1e8b3" class="outline-2">
-<h2 id="org7c1e8b3">Servlet 开发</h2>
-<div class="outline-text-2" id="text-org7c1e8b3">
+<div id="outline-container-org993d8b2" class="outline-2">
+<h2 id="org993d8b2">Servlet 开发</h2>
+<div class="outline-text-2" id="text-org993d8b2">
 <p>
 通常，一个完整的 Web 应用程序的开发流程如下：
 </p>
@@ -515,9 +553,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org37de4ed" class="outline-2">
-<h2 id="org37de4ed">Servlet 是什么</h2>
-<div class="outline-text-2" id="text-org37de4ed">
+<div id="outline-container-org4f2e6b6" class="outline-2">
+<h2 id="org4f2e6b6">Servlet 是什么</h2>
+<div class="outline-text-2" id="text-org4f2e6b6">
 <p>
 好的，下面我们就来具体认识一下 Servlet 是什么。
 </p>
@@ -580,9 +618,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org3b20181" class="outline-2">
-<h2 id="org3b20181">与 Servlet 相关的接口和类</h2>
-<div class="outline-text-2" id="text-org3b20181">
+<div id="outline-container-org8caff6a" class="outline-2">
+<h2 id="org8caff6a">Servlet 相关的接口和类</h2>
+<div class="outline-text-2" id="text-org8caff6a">
 <p>
 SUN 公司提供了一系列的接口和类用于 Servlet 技术的开发（缅怀一下 SUN 公司吧），其中最重要的接口是 <code>javax.servlet.Servlet</code> 。在 Servlet 接口中定义了 5 个抽象方法，如下表：
 </p>
@@ -645,7 +683,7 @@ SUN 公司提供了一系列的接口和类用于 Servlet 技术的开发（缅�
 </p>
 
 <p>
-针对 Servlet 的接口，SUN 公司提供了现个默认的接口实现类： <code>GenericServlet</code> 和 <code>HttpServlet</code> 。其中：
+<b>针对 Servlet 的接口，SUN 公司提供了现个默认的接口实现类： <code>GenericServlet</code> 和 <code>HttpServlet</code> 。</b> 其中：
 </p>
 <ul class="org-ul">
 <li><code>GenericServlet</code> 是一个抽象类，该类为 Servlet 接口提供了部分实现，它并没有实现 HTTP 请求处理；</li>
@@ -692,8 +730,802 @@ HttpServlet 主要有两大功能，具体如下：
 </ul>
 
 <p>
-需要注意的是，由于 HttpServlet 类在重写的 <code>service()</code> 方法，为每一种 HTTP 请求方式都定义了对应的 <code>doXxx()</code> 方法，因此，当定义的类的继承 HttpServlet 后，只需要根据请求方式重写对应的 <code>doXxx()</code> 方法即可，而不需要重写 <code>service()</code> 方法。
+*注：需要注意的是，由于 HttpServlet 类在重写的 <code>service()</code> 方法，为每一种 HTTP 请求方式都定义了对应的 <code>doXxx()</code> 方法，因此，当定义的类的继承 HttpServlet 后，只需要根据请求方式重写对应的 <code>doXxx()</code> 方法即可，而不需要重写 <code>service()</code> 方法。
 </p>
+</div>
+</div>
+
+<div id="outline-container-org863af58" class="outline-2">
+<h2 id="org863af58">Servlet 生命周期</h2>
+<div class="outline-text-2" id="text-org863af58">
+<p>
+在 Java 中，任何对象都有生命周期，Servlet 也不例外，其生命周期如下：
+</p>
+
+<img
+src="/images/java/java-35.png"
+width="510"
+height=""
+style=""
+title=""
+/>
+
+<p>
+按照功能的不同，大致可以将 Servlet 的生命周期分为三个阶段，分别是初始化阶段、运行阶段和销毁阶段。
+</p>
+
+<p>
+<span class="underline">1. 初始化阶段</span>
+</p>
+
+<p>
+当客户端向 Servlet 容器发出 HTTP 请求要求访问 Servlet 时，Servlet 容器首先会解析请求，检查内存中是否已经有了该 Servlet 对象，如果有，则直接使用该 Servlet 对象，如果没有，则创建 Servlet 实例对象，然后通过调用 <code>init()</code> 方法实现 Servlet 的初始化工作。
+</p>
+
+<p>
+*注：在 Servlet 的整个生命周期内，它的 <code>init()</code> 方法只能被调用一次。
+</p>
+
+<p>
+<span class="underline">2. 运行阶段</span>
+</p>
+
+<p>
+这是 Servlet 生命周期中最重要的阶段，在这个阶段中，Servlet 容器会为这个请求创建代表 HTTP 请求的 <code>ServletRequest</code> 对象和代表 HTTP 响应的 <code>ServletResponse</code> 对象，然后将它们作为参数传递给 Servlet 的 <code>service()</code> 方法。
+</p>
+
+<p>
+<code>service()</code> 方法从 <code>ServletRequest</code> 对象中获得请求信息并处理该请求，通过 <code>ServletResponse</code> 对象生成响应结果。
+</p>
+
+<p>
+在 Servlet 的整个生命周期内，对于 Servlet 的每一次访问请求，Servlet 容器都会调用一次 Servlet 的 <code>service()</code> 方法，并且创建新的 <code>ServletRequest</code> 和 <code>ServletResponse</code> 对象。
+</p>
+
+<p>
+*注：也就是说， <code>service()</code> 方法在 Servlet 的整个生命周期中会被调用多次。
+</p>
+
+<p>
+<span class="underline">3. 销毁阶段</span>
+</p>
+
+<p>
+当服务器关闭或 Web 应用被移除出容器时，Servlet 随着 Web 应用的关闭而销毁。在销毁 Servlet 之前，Servlet 容器会调用 Servlet 的 <code>destroy()</code> 方法，以便让 Servlet 对象释放它所占用的资源（Servlet 对象一旦创建就会驻留在内存中等待客户端的访问）。
+</p>
+
+<p>
+*注：在 Servlet 的整个生命周期中， <code>destroy()</code> 方法也只能被调用一次。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1d7c57f" class="outline-2">
+<h2 id="org1d7c57f">第一个 Servlet 程序</h2>
+<div class="outline-text-2" id="text-org1d7c57f">
+<p>
+<span class="underline">1. 创建 Web 项目</span>
+</p>
+
+<p>
+<span class="underline">2. 创建 Servlet 程序</span>
+</p>
+
+<p>
+<span class="underline">3. 部署和访问 Servlet</span>
+</p>
+
+<essay>
+Hmmm... 大致就是这么个过程，具体如何结合的，找个专题慢慢聊。
+</essay>
+</div>
+</div>
+
+<div id="outline-container-org4a30b02" class="outline-2">
+<h2 id="org4a30b02">Servlet 虚拟路径映射的配置</h2>
+<div class="outline-text-2" id="text-org4a30b02">
+<p>
+在 <code>web.xml</code> 文件中，一个 <code>&lt;servlet-mapping&gt;</code> 元素用于映射一个 Servlet 的对外访问路径，该路径也称为虚拟路径。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xml"><span class="linenr">1: </span><span style="color: #75715E;">&lt;!-- </span><span style="color: #75715E;">web.xml </span><span style="color: #75715E;">--&gt;</span>
+<span class="linenr">2: </span>...
+<span class="linenr">3: </span>&lt;<span style="color: #A6E22E;">servlet-mapping</span>&gt;
+<span class="linenr">4: </span>  &lt;<span style="color: #A6E22E;">servlet-name</span>&gt;TestServlet01&lt;/<span style="color: #A6E22E;">servlet-name</span>&gt;
+<span class="linenr">5: </span>  &lt;<span style="color: #A6E22E;">url-pattern</span>&gt;/TestServlet01&lt;/<span style="color: #A6E22E;">url-pattern</span>&gt;
+<span class="linenr">6: </span>&lt;/<span style="color: #A6E22E;">servlet-mapping</span>&gt;
+<span class="linenr">7: </span>...
+</pre>
+</div>
+
+<p>
+如上，  <code>TestServlet01</code> 所映射的虚拟路径为 <code>/TestServlet01</code> 。
+</p>
+
+<p>
+*注：创建好的 Servlet 只有映射成虚拟路径，客户端才能对其进行访问。
+</p>
+
+<blockquote>
+<p>
+在映射 Servlet 时，需要了解 Servlet 的多重映射、在映射路径中使用通配符、配置默认的 Servlet 等。
+</p>
+</blockquote>
+</div>
+
+<div id="outline-container-org9ff7fb0" class="outline-3">
+<h3 id="org9ff7fb0">Servlet 的多重映射</h3>
+<div class="outline-text-3" id="text-org9ff7fb0">
+<p>
+Servlet 的多重映射指同一个 Servlet 可以被映射成多条虚拟路径。也就是说，客户端可以通过多条路径实现对同一个 Servlet 的访问。
+</p>
+
+<p>
+那么，如何 Servlet 多重映射的实现方式有哪些呢？两种。
+</p>
+
+<p>
+<span class="underline">1. 配置多个 &lt;servlet-mapping&gt; 元素</span>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xml"><span class="linenr"> 1: </span><span style="color: #75715E;">&lt;!-- </span><span style="color: #75715E;">web.xml </span><span style="color: #75715E;">--&gt;</span>
+<span class="linenr"> 2: </span>...
+<span class="linenr"> 3: </span>&lt;<span style="color: #A6E22E;">servlet-mapping</span>&gt;
+<span class="linenr"> 4: </span>  &lt;<span style="color: #A6E22E;">servlet-name</span>&gt;TestServlet01&lt;/<span style="color: #A6E22E;">servlet-name</span>&gt;
+<span class="linenr"> 5: </span>  &lt;<span style="color: #A6E22E;">url-pattern</span>&gt;/TestServlet01&lt;/<span style="color: #A6E22E;">url-pattern</span>&gt;
+<span class="linenr"> 6: </span>&lt;/<span style="color: #A6E22E;">servlet-mapping</span>&gt;
+<span class="linenr"> 7: </span>&lt;<span style="color: #A6E22E;">servlet-mapping</span>&gt;
+<span class="linenr"> 8: </span>  &lt;<span style="color: #A6E22E;">servlet-name</span>&gt;TestServlet01&lt;/<span style="color: #A6E22E;">servlet-name</span>&gt;
+<span class="linenr"> 9: </span>  &lt;<span style="color: #A6E22E;">url-pattern</span>&gt;/Test01&lt;/<span style="color: #A6E22E;">url-pattern</span>&gt;
+<span class="linenr">10: </span>&lt;/<span style="color: #A6E22E;">servlet-mapping</span>&gt;
+<span class="linenr">11: </span>...
+</pre>
+</div>
+
+<p>
+<span class="underline">2. 配置多个 &lt;url-pattern&gt; 子元素</span>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xml"><span class="linenr">1: </span><span style="color: #75715E;">&lt;!-- </span><span style="color: #75715E;">web.xml </span><span style="color: #75715E;">--&gt;</span>
+<span class="linenr">2: </span>...
+<span class="linenr">3: </span>&lt;<span style="color: #A6E22E;">servlet-mapping</span>&gt;
+<span class="linenr">4: </span>    <span style="color: #75715E;">&lt;!-- </span><span style="color: #75715E;">&#26144;&#23556;&#20026;TestServlet01&#21644;Test02 </span><span style="color: #75715E;">--&gt;</span>
+<span class="linenr">5: </span>    &lt;<span style="color: #A6E22E;">servlet-name</span>&gt;TestServlet01&lt;/<span style="color: #A6E22E;">servlet-name</span>&gt;
+<span class="linenr">6: </span>    &lt;<span style="color: #A6E22E;">url-pattern</span>&gt;/TestServlet01&lt;/<span style="color: #A6E22E;">url-pattern</span>&gt;
+<span class="linenr">7: </span>    &lt;<span style="color: #A6E22E;">url-pattern</span>&gt;/Test02&lt;/<span style="color: #A6E22E;">url-pattern</span>&gt;
+<span class="linenr">8: </span>&lt;/<span style="color: #A6E22E;">servlet-mapping</span>&gt;
+<span class="linenr">9: </span>...
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6bcd272" class="outline-3">
+<h3 id="org6bcd272">Servlet 映射路径中使用通配符</h3>
+<div class="outline-text-3" id="text-org6bcd272">
+<p>
+在实际开发过程中，开发者有时会希望某个目录下的所有路径都可以访问同一个 Servlet ，这时，可以在 Servlet 映射的路径中使用通配符 <code>*</code> 。
+</p>
+
+<p>
+通配符的格式有两种：
+</p>
+<ul class="org-ul">
+<li>格式为 <code>*.扩展名</code> ，例如 <code>*.do</code> 匹配以 <code>.do</code> 结尾的所有 URL 地址；</li>
+<li>格式为 <code>/*</code> ，例如 <code>/abc/*</code> 匹配以 <code>/abc</code> 开始的所有 URL 地址。</li>
+</ul>
+
+<p>
+但是，这两种通配符的格式 <b>不能混合使用</b> ，例如， <code>/abc/*.do</code> 是不合法的映射路径。
+</p>
+
+<p>
+当客户端访问一个 Servlet 时，如果请求的 URL 地址能够匹配多条虚拟路径，那么 Tomcat 将采取最具体匹配原则查找与请求 URL <b>最接近的</b> 虚拟映射路径。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfa95d30" class="outline-3">
+<h3 id="orgfa95d30">默认 Servlet</h3>
+<div class="outline-text-3" id="text-orgfa95d30">
+<p>
+如果某个 Servlet 的映射路径仅仅是一个正斜线（ <code>/</code> ），那么这个 Servlet 就是当前 Web 应用的默认 Servlet。Servlet 服务器在接收到访问请求时，如果在 <code>web.xml</code> 文件中找不到匹配的 <code>&lt;servlet-mapping&gt;</code> 元素的 URL ，则会将访问请求交给默认 Servlet 处理。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf0264fb" class="outline-2">
+<h2 id="orgf0264fb">ServletConfig 和 ServletContext 接口</h2>
+<div class="outline-text-2" id="text-orgf0264fb">
+</div>
+<div id="outline-container-orgf36789b" class="outline-3">
+<h3 id="orgf36789b">ServletConfig 接口</h3>
+<div class="outline-text-3" id="text-orgf36789b">
+<p>
+在运行 Servlet 程序时，可能需要一些辅助信息，例如，文件使用的编码、使用 Servlet 程序的共享信息等，这些信息可以在 web.xml 文件中使用一个或多个 <code>&lt;init-param&gt;</code> 元素进行配置。
+</p>
+
+<p>
+当 Tomcat 初始化一个 Servlet 时，会将该 Servlet 的配置信息封装到 <code>ServletConfig</code> 对象中，此时可以通过调用 <code>init(ServletConfig config)</code> 方法将 <code>ServletConfig</code> 对象传递给 Servlet 。
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 3:</span> ServletConfig 接口的常用方法</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">方法说明</th>
+<th scope="col" class="org-left">功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>String getInitParameter(String name)</code></td>
+<td class="org-left">根据初始化参数名返回对应的初始化参数值</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Enumeration getInitParameterNames()</code></td>
+<td class="org-left">返回一个 <code>Enumeration</code> 对象，其中包含了所有的初始化参数名</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>ServletContext getServletContext()</code></td>
+<td class="org-left">返回一个代表当前 Web 应用的 <code>ServletContext</code> 对象</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>String getServletName()</code></td>
+<td class="org-left">返回 Servlet 的名字，即 <code>web.xml</code> 中 <code>&lt;servlet-name&gt;</code> 元素的值</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org4b38eb9" class="outline-3">
+<h3 id="org4b38eb9">ServletContext 接口</h3>
+<div class="outline-text-3" id="text-org4b38eb9">
+<p>
+当 Tomcat 启动时，Tomcat 会为每个 Web 应用创建一个唯一的 <code>ServletContext</code> 对象代表当前的 Web 应用，该对象封装了当前 Web 应用的所有信息。可以利用该对象获取 Web 应用程序的初始化信息、读取资源文件等。
+</p>
+
+<p>
+<span class="underline">1. 获取 Web 应用程序的初始化参数</span>
+</p>
+
+<p>
+在 web.xml 文件中，不仅可以配置 Servlet 的映射信息，还可以配置整个 Web 应用的初始化信息。
+</p>
+
+<p>
+Web 应用初始化参数的配置方式具体如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xml"><span class="linenr"> 1: </span><span style="color: #75715E;">&lt;!-- </span><span style="color: #75715E;">web.xml </span><span style="color: #75715E;">--&gt;</span>
+<span class="linenr"> 2: </span>...
+<span class="linenr"> 3: </span>&lt;<span style="color: #A6E22E;">context-param</span>&gt;
+<span class="linenr"> 4: </span>    &lt;<span style="color: #A6E22E;">param-name</span>&gt;XXX&lt;/<span style="color: #A6E22E;">param-name</span>&gt;
+<span class="linenr"> 5: </span>    &lt;<span style="color: #A6E22E;">param-value</span>&gt;xxx&lt;/<span style="color: #A6E22E;">param-value</span>&gt;
+<span class="linenr"> 6: </span>&lt;/<span style="color: #A6E22E;">context-param</span>&gt;
+<span class="linenr"> 7: </span>&lt;<span style="color: #A6E22E;">context-param</span>&gt;
+<span class="linenr"> 8: </span>    &lt;<span style="color: #A6E22E;">param-name</span>&gt;AAA&lt;/<span style="color: #A6E22E;">param-name</span>&gt;
+<span class="linenr"> 9: </span>    &lt;<span style="color: #A6E22E;">param-value</span>&gt;aaa&lt;/<span style="color: #A6E22E;">param-value</span>&gt;
+<span class="linenr">10: </span>&lt;/<span style="color: #A6E22E;">context-param</span>&gt;
+<span class="linenr">11: </span>...
+</pre>
+</div>
+
+<p>
+在上面的示例中， <code>&lt;context-param&gt;</code> 元素位于根元素 <code>&lt;web-app&gt;</code> 中，它的子元素 <code>&lt;param-name&gt;</code> 和 <code>&lt;param-value&gt;</code> 分别用于指定参数的名字和参数值。
+</p>
+
+<p>
+要想获取这些参数名和参数值的信息，可以使用 <code>ServletContext</code> 接口中定义的 <code>getInitParameterNames()</code> 和 <code>getInitParameter(String name)</code> 方法分别获取。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">TestServlet</span> <span style="color: #F92672;">extends</span> <span style="color: #66D9EF;">HttpServlet</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">doGet</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">HttpServletRequest</span> <span style="color: #FD971F;">req</span>, <span style="color: #66D9EF;">HttpServletResponse</span> <span style="color: #FD971F;">resp</span><span style="color: #66D9EF;">)</span> <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">ServletException</span>, <span style="color: #66D9EF;">IOException</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 3: </span>        res.setContentType<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"text/html;charset=utf-8"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr"> 4: </span>        <span style="color: #66D9EF;">PrintWriter</span> <span style="color: #FD971F;">out</span> = resp.getWriter<span style="color: #A6E22E;">()</span>;
+<span class="linenr"> 5: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#24471;&#21040; ServletContext &#23545;&#35937;</span>
+<span class="linenr"> 6: </span>        <span style="color: #66D9EF;">ServletContext</span> <span style="color: #FD971F;">context</span> = <span style="color: #F92672;">this</span>.getServletContext<span style="color: #A6E22E;">()</span>;
+<span class="linenr"> 7: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#24471;&#21040;&#21253;&#21547;&#25152;&#26377;&#21021;&#22987;&#21270;&#21442;&#25968;&#21517;&#30340; Enumeration &#23545;&#35937;</span>
+<span class="linenr"> 8: </span>        <span style="color: #66D9EF;">Enumeration</span><span style="color: #A6E22E;">&lt;</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">&gt;</span> <span style="color: #FD971F;">paramNames</span> = context.getInitParameterNames<span style="color: #A6E22E;">()</span>;
+<span class="linenr"> 9: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#36941;&#21382;&#25152;&#26377;&#30340;&#21021;&#22987;&#21270;&#21442;&#25968;&#21517;&#65292;&#24471;&#21040;&#30456;&#24212;&#30340;&#21442;&#25968;&#20540;&#24182;&#25171;&#21360;</span>
+<span class="linenr">10: </span>        <span style="color: #F92672;">while</span> <span style="color: #A6E22E;">(</span>paramNames.hasMoreElements<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr">11: </span>            <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">name</span> = paramNames.nextElement<span style="color: #E6DB74;">()</span>;
+<span class="linenr">12: </span>            <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">value</span> = context.getInitparameter<span style="color: #E6DB74;">(</span>name<span style="color: #E6DB74;">)</span>;
+<span class="linenr">13: </span>            out.println<span style="color: #E6DB74;">(</span>name + <span style="color: #E6DB74;">":"</span> + value<span style="color: #E6DB74;">)</span>;
+<span class="linenr">14: </span>            out.println<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"&lt;br/&gt;"</span><span style="color: #E6DB74;">)</span>;
+<span class="linenr">15: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">16: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">17: </span>    ...
+<span class="linenr">18: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+<span class="underline">2.TODO 读取 Web 应用下的资源文件</span>
+</p>
+
+<p>
+在实际开发中，有时会需要读取 Web 应用中的一些资源文件，如配置文件和日志文件等。为此，在 <code>ServletContext</code> 接口中定义了一些读取 Web 资源的方法，这些方法是依靠 Servlet 容器实现的。
+</p>
+
+<p>
+Servlet 容器根据资源文件相对于 Web 应用的路径，返回关联资源文件的 I/O 流或资源文件在系统的绝对路径等。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5573327" class="outline-2">
+<h2 id="org5573327">Servlet 处理用户请求的完整流程</h2>
+<div class="outline-text-2" id="text-org5573327">
+<p>
+针对 Servlet 的每次请求，Web 服务器在调用 <code>service()</code> 方法之前，都会创建 <code>HttpServletRequest</code> 和 <code>HttpServletResponse</code> 对象。其中， <code>HttpServletRequest</code> 对象用于封装 HTTP 请求消息，简称 <code>request</code> 对象。 <code>HttpServletResponse</code> 对象用于封装 HTTP 响应信息，简称 <code>response</code> 对象。
+</p>
+
+<img
+src="/images/java/java-36.png"
+width="600"
+height=""
+style=""
+title=""
+/>
+<p>
+<code>Figure: 浏览器访问 Servlet 过程</code>
+</p>
+
+<p>
+如图，首先浏览器向 Web 服务器发送了一个 HTTP 请求，Web 服务器根据收到的请求，会先创建一个 <code>HttpServletRequest</code> 和 <code>HttpServletResponse</code> 对象，然后再调用相应的 Servlet 程序。
+</p>
+
+<p>
+在 Servlet 程序运行时，它首先会从 <code>HttpServletRequest</code> 对象中读取数据信息，然后通过 <code>service()</code> 方法处理请求消息，并将处理后的响应数据写入到 <code>HttpServletResponse</code> 对象中。最后，Web 服务器会从 <code>HttpServletResponse</code> 对象中读取到响应数据，并发送给浏览器。
+</p>
+
+<p>
+需要注意的是，在 Web 服务器运行阶段，每个 Servlet 都只会创建一个实例对象，针对每次 HTTP 请求，Web 服务器都会调用所请求 Servlet 实例的 <code>service(HttpServletRequest request, HttpServletResponse response)</code> 方法，并重新创建一个 <code>request</code> 对象和一个 <code>response</code> 对象。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6fa569b" class="outline-2">
+<h2 id="org6fa569b">HttpServletRequest</h2>
+<div class="outline-text-2" id="text-org6fa569b">
+<p>
+<code>HttpServletRequest</code> 接口继承处 <code>ServletRequest</code> 接口，其主要使用是封装 HTTP 请求信息。
+</p>
+
+<p>
+由于 HTTP 请求消息分为请求行、请求消息头和请求消息体三部分。因此，在 <code>HttpServletRequest</code> 接口中定义了获取请求行、请求头和请求消息体的相关方法。
+</p>
+</div>
+
+<div id="outline-container-org2e6eb50" class="outline-3">
+<h3 id="org2e6eb50">获取请求行信息的相关方法<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
+<div class="outline-text-3" id="text-org2e6eb50">
+<p>
+当访问 Servlet 时，所有请求消息将被封装到 <code>HttpServletRequest</code> 对象中，请求消息的请求行中包含请求方法、请求资源名、请求路径等信息，为了获取这些信息， <code>HttpServletRequest</code> 接口定义了一系列方法。
+</p>
+
+<essay>
+具体的属性表格，用的时候再查就好了。
+</essay>
+</div>
+</div>
+
+<div id="outline-container-org6b85d99" class="outline-3">
+<h3 id="org6b85d99">获取请求消息头的相关方法</h3>
+<div class="outline-text-3" id="text-org6b85d99">
+<p>
+当浏览器发送 Servlet 请求时，需要通过请求消息头向服务器传递附加信息，例如，客户端可以接收的数据类型、压缩方式、语言等。为此，在 <code>HttpServletRequest</code> 接口中定义了一系列获取 HTTP 请求字段的方法。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9212f46" class="outline-3">
+<h3 id="org9212f46"><span class="todo TODO">TODO</span> Servlet 获取 form 表单数据</h3>
+<div class="outline-text-3" id="text-org9212f46">
+<p>
+Request 对象不仅可以获取一系列数据，还可以通过属性传递数据。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org430f353" class="outline-3">
+<h3 id="org430f353">RequestDispatcher 实现请求转发<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h3>
+<div class="outline-text-3" id="text-org430f353">
+<p>
+当一个 Web 资源收到客户端的请求后，如果希望服务器通知另外一个资源处理请求，可以通过 <code>RequestDispatcher</code> 接口的实例对象实现。
+</p>
+
+<essay>
+老规矩喽，相关具体的属性列表有些了解就好，用的时候再查就行了，不经过反复的实践，你也记不住。
+</essay>
+
+<img
+src="/images/java/java-37.png"
+width="420"
+height=""
+style=""
+title=""
+/>
+<p>
+<code>Figure：forward() 方法的工作原理</code>
+</p>
+
+<p>
+在 <code>RequestDispatcher</code> 接口中， <code>forward()</code> 方法可以实现请求转发， <code>include()</code> 方法可以实现请求包含。
+</p>
+
+<p>
+如图：当客户端访问 Servlet1 时，可以通过 <code>forward()</code> 方法将请求转发给其他 Web 资源，其他 Web 资源处理完请求后，直接将响应结果返回到客户端。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge72f188" class="outline-2">
+<h2 id="orge72f188">HttpServletResponse</h2>
+<div class="outline-text-2" id="text-orge72f188">
+<p>
+<code>HttpServletResponse</code> 接口继承自 <code>ServletResponse</code> 接口，主要用于封装 HTTP 响应消息。
+</p>
+
+<p>
+由于 HTTP 响应消息分为状态行、响应消息头、消息体三部分。因此，在 <code>HttpServletResponse</code> 接口中定义了向客户端发送响应状态码、响应消息头、响应消息体的方法。
+</p>
+</div>
+
+<div id="outline-container-org2312f82" class="outline-3">
+<h3 id="org2312f82">发送状态码相关的方法</h3>
+<div class="outline-text-3" id="text-org2312f82">
+<p>
+当 Servlet 向客户端回送响应消息时，需要在响应消息中设置状态码。因此， <code>HttpServletResponse</code> 接口定义了两个发送状态码的方法。
+</p>
+
+<p>
+<span class="underline">1. setStatus(int status) 方法</span>
+</p>
+
+<p>
+该方法用于设置 HTTP 响应消息的状态码，并生成响应状态行。
+</p>
+
+<p>
+由于响应状态行中的状态描述信息直接与状态码相关，而 HTTP 版本由服务器确定，因此，只要通过 <code>setStatus(ini status)</code> 方法设置了状态码，即可实现状态行的发送。
+</p>
+
+<p>
+*注：在正常情况下，Web 服务器会默认产生一个状态码为 <code>200</code> 的状态行。
+</p>
+
+<p>
+<span class="underline">2. sendError(int sc) 方法</span>
+</p>
+
+<p>
+该方法用于发送表示错误信息的状态码。例如， <code>404</code> 状态码表示找不到客户端请求的资源。
+</p>
+
+<p>
+<code>response</code> 对象提供了现个重载的 <code>sendError(int sc)</code> 方法，具体如下：
+</p>
+
+<pre class="example">
+public void sendError(int code) throws java.io.IOException
+public void sendError(int code, String message) throws java.io.IOException
+</pre>
+
+<p>
+在上面重载的两个方法中，第一个方法只发送错误信息的状态码，而第二个方法除了发送状态以外，还可以增加一条用于提示说明的文本信息，该文本信息将出现在发送给客户端的正文内容中。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdb6e6ac" class="outline-3">
+<h3 id="orgdb6e6ac">发送响应消息头相关的方法</h3>
+<div class="outline-text-3" id="text-orgdb6e6ac">
+<p>
+Servlet 向客户端发送的响应消息中包含响应头字段，由于 HTTP 协议的响应头字段有很多种，因此， <code>HttpServletResponse</code> 接口定义了一系列设置 HTTP 响应头字段的方法。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgad43dd1" class="outline-3">
+<h3 id="orgad43dd1">发送响应消息体相关的方法</h3>
+<div class="outline-text-3" id="text-orgad43dd1">
+<p>
+由于在 HTTP 响应消息中，大量的数据都是通过响应消息体传递的，因此， <code>ServletResponse</code> 遵循以 I/O 流传递大量数据的设计理念。在发送响应消息体时，定义了两个与输出流相关的方法。
+</p>
+
+<p>
+<span class="underline">1. getOutputStream() 方法</span>
+</p>
+
+<p>
+该方法所获取的字节输出流对象为 <code>ServletOutputStream</code> 类型。
+</p>
+
+<p>
+由于 <code>ServletOutputStream</code> 是 <code>OutputStream</code> 的子类，它可以直接输出字节数组中的二进制数据。因此，要想输出二进制格式的响应正文，就需要使用 <code>getOutputStream()</code> 方法。
+</p>
+
+<p>
+<span class="underline">2. getWriter() 方法</span>
+</p>
+
+<p>
+该方法所获取的字符输出流对象为 <code>PrintWriter</code> 类型。
+</p>
+
+<p>
+由于 PrintWriter 类型的对象可以直接输出字符文本内容，因此，要想输出内容全部为字符文本的网页文档，则需要使用 <code>getWriter()</code> 方法。
+</p>
+
+<p>
+*注：虽然 <code>response</code> 对象的 <code>getOutputStream()</code> 和 <code>getWriter()</code> 方法都可以发送响应消息体，但是，它们之间互相排斥，不可同时使用，否则会发生 <code>IllegalStateException</code> 异常。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga6b9181" class="outline-3">
+<h3 id="orga6b9181">sendRedirect() 实现重写向</h3>
+<div class="outline-text-3" id="text-orga6b9181">
+<p>
+在某些情况下，针对客户端的请求，一个 Servlet 类可能无法完成全部工作，这时，可以使用请求重定向完成这一工作。
+</p>
+
+<p>
+<span class="underline">请求重定向</span> 指 Web 服务器接收到客户端的请求后，可能由于某些条件的限制，不能访问当前请求 URL 所指向的 Web 资源，而是指定了一个新的资源路径，让客户端重新发送请求。
+</p>
+
+<p>
+为了实现请求重定向， <code>HttpServletResponse</code> 接口定义了一个 <code>sendRedirect()</code> 方法，该方法用于生成 <code>302</code> 响应码和 <code>Location</code> 响应头，从而通知客户端重新访问 <code>Location</code> 响应中指定的 URL ， <code>sendRedirect()</code> 方法的完整语法如下所示：
+</p>
+
+<pre class="example">
+public void sendRedirect(java.lang.String.location) throws java.io.IOException
+</pre>
+
+<p>
+在上述方法代码中，参数 <code>location</code> 可以使用相对  URL ，Web 服务器会自动将相对 URL 翻译成绝对 URL，再生成 <code>Location</code> 头字段。
+</p>
+
+<img
+src="/images/java/java-38.png"
+width="550"
+height=""
+style=""
+title=""
+/>
+<p>
+<code>Figure：sendRedirect() 方法的工作原理</code>
+</p>
+
+<p>
+如图：当客户端访问 <code>Servlet1</code> 时，由于在 <code>Servlet1</code> 中调用了 <code>sendRedirect()</code> 方法将请求重定向到 <code>Servlet2</code> ，因此，浏览器收到 <code>Servlet1</code> 的响应消息后，立刻向 <code>Servlet2</code> 发送请求， <code>Servlet2</code> 对请求处理完毕后，再将响应消息回送给客户端浏览器并显示。
+</p>
+
+<p>
+下面通过一个用户登录的案例分步骤讲解 sendRedirect() 方法的使用。
+</p>
+
+<p>
+<span class="underline">1. 创建页面文件</span>
+</p>
+
+<p>
+在servletDemo 项目的 WebContent 目录下创建一个用户登录的页面 <code>login.html</code> 和登录成功的页面 <code>welcome.html</code> ，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-html"><span class="linenr"> 1: </span><span style="color: #75715E;">&lt;!-- </span><span style="color: #75715E;">login.html </span><span style="color: #75715E;">--&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #E6DB74;">&lt;!doctype html&gt;</span>
+<span class="linenr"> 3: </span>&lt;<span style="color: #A6E22E;">html</span>&gt;
+<span class="linenr"> 4: </span>  &lt;<span style="color: #A6E22E;">head</span>&gt;
+<span class="linenr"> 5: </span>    &lt;<span style="color: #A6E22E;">meta</span> <span style="color: #FD971F;">charset</span>=<span style="color: #E6DB74;">"UTF-8"</span>/&gt;
+<span class="linenr"> 6: </span>    &lt;<span style="color: #A6E22E;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">&#29992;&#25143;&#30331;&#24405;</span>&lt;/<span style="color: #A6E22E;">title</span>&gt;
+<span class="linenr"> 7: </span>  &lt;/<span style="color: #A6E22E;">head</span>&gt;
+<span class="linenr"> 8: </span>  &lt;<span style="color: #A6E22E;">body</span>&gt;
+<span class="linenr"> 9: </span>    <span style="color: #75715E;">&lt;!-- </span><span style="color: #75715E;">&#25226;&#34920;&#21333;&#20869;&#23481;&#25552;&#20132;&#21040; servletDemo &#24037;&#31243;&#19979;&#30340; LoginServlet </span><span style="color: #75715E;">--&gt;</span>
+<span class="linenr">10: </span>    &lt;<span style="color: #A6E22E;">form</span> <span style="color: #FD971F;">action</span>=<span style="color: #E6DB74;">"/servletDemo/LoginServlet"</span> <span style="color: #FD971F;">method</span>=<span style="color: #E6DB74;">"POST"</span>&gt;
+<span class="linenr">11: </span>      &#36134;&#21495;: &lt;<span style="color: #A6E22E;">input</span> <span style="color: #FD971F;">name</span>=<span style="color: #E6DB74;">"username"</span> <span style="color: #FD971F;">type</span>=<span style="color: #E6DB74;">"text"</span>  /&gt;&lt;<span style="color: #A6E22E;">br</span>/&gt;
+<span class="linenr">12: </span>      &#23494;&#30721;: &lt;<span style="color: #A6E22E;">input</span> <span style="color: #FD971F;">name</span>=<span style="color: #E6DB74;">"password"</span> <span style="color: #FD971F;">type</span>=<span style="color: #E6DB74;">"password"</span> /&gt;&lt;<span style="color: #A6E22E;">br</span>/&gt;
+<span class="linenr">13: </span>      &lt;<span style="color: #A6E22E;">br</span>/&gt;
+<span class="linenr">14: </span>      &lt;<span style="color: #A6E22E;">input</span> <span style="color: #FD971F;">type</span>=<span style="color: #E6DB74;">"submit"</span> <span style="color: #FD971F;">value</span>=<span style="color: #E6DB74;">"&#30331;&#24405;"</span> /&gt;
+<span class="linenr">15: </span>    &lt;/<span style="color: #A6E22E;">form</span>&gt;
+<span class="linenr">16: </span>  &lt;/<span style="color: #A6E22E;">body</span>&gt;
+<span class="linenr">17: </span>&lt;/<span style="color: #A6E22E;">html</span>&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-html"><span class="linenr"> 1: </span><span style="color: #E6DB74;">&lt;!doctype html&gt;</span>
+<span class="linenr"> 2: </span>&lt;<span style="color: #A6E22E;">html</span>&gt;
+<span class="linenr"> 3: </span>  &lt;<span style="color: #A6E22E;">head</span>&gt;
+<span class="linenr"> 4: </span>    &lt;<span style="color: #A6E22E;">meta</span> <span style="color: #FD971F;">charset</span>=<span style="color: #E6DB74;">"UTF-8"</span>/&gt;
+<span class="linenr"> 5: </span>    &lt;<span style="color: #A6E22E;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">&#27426;&#36814;&#39029;&#38754;</span>&lt;/<span style="color: #A6E22E;">title</span>&gt;
+<span class="linenr"> 6: </span>  &lt;/<span style="color: #A6E22E;">head</span>&gt;
+<span class="linenr"> 7: </span>  &lt;<span style="color: #A6E22E;">body</span>&gt;
+<span class="linenr"> 8: </span>    &#27426;&#36814;&#20320;&#65292;&#30331;&#38470;&#25104;&#21151;&#65281;
+<span class="linenr"> 9: </span>  &lt;/<span style="color: #A6E22E;">body</span>&gt;
+<span class="linenr">10: </span>&lt;/<span style="color: #A6E22E;">html</span>&gt;
+</pre>
+</div>
+
+<p>
+<span class="underline">2. 创建 Servlet</span>
+</p>
+
+<p>
+在 servletDemo 项目的 <code>com.mengma.response</code> 包中创建一个名为 <code>LoginServlet</code> 的 <code>Servlet</code> 类，用于处理用户登录请求，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">package</span> com.mengma.<span style="color: #AE81FF;">servlet</span>;
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span><span style="color: #F92672;">import</span> <span style="color: #AE81FF;">java</span>.<span style="color: #AE81FF;">io</span>.<span style="color: #66D9EF;">IOException</span>;
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span style="color: #F92672;">import</span> <span style="color: #AE81FF;">javax</span>.<span style="color: #AE81FF;">servlet</span>.<span style="color: #66D9EF;">ServletException</span>;
+<span class="linenr"> 6: </span><span style="color: #F92672;">import</span> <span style="color: #AE81FF;">javax</span>.<span style="color: #AE81FF;">servlet</span>.<span style="color: #AE81FF;">http</span>.<span style="color: #66D9EF;">HttpServlet</span>;
+<span class="linenr"> 7: </span><span style="color: #F92672;">import</span> <span style="color: #AE81FF;">javax</span>.<span style="color: #AE81FF;">servlet</span>.<span style="color: #AE81FF;">http</span>.<span style="color: #66D9EF;">HttpServletRequest</span>;
+<span class="linenr"> 8: </span><span style="color: #F92672;">import</span> <span style="color: #AE81FF;">javax</span>.<span style="color: #AE81FF;">servlet</span>.<span style="color: #AE81FF;">http</span>.<span style="color: #66D9EF;">HttpServletResponse</span>;
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">LoginServlet</span> <span style="color: #F92672;">extends</span> <span style="color: #66D9EF;">HttpServlet</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">11: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">doGet</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">HttpServletRequest</span> <span style="color: #FD971F;">request</span>, <span style="color: #66D9EF;">HttpServletResponse</span> <span style="color: #FD971F;">response</span><span style="color: #66D9EF;">)</span>
+<span class="linenr">12: </span>        <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">ServletException</span>, <span style="color: #66D9EF;">IOException</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">13: </span>        response.setContentType<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"text/html;charset=utf-8"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">14: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#29992; HttpServletRequest &#23545;&#35937;&#30340; getParameter() &#26041;&#27861;&#33719;&#21462;&#29992;&#25143;&#21517;&#21644;&#23494;&#30721;</span>
+<span class="linenr">15: </span>        <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">username</span> = request.getParameter<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"username"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">16: </span>        <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">password</span> = request.getParameter<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"password"</span><span style="color: #A6E22E;">)</span>;
+<span class="linenr">17: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#20551;&#35774;&#29992;&#25143;&#21517;&#21644;&#23494;&#30721;&#20998;&#21035;&#20026; admin &#21644; 123456</span>
+<span class="linenr">18: </span>        <span style="color: #F92672;">if</span> <span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"admin"</span>.equals<span style="color: #E6DB74;">(</span>username<span style="color: #E6DB74;">)</span> &amp;&amp; <span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"123456"</span><span style="color: #E6DB74;">)</span>.equals<span style="color: #E6DB74;">(</span>password<span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr">19: </span>            <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22914;&#26524;&#29992;&#25143;&#21517;&#21644;&#23494;&#30721;&#27491;&#30830;&#65292;&#37325;&#23450;&#21521;&#21040; welcome.html</span>
+<span class="linenr">20: </span>            response.sendRedirect<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"/servletDemo/welcome.html"</span><span style="color: #E6DB74;">)</span>;
+<span class="linenr">21: </span>        <span style="color: #A6E22E;">}</span> <span style="color: #F92672;">else</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr">22: </span>            <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22914;&#26524;&#29992;&#25143;&#21517;&#21644;&#23494;&#30721;&#38169;&#35823;&#65292;&#37325;&#23450;&#21521;&#21040; login.html</span>
+<span class="linenr">23: </span>            response.sendRedirect<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"/servletDemo/login.html"</span><span style="color: #E6DB74;">)</span>;
+<span class="linenr">24: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">25: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">26: </span>
+<span class="linenr">27: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">doPost</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">HttpServletRequest</span> <span style="color: #FD971F;">request</span>, <span style="color: #66D9EF;">HttpServletResponse</span> <span style="color: #FD971F;">response</span><span style="color: #66D9EF;">)</span>
+<span class="linenr">28: </span>        <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">ServletException</span>, <span style="color: #66D9EF;">IOException</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">29: </span>        doGet<span style="color: #A6E22E;">(</span>request, response<span style="color: #A6E22E;">)</span>;
+<span class="linenr">30: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">31: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+在上述代码中，首先通过 <code>getParameter()</code> 方法分别获取用户名和密码，然后判断表单中输入的用户名和密码是否为指定的 <code>“admin”</code> 和 <code>“123456”</code> ，如果是，则将请求重定向到 <code>welcome.html</code> 页面，否则重定向到 <code>login.html</code> 页面。
+</p>
+
+<p>
+<span class="underline">3. 运行项目并查看结果</span>
+</p>
+
+<p>
+&#x2026;
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgebe1723" class="outline-2">
+<h2 id="orgebe1723">request/response 中文乱码问题</h2>
+<div class="outline-text-2" id="text-orgebe1723">
+</div>
+<div id="outline-container-orge56bbcf" class="outline-3">
+<h3 id="orge56bbcf">request 中文乱码问题以及解决方案</h3>
+<div class="outline-text-3" id="text-orge56bbcf">
+<p>
+在填写表单数据时，难免需要输入中文，如用户名和公司名称，提交后控制台的显示乱码，如 <code>é??é??...</code> 。
+</p>
+
+<img
+src="/images/java/java-39.png"
+width="500"
+height=""
+style=""
+title=""
+/>
+
+<p>
+在 <code>HttpServletRequest</code> 接口中提供了一个 <code>setCharacterEncoding()</code> 方法，该方法用于设置 <code>request</code> 对象的解码方式。
+</p>
+
+<pre class="example">
+request.setCharacterEncoding("utf-8");    // 设置 request 对象的解码方式
+</pre>
+
+<p>
+重启 Tomcat 服务器后，再次输入中文即可正确解码。
+</p>
+
+<img
+src="/images/java/java-40.gif"
+width="500"
+height=""
+style=""
+title=""
+/>
+
+<p>
+*注：这种解决乱码的方式只对 POST 方式有效，而对 GET 方式无效。
+</p>
+
+<p>
+那么，如何解决 GET 方式提交表单时出现的中文乱码问题，可以先使用错误码表 <code>ISO-8859-1</code> 将用户名重新编码，然后使用码表 <code>UTF-8</code> 进行解码。
+</p>
+
+<pre class="example">
+name = new String(name.getBytes("iso8859-1"),"utf-8");
+</pre>
+
+<p>
+重启 Tomcat 服务器后，再次输入中文即可正确解码。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1709055" class="outline-3">
+<h3 id="org1709055">response中文乱码问题以及解决方案</h3>
+<div class="outline-text-3" id="text-org1709055">
+<p>
+由于计算机中的数据都是以二进制形式存储的，因此，当传输文本数据时，会发生字符和字节的转换。
+</p>
+
+<p>
+字符和字节的转换是通过查码表完成的，将字符转换成字节的过程称为 <span class="underline">编码</span> ，将字节转换成字符的过程称为 <span class="underline">解码</span> ，如果编码和解码使用的码表不一致，则会导致乱码问题。
+</p>
+
+<img
+src="/images/java/java-41.gif"
+width="600"
+height=""
+style=""
+title=""
+/>
+<p>
+<code>Figure：编码错误分析</code>
+</p>
+
+<p>
+为了解决上述编码错误，HttpServletResponse 对象提供了两种解决乱码的方式，具体如下：
+</p>
+
+<pre class="example">
+response.setCharacterEncoding("utf-8");                        // 设置 HttpServletResponse 使用 utf-8 编码
+response.setHeader("Content-Type", "text/html;charset=utf-8"); // 通知浏览器使用 utf-8 解码
+</pre>
+
+<p>
+或
+</p>
+
+<pre class="example">
+response.setContentType("text/html;charset=utf-8");            // 包含第一种方式的两个功能（推荐）
+</pre>
+
+<p>
+重启 Tomcat 服务器服务器并使用浏览器访问，即可正确解码。
+</p>
+</div>
 </div>
 </div>
 <div id="footnotes">
@@ -704,12 +1536,20 @@ HttpServlet 主要有两大功能，具体如下：
 <a href="https://www.liaoxuefeng.com/wiki/1252599548343744/1304265903570978">https://www.liaoxuefeng.com/wiki/1252599548343744/1304265903570978</a>
 </p></div></div>
 
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+<a href="http://c.biancheng.net/view/4008.html">http://c.biancheng.net/view/4008.html</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+<a href="http://c.biancheng.net/view/4013.html">http://c.biancheng.net/view/4013.html</a>
+</p></div></div>
+
 </div>
 </div></div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-06 Tue 14:08</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-10-06 Tue 18:33</p>
+<p class="date">Created: 2020-10-07 Wed 18:48</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
