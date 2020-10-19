@@ -16,10 +16,10 @@
 | 插件 | [[https://www.crx4chrome.com/][Crx4Chrome]] |              | [[https://vimawesome.com/][VimAwesome]]     | [[http://www.melpa.org/#/][Melpa]]          | [[https://chocolatey.org/packages][Chocolatey]]     |
 |------+------------+--------------+----------------+----------------+----------------|
 | 教程 | [[http://www.runoob.com/][菜鸟教程]]   | [[http://es6.ruanyifeng.com/][ES6]]          | [[https://www.liaoxuefeng.com/][廖雪峰]]         | [[http://www.softwhy.com/][蚂蚁部落]]       | [[https://www.interviewcake.com/data-structures-reference][Interview Cake]] |
-|      | [[http://www.nginx.cn/doc/][Nginx Doc]]  | [[http://c.biancheng.net/][C 语言中文网]] |                |                |                |
+|      | [[http://www.nginx.cn/doc/][Nginx Doc]]  | [[http://c.biancheng.net/][C 语言中文网]] | [[https://www.lmonkey.com/][学习猿地]]       |                |                |
 |------+------------+--------------+----------------+----------------+----------------|
-| 博客 | [[https://bitsofco.de/][Bitsofco]]   | [[http://www.ruanyifeng.com/blog/developer/][阮一峰]]       | [[http://xahlee.org/][李杀网]]         | [[https://coolshell.cn/][酷壳]]           |                |
-|      | [[https://geekinney.com/][Geenkinney]] | [[https://www.lijigang.com/][LiJigang]]     | [[https://manateelazycat.github.io/index.html][ManateeLazyCat]] |                |                |
+| 博客 | [[https://bitsofco.de/][Bitsofco]]   | [[http://www.ruanyifeng.com/blog/developer/][阮一峰]]       | [[http://xahlee.org/][李杀网]]         | [[https://coolshell.cn/][酷壳]]           | [[https://www.zhangxinxu.com/][张鑫旭]]         |
+|      |            |              | [[https://manateelazycat.github.io/index.html][ManateeLazyCat]] |                |                |
 
  *Bookmarks InboX*
 
@@ -36,3 +36,5 @@
 - https://www.jiweichengzhu.com/article/93afbed1245d4ee69b82ed1b067f48a4
 - https://blog.csdn.net/qq_25800311/article/details/87024665
 - https://blog.csdn.net/pashanhu6402/article/details/96428887
+- https://blog.csdn.net/weixin_40396459/article/details/81706543
+- https://www.jianshu.com/p/ae61623ce9b7
