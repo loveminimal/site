@@ -1,0 +1,5 @@
+#+SETUPFILE: ../theme-rose.setup
+#+DATE: <2020-10-23 Fri 10:38>
+#+TITLE: Nginx
+
+Nginx 是异步框架的网页服务器，也可以用作反向代理、负载平衡器和 HTTP 缓存，该软件由伊戈尔·塞索耶夫创建并于 2004 年站首次公开发布。
