@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-10-26 Mon 09:49 -->
+<!-- 2020-10-26 Mon 15:51 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nginx</title>
@@ -19,26 +19,616 @@
 <body>
 <div id="content">
 <h1 class="title">Nginx</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgc302e9e">关于代理</a>
+<ul>
+<li><a href="#org45ab2d8">单点服务的 C/S 架构</a></li>
+<li><a href="#org391c8c7">基于代理的 C/S 架构</a></li>
+<li><a href="#org1e5e146">Proxy 是什么</a></li>
+<li><a href="#orgdc89542">正向代理和反向代理</a></li>
+</ul>
+</li>
+<li><a href="#orgf22af00">Nginx 那些事</a>
+<ul>
+<li><a href="#org04e3826">安装</a></li>
+<li><a href="#org37a50db">静态网站部署</a></li>
+<li><a href="#orgb24e37c">配置虚拟主机</a></li>
+<li><a href="#org0f99b1f">反向代理</a></li>
+<li><a href="#orgb9d0cda">负载均衡</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <p>
-Nginx 是异步框架的网页服务器，也可以用作反向代理、负载平衡器和 HTTP 缓存，该软件由伊戈尔·塞索耶夫创建并于 2004 年站首次公开发布。
+在认识、学习 Nginx 之前，我们先来看一下代理是什么，如果你已经非常熟悉代理，可以直接跳到第二个章节。
 </p>
 
+<div id="outline-container-orgc302e9e" class="outline-2">
+<h2 id="orgc302e9e">关于代理<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-orgc302e9e">
+<blockquote>
+<p>
+*注：该节原创发布于慕课网，作者：咚咚呛。
+</p>
+</blockquote>
+
+<p>
+要说清楚什么是反向代理，先来了解下最简单的 C/S （Client-Server）架构，即以单个节点作为后端 Server 的 C/S 架构。
+</p>
+</div>
+
+<div id="outline-container-org45ab2d8" class="outline-3">
+<h3 id="org45ab2d8">单点服务的 C/S 架构</h3>
+<div class="outline-text-3" id="text-org45ab2d8">
+<p>
+在普通的开发中，单点 Server 的服务方式非常常见，比如使用 Django 框架做后台服务的时候，就可以通过简单的 <code>run server</code> 命令起一个临时的服务，接着通过地址就可能访问到这个服务了。
+</p>
+
+<blockquote>
+<p>
+当然，对于 Django 而言， <code>run server</code> 命令只是提供开发周期的调试使用的便捷工具，更一般的情况是通过 uWSGI 把这个 Django 服务跑起来，以获取比 <code>run server</code> 更好的服务性能。
+</p>
+</blockquote>
+
 <img
-src="/images/web/nginx-1.jpg"
-width="300"
+src="/images/web/nginx-3.png"
+width="400"
 height=""
-style="float: right; margin-left: 8px;"
+style=""
 title=""
 />
 
 <p>
-**
+对于请求量非常少的服务，这样的部署不会有什么问题，但随着服务请求量越来越多，这样的部署架构就很有问题了。
+</p>
+
+<p>
+<b>首先，从服务器的物理特性来看，这个服务器可能就不能支持这么高的请求量。</b> 这种情况下，就迫使开发者去把服务迁移到一个 CPU 更强、内存更高，综合性能更好的服务器。
+</p>
+
+<essay>
+在不考虑成本的条件下，总可以找到性能更好的服务器来支撑服务，然而，这是不现实的，地主家也没有余粮啊……
+</essay>
+
+<p>
+<b>其次，如果服务 Server 单节点发生了故障，就必然会影响整个服务。</b> 因为对于众多的 Client 客户端都是连接的一个 Server 服务端，一旦这个节点不可用了，势必会影响所有使用了客户端的用户。
+</p>
+
+<p>
+<b>那么，如何解决这两个显而易见的问题呢？</b>
+</p>
+
+<p>
+如果有一种横向拓展架构，使得服务可以支撑的请求量可以随着服务的横向拓展面增加就好了。
 </p>
 </div>
+</div>
+
+<div id="outline-container-org391c8c7" class="outline-3">
+<h3 id="org391c8c7">基于代理的 C/S 架构</h3>
+<div class="outline-text-3" id="text-org391c8c7">
+<p>
+一种基于代理的可横向拓展的 C/S 架构，如下：
+</p>
+
+<img
+src="/images/web/nginx-4.png"
+width="560"
+height=""
+style=""
+title=""
+/>
+
+<p>
+在这个部署的架构中，除了 Server 节点外，还多出一个叫 <span class="underline">Proxy</span> 的节点，这个节点的做什么的呢？
+</p>
+
+<p>
+Proxy 节点，用于把接收的所有请求都转发到它后面的 Server 节点中，然后等待 Server 节点处理请求，再从 Server 节点取回执行结果返回到 Client 。所以，实际上 Proxy 节点不处理任何的请求。
+</p>
+
+<p>
+下面让我们来看一下，这种架构是怎么解决了上述问题的，之后再思考 <span class="underline">Proxy</span> 的这个角色。
+</p>
+
+<p>
+<span class="underline">1. 服务器性能不足的问题</span>
+</p>
+
+<img
+src="/images/web/nginx-5.png"
+width="560"
+height=""
+style=""
+title=""
+/>
+
+<p>
+在这个架构里，假设 Server 节点 S1 性能到达瓶颈了，不能处理更多请求了。我们可以添加 Server 节点 S2 ，同时告诉 Proxy 节点，让它把部分原来转发到 S1 节点的请求转发到 S2 节点。如此，通过服务分流减少压力的方法就可以解决原来 S1 节点性能不足的问题了。
+</p>
+
+<p>
+<span class="underline">2. 单点服务器挂掉的问题</span>
+</p>
+
+<img
+src="/images/web/nginx-6.png"
+width="560"
+height=""
+style=""
+title=""
+/>
+
+<p>
+在这个架构里，假设 Server 节点 S1 和 S2 能够提供的服务是一样的。如果 S1 挂掉了，Proxy 节点存在，且能够察觉到 S1 挂掉了的话，就让 Proxy 节点把原来要转发给 S1 节点的请求转发到 S2 进行处理，如此，通过服务冗余的方法就可以解决原来 S1 突然挂掉影响服务的问题了。
+</p>
+
+<p>
+那么，Proxy 节点到底是什么呢？
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1e5e146" class="outline-3">
+<h3 id="org1e5e146">Proxy 是什么</h3>
+<div class="outline-text-3" id="text-org1e5e146">
+<p>
+<b>Proxy ，就是代理。</b> 如何理解呢？
+</p>
+
+<p>
+在第一个问题中，Proxy 节点通过服务分流的方法来减少 S1 的压力。对于原来应该被 S1 服务的，却由于被 Proxy 节点转发而被 S2 服务的 Client 客户端而言，其实 Client 并不知道它的请求是由 S1 处理的，还是由 S2 处理的，它只需要往 Proxy 节点发送请求就好了，剩下的工作就由 Proxy 节点去解决了。
+</p>
+
+<p>
+也就是说，Proxy 节点相当于一个中介，“代理” Client 去寻找实际的 Server 节点去完成服务。
+</p>
+
+<blockquote>
+<p>
+这种模式在现实生活中也非常常见，在买房的时候，通常由房产中介帮助你完成和卖者之间的手续，而不需要你亲自去处理这些事情，你只需要处理自己与中介之间的手续就可以了，这里的中介，就和我们的 Proxy 节点工作非常类似。
+</p>
+</blockquote>
+
+<p>
+同样的，在第二个问题中，Client 并不需要感知 S1 是否还能正常工作，只需要把请求发送给 Proxy 节点，由它去帮忙处理就可以了。
+</p>
+
+<p>
+由上可知，基于代理的可横向拓展的 C/S 架构中，Proxy 节点就是我们的代理节点。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdc89542" class="outline-3">
+<h3 id="orgdc89542">正向代理和反向代理</h3>
+<div class="outline-text-3" id="text-orgdc89542">
+<p>
+本质上来讲，代理都是存在于 Client 和 Server 之间，但是由于性质不同，可以分为正向代理和反向代理两种。那么，什么是反向代理？什么是正向代理呢？
+</p>
+
+<p>
+我们来看一个直观的例子，假设有 A、B 和 C 三人，他们之间存在借钱的关系。
+</p>
+
+<p>
+<span class="underline">1. 正向代理</span>
+</p>
+
+<blockquote>
+<ol class="org-ol">
+<li>A 需要钱，A 知道 C 有很多钱，想向 C 借钱；</li>
+<li>但是 A 和 C 有矛盾，于是 A 想到通过 B 去借 C 的钱；</li>
+<li>B 向 C 借到钱了 ，C 并不知道 A 的存在；</li>
+<li>B 再把借到的钱交给 A 。</li>
+</ol>
+</blockquote>
+
+<img
+src="/images/web/nginx-7.png"
+width="460"
+height=""
+style=""
+title=""
+/>
+
+<p>
+在这个过程中，B 就充当了代理借钱的角色，并且是代替 A 去借钱的，这样就是正向代理。
+</p>
+
+<p>
+<span class="underline">2. 反向代理</span>
+</p>
+
+<blockquote>
+<ol class="org-ol">
+<li>A 需要钱，C 有很多钱，A 不知道 C 有很多钱；</li>
+<li>A 找 B 借钱；</li>
+<li>B 知道 C 有很多钱；</li>
+<li>B 向 C 借钱，并把借到的钱给 A ，而没有使用自己的钱借给 A ；</li>
+<li>A 拿到钱后，以为钱是 B 的，A 不知道 C 的存在。</li>
+</ol>
+</blockquote>
+
+<img
+src="/images/web/nginx-8.png"
+width="520"
+height=""
+style=""
+title=""
+/>
+
+<p>
+在这个过程中，B 也充当了代理代理借钱的角色，不过这次不是代替 A 去借的，而是用 C 的钱借给 A 的，换言之即是代替 C 将钱代给了 A ，这就是反向代理。
+</p>
+
+<essay>
+同样都是 A 借钱：
+
+<p>正向代理是 A 委任 B 去借。B 去借钱，借钱的人只知道钱借给了 B ，并不知道、也不关心 B 拿来做什么用。</p>
+
+<p>反向代理是 A 去向 B 借钱，A 并不知道、也不关心 B 的钱是从哪儿来的。</p>
+</essay>
+
+<p>
+<span class="underline">3. 两者区别</span>
+</p>
+
+<p>
+<b>1）服务对象不同：</b>
+</p>
+<ul class="org-ul">
+<li>正向代理，代理的是客户端，也就是例子中的 A ，服务端并不知道实际发起请求的客户端；</li>
+<li>反向代理，代理的是服务端，也就是例子中的 C ，客户端并不知道实际提供服务的服务端。</li>
+</ul>
+
+<img
+src="/images/web/nginx-9.png"
+width="560"
+height=""
+style=""
+title=""
+/>
+<p>
+<code>Figure：正向代理</code>
+</p>
+
+<img
+src="/images/web/nginx-10.png"
+width="560"
+height=""
+style=""
+title=""
+/>
+<p>
+<code>Figure：反向代理</code>
+</p>
+
+<p>
+<b>2）安全模型不同：</b>
+</p>
+<ul class="org-ul">
+<li>正向代理，允许客户端通过它访问任意网站并且隐藏客户端自身，因此必须采取安全措施以确保仅为授权的客户端提供服务；</li>
+<li>反向代理，对外都是透明的，访问者并不知道自己访问的是代理，并不知道服务节点的存在，认为处理请求的就是代理节点。</li>
+</ul>
+
+<p>
+总而言之，正向代理是从客户端的角度出发，服务于局域网用户，以访问非特定的服务，其中最典型的例子就是翻墙；反向代理正好与此相反，从服务端的角度出发，服务于所有用户，隐藏实际的服务节点，服务节点的架构对用户透明，以代理节点统一对外服务。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf22af00" class="outline-2">
+<h2 id="orgf22af00">Nginx 那些事<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
+<div class="outline-text-2" id="text-orgf22af00">
+<img
+src="/images/web/nginx-1.jpg"
+width="260"
+height=""
+style="float: right; margin-left: 16px;"
+title=""
+/>
+
+<p>
+了解了什么是代理，下面我们要进入正题认识下 Nginx 了。
+</p>
+
+<p>
+Nginx 是异步框架的网页服务器，也可以用作反向代理、负载平衡器和 HTTP 缓存，该软件由 <span class="underline">伊戈尔·塞索耶夫</span> 创建并于 2004 年站首次公开发布，官方测试 nginx 能够支支撑五万并发链接，并且 CPU 、内存等资源消耗非常低，运行非常稳定。
+</p>
+
+<p>
+Nginx 这么强劲，都有些什么应用场景呢？如下：
+</p>
+<ul class="org-ul">
+<li>Http 服务器。Nginx 可以独立提供 http 服务，用做网页静态服务器；</li>
+<li>虚拟主机。Nginx 可以实现在一台服务器虚拟出多个网站，如个人网站使用的虚拟主机；</li>
+<li>反向代理、负载均衡。Nginx 可以实现请求分流，避免单点服务器宕机影响服务。</li>
+</ul>
+</div>
+
+<div id="outline-container-org04e3826" class="outline-3">
+<h3 id="org04e3826">安装</h3>
+<div class="outline-text-3" id="text-org04e3826">
+<p>
+→ 具体安装过程可以参考<a href="https://blog.csdn.net/nanhuaibeian/article/details/106916313">该链接</a> 。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr"> 1: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#20934;&#22791;&#24037;&#20316;</span>
+<span class="linenr"> 2: </span>yum install gcc-c++                     <span style="color: #75715E;"># </span><span style="color: #75715E;">&#23433;&#35013;&#38656;&#35201;&#30340; gcc &#29615;&#22659;</span>
+<span class="linenr"> 3: </span>yum install -y pcre pcre-devel          <span style="color: #75715E;"># </span><span style="color: #75715E;">&#23433;&#35013; perl &#20860;&#23481;&#30340;&#27491;&#21017;&#34920;&#36798;&#24335;&#24211;</span>
+<span class="linenr"> 4: </span>yum install -y zlib zlib-devel          <span style="color: #75715E;"># </span><span style="color: #75715E;">nginx &#20351;&#29992; zlib &#23545; http &#21253;&#36827;&#34892; gzip</span>
+<span class="linenr"> 5: </span>yum install -y openssl openssl-devel    <span style="color: #75715E;"># </span><span style="color: #75715E;">&#25903;&#25345; https</span>
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#19979;&#36733;&#23433;&#35013; nginx - http://nginx.org</span>
+<span class="linenr"> 8: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#21487;&#20197;&#20462;&#25913;&#20026;&#20320;&#35201;&#30340;&#29256;&#26412;&#65292;&#30446;&#21069;&#26368;&#21069;&#20026; 1.19.3</span>
+<span class="linenr"> 9: </span>wget http://nginx.org/download/nginx-1.8.0.tar.gz
+<span class="linenr">10: </span>tar zxvf nginx-1.8.0.tar.gz
+<span class="linenr">11: </span><span style="color: #F92672;">cd</span> nginx-1.8.0
+<span class="linenr">12: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#20351;&#29992; configure &#21629;&#20196;&#21019;&#24314; makeFile &#25991;&#20214;</span>
+<span class="linenr">13: </span>./configure --prefix=/usr/local/nginx   <span style="color: #75715E;"># </span><span style="color: #75715E;">&#25351;&#21521;&#23433;&#35013;&#30446;&#24405;</span>
+<span class="linenr">14: </span>make &amp;&amp; make install
+<span class="linenr">15: </span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr">1: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">Nginx &#30340;&#21551;&#21160;&#21644;&#35775;&#38382;&#65306;</span>
+<span class="linenr">2: </span><span style="color: #F92672;">cd</span> nginx                        <span style="color: #75715E;"># </span><span style="color: #75715E;">&#36827;&#20837; nginx &#23433;&#35013;&#30446;&#24405;</span>
+<span class="linenr">3: </span><span style="color: #F92672;">cd</span> sbin &amp;&amp; ./nginx              <span style="color: #75715E;"># </span><span style="color: #75715E;">&#36827;&#20837; nginx &#30340;&#25191;&#34892;&#30446;&#24405;&#24182;&#21551;&#21160; ./nginx</span>
+<span class="linenr">4: </span>ps aux | grep nginx             <span style="color: #75715E;"># </span><span style="color: #75715E;">&#21551;&#21160;&#21518;&#21488;&#26597;&#30475;&#36827;&#31243;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr">1: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">Nginx &#30340;&#19968;&#20123;&#24120;&#29992;&#25805;&#20316;&#65306;</span>
+<span class="linenr">2: </span>./nginx -s stop                 <span style="color: #75715E;"># </span><span style="color: #75715E;">&#20572;&#27490; nginx</span>
+<span class="linenr">3: </span>./nginx -s quit                 <span style="color: #75715E;"># </span><span style="color: #75715E;">&#24378;&#21046;&#20572;&#27490; nginx</span>
+<span class="linenr">4: </span>./nginx -t                      <span style="color: #75715E;"># </span><span style="color: #75715E;">&#26657;&#39564; nginx &#37197;&#32622;&#27491;&#30830;&#19982;&#21542;</span>
+<span class="linenr">5: </span>./nginx -s reload               <span style="color: #75715E;"># </span><span style="color: #75715E;">&#37325;&#21551; nginx&#65292;&#29992;&#20110;&#20462;&#25913;&#37197;&#32622;&#25991;&#20214;&#21518;&#26356;&#26032; nginx &#29366;&#24577;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org37a50db" class="outline-3">
+<h3 id="org37a50db">静态网站部署</h3>
+<div class="outline-text-3" id="text-org37a50db">
+<p>
+将我们的网页内容（假设为 <code>index</code> 文件夹 ）上传到服务器的 <code>/usr/local/nginx</code> 下，并更新 <code>/usr/local/nginx/conf</code> 下的 <code>nginx.conf</code> 配置文件，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr"> 1: </span>worker_processes 1;
+<span class="linenr"> 2: </span>...
+<span class="linenr"> 3: </span>http <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 4: </span>    ...
+<span class="linenr"> 5: </span>    server <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 6: </span>        listen      80;
+<span class="linenr"> 7: </span>        server_name localhost&#65307;
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>        location / <span style="color: #A6E22E;">{</span>
+<span class="linenr">10: </span>            root  index;                <span style="color: #75715E;"># </span><span style="color: #75715E;">&#30446;&#24405;&#21517;&#31216;</span>
+<span class="linenr">11: </span>            index index.html index.htm; <span style="color: #75715E;"># </span><span style="color: #75715E;">&#25991;&#20214;&#21517;&#31216;</span>
+<span class="linenr">12: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">13: </span>        ...
+<span class="linenr">14: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">15: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+重启 Nginx 即可，打开服务器的 IP 即可访问。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb24e37c" class="outline-3">
+<h3 id="orgb24e37c">配置虚拟主机</h3>
+<div class="outline-text-3" id="text-orgb24e37c">
+<p>
+（1）上传静态网站：
+</p>
+<ul class="org-ul">
+<li>将 <code>index</code> 目录上传至 <code>/usr/local/nginx/index</code> 下；</li>
+<li>将 <code>regist</code> 目录上传至 <code>/usr/local/nginx/regist</code> 下。</li>
+</ul>
+
+<p>
+（2）修改 Nginx 的配置文件：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr"> 1: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#37197;&#32622; index &#35775;&#38382;&#36164;&#28304;</span>
+<span class="linenr"> 2: </span>server <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 3: </span>    listen        80;           <span style="color: #75715E;"># </span><span style="color: #75715E;">&#30417;&#21548;&#31471;&#21475;</span>
+<span class="linenr"> 4: </span>    server_name   localhost;    <span style="color: #75715E;"># </span><span style="color: #75715E;">&#22495;&#21517;&#25110; IP</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>    location / <span style="color: #66D9EF;">{</span>                <span style="color: #75715E;"># </span><span style="color: #75715E;">&#35775;&#38382;&#36335;&#24452;&#37197;&#32622;</span>
+<span class="linenr"> 7: </span>        root      index;
+<span class="linenr"> 8: </span>        index     index.html index.htm;
+<span class="linenr"> 9: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">10: </span>    ...
+<span class="linenr">11: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">12: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#37197;&#32622; regist &#35775;&#38382;&#36164;&#28304;</span>
+<span class="linenr">13: </span>server <span style="color: #AE81FF;">{</span>
+<span class="linenr">14: </span>    listen        81;
+<span class="linenr">15: </span>    server_name   localhost;
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>    location / <span style="color: #66D9EF;">{</span>
+<span class="linenr">18: </span>        root regist;
+<span class="linenr">19: </span>        index regist.html;
+<span class="linenr">20: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">21: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+（3）重启 Nginx ，可以通过 80，81 访问不同的资源。
+</p>
+
+<p>
+综上，就实现了一台虚拟主机部署两个项目，一个 Nginx 虚拟出来了两个主机，实现了 <span class="underline">端口号配置虚拟主机</span> 。
+</p>
+
+<p>
+当然，还可以通 <span class="underline">过域名配置虚拟主机</span> ，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr"> 1: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#37197;&#32622; index &#35775;&#38382;&#36164;&#28304;</span>
+<span class="linenr"> 2: </span>server <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 3: </span>    listen        80;             <span style="color: #75715E;"># </span><span style="color: #75715E;">&#30417;&#21548;&#31471;&#21475;</span>
+<span class="linenr"> 4: </span>    server_name   www.travel.com; <span style="color: #75715E;"># </span><span style="color: #75715E;">&#22495;&#21517;&#25110; IP</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>    location / <span style="color: #66D9EF;">{</span>                  <span style="color: #75715E;"># </span><span style="color: #75715E;">&#35775;&#38382;&#36335;&#24452;&#37197;&#32622;</span>
+<span class="linenr"> 7: </span>        root      index;
+<span class="linenr"> 8: </span>        index     index.html index.htm;
+<span class="linenr"> 9: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">10: </span>    ...
+<span class="linenr">11: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">12: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#37197;&#32622; regist &#35775;&#38382;&#36164;&#28304;</span>
+<span class="linenr">13: </span>server <span style="color: #AE81FF;">{</span>
+<span class="linenr">14: </span>    listen        80;             <span style="color: #75715E;"># </span><span style="color: #75715E;">&#31471;&#21475;&#21495;&#30456;&#21516;</span>
+<span class="linenr">15: </span>    server_name   www.regist.com; <span style="color: #75715E;"># </span><span style="color: #75715E;">&#22495;&#21517;&#19981;&#21516;&#65292;&#20197;&#27492;&#36827;&#34892;&#21306;&#20998;</span>
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>    location / <span style="color: #66D9EF;">{</span>
+<span class="linenr">18: </span>        root regist;
+<span class="linenr">19: </span>        index regist.html;
+<span class="linenr">20: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">21: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0f99b1f" class="outline-3">
+<h3 id="org0f99b1f">反向代理</h3>
+<div class="outline-text-3" id="text-org0f99b1f">
+<p>
+这里我们将实现好的案例（war 包）部署到服务器的 Tomcat 中的根目录下：
+</p>
+<ul class="org-ul">
+<li>为了操作方便（不需要输入对应的项目名称访问）将项目命名为 <code>ROOT.war</code> ；</li>
+<li>将服务器 <code>/usr/local/tomcat/apache-tomcat-7.0.57/webapps</code> 下的内容删除，将打好的包导入即可。</li>
+</ul>
+
+<p>
+此时，输入相应 IP:Port 如 <code>192.168.245.119:8080</code> 即可正常访问。
+</p>
+
+<p>
+接下来，我们看看如何用 Nginx 配置反向代理：
+</p>
+
+<img
+src="/images/web/nginx-11.jpg"
+width="90%"
+height=""
+style="border: 2px solid #eee; padding: 16px 10% 16px 0;"
+title=""
+/>
+
+<p>
+重新启动 Nginx ，输入 <code>www.travel.com</code> 即可实现访问。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb9d0cda" class="outline-3">
+<h3 id="orgb9d0cda">负载均衡</h3>
+<div class="outline-text-3" id="text-orgb9d0cda">
+<p>
+什么是负载均衡呢？
+</p>
+
+<p>
+负载均衡（i.e. Load Balance），就是分摊到多个操作单元上进行执行，例如 Web 服务器、FTP 服务器、企业关键应用服务器等，从而共同完成工作任务。
+</p>
+
+<img
+src="/images/web/nginx-12.jpg"
+width="500"
+height=""
+style="border: 2px solid #eee;"
+title=""
+/>
+
+<p>
+实际应该部署到不同的服务器上，这里为了演示方便，就在同一台服务器配置三个 Tomcat 。
+</p>
+
+<p>
+将刚才存放工程的 tomcat 复制三份，修改端口分别为 8080，8081，8082 ，修改 <code>server.xml</code>  的端口，分别启动这三个 tomcat 服务。
+</p>
+
+<p>
+配置负载均衡：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr"> 1: </span>worker_process 1;
+<span class="linenr"> 2: </span>...
+<span class="linenr"> 3: </span>http <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 4: </span>    ...
+<span class="linenr"> 5: </span>    <span style="color: #75715E;"># </span><span style="color: #75715E;">&#37197;&#32622;&#35201;&#20195;&#29702;&#30340;&#32593;&#22336;</span>
+<span class="linenr"> 6: </span>    <span style="color: #75715E;"># </span><span style="color: #75715E;">&#40664;&#35748;&#22914;&#19979;&#37197;&#32622;&#26159;&#24179;&#26435;&#30340;&#65292;&#38543;&#26426;&#36873;&#27010;&#29575;&#30456;&#21516; 1:1:1</span>
+<span class="linenr"> 7: </span>    <span style="color: #75715E;"># </span><span style="color: #75715E;">&#20063;&#21487;&#20197;&#36890;&#36807;&#21152;&#26435;&#65292;&#22914;&#65306;</span>
+<span class="linenr"> 8: </span>    <span style="color: #75715E;"># </span><span style="color: #75715E;">server 192.168.245.129:8080 weight=2;</span>
+<span class="linenr"> 9: </span>    <span style="color: #75715E;"># </span><span style="color: #75715E;">&#27492;&#26102;&#30340;&#26435;&#37325;&#27604;&#20026; 2:1:1</span>
+<span class="linenr">10: </span>    upstream tomcat-travel <span style="color: #66D9EF;">{</span>
+<span class="linenr">11: </span>        server 192.168.245.129:8080;
+<span class="linenr">12: </span>        server 192.168.245.129:8081;
+<span class="linenr">13: </span>        server 192.168.245.129:8082;
+<span class="linenr">14: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>    <span style="color: #75715E;"># </span><span style="color: #75715E;">&#37197;&#32622; index &#35775;&#38382;&#36164;&#28304;</span>
+<span class="linenr">17: </span>    server <span style="color: #66D9EF;">{</span>
+<span class="linenr">18: </span>        listen        80;
+<span class="linenr">19: </span>        server_name   www.travel.com;
+<span class="linenr">20: </span>
+<span class="linenr">21: </span>        location / <span style="color: #A6E22E;">{</span>
+<span class="linenr">22: </span>            <span style="color: #75715E;"># </span><span style="color: #75715E;">root    index;</span>
+<span class="linenr">23: </span>            <span style="color: #75715E;"># </span><span style="color: #75715E;">&#23545;&#24212;&#35201;&#20195;&#29702;&#30340;&#32593;&#22336;</span>
+<span class="linenr">24: </span>            proxy_pass http://tomcat-travel;
+<span class="linenr">25: </span>            index      index.html index.htm;
+<span class="linenr">26: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">27: </span>        ...
+<span class="linenr">28: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">29: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<essay>
+如 Nginx 这种配置性的软件，用时查询即可，重在理解它的原理。
+</essay>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://www.zhihu.com/question/24723688/answer/583903276">https://www.zhihu.com/question/24723688/answer/583903276</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://blog.csdn.net/nanhuaibeian/article/details/106927143">https://blog.csdn.net/nanhuaibeian/article/details/106927143</a>
+</p></div></div>
+
+</div>
+</div></div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-23 Fri 10:38</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-10-26 Mon 09:49</p>
+<p class="date">Created: 2020-10-26 Mon 15:51</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
