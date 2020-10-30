@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-10-29 Thu 16:06 -->
+<!-- 2020-10-29 Thu 17:49 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Compilers</title>
@@ -23,14 +23,14 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4da8e78">编译过程概述</a>
+<li><a href="#org5a87c57">编译过程概述</a>
 <ul>
-<li><a href="#org2c838ea">词法分析</a></li>
-<li><a href="#orgdf94375">语法分析</a></li>
-<li><a href="#orgd94f197">从语法树到中间代码再到目标代码</a></li>
+<li><a href="#orgf2a1ba2">词法分析</a></li>
+<li><a href="#orgfb0d6fd">语法分析</a></li>
+<li><a href="#org0b7883c">从语法树到中间代码再到目标代码</a></li>
 </ul>
 </li>
-<li><a href="#org6a0215c">编译原理三大经典</a></li>
+<li><a href="#org076e178">编译原理三大经典</a></li>
 </ul>
 </div>
 </div>
@@ -38,9 +38,9 @@
 谁能想到，有一天，百度百科上的资料，竟然也有料……
 </essay>
 
-<div id="outline-container-org4da8e78" class="outline-2">
-<h2 id="org4da8e78">编译过程概述<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-org4da8e78">
+<div id="outline-container-org5a87c57" class="outline-2">
+<h2 id="org5a87c57">编译过程概述<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-org5a87c57">
 <p>
 源程序是给人看的，本质上就是文本文件，可以用文本编辑程序打开、编辑，但计算机无法直接执行源程序，需要通过一个专门的程序将源程序编译为计算机可执行程序，这个专门的程序就是 <span class="underline">编译器</span> 。
 </p>
@@ -50,29 +50,29 @@
 </p>
 </div>
 
-<div id="outline-container-org2c838ea" class="outline-3">
-<h3 id="org2c838ea">词法分析</h3>
-<div class="outline-text-3" id="text-org2c838ea">
+<div id="outline-container-orgf2a1ba2" class="outline-3">
+<h3 id="orgf2a1ba2">词法分析</h3>
+<div class="outline-text-3" id="text-orgf2a1ba2">
 <p>
 我们眼中看到的源代码，如下：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-c"><span class="linenr"> 1: </span><span style="color: #66D9EF;">int</span> <span style="color: #A6E22E;">fun</span><span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">a</span>, <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">b</span><span style="color: #AE81FF;">)</span>;
-<span class="linenr"> 2: </span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">m</span>=10;
-<span class="linenr"> 3: </span><span style="color: #66D9EF;">int</span> <span style="color: #A6E22E;">main</span><span style="color: #AE81FF;">()</span>
-<span class="linenr"> 4: </span><span style="color: #AE81FF;">{</span>
-<span class="linenr"> 5: </span>  <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">i</span>=4;
-<span class="linenr"> 6: </span>  <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">j</span>=5;
-<span class="linenr"> 7: </span>  m = fun<span style="color: #66D9EF;">(</span>i,j<span style="color: #66D9EF;">)</span>;
-<span class="linenr"> 8: </span>  <span style="color: #F92672;">return</span> 0;
-<span class="linenr"> 9: </span><span style="color: #AE81FF;">}</span>
-<span class="linenr">10: </span><span style="color: #66D9EF;">int</span> <span style="color: #A6E22E;">fun</span><span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">a</span>, <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">b</span><span style="color: #AE81FF;">)</span>
-<span class="linenr">11: </span><span style="color: #AE81FF;">{</span>
-<span class="linenr">12: </span>  <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">c</span>=0;
+<pre class="src src-c"><span class="linenr"> 1: </span><span style="color: #5FD7FF;">int</span> <span style="color: #87D700;">fun</span><span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">a</span>, <span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">b</span><span style="color: #AF87FF;">)</span>;
+<span class="linenr"> 2: </span><span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">m</span>=10;
+<span class="linenr"> 3: </span><span style="color: #5FD7FF;">int</span> <span style="color: #87D700;">main</span><span style="color: #AF87FF;">()</span>
+<span class="linenr"> 4: </span><span style="color: #AF87FF;">{</span>
+<span class="linenr"> 5: </span>  <span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">i</span>=4;
+<span class="linenr"> 6: </span>  <span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">j</span>=5;
+<span class="linenr"> 7: </span>  m = fun<span style="color: #5FD7FF;">(</span>i,j<span style="color: #5FD7FF;">)</span>;
+<span class="linenr"> 8: </span>  <span style="color: #FF1493;">return</span> 0;
+<span class="linenr"> 9: </span><span style="color: #AF87FF;">}</span>
+<span class="linenr">10: </span><span style="color: #5FD7FF;">int</span> <span style="color: #87D700;">fun</span><span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">a</span>, <span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">b</span><span style="color: #AF87FF;">)</span>
+<span class="linenr">11: </span><span style="color: #AF87FF;">{</span>
+<span class="linenr">12: </span>  <span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">c</span>=0;
 <span class="linenr">13: </span>  c=a+b;
-<span class="linenr">14: </span>  <span style="color: #F92672;">return</span> c;
-<span class="linenr">15: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">14: </span>  <span style="color: #FF1493;">return</span> c;
+<span class="linenr">15: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -122,11 +122,11 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgdf94375" class="outline-3">
-<h3 id="orgdf94375">语法分析</h3>
-<div class="outline-text-3" id="text-orgdf94375">
+<div id="outline-container-orgfb0d6fd" class="outline-3">
+<h3 id="orgfb0d6fd">语法分析</h3>
+<div class="outline-text-3" id="text-orgfb0d6fd">
 <p>
-如果说词法分析的作用是从连续的字符中识别出标识符、关键字、数字、运算符并存储为符号（token）流，语法分析的作用就是从词法分析识别出的符号流中识别出符合 C 语言规范的语句。
+如果说词法分析的作用是从连续的字符中识别出标识符、关键字、数字、运算符并存储为 <span class="underline">符号（token）流</span> ，语法分析的作用就是从词法分析识别出的符号流中识别出符合 C 语言规范的语句。
 </p>
 
 <essay>
@@ -185,9 +185,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgd94f197" class="outline-3">
-<h3 id="orgd94f197">从语法树到中间代码再到目标代码</h3>
-<div class="outline-text-3" id="text-orgd94f197">
+<div id="outline-container-org0b7883c" class="outline-3">
+<h3 id="org0b7883c">从语法树到中间代码再到目标代码</h3>
+<div class="outline-text-3" id="text-org0b7883c">
 <p>
 至此，语法树已经承载了源程序的全部信息，后续的转换工作就和源程序没关系了。
 </p>
@@ -214,7 +214,7 @@ title=""
 </p>
 
 <p>
-运行时结构也是一样维的，上图左侧部分的转换结果将更贴近运行时结构。
+运行时结构也是一维的，上图左侧部分的转换结果将更贴近运行时结构。
 </p>
 
 <p>
@@ -236,9 +236,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org6a0215c" class="outline-2">
-<h2 id="org6a0215c">编译原理三大经典</h2>
-<div class="outline-text-2" id="text-org6a0215c">
+<div id="outline-container-org076e178" class="outline-2">
+<h2 id="org076e178">编译原理三大经典</h2>
+<div class="outline-text-2" id="text-org076e178">
 <table>
 
 <colgroup>
@@ -260,27 +260,39 @@ title=""
 </thead>
 <tbody>
 <tr>
-<td class="org-left">龙书 Dragon book</td>
+<td class="org-left">龙书 Dragon</td>
 <td class="org-left">《Compilers: Principles, Techniques, and Tools》</td>
 <td class="org-left">《编译原理技术和工具》</td>
 <td class="org-left">Alfred V.Aho, Ravi Sethi, Jeffrey D.Ullman</td>
 </tr>
 
 <tr>
-<td class="org-left">虎书 Tiger book</td>
+<td class="org-left">虎书 Tiger</td>
 <td class="org-left">《Modern Compiler Implementation in C》</td>
 <td class="org-left">《现代编译原理 - C 语言描述》</td>
 <td class="org-left">Andrew W.Appel, Jens Palsberg</td>
 </tr>
 
 <tr>
-<td class="org-left">鲸书 Whale book</td>
+<td class="org-left">鲸书 Whale</td>
 <td class="org-left">《Advanced Compiler Design and Implementation》</td>
 <td class="org-left">《高级编译器设计与实现 》</td>
 <td class="org-left">Steven S.Muchnick</td>
 </tr>
 </tbody>
 </table>
+
+<p>
+龙书是 Alfred V.Aho 等人于 1986 年出版的，由于出版年代较早，其中包含部分过时的技术并且没有反映一些新的编译技术。新编的《编译原理》抛弃诸如算符优先分析等过时技术，增加面向对象编译、类型检查等新技术。
+</p>
+
+<p>
+虎书出版比较晚，与《编译原理》的知识点差不多，但增加了数据流分析、循环优化、内存管理等内容。与虎书比，《编译原理》更适合国内的编译原理课程教学，有 C 版、Java 版和 ML 版。
+</p>
+
+<p>
+鲸书侧重在对编译器后端优化的处理。在本科阶段的编译教学中旨在让学生对程序设计语言的编译全过程有系统的理解，因此会介绍编译器后端的处理技术，但不注重优化技术。鲸书更适合作为研究生的教材或参考书。
+</p>
 </div>
 </div>
 <div id="footnotes">
@@ -296,7 +308,7 @@ title=""
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-29 Thu 12:06</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-10-29 Thu 16:06</p>
+<p class="date">Created: 2020-10-29 Thu 17:49</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
