@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-02 Mon 16:44 -->
+<!-- 2020-11-02 Mon 18:51 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>五笔那些事</title>
+<title>五笔那些事儿</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
@@ -18,13 +18,386 @@
 </head>
 <body>
 <div id="content">
-<h1 class="title">五笔那些事</h1>
+<h1 class="title">五笔那些事儿</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org8e285da">五笔是什么</a></li>
+<li><a href="#org10c2a8c">键盘分区和区位号</a></li>
+<li><a href="#org3eac763">字根的输入</a>
+<ul>
+<li><a href="#orgf24c1fd">键名字根</a></li>
+<li><a href="#org667cae3">字根歌</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+→ 本文主要摘录自 <a href="http://www.wubizi.net/xuewubi/">问问学五笔</a><sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>
+</p>
+
+<img
+src="/images/wubi/wenwen.jpg"
+width="300"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
+
+<div id="outline-container-org8e285da" class="outline-2">
+<h2 id="org8e285da">五笔是什么</h2>
+<div class="outline-text-2" id="text-org8e285da">
+<p>
+我们主要讲 86 版的五笔，它的通用性最好。
+</p>
+
+<p>
+<b>五笔的基本原理是什么呢？</b>
+</p>
+
+<p>
+汉字都是由笔划或部首组成的。为了输入汉字，我们把汉字折成一些最常用的基本单位 &#x2013; <span class="underline">字根</span> ，字根可以是汉字的偏旁部首，可以是部首的一部分，甚至是笔划。
+</p>
+
+<p>
+取出这引起字根后，把它们按一定的规律分类，再把这些字根依据科学原理分配在键盘上，作为输入汉字的基本单位。
+</p>
+
+<p>
+当要输入汉字时，我们就按照汉字的书写顺序依次按键盘上与字根对应的键，组成一个代码，系统根据输入字根组成的代码，在五笔输入的字库中检索出所要的字。
+</p>
+
+<essay>
+拆字 → 分配 → 组代 → 字库检索
+</essay>
+
+<p>
+我们已经了解了五笔的基本原理，那么究竟应该如何学习五笔呢？
+</p>
+
+<p>
+三个方面，如下：
+</p>
+<ol class="org-ol">
+<li>知道键盘上的每个键位对应着哪些字根；</li>
+<li>学习如何把汉字拆分成五笔字根；</li>
+<li>输入字根对应的字母，必要时要键入识别码。</li>
+</ol>
+
+<essay>
+分三步：把冰箱门打开，把大象装进去，把冰箱门关上。
+</essay>
+</div>
+</div>
+
+<div id="outline-container-org10c2a8c" class="outline-2">
+<h2 id="org10c2a8c">键盘分区和区位号</h2>
+<div class="outline-text-2" id="text-org10c2a8c">
+<p>
+五笔基本字根有 130 种，加上一些基本字根的变型，共有 200 个左右，这些字根分配在键盘上的 25 个键（除 Z 外）上，每个键位都对应着几个甚至几十个字根。
+</p>
+
+<p>
+我们知道，汉字有五种基本笔划： <span class="underline">横（提）、竖（竖勾）、撇、捺（点）、折</span> ，所有的字根都是由这五种笔划组成的。
+</p>
+
+<p>
+按照每个字根的起笔笔划，把这些字根分为五个区，如下：
+</p>
+
+<img
+src="/images/wubi/wubi-1.jpg"
+width="400"
+height=""
+style=""
+title=""
+/>
+
+<p>
+每个区有五个位，按一定的顺序编号，就叫 <span class="underline">区位号</span> （都是从键盘中间开始，向外扩展进行编号），如下：
+</p>
+
+<img
+src="/images/wubi/wubi-2.jpg"
+width="460"
+height=""
+style=""
+title=""
+/>
+
+<blockquote>
+<p>
+如何输入这五个基本笔划？
+</p>
+
+<table>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">笔划</td>
+<td class="org-left">一</td>
+<td class="org-left">丨</td>
+<td class="org-left">丿</td>
+<td class="org-left">丶</td>
+<td class="org-left">乙</td>
+</tr>
+
+<tr>
+<td class="org-left">代码</td>
+<td class="org-left"><code>ggll</code></td>
+<td class="org-left"><code>hhll</code></td>
+<td class="org-left"><code>ttll</code></td>
+<td class="org-left"><code>yyll</code></td>
+<td class="org-left"><code>nnll</code></td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org3eac763" class="outline-2">
+<h2 id="org3eac763">字根的输入</h2>
+<div class="outline-text-2" id="text-org3eac763">
+<p>
+→ 更多详查 <a href="http://www.wubizi.net/wubi/wbfjtu.html">五笔字根分解图详解</a><sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>
+</p>
+</div>
+
+<div id="outline-container-orgf24c1fd" class="outline-3">
+<h3 id="orgf24c1fd">键名字根</h3>
+<div class="outline-text-3" id="text-orgf24c1fd">
+<p>
+让我们再来看看上面这张图中标红的字体，每个区位选取了一个最常用的字根作为键的名字，该字根称为 <span class="underline">键名字根</span> 。
+</p>
+
+<essay>
+Hmm... 怎么说呢，“被”这个字我经常使用，但每次都要输入“puhc”四个键...
+</essay>
+
+<p>
+如何输入键名字根呢？对应的键按四下就行了，如：
+</p>
+
+<table>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">键名字根</td>
+<td class="org-left">王</td>
+<td class="org-left">土</td>
+<td class="org-left">大</td>
+<td class="org-left">&#x2026;</td>
+</tr>
+
+<tr>
+<td class="org-left">代码</td>
+<td class="org-left"><code>gggg</code></td>
+<td class="org-left"><code>ffff</code></td>
+<td class="org-left"><code>dddd</code></td>
+<td class="org-left"><code>xxxx</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org667cae3" class="outline-3">
+<h3 id="org667cae3">字根歌</h3>
+<div class="outline-text-3" id="text-org667cae3">
+<table>
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">31</td>
+<td class="org-left">T</td>
+<td class="org-left">禾竹一撇双人立，反文条头共三一</td>
+<td class="org-right">41</td>
+<td class="org-left">Y</td>
+<td class="org-left">言文方广在四一,高头一捺谁人去</td>
+</tr>
+
+<tr>
+<td class="org-right">32</td>
+<td class="org-left">R</td>
+<td class="org-left">白手看头三二斤</td>
+<td class="org-right">42</td>
+<td class="org-left">U</td>
+<td class="org-left">立辛两点六门疒</td>
+</tr>
+
+<tr>
+<td class="org-right">33</td>
+<td class="org-left">E</td>
+<td class="org-left">月彡（衫）乃用家衣底（爱头豹脚舟字底）</td>
+<td class="org-right">43</td>
+<td class="org-left">I</td>
+<td class="org-left">水旁兴头小倒立</td>
+</tr>
+
+<tr>
+<td class="org-right">34</td>
+<td class="org-left">W</td>
+<td class="org-left">人和八，登祭头</td>
+<td class="org-right">44</td>
+<td class="org-left">O</td>
+<td class="org-left">火业头，四点米</td>
+</tr>
+
+<tr>
+<td class="org-right">35</td>
+<td class="org-left">Q</td>
+<td class="org-left">金勺缺点无尾鱼，犬旁留叉儿一点夕，氏无七</td>
+<td class="org-right">45</td>
+<td class="org-left">P</td>
+<td class="org-left">之字军，摘礻（示）衤（衣）（之字军盖建道底）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">11</td>
+<td class="org-left">G</td>
+<td class="org-left">王旁青头戋（兼）五一（“兼”与“戋”同音）</td>
+<td class="org-right">21</td>
+<td class="org-left">H</td>
+<td class="org-left">目具上止卜虎皮（“具上”指具字的上部）</td>
+</tr>
+
+<tr>
+<td class="org-right">12</td>
+<td class="org-left">F</td>
+<td class="org-left">土士二干十寸雨（可别忘了革字底）</td>
+<td class="org-right">22</td>
+<td class="org-left">J</td>
+<td class="org-left">日早两竖与虫依</td>
+</tr>
+
+<tr>
+<td class="org-right">13</td>
+<td class="org-left">D</td>
+<td class="org-left">大犬三羊古石厂（羊底龙头套上套下)</td>
+<td class="org-right">23</td>
+<td class="org-left">K</td>
+<td class="org-left">口与川，字根稀</td>
+</tr>
+
+<tr>
+<td class="org-right">14</td>
+<td class="org-left">S</td>
+<td class="org-left">木丁西</td>
+<td class="org-right">24</td>
+<td class="org-left">L</td>
+<td class="org-left">田甲方框四车力（“方框”即“口”）</td>
+</tr>
+
+<tr>
+<td class="org-right">15</td>
+<td class="org-left">A</td>
+<td class="org-left">工戈草头右框七（“右框”即“匚”)</td>
+<td class="org-right">25</td>
+<td class="org-left">M</td>
+<td class="org-left">山由贝，下框几</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">51</td>
+<td class="org-left">C</td>
+<td class="org-left">又巴马，丢矢矣，（“矣”去“矢”为“厶”）</td>
+<td class="org-right">54</td>
+<td class="org-left">N</td>
+<td class="org-left">已半巳满不出己，左框折尸心和羽</td>
+</tr>
+
+<tr>
+<td class="org-right">52</td>
+<td class="org-left">X</td>
+<td class="org-left">慈母无心弓和匕，幼无力（“幼无力”即“幺”）</td>
+<td class="org-right">55</td>
+<td class="org-left">B</td>
+<td class="org-left">子耳了也框向上。（“框向上”即“凵”）</td>
+</tr>
+
+<tr>
+<td class="org-right">53</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-left">V</td>
+<td class="org-left">女刀九臼山朝西。（“山朝西”即“彐”）</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<a href="http://www.wubizi.net/xuewubi/">http://www.wubizi.net/xuewubi/</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+<a href="http://www.wubizi.net/wubi/wbfjtu.html">http://www.wubizi.net/wubi/wbfjtu.html</a>
+</p></div></div>
 
 </div>
+</div></div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-11-02 Mon 16:43</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-11-02 Mon 16:44</p>
+<p class="date">Created: 2020-11-02 Mon 18:51</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
