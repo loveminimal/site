@@ -22,6 +22,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./jenkins.org][Jenkins]]             |
 | [[./nginx.org][Nginx]]               |
 | [[./compilers.org][Compilers]]           |
+| [[./wubi.org][WuBi]]                |
 
 | GTD             |
 |-----------------|
