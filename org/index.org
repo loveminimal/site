@@ -31,6 +31,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 |-----------------------|
 | [[./web-developer-roadmap.org][Web Developer Roadmap]] |
 | [[./js-module.org][JavaScript Module]]     |
+| [[./webpack-dev-server-proxy.org][Webpack Proxy]]         |
 
 | CSS          |
 |--------------|
