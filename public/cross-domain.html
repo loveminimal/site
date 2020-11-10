@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-03 Tue 12:38 -->
+<!-- 2020-11-10 Tue 17:01 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cross Domain</title>
@@ -39,7 +39,12 @@
 <li><a href="#org52b5de4">CORS</a></li>
 </ul>
 </li>
-<li><a href="#org907204a"><span class="todo TODO">TODO</span> CORS 详解</a></li>
+<li><a href="#org907204a">CORS 详解</a>
+<ul>
+<li><a href="#orgbdb1d6b">两种请求</a></li>
+<li><a href="#orgdbe70c1">简单请求</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -547,18 +552,184 @@ CORS （Cross-Origin Resource Sharing）是跨域资源分享的缩写，它是 
 </div>
 
 <div id="outline-container-org907204a" class="outline-2">
-<h2 id="org907204a"><span class="todo TODO">TODO</span> CORS 详解</h2>
+<h2 id="org907204a">CORS 详解</h2>
 <div class="outline-text-2" id="text-org907204a">
 <p>
 CORS 允许浏览器向跨源服务器，发出 <code>XMLHttpRequest</code> 请求，从而克服了 AJAX 只能同源使用的限制。接下来，我们来深入认识下 CORS 的内部机制。
 </p>
+
+<p>
+CORS 需要浏览器和服务器同时支持， <b>整个 CORS 通信过程，都是浏览器自动完成</b> ，不需要用户参与。
+</p>
+
+<blockquote>
+<p>
+对于开发者来说，CORS 通信与同源的 AJAX 通信没有差别，代码完全一样。浏览器一旦发现 AJAX 请求资源，就会 <b>自动添加一些附加的头信息</b> ，有时还会多出一次附加的请求，但用户不会有感觉。
+</p>
+</blockquote>
+
+<p>
+因此，实现 CORS 通信的关键是服务器，只要服务器实现了 CORS 接口，就可以跨源通信。
+</p>
+</div>
+
+<div id="outline-container-orgbdb1d6b" class="outline-3">
+<h3 id="orgbdb1d6b">两种请求</h3>
+<div class="outline-text-3" id="text-orgbdb1d6b">
+<p>
+浏览器将 CORS 请求分为两类： <span class="underline">简单请求</span> （simple request）和 <span class="underline">非简单请求</span> （not-so-simple request）。
+</p>
+
+<p>
+只要同时满足以下两在条件，就属于简单请求，如下：
+</p>
+<ul class="org-ul">
+<li>请求方法是以下三种之一： <code>HEAD、GET、POST</code> ；</li>
+<li>HTTP 的头信息不超出以下几种字段： <code>Accept、Accept-Language、Content-Language、Last-Event-ID、Content-Type</code> （只限于三个值 <code>application/x-www-form-urlencode、multipart/form-data、text/plain</code> ） 。</li>
+</ul>
+
+<p>
+这是为了兼容表单，因为历史上表单一直可以发出跨域请求。AJAX 的跨域设计就是，只要表单可以发，AJAX 就可以直接发。
+</p>
+
+<p>
+*注：凡是不同时满足上面两个条件，就属于非简单请求，浏览器对这两种请求的处理，是不一样的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdbe70c1" class="outline-3">
+<h3 id="orgdbe70c1">简单请求</h3>
+<div class="outline-text-3" id="text-orgdbe70c1">
+<p>
+<span class="underline">1. 基本流程</span>
+</p>
+
+<p>
+对于简单请求，浏览器直接发出 CORS 请求，具体来说，就是在头信息中，增加一个 <code>Origin</code> 字段。
+</p>
+
+<p>
+如下面这个例子，浏览器发现这次跨源 AJAX 请求是简单请求，就自动在头信息中，添加一个 <code>Origin</code> 字段：
+</p>
+
+<pre class="example">
+GET /cors HTTP/1.1
+Origin: http://api.bob.com
+Host: api.alice.com
+Accept-Language: en-US
+Connection: keep-alive
+User-Agent: Mozilla/5.0...
+</pre>
+
+<p>
+上面的头信息中， <code>Origin</code> 字段用来说明，本次请求来自哪个源（协议+域名+端口），服务器根据这个值决定是否同意这次请求。
+</p>
+
+<p>
+<b>1.不在服务器许可范围内</b>
+</p>
+
+<p>
+如果 <code>Origin</code> 指定的源不在许可范围内，服务器会返回一个正常的 HTTP 回应。浏览器发现这个回应的头信息没有包含 <code>Access-Control-Allow-Origin</code> 字段，就知道出错了，从面抛出一个错误，被 <code>XMLHttpRequest</code> 的 <code>onerror</code> 回调函数捕获。
+</p>
+
+<p>
+<b>*注：这种错误无法通过状态码识别，因为 HTTP 回应的状态码可能是 200 。</b>
+</p>
+
+<p>
+<b>2.在服务器许可范围内</b>
+</p>
+
+<p>
+如果 <code>Origin</code> 指定的域名在许可范围内，服务器返回的响应，会多出几个头信息字段，如下：
+</p>
+
+<pre class="example">
+Access-Control-Allow-Origin: http://api.bob.com
+Access-Control-Allow-Credentials: true
+Access-Control-Expose-Headers: FooBar
+Content-Type: text/html; charset=utf-8
+</pre>
+
+<p>
+上面的信息头中，有三个与 CORS 请求相关的字段，都以 <code>Access-Control-</code> 开头。
+</p>
+
+<p>
+（1）Access-Control-Allow-Origin
+</p>
+
+<p>
+该字段是 <b>必须</b> 的，它的值要么是请求时 <code>Origin</code> 字段的值，要么是一个 <code>*</code> （表示接受任意域名的请求）。
+</p>
+
+<p>
+（2）Access-Control-Allow-Credentials
+</p>
+
+<p>
+该字段可选，它的值是一个布尔值，表示是否允许发送 Cookie 。
+</p>
+
+<p>
+默认情况下，Cookie 不包括在 CORS 请求之中，设为 <code>true</code> ，即表示服务器明确许可 Cookie 可以包含在请求中，一起发给服务器。
+</p>
+
+<p>
+*注：其实，这个值也只能设为 <code>true</code> ，如果服务器不要浏览器发送 Cookie ，删除该字段即可。
+</p>
+
+<p>
+（3）Access-Control-Expose-Headers
+</p>
+
+<p>
+该字段可选，CORS 请求时， <code>XMLHttpRequest</code> 对象的 <code>getResponseHeader()</code> 方法只能拿到 6 个基本字段： <code>Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma</code> 。如果想拿到其他字段，就必须在 <code>Access-Control-Expose-Headers</code> 里面指定。如下面的例子中就指定了 <code>FooBar</code> ，如此便可以通过 <code>getResponseHeader('FooBar')</code> 来返回 <code>FooBar</code> 字段的值。
+</p>
+
+<p>
+<span class="underline">2. withCredentials 属性</span>
+</p>
+
+<p>
+上面说到，CORS 请求默认不发送 Cookie 和 HTTP 认证信息。如果要把 Cookie 发到服务器，一方面要服务器同意，指定 <code>Access-Control-Allow-Credentials</code> 字段：
+</p>
+
+<pre class="example">
+Access-Control-Allow-Credentials: true
+</pre>
+
+<p>
+另一方面，开发者必须在 AJAX 请求中打开 <code>withCredentials</code> 属性，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">xhr</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">XMLHttpRequest</span><span style="color: #AE81FF;">()</span>
+<span class="linenr">2: </span>xhr.withCredentials = <span style="color: #AE81FF;">true</span>
+</pre>
+</div>
+
+<p>
+否则，即使服务器同意发送 Cookie ，浏览器也不会发送。或者，服务器要求设置 Cookie ，浏览器也不会处理。
+</p>
+
+<p>
+但是，如果省略 <code>withCredentials</code> 设置，有的浏览器还是会一起发送 Cookie 。
+</p>
+
+<p>
+&#x2026;
+</p>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-11-03 Tue 09:36</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-11-03 Tue 12:38</p>
+<p class="date">Created: 2020-11-10 Tue 17:01</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

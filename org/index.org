@@ -34,6 +34,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./js-module.org][JavaScript Module]]     |
 | [[./webpack-dev-server-proxy.org][Webpack Proxy]]         |
 | [[./cross-domain.org][Cross Domain]]          |
+| [[./drag-and-drop.org][Drag and Drop]]         |
 
 | CSS          |
 |--------------|

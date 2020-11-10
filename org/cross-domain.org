@@ -347,7 +347,101 @@ WebSocket 是一种通信协议，使用 =ws://= （非加密）和 =wss://= （
 
 CORS （Cross-Origin Resource Sharing）是跨域资源分享的缩写，它是 W3C 标准，是 *跨源 AJAX 请求的根本解决办法* 。相比 JSONP 只能发 =GET= 请求，CORS 允许任何类型的请求。
 
-** TODO CORS 详解
+** CORS 详解
 
 CORS 允许浏览器向跨源服务器，发出 =XMLHttpRequest= 请求，从而克服了 AJAX 只能同源使用的限制。接下来，我们来深入认识下 CORS 的内部机制。
 
+CORS 需要浏览器和服务器同时支持， *整个 CORS 通信过程，都是浏览器自动完成* ，不需要用户参与。
+
+#+BEGIN_QUOTE
+对于开发者来说，CORS 通信与同源的 AJAX 通信没有差别，代码完全一样。浏览器一旦发现 AJAX 请求资源，就会 *自动添加一些附加的头信息* ，有时还会多出一次附加的请求，但用户不会有感觉。
+#+END_QUOTE
+
+因此，实现 CORS 通信的关键是服务器，只要服务器实现了 CORS 接口，就可以跨源通信。
+
+*** 两种请求
+
+浏览器将 CORS 请求分为两类： _简单请求_ （simple request）和 _非简单请求_ （not-so-simple request）。
+
+只要同时满足以下两在条件，就属于简单请求，如下：
+- 请求方法是以下三种之一： =HEAD、GET、POST= ；
+- HTTP 的头信息不超出以下几种字段： =Accept、Accept-Language、Content-Language、Last-Event-ID、Content-Type= （只限于三个值 =application/x-www-form-urlencode、multipart/form-data、text/plain= ） 。
+
+这是为了兼容表单，因为历史上表单一直可以发出跨域请求。AJAX 的跨域设计就是，只要表单可以发，AJAX 就可以直接发。
+
+*注：凡是不同时满足上面两个条件，就属于非简单请求，浏览器对这两种请求的处理，是不一样的。
+
+*** 简单请求
+
+_1. 基本流程_
+
+对于简单请求，浏览器直接发出 CORS 请求，具体来说，就是在头信息中，增加一个 =Origin= 字段。
+
+如下面这个例子，浏览器发现这次跨源 AJAX 请求是简单请求，就自动在头信息中，添加一个 =Origin= 字段：
+
+#+BEGIN_EXAMPLE
+  GET /cors HTTP/1.1
+  Origin: http://api.bob.com
+  Host: api.alice.com
+  Accept-Language: en-US
+  Connection: keep-alive
+  User-Agent: Mozilla/5.0...
+#+END_EXAMPLE
+
+上面的头信息中， =Origin= 字段用来说明，本次请求来自哪个源（协议+域名+端口），服务器根据这个值决定是否同意这次请求。
+
+*1.不在服务器许可范围内*
+
+如果 =Origin= 指定的源不在许可范围内，服务器会返回一个正常的 HTTP 回应。浏览器发现这个回应的头信息没有包含 =Access-Control-Allow-Origin= 字段，就知道出错了，从面抛出一个错误，被 =XMLHttpRequest= 的 =onerror= 回调函数捕获。
+
+**注：这种错误无法通过状态码识别，因为 HTTP 回应的状态码可能是 200 。*
+
+*2.在服务器许可范围内*
+
+如果 =Origin= 指定的域名在许可范围内，服务器返回的响应，会多出几个头信息字段，如下：
+
+#+BEGIN_EXAMPLE
+  Access-Control-Allow-Origin: http://api.bob.com
+  Access-Control-Allow-Credentials: true
+  Access-Control-Expose-Headers: FooBar
+  Content-Type: text/html; charset=utf-8
+#+END_EXAMPLE
+
+上面的信息头中，有三个与 CORS 请求相关的字段，都以 =Access-Control-= 开头。
+
+（1）Access-Control-Allow-Origin
+
+该字段是 *必须* 的，它的值要么是请求时 =Origin= 字段的值，要么是一个 =*= （表示接受任意域名的请求）。
+
+（2）Access-Control-Allow-Credentials
+
+该字段可选，它的值是一个布尔值，表示是否允许发送 Cookie 。
+
+默认情况下，Cookie 不包括在 CORS 请求之中，设为 =true= ，即表示服务器明确许可 Cookie 可以包含在请求中，一起发给服务器。
+
+*注：其实，这个值也只能设为 =true= ，如果服务器不要浏览器发送 Cookie ，删除该字段即可。
+
+（3）Access-Control-Expose-Headers
+
+该字段可选，CORS 请求时， =XMLHttpRequest= 对象的 =getResponseHeader()= 方法只能拿到 6 个基本字段： =Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma= 。如果想拿到其他字段，就必须在 =Access-Control-Expose-Headers= 里面指定。如下面的例子中就指定了 =FooBar= ，如此便可以通过 =getResponseHeader('FooBar')= 来返回 =FooBar= 字段的值。
+
+_2. withCredentials 属性_
+
+上面说到，CORS 请求默认不发送 Cookie 和 HTTP 认证信息。如果要把 Cookie 发到服务器，一方面要服务器同意，指定 =Access-Control-Allow-Credentials= 字段：
+
+#+BEGIN_EXAMPLE
+  Access-Control-Allow-Credentials: true
+#+END_EXAMPLE
+
+另一方面，开发者必须在 AJAX 请求中打开 =withCredentials= 属性，如下：
+
+#+BEGIN_SRC js -n
+  var xhr = new XMLHttpRequest()
+  xhr.withCredentials = true
+#+END_SRC
+
+否则，即使服务器同意发送 Cookie ，浏览器也不会发送。或者，服务器要求设置 Cookie ，浏览器也不会处理。
+
+但是，如果省略 =withCredentials= 设置，有的浏览器还是会一起发送 Cookie 。
+
+...
