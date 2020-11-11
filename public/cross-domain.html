@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-10 Tue 17:01 -->
+<!-- 2020-11-11 Wed 17:47 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cross Domain</title>
@@ -43,6 +43,7 @@
 <ul>
 <li><a href="#orgbdb1d6b">两种请求</a></li>
 <li><a href="#orgdbe70c1">简单请求</a></li>
+<li><a href="#org64ae2c2">非简单请求</a></li>
 </ul>
 </li>
 </ul>
@@ -64,8 +65,20 @@
 </p>
 
 <p>
-<span class="underline">同源策略</span> 是由 Netscape 公司于 1995 年引入浏览器的，目前，所有浏览器都实行这个策略。同源策略的目的，是为了保证用户信息的安全，防止恶意的网站窃取数据。
+<span class="underline">同源策略</span> 是由 Netscape 公司于 1995 年引入浏览器的，目前，所有浏览器都实行这个策略。
 </p>
+
+<p>
+为什么需要同源策略呢？
+</p>
+
+<p>
+同源策略的目的，是为了保证用户信息的安全，防止恶意的网站窃取数据。
+</p>
+
+<essay>
+每一件事物都有其产生的源头……
+</essay>
 
 <p>
 最初，它的含义是，A 网页设置的 Cookie ，B 网页不能打开，除非这两个网页“同源” &#x2013; <span class="underline">协议相同、域名相同、端口相同</span> 。
@@ -87,6 +100,10 @@ Cookie 往往用来保存用户的登录状态，所以“同源策略”是必�
 <p>
 跨域的限制当然是有必要的，但实际应用过程中也常常需要在保证相对安全的情况下规避上述的三种限制。
 </p>
+
+<essay>
+往往是这样，建立的束缚就是用来打挣脱的…… 在同源策略不允许跨域的那一刻，也就产生了需要跨域的需求。
+</essay>
 </div>
 </div>
 
@@ -94,15 +111,21 @@ Cookie 往往用来保存用户的登录状态，所以“同源策略”是必�
 <h2 id="org797b50b">Cookie</h2>
 <div class="outline-text-2" id="text-org797b50b">
 <p>
-Cookie 是服务器写入浏览器的一小段信息，只有同源网页才能共享。但是，如果两个网页的一级域名相同，只是二级域名不同，浏览器允许通过设置 <code>document.domain</code> 共享 Cookie 。
+<b>Cookie 是服务器写入浏览器的一小段信息</b> ，只有同源网页才能共享。但是，如果两个网页的一级域名相同，只是二级域名不同，浏览器允许通过设置 <code>document.domain</code> 共享 Cookie 。
 </p>
+
+<blockquote>
+<p>
+*注：Cookie 是服务器写入浏览器的信息哦！
+</p>
+</blockquote>
 
 <p>
 举例来说，A 网页是 <code>http://w1.example.com/a.html</code> ，B 网页是 <code>http://w2.example.com/b.html</code> ，那么只要设置相同的 <code>document.domain</code> ，两个网页就可以共享 Cookie 。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js">document.domain = <span style="color: #E6DB74;">'example.com'</span>;
+<pre class="src src-js"><span class="linenr">1: </span>document.domain = <span style="color: #E6DB74;">'example.com'</span>;
 </pre>
 </div>
 
@@ -111,7 +134,7 @@ Cookie 是服务器写入浏览器的一小段信息，只有同源网页才能�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js">document.cookie = <span style="color: #E6DB74;">"test1=hello"</span>;
+<pre class="src src-js"><span class="linenr">1: </span>document.cookie = <span style="color: #E6DB74;">"test1=hello"</span>;
 </pre>
 </div>
 
@@ -120,12 +143,12 @@ B 网页就可以读到这个 Cookie ：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span style="color: #F92672;">var</span> <span style="color: #FD971F;">allCookie</span> = document.cookie;
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">allCookie</span> = document.cookie;
 </pre>
 </div>
 
 <p>
-*注：这种方法只适用于 Cookie 和 iframe 窗口，LocalStorage 和 IndexDB 无法通过这种方法（要使用 PostMessage API）。
+<b>*注：这种方法只适用于 Cookie 和 iframe 窗口</b> ，LocalStorage 和 IndexDB 无法通过这种方法（要使用 PostMessage API）。
 </p>
 
 <p>
@@ -139,6 +162,10 @@ Set-Cookie: key=value; domain=.example.com; path=/
 <p>
 如此，二级域名和三级域名不用做任何设置，都可以读取这个 Cookie 。
 </p>
+
+<essay>
+旨在理解吧，已经是被时代淘汰了的东东了……
+</essay>
 </div>
 </div>
 
@@ -199,7 +226,7 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js">parent.location.href = target + <span style="color: #E6DB74;">'#'</span> + hash;
+<pre class="src src-js"><span class="linenr">1: </span>parent.location.href = target + <span style="color: #E6DB74;">'#'</span> + hash;
 </pre>
 </div>
 </div>
@@ -260,6 +287,10 @@ Set-Cookie: key=value; domain=.example.com; path=/
 片段识别符和 <code>window.name</code> 两种方法都属于破解，HTML5 为了解决这个问题，引入了一个全新的 API &#x2013; 跨文档通信 API （Cross-document messaging）。
 </p>
 
+<essay>
+所谓破解，就是把公鸡的工作交给大鹅去做，虽然也能叫你起床，但总归不那么悦耳。
+</essay>
+
 <p>
 这个 API 为 <code>window</code> 对象新增了一个 <code>window.postMessage</code> 方法，允许跨窗口通信，不论这两个窗口是否同源。
 </p>
@@ -275,8 +306,12 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </div>
 
 <p>
-其中， <code>postMessage</code> 方法的第一个参数是具体的信息内容，第二个参数是接收消息的窗口的源（origin），即“协议 + 域名 + 端口”，也可以设为 <code>*</code> ，表示不限制域名，向所有窗口发送。
+其中， <code>postMessage</code> 方法的：
 </p>
+<ul class="org-ul">
+<li>第一个参数是具体的信息内容；</li>
+<li>第二个参数是接收消息的窗口的源（origin），即“协议+域名+端口”，也可以设为 <code>*</code> ，表示不限制域名，向所有窗口发送。</li>
+</ul>
 
 <p>
 子窗口向父窗口发送消息的写法类似：
@@ -343,6 +378,10 @@ Set-Cookie: key=value; domain=.example.com; path=/
 <p>
 <b>通过 <code>window.postMessage</code> ，读写其他窗口的 LocalStorage 也成为了可能。</b>
 </p>
+
+<essay>
+其实吧，只要是能序列化字符串的信息，都可以传递。
+</essay>
 
 <p>
 例如，主窗口写入 iframe 子窗口的 <code>localStorage</code> ：
@@ -413,6 +452,10 @@ Set-Cookie: key=value; domain=.example.com; path=/
 <span class="linenr">18: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
+
+<essay>
+从本质上来说，这几种方法都是利用浏览器的某些信息保留机制，把信息序列化为字符串，以参数形式在跨域窗口之间的传递。
+</essay>
 </div>
 </div>
 </div>
@@ -421,7 +464,7 @@ Set-Cookie: key=value; domain=.example.com; path=/
 <h2 id="org3504bdb">AJAX</h2>
 <div class="outline-text-2" id="text-org3504bdb">
 <p>
-同源政策规定，AJAX 请求只能发给同源的网址，否则就报错。
+浏览器的同源策略规定， <b>AJAX 请求只能发给同源的网址</b> ，否则就报错。
 </p>
 
 <p>
@@ -440,6 +483,12 @@ Set-Cookie: key=value; domain=.example.com; path=/
 JSONP是服务器与客户端跨源通信的常用方法。最大特点就是简单适用，老式浏览器全部支持，服务器改造非常小。
 </p>
 
+<blockquote>
+<p>
+很简单，但缺点在于 JSONP 只支持 <code>GET</code> 请求。
+</p>
+</blockquote>
+
 <p>
 <b>JSONP 的基本思想是什么？</b>
 </p>
@@ -447,6 +496,10 @@ JSONP是服务器与客户端跨源通信的常用方法。最大特点就是简
 <p>
 原来，网页通过添加一个 <code>&lt;script&gt;</code> 元素，向服务器请求 JSON 数据的做法是不受同源策略限制的；服务器收到请求后，将数据放在一个指定名字的回调函数里传回来。
 </p>
+
+<essay>
+通过 `script` 标签的 `src` 属性值作为请求地址，666 。
+</essay>
 
 <p>
 首先，网页动态插入 <code>&lt;script&gt;</code> 元素，由它向跨源网址发出请求，如下：
@@ -499,7 +552,7 @@ JSONP是服务器与客户端跨源通信的常用方法。最大特点就是简
 <h3 id="org691f0db">WebSocket</h3>
 <div class="outline-text-3" id="text-org691f0db">
 <p>
-WebSocket 是一种通信协议，使用 <code>ws://</code> （非加密）和 <code>wss://</code> （加密）作为协议前缀。该协议不实行同源策略，只要服务器支持，就可以通过它进行跨源通信。
+WebSocket 是一种通信协议，使用 <code>ws://</code> （非加密）和 <code>wss://</code> （加密）作为协议前缀。该协议 <b>不实行同源策略</b> ，只要服务器支持，就可以通过它进行跨源通信。
 </p>
 
 <p>
@@ -523,7 +576,7 @@ Origin: http://example.com
 
 <blockquote>
 <p>
-正是因为有了 <code>Origin</code> 这个字段，WebSocket 才没有实行同源策略，因为服务器可以根据这个字段，判断是否允许本次通信。
+<b>*注：正是因为有了 <code>Origin</code> 这个字段，WebSocket 才没有实行同源策略，因为服务器可以根据这个字段，判断是否允许本次通信。</b>
 </p>
 </blockquote>
 
@@ -567,6 +620,10 @@ CORS 需要浏览器和服务器同时支持， <b>整个 CORS 通信过程，�
 对于开发者来说，CORS 通信与同源的 AJAX 通信没有差别，代码完全一样。浏览器一旦发现 AJAX 请求资源，就会 <b>自动添加一些附加的头信息</b> ，有时还会多出一次附加的请求，但用户不会有感觉。
 </p>
 </blockquote>
+
+<essay>
+浏览器是个好宿主，直接帮你（用户）解决了。本质上讲，CORS 在浏览器端而言，就是浏览器对用户的 AJAX 请求的“封装代理”。
+</essay>
 
 <p>
 因此，实现 CORS 通信的关键是服务器，只要服务器实现了 CORS 接口，就可以跨源通信。
@@ -716,11 +773,219 @@ Access-Control-Allow-Credentials: true
 </p>
 
 <p>
-但是，如果省略 <code>withCredentials</code> 设置，有的浏览器还是会一起发送 Cookie 。
+但是，如果省略 <code>withCredentials</code> 设置，有的浏览器还是会一起发送 Cookie 。这时，可以显式关闭 <code>withCredentials</code> ：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span>xhr.withCredentials = <span style="color: #AE81FF;">false</span>;
+</pre>
+</div>
+
+<p>
+需要注意的是，如果要发送 Cookie ， <code>Access-Control-Allow-Origin</code> 就不能设为星号，必须指定的、与请求网页一致的域名。同时，Cookie 依然遵循同源政策，只有服务器域名设置的 Cookie 才会上传，其他域名的 Cookie 并不会上传，且（跨源）原网页代码中的 <code>document.cookie</code> 也无法读取服务器域名下的 Cookie 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org64ae2c2" class="outline-3">
+<h3 id="org64ae2c2">非简单请求</h3>
+<div class="outline-text-3" id="text-org64ae2c2">
+<p>
+<span class="underline">1. 预检请求</span>
 </p>
 
 <p>
-&#x2026;
+非简单请求是那种对服务器有特殊要求的请求，比如请求方法是 <code>PUT</code> 或 <code>DELETE</code> ，或者 <code>Content-Type</code> 字段的类型是 <code>application/json</code> 。
+</p>
+
+<p>
+非简单请求的 CORS 请求，会在正式通信之前，增加一次 HTTP 查询请求，称为 <span class="underline">预检请求</span> （prefight）。
+</p>
+
+<p>
+浏览器先询问服务器，当前网页所在的域名是否在服务器的许可名单之中，以及可以使用哪些 HTTP 动词和头信息字段。只有得到肯定答复，浏览器才会发出正式的 <code>XMLHttpRequest</code> 请求，否则就报错。
+</p>
+
+<p>
+来看一段浏览器的 JavaScript 脚本。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">url</span> = <span style="color: #E6DB74;">'http://api.alice.com/cors'</span>
+<span class="linenr">2: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">xhr</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">XMLHttpReuqest</span><span style="color: #AE81FF;">()</span>
+<span class="linenr">3: </span>xhr.open<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'PUT'</span>, url, <span style="color: #AE81FF;">true</span><span style="color: #AE81FF;">)</span>
+<span class="linenr">4: </span>xhr.setRequestHeader<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'X-Custom-Header'</span>, <span style="color: #E6DB74;">'value'</span><span style="color: #AE81FF;">)</span>
+<span class="linenr">5: </span>xhr.send<span style="color: #AE81FF;">()</span>
+</pre>
+</div>
+
+<p>
+上面代码中，HTTP 请求的方法是 <code>PUT</code> ，并且发送一个自定义头信息 <code>X-Custom-Header</code> 。
+</p>
+
+<p>
+浏览器发现，这是一个非简单请求，就自动发出一个“预检”请求，要求服务器确认可以这样请求。下面是这个“预检”请求的 HTTP 头信息：
+</p>
+
+<pre class="example">
+OPTIONS /cors HTTP/1.1
+Origin: http://api.bob.com
+Access-Control-Request-Method: PUT
+Access-Control-Request-Headers: X-Custom-Header
+Host: api.alice.com
+Accept-Language: en-US
+Connection: keep-alive
+User-Agent: Mozilla/5.0...
+</pre>
+
+<p>
+“预检”请求用的请求方法是 <code>OPTIONS</code> ，表示这个请求是用来询问的。头信息里面，关键字段是 <code>Origin</code> ，表示请求来自哪个源。
+</p>
+
+<p>
+除了 <code>Origin</code> 字段，“预检”请求的头信息包括两个特殊字段。
+</p>
+
+<p>
+（1）Access-Control-Request-Method
+</p>
+
+<p>
+该字段是必须的，用来列出浏览器的 CORS 请求会用到哪些 HTTP 方法，上例是 <code>PUT</code> 。
+</p>
+
+<p>
+（2）Access-Control-Request-Headers
+</p>
+
+<p>
+该字段是一个逗号分隔的字符串，指定浏览器 CORS 请求额外发送的头信息字段，上例是 <code>X-Custom-Header</code> 。
+</p>
+
+<p>
+<span class="underline">2. 预检请求的回应</span>
+</p>
+
+<p>
+服务器收到“预检”请求以后，检查了 <code>Origin、Access-Control-Request-Method</code> 和 <code>Access-Control-Request-Headers</code> 字段以后，确认允许跨源请求，就可以做出反应。
+</p>
+
+<pre class="example">
+HTTP/1.1 200 OK
+Date: Mon, 01 Dec 2008 01:15:39 GMT
+Server: Apache/2.0.61 (Unix)
+Access-Control-Allow-Origin: http://api.bob.com
+Access-Control-Allow-Methods: GET, POST, PUT
+Access-Control-Allow-Headers: X-Custom-Header
+Content-Type: text/html; charset=utf-8
+Content-Encoding: gzip
+Content-Length: 0
+Keep-Alive: timeout=2, max=100
+Connection: Keep-Alive
+Content-Type: text/plain
+</pre>
+
+<p>
+上面的 HTTP 回应中，关键的是 <code>Access-Control-Allow-Origin</code> 字段，表示 <code>http://api.bob.com</code> 可以请求数据。该字段可也可以设为星号，表示同意任意跨源请求。
+</p>
+
+<pre class="example">
+Access-Control-Allow-Origin: *
+</pre>
+
+<p>
+如果服务器否定了“预检”请求，会返回一个正常的 HTTP 回应，但是没有任何 CORS 相关的头信息字段。这时，浏览器就会认定，服务器不同意“预检”请求，因此触发一个错误，被 <code>XMLHttpRequest</code> 对象的 <code>onerror</code> 回调函数捕获，控制台会打印出如下的报错信息：
+</p>
+
+<pre class="example">
+XMLHttpRequest cannot load http://api.alice.com.
+Origin http://api.bob.com is not allowed by Access-Control-Allow-Origin.
+</pre>
+
+<p>
+服务器回应的其他CORS相关字段如下：
+</p>
+
+<pre class="example">
+Access-Control-Allow-Methods: GET, POST, PUT
+Access-Control-Allow-Headers: X-Custom-Header
+Access-Control-Allow-Credentials: true
+Access-Control-Max-Age: 1728000
+</pre>
+
+<p>
+（1）Access-Control-Allow-Methods
+</p>
+
+<p>
+该字段必需，它的值是逗号分隔的一个字符串，表明服务器支持的所有跨域请求的方法。
+</p>
+
+<p>
+*注：返回的是所有支持的方法，而不单是浏览器请求的那个方法，这是为了避免多次“预检”请求。
+</p>
+
+<p>
+（2）Access-Control-Allow-Headers
+</p>
+
+<p>
+如果浏览器请求包括 <code>Access-Control-Request-Headers</code> 字段，则 <code>Access-Control-Request-Headers</code> 字段是必需的。它也是一个逗号分隔的字符串，表明服务器支持的所有头信息字段，不限于浏览器在“预检”中请求的字段。
+</p>
+
+<p>
+（3）Access-Control-Allow-Credentials
+</p>
+
+<p>
+该字段与简单请求时的含义相同。
+</p>
+
+<p>
+（4）Access-Control-Max-Age
+</p>
+
+<p>
+该字段可选，用来指定本次预检请求的有效期，单位为秒。上面结果中，有效期是 20 天（1728000 秒），即允许缓存该条回应 1728000 秒，在些期间，不用发出另一条预检请求。
+</p>
+
+<p>
+<span class="underline">3. 浏览器的正常请求和回应</span>
+</p>
+
+<p>
+一旦服务器通过了“预检”请求，以后每次浏览器政党的 CORS 请求，就都跟简单请求一样，会有一个 <code>Origin</code> 头信息字段。服务器的回应，也都会有一个 <code>Access-Control-Allow-Origin</code> 头信息字段。
+</p>
+
+<p>
+下面是“预检”请求之后，浏览器的正常 CORS 请求：
+</p>
+
+<pre class="example">
+PUT /cors HTTP/1.1
+Origin: http://api.bob.com
+Host: api.alice.com
+X-Custom-Header: value
+Accept-Language: en-US
+Connection: keep-alive
+User-Agent: Mozilla/5.0...
+</pre>
+
+<p>
+上面头信息的 <code>Origin</code> 字段是浏览器自动添加的。
+</p>
+
+<p>
+下面是服务器正常的回应：
+</p>
+
+<pre class="example">
+Access-Control-Allow-Origin: http://api.bob.com
+Content-Type: text/html; charset=utf-8
+</pre>
+
+<p>
+上面头信息中， <code>Access-Control-Allow-Origin</code> 字段是每次回应都必定包含的。
 </p>
 </div>
 </div>
@@ -729,7 +994,7 @@ Access-Control-Allow-Credentials: true
 <div id="postamble" class="status">
 <p class="date">Date: 2020-11-03 Tue 09:36</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-11-10 Tue 17:01</p>
+<p class="date">Created: 2020-11-11 Wed 17:47</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

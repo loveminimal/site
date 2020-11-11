@@ -233,13 +233,13 @@ pre {
     margin: .16rem 0;
     padding: .14rem;
     padding-left: .08rem;
-    border: 2px solid rgba(234, 234, 234, 0.5);
     background: rgba(255, 255, 255, .6);
     color: #135;
     font-size: 0.14rem;
     font-family: Monaco, Consolas, 'monospace', "kaiti";
     overflow: hidden;
     /* monokai background */
+    border: 2px solid rgba(234, 234, 234, 0.8);
     /* color: #ccc; */
     /* background: #272822; */
 }
