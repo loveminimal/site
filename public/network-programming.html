@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-10-05 Mon 17:44 -->
+<!-- 2020-11-13 Fri 18:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>网络编程</title>
@@ -23,34 +23,34 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd59213c">网络编程基础</a>
+<li><a href="#orga62b545">网络编程基础</a>
 <ul>
-<li><a href="#org23030b5">IP 地址</a></li>
-<li><a href="#org834eb0c">域名</a></li>
-<li><a href="#org7bc1c71">网络模型</a></li>
-<li><a href="#org6bf170c">常用协议</a></li>
-<li><a href="#orgb214c98">网络基本概念小结</a></li>
+<li><a href="#orgfea0b20">IP 地址</a></li>
+<li><a href="#orgeaafdce">域名</a></li>
+<li><a href="#org9b26c8f">网络模型</a></li>
+<li><a href="#org0646601">常用协议</a></li>
+<li><a href="#orgf978e36">网络基本概念小结</a></li>
 </ul>
 </li>
-<li><a href="#org47f939a">TCP 编程</a>
+<li><a href="#org0f2cd7e">TCP 编程</a>
 <ul>
-<li><a href="#org816a8cd">服务器端</a></li>
-<li><a href="#org9bb8eef">客户端</a></li>
-<li><a href="#orge543541">Socket 流</a></li>
-<li><a href="#org00ca885">TCP 编程小结</a></li>
+<li><a href="#orgbefd445">服务器端</a></li>
+<li><a href="#orge4f4fe3">客户端</a></li>
+<li><a href="#orga10b1c8">Socket 流</a></li>
+<li><a href="#org1660052">TCP 编程小结</a></li>
 </ul>
 </li>
-<li><a href="#orgf7d0de4">UDP 编程</a>
+<li><a href="#orge2fa97c">UDP 编程</a>
 <ul>
-<li><a href="#org12206ea">服务器端</a></li>
-<li><a href="#orga7e54a1">客户端</a></li>
-<li><a href="#org22443cc">UDP 编程小结</a></li>
+<li><a href="#org1062e6d">服务器端</a></li>
+<li><a href="#orgfa8b202">客户端</a></li>
+<li><a href="#org0eac13e">UDP 编程小结</a></li>
 </ul>
 </li>
-<li><a href="#orgbddb4e5">HTTP 编程</a>
+<li><a href="#orgd4cea68">HTTP 编程</a>
 <ul>
-<li><a href="#org538a472">HTTP 请求</a></li>
-<li><a href="#org769a935">HTTP 响应</a></li>
+<li><a href="#orgb2a18a0">HTTP 请求</a></li>
+<li><a href="#org7ce9d32">HTTP 响应</a></li>
 </ul>
 </li>
 </ul>
@@ -72,9 +72,9 @@ style=""
 title=""
 />
 
-<div id="outline-container-orgd59213c" class="outline-2">
-<h2 id="orgd59213c">网络编程基础</h2>
-<div class="outline-text-2" id="text-orgd59213c">
+<div id="outline-container-orga62b545" class="outline-2">
+<h2 id="orga62b545">网络编程基础</h2>
+<div class="outline-text-2" id="text-orga62b545">
 <p>
 在学习 Java 网络编程之前，我们先来了解什么是计算机网络。
 </p>
@@ -88,15 +88,15 @@ title=""
 </p>
 </div>
 
-<div id="outline-container-org23030b5" class="outline-3">
-<h3 id="org23030b5">IP 地址</h3>
-<div class="outline-text-3" id="text-org23030b5">
+<div id="outline-container-orgfea0b20" class="outline-3">
+<h3 id="orgfea0b20">IP 地址</h3>
+<div class="outline-text-3" id="text-orgfea0b20">
 <p>
 i.e. Internet Protocol
 </p>
 
 <p>
-在互联网中，一个 IP 地址用于唯一标识一个网络接口（Network Interface），一台联入互联网的计算机至少有一个 IP 地址。
+在互联网中， <b>一个 IP 地址用于唯一标识一个网络接口</b> （Network Interface），一台联入互联网的计算机至少有一个 IP 地址。
 </p>
 
 <p>
@@ -104,7 +104,7 @@ IP 地址分为 IPv4 和 IPv6 两种。IPv4 采用 32 位地址，类似于 <cod
 </p>
 
 <p>
-IP 地址又分为公网 IP 地址（可以直接被访问）和内网 IP 地址（只能在内网访问）。
+IP 地址又分为 <span class="underline">公网 IP 地址</span> （可以直接被访问）和 <span class="underline">内网 IP 地址</span> （只能在内网访问）。
 </p>
 
 <p>
@@ -112,7 +112,7 @@ IP 地址又分为公网 IP 地址（可以直接被访问）和内网 IP 地址
 </p>
 
 <p>
-IPv4 地址实际上是一个 32 位整数，如：
+<b>IPv4 地址实际上是一个 32 位整数</b> ，如：
 </p>
 
 <table>
@@ -140,6 +140,10 @@ IPv4 地址实际上是一个 32 位整数，如：
 </tbody>
 </table>
 
+<essay>
+这就是 IPv4 的本质了 : )
+</essay>
+
 <p>
 如果一台计算机只有一个网卡，并且接入了网络，那么，它有一个本机地址 <code>127.0.0.1</code> ，还有一个 IP 地址，例如 <code>101.202.99.12</code> ，可以通过这个 IP 地址接入网络。
 </p>
@@ -149,7 +153,7 @@ IPv4 地址实际上是一个 32 位整数，如：
 </p>
 
 <p>
-如果两台计算机位于同一个网络，那么他们之间可以直接通信，因为他们的 IP 地址是相同的，也就是网络号是相同的。
+如果两台计算机位于同一个网络，那么他们之间可以直接通信，因为他们的 IP 地址是相同的，也就是 <b>网络号是相同的</b> 。
 </p>
 
 <p>
@@ -189,12 +193,16 @@ IPv4 地址实际上是一个 32 位整数，如：
 每台计算机都需要正确配置 IP 地址和子网掩码，根据这两个就可以计算网络号。如果两台计算机计算出的网络号相同，说明两台计算机在同一个网络，可以直接通信；如果网络号不同，说明两台计算机不在同个网络，不能直接通信。
 </p>
 
+<essay>
+网络号，就是用来判断两台计算机是否在同一网络中的。
+</essay>
+
 <p>
 不在同一网络（网络号不同）的计算机，必须通过 <b>路由器或者交换机</b> 这样的网络设备间接通信，我们把这种设备称为 <span class="underline">网关</span> 。
 </p>
 
 <p>
-网关的作用就是连接多个网络，负责把来自一个网络的数据包发到另一个网络，这个过程叫 <span class="underline">路由</span> 。
+<b>网关的作用就是连接多个网络</b> ，负责把来自一个网络的数据包发到另一个网络，这个过程叫 <span class="underline">路由</span> 。
 </p>
 
 <img
@@ -210,9 +218,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org834eb0c" class="outline-3">
-<h3 id="org834eb0c">域名</h3>
-<div class="outline-text-3" id="text-org834eb0c">
+<div id="outline-container-orgeaafdce" class="outline-3">
+<h3 id="orgeaafdce">域名</h3>
+<div class="outline-text-3" id="text-orgeaafdce">
 <p>
 IP 地址不容易记忆，所以我们通常使用域名访问某个特定的服务， <b>域名解析服务器 DNS</b> 负责把域名翻译成对应的 IP ，客户端再根据 IP 地址访问服务器。
 </p>
@@ -228,7 +236,7 @@ Address: xxx.xxx.xxx.xxx#53
 
 Non-authoritative answer:
 Name:    www.rosesor.com
-Address: 192.112.245.112
+Address: 193.112.245.112
 </pre>
 
 <p>
@@ -237,12 +245,16 @@ Address: 192.112.245.112
 </div>
 </div>
 
-<div id="outline-container-org7bc1c71" class="outline-3">
-<h3 id="org7bc1c71">网络模型</h3>
-<div class="outline-text-3" id="text-org7bc1c71">
+<div id="outline-container-org9b26c8f" class="outline-3">
+<h3 id="org9b26c8f">网络模型</h3>
+<div class="outline-text-3" id="text-org9b26c8f">
 <p>
 由于计算机网络从底层的传输到高层的软件设计十分复杂，要合理地设计计算机网络模型，必须采用分层模型，每一层负责处理自己的操作。
 </p>
+
+<essay>
+分层抽象！
+</essay>
 
 <p>
 OSI（Open System Interconnect）网络模型是 ISO 组织定义的一个计算机互联的标准模型，注意它只是一个定义，目的是为了简化网络各层的操作，提供标准接口便于实现和维护。
@@ -327,11 +339,11 @@ OSI（Open System Interconnect）网络模型是 ISO 组织定义的一个计算
 </div>
 </div>
 
-<div id="outline-container-org6bf170c" class="outline-3">
-<h3 id="org6bf170c">常用协议</h3>
-<div class="outline-text-3" id="text-org6bf170c">
+<div id="outline-container-org0646601" class="outline-3">
+<h3 id="org0646601">常用协议</h3>
+<div class="outline-text-3" id="text-org0646601">
 <p>
-IP 协议是一个分组交换传输协议，它不保证可靠传输，而 TCP 协议是传输控制协议，它是面向连接的协议，支持可靠传输和双向通信。
+IP 协议是一个 <b>分组交换传输协议</b> ，它不保证可靠传输，而 TCP 协议是传输控制协议，它是 <b>面向连接的协议</b> ，支持可靠传输和双向通信。
 </p>
 
 <p>
@@ -339,7 +351,7 @@ TCP 协议是建立在 IP 协议之上，简单地说，IP 协议只负责发数
 </p>
 
 <p>
-TCP 协议之所以能保证数据的可靠传输，是通过接收确认、超时重传这些机制实现的。并且，TCP 协议允许双向通信，即通信双方可以同时发送和接收数据。
+TCP 协议之所以能保证数据的可靠传输，是通过 <b>接收确认、超时重传</b> 这些机制实现的。并且，TCP 协议允许双向通信，即通信双方可以同时发送和接收数据。
 </p>
 
 <p>
@@ -347,7 +359,7 @@ TCP 协议也是应用最广泛的协议，许多高级协议都是建立在 TCP
 </p>
 
 <p>
-UDP 协议（User Datagram Protocol）是一种数据报文协议，这是元连接协议，不保证可靠传输。因为 UDP 协议在通信前不需要进行连接，所以它的传输效率比 TCP 高，而且 UDP 协议比 TCP 协议要简单得多。
+UDP 协议（User Datagram Protocol）是一种数据报文协议，这是 <b>无连接协议</b> ，不保证可靠传输。因为 UDP 协议在通信前不需要进行连接，所以它的传输效率比 TCP 高，而且 UDP 协议比 TCP 协议要简单得多。
 </p>
 
 <p>
@@ -356,9 +368,9 @@ UDP 协议（User Datagram Protocol）是一种数据报文协议，这是元连
 </div>
 </div>
 
-<div id="outline-container-orgb214c98" class="outline-3">
-<h3 id="orgb214c98">网络基本概念小结</h3>
-<div class="outline-text-3" id="text-orgb214c98">
+<div id="outline-container-orgf978e36" class="outline-3">
+<h3 id="orgf978e36">网络基本概念小结</h3>
+<div class="outline-text-3" id="text-orgf978e36">
 <ul class="org-ul">
 <li>计算机网络：由两台或更多计算机组成的网络；</li>
 <li>互联网：连接网络的网络；</li>
@@ -373,9 +385,9 @@ UDP 协议（User Datagram Protocol）是一种数据报文协议，这是元连
 </div>
 </div>
 
-<div id="outline-container-org47f939a" class="outline-2">
-<h2 id="org47f939a">TCP 编程</h2>
-<div class="outline-text-2" id="text-org47f939a">
+<div id="outline-container-org0f2cd7e" class="outline-2">
+<h2 id="org0f2cd7e">TCP 编程</h2>
+<div class="outline-text-2" id="text-org0f2cd7e">
 <p>
 i.e. Transmission Control Protocol
 </p>
@@ -430,9 +442,9 @@ QQ: 101.202.99.2:1304
 </ul>
 </div>
 
-<div id="outline-container-org816a8cd" class="outline-3">
-<h3 id="org816a8cd">服务器端</h3>
-<div class="outline-text-3" id="text-org816a8cd">
+<div id="outline-container-orgbefd445" class="outline-3">
+<h3 id="orgbefd445">服务器端</h3>
+<div class="outline-text-3" id="text-orgbefd445">
 <p>
 要全用 Socket 编程，我们首先要编写服务器端程序。
 </p>
@@ -442,59 +454,59 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Server</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">IOException</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr"> 3: </span>        <span style="color: #66D9EF;">ServerSocket</span> <span style="color: #FD971F;">ss</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">ServerSocket</span><span style="color: #A6E22E;">(</span>6666<span style="color: #A6E22E;">)</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#30417;&#21548;&#25351;&#23450;&#31471;&#21475;</span>
-<span class="linenr"> 4: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"Server is running..."</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr"> 5: </span>        <span style="color: #F92672;">for</span> <span style="color: #A6E22E;">(</span>;;<span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
-<span class="linenr"> 6: </span>            <span style="color: #66D9EF;">Socket</span> <span style="color: #FD971F;">sock</span> == ss.accept<span style="color: #E6DB74;">()</span>;
-<span class="linenr"> 7: </span>            System.out.println<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"connected from "</span> + sock.getRemoteSocketAddress<span style="color: #FD971F;">()</span><span style="color: #E6DB74;">)</span>;
-<span class="linenr"> 8: </span>            <span style="color: #66D9EF;">Thread</span> <span style="color: #FD971F;">t</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Handler</span><span style="color: #E6DB74;">(</span>sock<span style="color: #E6DB74;">)</span>;
-<span class="linenr"> 9: </span>            t.start<span style="color: #E6DB74;">()</span>;
-<span class="linenr">10: </span>        <span style="color: #A6E22E;">}</span>
-<span class="linenr">11: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">12: </span><span style="color: #AE81FF;">}</span>
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">Server</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #FF1493;">public</span> <span style="color: #FF1493;">static</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">main</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">String</span><span style="color: #87D700;">[]</span> <span style="color: #FF8C00;">args</span><span style="color: #5FD7FF;">)</span> <span style="color: #FF1493;">throws</span> <span style="color: #5FD7FF;">IOException</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #5FD7FF;">ServerSocket</span> <span style="color: #FF8C00;">ss</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">ServerSocket</span><span style="color: #87D700;">(</span>6666<span style="color: #87D700;">)</span>; <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#30417;&#21548;&#25351;&#23450;&#31471;&#21475;</span>
+<span class="linenr"> 4: </span>        System.out.println<span style="color: #87D700;">(</span><span style="color: #CDC673;">"Server is running..."</span><span style="color: #87D700;">)</span>;
+<span class="linenr"> 5: </span>        <span style="color: #FF1493;">for</span> <span style="color: #87D700;">(</span>;;<span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr"> 6: </span>            <span style="color: #5FD7FF;">Socket</span> <span style="color: #FF8C00;">sock</span> == ss.accept<span style="color: #CDC673;">()</span>;
+<span class="linenr"> 7: </span>            System.out.println<span style="color: #CDC673;">(</span><span style="color: #CDC673;">"connected from "</span> + sock.getRemoteSocketAddress<span style="color: #FF8C00;">()</span><span style="color: #CDC673;">)</span>;
+<span class="linenr"> 8: </span>            <span style="color: #5FD7FF;">Thread</span> <span style="color: #FF8C00;">t</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Handler</span><span style="color: #CDC673;">(</span>sock<span style="color: #CDC673;">)</span>;
+<span class="linenr"> 9: </span>            t.start<span style="color: #CDC673;">()</span>;
+<span class="linenr">10: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr">11: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">12: </span><span style="color: #AF87FF;">}</span>
 <span class="linenr">13: </span>
-<span class="linenr">14: </span><span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Handler</span> <span style="color: #F92672;">extends</span> <span style="color: #66D9EF;">Thread</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr">15: </span>    <span style="color: #66D9EF;">Socked</span> <span style="color: #FD971F;">sock</span>;
+<span class="linenr">14: </span><span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">Handler</span> <span style="color: #FF1493;">extends</span> <span style="color: #5FD7FF;">Thread</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">15: </span>    <span style="color: #5FD7FF;">Socked</span> <span style="color: #FF8C00;">sock</span>;
 <span class="linenr">16: </span>
-<span class="linenr">17: </span>    <span style="color: #F92672;">public</span> <span style="color: #A6E22E;">Handler</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">Socket</span> <span style="color: #FD971F;">sock</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">18: </span>        <span style="color: #F92672;">this</span>.sock = sock;
-<span class="linenr">19: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">17: </span>    <span style="color: #FF1493;">public</span> <span style="color: #87D700;">Handler</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">Socket</span> <span style="color: #FF8C00;">sock</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">18: </span>        <span style="color: #FF1493;">this</span>.sock = sock;
+<span class="linenr">19: </span>    <span style="color: #5FD7FF;">}</span>
 <span class="linenr">20: </span>
-<span class="linenr">21: </span>    <span style="color: #AE81FF;">@Override</span>
-<span class="linenr">22: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">run</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">23: </span>        <span style="color: #F92672;">try</span> <span style="color: #A6E22E;">(</span><span style="color: #66D9EF;">InputStream</span> <span style="color: #FD971F;">input</span> = <span style="color: #F92672;">this</span>.sock.getInputStream<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
-<span class="linenr">24: </span>            <span style="color: #F92672;">try</span> <span style="color: #E6DB74;">(</span><span style="color: #66D9EF;">OutputStream</span> <span style="color: #FD971F;">output</span> = <span style="color: #F92672;">this</span>.sock.getOutputStream<span style="color: #FD971F;">()</span><span style="color: #E6DB74;">)</span> <span style="color: #E6DB74;">{</span>
-<span class="linenr">25: </span>                handle<span style="color: #FD971F;">(</span>input, output<span style="color: #FD971F;">)</span>;
-<span class="linenr">26: </span>            <span style="color: #E6DB74;">}</span>
+<span class="linenr">21: </span>    <span style="color: #AF87FF;">@Override</span>
+<span class="linenr">22: </span>    <span style="color: #FF1493;">public</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">run</span><span style="color: #5FD7FF;">()</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">23: </span>        <span style="color: #FF1493;">try</span> <span style="color: #87D700;">(</span><span style="color: #5FD7FF;">InputStream</span> <span style="color: #FF8C00;">input</span> = <span style="color: #FF1493;">this</span>.sock.getInputStream<span style="color: #CDC673;">()</span><span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr">24: </span>            <span style="color: #FF1493;">try</span> <span style="color: #CDC673;">(</span><span style="color: #5FD7FF;">OutputStream</span> <span style="color: #FF8C00;">output</span> = <span style="color: #FF1493;">this</span>.sock.getOutputStream<span style="color: #FF8C00;">()</span><span style="color: #CDC673;">)</span> <span style="color: #CDC673;">{</span>
+<span class="linenr">25: </span>                handle<span style="color: #FF8C00;">(</span>input, output<span style="color: #FF8C00;">)</span>;
+<span class="linenr">26: </span>            <span style="color: #CDC673;">}</span>
 <span class="linenr">27: </span>
-<span class="linenr">28: </span>        <span style="color: #A6E22E;">}</span> <span style="color: #F92672;">catch</span> <span style="color: #A6E22E;">(</span><span style="color: #66D9EF;">Exception</span> <span style="color: #FD971F;">e</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
-<span class="linenr">29: </span>            <span style="color: #F92672;">try</span> <span style="color: #E6DB74;">{</span>
-<span class="linenr">30: </span>                <span style="color: #F92672;">this</span>.sock.close<span style="color: #FD971F;">()</span>;
-<span class="linenr">31: </span>            <span style="color: #E6DB74;">}</span> <span style="color: #F92672;">catch</span> <span style="color: #E6DB74;">(</span><span style="color: #66D9EF;">IOException</span> <span style="color: #FD971F;">ioe</span><span style="color: #E6DB74;">)</span> <span style="color: #E6DB74;">{</span>
-<span class="linenr">32: </span>            <span style="color: #E6DB74;">}</span>
-<span class="linenr">33: </span>            System.out.println<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"client disconnected."</span><span style="color: #E6DB74;">)</span>;
-<span class="linenr">34: </span>        <span style="color: #A6E22E;">}</span>
-<span class="linenr">35: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">36: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">28: </span>        <span style="color: #87D700;">}</span> <span style="color: #FF1493;">catch</span> <span style="color: #87D700;">(</span><span style="color: #5FD7FF;">Exception</span> <span style="color: #FF8C00;">e</span><span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr">29: </span>            <span style="color: #FF1493;">try</span> <span style="color: #CDC673;">{</span>
+<span class="linenr">30: </span>                <span style="color: #FF1493;">this</span>.sock.close<span style="color: #FF8C00;">()</span>;
+<span class="linenr">31: </span>            <span style="color: #CDC673;">}</span> <span style="color: #FF1493;">catch</span> <span style="color: #CDC673;">(</span><span style="color: #5FD7FF;">IOException</span> <span style="color: #FF8C00;">ioe</span><span style="color: #CDC673;">)</span> <span style="color: #CDC673;">{</span>
+<span class="linenr">32: </span>            <span style="color: #CDC673;">}</span>
+<span class="linenr">33: </span>            System.out.println<span style="color: #CDC673;">(</span><span style="color: #CDC673;">"client disconnected."</span><span style="color: #CDC673;">)</span>;
+<span class="linenr">34: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr">35: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">36: </span><span style="color: #AF87FF;">}</span>
 <span class="linenr">37: </span>
-<span class="linenr">38: </span><span style="color: #F92672;">private</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">handle</span><span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">InputStream</span> <span style="color: #FD971F;">input</span>, <span style="color: #66D9EF;">OutputStream</span> <span style="color: #FD971F;">output</span><span style="color: #AE81FF;">)</span> <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">IOException</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr">39: </span>    <span style="color: #66D9EF;">var</span> <span style="color: #FD971F;">writer</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">BufferedWriter</span><span style="color: #66D9EF;">(</span><span style="color: #F92672;">new</span> <span style="color: #66D9EF;">OutputStreamWriter</span><span style="color: #A6E22E;">(</span>output, <span style="color: #AE81FF;">StandardCharsets</span>.UTF_8<span style="color: #A6E22E;">)</span><span style="color: #66D9EF;">)</span>;
-<span class="linenr">40: </span>    <span style="color: #66D9EF;">var</span> <span style="color: #FD971F;">reader</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">BufferedReader</span><span style="color: #66D9EF;">(</span><span style="color: #F92672;">new</span> <span style="color: #66D9EF;">InputStreamReader</span><span style="color: #A6E22E;">(</span>input, <span style="color: #AE81FF;">StandardCharsets</span>.UTF_8<span style="color: #A6E22E;">)</span><span style="color: #66D9EF;">)</span>;
-<span class="linenr">41: </span>    writer.write<span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">"hello\n"</span><span style="color: #66D9EF;">)</span>;
-<span class="linenr">42: </span>    writer.flush<span style="color: #66D9EF;">()</span>;
-<span class="linenr">43: </span>    <span style="color: #F92672;">for</span><span style="color: #66D9EF;">(</span>;;<span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">44: </span>        <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">s</span> = reader.readLine<span style="color: #A6E22E;">()</span>;
-<span class="linenr">45: </span>        <span style="color: #F92672;">if</span> <span style="color: #A6E22E;">(</span>s.equals<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"bye"</span><span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
-<span class="linenr">46: </span>            writer.write<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"bye\n"</span><span style="color: #E6DB74;">)</span>;
-<span class="linenr">47: </span>            writer.flush<span style="color: #E6DB74;">()</span>;
-<span class="linenr">48: </span>            <span style="color: #F92672;">break</span>;
-<span class="linenr">49: </span>        <span style="color: #A6E22E;">}</span>
-<span class="linenr">50: </span>        writer.write<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"ok: "</span> + s + <span style="color: #E6DB74;">"\n"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">51: </span>        writer.flush<span style="color: #A6E22E;">()</span>;
-<span class="linenr">52: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">53: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">38: </span><span style="color: #FF1493;">private</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">handle</span><span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">InputStream</span> <span style="color: #FF8C00;">input</span>, <span style="color: #5FD7FF;">OutputStream</span> <span style="color: #FF8C00;">output</span><span style="color: #AF87FF;">)</span> <span style="color: #FF1493;">throws</span> <span style="color: #5FD7FF;">IOException</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">39: </span>    <span style="color: #5FD7FF;">var</span> <span style="color: #FF8C00;">writer</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">BufferedWriter</span><span style="color: #5FD7FF;">(</span><span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">OutputStreamWriter</span><span style="color: #87D700;">(</span>output, <span style="color: #AF87FF;">StandardCharsets</span>.UTF_8<span style="color: #87D700;">)</span><span style="color: #5FD7FF;">)</span>;
+<span class="linenr">40: </span>    <span style="color: #5FD7FF;">var</span> <span style="color: #FF8C00;">reader</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">BufferedReader</span><span style="color: #5FD7FF;">(</span><span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">InputStreamReader</span><span style="color: #87D700;">(</span>input, <span style="color: #AF87FF;">StandardCharsets</span>.UTF_8<span style="color: #87D700;">)</span><span style="color: #5FD7FF;">)</span>;
+<span class="linenr">41: </span>    writer.write<span style="color: #5FD7FF;">(</span><span style="color: #CDC673;">"hello\n"</span><span style="color: #5FD7FF;">)</span>;
+<span class="linenr">42: </span>    writer.flush<span style="color: #5FD7FF;">()</span>;
+<span class="linenr">43: </span>    <span style="color: #FF1493;">for</span><span style="color: #5FD7FF;">(</span>;;<span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">44: </span>        <span style="color: #5FD7FF;">String</span> <span style="color: #FF8C00;">s</span> = reader.readLine<span style="color: #87D700;">()</span>;
+<span class="linenr">45: </span>        <span style="color: #FF1493;">if</span> <span style="color: #87D700;">(</span>s.equals<span style="color: #CDC673;">(</span><span style="color: #CDC673;">"bye"</span><span style="color: #CDC673;">)</span><span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr">46: </span>            writer.write<span style="color: #CDC673;">(</span><span style="color: #CDC673;">"bye\n"</span><span style="color: #CDC673;">)</span>;
+<span class="linenr">47: </span>            writer.flush<span style="color: #CDC673;">()</span>;
+<span class="linenr">48: </span>            <span style="color: #FF1493;">break</span>;
+<span class="linenr">49: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr">50: </span>        writer.write<span style="color: #87D700;">(</span><span style="color: #CDC673;">"ok: "</span> + s + <span style="color: #CDC673;">"\n"</span><span style="color: #87D700;">)</span>;
+<span class="linenr">51: </span>        writer.flush<span style="color: #87D700;">()</span>;
+<span class="linenr">52: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">53: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -507,7 +519,7 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">ServerSocket</span> <span style="color: #FD971F;">ss</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">ServerSocket</span><span style="color: #AE81FF;">(</span>6666<span style="color: #AE81FF;">)</span>;
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #5FD7FF;">ServerSocket</span> <span style="color: #FF8C00;">ss</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">ServerSocket</span><span style="color: #AF87FF;">(</span>6666<span style="color: #AF87FF;">)</span>;
 </pre>
 </div>
 
@@ -520,11 +532,11 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">for</span><span style="color: #AE81FF;">(</span>;;<span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr">2: </span>    <span style="color: #66D9EF;">Socket</span> <span style="color: #FD971F;">sock</span> = ss.accept<span style="color: #66D9EF;">()</span>;
-<span class="linenr">3: </span>    <span style="color: #66D9EF;">Thread</span> <span style="color: #FD971F;">t</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Handler</span><span style="color: #66D9EF;">(</span>sock<span style="color: #66D9EF;">)</span>;
-<span class="linenr">4: </span>    t.start<span style="color: #66D9EF;">()</span>;
-<span class="linenr">5: </span><span style="color: #AE81FF;">}</span>
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #FF1493;">for</span><span style="color: #AF87FF;">(</span>;;<span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #5FD7FF;">Socket</span> <span style="color: #FF8C00;">sock</span> = ss.accept<span style="color: #5FD7FF;">()</span>;
+<span class="linenr">3: </span>    <span style="color: #5FD7FF;">Thread</span> <span style="color: #FF8C00;">t</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Handler</span><span style="color: #5FD7FF;">(</span>sock<span style="color: #5FD7FF;">)</span>;
+<span class="linenr">4: </span>    t.start<span style="color: #5FD7FF;">()</span>;
+<span class="linenr">5: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -544,43 +556,43 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-org9bb8eef" class="outline-3">
-<h3 id="org9bb8eef">客户端</h3>
-<div class="outline-text-3" id="text-org9bb8eef">
+<div id="outline-container-orge4f4fe3" class="outline-3">
+<h3 id="orge4f4fe3">客户端</h3>
+<div class="outline-text-3" id="text-orge4f4fe3">
 <p>
 相比服务器端，客户端程序就要简单很多。一个典型的客户端程序如下：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Client</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">IOException</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr"> 3: </span>        <span style="color: #66D9EF;">Socket</span> <span style="color: #FD971F;">sock</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Socket</span><span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"localhost"</span>, 6666<span style="color: #A6E22E;">)</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#36830;&#25509;&#25351;&#23450;&#26381;&#21153;&#22120;&#21644;&#31471;&#21475;</span>
-<span class="linenr"> 4: </span>        <span style="color: #F92672;">try</span> <span style="color: #A6E22E;">(</span><span style="color: #66D9EF;">InputStream</span> <span style="color: #FD971F;">input</span> = sock.getInputStream<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
-<span class="linenr"> 5: </span>            <span style="color: #F92672;">try</span> <span style="color: #E6DB74;">(</span><span style="color: #66D9EF;">OutputStream</span> <span style="color: #FD971F;">output</span> = sock.getOutputStream<span style="color: #FD971F;">()</span><span style="color: #E6DB74;">)</span> <span style="color: #E6DB74;">{</span>
-<span class="linenr"> 6: </span>                handle<span style="color: #FD971F;">(</span>input, output<span style="color: #FD971F;">)</span>;
-<span class="linenr"> 7: </span>            <span style="color: #E6DB74;">}</span>
-<span class="linenr"> 8: </span>        <span style="color: #A6E22E;">}</span>
-<span class="linenr"> 9: </span>    <span style="color: #66D9EF;">}</span>
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">Client</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #FF1493;">public</span> <span style="color: #FF1493;">static</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">main</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">String</span><span style="color: #87D700;">[]</span> <span style="color: #FF8C00;">args</span><span style="color: #5FD7FF;">)</span> <span style="color: #FF1493;">throws</span> <span style="color: #5FD7FF;">IOException</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #5FD7FF;">Socket</span> <span style="color: #FF8C00;">sock</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Socket</span><span style="color: #87D700;">(</span><span style="color: #CDC673;">"localhost"</span>, 6666<span style="color: #87D700;">)</span>; <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#36830;&#25509;&#25351;&#23450;&#26381;&#21153;&#22120;&#21644;&#31471;&#21475;</span>
+<span class="linenr"> 4: </span>        <span style="color: #FF1493;">try</span> <span style="color: #87D700;">(</span><span style="color: #5FD7FF;">InputStream</span> <span style="color: #FF8C00;">input</span> = sock.getInputStream<span style="color: #CDC673;">()</span><span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr"> 5: </span>            <span style="color: #FF1493;">try</span> <span style="color: #CDC673;">(</span><span style="color: #5FD7FF;">OutputStream</span> <span style="color: #FF8C00;">output</span> = sock.getOutputStream<span style="color: #FF8C00;">()</span><span style="color: #CDC673;">)</span> <span style="color: #CDC673;">{</span>
+<span class="linenr"> 6: </span>                handle<span style="color: #FF8C00;">(</span>input, output<span style="color: #FF8C00;">)</span>;
+<span class="linenr"> 7: </span>            <span style="color: #CDC673;">}</span>
+<span class="linenr"> 8: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr"> 9: </span>    <span style="color: #5FD7FF;">}</span>
 <span class="linenr">10: </span>
-<span class="linenr">11: </span>    <span style="color: #F92672;">private</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">handle</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">InputStream</span> <span style="color: #FD971F;">input</span>, <span style="color: #66D9EF;">OutputStream</span> <span style="color: #FD971F;">output</span><span style="color: #66D9EF;">)</span> <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">IOException</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">12: </span>        <span style="color: #66D9EF;">var</span> <span style="color: #FD971F;">writer</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">BufferedWriter</span><span style="color: #A6E22E;">(</span><span style="color: #F92672;">new</span> <span style="color: #66D9EF;">OutputStreamWriter</span><span style="color: #E6DB74;">(</span>output, <span style="color: #AE81FF;">StandardCharsets</span>.UTF_8<span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">13: </span>        <span style="color: #66D9EF;">var</span> <span style="color: #FD971F;">reader</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">BufferedReader</span><span style="color: #A6E22E;">(</span><span style="color: #F92672;">new</span> <span style="color: #66D9EF;">InputStreamReader</span><span style="color: #E6DB74;">(</span>input, <span style="color: #AE81FF;">StandardCharsets</span>.UTF_8<span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">14: </span>        <span style="color: #66D9EF;">Scanner</span> <span style="color: #FD971F;">scanner</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Scanner</span><span style="color: #A6E22E;">(</span>System.in<span style="color: #A6E22E;">)</span>;
-<span class="linenr">15: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"[server] "</span> + reader.readLine<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">16: </span>        <span style="color: #F92672;">for</span> <span style="color: #A6E22E;">(</span>;;<span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
-<span class="linenr">17: </span>            System.out.println<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"&gt;&gt;&gt; "</span><span style="color: #E6DB74;">)</span>;    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#25171;&#21360;&#25552;&#31034;</span>
-<span class="linenr">18: </span>            <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">s</span> = scanner.nextLine<span style="color: #E6DB74;">()</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#35835;&#21462;&#19968;&#34892;&#36755;&#20837;</span>
-<span class="linenr">19: </span>            writer.write<span style="color: #E6DB74;">(</span>s<span style="color: #E6DB74;">)</span>;
-<span class="linenr">20: </span>            writer.newLine<span style="color: #E6DB74;">()</span>;
-<span class="linenr">21: </span>            writer.flush<span style="color: #E6DB74;">()</span>;
-<span class="linenr">22: </span>            <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">resp</span> = reader.readLine<span style="color: #E6DB74;">()</span>;
-<span class="linenr">23: </span>            System.out.println<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"&lt;&lt;&lt; "</span> + resp<span style="color: #E6DB74;">)</span>;
-<span class="linenr">24: </span>            <span style="color: #F92672;">if</span> <span style="color: #E6DB74;">(</span>resp.equals<span style="color: #FD971F;">(</span><span style="color: #E6DB74;">"bye"</span><span style="color: #FD971F;">)</span><span style="color: #E6DB74;">)</span> <span style="color: #E6DB74;">{</span>
-<span class="linenr">25: </span>                <span style="color: #F92672;">break</span>;
-<span class="linenr">26: </span>            <span style="color: #E6DB74;">}</span>
-<span class="linenr">27: </span>        <span style="color: #A6E22E;">}</span>
-<span class="linenr">28: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">29: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">11: </span>    <span style="color: #FF1493;">private</span> <span style="color: #FF1493;">static</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">handle</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">InputStream</span> <span style="color: #FF8C00;">input</span>, <span style="color: #5FD7FF;">OutputStream</span> <span style="color: #FF8C00;">output</span><span style="color: #5FD7FF;">)</span> <span style="color: #FF1493;">throws</span> <span style="color: #5FD7FF;">IOException</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">12: </span>        <span style="color: #5FD7FF;">var</span> <span style="color: #FF8C00;">writer</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">BufferedWriter</span><span style="color: #87D700;">(</span><span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">OutputStreamWriter</span><span style="color: #CDC673;">(</span>output, <span style="color: #AF87FF;">StandardCharsets</span>.UTF_8<span style="color: #CDC673;">)</span><span style="color: #87D700;">)</span>;
+<span class="linenr">13: </span>        <span style="color: #5FD7FF;">var</span> <span style="color: #FF8C00;">reader</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">BufferedReader</span><span style="color: #87D700;">(</span><span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">InputStreamReader</span><span style="color: #CDC673;">(</span>input, <span style="color: #AF87FF;">StandardCharsets</span>.UTF_8<span style="color: #CDC673;">)</span><span style="color: #87D700;">)</span>;
+<span class="linenr">14: </span>        <span style="color: #5FD7FF;">Scanner</span> <span style="color: #FF8C00;">scanner</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Scanner</span><span style="color: #87D700;">(</span>System.in<span style="color: #87D700;">)</span>;
+<span class="linenr">15: </span>        System.out.println<span style="color: #87D700;">(</span><span style="color: #CDC673;">"[server] "</span> + reader.readLine<span style="color: #CDC673;">()</span><span style="color: #87D700;">)</span>;
+<span class="linenr">16: </span>        <span style="color: #FF1493;">for</span> <span style="color: #87D700;">(</span>;;<span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr">17: </span>            System.out.println<span style="color: #CDC673;">(</span><span style="color: #CDC673;">"&gt;&gt;&gt; "</span><span style="color: #CDC673;">)</span>;    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#25171;&#21360;&#25552;&#31034;</span>
+<span class="linenr">18: </span>            <span style="color: #5FD7FF;">String</span> <span style="color: #FF8C00;">s</span> = scanner.nextLine<span style="color: #CDC673;">()</span>; <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#35835;&#21462;&#19968;&#34892;&#36755;&#20837;</span>
+<span class="linenr">19: </span>            writer.write<span style="color: #CDC673;">(</span>s<span style="color: #CDC673;">)</span>;
+<span class="linenr">20: </span>            writer.newLine<span style="color: #CDC673;">()</span>;
+<span class="linenr">21: </span>            writer.flush<span style="color: #CDC673;">()</span>;
+<span class="linenr">22: </span>            <span style="color: #5FD7FF;">String</span> <span style="color: #FF8C00;">resp</span> = reader.readLine<span style="color: #CDC673;">()</span>;
+<span class="linenr">23: </span>            System.out.println<span style="color: #CDC673;">(</span><span style="color: #CDC673;">"&lt;&lt;&lt; "</span> + resp<span style="color: #CDC673;">)</span>;
+<span class="linenr">24: </span>            <span style="color: #FF1493;">if</span> <span style="color: #CDC673;">(</span>resp.equals<span style="color: #FF8C00;">(</span><span style="color: #CDC673;">"bye"</span><span style="color: #FF8C00;">)</span><span style="color: #CDC673;">)</span> <span style="color: #CDC673;">{</span>
+<span class="linenr">25: </span>                <span style="color: #FF1493;">break</span>;
+<span class="linenr">26: </span>            <span style="color: #CDC673;">}</span>
+<span class="linenr">27: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr">28: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">29: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -589,7 +601,7 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">Socked</span> <span style="color: #FD971F;">sock</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Socket</span><span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">"localhost"</span>, 6666<span style="color: #AE81FF;">)</span>;
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #5FD7FF;">Socked</span> <span style="color: #FF8C00;">sock</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Socket</span><span style="color: #AF87FF;">(</span><span style="color: #CDC673;">"localhost"</span>, 6666<span style="color: #AF87FF;">)</span>;
 </pre>
 </div>
 
@@ -599,9 +611,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-orge543541" class="outline-3">
-<h3 id="orge543541">Socket 流</h3>
-<div class="outline-text-3" id="text-orge543541">
+<div id="outline-container-orga10b1c8" class="outline-3">
+<h3 id="orga10b1c8">Socket 流</h3>
+<div class="outline-text-3" id="text-orga10b1c8">
 <p>
 当 Socket 连接创建后成功后，无论是服务器端，还是客户端，我们都使用 <code>Socket</code> 实例进行网络通信。
 </p>
@@ -611,10 +623,10 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#29992;&#20110;&#35835;&#21462;&#32593;&#32476;&#25968;&#25454;&#65306;</span>
-<span class="linenr">2: </span><span style="color: #66D9EF;">InputStream</span> <span style="color: #FD971F;">in</span> = sock.getInputStream<span style="color: #AE81FF;">()</span>;
-<span class="linenr">3: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#29992;&#20110;&#20889;&#20837;&#32593;&#32476;&#25968;&#25454;&#65306;</span>
-<span class="linenr">4: </span><span style="color: #66D9EF;">OutputStream</span> <span style="color: #FD971F;">out</span> = sock.getOutputstream<span style="color: #AE81FF;">()</span>;
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#29992;&#20110;&#35835;&#21462;&#32593;&#32476;&#25968;&#25454;&#65306;</span>
+<span class="linenr">2: </span><span style="color: #5FD7FF;">InputStream</span> <span style="color: #FF8C00;">in</span> = sock.getInputStream<span style="color: #AF87FF;">()</span>;
+<span class="linenr">3: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#29992;&#20110;&#20889;&#20837;&#32593;&#32476;&#25968;&#25454;&#65306;</span>
+<span class="linenr">4: </span><span style="color: #5FD7FF;">OutputStream</span> <span style="color: #FF8C00;">out</span> = sock.getOutputstream<span style="color: #AF87FF;">()</span>;
 </pre>
 </div>
 
@@ -632,9 +644,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-org00ca885" class="outline-3">
-<h3 id="org00ca885">TCP 编程小结</h3>
-<div class="outline-text-3" id="text-org00ca885">
+<div id="outline-container-org1660052" class="outline-3">
+<h3 id="org1660052">TCP 编程小结</h3>
+<div class="outline-text-3" id="text-org1660052">
 <p>
 使用 Java 进行 TCP 编程时，需要使用 Socket 模型：
 </p>
@@ -650,9 +662,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-orgf7d0de4" class="outline-2">
-<h2 id="orgf7d0de4">UDP 编程</h2>
-<div class="outline-text-2" id="text-orgf7d0de4">
+<div id="outline-container-orge2fa97c" class="outline-2">
+<h2 id="orge2fa97c">UDP 编程</h2>
+<div class="outline-text-2" id="text-orge2fa97c">
 <p>
 和 TCP 编程相比，UDP 编程就简单得多，因为 UDP 没有创建连接，数据包也是一次收发一个，所以没有流的概念。
 </p>
@@ -666,28 +678,28 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 </div>
 
-<div id="outline-container-org12206ea" class="outline-3">
-<h3 id="org12206ea">服务器端</h3>
-<div class="outline-text-3" id="text-org12206ea">
+<div id="outline-container-org1062e6d" class="outline-3">
+<h3 id="org1062e6d">服务器端</h3>
+<div class="outline-text-3" id="text-org1062e6d">
 <p>
 在服务器端，使用 UDP 也需要监听指定的端口，Java 提供了 <code>DatagramSocket</code> 来实现这个功能，代码如下：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #66D9EF;">DatagramSocket</span> <span style="color: #FD971F;">ds</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">DatagramSocket</span><span style="color: #AE81FF;">(</span>6666<span style="color: #AE81FF;">)</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#30417;&#21548;&#25351;&#23450;&#31471;&#21475;</span>
-<span class="linenr"> 2: </span><span style="color: #F92672;">for</span> <span style="color: #AE81FF;">(</span>;;<span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 3: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#25968;&#25454;&#32531;&#20914;&#21306;</span>
-<span class="linenr"> 4: </span>    <span style="color: #66D9EF;">byte</span><span style="color: #66D9EF;">[]</span> <span style="color: #FD971F;">buffer</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">byte</span><span style="color: #66D9EF;">[</span>1024<span style="color: #66D9EF;">]</span>;
-<span class="linenr"> 5: </span>    <span style="color: #66D9EF;">DatagramPacket</span> <span style="color: #FD971F;">packet</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">DatagramPacket</span><span style="color: #66D9EF;">(</span>buffer, buffer.length<span style="color: #66D9EF;">)</span>;
-<span class="linenr"> 6: </span>    ds.receive<span style="color: #66D9EF;">(</span>packet<span style="color: #66D9EF;">)</span>;                       <span style="color: #75715E;">// </span><span style="color: #75715E;">&#25910;&#21462;&#19968;&#20010; UDP &#25968;&#25454;&#21253;</span>
-<span class="linenr"> 7: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#25910;&#21462;&#21040;&#30340;&#25968;&#25454;&#23384;&#20648;&#22312; buffer &#20013;&#65292;&#30001; packet.getOffset()&#65292;packet.getLength() &#25351;&#23450;&#36215;&#22987;&#20301;&#32622;&#21644;&#38271;&#24230;</span>
-<span class="linenr"> 8: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23558;&#20854;&#25353; UTF-8 &#32534;&#30721;&#36716;&#25442;&#20026; String</span>
-<span class="linenr"> 9: </span>    <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">s</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">String</span><span style="color: #66D9EF;">(</span>packet.getData<span style="color: #A6E22E;">()</span>, packet.getOffset<span style="color: #A6E22E;">()</span>, packet.getLength<span style="color: #A6E22E;">()</span>, <span style="color: #AE81FF;">StandardCharsets</span>.UTF_8<span style="color: #66D9EF;">)</span>;
-<span class="linenr">10: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21457;&#36865;&#25968;&#25454;</span>
-<span class="linenr">11: </span>    <span style="color: #66D9EF;">byte</span><span style="color: #66D9EF;">[]</span><span style="color: #FD971F;">data</span> = <span style="color: #E6DB74;">"ACK"</span>.getBytes<span style="color: #66D9EF;">(</span><span style="color: #AE81FF;">StandardCharsets</span>.UTF_8<span style="color: #66D9EF;">)</span>;
-<span class="linenr">12: </span>    packet.setData<span style="color: #66D9EF;">(</span>data<span style="color: #66D9EF;">)</span>;
-<span class="linenr">13: </span>    ds.send<span style="color: #66D9EF;">(</span>packet<span style="color: #66D9EF;">)</span>;
-<span class="linenr">14: </span><span style="color: #AE81FF;">}</span>
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #5FD7FF;">DatagramSocket</span> <span style="color: #FF8C00;">ds</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">DatagramSocket</span><span style="color: #AF87FF;">(</span>6666<span style="color: #AF87FF;">)</span>; <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#30417;&#21548;&#25351;&#23450;&#31471;&#21475;</span>
+<span class="linenr"> 2: </span><span style="color: #FF1493;">for</span> <span style="color: #AF87FF;">(</span>;;<span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 3: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#25968;&#25454;&#32531;&#20914;&#21306;</span>
+<span class="linenr"> 4: </span>    <span style="color: #5FD7FF;">byte</span><span style="color: #5FD7FF;">[]</span> <span style="color: #FF8C00;">buffer</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">byte</span><span style="color: #5FD7FF;">[</span>1024<span style="color: #5FD7FF;">]</span>;
+<span class="linenr"> 5: </span>    <span style="color: #5FD7FF;">DatagramPacket</span> <span style="color: #FF8C00;">packet</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">DatagramPacket</span><span style="color: #5FD7FF;">(</span>buffer, buffer.length<span style="color: #5FD7FF;">)</span>;
+<span class="linenr"> 6: </span>    ds.receive<span style="color: #5FD7FF;">(</span>packet<span style="color: #5FD7FF;">)</span>;                       <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#25910;&#21462;&#19968;&#20010; UDP &#25968;&#25454;&#21253;</span>
+<span class="linenr"> 7: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#25910;&#21462;&#21040;&#30340;&#25968;&#25454;&#23384;&#20648;&#22312; buffer &#20013;&#65292;&#30001; packet.getOffset()&#65292;packet.getLength() &#25351;&#23450;&#36215;&#22987;&#20301;&#32622;&#21644;&#38271;&#24230;</span>
+<span class="linenr"> 8: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#23558;&#20854;&#25353; UTF-8 &#32534;&#30721;&#36716;&#25442;&#20026; String</span>
+<span class="linenr"> 9: </span>    <span style="color: #5FD7FF;">String</span> <span style="color: #FF8C00;">s</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">String</span><span style="color: #5FD7FF;">(</span>packet.getData<span style="color: #87D700;">()</span>, packet.getOffset<span style="color: #87D700;">()</span>, packet.getLength<span style="color: #87D700;">()</span>, <span style="color: #AF87FF;">StandardCharsets</span>.UTF_8<span style="color: #5FD7FF;">)</span>;
+<span class="linenr">10: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#21457;&#36865;&#25968;&#25454;</span>
+<span class="linenr">11: </span>    <span style="color: #5FD7FF;">byte</span><span style="color: #5FD7FF;">[]</span><span style="color: #FF8C00;">data</span> = <span style="color: #CDC673;">"ACK"</span>.getBytes<span style="color: #5FD7FF;">(</span><span style="color: #AF87FF;">StandardCharsets</span>.UTF_8<span style="color: #5FD7FF;">)</span>;
+<span class="linenr">12: </span>    packet.setData<span style="color: #5FD7FF;">(</span>data<span style="color: #5FD7FF;">)</span>;
+<span class="linenr">13: </span>    ds.send<span style="color: #5FD7FF;">(</span>packet<span style="color: #5FD7FF;">)</span>;
+<span class="linenr">14: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -696,7 +708,7 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">DatagramSocket</span> <span style="color: #FD971F;">ds</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">DatagramSocket</span><span style="color: #AE81FF;">(</span>6666<span style="color: #AE81FF;">)</span>;
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #5FD7FF;">DatagramSocket</span> <span style="color: #FF8C00;">ds</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">DatagramSocket</span><span style="color: #AF87FF;">(</span>6666<span style="color: #AF87FF;">)</span>;
 </pre>
 </div>
 
@@ -705,9 +717,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">for</span> <span style="color: #AE81FF;">(</span>;;<span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #FF1493;">for</span> <span style="color: #AF87FF;">(</span>;;<span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
 <span class="linenr">2: </span>    ...
-<span class="linenr">3: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">3: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -716,9 +728,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">byte</span><span style="color: #AE81FF;">[]</span> <span style="color: #FD971F;">buffer</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">byte</span><span style="color: #AE81FF;">[</span>1024<span style="color: #AE81FF;">]</span>;
-<span class="linenr">2: </span><span style="color: #66D9EF;">DatagramPacket</span> <span style="color: #FD971F;">packet</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">DatagramPacket</span><span style="color: #AE81FF;">(</span>buffer, buffer.length<span style="color: #AE81FF;">)</span>;
-<span class="linenr">3: </span>ds.receive<span style="color: #AE81FF;">(</span>packet<span style="color: #AE81FF;">)</span>;
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #5FD7FF;">byte</span><span style="color: #AF87FF;">[]</span> <span style="color: #FF8C00;">buffer</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">byte</span><span style="color: #AF87FF;">[</span>1024<span style="color: #AF87FF;">]</span>;
+<span class="linenr">2: </span><span style="color: #5FD7FF;">DatagramPacket</span> <span style="color: #FF8C00;">packet</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">DatagramPacket</span><span style="color: #AF87FF;">(</span>buffer, buffer.length<span style="color: #AF87FF;">)</span>;
+<span class="linenr">3: </span>ds.receive<span style="color: #AF87FF;">(</span>packet<span style="color: #AF87FF;">)</span>;
 </pre>
 </div>
 
@@ -727,7 +739,7 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">s</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">String</span><span style="color: #AE81FF;">(</span>packet.getData<span style="color: #66D9EF;">()</span>, packet.getOffset<span style="color: #66D9EF;">()</span>, packet.getLength<span style="color: #66D9EF;">()</span>, <span style="color: #AE81FF;">StandardCharsets</span>.UTF_8<span style="color: #AE81FF;">)</span>;
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #5FD7FF;">String</span> <span style="color: #FF8C00;">s</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">String</span><span style="color: #AF87FF;">(</span>packet.getData<span style="color: #5FD7FF;">()</span>, packet.getOffset<span style="color: #5FD7FF;">()</span>, packet.getLength<span style="color: #5FD7FF;">()</span>, <span style="color: #AF87FF;">StandardCharsets</span>.UTF_8<span style="color: #AF87FF;">)</span>;
 </pre>
 </div>
 
@@ -740,35 +752,35 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">byte</span><span style="color: #AE81FF;">[]</span> <span style="color: #FD971F;">data</span> = ...
-<span class="linenr">2: </span>packet.setData<span style="color: #AE81FF;">(</span>data<span style="color: #AE81FF;">)</span>;
-<span class="linenr">3: </span>ds.send<span style="color: #AE81FF;">(</span>packet<span style="color: #AE81FF;">)</span>;
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #5FD7FF;">byte</span><span style="color: #AF87FF;">[]</span> <span style="color: #FF8C00;">data</span> = ...
+<span class="linenr">2: </span>packet.setData<span style="color: #AF87FF;">(</span>data<span style="color: #AF87FF;">)</span>;
+<span class="linenr">3: </span>ds.send<span style="color: #AF87FF;">(</span>packet<span style="color: #AF87FF;">)</span>;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orga7e54a1" class="outline-3">
-<h3 id="orga7e54a1">客户端</h3>
-<div class="outline-text-3" id="text-orga7e54a1">
+<div id="outline-container-orgfa8b202" class="outline-3">
+<h3 id="orgfa8b202">客户端</h3>
+<div class="outline-text-3" id="text-orgfa8b202">
 <p>
 和服务端相比，客户端使用 UDP 时，只需要直接向服务器端发送 UDP 包，然后接收返回的 UDP 包：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #66D9EF;">DatagramSocket</span> <span style="color: #FD971F;">ds</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">DatagramSocket</span><span style="color: #AE81FF;">()</span>;
-<span class="linenr"> 2: </span>ds.setSoTimeOut<span style="color: #AE81FF;">(</span>1000<span style="color: #AE81FF;">)</span>;
-<span class="linenr"> 3: </span>ds.connect<span style="color: #AE81FF;">(</span>InetAddress.getByName<span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">"localhost"</span><span style="color: #66D9EF;">)</span>, 6666<span style="color: #AE81FF;">)</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#36830;&#25509;&#25351;&#23450;&#26381;&#21153;&#22120;&#21644;&#31471;&#21475;</span>
-<span class="linenr"> 4: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#21457;&#36865;&#65306;</span>
-<span class="linenr"> 5: </span><span style="color: #66D9EF;">byte</span><span style="color: #AE81FF;">[]</span> <span style="color: #FD971F;">data</span> = <span style="color: #E6DB74;">"Hello"</span>.getBytes<span style="color: #AE81FF;">()</span>;
-<span class="linenr"> 6: </span><span style="color: #66D9EF;">DatagramPacket</span> <span style="color: #FD971F;">packet</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">DatagramPacket</span><span style="color: #AE81FF;">(</span>data, data.length<span style="color: #AE81FF;">)</span>;
-<span class="linenr"> 7: </span>ds.send<span style="color: #AE81FF;">(</span>packet<span style="color: #AE81FF;">)</span>;
-<span class="linenr"> 8: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#25509;&#25910;&#65306;</span>
-<span class="linenr"> 9: </span><span style="color: #66D9EF;">byte</span><span style="color: #AE81FF;">[]</span> <span style="color: #FD971F;">buffer</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">byte</span><span style="color: #AE81FF;">[</span>1024<span style="color: #AE81FF;">]</span>;
-<span class="linenr">10: </span>packet = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">DatagramPacket</span><span style="color: #AE81FF;">(</span>buffer, buffer.length<span style="color: #AE81FF;">)</span>;
-<span class="linenr">11: </span>ds.receive<span style="color: #AE81FF;">(</span>packet<span style="color: #AE81FF;">)</span>;
-<span class="linenr">12: </span><span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">resp</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">String</span><span style="color: #AE81FF;">(</span>packet.getData<span style="color: #66D9EF;">()</span>, packet.getOffset<span style="color: #66D9EF;">()</span>, packet.getLength<span style="color: #66D9EF;">()</span><span style="color: #AE81FF;">)</span>;
-<span class="linenr">13: </span>ds.disconnect<span style="color: #AE81FF;">()</span>;
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #5FD7FF;">DatagramSocket</span> <span style="color: #FF8C00;">ds</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">DatagramSocket</span><span style="color: #AF87FF;">()</span>;
+<span class="linenr"> 2: </span>ds.setSoTimeOut<span style="color: #AF87FF;">(</span>1000<span style="color: #AF87FF;">)</span>;
+<span class="linenr"> 3: </span>ds.connect<span style="color: #AF87FF;">(</span>InetAddress.getByName<span style="color: #5FD7FF;">(</span><span style="color: #CDC673;">"localhost"</span><span style="color: #5FD7FF;">)</span>, 6666<span style="color: #AF87FF;">)</span>; <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#36830;&#25509;&#25351;&#23450;&#26381;&#21153;&#22120;&#21644;&#31471;&#21475;</span>
+<span class="linenr"> 4: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#21457;&#36865;&#65306;</span>
+<span class="linenr"> 5: </span><span style="color: #5FD7FF;">byte</span><span style="color: #AF87FF;">[]</span> <span style="color: #FF8C00;">data</span> = <span style="color: #CDC673;">"Hello"</span>.getBytes<span style="color: #AF87FF;">()</span>;
+<span class="linenr"> 6: </span><span style="color: #5FD7FF;">DatagramPacket</span> <span style="color: #FF8C00;">packet</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">DatagramPacket</span><span style="color: #AF87FF;">(</span>data, data.length<span style="color: #AF87FF;">)</span>;
+<span class="linenr"> 7: </span>ds.send<span style="color: #AF87FF;">(</span>packet<span style="color: #AF87FF;">)</span>;
+<span class="linenr"> 8: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#25509;&#25910;&#65306;</span>
+<span class="linenr"> 9: </span><span style="color: #5FD7FF;">byte</span><span style="color: #AF87FF;">[]</span> <span style="color: #FF8C00;">buffer</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">byte</span><span style="color: #AF87FF;">[</span>1024<span style="color: #AF87FF;">]</span>;
+<span class="linenr">10: </span>packet = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">DatagramPacket</span><span style="color: #AF87FF;">(</span>buffer, buffer.length<span style="color: #AF87FF;">)</span>;
+<span class="linenr">11: </span>ds.receive<span style="color: #AF87FF;">(</span>packet<span style="color: #AF87FF;">)</span>;
+<span class="linenr">12: </span><span style="color: #5FD7FF;">String</span> <span style="color: #FF8C00;">resp</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">String</span><span style="color: #AF87FF;">(</span>packet.getData<span style="color: #5FD7FF;">()</span>, packet.getOffset<span style="color: #5FD7FF;">()</span>, packet.getLength<span style="color: #5FD7FF;">()</span><span style="color: #AF87FF;">)</span>;
+<span class="linenr">13: </span>ds.disconnect<span style="color: #AF87FF;">()</span>;
 </pre>
 </div>
 
@@ -777,9 +789,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">DatagramSocket</span> <span style="color: #FD971F;">ds</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">DatagramSocket</span><span style="color: #AE81FF;">()</span>;
-<span class="linenr">2: </span>ds.setSoTimeout<span style="color: #AE81FF;">(</span>1000<span style="color: #AE81FF;">)</span>;
-<span class="linenr">3: </span>ds.connect<span style="color: #AE81FF;">(</span>InetAddress.getByName<span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">"localhost"</span><span style="color: #66D9EF;">)</span>, 6666<span style="color: #AE81FF;">)</span>;
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #5FD7FF;">DatagramSocket</span> <span style="color: #FF8C00;">ds</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">DatagramSocket</span><span style="color: #AF87FF;">()</span>;
+<span class="linenr">2: </span>ds.setSoTimeout<span style="color: #AF87FF;">(</span>1000<span style="color: #AF87FF;">)</span>;
+<span class="linenr">3: </span>ds.connect<span style="color: #AF87FF;">(</span>InetAddress.getByName<span style="color: #5FD7FF;">(</span><span style="color: #CDC673;">"localhost"</span><span style="color: #5FD7FF;">)</span>, 6666<span style="color: #AF87FF;">)</span>;
 </pre>
 </div>
 
@@ -808,7 +820,7 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span>ds.disconnect<span style="color: #AE81FF;">()</span>;
+<pre class="src src-java"><span class="linenr">1: </span>ds.disconnect<span style="color: #AF87FF;">()</span>;
 </pre>
 </div>
 
@@ -818,9 +830,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-org22443cc" class="outline-3">
-<h3 id="org22443cc">UDP 编程小结</h3>
-<div class="outline-text-3" id="text-org22443cc">
+<div id="outline-container-org0eac13e" class="outline-3">
+<h3 id="org0eac13e">UDP 编程小结</h3>
+<div class="outline-text-3" id="text-org0eac13e">
 <p>
 使用 UDP 协议通信时，服务器和客户端双方无需建立连接：
 </p>
@@ -834,9 +846,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-orgbddb4e5" class="outline-2">
-<h2 id="orgbddb4e5">HTTP 编程</h2>
-<div class="outline-text-2" id="text-orgbddb4e5">
+<div id="outline-container-orgd4cea68" class="outline-2">
+<h2 id="orgd4cea68">HTTP 编程</h2>
+<div class="outline-text-2" id="text-orgd4cea68">
 <p>
 什么是 HTTP ？HTTP 就是目前使用最广泛的 Web 应用程序使用的基础协议，例如，浏览器访问网站，手机 App 访问后台服务器，都是通过 HTTP 协议实现的。
 </p>
@@ -862,9 +874,9 @@ title=""
 />
 </div>
 
-<div id="outline-container-org538a472" class="outline-3">
-<h3 id="org538a472">HTTP 请求</h3>
-<div class="outline-text-3" id="text-org538a472">
+<div id="outline-container-orgb2a18a0" class="outline-3">
+<h3 id="orgb2a18a0">HTTP 请求</h3>
+<div class="outline-text-3" id="text-orgb2a18a0">
 <p>
 HTTP 请求的格式是固定的，它由 HTTP Header 和 HTTP Body 两部分构成。
 </p>
@@ -926,9 +938,9 @@ Content-Length: 38
 </div>
 </div>
 
-<div id="outline-container-org769a935" class="outline-3">
-<h3 id="org769a935">HTTP 响应</h3>
-<div class="outline-text-3" id="text-org769a935">
+<div id="outline-container-org7ce9d32" class="outline-3">
+<h3 id="org7ce9d32">HTTP 响应</h3>
+<div class="outline-text-3" id="text-org7ce9d32">
 <p>
 <b>HTTP 响应也是由 Header 和 Body 两部分组成</b> ，一个典型的 HTTP 响应如下：
 </p>
@@ -1017,7 +1029,7 @@ title=""
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-05 Mon 09:53</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-10-05 Mon 17:44</p>
+<p class="date">Created: 2020-11-13 Fri 18:00</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

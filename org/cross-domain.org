@@ -427,7 +427,17 @@ CORS 需要浏览器和服务器同时支持， *整个 CORS 通信过程，都�
 
 只要同时满足以下两在条件，就属于简单请求，如下：
 - 请求方法是以下三种之一： =HEAD、GET、POST= ；
-- HTTP 的头信息不超出以下几种字段： =Accept、Accept-Language、Content-Language、Last-Event-ID、Content-Type= （只限于三个值 =application/x-www-form-urlencode、multipart/form-data、text/plain= ） 。
+- HTTP 的头信息不超出以下几种字段：
+
+#+BEGIN_EXAMPLE
+- Accept
+- Accept-Language
+- Content-Language
+- Last-Event-ID
+- Content-Type
+#+END_EXAMPLE
+
+其中， =Content-Type=  只限于三个值 =application/x-www-form-urlencode、multipart/form-data、text/plain= 。
 
 这是为了兼容表单，因为历史上表单一直可以发出跨域请求。AJAX 的跨域设计就是，只要表单可以发，AJAX 就可以直接发。
 
@@ -437,13 +447,13 @@ CORS 需要浏览器和服务器同时支持， *整个 CORS 通信过程，都�
 
 _1. 基本流程_
 
-对于简单请求，浏览器直接发出 CORS 请求，具体来说，就是在头信息中，增加一个 =Origin= 字段。
+*对于简单请求，浏览器直接发出 CORS 请求，具体来说，就是在头信息中，增加一个 =Origin= 字段。*
 
 如下面这个例子，浏览器发现这次跨源 AJAX 请求是简单请求，就自动在头信息中，添加一个 =Origin= 字段：
 
 #+BEGIN_EXAMPLE
   GET /cors HTTP/1.1
-  Origin: http://api.bob.com
+  Origin: http://api.bob.com ←
   Host: api.alice.com
   Accept-Language: en-US
   Connection: keep-alive
@@ -608,7 +618,7 @@ _2. 预检请求的回应_
 
 （2）Access-Control-Allow-Headers
 
-如果浏览器请求包括 =Access-Control-Request-Headers= 字段，则 =Access-Control-Request-Headers= 字段是必需的。它也是一个逗号分隔的字符串，表明服务器支持的所有头信息字段，不限于浏览器在“预检”中请求的字段。
+如果浏览器请求包括 =Access-Control-Request-Headers= 字段，则 =Access-Control-Allow-Headers= 字段是必需的。它也是一个逗号分隔的字符串，表明服务器支持的所有头信息字段，不限于浏览器在“预检”中请求的字段。
 
 （3）Access-Control-Allow-Credentials
 
@@ -620,7 +630,7 @@ _2. 预检请求的回应_
 
 _3. 浏览器的正常请求和回应_
 
-一旦服务器通过了“预检”请求，以后每次浏览器政党的 CORS 请求，就都跟简单请求一样，会有一个 =Origin= 头信息字段。服务器的回应，也都会有一个 =Access-Control-Allow-Origin= 头信息字段。
+一旦服务器通过了“预检”请求，以后每次浏览器正常的 CORS 请求，就都跟简单请求一样，会有一个 =Origin= 头信息字段。服务器的回应，也都会有一个 =Access-Control-Allow-Origin= 头信息字段。
 
 下面是“预检”请求之后，浏览器的正常 CORS 请求：
 

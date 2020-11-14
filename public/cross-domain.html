@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-11 Wed 17:47 -->
+<!-- 2020-11-13 Fri 14:32 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cross Domain</title>
@@ -23,27 +23,27 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3edf0e4">什么是跨域</a></li>
-<li><a href="#org797b50b">Cookie</a></li>
-<li><a href="#org153b55f">iframe</a>
+<li><a href="#org8cfc2e5">什么是跨域</a></li>
+<li><a href="#orgeab6c5e">Cookie</a></li>
+<li><a href="#org7168268">iframe</a>
 <ul>
-<li><a href="#org2b6e510">片段识别符</a></li>
-<li><a href="#org3d1792c">window.name</a></li>
-<li><a href="#org7803c30">window.postMessage</a></li>
+<li><a href="#org0523789">片段识别符</a></li>
+<li><a href="#orgc2513bc">window.name</a></li>
+<li><a href="#org36fd1fb">window.postMessage</a></li>
 </ul>
 </li>
-<li><a href="#org3504bdb">AJAX</a>
+<li><a href="#org91c9b53">AJAX</a>
 <ul>
-<li><a href="#org1df0b52">JSONP</a></li>
-<li><a href="#org691f0db">WebSocket</a></li>
-<li><a href="#org52b5de4">CORS</a></li>
+<li><a href="#orgfcec386">JSONP</a></li>
+<li><a href="#org61953d8">WebSocket</a></li>
+<li><a href="#org16254e1">CORS</a></li>
 </ul>
 </li>
-<li><a href="#org907204a">CORS 详解</a>
+<li><a href="#orgae64b79">CORS 详解</a>
 <ul>
-<li><a href="#orgbdb1d6b">两种请求</a></li>
-<li><a href="#orgdbe70c1">简单请求</a></li>
-<li><a href="#org64ae2c2">非简单请求</a></li>
+<li><a href="#org1b2321e">两种请求</a></li>
+<li><a href="#orga2e75e6">简单请求</a></li>
+<li><a href="#orgd51a36c">非简单请求</a></li>
 </ul>
 </li>
 </ul>
@@ -53,9 +53,9 @@
 → 本文摘录自 <a href="http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html">浏览器同源政策及其规避方法</a>
 </p>
 
-<div id="outline-container-org3edf0e4" class="outline-2">
-<h2 id="org3edf0e4">什么是跨域</h2>
-<div class="outline-text-2" id="text-org3edf0e4">
+<div id="outline-container-org8cfc2e5" class="outline-2">
+<h2 id="org8cfc2e5">什么是跨域</h2>
+<div class="outline-text-2" id="text-org8cfc2e5">
 <p>
 <span class="underline">跨域</span> ，是指浏览器不能执行其他网站的脚本，它是浏览器的同源策略造成的，是浏览器对 JavaScript 实施的安全限制。
 </p>
@@ -107,9 +107,9 @@ Cookie 往往用来保存用户的登录状态，所以“同源策略”是必�
 </div>
 </div>
 
-<div id="outline-container-org797b50b" class="outline-2">
-<h2 id="org797b50b">Cookie</h2>
-<div class="outline-text-2" id="text-org797b50b">
+<div id="outline-container-orgeab6c5e" class="outline-2">
+<h2 id="orgeab6c5e">Cookie</h2>
+<div class="outline-text-2" id="text-orgeab6c5e">
 <p>
 <b>Cookie 是服务器写入浏览器的一小段信息</b> ，只有同源网页才能共享。但是，如果两个网页的一级域名相同，只是二级域名不同，浏览器允许通过设置 <code>document.domain</code> 共享 Cookie 。
 </p>
@@ -125,7 +125,7 @@ Cookie 往往用来保存用户的登录状态，所以“同源策略”是必�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span>document.domain = <span style="color: #E6DB74;">'example.com'</span>;
+<pre class="src src-js"><span class="linenr">1: </span>document.domain = <span style="color: #CDC673;">'example.com'</span>;
 </pre>
 </div>
 
@@ -134,7 +134,7 @@ Cookie 往往用来保存用户的登录状态，所以“同源策略”是必�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span>document.cookie = <span style="color: #E6DB74;">"test1=hello"</span>;
+<pre class="src src-js"><span class="linenr">1: </span>document.cookie = <span style="color: #CDC673;">"test1=hello"</span>;
 </pre>
 </div>
 
@@ -143,7 +143,7 @@ B 网页就可以读到这个 Cookie ：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">allCookie</span> = document.cookie;
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">allCookie</span> = document.cookie;
 </pre>
 </div>
 
@@ -169,9 +169,9 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </div>
 </div>
 
-<div id="outline-container-org153b55f" class="outline-2">
-<h2 id="org153b55f">iframe</h2>
-<div class="outline-text-2" id="text-org153b55f">
+<div id="outline-container-org7168268" class="outline-2">
+<h2 id="org7168268">iframe</h2>
+<div class="outline-text-2" id="text-org7168268">
 <p>
 如果两个网页不同源，就无法拿到对方的 DOM ，典型的例子是 <code>iframe</code> 窗口和 <code>window.open</code> 方法打开的窗口，它们与父窗口无法通信。
 </p>
@@ -190,9 +190,9 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </ul>
 </div>
 
-<div id="outline-container-org2b6e510" class="outline-3">
-<h3 id="org2b6e510">片段识别符</h3>
-<div class="outline-text-3" id="text-org2b6e510">
+<div id="outline-container-org0523789" class="outline-3">
+<h3 id="org0523789">片段识别符</h3>
+<div class="outline-text-3" id="text-org0523789">
 <p>
 <span class="underline">片段识别符</span> （fragment identifier），是指 URL 的 <code>#</code> 号后面的部分，如 <code>http://example.com/x.html#fragment</code> 的 <code>#fragment</code> 。如果，只是改变片段识别符，页面不会重新刷新。
 </p>
@@ -202,8 +202,8 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">src</span> = originURL + <span style="color: #E6DB74;">'#'</span> + data;
-<span class="linenr">2: </span>document.getElementById<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'myIFrame'</span><span style="color: #AE81FF;">)</span>.src = src;
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">src</span> = originURL + <span style="color: #CDC673;">'#'</span> + data;
+<span class="linenr">2: </span>document.getElementById<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'myIFrame'</span><span style="color: #AF87FF;">)</span>.src = src;
 </pre>
 </div>
 
@@ -214,10 +214,10 @@ Set-Cookie: key=value; domain=.example.com; path=/
 <div class="org-src-container">
 <pre class="src src-js"><span class="linenr">1: </span>window.onhashchange = checkMessage;
 <span class="linenr">2: </span>
-<span class="linenr">3: </span><span style="color: #F92672;">function</span> <span style="color: #A6E22E;">checkMessage</span><span style="color: #AE81FF;">()</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr">4: </span>    <span style="color: #F92672;">var</span> <span style="color: #FD971F;">message</span> = window.location.hash;
-<span class="linenr">5: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">...</span>
-<span class="linenr">6: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">3: </span><span style="color: #FF1493;">function</span> <span style="color: #87D700;">checkMessage</span><span style="color: #AF87FF;">()</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">4: </span>    <span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">message</span> = window.location.hash;
+<span class="linenr">5: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">...</span>
+<span class="linenr">6: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -226,15 +226,15 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span>parent.location.href = target + <span style="color: #E6DB74;">'#'</span> + hash;
+<pre class="src src-js"><span class="linenr">1: </span>parent.location.href = target + <span style="color: #CDC673;">'#'</span> + hash;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3d1792c" class="outline-3">
-<h3 id="org3d1792c">window.name</h3>
-<div class="outline-text-3" id="text-org3d1792c">
+<div id="outline-container-orgc2513bc" class="outline-3">
+<h3 id="orgc2513bc">window.name</h3>
+<div class="outline-text-3" id="text-orgc2513bc">
 <p>
 浏览器窗口有 <code>window.name</code> 属性，它的最大特点是，无论是否同源，只要在同一个窗口里，前一个网页设置了这个属性，后一个网页就可以读取它。
 </p>
@@ -257,7 +257,7 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js">location = <span style="color: #E6DB74;">'http://parent.url.com/xxx.html'</span>;
+<pre class="src src-js">location = <span style="color: #CDC673;">'http://parent.url.com/xxx.html'</span>;
 </pre>
 </div>
 
@@ -266,7 +266,7 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span style="color: #F92672;">var</span> <span style="color: #FD971F;">data</span> = document.getElementById<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'myFrame'</span><span style="color: #AE81FF;">)</span>.contentWindow.name;
+<pre class="src src-js"><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">data</span> = document.getElementById<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'myFrame'</span><span style="color: #AF87FF;">)</span>.contentWindow.name;
 </pre>
 </div>
 
@@ -280,9 +280,9 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </div>
 </div>
 
-<div id="outline-container-org7803c30" class="outline-3">
-<h3 id="org7803c30">window.postMessage</h3>
-<div class="outline-text-3" id="text-org7803c30">
+<div id="outline-container-org36fd1fb" class="outline-3">
+<h3 id="org36fd1fb">window.postMessage</h3>
+<div class="outline-text-3" id="text-org36fd1fb">
 <p>
 片段识别符和 <code>window.name</code> 两种方法都属于破解，HTML5 为了解决这个问题，引入了一个全新的 API &#x2013; 跨文档通信 API （Cross-document messaging）。
 </p>
@@ -300,8 +300,8 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">popup</span> = window.open<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'http://bbb.com'</span>, <span style="color: #E6DB74;">'title'</span><span style="color: #AE81FF;">)</span>;
-<span class="linenr">2: </span>popup.postMessage<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'Hello World!'</span>, <span style="color: #E6DB74;">'http://bbb.com'</span><span style="color: #AE81FF;">)</span>;
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">popup</span> = window.open<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'http://bbb.com'</span>, <span style="color: #CDC673;">'title'</span><span style="color: #AF87FF;">)</span>;
+<span class="linenr">2: </span>popup.postMessage<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'Hello World!'</span>, <span style="color: #CDC673;">'http://bbb.com'</span><span style="color: #AF87FF;">)</span>;
 </pre>
 </div>
 
@@ -318,7 +318,7 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span>window.opener.postMessage<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'Nice to see you'</span>, <span style="color: #E6DB74;">'http://aaa.com'</span><span style="color: #AE81FF;">)</span>;
+<pre class="src src-js"><span class="linenr">1: </span>window.opener.postMessage<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'Nice to see you'</span>, <span style="color: #CDC673;">'http://aaa.com'</span><span style="color: #AF87FF;">)</span>;
 </pre>
 </div>
 
@@ -327,9 +327,9 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span>window.addEventListener<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'message'</span>, <span style="color: #F92672;">function</span><span style="color: #66D9EF;">(</span><span style="color: #FD971F;">e</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">2: </span>    console.log<span style="color: #A6E22E;">(</span>e.data<span style="color: #A6E22E;">)</span>;
-<span class="linenr">3: </span><span style="color: #66D9EF;">}</span>, <span style="color: #AE81FF;">false</span><span style="color: #AE81FF;">)</span>;
+<pre class="src src-js"><span class="linenr">1: </span>window.addEventListener<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'message'</span>, <span style="color: #FF1493;">function</span><span style="color: #5FD7FF;">(</span><span style="color: #FF8C00;">e</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">2: </span>    console.log<span style="color: #87D700;">(</span>e.data<span style="color: #87D700;">)</span>;
+<span class="linenr">3: </span><span style="color: #5FD7FF;">}</span>, <span style="color: #AF87FF;">false</span><span style="color: #AF87FF;">)</span>;
 </pre>
 </div>
 
@@ -349,11 +349,11 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span>window.addEventListener<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'message'</span>, receiveMessage<span style="color: #AE81FF;">)</span>;
+<pre class="src src-js"><span class="linenr">1: </span>window.addEventListener<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'message'</span>, receiveMessage<span style="color: #AF87FF;">)</span>;
 <span class="linenr">2: </span>
-<span class="linenr">3: </span><span style="color: #F92672;">function</span> <span style="color: #A6E22E;">receiveMessage</span><span style="color: #AE81FF;">(</span><span style="color: #FD971F;">event</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr">4: </span>    event.source.postMessage<span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">'Nice to see you!'</span>, <span style="color: #E6DB74;">'*'</span><span style="color: #66D9EF;">)</span>;
-<span class="linenr">5: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">3: </span><span style="color: #FF1493;">function</span> <span style="color: #87D700;">receiveMessage</span><span style="color: #AF87FF;">(</span><span style="color: #FF8C00;">event</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">4: </span>    event.source.postMessage<span style="color: #5FD7FF;">(</span><span style="color: #CDC673;">'Nice to see you!'</span>, <span style="color: #CDC673;">'*'</span><span style="color: #5FD7FF;">)</span>;
+<span class="linenr">5: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -362,16 +362,16 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span>window.addEventListener<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'message'</span>, receiveMessage<span style="color: #AE81FF;">)</span>;
+<pre class="src src-js"><span class="linenr"> 1: </span>window.addEventListener<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'message'</span>, receiveMessage<span style="color: #AF87FF;">)</span>;
 <span class="linenr"> 2: </span>
-<span class="linenr"> 3: </span><span style="color: #F92672;">function</span> <span style="color: #A6E22E;">receiveMessage</span><span style="color: #AE81FF;">(</span><span style="color: #FD971F;">event</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 4: </span>    <span style="color: #F92672;">if</span> <span style="color: #66D9EF;">(</span>event.origin !== <span style="color: #E6DB74;">'http://aaa.com'</span><span style="color: #66D9EF;">)</span> <span style="color: #F92672;">return</span>;
-<span class="linenr"> 5: </span>    <span style="color: #F92672;">if</span> <span style="color: #66D9EF;">(</span>event.data === <span style="color: #E6DB74;">'Hello World'</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr"> 6: </span>        event.source.postMessage<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">'Hello'</span>, event.origin<span style="color: #A6E22E;">)</span>;
-<span class="linenr"> 7: </span>    <span style="color: #66D9EF;">}</span> <span style="color: #F92672;">else</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr"> 8: </span>        console.log<span style="color: #A6E22E;">(</span>event.data<span style="color: #A6E22E;">)</span>;
-<span class="linenr"> 9: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">10: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr"> 3: </span><span style="color: #FF1493;">function</span> <span style="color: #87D700;">receiveMessage</span><span style="color: #AF87FF;">(</span><span style="color: #FF8C00;">event</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #FF1493;">if</span> <span style="color: #5FD7FF;">(</span>event.origin !== <span style="color: #CDC673;">'http://aaa.com'</span><span style="color: #5FD7FF;">)</span> <span style="color: #FF1493;">return</span>;
+<span class="linenr"> 5: </span>    <span style="color: #FF1493;">if</span> <span style="color: #5FD7FF;">(</span>event.data === <span style="color: #CDC673;">'Hello World'</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 6: </span>        event.source.postMessage<span style="color: #87D700;">(</span><span style="color: #CDC673;">'Hello'</span>, event.origin<span style="color: #87D700;">)</span>;
+<span class="linenr"> 7: </span>    <span style="color: #5FD7FF;">}</span> <span style="color: #FF1493;">else</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 8: </span>        console.log<span style="color: #87D700;">(</span>event.data<span style="color: #87D700;">)</span>;
+<span class="linenr"> 9: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">10: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -388,14 +388,14 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span>window.onmessage = <span style="color: #F92672;">function</span><span style="color: #AE81FF;">(</span><span style="color: #FD971F;">e</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr">2: </span>    <span style="color: #F92672;">if</span> <span style="color: #66D9EF;">(</span>e.origin !== <span style="color: #E6DB74;">'http://bbb.com'</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">3: </span>        <span style="color: #F92672;">return</span>;
-<span class="linenr">4: </span>    <span style="color: #66D9EF;">}</span>
+<pre class="src src-js"><span class="linenr">1: </span>window.onmessage = <span style="color: #FF1493;">function</span><span style="color: #AF87FF;">(</span><span style="color: #FF8C00;">e</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #FF1493;">if</span> <span style="color: #5FD7FF;">(</span>e.origin !== <span style="color: #CDC673;">'http://bbb.com'</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">3: </span>        <span style="color: #FF1493;">return</span>;
+<span class="linenr">4: </span>    <span style="color: #5FD7FF;">}</span>
 <span class="linenr">5: </span>
-<span class="linenr">6: </span>    <span style="color: #F92672;">var</span> <span style="color: #FD971F;">payload</span> = JSON.parse<span style="color: #66D9EF;">(</span>e.data<span style="color: #66D9EF;">)</span>;
-<span class="linenr">7: </span>    localStorage.setItem<span style="color: #66D9EF;">(</span>payload.key, JSON.stringfy<span style="color: #A6E22E;">(</span>payload.data<span style="color: #A6E22E;">)</span><span style="color: #66D9EF;">)</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">?? payload.data</span>
-<span class="linenr">8: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">6: </span>    <span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">payload</span> = JSON.parse<span style="color: #5FD7FF;">(</span>e.data<span style="color: #5FD7FF;">)</span>;
+<span class="linenr">7: </span>    localStorage.setItem<span style="color: #5FD7FF;">(</span>payload.key, JSON.stringfy<span style="color: #87D700;">(</span>payload.data<span style="color: #87D700;">)</span><span style="color: #5FD7FF;">)</span>; <span style="color: #8B8878;">// </span><span style="color: #8B8878;">?? payload.data</span>
+<span class="linenr">8: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -404,10 +404,10 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">win</span> = document.getElementByTagName<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'iframe'</span><span style="color: #AE81FF;">)[</span>0<span style="color: #AE81FF;">]</span>.contentWindow;
-<span class="linenr">2: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">obj</span> = <span style="color: #AE81FF;">{</span> name: <span style="color: #E6DB74;">'Jack'</span> <span style="color: #AE81FF;">}</span>;
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">win</span> = document.getElementByTagName<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'iframe'</span><span style="color: #AF87FF;">)[</span>0<span style="color: #AF87FF;">]</span>.contentWindow;
+<span class="linenr">2: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">obj</span> = <span style="color: #AF87FF;">{</span> name: <span style="color: #CDC673;">'Jack'</span> <span style="color: #AF87FF;">}</span>;
 <span class="linenr">3: </span>
-<span class="linenr">4: </span>win.postMessage<span style="color: #AE81FF;">(</span>JSON.stringfy<span style="color: #66D9EF;">(</span><span style="color: #A6E22E;">{</span> key: <span style="color: #E6DB74;">'storage'</span>, data: obj <span style="color: #A6E22E;">}</span><span style="color: #66D9EF;">)</span>, <span style="color: #E6DB74;">'http://bbb.com'</span><span style="color: #AE81FF;">)</span>;
+<span class="linenr">4: </span>win.postMessage<span style="color: #AF87FF;">(</span>JSON.stringfy<span style="color: #5FD7FF;">(</span><span style="color: #87D700;">{</span> key: <span style="color: #CDC673;">'storage'</span>, data: obj <span style="color: #87D700;">}</span><span style="color: #5FD7FF;">)</span>, <span style="color: #CDC673;">'http://bbb.com'</span><span style="color: #AF87FF;">)</span>;
 </pre>
 </div>
 
@@ -416,40 +416,40 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </essay>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#21152;&#24378;&#29256;&#30340;&#29238;&#31383;&#21475;&#21457;&#28040;&#24687; ///</span>
-<span class="linenr"> 2: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">win</span> = doucment.getElementByTagName<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'iframe'</span><span style="color: #AE81FF;">)[</span>0<span style="color: #AE81FF;">]</span>.contentWindow;
-<span class="linenr"> 3: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">obj</span> = <span style="color: #AE81FF;">{</span> name: <span style="color: #E6DB74;">'Jack'</span> <span style="color: #AE81FF;">}</span>;
-<span class="linenr"> 4: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#23384;&#20837;&#23545;&#35937;</span>
-<span class="linenr"> 5: </span>win.postMessage<span style="color: #AE81FF;">(</span>JSON.stringfy<span style="color: #66D9EF;">(</span><span style="color: #A6E22E;">{</span> key: <span style="color: #E6DB74;">'storage'</span>, method: <span style="color: #E6DB74;">'set'</span>, data: obj <span style="color: #A6E22E;">}</span><span style="color: #66D9EF;">)</span>, <span style="color: #E6DB74;">'http://bbb.com'</span><span style="color: #AE81FF;">)</span>;
-<span class="linenr"> 6: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#35835;&#21462;&#23545;&#35937;</span>
-<span class="linenr"> 7: </span>win.postMessage<span style="color: #AE81FF;">(</span>JSON.stringfy<span style="color: #66D9EF;">(</span><span style="color: #A6E22E;">{</span> key: <span style="color: #E6DB74;">'storage'</span>, method: <span style="color: #E6DB74;">'get'</span><span style="color: #A6E22E;">}</span><span style="color: #66D9EF;">)</span>, <span style="color: #E6DB74;">'*'</span><span style="color: #AE81FF;">)</span>;
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#21152;&#24378;&#29256;&#30340;&#29238;&#31383;&#21475;&#21457;&#28040;&#24687; ///</span>
+<span class="linenr"> 2: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">win</span> = doucment.getElementByTagName<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'iframe'</span><span style="color: #AF87FF;">)[</span>0<span style="color: #AF87FF;">]</span>.contentWindow;
+<span class="linenr"> 3: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">obj</span> = <span style="color: #AF87FF;">{</span> name: <span style="color: #CDC673;">'Jack'</span> <span style="color: #AF87FF;">}</span>;
+<span class="linenr"> 4: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#23384;&#20837;&#23545;&#35937;</span>
+<span class="linenr"> 5: </span>win.postMessage<span style="color: #AF87FF;">(</span>JSON.stringfy<span style="color: #5FD7FF;">(</span><span style="color: #87D700;">{</span> key: <span style="color: #CDC673;">'storage'</span>, method: <span style="color: #CDC673;">'set'</span>, data: obj <span style="color: #87D700;">}</span><span style="color: #5FD7FF;">)</span>, <span style="color: #CDC673;">'http://bbb.com'</span><span style="color: #AF87FF;">)</span>;
+<span class="linenr"> 6: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#35835;&#21462;&#23545;&#35937;</span>
+<span class="linenr"> 7: </span>win.postMessage<span style="color: #AF87FF;">(</span>JSON.stringfy<span style="color: #5FD7FF;">(</span><span style="color: #87D700;">{</span> key: <span style="color: #CDC673;">'storage'</span>, method: <span style="color: #CDC673;">'get'</span><span style="color: #87D700;">}</span><span style="color: #5FD7FF;">)</span>, <span style="color: #CDC673;">'*'</span><span style="color: #AF87FF;">)</span>;
 <span class="linenr"> 8: </span>
-<span class="linenr"> 9: </span>window.onmessage = <span style="color: #F92672;">function</span><span style="color: #AE81FF;">(</span><span style="color: #FD971F;">e</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr">10: </span>    <span style="color: #F92672;">if</span> <span style="color: #66D9EF;">(</span>e.origin != <span style="color: #E6DB74;">'http://aaa.com'</span><span style="color: #66D9EF;">)</span> <span style="color: #F92672;">return</span>;
-<span class="linenr">11: </span>    console.log<span style="color: #66D9EF;">(</span>JSON.parse<span style="color: #A6E22E;">(</span>e.data<span style="color: #A6E22E;">)</span>.name<span style="color: #66D9EF;">)</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; "Jack"</span>
-<span class="linenr">12: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr"> 9: </span>window.onmessage = <span style="color: #FF1493;">function</span><span style="color: #AF87FF;">(</span><span style="color: #FF8C00;">e</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">10: </span>    <span style="color: #FF1493;">if</span> <span style="color: #5FD7FF;">(</span>e.origin != <span style="color: #CDC673;">'http://aaa.com'</span><span style="color: #5FD7FF;">)</span> <span style="color: #FF1493;">return</span>;
+<span class="linenr">11: </span>    console.log<span style="color: #5FD7FF;">(</span>JSON.parse<span style="color: #87D700;">(</span>e.data<span style="color: #87D700;">)</span>.name<span style="color: #5FD7FF;">)</span>; <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#8594; "Jack"</span>
+<span class="linenr">12: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#21152;&#24378;&#29256;&#30340;&#23376;&#31383;&#21475;&#25509;&#25910;&#28040;&#24687; ///</span>
-<span class="linenr"> 2: </span>window.onmessage = <span style="color: #F92672;">function</span><span style="color: #AE81FF;">(</span><span style="color: #FD971F;">e</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 3: </span>    <span style="color: #F92672;">if</span> <span style="color: #66D9EF;">(</span>e.origin !== <span style="color: #E6DB74;">'http://bbb.com'</span><span style="color: #66D9EF;">)</span> <span style="color: #F92672;">return</span>;
-<span class="linenr"> 4: </span>    <span style="color: #F92672;">var</span> <span style="color: #FD971F;">payload</span> = JSON.parse<span style="color: #66D9EF;">(</span>e.data<span style="color: #66D9EF;">)</span>;
-<span class="linenr"> 5: </span>    <span style="color: #F92672;">switch</span> <span style="color: #66D9EF;">(</span>payload.method<span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr"> 6: </span>        <span style="color: #F92672;">case</span> <span style="color: #E6DB74;">'set'</span>:
-<span class="linenr"> 7: </span>            localStorage.setItem<span style="color: #A6E22E;">(</span>payload.key, JSON.stringfy<span style="color: #E6DB74;">(</span>payload.data<span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr"> 8: </span>            <span style="color: #F92672;">break</span>;
-<span class="linenr"> 9: </span>        <span style="color: #F92672;">case</span> <span style="color: #E6DB74;">'get'</span>:
-<span class="linenr">10: </span>            <span style="color: #F92672;">var</span> <span style="color: #FD971F;">parent</span> = window.parent;
-<span class="linenr">11: </span>            <span style="color: #F92672;">var</span> <span style="color: #FD971F;">data</span> = localStorage.getItem<span style="color: #A6E22E;">(</span>payload.key<span style="color: #A6E22E;">)</span>;
-<span class="linenr">12: </span>            parent.postMessage<span style="color: #A6E22E;">(</span>data, <span style="color: #E6DB74;">'http://aaa.com'</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">13: </span>            <span style="color: #F92672;">break</span>;
-<span class="linenr">14: </span>        <span style="color: #F92672;">case</span> <span style="color: #E6DB74;">'remove'</span>:
-<span class="linenr">15: </span>            localStorage.removeItem<span style="color: #A6E22E;">(</span>payload.key<span style="color: #A6E22E;">)</span>;
-<span class="linenr">16: </span>            <span style="color: #F92672;">break</span>;
-<span class="linenr">17: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">18: </span><span style="color: #AE81FF;">}</span>
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#21152;&#24378;&#29256;&#30340;&#23376;&#31383;&#21475;&#25509;&#25910;&#28040;&#24687; ///</span>
+<span class="linenr"> 2: </span>window.onmessage = <span style="color: #FF1493;">function</span><span style="color: #AF87FF;">(</span><span style="color: #FF8C00;">e</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 3: </span>    <span style="color: #FF1493;">if</span> <span style="color: #5FD7FF;">(</span>e.origin !== <span style="color: #CDC673;">'http://bbb.com'</span><span style="color: #5FD7FF;">)</span> <span style="color: #FF1493;">return</span>;
+<span class="linenr"> 4: </span>    <span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">payload</span> = JSON.parse<span style="color: #5FD7FF;">(</span>e.data<span style="color: #5FD7FF;">)</span>;
+<span class="linenr"> 5: </span>    <span style="color: #FF1493;">switch</span> <span style="color: #5FD7FF;">(</span>payload.method<span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 6: </span>        <span style="color: #FF1493;">case</span> <span style="color: #CDC673;">'set'</span>:
+<span class="linenr"> 7: </span>            localStorage.setItem<span style="color: #87D700;">(</span>payload.key, JSON.stringfy<span style="color: #CDC673;">(</span>payload.data<span style="color: #CDC673;">)</span><span style="color: #87D700;">)</span>;
+<span class="linenr"> 8: </span>            <span style="color: #FF1493;">break</span>;
+<span class="linenr"> 9: </span>        <span style="color: #FF1493;">case</span> <span style="color: #CDC673;">'get'</span>:
+<span class="linenr">10: </span>            <span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">parent</span> = window.parent;
+<span class="linenr">11: </span>            <span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">data</span> = localStorage.getItem<span style="color: #87D700;">(</span>payload.key<span style="color: #87D700;">)</span>;
+<span class="linenr">12: </span>            parent.postMessage<span style="color: #87D700;">(</span>data, <span style="color: #CDC673;">'http://aaa.com'</span><span style="color: #87D700;">)</span>;
+<span class="linenr">13: </span>            <span style="color: #FF1493;">break</span>;
+<span class="linenr">14: </span>        <span style="color: #FF1493;">case</span> <span style="color: #CDC673;">'remove'</span>:
+<span class="linenr">15: </span>            localStorage.removeItem<span style="color: #87D700;">(</span>payload.key<span style="color: #87D700;">)</span>;
+<span class="linenr">16: </span>            <span style="color: #FF1493;">break</span>;
+<span class="linenr">17: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">18: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -460,9 +460,9 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </div>
 </div>
 
-<div id="outline-container-org3504bdb" class="outline-2">
-<h2 id="org3504bdb">AJAX</h2>
-<div class="outline-text-2" id="text-org3504bdb">
+<div id="outline-container-org91c9b53" class="outline-2">
+<h2 id="org91c9b53">AJAX</h2>
+<div class="outline-text-2" id="text-org91c9b53">
 <p>
 浏览器的同源策略规定， <b>AJAX 请求只能发给同源的网址</b> ，否则就报错。
 </p>
@@ -476,9 +476,9 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </note>
 </div>
 
-<div id="outline-container-org1df0b52" class="outline-3">
-<h3 id="org1df0b52">JSONP</h3>
-<div class="outline-text-3" id="text-org1df0b52">
+<div id="outline-container-orgfcec386" class="outline-3">
+<h3 id="orgfcec386">JSONP</h3>
+<div class="outline-text-3" id="text-orgfcec386">
 <p>
 JSONP是服务器与客户端跨源通信的常用方法。最大特点就是简单适用，老式浏览器全部支持，服务器改造非常小。
 </p>
@@ -506,20 +506,20 @@ JSONP是服务器与客户端跨源通信的常用方法。最大特点就是简
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #F92672;">function</span> <span style="color: #A6E22E;">addScriptTag</span><span style="color: #AE81FF;">(</span><span style="color: #FD971F;">src</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #F92672;">var</span> <span style="color: #FD971F;">script</span> = doucment.createElement<span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">'script'</span><span style="color: #66D9EF;">)</span>;
-<span class="linenr"> 3: </span>    script.setAttribute<span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">'type'</span>, <span style="color: #E6DB74;">'text/javascript'</span><span style="color: #66D9EF;">)</span>;
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #FF1493;">function</span> <span style="color: #87D700;">addScriptTag</span><span style="color: #AF87FF;">(</span><span style="color: #FF8C00;">src</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">script</span> = doucment.createElement<span style="color: #5FD7FF;">(</span><span style="color: #CDC673;">'script'</span><span style="color: #5FD7FF;">)</span>;
+<span class="linenr"> 3: </span>    script.setAttribute<span style="color: #5FD7FF;">(</span><span style="color: #CDC673;">'type'</span>, <span style="color: #CDC673;">'text/javascript'</span><span style="color: #5FD7FF;">)</span>;
 <span class="linenr"> 4: </span>    script.src = src;
-<span class="linenr"> 5: </span>    document.body.appendChild<span style="color: #66D9EF;">(</span>script<span style="color: #66D9EF;">)</span>;
-<span class="linenr"> 6: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr"> 5: </span>    document.body.appendChild<span style="color: #5FD7FF;">(</span>script<span style="color: #5FD7FF;">)</span>;
+<span class="linenr"> 6: </span><span style="color: #AF87FF;">}</span>
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span>window.onload = <span style="color: #F92672;">function</span><span style="color: #AE81FF;">()</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 9: </span>    addScriptTag<span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">'http://example.com/jp?callback=foo'</span><span style="color: #66D9EF;">)</span>;
-<span class="linenr">10: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr"> 8: </span>window.onload = <span style="color: #FF1493;">function</span><span style="color: #AF87FF;">()</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 9: </span>    addScriptTag<span style="color: #5FD7FF;">(</span><span style="color: #CDC673;">'http://example.com/jp?callback=foo'</span><span style="color: #5FD7FF;">)</span>;
+<span class="linenr">10: </span><span style="color: #AF87FF;">}</span>
 <span class="linenr">11: </span>
-<span class="linenr">12: </span><span style="color: #F92672;">function</span> <span style="color: #A6E22E;">foo</span><span style="color: #AE81FF;">(</span><span style="color: #FD971F;">data</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr">13: </span>    console.log<span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">'Your public IP address is: '</span> + data.ip<span style="color: #66D9EF;">)</span>;
-<span class="linenr">14: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">12: </span><span style="color: #FF1493;">function</span> <span style="color: #87D700;">foo</span><span style="color: #AF87FF;">(</span><span style="color: #FF8C00;">data</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">13: </span>    console.log<span style="color: #5FD7FF;">(</span><span style="color: #CDC673;">'Your public IP address is: '</span> + data.ip<span style="color: #5FD7FF;">)</span>;
+<span class="linenr">14: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -536,9 +536,9 @@ JSONP是服务器与客户端跨源通信的常用方法。最大特点就是简
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span>foo<span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">{</span>
-<span class="linenr">2: </span>    <span style="color: #E6DB74;">'ip'</span>: <span style="color: #E6DB74;">'8.8.8.8'</span>
-<span class="linenr">3: </span><span style="color: #66D9EF;">}</span><span style="color: #AE81FF;">)</span>;
+<pre class="src src-js"><span class="linenr">1: </span>foo<span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #CDC673;">'ip'</span>: <span style="color: #CDC673;">'8.8.8.8'</span>
+<span class="linenr">3: </span><span style="color: #5FD7FF;">}</span><span style="color: #AF87FF;">)</span>;
 </pre>
 </div>
 
@@ -548,9 +548,9 @@ JSONP是服务器与客户端跨源通信的常用方法。最大特点就是简
 </div>
 </div>
 
-<div id="outline-container-org691f0db" class="outline-3">
-<h3 id="org691f0db">WebSocket</h3>
-<div class="outline-text-3" id="text-org691f0db">
+<div id="outline-container-org61953d8" class="outline-3">
+<h3 id="org61953d8">WebSocket</h3>
+<div class="outline-text-3" id="text-org61953d8">
 <p>
 WebSocket 是一种通信协议，使用 <code>ws://</code> （非加密）和 <code>wss://</code> （加密）作为协议前缀。该协议 <b>不实行同源策略</b> ，只要服务器支持，就可以通过它进行跨源通信。
 </p>
@@ -594,9 +594,9 @@ Sec-WebSocket-Protocol: chat
 </div>
 </div>
 
-<div id="outline-container-org52b5de4" class="outline-3">
-<h3 id="org52b5de4">CORS</h3>
-<div class="outline-text-3" id="text-org52b5de4">
+<div id="outline-container-org16254e1" class="outline-3">
+<h3 id="org16254e1">CORS</h3>
+<div class="outline-text-3" id="text-org16254e1">
 <p>
 CORS （Cross-Origin Resource Sharing）是跨域资源分享的缩写，它是 W3C 标准，是 <b>跨源 AJAX 请求的根本解决办法</b> 。相比 JSONP 只能发 <code>GET</code> 请求，CORS 允许任何类型的请求。
 </p>
@@ -604,9 +604,9 @@ CORS （Cross-Origin Resource Sharing）是跨域资源分享的缩写，它是 
 </div>
 </div>
 
-<div id="outline-container-org907204a" class="outline-2">
-<h2 id="org907204a">CORS 详解</h2>
-<div class="outline-text-2" id="text-org907204a">
+<div id="outline-container-orgae64b79" class="outline-2">
+<h2 id="orgae64b79">CORS 详解</h2>
+<div class="outline-text-2" id="text-orgae64b79">
 <p>
 CORS 允许浏览器向跨源服务器，发出 <code>XMLHttpRequest</code> 请求，从而克服了 AJAX 只能同源使用的限制。接下来，我们来深入认识下 CORS 的内部机制。
 </p>
@@ -630,9 +630,9 @@ CORS 需要浏览器和服务器同时支持， <b>整个 CORS 通信过程，�
 </p>
 </div>
 
-<div id="outline-container-orgbdb1d6b" class="outline-3">
-<h3 id="orgbdb1d6b">两种请求</h3>
-<div class="outline-text-3" id="text-orgbdb1d6b">
+<div id="outline-container-org1b2321e" class="outline-3">
+<h3 id="org1b2321e">两种请求</h3>
+<div class="outline-text-3" id="text-org1b2321e">
 <p>
 浏览器将 CORS 请求分为两类： <span class="underline">简单请求</span> （simple request）和 <span class="underline">非简单请求</span> （not-so-simple request）。
 </p>
@@ -642,8 +642,20 @@ CORS 需要浏览器和服务器同时支持， <b>整个 CORS 通信过程，�
 </p>
 <ul class="org-ul">
 <li>请求方法是以下三种之一： <code>HEAD、GET、POST</code> ；</li>
-<li>HTTP 的头信息不超出以下几种字段： <code>Accept、Accept-Language、Content-Language、Last-Event-ID、Content-Type</code> （只限于三个值 <code>application/x-www-form-urlencode、multipart/form-data、text/plain</code> ） 。</li>
+<li>HTTP 的头信息不超出以下几种字段：</li>
 </ul>
+
+<pre class="example">
+- Accept
+- Accept-Language
+- Content-Language
+- Last-Event-ID
+- Content-Type
+</pre>
+
+<p>
+其中， <code>Content-Type</code>  只限于三个值 <code>application/x-www-form-urlencode、multipart/form-data、text/plain</code> 。
+</p>
 
 <p>
 这是为了兼容表单，因为历史上表单一直可以发出跨域请求。AJAX 的跨域设计就是，只要表单可以发，AJAX 就可以直接发。
@@ -655,15 +667,15 @@ CORS 需要浏览器和服务器同时支持， <b>整个 CORS 通信过程，�
 </div>
 </div>
 
-<div id="outline-container-orgdbe70c1" class="outline-3">
-<h3 id="orgdbe70c1">简单请求</h3>
-<div class="outline-text-3" id="text-orgdbe70c1">
+<div id="outline-container-orga2e75e6" class="outline-3">
+<h3 id="orga2e75e6">简单请求</h3>
+<div class="outline-text-3" id="text-orga2e75e6">
 <p>
 <span class="underline">1. 基本流程</span>
 </p>
 
 <p>
-对于简单请求，浏览器直接发出 CORS 请求，具体来说，就是在头信息中，增加一个 <code>Origin</code> 字段。
+<b>对于简单请求，浏览器直接发出 CORS 请求，具体来说，就是在头信息中，增加一个 <code>Origin</code> 字段。</b>
 </p>
 
 <p>
@@ -672,7 +684,7 @@ CORS 需要浏览器和服务器同时支持， <b>整个 CORS 通信过程，�
 
 <pre class="example">
 GET /cors HTTP/1.1
-Origin: http://api.bob.com
+Origin: http://api.bob.com ←
 Host: api.alice.com
 Accept-Language: en-US
 Connection: keep-alive
@@ -763,8 +775,8 @@ Access-Control-Allow-Credentials: true
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">xhr</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">XMLHttpRequest</span><span style="color: #AE81FF;">()</span>
-<span class="linenr">2: </span>xhr.withCredentials = <span style="color: #AE81FF;">true</span>
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">xhr</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">XMLHttpRequest</span><span style="color: #AF87FF;">()</span>
+<span class="linenr">2: </span>xhr.withCredentials = <span style="color: #AF87FF;">true</span>
 </pre>
 </div>
 
@@ -777,7 +789,7 @@ Access-Control-Allow-Credentials: true
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span>xhr.withCredentials = <span style="color: #AE81FF;">false</span>;
+<pre class="src src-js"><span class="linenr">1: </span>xhr.withCredentials = <span style="color: #AF87FF;">false</span>;
 </pre>
 </div>
 
@@ -787,9 +799,9 @@ Access-Control-Allow-Credentials: true
 </div>
 </div>
 
-<div id="outline-container-org64ae2c2" class="outline-3">
-<h3 id="org64ae2c2">非简单请求</h3>
-<div class="outline-text-3" id="text-org64ae2c2">
+<div id="outline-container-orgd51a36c" class="outline-3">
+<h3 id="orgd51a36c">非简单请求</h3>
+<div class="outline-text-3" id="text-orgd51a36c">
 <p>
 <span class="underline">1. 预检请求</span>
 </p>
@@ -811,11 +823,11 @@ Access-Control-Allow-Credentials: true
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">url</span> = <span style="color: #E6DB74;">'http://api.alice.com/cors'</span>
-<span class="linenr">2: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">xhr</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">XMLHttpReuqest</span><span style="color: #AE81FF;">()</span>
-<span class="linenr">3: </span>xhr.open<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'PUT'</span>, url, <span style="color: #AE81FF;">true</span><span style="color: #AE81FF;">)</span>
-<span class="linenr">4: </span>xhr.setRequestHeader<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'X-Custom-Header'</span>, <span style="color: #E6DB74;">'value'</span><span style="color: #AE81FF;">)</span>
-<span class="linenr">5: </span>xhr.send<span style="color: #AE81FF;">()</span>
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">url</span> = <span style="color: #CDC673;">'http://api.alice.com/cors'</span>
+<span class="linenr">2: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">xhr</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">XMLHttpReuqest</span><span style="color: #AF87FF;">()</span>
+<span class="linenr">3: </span>xhr.open<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'PUT'</span>, url, <span style="color: #AF87FF;">true</span><span style="color: #AF87FF;">)</span>
+<span class="linenr">4: </span>xhr.setRequestHeader<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'X-Custom-Header'</span>, <span style="color: #CDC673;">'value'</span><span style="color: #AF87FF;">)</span>
+<span class="linenr">5: </span>xhr.send<span style="color: #AF87FF;">()</span>
 </pre>
 </div>
 
@@ -930,7 +942,7 @@ Access-Control-Max-Age: 1728000
 </p>
 
 <p>
-如果浏览器请求包括 <code>Access-Control-Request-Headers</code> 字段，则 <code>Access-Control-Request-Headers</code> 字段是必需的。它也是一个逗号分隔的字符串，表明服务器支持的所有头信息字段，不限于浏览器在“预检”中请求的字段。
+如果浏览器请求包括 <code>Access-Control-Request-Headers</code> 字段，则 <code>Access-Control-Allow-Headers</code> 字段是必需的。它也是一个逗号分隔的字符串，表明服务器支持的所有头信息字段，不限于浏览器在“预检”中请求的字段。
 </p>
 
 <p>
@@ -954,7 +966,7 @@ Access-Control-Max-Age: 1728000
 </p>
 
 <p>
-一旦服务器通过了“预检”请求，以后每次浏览器政党的 CORS 请求，就都跟简单请求一样，会有一个 <code>Origin</code> 头信息字段。服务器的回应，也都会有一个 <code>Access-Control-Allow-Origin</code> 头信息字段。
+一旦服务器通过了“预检”请求，以后每次浏览器正常的 CORS 请求，就都跟简单请求一样，会有一个 <code>Origin</code> 头信息字段。服务器的回应，也都会有一个 <code>Access-Control-Allow-Origin</code> 头信息字段。
 </p>
 
 <p>
@@ -994,7 +1006,7 @@ Content-Type: text/html; charset=utf-8
 <div id="postamble" class="status">
 <p class="date">Date: 2020-11-03 Tue 09:36</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-11-11 Wed 17:47</p>
+<p class="date">Created: 2020-11-13 Fri 14:32</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
