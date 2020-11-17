@@ -171,7 +171,7 @@ title=""
 />
 #+END_EXPORT
 
-Socket、TCP 和部分 IP 的功能都是由操作系统提供的，不同的编程语言只是提供了对操作系统调用的简单封装。例如，Java 提供的几个关于 Socket 相关的类就封装了操作系统提供的接口。
+*Socket、TCP 和部分 IP 的功能都是由操作系统提供的* ，不同的编程语言只是提供了对操作系统调用的简单封装。例如，Java 提供的几个关于 Socket 相关的类就封装了操作系统提供的接口。
 
 *为什么需要 Socket 进行网络通信？*
 
@@ -213,7 +213,7 @@ Java 标准库提供了 =ServerSocket= 来实现对指定 IP 和指定端口的�
   }
 
   class Handler extends Thread {
-      Socked sock;
+      Socket sock;
 
       public Handler(Socket sock) {
           this.sock = sock;

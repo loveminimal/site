@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-10-07 Wed 18:48 -->
+<!-- 2020-11-17 Tue 17:41 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Servlet 是什么</title>
@@ -23,62 +23,62 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org00ec675">Web 开发</a></li>
-<li><a href="#orgda162d3">Servlet 入门</a></li>
-<li><a href="#org993d8b2">Servlet 开发</a></li>
-<li><a href="#org4f2e6b6">Servlet 是什么</a></li>
-<li><a href="#org8caff6a">Servlet 相关的接口和类</a></li>
-<li><a href="#org863af58">Servlet 生命周期</a></li>
-<li><a href="#org1d7c57f">第一个 Servlet 程序</a></li>
-<li><a href="#org4a30b02">Servlet 虚拟路径映射的配置</a>
+<li><a href="#orge532a28">Web 开发</a></li>
+<li><a href="#org5d2c904">Servlet 入门</a></li>
+<li><a href="#org5c256f1">Servlet 开发</a></li>
+<li><a href="#org846a01a">Servlet 是什么</a></li>
+<li><a href="#orgb55529b">Servlet 相关的接口和类</a></li>
+<li><a href="#org64bf5cb">Servlet 生命周期</a></li>
+<li><a href="#orga8a66f7">第一个 Servlet 程序</a></li>
+<li><a href="#org20886d3">Servlet 虚拟路径映射的配置</a>
 <ul>
-<li><a href="#org9ff7fb0">Servlet 的多重映射</a></li>
-<li><a href="#org6bcd272">Servlet 映射路径中使用通配符</a></li>
-<li><a href="#orgfa95d30">默认 Servlet</a></li>
+<li><a href="#orgf9e125e">Servlet 的多重映射</a></li>
+<li><a href="#orge1b1939">Servlet 映射路径中使用通配符</a></li>
+<li><a href="#org1130883">默认 Servlet</a></li>
 </ul>
 </li>
-<li><a href="#orgf0264fb">ServletConfig 和 ServletContext 接口</a>
+<li><a href="#orgb40f9cb">ServletConfig 和 ServletContext 接口</a>
 <ul>
-<li><a href="#orgf36789b">ServletConfig 接口</a></li>
-<li><a href="#org4b38eb9">ServletContext 接口</a></li>
+<li><a href="#org0be22d2">ServletConfig 接口</a></li>
+<li><a href="#orgaff6668">ServletContext 接口</a></li>
 </ul>
 </li>
-<li><a href="#org5573327">Servlet 处理用户请求的完整流程</a></li>
-<li><a href="#org6fa569b">HttpServletRequest</a>
+<li><a href="#orgbb6f793">Servlet 处理用户请求的完整流程</a></li>
+<li><a href="#org7fcb6e3">HttpServletRequest</a>
 <ul>
-<li><a href="#org2e6eb50">获取请求行信息的相关方法</a></li>
-<li><a href="#org6b85d99">获取请求消息头的相关方法</a></li>
-<li><a href="#org9212f46"><span class="todo TODO">TODO</span> Servlet 获取 form 表单数据</a></li>
-<li><a href="#org430f353">RequestDispatcher 实现请求转发</a></li>
+<li><a href="#org28e6d5f">获取请求行信息的相关方法</a></li>
+<li><a href="#org79357db">获取请求消息头的相关方法</a></li>
+<li><a href="#org982b086"><span class="todo TODO">TODO</span> Servlet 获取 form 表单数据</a></li>
+<li><a href="#orgec6c6f5">RequestDispatcher 实现请求转发</a></li>
 </ul>
 </li>
-<li><a href="#orge72f188">HttpServletResponse</a>
+<li><a href="#org2bbbf01">HttpServletResponse</a>
 <ul>
-<li><a href="#org2312f82">发送状态码相关的方法</a></li>
-<li><a href="#orgdb6e6ac">发送响应消息头相关的方法</a></li>
-<li><a href="#orgad43dd1">发送响应消息体相关的方法</a></li>
-<li><a href="#orga6b9181">sendRedirect() 实现重写向</a></li>
+<li><a href="#org8471699">发送状态码相关的方法</a></li>
+<li><a href="#org390889b">发送响应消息头相关的方法</a></li>
+<li><a href="#org3214ed8">发送响应消息体相关的方法</a></li>
+<li><a href="#org380d411">sendRedirect() 实现重写向</a></li>
 </ul>
 </li>
-<li><a href="#orgebe1723">request/response 中文乱码问题</a>
+<li><a href="#org354cddf">request/response 中文乱码问题</a>
 <ul>
-<li><a href="#orge56bbcf">request 中文乱码问题以及解决方案</a></li>
-<li><a href="#org1709055">response中文乱码问题以及解决方案</a></li>
+<li><a href="#org1f95403">request 中文乱码问题以及解决方案</a></li>
+<li><a href="#orgc5212ef">response中文乱码问题以及解决方案</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org00ec675" class="outline-2">
-<h2 id="org00ec675">Web 开发<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-org00ec675">
+<div id="outline-container-orge532a28" class="outline-2">
+<h2 id="orge532a28">Web 开发<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-orge532a28">
 <p>
 JavaEE 是什么？它并不是一个软件产品，更多的是一种软件架构和设计思想，它是在 JavaSE 的基础上，开发的一系列基于服务的组件、API 标准和通用架构。
 </p>
 
 <p>
-JavaEE 最核心的组件就是基于 Servlet 标准的 Web 服务器，开发者编写的应用程序是基于 Servlet API 并运行在 Web 服务器内部的：
+<b>JavaEE 最核心的组件就是基于 Servlet 标准的 Web 服务器，开发者编写的应用程序是基于 Servlet API 并运行在 Web 服务器内部的</b> ：
 </p>
 
 <img
@@ -114,48 +114,48 @@ title=""
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Server</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">IOException</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr"> 3: </span>        <span style="color: #66D9EF;">ServerSocket</span> <span style="color: #FD971F;">ss</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">ServerSocket</span><span style="color: #A6E22E;">(</span>8080<span style="color: #A6E22E;">)</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#30417;&#21548;&#25351;&#23450;&#31471;&#21475;</span>
-<span class="linenr"> 4: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"Server is running..."</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr"> 5: </span>        <span style="color: #F92672;">for</span> <span style="color: #A6E22E;">(</span>;;<span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
-<span class="linenr"> 6: </span>            <span style="color: #66D9EF;">Socket</span> <span style="color: #FD971F;">sock</span> = ss.accept<span style="color: #E6DB74;">()</span>;
-<span class="linenr"> 7: </span>            System.out.println<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"Connected from "</span> + sock.getRemoteSocketAddress<span style="color: #FD971F;">()</span><span style="color: #E6DB74;">)</span>;
-<span class="linenr"> 8: </span>            <span style="color: #66D9EF;">Thread</span> <span style="color: #FD971F;">t</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Handler</span><span style="color: #E6DB74;">(</span>sock<span style="color: #E6DB74;">)</span>;
-<span class="linenr"> 9: </span>            t.start<span style="color: #E6DB74;">()</span>;
-<span class="linenr">10: </span>        <span style="color: #A6E22E;">}</span>
-<span class="linenr">11: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">12: </span><span style="color: #AE81FF;">}</span>
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">Server</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #FF1493;">public</span> <span style="color: #FF1493;">static</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">main</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">String</span><span style="color: #87D700;">[]</span> <span style="color: #FF8C00;">args</span><span style="color: #5FD7FF;">)</span> <span style="color: #FF1493;">throws</span> <span style="color: #5FD7FF;">IOException</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #5FD7FF;">ServerSocket</span> <span style="color: #FF8C00;">ss</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">ServerSocket</span><span style="color: #87D700;">(</span>8080<span style="color: #87D700;">)</span>; <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#30417;&#21548;&#25351;&#23450;&#31471;&#21475;</span>
+<span class="linenr"> 4: </span>        System.out.println<span style="color: #87D700;">(</span><span style="color: #CDC673;">"Server is running..."</span><span style="color: #87D700;">)</span>;
+<span class="linenr"> 5: </span>        <span style="color: #FF1493;">for</span> <span style="color: #87D700;">(</span>;;<span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr"> 6: </span>            <span style="color: #5FD7FF;">Socket</span> <span style="color: #FF8C00;">sock</span> = ss.accept<span style="color: #CDC673;">()</span>;
+<span class="linenr"> 7: </span>            System.out.println<span style="color: #CDC673;">(</span><span style="color: #CDC673;">"Connected from "</span> + sock.getRemoteSocketAddress<span style="color: #FF8C00;">()</span><span style="color: #CDC673;">)</span>;
+<span class="linenr"> 8: </span>            <span style="color: #5FD7FF;">Thread</span> <span style="color: #FF8C00;">t</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Handler</span><span style="color: #CDC673;">(</span>sock<span style="color: #CDC673;">)</span>;
+<span class="linenr"> 9: </span>            t.start<span style="color: #CDC673;">()</span>;
+<span class="linenr">10: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr">11: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">12: </span><span style="color: #AF87FF;">}</span>
 <span class="linenr">13: </span>
-<span class="linenr">14: </span><span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Handler</span> <span style="color: #F92672;">extends</span> <span style="color: #66D9EF;">Thread</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr">15: </span>    <span style="color: #66D9EF;">Socket</span> <span style="color: #FD971F;">sock</span>;
+<span class="linenr">14: </span><span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">Handler</span> <span style="color: #FF1493;">extends</span> <span style="color: #5FD7FF;">Thread</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">15: </span>    <span style="color: #5FD7FF;">Socket</span> <span style="color: #FF8C00;">sock</span>;
 <span class="linenr">16: </span>
-<span class="linenr">17: </span>    <span style="color: #F92672;">public</span> <span style="color: #A6E22E;">Handler</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">Socket</span> <span style="color: #FD971F;">sock</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">18: </span>        <span style="color: #F92672;">this</span>.sock = sock;
-<span class="linenr">19: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">17: </span>    <span style="color: #FF1493;">public</span> <span style="color: #87D700;">Handler</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">Socket</span> <span style="color: #FF8C00;">sock</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">18: </span>        <span style="color: #FF1493;">this</span>.sock = sock;
+<span class="linenr">19: </span>    <span style="color: #5FD7FF;">}</span>
 <span class="linenr">20: </span>
-<span class="linenr">21: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">run</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">22: </span>        <span style="color: #F92672;">try</span> <span style="color: #A6E22E;">(</span><span style="color: #66D9EF;">InputStream</span> <span style="color: #FD971F;">input</span> = <span style="color: #F92672;">this</span>.sock.getInputStream<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
-<span class="linenr">23: </span>            <span style="color: #F92672;">try</span> <span style="color: #E6DB74;">(</span><span style="color: #66D9EF;">OutputStream</span> <span style="color: #FD971F;">output</span> = <span style="color: #F92672;">this</span>.sock.getOutputStream<span style="color: #FD971F;">()</span><span style="color: #E6DB74;">)</span> <span style="color: #E6DB74;">{</span>
-<span class="linenr">24: </span>                handle<span style="color: #FD971F;">(</span>input, output<span style="color: #FD971F;">)</span>;
-<span class="linenr">25: </span>            <span style="color: #E6DB74;">}</span>
-<span class="linenr">26: </span>        <span style="color: #A6E22E;">}</span> <span style="color: #F92672;">catch</span> <span style="color: #A6E22E;">(</span><span style="color: #66D9EF;">Exception</span> <span style="color: #FD971F;">e</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
-<span class="linenr">27: </span>            <span style="color: #F92672;">try</span> <span style="color: #E6DB74;">{</span>
-<span class="linenr">28: </span>                <span style="color: #F92672;">this</span>.sock.close<span style="color: #FD971F;">()</span>;
-<span class="linenr">29: </span>            <span style="color: #E6DB74;">}</span> <span style="color: #F92672;">catch</span> <span style="color: #E6DB74;">(</span><span style="color: #66D9EF;">IOException</span> <span style="color: #FD971F;">ioe</span><span style="color: #E6DB74;">)</span> <span style="color: #E6DB74;">{</span>
+<span class="linenr">21: </span>    <span style="color: #FF1493;">public</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">run</span><span style="color: #5FD7FF;">()</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">22: </span>        <span style="color: #FF1493;">try</span> <span style="color: #87D700;">(</span><span style="color: #5FD7FF;">InputStream</span> <span style="color: #FF8C00;">input</span> = <span style="color: #FF1493;">this</span>.sock.getInputStream<span style="color: #CDC673;">()</span><span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr">23: </span>            <span style="color: #FF1493;">try</span> <span style="color: #CDC673;">(</span><span style="color: #5FD7FF;">OutputStream</span> <span style="color: #FF8C00;">output</span> = <span style="color: #FF1493;">this</span>.sock.getOutputStream<span style="color: #FF8C00;">()</span><span style="color: #CDC673;">)</span> <span style="color: #CDC673;">{</span>
+<span class="linenr">24: </span>                handle<span style="color: #FF8C00;">(</span>input, output<span style="color: #FF8C00;">)</span>;
+<span class="linenr">25: </span>            <span style="color: #CDC673;">}</span>
+<span class="linenr">26: </span>        <span style="color: #87D700;">}</span> <span style="color: #FF1493;">catch</span> <span style="color: #87D700;">(</span><span style="color: #5FD7FF;">Exception</span> <span style="color: #FF8C00;">e</span><span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr">27: </span>            <span style="color: #FF1493;">try</span> <span style="color: #CDC673;">{</span>
+<span class="linenr">28: </span>                <span style="color: #FF1493;">this</span>.sock.close<span style="color: #FF8C00;">()</span>;
+<span class="linenr">29: </span>            <span style="color: #CDC673;">}</span> <span style="color: #FF1493;">catch</span> <span style="color: #CDC673;">(</span><span style="color: #5FD7FF;">IOException</span> <span style="color: #FF8C00;">ioe</span><span style="color: #CDC673;">)</span> <span style="color: #CDC673;">{</span>
 <span class="linenr">30: </span>
-<span class="linenr">31: </span>            <span style="color: #E6DB74;">}</span>
-<span class="linenr">32: </span>            System.out.println<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"Client disconnected."</span><span style="color: #E6DB74;">)</span>;
-<span class="linenr">33: </span>        <span style="color: #A6E22E;">}</span>
-<span class="linenr">34: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">31: </span>            <span style="color: #CDC673;">}</span>
+<span class="linenr">32: </span>            System.out.println<span style="color: #CDC673;">(</span><span style="color: #CDC673;">"Client disconnected."</span><span style="color: #CDC673;">)</span>;
+<span class="linenr">33: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr">34: </span>    <span style="color: #5FD7FF;">}</span>
 <span class="linenr">35: </span>
-<span class="linenr">36: </span>    <span style="color: #F92672;">private</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">handle</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">InputStream</span> <span style="color: #FD971F;">input</span>, <span style="color: #66D9EF;">OutputStream</span> <span style="color: #FD971F;">output</span><span style="color: #66D9EF;">)</span> <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">IOException</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">37: </span>        <span style="color: #66D9EF;">var</span> <span style="color: #FD971F;">reader</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">BufferedReader</span><span style="color: #A6E22E;">(</span><span style="color: #F92672;">new</span> <span style="color: #66D9EF;">InputStreamReader</span><span style="color: #E6DB74;">(</span>input, <span style="color: #AE81FF;">StrandardCharsets</span>.UTF_8<span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">38: </span>        <span style="color: #66D9EF;">var</span> <span style="color: #FD971F;">writer</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">BufferedWriter</span><span style="color: #A6E22E;">(</span><span style="color: #F92672;">new</span> <span style="color: #66D9EF;">OutputStreamWriter</span><span style="color: #E6DB74;">(</span>output, <span style="color: #AE81FF;">StrandardCharsets</span>.UTF_8<span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">39: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">TODO: &#22788;&#29702; HTTP &#35831;&#27714;</span>
-<span class="linenr">40: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">...</span>
-<span class="linenr">41: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">42: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">36: </span>    <span style="color: #FF1493;">private</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">handle</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">InputStream</span> <span style="color: #FF8C00;">input</span>, <span style="color: #5FD7FF;">OutputStream</span> <span style="color: #FF8C00;">output</span><span style="color: #5FD7FF;">)</span> <span style="color: #FF1493;">throws</span> <span style="color: #5FD7FF;">IOException</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">37: </span>        <span style="color: #5FD7FF;">var</span> <span style="color: #FF8C00;">reader</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">BufferedReader</span><span style="color: #87D700;">(</span><span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">InputStreamReader</span><span style="color: #CDC673;">(</span>input, <span style="color: #AF87FF;">StrandardCharsets</span>.UTF_8<span style="color: #CDC673;">)</span><span style="color: #87D700;">)</span>;
+<span class="linenr">38: </span>        <span style="color: #5FD7FF;">var</span> <span style="color: #FF8C00;">writer</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">BufferedWriter</span><span style="color: #87D700;">(</span><span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">OutputStreamWriter</span><span style="color: #CDC673;">(</span>output, <span style="color: #AF87FF;">StrandardCharsets</span>.UTF_8<span style="color: #CDC673;">)</span><span style="color: #87D700;">)</span>;
+<span class="linenr">39: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">TODO: &#22788;&#29702; HTTP &#35831;&#27714;</span>
+<span class="linenr">40: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">...</span>
+<span class="linenr">41: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">42: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -164,45 +164,45 @@ title=""
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">private</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">handle</span><span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">InputStream</span> <span style="color: #FD971F;">input</span>, <span style="color: #66D9EF;">OutputStream</span> <span style="color: #FD971F;">output</span><span style="color: #AE81FF;">)</span> <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">IOException</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 2: </span>    System.out.println<span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">"Process new http request..."</span><span style="color: #66D9EF;">)</span>;
-<span class="linenr"> 3: </span>    <span style="color: #66D9EF;">var</span> <span style="color: #FD971F;">reader</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">BufferedReader</span><span style="color: #66D9EF;">(</span><span style="color: #F92672;">new</span> <span style="color: #66D9EF;">InputStreamReader</span><span style="color: #A6E22E;">(</span>input, <span style="color: #AE81FF;">StandardCharsets</span>.UTF_8<span style="color: #A6E22E;">)</span><span style="color: #66D9EF;">)</span>;
-<span class="linenr"> 4: </span>    <span style="color: #66D9EF;">var</span> <span style="color: #FD971F;">writer</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">BufferedWriter</span><span style="color: #66D9EF;">(</span><span style="color: #F92672;">new</span> <span style="color: #66D9EF;">OutputStreamWriter</span><span style="color: #A6E22E;">(</span>output, <span style="color: #AE81FF;">StandardCharsets</span>.UTF_8<span style="color: #A6E22E;">)</span><span style="color: #66D9EF;">)</span>;
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #FF1493;">private</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">handle</span><span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">InputStream</span> <span style="color: #FF8C00;">input</span>, <span style="color: #5FD7FF;">OutputStream</span> <span style="color: #FF8C00;">output</span><span style="color: #AF87FF;">)</span> <span style="color: #FF1493;">throws</span> <span style="color: #5FD7FF;">IOException</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 2: </span>    System.out.println<span style="color: #5FD7FF;">(</span><span style="color: #CDC673;">"Process new http request..."</span><span style="color: #5FD7FF;">)</span>;
+<span class="linenr"> 3: </span>    <span style="color: #5FD7FF;">var</span> <span style="color: #FF8C00;">reader</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">BufferedReader</span><span style="color: #5FD7FF;">(</span><span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">InputStreamReader</span><span style="color: #87D700;">(</span>input, <span style="color: #AF87FF;">StandardCharsets</span>.UTF_8<span style="color: #87D700;">)</span><span style="color: #5FD7FF;">)</span>;
+<span class="linenr"> 4: </span>    <span style="color: #5FD7FF;">var</span> <span style="color: #FF8C00;">writer</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">BufferedWriter</span><span style="color: #5FD7FF;">(</span><span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">OutputStreamWriter</span><span style="color: #87D700;">(</span>output, <span style="color: #AF87FF;">StandardCharsets</span>.UTF_8<span style="color: #87D700;">)</span><span style="color: #5FD7FF;">)</span>;
 <span class="linenr"> 5: </span>
-<span class="linenr"> 6: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#35835;&#21462; HTTP &#35831;&#27714;</span>
-<span class="linenr"> 7: </span>    <span style="color: #66D9EF;">boolean</span> <span style="color: #FD971F;">requestOk</span> = <span style="color: #AE81FF;">false</span>;
-<span class="linenr"> 8: </span>    <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">first</span> = reader.readLine<span style="color: #66D9EF;">()</span>;
-<span class="linenr"> 9: </span>    <span style="color: #F92672;">if</span> <span style="color: #66D9EF;">(</span>first.startsWith<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"GET / HTTP/1."</span><span style="color: #A6E22E;">)</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">10: </span>        requestOk = <span style="color: #AE81FF;">true</span>;
-<span class="linenr">11: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">12: </span>    <span style="color: #F92672;">for</span> <span style="color: #66D9EF;">(</span>;;<span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">13: </span>        <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">header</span> = reader.readLine<span style="color: #A6E22E;">()</span>;
-<span class="linenr">14: </span>        <span style="color: #F92672;">if</span> <span style="color: #A6E22E;">(</span>header.isEmpty<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span> <span style="color: #75715E;">// </span><span style="color: #75715E;">&#35835;&#21462;&#21040;&#31354;&#34892;&#26102;&#65292;HTTP Header &#35835;&#21462;&#23436;&#27605;</span>
-<span class="linenr">15: </span>            <span style="color: #F92672;">break</span>;
-<span class="linenr">16: </span>        <span style="color: #A6E22E;">}</span>
-<span class="linenr">17: </span>        System.out.println<span style="color: #A6E22E;">(</span>header<span style="color: #A6E22E;">)</span>;
-<span class="linenr">18: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">19: </span>    System.out.println<span style="color: #66D9EF;">(</span>requestOk ? <span style="color: #E6DB74;">"Response OK"</span> : <span style="color: #E6DB74;">"Response Error"</span><span style="color: #66D9EF;">)</span>;
+<span class="linenr"> 6: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#35835;&#21462; HTTP &#35831;&#27714;</span>
+<span class="linenr"> 7: </span>    <span style="color: #5FD7FF;">boolean</span> <span style="color: #FF8C00;">requestOk</span> = <span style="color: #AF87FF;">false</span>;
+<span class="linenr"> 8: </span>    <span style="color: #5FD7FF;">String</span> <span style="color: #FF8C00;">first</span> = reader.readLine<span style="color: #5FD7FF;">()</span>;
+<span class="linenr"> 9: </span>    <span style="color: #FF1493;">if</span> <span style="color: #5FD7FF;">(</span>first.startsWith<span style="color: #87D700;">(</span><span style="color: #CDC673;">"GET / HTTP/1."</span><span style="color: #87D700;">)</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">10: </span>        requestOk = <span style="color: #AF87FF;">true</span>;
+<span class="linenr">11: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">12: </span>    <span style="color: #FF1493;">for</span> <span style="color: #5FD7FF;">(</span>;;<span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">13: </span>        <span style="color: #5FD7FF;">String</span> <span style="color: #FF8C00;">header</span> = reader.readLine<span style="color: #87D700;">()</span>;
+<span class="linenr">14: </span>        <span style="color: #FF1493;">if</span> <span style="color: #87D700;">(</span>header.isEmpty<span style="color: #CDC673;">()</span><span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span> <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#35835;&#21462;&#21040;&#31354;&#34892;&#26102;&#65292;HTTP Header &#35835;&#21462;&#23436;&#27605;</span>
+<span class="linenr">15: </span>            <span style="color: #FF1493;">break</span>;
+<span class="linenr">16: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr">17: </span>        System.out.println<span style="color: #87D700;">(</span>header<span style="color: #87D700;">)</span>;
+<span class="linenr">18: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">19: </span>    System.out.println<span style="color: #5FD7FF;">(</span>requestOk ? <span style="color: #CDC673;">"Response OK"</span> : <span style="color: #CDC673;">"Response Error"</span><span style="color: #5FD7FF;">)</span>;
 <span class="linenr">20: </span>
-<span class="linenr">21: </span>    <span style="color: #F92672;">if</span> <span style="color: #66D9EF;">(</span><span style="color: #E6DB74; font-weight: bold;">!</span>requestOk<span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">22: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21457;&#36865;&#38169;&#35823;&#21709;&#24212;</span>
-<span class="linenr">23: </span>        writer.write<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"HTTP/1.0 404 Not Found\r\n"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">24: </span>        writer.write<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"Content-Length: 0\r\n"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">25: </span>        writer.write<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"\r\n"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">26: </span>        writer.flush<span style="color: #A6E22E;">()</span>;
-<span class="linenr">27: </span>    <span style="color: #66D9EF;">}</span> <span style="color: #F92672;">else</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">28: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21457;&#36865;&#25104;&#21151;&#21709;&#24212;</span>
-<span class="linenr">29: </span>        <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">data</span> = <span style="color: #E6DB74;">"&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello, world!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;"</span>;
-<span class="linenr">30: </span>        <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">length</span> = data.getBytes<span style="color: #A6E22E;">(</span><span style="color: #AE81FF;">StandardCharsets</span>.UTF_8<span style="color: #A6E22E;">)</span>.length;
-<span class="linenr">31: </span>        writer.write<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"HTTP/1.0 200 OK\r\n"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">32: </span>        writer.write<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"Connection: close\r\n"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">33: </span>        writer.write<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"Content-Type: text/html\r\n"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">34: </span>        writer.write<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"Content-Length: "</span> + length + <span style="color: #E6DB74;">"\r\n"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">35: </span>        writer.write<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"\r\n"</span><span style="color: #A6E22E;">)</span>;   <span style="color: #75715E;">// </span><span style="color: #75715E;">&#31354;&#34892;&#26631;&#35782; Header &#21644; Body &#30340;&#20998;&#38548;</span>
-<span class="linenr">36: </span>        writer.write<span style="color: #A6E22E;">(</span>data<span style="color: #A6E22E;">)</span>;
-<span class="linenr">37: </span>        writer.flush<span style="color: #A6E22E;">()</span>;
-<span class="linenr">38: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">39: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">21: </span>    <span style="color: #FF1493;">if</span> <span style="color: #5FD7FF;">(</span><span style="color: #CDC673; font-weight: bold;">!</span>requestOk<span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">22: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#21457;&#36865;&#38169;&#35823;&#21709;&#24212;</span>
+<span class="linenr">23: </span>        writer.write<span style="color: #87D700;">(</span><span style="color: #CDC673;">"HTTP/1.0 404 Not Found\r\n"</span><span style="color: #87D700;">)</span>;
+<span class="linenr">24: </span>        writer.write<span style="color: #87D700;">(</span><span style="color: #CDC673;">"Content-Length: 0\r\n"</span><span style="color: #87D700;">)</span>;
+<span class="linenr">25: </span>        writer.write<span style="color: #87D700;">(</span><span style="color: #CDC673;">"\r\n"</span><span style="color: #87D700;">)</span>;
+<span class="linenr">26: </span>        writer.flush<span style="color: #87D700;">()</span>;
+<span class="linenr">27: </span>    <span style="color: #5FD7FF;">}</span> <span style="color: #FF1493;">else</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">28: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#21457;&#36865;&#25104;&#21151;&#21709;&#24212;</span>
+<span class="linenr">29: </span>        <span style="color: #5FD7FF;">String</span> <span style="color: #FF8C00;">data</span> = <span style="color: #CDC673;">"&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello, world!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;"</span>;
+<span class="linenr">30: </span>        <span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">length</span> = data.getBytes<span style="color: #87D700;">(</span><span style="color: #AF87FF;">StandardCharsets</span>.UTF_8<span style="color: #87D700;">)</span>.length;
+<span class="linenr">31: </span>        writer.write<span style="color: #87D700;">(</span><span style="color: #CDC673;">"HTTP/1.0 200 OK\r\n"</span><span style="color: #87D700;">)</span>;
+<span class="linenr">32: </span>        writer.write<span style="color: #87D700;">(</span><span style="color: #CDC673;">"Connection: close\r\n"</span><span style="color: #87D700;">)</span>;
+<span class="linenr">33: </span>        writer.write<span style="color: #87D700;">(</span><span style="color: #CDC673;">"Content-Type: text/html\r\n"</span><span style="color: #87D700;">)</span>;
+<span class="linenr">34: </span>        writer.write<span style="color: #87D700;">(</span><span style="color: #CDC673;">"Content-Length: "</span> + length + <span style="color: #CDC673;">"\r\n"</span><span style="color: #87D700;">)</span>;
+<span class="linenr">35: </span>        writer.write<span style="color: #87D700;">(</span><span style="color: #CDC673;">"\r\n"</span><span style="color: #87D700;">)</span>;   <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#31354;&#34892;&#26631;&#35782; Header &#21644; Body &#30340;&#20998;&#38548;</span>
+<span class="linenr">36: </span>        writer.write<span style="color: #87D700;">(</span>data<span style="color: #87D700;">)</span>;
+<span class="linenr">37: </span>        writer.flush<span style="color: #87D700;">()</span>;
+<span class="linenr">38: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">39: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -248,9 +248,9 @@ HTTP 3.0 为了进一步提高速度，将抛弃 TCP 协议，改为使用无需
 </div>
 </div>
 
-<div id="outline-container-orgda162d3" class="outline-2">
-<h2 id="orgda162d3">Servlet 入门</h2>
-<div class="outline-text-2" id="text-orgda162d3">
+<div id="outline-container-org5d2c904" class="outline-2">
+<h2 id="org5d2c904">Servlet 入门</h2>
+<div class="outline-text-2" id="text-org5d2c904">
 <p>
 在上一节中，可见，编写 HTTP 服务器其实是非常简单的，只需要先编写基于多线程的 TCP 服务，然后在一个 TCP 连接中读取 HTTP 请求，发送 HTTP 响应即可。
 </p>
@@ -300,21 +300,21 @@ title=""
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">WebServlet &#27880;&#35299;&#34920;&#31034;&#36825;&#26159;&#19968;&#20010; Servlet &#65292;&#24182;&#26144;&#23556;&#21040;&#22320;&#22336; `/` &#65306;</span>
-<span class="linenr"> 2: </span><span style="color: #AE81FF;">@WebServlet</span><span style="color: #AE81FF;">(</span>urlPatterns = <span style="color: #E6DB74;">"/"</span><span style="color: #AE81FF;">)</span>
-<span class="linenr"> 3: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">HelloServlet</span> <span style="color: #F92672;">extends</span> <span style="color: #66D9EF;">HttpServlet</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 4: </span>    <span style="color: #F92672;">protected</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">doGet</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">HttpServletRequest</span> <span style="color: #FD971F;">req</span>, <span style="color: #66D9EF;">HttpServletResponse</span> <span style="color: #FD971F;">resp</span><span style="color: #66D9EF;">)</span>
-<span class="linenr"> 5: </span>        <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">ServletException</span>, <span style="color: #66D9EF;">IOException</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr"> 6: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#35774;&#32622;&#21709;&#24212;&#31867;&#22411;&#65306;</span>
-<span class="linenr"> 7: </span>        resp.setContentType<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"text/html"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr"> 8: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#33719;&#21462;&#36755;&#20986;&#27969;&#65306;</span>
-<span class="linenr"> 9: </span>        <span style="color: #66D9EF;">PrintWriter</span> <span style="color: #FD971F;">pw</span> = resp.getWriter<span style="color: #A6E22E;">()</span>;
-<span class="linenr">10: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#20889;&#20837;&#21709;&#24212;&#65306;</span>
-<span class="linenr">11: </span>        pw.write<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"&lt;h1&gt;Hello, world!&lt;/h1&gt;"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">12: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#26368;&#21518;&#19981;&#35201;&#24536;&#35760; flush &#24378;&#21046;&#36755;&#20986;&#65306;</span>
-<span class="linenr">13: </span>        pw.flush<span style="color: #A6E22E;">()</span>;
-<span class="linenr">14: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">15: </span><span style="color: #AE81FF;">}</span>
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">WebServlet &#27880;&#35299;&#34920;&#31034;&#36825;&#26159;&#19968;&#20010; Servlet &#65292;&#24182;&#26144;&#23556;&#21040;&#22320;&#22336; `/` &#65306;</span>
+<span class="linenr"> 2: </span><span style="color: #AF87FF;">@WebServlet</span><span style="color: #AF87FF;">(</span>urlPatterns = <span style="color: #CDC673;">"/"</span><span style="color: #AF87FF;">)</span>
+<span class="linenr"> 3: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">HelloServlet</span> <span style="color: #FF1493;">extends</span> <span style="color: #5FD7FF;">HttpServlet</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #FF1493;">protected</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">doGet</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">HttpServletRequest</span> <span style="color: #FF8C00;">req</span>, <span style="color: #5FD7FF;">HttpServletResponse</span> <span style="color: #FF8C00;">resp</span><span style="color: #5FD7FF;">)</span>
+<span class="linenr"> 5: </span>        <span style="color: #FF1493;">throws</span> <span style="color: #5FD7FF;">ServletException</span>, <span style="color: #5FD7FF;">IOException</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 6: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#35774;&#32622;&#21709;&#24212;&#31867;&#22411;&#65306;</span>
+<span class="linenr"> 7: </span>        resp.setContentType<span style="color: #87D700;">(</span><span style="color: #CDC673;">"text/html"</span><span style="color: #87D700;">)</span>;
+<span class="linenr"> 8: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#33719;&#21462;&#36755;&#20986;&#27969;&#65306;</span>
+<span class="linenr"> 9: </span>        <span style="color: #5FD7FF;">PrintWriter</span> <span style="color: #FF8C00;">pw</span> = resp.getWriter<span style="color: #87D700;">()</span>;
+<span class="linenr">10: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20889;&#20837;&#21709;&#24212;&#65306;</span>
+<span class="linenr">11: </span>        pw.write<span style="color: #87D700;">(</span><span style="color: #CDC673;">"&lt;h1&gt;Hello, world!&lt;/h1&gt;"</span><span style="color: #87D700;">)</span>;
+<span class="linenr">12: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#26368;&#21518;&#19981;&#35201;&#24536;&#35760; flush &#24378;&#21046;&#36755;&#20986;&#65306;</span>
+<span class="linenr">13: </span>        pw.flush<span style="color: #87D700;">()</span>;
+<span class="linenr">14: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">15: </span><span style="color: #AF87FF;">}</span>
 <span class="linenr">16: </span>
 </pre>
 </div>
@@ -339,6 +339,10 @@ title=""
 Servlet API 是一个 jar 包，我们需要通过 Maven 来引入它，才能正常编译。通过 Maven 构建后会得到一个 <code>.war</code> 格式的文件，那么， <b>如何运行这个 <code>war</code> 文件呢</b> ？
 </p>
 
+<essay>
+至于 Maven ，我们将开一个单独的文章来了解，TODO...
+</essay>
+
 <p>
 普通的 Java 程序是通过启动 JVM ，然后执行 <code>main()</code> 方法开始运行。但是 Web 应用程序有所不同，我们无法直接运行 <code>war</code> 文件，必须先启动 Web 服务器，再由 Web 服务器加载我们编写的 HelloServlet ，这样就可以让我们编写的 HelloServlet 处理浏览器发送的请求。
 </p>
@@ -351,7 +355,7 @@ Servlet API 是一个 jar 包，我们需要通过 Maven 来引入它，才能�
 是由支持 Servlet API 的 Web 服务器提供的！常用的服务器有：
 </p>
 <ul class="org-ul">
-<li>Tomcat ：由 Apache 开发的开源免费服务器；</li>
+<li><b>Tomcat ：由 Apache 开发的开源免费服务器；</b></li>
 <li>Jetty ：由 Eclipse 开发的开源免费服务器；</li>
 <li>GlassFish ：一个开源的全功能 JavaEE 服务器；</li>
 <li>WebLogic ：Oracle 的商用服务器；</li>
@@ -367,7 +371,19 @@ Servlet API 是一个 jar 包，我们需要通过 Maven 来引入它，才能�
 </p>
 
 <p>
-实际上，类似 Tomcat 这样的服务器也是 Java 编写的，启动 Tomcat 服务器实际上是启动 Java 虚拟机，执行 Tomcat 的 <code>main()</code> 方法，然后由 Tomcat 负责加载我们的 <code>.war</code> 文件，并创建一个我们编写的 HelloServlet 实例，最后以多线程的模式来处理 HTTP 请求。例如，Tomcat 服务器收到的请求路径是 <code>/</code> 时，就转发到 HelloServlet 并传入 <code>HttpServletRequest</code> 和 <code>HttpServletResponse</code> 现个对象。
+实际上，类似 Tomcat 这样的服务器也是 Java 编写的，
+</p>
+
+<pre class="example">
+→ 启动 Tomcat 服务器实际上是启动 Java 虚拟机，
+→ 执行 Tomcat 的 =main()= 方法，
+→ 然后由 Tomcat 负责加载我们的 =.war= 文件，
+→ 并创建一个我们编写的 HelloServlet 实例，
+→ 最后以多线程的模式来处理 HTTP 请求。
+</pre>
+
+<p>
+例如，Tomcat 服务器收到的请求路径是 <code>/</code> 时，就转发到 HelloServlet 并传入 <code>HttpServletRequest</code> 和 <code>HttpServletResponse</code> 两个对象。
 </p>
 
 <p>
@@ -389,9 +405,9 @@ Servlet API 是一个 jar 包，我们需要通过 Maven 来引入它，才能�
 </div>
 </div>
 
-<div id="outline-container-org993d8b2" class="outline-2">
-<h2 id="org993d8b2">Servlet 开发</h2>
-<div class="outline-text-2" id="text-org993d8b2">
+<div id="outline-container-org5c256f1" class="outline-2">
+<h2 id="org5c256f1">Servlet 开发</h2>
+<div class="outline-text-2" id="text-org5c256f1">
 <p>
 通常，一个完整的 Web 应用程序的开发流程如下：
 </p>
@@ -428,40 +444,40 @@ Tomcat 实际上也是一个 Java 程序，我们看看 Tomcat 的启动流程�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml"><span class="linenr"> 1: </span>&lt;<span style="color: #A6E22E;">project</span> <span style="color: #F92672;">xmlns</span>=<span style="color: #E6DB74;">"http://maven.apache.org/POM/4.0.0"</span>
-<span class="linenr"> 2: </span>         <span style="color: #F92672;">xmlns</span>:<span style="color: #FD971F;">xsi</span>=<span style="color: #E6DB74;">"http://www.w3.org/2001/XMLSchema-instance"</span>
-<span class="linenr"> 3: </span>         <span style="color: #F92672;">xsi</span>:<span style="color: #FD971F;">schemaLocation</span>=<span style="color: #E6DB74;">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;
-<span class="linenr"> 4: </span>         &lt;<span style="color: #A6E22E;">modelVersion</span>&gt;4.0.0&lt;/<span style="color: #A6E22E;">modelVersion</span>&gt;
+<pre class="src src-xml"><span class="linenr"> 1: </span>&lt;<span style="color: #87D700;">project</span> <span style="color: #FF1493;">xmlns</span>=<span style="color: #CDC673;">"http://maven.apache.org/POM/4.0.0"</span>
+<span class="linenr"> 2: </span>         <span style="color: #FF1493;">xmlns</span>:<span style="color: #FF8C00;">xsi</span>=<span style="color: #CDC673;">"http://www.w3.org/2001/XMLSchema-instance"</span>
+<span class="linenr"> 3: </span>         <span style="color: #FF1493;">xsi</span>:<span style="color: #FF8C00;">schemaLocation</span>=<span style="color: #CDC673;">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;
+<span class="linenr"> 4: </span>         &lt;<span style="color: #87D700;">modelVersion</span>&gt;4.0.0&lt;/<span style="color: #87D700;">modelVersion</span>&gt;
 <span class="linenr"> 5: </span>
-<span class="linenr"> 6: </span>         &lt;<span style="color: #A6E22E;">groupId</span>&gt;com.itranswarp.leanjava&lt;/<span style="color: #A6E22E;">groupId</span>&gt;
-<span class="linenr"> 7: </span>         &lt;<span style="color: #A6E22E;">artifactId</span>&gt;web-servlet-embedded&lt;/<span style="color: #A6E22E;">artifactId</span>&gt;
-<span class="linenr"> 8: </span>         &lt;<span style="color: #A6E22E;">version</span>&gt;1.0-SNAPSHOT&lt;/<span style="color: #A6E22E;">version</span>&gt;
-<span class="linenr"> 9: </span>         &lt;<span style="color: #A6E22E;">packaging</span>&gt;war&lt;/<span style="color: #A6E22E;">packaging</span>&gt;
+<span class="linenr"> 6: </span>         &lt;<span style="color: #87D700;">groupId</span>&gt;com.itranswarp.leanjava&lt;/<span style="color: #87D700;">groupId</span>&gt;
+<span class="linenr"> 7: </span>         &lt;<span style="color: #87D700;">artifactId</span>&gt;web-servlet-embedded&lt;/<span style="color: #87D700;">artifactId</span>&gt;
+<span class="linenr"> 8: </span>         &lt;<span style="color: #87D700;">version</span>&gt;1.0-SNAPSHOT&lt;/<span style="color: #87D700;">version</span>&gt;
+<span class="linenr"> 9: </span>         &lt;<span style="color: #87D700;">packaging</span>&gt;war&lt;/<span style="color: #87D700;">packaging</span>&gt;
 <span class="linenr">10: </span>
-<span class="linenr">11: </span>         &lt;<span style="color: #A6E22E;">properties</span>&gt;
-<span class="linenr">12: </span>           &lt;<span style="color: #A6E22E;">project.build.sourceEncoding</span>&gt;UTF-8&lt;/<span style="color: #A6E22E;">project.build.sourceEncoding</span>&gt;
-<span class="linenr">13: </span>           &lt;<span style="color: #A6E22E;">project.reporting.outputEncoding</span>&gt;UTF-8&lt;/<span style="color: #A6E22E;">project.reporting.outputEncoding</span>&gt;
-<span class="linenr">14: </span>           &lt;<span style="color: #A6E22E;">maven.compiler.source</span>&gt;11&lt;/<span style="color: #A6E22E;">maven.compiler.source</span>&gt;
-<span class="linenr">15: </span>           &lt;<span style="color: #A6E22E;">maven.compiler.target</span>&gt;11&lt;/<span style="color: #A6E22E;">maven.compiler.target</span>&gt;
-<span class="linenr">16: </span>           &lt;<span style="color: #A6E22E;">java.version</span>&gt;11&lt;/<span style="color: #A6E22E;">java.version</span>&gt;
-<span class="linenr">17: </span>           &lt;<span style="color: #A6E22E;">tomcat.version</span>&gt;9.0.26&lt;/<span style="color: #A6E22E;">tomcat.version</span>&gt;
-<span class="linenr">18: </span>         &lt;/<span style="color: #A6E22E;">properties</span>&gt;
+<span class="linenr">11: </span>         &lt;<span style="color: #87D700;">properties</span>&gt;
+<span class="linenr">12: </span>           &lt;<span style="color: #87D700;">project.build.sourceEncoding</span>&gt;UTF-8&lt;/<span style="color: #87D700;">project.build.sourceEncoding</span>&gt;
+<span class="linenr">13: </span>           &lt;<span style="color: #87D700;">project.reporting.outputEncoding</span>&gt;UTF-8&lt;/<span style="color: #87D700;">project.reporting.outputEncoding</span>&gt;
+<span class="linenr">14: </span>           &lt;<span style="color: #87D700;">maven.compiler.source</span>&gt;11&lt;/<span style="color: #87D700;">maven.compiler.source</span>&gt;
+<span class="linenr">15: </span>           &lt;<span style="color: #87D700;">maven.compiler.target</span>&gt;11&lt;/<span style="color: #87D700;">maven.compiler.target</span>&gt;
+<span class="linenr">16: </span>           &lt;<span style="color: #87D700;">java.version</span>&gt;11&lt;/<span style="color: #87D700;">java.version</span>&gt;
+<span class="linenr">17: </span>           &lt;<span style="color: #87D700;">tomcat.version</span>&gt;9.0.26&lt;/<span style="color: #87D700;">tomcat.version</span>&gt;
+<span class="linenr">18: </span>         &lt;/<span style="color: #87D700;">properties</span>&gt;
 <span class="linenr">19: </span>
-<span class="linenr">20: </span>         &lt;<span style="color: #A6E22E;">dependencies</span>&gt;
-<span class="linenr">21: </span>           &lt;<span style="color: #A6E22E;">dependency</span>&gt;
-<span class="linenr">22: </span>             &lt;<span style="color: #A6E22E;">groupId</span>&gt;org.apache.tomcat.embed&lt;/<span style="color: #A6E22E;">groupId</span>&gt;
-<span class="linenr">23: </span>             &lt;<span style="color: #A6E22E;">artifactId</span>&gt;tomcat-embed-core&lt;/<span style="color: #A6E22E;">artifactId</span>&gt;
-<span class="linenr">24: </span>             &lt;<span style="color: #A6E22E;">version</span>&gt;${tomcat.version}&lt;/<span style="color: #A6E22E;">version</span>&gt;
-<span class="linenr">25: </span>             &lt;<span style="color: #A6E22E;">scope</span>&gt;provided&lt;/<span style="color: #A6E22E;">scope</span>&gt;
-<span class="linenr">26: </span>           &lt;/<span style="color: #A6E22E;">dependency</span>&gt;
-<span class="linenr">27: </span>           &lt;<span style="color: #A6E22E;">dependency</span>&gt;
-<span class="linenr">28: </span>             &lt;<span style="color: #A6E22E;">groupId</span>&gt;org.apache.tomcat.embed&lt;/<span style="color: #A6E22E;">groupId</span>&gt;
-<span class="linenr">29: </span>             &lt;<span style="color: #A6E22E;">artifactId</span>&gt;tomcat-embed-jasper&lt;/<span style="color: #A6E22E;">artifactId</span>&gt;
-<span class="linenr">30: </span>             &lt;<span style="color: #A6E22E;">version</span>&gt;${tomcat.version}&lt;/<span style="color: #A6E22E;">version</span>&gt;
-<span class="linenr">31: </span>             &lt;<span style="color: #A6E22E;">scope</span>&gt;provided&lt;/<span style="color: #A6E22E;">scope</span>&gt;
-<span class="linenr">32: </span>           &lt;/<span style="color: #A6E22E;">dependency</span>&gt;
-<span class="linenr">33: </span>         &lt;/<span style="color: #A6E22E;">dependencies</span>&gt;
-<span class="linenr">34: </span>&lt;/<span style="color: #A6E22E;">project</span>&gt;
+<span class="linenr">20: </span>         &lt;<span style="color: #87D700;">dependencies</span>&gt;
+<span class="linenr">21: </span>           &lt;<span style="color: #87D700;">dependency</span>&gt;
+<span class="linenr">22: </span>             &lt;<span style="color: #87D700;">groupId</span>&gt;org.apache.tomcat.embed&lt;/<span style="color: #87D700;">groupId</span>&gt;
+<span class="linenr">23: </span>             &lt;<span style="color: #87D700;">artifactId</span>&gt;tomcat-embed-core&lt;/<span style="color: #87D700;">artifactId</span>&gt;
+<span class="linenr">24: </span>             &lt;<span style="color: #87D700;">version</span>&gt;${tomcat.version}&lt;/<span style="color: #87D700;">version</span>&gt;
+<span class="linenr">25: </span>             &lt;<span style="color: #87D700;">scope</span>&gt;provided&lt;/<span style="color: #87D700;">scope</span>&gt;
+<span class="linenr">26: </span>           &lt;/<span style="color: #87D700;">dependency</span>&gt;
+<span class="linenr">27: </span>           &lt;<span style="color: #87D700;">dependency</span>&gt;
+<span class="linenr">28: </span>             &lt;<span style="color: #87D700;">groupId</span>&gt;org.apache.tomcat.embed&lt;/<span style="color: #87D700;">groupId</span>&gt;
+<span class="linenr">29: </span>             &lt;<span style="color: #87D700;">artifactId</span>&gt;tomcat-embed-jasper&lt;/<span style="color: #87D700;">artifactId</span>&gt;
+<span class="linenr">30: </span>             &lt;<span style="color: #87D700;">version</span>&gt;${tomcat.version}&lt;/<span style="color: #87D700;">version</span>&gt;
+<span class="linenr">31: </span>             &lt;<span style="color: #87D700;">scope</span>&gt;provided&lt;/<span style="color: #87D700;">scope</span>&gt;
+<span class="linenr">32: </span>           &lt;/<span style="color: #87D700;">dependency</span>&gt;
+<span class="linenr">33: </span>         &lt;/<span style="color: #87D700;">dependencies</span>&gt;
+<span class="linenr">34: </span>&lt;/<span style="color: #87D700;">project</span>&gt;
 </pre>
 </div>
 
@@ -474,20 +490,20 @@ Tomcat 实际上也是一个 Java 程序，我们看看 Tomcat 的启动流程�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #AE81FF;">@WebServlet</span><span style="color: #AE81FF;">(</span>urlPatterns = <span style="color: #E6DB74;">"/"</span><span style="color: #AE81FF;">)</span>
-<span class="linenr"> 2: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">HelloServlet</span> <span style="color: #F92672;">extends</span> <span style="color: #66D9EF;">HttpServlet</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 3: </span>    <span style="color: #F92672;">protected</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">doGet</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">HttpServletRequest</span> <span style="color: #FD971F;">req</span>, <span style="color: #66D9EF;">HttpServletResponse</span> <span style="color: #FD971F;">resp</span><span style="color: #66D9EF;">)</span>
-<span class="linenr"> 4: </span>        <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">ServletException</span>, <span style="color: #66D9EF;">IOException</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr"> 5: </span>        resp.setContentType<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"text/html"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr"> 6: </span>        <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">name</span> = req.getParameter<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"name"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr"> 7: </span>        <span style="color: #F92672;">if</span> <span style="color: #A6E22E;">(</span>name == <span style="color: #AE81FF;">null</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
-<span class="linenr"> 8: </span>            name = <span style="color: #E6DB74;">"world"</span>;
-<span class="linenr"> 9: </span>        <span style="color: #A6E22E;">}</span>
-<span class="linenr">10: </span>        <span style="color: #66D9EF;">PrintWriter</span> <span style="color: #FD971F;">pw</span> = resp.getWriter<span style="color: #A6E22E;">()</span>;
-<span class="linenr">11: </span>        pw.write<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"&lt;h1&gt;Hello, "</span> + name + <span style="color: #E6DB74;">"&lt;/h1&gt;"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">12: </span>        pw.flush<span style="color: #A6E22E;">()</span>;
-<span class="linenr">13: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">14: </span><span style="color: #AE81FF;">}</span>
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #AF87FF;">@WebServlet</span><span style="color: #AF87FF;">(</span>urlPatterns = <span style="color: #CDC673;">"/"</span><span style="color: #AF87FF;">)</span>
+<span class="linenr"> 2: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">HelloServlet</span> <span style="color: #FF1493;">extends</span> <span style="color: #5FD7FF;">HttpServlet</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 3: </span>    <span style="color: #FF1493;">protected</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">doGet</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">HttpServletRequest</span> <span style="color: #FF8C00;">req</span>, <span style="color: #5FD7FF;">HttpServletResponse</span> <span style="color: #FF8C00;">resp</span><span style="color: #5FD7FF;">)</span>
+<span class="linenr"> 4: </span>        <span style="color: #FF1493;">throws</span> <span style="color: #5FD7FF;">ServletException</span>, <span style="color: #5FD7FF;">IOException</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 5: </span>        resp.setContentType<span style="color: #87D700;">(</span><span style="color: #CDC673;">"text/html"</span><span style="color: #87D700;">)</span>;
+<span class="linenr"> 6: </span>        <span style="color: #5FD7FF;">String</span> <span style="color: #FF8C00;">name</span> = req.getParameter<span style="color: #87D700;">(</span><span style="color: #CDC673;">"name"</span><span style="color: #87D700;">)</span>;
+<span class="linenr"> 7: </span>        <span style="color: #FF1493;">if</span> <span style="color: #87D700;">(</span>name == <span style="color: #AF87FF;">null</span><span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr"> 8: </span>            name = <span style="color: #CDC673;">"world"</span>;
+<span class="linenr"> 9: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr">10: </span>        <span style="color: #5FD7FF;">PrintWriter</span> <span style="color: #FF8C00;">pw</span> = resp.getWriter<span style="color: #87D700;">()</span>;
+<span class="linenr">11: </span>        pw.write<span style="color: #87D700;">(</span><span style="color: #CDC673;">"&lt;h1&gt;Hello, "</span> + name + <span style="color: #CDC673;">"&lt;/h1&gt;"</span><span style="color: #87D700;">)</span>;
+<span class="linenr">12: </span>        pw.flush<span style="color: #87D700;">()</span>;
+<span class="linenr">13: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">14: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -496,21 +512,21 @@ Tomcat 实际上也是一个 Java 程序，我们看看 Tomcat 的启动流程�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Main</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">Exception</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr"> 3: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21551;&#21160; Tomcat &#65306;</span>
-<span class="linenr"> 4: </span>        <span style="color: #66D9EF;">Tomcat</span> <span style="color: #FD971F;">tomcat</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Tomcat</span><span style="color: #A6E22E;">()</span>;
-<span class="linenr"> 5: </span>        tomcat.setPort<span style="color: #A6E22E;">(</span>Integer.getInteger<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"port"</span>, 8080<span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr"> 6: </span>        tomcat.getConnectory<span style="color: #A6E22E;">()</span>;
-<span class="linenr"> 7: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21019;&#24314; webapp &#65306;</span>
-<span class="linenr"> 8: </span>        <span style="color: #66D9EF;">Context</span> <span style="color: #FD971F;">ctx</span> = tomcat.addWebApp<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">""</span>, <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">File</span><span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"src/main/webapp"</span><span style="color: #E6DB74;">)</span>,getAbsolutePath<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr"> 9: </span>        <span style="color: #66D9EF;">WebResourceRoot</span> <span style="color: #FD971F;">resources</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">StandardRoot</span><span style="color: #A6E22E;">(</span>ctx<span style="color: #A6E22E;">)</span>;
-<span class="linenr">10: </span>        resources.addPreResources<span style="color: #A6E22E;">(</span><span style="color: #F92672;">new</span> <span style="color: #66D9EF;">DirResourceSet</span><span style="color: #E6DB74;">(</span>resources, <span style="color: #E6DB74;">"/WEB-INF/classes"</span>, <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">File</span><span style="color: #FD971F;">(</span><span style="color: #E6DB74;">"target/classes"</span><span style="color: #FD971F;">)</span>.getAbsolutePath<span style="color: #FD971F;">()</span>, <span style="color: #E6DB74;">"/"</span><span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">11: </span>        ctx.setResources<span style="color: #A6E22E;">(</span>resources<span style="color: #A6E22E;">)</span>;
-<span class="linenr">12: </span>        tomcat.start<span style="color: #A6E22E;">()</span>;
-<span class="linenr">13: </span>        tomcat.getServer<span style="color: #A6E22E;">()</span>.await<span style="color: #A6E22E;">()</span>;
-<span class="linenr">14: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">15: </span><span style="color: #AE81FF;">}</span>
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">Main</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #FF1493;">public</span> <span style="color: #FF1493;">static</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">main</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">String</span><span style="color: #87D700;">[]</span> <span style="color: #FF8C00;">args</span><span style="color: #5FD7FF;">)</span> <span style="color: #FF1493;">throws</span> <span style="color: #5FD7FF;">Exception</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#21551;&#21160; Tomcat &#65306;</span>
+<span class="linenr"> 4: </span>        <span style="color: #5FD7FF;">Tomcat</span> <span style="color: #FF8C00;">tomcat</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Tomcat</span><span style="color: #87D700;">()</span>;
+<span class="linenr"> 5: </span>        tomcat.setPort<span style="color: #87D700;">(</span>Integer.getInteger<span style="color: #CDC673;">(</span><span style="color: #CDC673;">"port"</span>, 8080<span style="color: #CDC673;">)</span><span style="color: #87D700;">)</span>;
+<span class="linenr"> 6: </span>        tomcat.getConnectory<span style="color: #87D700;">()</span>;
+<span class="linenr"> 7: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#21019;&#24314; webapp &#65306;</span>
+<span class="linenr"> 8: </span>        <span style="color: #5FD7FF;">Context</span> <span style="color: #FF8C00;">ctx</span> = tomcat.addWebApp<span style="color: #87D700;">(</span><span style="color: #CDC673;">""</span>, <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">File</span><span style="color: #CDC673;">(</span><span style="color: #CDC673;">"src/main/webapp"</span><span style="color: #CDC673;">)</span>,getAbsolutePath<span style="color: #CDC673;">()</span><span style="color: #87D700;">)</span>;
+<span class="linenr"> 9: </span>        <span style="color: #5FD7FF;">WebResourceRoot</span> <span style="color: #FF8C00;">resources</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">StandardRoot</span><span style="color: #87D700;">(</span>ctx<span style="color: #87D700;">)</span>;
+<span class="linenr">10: </span>        resources.addPreResources<span style="color: #87D700;">(</span><span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">DirResourceSet</span><span style="color: #CDC673;">(</span>resources, <span style="color: #CDC673;">"/WEB-INF/classes"</span>, <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">File</span><span style="color: #FF8C00;">(</span><span style="color: #CDC673;">"target/classes"</span><span style="color: #FF8C00;">)</span>.getAbsolutePath<span style="color: #FF8C00;">()</span>, <span style="color: #CDC673;">"/"</span><span style="color: #CDC673;">)</span><span style="color: #87D700;">)</span>;
+<span class="linenr">11: </span>        ctx.setResources<span style="color: #87D700;">(</span>resources<span style="color: #87D700;">)</span>;
+<span class="linenr">12: </span>        tomcat.start<span style="color: #87D700;">()</span>;
+<span class="linenr">13: </span>        tomcat.getServer<span style="color: #87D700;">()</span>.await<span style="color: #87D700;">()</span>;
+<span class="linenr">14: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">15: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -553,9 +569,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org4f2e6b6" class="outline-2">
-<h2 id="org4f2e6b6">Servlet 是什么</h2>
-<div class="outline-text-2" id="text-org4f2e6b6">
+<div id="outline-container-org846a01a" class="outline-2">
+<h2 id="org846a01a">Servlet 是什么</h2>
+<div class="outline-text-2" id="text-org846a01a">
 <p>
 好的，下面我们就来具体认识一下 Servlet 是什么。
 </p>
@@ -618,9 +634,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org8caff6a" class="outline-2">
-<h2 id="org8caff6a">Servlet 相关的接口和类</h2>
-<div class="outline-text-2" id="text-org8caff6a">
+<div id="outline-container-orgb55529b" class="outline-2">
+<h2 id="orgb55529b">Servlet 相关的接口和类</h2>
+<div class="outline-text-2" id="text-orgb55529b">
 <p>
 SUN 公司提供了一系列的接口和类用于 Servlet 技术的开发（缅怀一下 SUN 公司吧），其中最重要的接口是 <code>javax.servlet.Servlet</code> 。在 Servlet 接口中定义了 5 个抽象方法，如下表：
 </p>
@@ -735,9 +751,9 @@ HttpServlet 主要有两大功能，具体如下：
 </div>
 </div>
 
-<div id="outline-container-org863af58" class="outline-2">
-<h2 id="org863af58">Servlet 生命周期</h2>
-<div class="outline-text-2" id="text-org863af58">
+<div id="outline-container-org64bf5cb" class="outline-2">
+<h2 id="org64bf5cb">Servlet 生命周期</h2>
+<div class="outline-text-2" id="text-org64bf5cb">
 <p>
 在 Java 中，任何对象都有生命周期，Servlet 也不例外，其生命周期如下：
 </p>
@@ -800,9 +816,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org1d7c57f" class="outline-2">
-<h2 id="org1d7c57f">第一个 Servlet 程序</h2>
-<div class="outline-text-2" id="text-org1d7c57f">
+<div id="outline-container-orga8a66f7" class="outline-2">
+<h2 id="orga8a66f7">第一个 Servlet 程序</h2>
+<div class="outline-text-2" id="text-orga8a66f7">
 <p>
 <span class="underline">1. 创建 Web 项目</span>
 </p>
@@ -821,20 +837,20 @@ Hmmm... 大致就是这么个过程，具体如何结合的，找个专题慢慢
 </div>
 </div>
 
-<div id="outline-container-org4a30b02" class="outline-2">
-<h2 id="org4a30b02">Servlet 虚拟路径映射的配置</h2>
-<div class="outline-text-2" id="text-org4a30b02">
+<div id="outline-container-org20886d3" class="outline-2">
+<h2 id="org20886d3">Servlet 虚拟路径映射的配置</h2>
+<div class="outline-text-2" id="text-org20886d3">
 <p>
 在 <code>web.xml</code> 文件中，一个 <code>&lt;servlet-mapping&gt;</code> 元素用于映射一个 Servlet 的对外访问路径，该路径也称为虚拟路径。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml"><span class="linenr">1: </span><span style="color: #75715E;">&lt;!-- </span><span style="color: #75715E;">web.xml </span><span style="color: #75715E;">--&gt;</span>
+<pre class="src src-xml"><span class="linenr">1: </span><span style="color: #8B8878;">&lt;!-- </span><span style="color: #8B8878;">web.xml </span><span style="color: #8B8878;">--&gt;</span>
 <span class="linenr">2: </span>...
-<span class="linenr">3: </span>&lt;<span style="color: #A6E22E;">servlet-mapping</span>&gt;
-<span class="linenr">4: </span>  &lt;<span style="color: #A6E22E;">servlet-name</span>&gt;TestServlet01&lt;/<span style="color: #A6E22E;">servlet-name</span>&gt;
-<span class="linenr">5: </span>  &lt;<span style="color: #A6E22E;">url-pattern</span>&gt;/TestServlet01&lt;/<span style="color: #A6E22E;">url-pattern</span>&gt;
-<span class="linenr">6: </span>&lt;/<span style="color: #A6E22E;">servlet-mapping</span>&gt;
+<span class="linenr">3: </span>&lt;<span style="color: #87D700;">servlet-mapping</span>&gt;
+<span class="linenr">4: </span>  &lt;<span style="color: #87D700;">servlet-name</span>&gt;TestServlet01&lt;/<span style="color: #87D700;">servlet-name</span>&gt;
+<span class="linenr">5: </span>  &lt;<span style="color: #87D700;">url-pattern</span>&gt;/TestServlet01&lt;/<span style="color: #87D700;">url-pattern</span>&gt;
+<span class="linenr">6: </span>&lt;/<span style="color: #87D700;">servlet-mapping</span>&gt;
 <span class="linenr">7: </span>...
 </pre>
 </div>
@@ -854,9 +870,9 @@ Hmmm... 大致就是这么个过程，具体如何结合的，找个专题慢慢
 </blockquote>
 </div>
 
-<div id="outline-container-org9ff7fb0" class="outline-3">
-<h3 id="org9ff7fb0">Servlet 的多重映射</h3>
-<div class="outline-text-3" id="text-org9ff7fb0">
+<div id="outline-container-orgf9e125e" class="outline-3">
+<h3 id="orgf9e125e">Servlet 的多重映射</h3>
+<div class="outline-text-3" id="text-orgf9e125e">
 <p>
 Servlet 的多重映射指同一个 Servlet 可以被映射成多条虚拟路径。也就是说，客户端可以通过多条路径实现对同一个 Servlet 的访问。
 </p>
@@ -870,16 +886,16 @@ Servlet 的多重映射指同一个 Servlet 可以被映射成多条虚拟路径
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml"><span class="linenr"> 1: </span><span style="color: #75715E;">&lt;!-- </span><span style="color: #75715E;">web.xml </span><span style="color: #75715E;">--&gt;</span>
+<pre class="src src-xml"><span class="linenr"> 1: </span><span style="color: #8B8878;">&lt;!-- </span><span style="color: #8B8878;">web.xml </span><span style="color: #8B8878;">--&gt;</span>
 <span class="linenr"> 2: </span>...
-<span class="linenr"> 3: </span>&lt;<span style="color: #A6E22E;">servlet-mapping</span>&gt;
-<span class="linenr"> 4: </span>  &lt;<span style="color: #A6E22E;">servlet-name</span>&gt;TestServlet01&lt;/<span style="color: #A6E22E;">servlet-name</span>&gt;
-<span class="linenr"> 5: </span>  &lt;<span style="color: #A6E22E;">url-pattern</span>&gt;/TestServlet01&lt;/<span style="color: #A6E22E;">url-pattern</span>&gt;
-<span class="linenr"> 6: </span>&lt;/<span style="color: #A6E22E;">servlet-mapping</span>&gt;
-<span class="linenr"> 7: </span>&lt;<span style="color: #A6E22E;">servlet-mapping</span>&gt;
-<span class="linenr"> 8: </span>  &lt;<span style="color: #A6E22E;">servlet-name</span>&gt;TestServlet01&lt;/<span style="color: #A6E22E;">servlet-name</span>&gt;
-<span class="linenr"> 9: </span>  &lt;<span style="color: #A6E22E;">url-pattern</span>&gt;/Test01&lt;/<span style="color: #A6E22E;">url-pattern</span>&gt;
-<span class="linenr">10: </span>&lt;/<span style="color: #A6E22E;">servlet-mapping</span>&gt;
+<span class="linenr"> 3: </span>&lt;<span style="color: #87D700;">servlet-mapping</span>&gt;
+<span class="linenr"> 4: </span>  &lt;<span style="color: #87D700;">servlet-name</span>&gt;TestServlet01&lt;/<span style="color: #87D700;">servlet-name</span>&gt;
+<span class="linenr"> 5: </span>  &lt;<span style="color: #87D700;">url-pattern</span>&gt;/TestServlet01&lt;/<span style="color: #87D700;">url-pattern</span>&gt;
+<span class="linenr"> 6: </span>&lt;/<span style="color: #87D700;">servlet-mapping</span>&gt;
+<span class="linenr"> 7: </span>&lt;<span style="color: #87D700;">servlet-mapping</span>&gt;
+<span class="linenr"> 8: </span>  &lt;<span style="color: #87D700;">servlet-name</span>&gt;TestServlet01&lt;/<span style="color: #87D700;">servlet-name</span>&gt;
+<span class="linenr"> 9: </span>  &lt;<span style="color: #87D700;">url-pattern</span>&gt;/Test01&lt;/<span style="color: #87D700;">url-pattern</span>&gt;
+<span class="linenr">10: </span>&lt;/<span style="color: #87D700;">servlet-mapping</span>&gt;
 <span class="linenr">11: </span>...
 </pre>
 </div>
@@ -889,23 +905,23 @@ Servlet 的多重映射指同一个 Servlet 可以被映射成多条虚拟路径
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml"><span class="linenr">1: </span><span style="color: #75715E;">&lt;!-- </span><span style="color: #75715E;">web.xml </span><span style="color: #75715E;">--&gt;</span>
+<pre class="src src-xml"><span class="linenr">1: </span><span style="color: #8B8878;">&lt;!-- </span><span style="color: #8B8878;">web.xml </span><span style="color: #8B8878;">--&gt;</span>
 <span class="linenr">2: </span>...
-<span class="linenr">3: </span>&lt;<span style="color: #A6E22E;">servlet-mapping</span>&gt;
-<span class="linenr">4: </span>    <span style="color: #75715E;">&lt;!-- </span><span style="color: #75715E;">&#26144;&#23556;&#20026;TestServlet01&#21644;Test02 </span><span style="color: #75715E;">--&gt;</span>
-<span class="linenr">5: </span>    &lt;<span style="color: #A6E22E;">servlet-name</span>&gt;TestServlet01&lt;/<span style="color: #A6E22E;">servlet-name</span>&gt;
-<span class="linenr">6: </span>    &lt;<span style="color: #A6E22E;">url-pattern</span>&gt;/TestServlet01&lt;/<span style="color: #A6E22E;">url-pattern</span>&gt;
-<span class="linenr">7: </span>    &lt;<span style="color: #A6E22E;">url-pattern</span>&gt;/Test02&lt;/<span style="color: #A6E22E;">url-pattern</span>&gt;
-<span class="linenr">8: </span>&lt;/<span style="color: #A6E22E;">servlet-mapping</span>&gt;
+<span class="linenr">3: </span>&lt;<span style="color: #87D700;">servlet-mapping</span>&gt;
+<span class="linenr">4: </span>    <span style="color: #8B8878;">&lt;!-- </span><span style="color: #8B8878;">&#26144;&#23556;&#20026;TestServlet01&#21644;Test02 </span><span style="color: #8B8878;">--&gt;</span>
+<span class="linenr">5: </span>    &lt;<span style="color: #87D700;">servlet-name</span>&gt;TestServlet01&lt;/<span style="color: #87D700;">servlet-name</span>&gt;
+<span class="linenr">6: </span>    &lt;<span style="color: #87D700;">url-pattern</span>&gt;/TestServlet01&lt;/<span style="color: #87D700;">url-pattern</span>&gt;
+<span class="linenr">7: </span>    &lt;<span style="color: #87D700;">url-pattern</span>&gt;/Test02&lt;/<span style="color: #87D700;">url-pattern</span>&gt;
+<span class="linenr">8: </span>&lt;/<span style="color: #87D700;">servlet-mapping</span>&gt;
 <span class="linenr">9: </span>...
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6bcd272" class="outline-3">
-<h3 id="org6bcd272">Servlet 映射路径中使用通配符</h3>
-<div class="outline-text-3" id="text-org6bcd272">
+<div id="outline-container-orge1b1939" class="outline-3">
+<h3 id="orge1b1939">Servlet 映射路径中使用通配符</h3>
+<div class="outline-text-3" id="text-orge1b1939">
 <p>
 在实际开发过程中，开发者有时会希望某个目录下的所有路径都可以访问同一个 Servlet ，这时，可以在 Servlet 映射的路径中使用通配符 <code>*</code> 。
 </p>
@@ -928,9 +944,9 @@ Servlet 的多重映射指同一个 Servlet 可以被映射成多条虚拟路径
 </div>
 </div>
 
-<div id="outline-container-orgfa95d30" class="outline-3">
-<h3 id="orgfa95d30">默认 Servlet</h3>
-<div class="outline-text-3" id="text-orgfa95d30">
+<div id="outline-container-org1130883" class="outline-3">
+<h3 id="org1130883">默认 Servlet</h3>
+<div class="outline-text-3" id="text-org1130883">
 <p>
 如果某个 Servlet 的映射路径仅仅是一个正斜线（ <code>/</code> ），那么这个 Servlet 就是当前 Web 应用的默认 Servlet。Servlet 服务器在接收到访问请求时，如果在 <code>web.xml</code> 文件中找不到匹配的 <code>&lt;servlet-mapping&gt;</code> 元素的 URL ，则会将访问请求交给默认 Servlet 处理。
 </p>
@@ -938,13 +954,13 @@ Servlet 的多重映射指同一个 Servlet 可以被映射成多条虚拟路径
 </div>
 </div>
 
-<div id="outline-container-orgf0264fb" class="outline-2">
-<h2 id="orgf0264fb">ServletConfig 和 ServletContext 接口</h2>
-<div class="outline-text-2" id="text-orgf0264fb">
+<div id="outline-container-orgb40f9cb" class="outline-2">
+<h2 id="orgb40f9cb">ServletConfig 和 ServletContext 接口</h2>
+<div class="outline-text-2" id="text-orgb40f9cb">
 </div>
-<div id="outline-container-orgf36789b" class="outline-3">
-<h3 id="orgf36789b">ServletConfig 接口</h3>
-<div class="outline-text-3" id="text-orgf36789b">
+<div id="outline-container-org0be22d2" class="outline-3">
+<h3 id="org0be22d2">ServletConfig 接口</h3>
+<div class="outline-text-3" id="text-org0be22d2">
 <p>
 在运行 Servlet 程序时，可能需要一些辅助信息，例如，文件使用的编码、使用 Servlet 程序的共享信息等，这些信息可以在 web.xml 文件中使用一个或多个 <code>&lt;init-param&gt;</code> 元素进行配置。
 </p>
@@ -992,9 +1008,9 @@ Servlet 的多重映射指同一个 Servlet 可以被映射成多条虚拟路径
 </div>
 </div>
 
-<div id="outline-container-org4b38eb9" class="outline-3">
-<h3 id="org4b38eb9">ServletContext 接口</h3>
-<div class="outline-text-3" id="text-org4b38eb9">
+<div id="outline-container-orgaff6668" class="outline-3">
+<h3 id="orgaff6668">ServletContext 接口</h3>
+<div class="outline-text-3" id="text-orgaff6668">
 <p>
 当 Tomcat 启动时，Tomcat 会为每个 Web 应用创建一个唯一的 <code>ServletContext</code> 对象代表当前的 Web 应用，该对象封装了当前 Web 应用的所有信息。可以利用该对象获取 Web 应用程序的初始化信息、读取资源文件等。
 </p>
@@ -1012,16 +1028,16 @@ Web 应用初始化参数的配置方式具体如下：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xml"><span class="linenr"> 1: </span><span style="color: #75715E;">&lt;!-- </span><span style="color: #75715E;">web.xml </span><span style="color: #75715E;">--&gt;</span>
+<pre class="src src-xml"><span class="linenr"> 1: </span><span style="color: #8B8878;">&lt;!-- </span><span style="color: #8B8878;">web.xml </span><span style="color: #8B8878;">--&gt;</span>
 <span class="linenr"> 2: </span>...
-<span class="linenr"> 3: </span>&lt;<span style="color: #A6E22E;">context-param</span>&gt;
-<span class="linenr"> 4: </span>    &lt;<span style="color: #A6E22E;">param-name</span>&gt;XXX&lt;/<span style="color: #A6E22E;">param-name</span>&gt;
-<span class="linenr"> 5: </span>    &lt;<span style="color: #A6E22E;">param-value</span>&gt;xxx&lt;/<span style="color: #A6E22E;">param-value</span>&gt;
-<span class="linenr"> 6: </span>&lt;/<span style="color: #A6E22E;">context-param</span>&gt;
-<span class="linenr"> 7: </span>&lt;<span style="color: #A6E22E;">context-param</span>&gt;
-<span class="linenr"> 8: </span>    &lt;<span style="color: #A6E22E;">param-name</span>&gt;AAA&lt;/<span style="color: #A6E22E;">param-name</span>&gt;
-<span class="linenr"> 9: </span>    &lt;<span style="color: #A6E22E;">param-value</span>&gt;aaa&lt;/<span style="color: #A6E22E;">param-value</span>&gt;
-<span class="linenr">10: </span>&lt;/<span style="color: #A6E22E;">context-param</span>&gt;
+<span class="linenr"> 3: </span>&lt;<span style="color: #87D700;">context-param</span>&gt;
+<span class="linenr"> 4: </span>    &lt;<span style="color: #87D700;">param-name</span>&gt;XXX&lt;/<span style="color: #87D700;">param-name</span>&gt;
+<span class="linenr"> 5: </span>    &lt;<span style="color: #87D700;">param-value</span>&gt;xxx&lt;/<span style="color: #87D700;">param-value</span>&gt;
+<span class="linenr"> 6: </span>&lt;/<span style="color: #87D700;">context-param</span>&gt;
+<span class="linenr"> 7: </span>&lt;<span style="color: #87D700;">context-param</span>&gt;
+<span class="linenr"> 8: </span>    &lt;<span style="color: #87D700;">param-name</span>&gt;AAA&lt;/<span style="color: #87D700;">param-name</span>&gt;
+<span class="linenr"> 9: </span>    &lt;<span style="color: #87D700;">param-value</span>&gt;aaa&lt;/<span style="color: #87D700;">param-value</span>&gt;
+<span class="linenr">10: </span>&lt;/<span style="color: #87D700;">context-param</span>&gt;
 <span class="linenr">11: </span>...
 </pre>
 </div>
@@ -1035,24 +1051,24 @@ Web 应用初始化参数的配置方式具体如下：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">TestServlet</span> <span style="color: #F92672;">extends</span> <span style="color: #66D9EF;">HttpServlet</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">doGet</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">HttpServletRequest</span> <span style="color: #FD971F;">req</span>, <span style="color: #66D9EF;">HttpServletResponse</span> <span style="color: #FD971F;">resp</span><span style="color: #66D9EF;">)</span> <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">ServletException</span>, <span style="color: #66D9EF;">IOException</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr"> 3: </span>        res.setContentType<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"text/html;charset=utf-8"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr"> 4: </span>        <span style="color: #66D9EF;">PrintWriter</span> <span style="color: #FD971F;">out</span> = resp.getWriter<span style="color: #A6E22E;">()</span>;
-<span class="linenr"> 5: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#24471;&#21040; ServletContext &#23545;&#35937;</span>
-<span class="linenr"> 6: </span>        <span style="color: #66D9EF;">ServletContext</span> <span style="color: #FD971F;">context</span> = <span style="color: #F92672;">this</span>.getServletContext<span style="color: #A6E22E;">()</span>;
-<span class="linenr"> 7: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#24471;&#21040;&#21253;&#21547;&#25152;&#26377;&#21021;&#22987;&#21270;&#21442;&#25968;&#21517;&#30340; Enumeration &#23545;&#35937;</span>
-<span class="linenr"> 8: </span>        <span style="color: #66D9EF;">Enumeration</span><span style="color: #A6E22E;">&lt;</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">&gt;</span> <span style="color: #FD971F;">paramNames</span> = context.getInitParameterNames<span style="color: #A6E22E;">()</span>;
-<span class="linenr"> 9: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#36941;&#21382;&#25152;&#26377;&#30340;&#21021;&#22987;&#21270;&#21442;&#25968;&#21517;&#65292;&#24471;&#21040;&#30456;&#24212;&#30340;&#21442;&#25968;&#20540;&#24182;&#25171;&#21360;</span>
-<span class="linenr">10: </span>        <span style="color: #F92672;">while</span> <span style="color: #A6E22E;">(</span>paramNames.hasMoreElements<span style="color: #E6DB74;">()</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
-<span class="linenr">11: </span>            <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">name</span> = paramNames.nextElement<span style="color: #E6DB74;">()</span>;
-<span class="linenr">12: </span>            <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">value</span> = context.getInitparameter<span style="color: #E6DB74;">(</span>name<span style="color: #E6DB74;">)</span>;
-<span class="linenr">13: </span>            out.println<span style="color: #E6DB74;">(</span>name + <span style="color: #E6DB74;">":"</span> + value<span style="color: #E6DB74;">)</span>;
-<span class="linenr">14: </span>            out.println<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"&lt;br/&gt;"</span><span style="color: #E6DB74;">)</span>;
-<span class="linenr">15: </span>        <span style="color: #A6E22E;">}</span>
-<span class="linenr">16: </span>    <span style="color: #66D9EF;">}</span>
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">TestServlet</span> <span style="color: #FF1493;">extends</span> <span style="color: #5FD7FF;">HttpServlet</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #FF1493;">public</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">doGet</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">HttpServletRequest</span> <span style="color: #FF8C00;">req</span>, <span style="color: #5FD7FF;">HttpServletResponse</span> <span style="color: #FF8C00;">resp</span><span style="color: #5FD7FF;">)</span> <span style="color: #FF1493;">throws</span> <span style="color: #5FD7FF;">ServletException</span>, <span style="color: #5FD7FF;">IOException</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 3: </span>        res.setContentType<span style="color: #87D700;">(</span><span style="color: #CDC673;">"text/html;charset=utf-8"</span><span style="color: #87D700;">)</span>;
+<span class="linenr"> 4: </span>        <span style="color: #5FD7FF;">PrintWriter</span> <span style="color: #FF8C00;">out</span> = resp.getWriter<span style="color: #87D700;">()</span>;
+<span class="linenr"> 5: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#24471;&#21040; ServletContext &#23545;&#35937;</span>
+<span class="linenr"> 6: </span>        <span style="color: #5FD7FF;">ServletContext</span> <span style="color: #FF8C00;">context</span> = <span style="color: #FF1493;">this</span>.getServletContext<span style="color: #87D700;">()</span>;
+<span class="linenr"> 7: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#24471;&#21040;&#21253;&#21547;&#25152;&#26377;&#21021;&#22987;&#21270;&#21442;&#25968;&#21517;&#30340; Enumeration &#23545;&#35937;</span>
+<span class="linenr"> 8: </span>        <span style="color: #5FD7FF;">Enumeration</span><span style="color: #87D700;">&lt;</span><span style="color: #5FD7FF;">String</span><span style="color: #87D700;">&gt;</span> <span style="color: #FF8C00;">paramNames</span> = context.getInitParameterNames<span style="color: #87D700;">()</span>;
+<span class="linenr"> 9: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#36941;&#21382;&#25152;&#26377;&#30340;&#21021;&#22987;&#21270;&#21442;&#25968;&#21517;&#65292;&#24471;&#21040;&#30456;&#24212;&#30340;&#21442;&#25968;&#20540;&#24182;&#25171;&#21360;</span>
+<span class="linenr">10: </span>        <span style="color: #FF1493;">while</span> <span style="color: #87D700;">(</span>paramNames.hasMoreElements<span style="color: #CDC673;">()</span><span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr">11: </span>            <span style="color: #5FD7FF;">String</span> <span style="color: #FF8C00;">name</span> = paramNames.nextElement<span style="color: #CDC673;">()</span>;
+<span class="linenr">12: </span>            <span style="color: #5FD7FF;">String</span> <span style="color: #FF8C00;">value</span> = context.getInitparameter<span style="color: #CDC673;">(</span>name<span style="color: #CDC673;">)</span>;
+<span class="linenr">13: </span>            out.println<span style="color: #CDC673;">(</span>name + <span style="color: #CDC673;">":"</span> + value<span style="color: #CDC673;">)</span>;
+<span class="linenr">14: </span>            out.println<span style="color: #CDC673;">(</span><span style="color: #CDC673;">"&lt;br/&gt;"</span><span style="color: #CDC673;">)</span>;
+<span class="linenr">15: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr">16: </span>    <span style="color: #5FD7FF;">}</span>
 <span class="linenr">17: </span>    ...
-<span class="linenr">18: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">18: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -1071,9 +1087,9 @@ Servlet 容器根据资源文件相对于 Web 应用的路径，返回关联资�
 </div>
 </div>
 
-<div id="outline-container-org5573327" class="outline-2">
-<h2 id="org5573327">Servlet 处理用户请求的完整流程</h2>
-<div class="outline-text-2" id="text-org5573327">
+<div id="outline-container-orgbb6f793" class="outline-2">
+<h2 id="orgbb6f793">Servlet 处理用户请求的完整流程</h2>
+<div class="outline-text-2" id="text-orgbb6f793">
 <p>
 针对 Servlet 的每次请求，Web 服务器在调用 <code>service()</code> 方法之前，都会创建 <code>HttpServletRequest</code> 和 <code>HttpServletResponse</code> 对象。其中， <code>HttpServletRequest</code> 对象用于封装 HTTP 请求消息，简称 <code>request</code> 对象。 <code>HttpServletResponse</code> 对象用于封装 HTTP 响应信息，简称 <code>response</code> 对象。
 </p>
@@ -1103,9 +1119,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org6fa569b" class="outline-2">
-<h2 id="org6fa569b">HttpServletRequest</h2>
-<div class="outline-text-2" id="text-org6fa569b">
+<div id="outline-container-org7fcb6e3" class="outline-2">
+<h2 id="org7fcb6e3">HttpServletRequest</h2>
+<div class="outline-text-2" id="text-org7fcb6e3">
 <p>
 <code>HttpServletRequest</code> 接口继承处 <code>ServletRequest</code> 接口，其主要使用是封装 HTTP 请求信息。
 </p>
@@ -1115,9 +1131,9 @@ title=""
 </p>
 </div>
 
-<div id="outline-container-org2e6eb50" class="outline-3">
-<h3 id="org2e6eb50">获取请求行信息的相关方法<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
-<div class="outline-text-3" id="text-org2e6eb50">
+<div id="outline-container-org28e6d5f" class="outline-3">
+<h3 id="org28e6d5f">获取请求行信息的相关方法<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
+<div class="outline-text-3" id="text-org28e6d5f">
 <p>
 当访问 Servlet 时，所有请求消息将被封装到 <code>HttpServletRequest</code> 对象中，请求消息的请求行中包含请求方法、请求资源名、请求路径等信息，为了获取这些信息， <code>HttpServletRequest</code> 接口定义了一系列方法。
 </p>
@@ -1128,27 +1144,27 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org6b85d99" class="outline-3">
-<h3 id="org6b85d99">获取请求消息头的相关方法</h3>
-<div class="outline-text-3" id="text-org6b85d99">
+<div id="outline-container-org79357db" class="outline-3">
+<h3 id="org79357db">获取请求消息头的相关方法</h3>
+<div class="outline-text-3" id="text-org79357db">
 <p>
 当浏览器发送 Servlet 请求时，需要通过请求消息头向服务器传递附加信息，例如，客户端可以接收的数据类型、压缩方式、语言等。为此，在 <code>HttpServletRequest</code> 接口中定义了一系列获取 HTTP 请求字段的方法。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9212f46" class="outline-3">
-<h3 id="org9212f46"><span class="todo TODO">TODO</span> Servlet 获取 form 表单数据</h3>
-<div class="outline-text-3" id="text-org9212f46">
+<div id="outline-container-org982b086" class="outline-3">
+<h3 id="org982b086"><span class="todo TODO">TODO</span> Servlet 获取 form 表单数据</h3>
+<div class="outline-text-3" id="text-org982b086">
 <p>
 Request 对象不仅可以获取一系列数据，还可以通过属性传递数据。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org430f353" class="outline-3">
-<h3 id="org430f353">RequestDispatcher 实现请求转发<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h3>
-<div class="outline-text-3" id="text-org430f353">
+<div id="outline-container-orgec6c6f5" class="outline-3">
+<h3 id="orgec6c6f5">RequestDispatcher 实现请求转发<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h3>
+<div class="outline-text-3" id="text-orgec6c6f5">
 <p>
 当一个 Web 资源收到客户端的请求后，如果希望服务器通知另外一个资源处理请求，可以通过 <code>RequestDispatcher</code> 接口的实例对象实现。
 </p>
@@ -1179,9 +1195,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orge72f188" class="outline-2">
-<h2 id="orge72f188">HttpServletResponse</h2>
-<div class="outline-text-2" id="text-orge72f188">
+<div id="outline-container-org2bbbf01" class="outline-2">
+<h2 id="org2bbbf01">HttpServletResponse</h2>
+<div class="outline-text-2" id="text-org2bbbf01">
 <p>
 <code>HttpServletResponse</code> 接口继承自 <code>ServletResponse</code> 接口，主要用于封装 HTTP 响应消息。
 </p>
@@ -1191,9 +1207,9 @@ title=""
 </p>
 </div>
 
-<div id="outline-container-org2312f82" class="outline-3">
-<h3 id="org2312f82">发送状态码相关的方法</h3>
-<div class="outline-text-3" id="text-org2312f82">
+<div id="outline-container-org8471699" class="outline-3">
+<h3 id="org8471699">发送状态码相关的方法</h3>
+<div class="outline-text-3" id="text-org8471699">
 <p>
 当 Servlet 向客户端回送响应消息时，需要在响应消息中设置状态码。因此， <code>HttpServletResponse</code> 接口定义了两个发送状态码的方法。
 </p>
@@ -1237,18 +1253,18 @@ public void sendError(int code, String message) throws java.io.IOException
 </div>
 </div>
 
-<div id="outline-container-orgdb6e6ac" class="outline-3">
-<h3 id="orgdb6e6ac">发送响应消息头相关的方法</h3>
-<div class="outline-text-3" id="text-orgdb6e6ac">
+<div id="outline-container-org390889b" class="outline-3">
+<h3 id="org390889b">发送响应消息头相关的方法</h3>
+<div class="outline-text-3" id="text-org390889b">
 <p>
 Servlet 向客户端发送的响应消息中包含响应头字段，由于 HTTP 协议的响应头字段有很多种，因此， <code>HttpServletResponse</code> 接口定义了一系列设置 HTTP 响应头字段的方法。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgad43dd1" class="outline-3">
-<h3 id="orgad43dd1">发送响应消息体相关的方法</h3>
-<div class="outline-text-3" id="text-orgad43dd1">
+<div id="outline-container-org3214ed8" class="outline-3">
+<h3 id="org3214ed8">发送响应消息体相关的方法</h3>
+<div class="outline-text-3" id="text-org3214ed8">
 <p>
 由于在 HTTP 响应消息中，大量的数据都是通过响应消息体传递的，因此， <code>ServletResponse</code> 遵循以 I/O 流传递大量数据的设计理念。在发送响应消息体时，定义了两个与输出流相关的方法。
 </p>
@@ -1283,9 +1299,9 @@ Servlet 向客户端发送的响应消息中包含响应头字段，由于 HTTP 
 </div>
 </div>
 
-<div id="outline-container-orga6b9181" class="outline-3">
-<h3 id="orga6b9181">sendRedirect() 实现重写向</h3>
-<div class="outline-text-3" id="text-orga6b9181">
+<div id="outline-container-org380d411" class="outline-3">
+<h3 id="org380d411">sendRedirect() 实现重写向</h3>
+<div class="outline-text-3" id="text-org380d411">
 <p>
 在某些情况下，针对客户端的请求，一个 Servlet 类可能无法完成全部工作，这时，可以使用请求重定向完成这一工作。
 </p>
@@ -1334,37 +1350,37 @@ title=""
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html"><span class="linenr"> 1: </span><span style="color: #75715E;">&lt;!-- </span><span style="color: #75715E;">login.html </span><span style="color: #75715E;">--&gt;</span>
-<span class="linenr"> 2: </span><span style="color: #E6DB74;">&lt;!doctype html&gt;</span>
-<span class="linenr"> 3: </span>&lt;<span style="color: #A6E22E;">html</span>&gt;
-<span class="linenr"> 4: </span>  &lt;<span style="color: #A6E22E;">head</span>&gt;
-<span class="linenr"> 5: </span>    &lt;<span style="color: #A6E22E;">meta</span> <span style="color: #FD971F;">charset</span>=<span style="color: #E6DB74;">"UTF-8"</span>/&gt;
-<span class="linenr"> 6: </span>    &lt;<span style="color: #A6E22E;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">&#29992;&#25143;&#30331;&#24405;</span>&lt;/<span style="color: #A6E22E;">title</span>&gt;
-<span class="linenr"> 7: </span>  &lt;/<span style="color: #A6E22E;">head</span>&gt;
-<span class="linenr"> 8: </span>  &lt;<span style="color: #A6E22E;">body</span>&gt;
-<span class="linenr"> 9: </span>    <span style="color: #75715E;">&lt;!-- </span><span style="color: #75715E;">&#25226;&#34920;&#21333;&#20869;&#23481;&#25552;&#20132;&#21040; servletDemo &#24037;&#31243;&#19979;&#30340; LoginServlet </span><span style="color: #75715E;">--&gt;</span>
-<span class="linenr">10: </span>    &lt;<span style="color: #A6E22E;">form</span> <span style="color: #FD971F;">action</span>=<span style="color: #E6DB74;">"/servletDemo/LoginServlet"</span> <span style="color: #FD971F;">method</span>=<span style="color: #E6DB74;">"POST"</span>&gt;
-<span class="linenr">11: </span>      &#36134;&#21495;: &lt;<span style="color: #A6E22E;">input</span> <span style="color: #FD971F;">name</span>=<span style="color: #E6DB74;">"username"</span> <span style="color: #FD971F;">type</span>=<span style="color: #E6DB74;">"text"</span>  /&gt;&lt;<span style="color: #A6E22E;">br</span>/&gt;
-<span class="linenr">12: </span>      &#23494;&#30721;: &lt;<span style="color: #A6E22E;">input</span> <span style="color: #FD971F;">name</span>=<span style="color: #E6DB74;">"password"</span> <span style="color: #FD971F;">type</span>=<span style="color: #E6DB74;">"password"</span> /&gt;&lt;<span style="color: #A6E22E;">br</span>/&gt;
-<span class="linenr">13: </span>      &lt;<span style="color: #A6E22E;">br</span>/&gt;
-<span class="linenr">14: </span>      &lt;<span style="color: #A6E22E;">input</span> <span style="color: #FD971F;">type</span>=<span style="color: #E6DB74;">"submit"</span> <span style="color: #FD971F;">value</span>=<span style="color: #E6DB74;">"&#30331;&#24405;"</span> /&gt;
-<span class="linenr">15: </span>    &lt;/<span style="color: #A6E22E;">form</span>&gt;
-<span class="linenr">16: </span>  &lt;/<span style="color: #A6E22E;">body</span>&gt;
-<span class="linenr">17: </span>&lt;/<span style="color: #A6E22E;">html</span>&gt;
+<pre class="src src-html"><span class="linenr"> 1: </span><span style="color: #8B8878;">&lt;!-- </span><span style="color: #8B8878;">login.html </span><span style="color: #8B8878;">--&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #CDC673;">&lt;!doctype html&gt;</span>
+<span class="linenr"> 3: </span>&lt;<span style="color: #87D700;">html</span>&gt;
+<span class="linenr"> 4: </span>  &lt;<span style="color: #87D700;">head</span>&gt;
+<span class="linenr"> 5: </span>    &lt;<span style="color: #87D700;">meta</span> <span style="color: #FF8C00;">charset</span>=<span style="color: #CDC673;">"UTF-8"</span>/&gt;
+<span class="linenr"> 6: </span>    &lt;<span style="color: #87D700;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">&#29992;&#25143;&#30331;&#24405;</span>&lt;/<span style="color: #87D700;">title</span>&gt;
+<span class="linenr"> 7: </span>  &lt;/<span style="color: #87D700;">head</span>&gt;
+<span class="linenr"> 8: </span>  &lt;<span style="color: #87D700;">body</span>&gt;
+<span class="linenr"> 9: </span>    <span style="color: #8B8878;">&lt;!-- </span><span style="color: #8B8878;">&#25226;&#34920;&#21333;&#20869;&#23481;&#25552;&#20132;&#21040; servletDemo &#24037;&#31243;&#19979;&#30340; LoginServlet </span><span style="color: #8B8878;">--&gt;</span>
+<span class="linenr">10: </span>    &lt;<span style="color: #87D700;">form</span> <span style="color: #FF8C00;">action</span>=<span style="color: #CDC673;">"/servletDemo/LoginServlet"</span> <span style="color: #FF8C00;">method</span>=<span style="color: #CDC673;">"POST"</span>&gt;
+<span class="linenr">11: </span>      &#36134;&#21495;: &lt;<span style="color: #87D700;">input</span> <span style="color: #FF8C00;">name</span>=<span style="color: #CDC673;">"username"</span> <span style="color: #FF8C00;">type</span>=<span style="color: #CDC673;">"text"</span>  /&gt;&lt;<span style="color: #87D700;">br</span>/&gt;
+<span class="linenr">12: </span>      &#23494;&#30721;: &lt;<span style="color: #87D700;">input</span> <span style="color: #FF8C00;">name</span>=<span style="color: #CDC673;">"password"</span> <span style="color: #FF8C00;">type</span>=<span style="color: #CDC673;">"password"</span> /&gt;&lt;<span style="color: #87D700;">br</span>/&gt;
+<span class="linenr">13: </span>      &lt;<span style="color: #87D700;">br</span>/&gt;
+<span class="linenr">14: </span>      &lt;<span style="color: #87D700;">input</span> <span style="color: #FF8C00;">type</span>=<span style="color: #CDC673;">"submit"</span> <span style="color: #FF8C00;">value</span>=<span style="color: #CDC673;">"&#30331;&#24405;"</span> /&gt;
+<span class="linenr">15: </span>    &lt;/<span style="color: #87D700;">form</span>&gt;
+<span class="linenr">16: </span>  &lt;/<span style="color: #87D700;">body</span>&gt;
+<span class="linenr">17: </span>&lt;/<span style="color: #87D700;">html</span>&gt;
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-html"><span class="linenr"> 1: </span><span style="color: #E6DB74;">&lt;!doctype html&gt;</span>
-<span class="linenr"> 2: </span>&lt;<span style="color: #A6E22E;">html</span>&gt;
-<span class="linenr"> 3: </span>  &lt;<span style="color: #A6E22E;">head</span>&gt;
-<span class="linenr"> 4: </span>    &lt;<span style="color: #A6E22E;">meta</span> <span style="color: #FD971F;">charset</span>=<span style="color: #E6DB74;">"UTF-8"</span>/&gt;
-<span class="linenr"> 5: </span>    &lt;<span style="color: #A6E22E;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">&#27426;&#36814;&#39029;&#38754;</span>&lt;/<span style="color: #A6E22E;">title</span>&gt;
-<span class="linenr"> 6: </span>  &lt;/<span style="color: #A6E22E;">head</span>&gt;
-<span class="linenr"> 7: </span>  &lt;<span style="color: #A6E22E;">body</span>&gt;
+<pre class="src src-html"><span class="linenr"> 1: </span><span style="color: #CDC673;">&lt;!doctype html&gt;</span>
+<span class="linenr"> 2: </span>&lt;<span style="color: #87D700;">html</span>&gt;
+<span class="linenr"> 3: </span>  &lt;<span style="color: #87D700;">head</span>&gt;
+<span class="linenr"> 4: </span>    &lt;<span style="color: #87D700;">meta</span> <span style="color: #FF8C00;">charset</span>=<span style="color: #CDC673;">"UTF-8"</span>/&gt;
+<span class="linenr"> 5: </span>    &lt;<span style="color: #87D700;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">&#27426;&#36814;&#39029;&#38754;</span>&lt;/<span style="color: #87D700;">title</span>&gt;
+<span class="linenr"> 6: </span>  &lt;/<span style="color: #87D700;">head</span>&gt;
+<span class="linenr"> 7: </span>  &lt;<span style="color: #87D700;">body</span>&gt;
 <span class="linenr"> 8: </span>    &#27426;&#36814;&#20320;&#65292;&#30331;&#38470;&#25104;&#21151;&#65281;
-<span class="linenr"> 9: </span>  &lt;/<span style="color: #A6E22E;">body</span>&gt;
-<span class="linenr">10: </span>&lt;/<span style="color: #A6E22E;">html</span>&gt;
+<span class="linenr"> 9: </span>  &lt;/<span style="color: #87D700;">body</span>&gt;
+<span class="linenr">10: </span>&lt;/<span style="color: #87D700;">html</span>&gt;
 </pre>
 </div>
 
@@ -1377,37 +1393,37 @@ title=""
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">package</span> com.mengma.<span style="color: #AE81FF;">servlet</span>;
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #FF1493;">package</span> com.mengma.<span style="color: #AF87FF;">servlet</span>;
 <span class="linenr"> 2: </span>
-<span class="linenr"> 3: </span><span style="color: #F92672;">import</span> <span style="color: #AE81FF;">java</span>.<span style="color: #AE81FF;">io</span>.<span style="color: #66D9EF;">IOException</span>;
+<span class="linenr"> 3: </span><span style="color: #FF1493;">import</span> <span style="color: #AF87FF;">java</span>.<span style="color: #AF87FF;">io</span>.<span style="color: #5FD7FF;">IOException</span>;
 <span class="linenr"> 4: </span>
-<span class="linenr"> 5: </span><span style="color: #F92672;">import</span> <span style="color: #AE81FF;">javax</span>.<span style="color: #AE81FF;">servlet</span>.<span style="color: #66D9EF;">ServletException</span>;
-<span class="linenr"> 6: </span><span style="color: #F92672;">import</span> <span style="color: #AE81FF;">javax</span>.<span style="color: #AE81FF;">servlet</span>.<span style="color: #AE81FF;">http</span>.<span style="color: #66D9EF;">HttpServlet</span>;
-<span class="linenr"> 7: </span><span style="color: #F92672;">import</span> <span style="color: #AE81FF;">javax</span>.<span style="color: #AE81FF;">servlet</span>.<span style="color: #AE81FF;">http</span>.<span style="color: #66D9EF;">HttpServletRequest</span>;
-<span class="linenr"> 8: </span><span style="color: #F92672;">import</span> <span style="color: #AE81FF;">javax</span>.<span style="color: #AE81FF;">servlet</span>.<span style="color: #AE81FF;">http</span>.<span style="color: #66D9EF;">HttpServletResponse</span>;
+<span class="linenr"> 5: </span><span style="color: #FF1493;">import</span> <span style="color: #AF87FF;">javax</span>.<span style="color: #AF87FF;">servlet</span>.<span style="color: #5FD7FF;">ServletException</span>;
+<span class="linenr"> 6: </span><span style="color: #FF1493;">import</span> <span style="color: #AF87FF;">javax</span>.<span style="color: #AF87FF;">servlet</span>.<span style="color: #AF87FF;">http</span>.<span style="color: #5FD7FF;">HttpServlet</span>;
+<span class="linenr"> 7: </span><span style="color: #FF1493;">import</span> <span style="color: #AF87FF;">javax</span>.<span style="color: #AF87FF;">servlet</span>.<span style="color: #AF87FF;">http</span>.<span style="color: #5FD7FF;">HttpServletRequest</span>;
+<span class="linenr"> 8: </span><span style="color: #FF1493;">import</span> <span style="color: #AF87FF;">javax</span>.<span style="color: #AF87FF;">servlet</span>.<span style="color: #AF87FF;">http</span>.<span style="color: #5FD7FF;">HttpServletResponse</span>;
 <span class="linenr"> 9: </span>
-<span class="linenr">10: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">LoginServlet</span> <span style="color: #F92672;">extends</span> <span style="color: #66D9EF;">HttpServlet</span> <span style="color: #AE81FF;">{</span>
-<span class="linenr">11: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">doGet</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">HttpServletRequest</span> <span style="color: #FD971F;">request</span>, <span style="color: #66D9EF;">HttpServletResponse</span> <span style="color: #FD971F;">response</span><span style="color: #66D9EF;">)</span>
-<span class="linenr">12: </span>        <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">ServletException</span>, <span style="color: #66D9EF;">IOException</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">13: </span>        response.setContentType<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"text/html;charset=utf-8"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">14: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#29992; HttpServletRequest &#23545;&#35937;&#30340; getParameter() &#26041;&#27861;&#33719;&#21462;&#29992;&#25143;&#21517;&#21644;&#23494;&#30721;</span>
-<span class="linenr">15: </span>        <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">username</span> = request.getParameter<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"username"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">16: </span>        <span style="color: #66D9EF;">String</span> <span style="color: #FD971F;">password</span> = request.getParameter<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"password"</span><span style="color: #A6E22E;">)</span>;
-<span class="linenr">17: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#20551;&#35774;&#29992;&#25143;&#21517;&#21644;&#23494;&#30721;&#20998;&#21035;&#20026; admin &#21644; 123456</span>
-<span class="linenr">18: </span>        <span style="color: #F92672;">if</span> <span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"admin"</span>.equals<span style="color: #E6DB74;">(</span>username<span style="color: #E6DB74;">)</span> &amp;&amp; <span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"123456"</span><span style="color: #E6DB74;">)</span>.equals<span style="color: #E6DB74;">(</span>password<span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
-<span class="linenr">19: </span>            <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22914;&#26524;&#29992;&#25143;&#21517;&#21644;&#23494;&#30721;&#27491;&#30830;&#65292;&#37325;&#23450;&#21521;&#21040; welcome.html</span>
-<span class="linenr">20: </span>            response.sendRedirect<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"/servletDemo/welcome.html"</span><span style="color: #E6DB74;">)</span>;
-<span class="linenr">21: </span>        <span style="color: #A6E22E;">}</span> <span style="color: #F92672;">else</span> <span style="color: #A6E22E;">{</span>
-<span class="linenr">22: </span>            <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22914;&#26524;&#29992;&#25143;&#21517;&#21644;&#23494;&#30721;&#38169;&#35823;&#65292;&#37325;&#23450;&#21521;&#21040; login.html</span>
-<span class="linenr">23: </span>            response.sendRedirect<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">"/servletDemo/login.html"</span><span style="color: #E6DB74;">)</span>;
-<span class="linenr">24: </span>        <span style="color: #A6E22E;">}</span>
-<span class="linenr">25: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">10: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">LoginServlet</span> <span style="color: #FF1493;">extends</span> <span style="color: #5FD7FF;">HttpServlet</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">11: </span>    <span style="color: #FF1493;">public</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">doGet</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">HttpServletRequest</span> <span style="color: #FF8C00;">request</span>, <span style="color: #5FD7FF;">HttpServletResponse</span> <span style="color: #FF8C00;">response</span><span style="color: #5FD7FF;">)</span>
+<span class="linenr">12: </span>        <span style="color: #FF1493;">throws</span> <span style="color: #5FD7FF;">ServletException</span>, <span style="color: #5FD7FF;">IOException</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">13: </span>        response.setContentType<span style="color: #87D700;">(</span><span style="color: #CDC673;">"text/html;charset=utf-8"</span><span style="color: #87D700;">)</span>;
+<span class="linenr">14: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#29992; HttpServletRequest &#23545;&#35937;&#30340; getParameter() &#26041;&#27861;&#33719;&#21462;&#29992;&#25143;&#21517;&#21644;&#23494;&#30721;</span>
+<span class="linenr">15: </span>        <span style="color: #5FD7FF;">String</span> <span style="color: #FF8C00;">username</span> = request.getParameter<span style="color: #87D700;">(</span><span style="color: #CDC673;">"username"</span><span style="color: #87D700;">)</span>;
+<span class="linenr">16: </span>        <span style="color: #5FD7FF;">String</span> <span style="color: #FF8C00;">password</span> = request.getParameter<span style="color: #87D700;">(</span><span style="color: #CDC673;">"password"</span><span style="color: #87D700;">)</span>;
+<span class="linenr">17: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20551;&#35774;&#29992;&#25143;&#21517;&#21644;&#23494;&#30721;&#20998;&#21035;&#20026; admin &#21644; 123456</span>
+<span class="linenr">18: </span>        <span style="color: #FF1493;">if</span> <span style="color: #87D700;">(</span><span style="color: #CDC673;">"admin"</span>.equals<span style="color: #CDC673;">(</span>username<span style="color: #CDC673;">)</span> &amp;&amp; <span style="color: #CDC673;">(</span><span style="color: #CDC673;">"123456"</span><span style="color: #CDC673;">)</span>.equals<span style="color: #CDC673;">(</span>password<span style="color: #CDC673;">)</span><span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
+<span class="linenr">19: </span>            <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22914;&#26524;&#29992;&#25143;&#21517;&#21644;&#23494;&#30721;&#27491;&#30830;&#65292;&#37325;&#23450;&#21521;&#21040; welcome.html</span>
+<span class="linenr">20: </span>            response.sendRedirect<span style="color: #CDC673;">(</span><span style="color: #CDC673;">"/servletDemo/welcome.html"</span><span style="color: #CDC673;">)</span>;
+<span class="linenr">21: </span>        <span style="color: #87D700;">}</span> <span style="color: #FF1493;">else</span> <span style="color: #87D700;">{</span>
+<span class="linenr">22: </span>            <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22914;&#26524;&#29992;&#25143;&#21517;&#21644;&#23494;&#30721;&#38169;&#35823;&#65292;&#37325;&#23450;&#21521;&#21040; login.html</span>
+<span class="linenr">23: </span>            response.sendRedirect<span style="color: #CDC673;">(</span><span style="color: #CDC673;">"/servletDemo/login.html"</span><span style="color: #CDC673;">)</span>;
+<span class="linenr">24: </span>        <span style="color: #87D700;">}</span>
+<span class="linenr">25: </span>    <span style="color: #5FD7FF;">}</span>
 <span class="linenr">26: </span>
-<span class="linenr">27: </span>    <span style="color: #F92672;">public</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">doPost</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">HttpServletRequest</span> <span style="color: #FD971F;">request</span>, <span style="color: #66D9EF;">HttpServletResponse</span> <span style="color: #FD971F;">response</span><span style="color: #66D9EF;">)</span>
-<span class="linenr">28: </span>        <span style="color: #F92672;">throws</span> <span style="color: #66D9EF;">ServletException</span>, <span style="color: #66D9EF;">IOException</span> <span style="color: #66D9EF;">{</span>
-<span class="linenr">29: </span>        doGet<span style="color: #A6E22E;">(</span>request, response<span style="color: #A6E22E;">)</span>;
-<span class="linenr">30: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">31: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">27: </span>    <span style="color: #FF1493;">public</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">doPost</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">HttpServletRequest</span> <span style="color: #FF8C00;">request</span>, <span style="color: #5FD7FF;">HttpServletResponse</span> <span style="color: #FF8C00;">response</span><span style="color: #5FD7FF;">)</span>
+<span class="linenr">28: </span>        <span style="color: #FF1493;">throws</span> <span style="color: #5FD7FF;">ServletException</span>, <span style="color: #5FD7FF;">IOException</span> <span style="color: #5FD7FF;">{</span>
+<span class="linenr">29: </span>        doGet<span style="color: #87D700;">(</span>request, response<span style="color: #87D700;">)</span>;
+<span class="linenr">30: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">31: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -1426,13 +1442,13 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgebe1723" class="outline-2">
-<h2 id="orgebe1723">request/response 中文乱码问题</h2>
-<div class="outline-text-2" id="text-orgebe1723">
+<div id="outline-container-org354cddf" class="outline-2">
+<h2 id="org354cddf">request/response 中文乱码问题</h2>
+<div class="outline-text-2" id="text-org354cddf">
 </div>
-<div id="outline-container-orge56bbcf" class="outline-3">
-<h3 id="orge56bbcf">request 中文乱码问题以及解决方案</h3>
-<div class="outline-text-3" id="text-orge56bbcf">
+<div id="outline-container-org1f95403" class="outline-3">
+<h3 id="org1f95403">request 中文乱码问题以及解决方案</h3>
+<div class="outline-text-3" id="text-org1f95403">
 <p>
 在填写表单数据时，难免需要输入中文，如用户名和公司名称，提交后控制台的显示乱码，如 <code>é??é??...</code> 。
 </p>
@@ -1483,9 +1499,9 @@ name = new String(name.getBytes("iso8859-1"),"utf-8");
 </div>
 </div>
 
-<div id="outline-container-org1709055" class="outline-3">
-<h3 id="org1709055">response中文乱码问题以及解决方案</h3>
-<div class="outline-text-3" id="text-org1709055">
+<div id="outline-container-orgc5212ef" class="outline-3">
+<h3 id="orgc5212ef">response中文乱码问题以及解决方案</h3>
+<div class="outline-text-3" id="text-orgc5212ef">
 <p>
 由于计算机中的数据都是以二进制形式存储的，因此，当传输文本数据时，会发生字符和字节的转换。
 </p>
@@ -1549,7 +1565,7 @@ response.setContentType("text/html;charset=utf-8");            // 包含第一�
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-06 Tue 14:08</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-10-07 Wed 18:48</p>
+<p class="date">Created: 2020-11-17 Tue 17:41</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

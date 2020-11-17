@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-13 Fri 18:00 -->
+<!-- 2020-11-17 Tue 16:51 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>网络编程</title>
@@ -34,16 +34,16 @@
 </li>
 <li><a href="#org0f2cd7e">TCP 编程</a>
 <ul>
-<li><a href="#orgbefd445">服务器端</a></li>
-<li><a href="#orge4f4fe3">客户端</a></li>
+<li><a href="#org2ee7f87">服务器端</a></li>
+<li><a href="#org4dfa34a">客户端</a></li>
 <li><a href="#orga10b1c8">Socket 流</a></li>
 <li><a href="#org1660052">TCP 编程小结</a></li>
 </ul>
 </li>
 <li><a href="#orge2fa97c">UDP 编程</a>
 <ul>
-<li><a href="#org1062e6d">服务器端</a></li>
-<li><a href="#orgfa8b202">客户端</a></li>
+<li><a href="#org2ff88cf">服务器端</a></li>
+<li><a href="#orgb980b49">客户端</a></li>
 <li><a href="#org0eac13e">UDP 编程小结</a></li>
 </ul>
 </li>
@@ -405,7 +405,7 @@ title=""
 />
 
 <p>
-Socket、TCP 和部分 IP 的功能都是由操作系统提供的，不同的编程语言只是提供了对操作系统调用的简单封装。例如，Java 提供的几个关于 Socket 相关的类就封装了操作系统提供的接口。
+<b>Socket、TCP 和部分 IP 的功能都是由操作系统提供的</b> ，不同的编程语言只是提供了对操作系统调用的简单封装。例如，Java 提供的几个关于 Socket 相关的类就封装了操作系统提供的接口。
 </p>
 
 <p>
@@ -442,9 +442,9 @@ QQ: 101.202.99.2:1304
 </ul>
 </div>
 
-<div id="outline-container-orgbefd445" class="outline-3">
-<h3 id="orgbefd445">服务器端</h3>
-<div class="outline-text-3" id="text-orgbefd445">
+<div id="outline-container-org2ee7f87" class="outline-3">
+<h3 id="org2ee7f87">服务器端</h3>
+<div class="outline-text-3" id="text-org2ee7f87">
 <p>
 要全用 Socket 编程，我们首先要编写服务器端程序。
 </p>
@@ -468,7 +468,7 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 <span class="linenr">12: </span><span style="color: #AF87FF;">}</span>
 <span class="linenr">13: </span>
 <span class="linenr">14: </span><span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">Handler</span> <span style="color: #FF1493;">extends</span> <span style="color: #5FD7FF;">Thread</span> <span style="color: #AF87FF;">{</span>
-<span class="linenr">15: </span>    <span style="color: #5FD7FF;">Socked</span> <span style="color: #FF8C00;">sock</span>;
+<span class="linenr">15: </span>    <span style="color: #5FD7FF;">Socket</span> <span style="color: #FF8C00;">sock</span>;
 <span class="linenr">16: </span>
 <span class="linenr">17: </span>    <span style="color: #FF1493;">public</span> <span style="color: #87D700;">Handler</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">Socket</span> <span style="color: #FF8C00;">sock</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
 <span class="linenr">18: </span>        <span style="color: #FF1493;">this</span>.sock = sock;
@@ -556,9 +556,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-orge4f4fe3" class="outline-3">
-<h3 id="orge4f4fe3">客户端</h3>
-<div class="outline-text-3" id="text-orge4f4fe3">
+<div id="outline-container-org4dfa34a" class="outline-3">
+<h3 id="org4dfa34a">客户端</h3>
+<div class="outline-text-3" id="text-org4dfa34a">
 <p>
 相比服务器端，客户端程序就要简单很多。一个典型的客户端程序如下：
 </p>
@@ -678,9 +678,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 </div>
 
-<div id="outline-container-org1062e6d" class="outline-3">
-<h3 id="org1062e6d">服务器端</h3>
-<div class="outline-text-3" id="text-org1062e6d">
+<div id="outline-container-org2ff88cf" class="outline-3">
+<h3 id="org2ff88cf">服务器端</h3>
+<div class="outline-text-3" id="text-org2ff88cf">
 <p>
 在服务器端，使用 UDP 也需要监听指定的端口，Java 提供了 <code>DatagramSocket</code> 来实现这个功能，代码如下：
 </p>
@@ -760,9 +760,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-orgfa8b202" class="outline-3">
-<h3 id="orgfa8b202">客户端</h3>
-<div class="outline-text-3" id="text-orgfa8b202">
+<div id="outline-container-orgb980b49" class="outline-3">
+<h3 id="orgb980b49">客户端</h3>
+<div class="outline-text-3" id="text-orgb980b49">
 <p>
 和服务端相比，客户端使用 UDP 时，只需要直接向服务器端发送 UDP 包，然后接收返回的 UDP 包：
 </p>
@@ -1029,7 +1029,7 @@ title=""
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-05 Mon 09:53</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-11-13 Fri 18:00</p>
+<p class="date">Created: 2020-11-17 Tue 16:51</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

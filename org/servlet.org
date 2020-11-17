@@ -6,7 +6,7 @@
 
 JavaEE 是什么？它并不是一个软件产品，更多的是一种软件架构和设计思想，它是在 JavaSE 的基础上，开发的一系列基于服务的组件、API 标准和通用架构。
 
-JavaEE 最核心的组件就是基于 Servlet 标准的 Web 服务器，开发者编写的应用程序是基于 Servlet API 并运行在 Web 服务器内部的：
+*JavaEE 最核心的组件就是基于 Servlet 标准的 Web 服务器，开发者编写的应用程序是基于 Servlet API 并运行在 Web 服务器内部的* ：
 
 #+BEGIN_EXPORT html
 <img
@@ -216,12 +216,18 @@ title=""
 
 Servlet API 是一个 jar 包，我们需要通过 Maven 来引入它，才能正常编译。通过 Maven 构建后会得到一个 =.war= 格式的文件，那么， *如何运行这个 =war= 文件呢* ？
 
+#+BEGIN_EXPORT html
+<essay>
+至于 Maven ，我们将开一个单独的文章来了解，TODO...
+</essay>
+#+END_EXPORT
+
 普通的 Java 程序是通过启动 JVM ，然后执行 =main()= 方法开始运行。但是 Web 应用程序有所不同，我们无法直接运行 =war= 文件，必须先启动 Web 服务器，再由 Web 服务器加载我们编写的 HelloServlet ，这样就可以让我们编写的 HelloServlet 处理浏览器发送的请求。
 
 *那么，Servlet API是谁提供的呢？*
 
 是由支持 Servlet API 的 Web 服务器提供的！常用的服务器有：
-- Tomcat ：由 Apache 开发的开源免费服务器；
+- *Tomcat ：由 Apache 开发的开源免费服务器；*
 - Jetty ：由 Eclipse 开发的开源免费服务器；
 - GlassFish ：一个开源的全功能 JavaEE 服务器；
 - WebLogic ：Oracle 的商用服务器；
@@ -231,7 +237,17 @@ Servlet API 是一个 jar 包，我们需要通过 Maven 来引入它，才能�
 
 我们通常选用最广泛的开源免费的 Tomcat 服务器。
 
-实际上，类似 Tomcat 这样的服务器也是 Java 编写的，启动 Tomcat 服务器实际上是启动 Java 虚拟机，执行 Tomcat 的 =main()= 方法，然后由 Tomcat 负责加载我们的 =.war= 文件，并创建一个我们编写的 HelloServlet 实例，最后以多线程的模式来处理 HTTP 请求。例如，Tomcat 服务器收到的请求路径是 =/= 时，就转发到 HelloServlet 并传入 =HttpServletRequest= 和 =HttpServletResponse= 现个对象。
+实际上，类似 Tomcat 这样的服务器也是 Java 编写的，
+
+#+BEGIN_EXAMPLE
+→ 启动 Tomcat 服务器实际上是启动 Java 虚拟机，
+→ 执行 Tomcat 的 =main()= 方法，
+→ 然后由 Tomcat 负责加载我们的 =.war= 文件，
+→ 并创建一个我们编写的 HelloServlet 实例，
+→ 最后以多线程的模式来处理 HTTP 请求。
+#+END_EXAMPLE
+
+例如，Tomcat 服务器收到的请求路径是 =/= 时，就转发到 HelloServlet 并传入 =HttpServletRequest= 和 =HttpServletResponse= 两个对象。
 
 由上可知，我们编写的 Servlet 并不是直接运行，而是由 Web 服务器加载后创建实例运行，所以，类似于 Tomcat 这样的 Web 服务器也称为 _Servlet 容器_ 。
 
