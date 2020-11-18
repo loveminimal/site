@@ -27,26 +27,32 @@ Java 中标识符是为方法、变量或其他用户定义项所定义的名称
 
 *注：标识符不能与关键字重名。
 
+#+BEGIN_EXPORT html
+<essay>
+`用户自定义标识符` 就是变量名、方法名之类的喽。
+</essay>
+#+END_EXPORT
+
 标识符用来命名常量、变量、类和类的对象等，因此，一个良好的编程习惯要求命名标识符时，应赋予它一个意义或有用途的名字。
 
 *** 关键字
 
-关键字（或者保留字）是对编译器有特殊意义的固定单词，不能在程序中做其他目的使用。它们用来表示一种数据类型，或者表示程序的结构等。
+关键字（或者保留字）是 *对编译器有特殊意义* 的固定单词，不能在程序中做其他目的使用。它们用来表示一种数据类型，或者表示程序的结构等。
 
 #+BEGIN_QUOTE
 保留字是为 Java 预留的关键字，它们虽然现在没有作为关键字，在以后的升级版本中可能作为关键字。
 #+END_QUOTE
 
 Java 语言目前定义了 51 个关键字，这些关键字不能作为变量名、类名和方法名来使用，以下对这些关键字进行了分类：
-| 数据类型 | boolean、int、long、short、byte、float、double、char、class、interface                                       |
-| 流程控制 | if、else、do、while、for、switch、case、default、break、continue、return、try、catch、finally                |
-| 修饰符   | public、protected、private、final、void、static、strict、abstract、transient、synchronized、volatile、native |
-| 动作     | package、import、throw、throws、extends、implements、this、super、instanceof、new                            |
-| 保留字   | true、false、null、goto、const                                                                               |
+| 数据类型 | =boolean、int、long、short、byte、float、double、char、class、interface=                                       |
+| 流程控制 | =if、else、do、while、for、switch、case、default、break、continue、return、try、catch、finally=                |
+| 修饰符   | =public、protected、private、final、void、static、strict、abstract、transient、synchronized、volatile、native= |
+| 动作     | =package、import、throw、throws、extends、implements、this、super、instanceof、new=                            |
+| 保留字   | =true、false、null、goto、const=                                                                               |
 
 ** 注释
 
-注释是对程序语言的说明，有助于开发者和用户之间的交流，方便理解程序。注释不是编程语句，因此被编译器忽略。
+注释是对程序语言的说明，有助于开发者和用户之间的交流，方便理解程序。注释不是编程语句，因此 *被编译器忽略* 。
 
 _单行注释_ ，以双斜杠 =//= 标识，只能注释一行内容，用在注释信息内容少的地方。
 
@@ -134,7 +140,7 @@ Java 的字符型常量值是用单引号引起来的一个字符，如 ='e'、'
 
 常量不同于常量值，它可以在程序中用符号来代替常量值使用，因此在使用前必须先定义。在声明常量的同时要赋予一个初始值，常量一旦初始化就不可以被修改。
 
-Java 语言中使用 =final= 关键字来定义一个常量，其语法如下所示：
+*Java 语言中使用 =final= 关键字来定义一个常量* ，其语法如下所示：
 
 #+BEGIN_EXAMPLE
 final dataType variableName = value
