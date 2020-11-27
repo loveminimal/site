@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-27 Fri 17:26 -->
+<!-- 2020-11-27 Fri 18:12 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ajax</title>
@@ -23,32 +23,38 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org76b5905">什么是 AJAX</a></li>
-<li><a href="#orgaff65d2">*进程、线程</a>
+<li><a href="#org802d101">什么是 AJAX</a></li>
+<li><a href="#orgc056ac2">*进程、线程</a>
 <ul>
-<li><a href="#orgf4ff839">单线程的 JS</a></li>
-<li><a href="#org8eac1ae">多线程的浏览器</a></li>
+<li><a href="#org5b2a467">单线程的 JS</a></li>
+<li><a href="#org5d55648">多线程的浏览器</a></li>
 </ul>
 </li>
-<li><a href="#org4fc007f">*JavaScript 运行机制</a>
+<li><a href="#orgfd77b8c">*JavaScript 运行机制</a>
 <ul>
-<li><a href="#org50b8993">为什么 JS 是单线程</a></li>
-<li><a href="#org75f90c4">任务队列</a></li>
-<li><a href="#org9a603a3">事件和回调函数</a></li>
-<li><a href="#orgf4e6d46">Event Loop</a></li>
-<li><a href="#org9f73a37">定时器</a></li>
-<li><a href="#orga8f5548">NodeJS 的 Event Loop</a></li>
+<li><a href="#org94e88db">为什么 JS 是单线程</a></li>
+<li><a href="#org974924a">任务队列</a></li>
+<li><a href="#org7100552">事件和回调函数</a></li>
+<li><a href="#org07ceac0">Event Loop</a></li>
+<li><a href="#org3e5edec">定时器</a></li>
+<li><a href="#org30379f7">NodeJS 的 Event Loop</a></li>
 </ul>
 </li>
-<li><a href="#orgbe7cfee">Ajax 异步的原理</a></li>
-<li><a href="#orgd2265f0">Ajax 的请求过程</a></li>
+<li><a href="#org034abb1">Ajax 异步的原理</a></li>
+<li><a href="#orgbfe8ef6">Ajax 的请求过程</a>
+<ul>
+<li><a href="#org73eb7c0">创建 XMLHttpRequest 对象</a></li>
+<li><a href="#orgd3cacf8">XHR 请求</a></li>
+<li><a href="#orgb7d46bf">XHR 响应</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org76b5905" class="outline-2">
-<h2 id="org76b5905">什么是 AJAX</h2>
-<div class="outline-text-2" id="text-org76b5905">
+<div id="outline-container-org802d101" class="outline-2">
+<h2 id="org802d101">什么是 AJAX</h2>
+<div class="outline-text-2" id="text-org802d101">
 <img
 src="/images/web/ajax-1.png"
 width="600"
@@ -67,9 +73,9 @@ AJAX（Asynchronous JavaScript and XML），是一种异步请求数据的 Web �
 </div>
 </div>
 
-<div id="outline-container-orgaff65d2" class="outline-2">
-<h2 id="orgaff65d2">*进程、线程<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-orgaff65d2">
+<div id="outline-container-orgc056ac2" class="outline-2">
+<h2 id="orgc056ac2">*进程、线程<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-orgc056ac2">
 <essay>
 在讲述 AJAX 之前，有必要先了解一些进程和线程方面的知识。
 </essay>
@@ -135,9 +141,9 @@ AJAX（Asynchronous JavaScript and XML），是一种异步请求数据的 Web �
 </p>
 </div>
 
-<div id="outline-container-orgf4ff839" class="outline-3">
-<h3 id="orgf4ff839">单线程的 JS</h3>
-<div class="outline-text-3" id="text-orgf4ff839">
+<div id="outline-container-org5b2a467" class="outline-3">
+<h3 id="org5b2a467">单线程的 JS</h3>
+<div class="outline-text-3" id="text-org5b2a467">
 <p>
 以 JavaScript 语言为例，它是一种单线程语言，所有任务都在一个线程上完成，任务只好排队喽。一旦遇到大量任务或者遇到一个耗时的任务，网页就会出现“假死”（JavaScript 停不下来，也就无法响应用户的行为）。
 </p>
@@ -182,9 +188,9 @@ Event Loop 是一个程序结构，用于等待和发送消息和事件。
 </div>
 </div>
 
-<div id="outline-container-org8eac1ae" class="outline-3">
-<h3 id="org8eac1ae">多线程的浏览器<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
-<div class="outline-text-3" id="text-org8eac1ae">
+<div id="outline-container-org5d55648" class="outline-3">
+<h3 id="org5d55648">多线程的浏览器<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
+<div class="outline-text-3" id="text-org5d55648">
 <p>
 前面我们已经大概了解了进程和线程，稍微回顾下相关概念。
 </p>
@@ -336,9 +342,9 @@ XMLHttpRequest 在连接后是通过浏览器新开一个线程请求，在检�
 </div>
 </div>
 
-<div id="outline-container-org4fc007f" class="outline-2">
-<h2 id="org4fc007f">*JavaScript 运行机制<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
-<div class="outline-text-2" id="text-org4fc007f">
+<div id="outline-container-orgfd77b8c" class="outline-2">
+<h2 id="orgfd77b8c">*JavaScript 运行机制<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
+<div class="outline-text-2" id="text-orgfd77b8c">
 <essay>
 学习一门语言，再怎么了解它的运行机制都是不为过的。
 </essay>
@@ -357,9 +363,9 @@ XMLHttpRequest 在连接后是通过浏览器新开一个线程请求，在检�
 </pre>
 </div>
 
-<div id="outline-container-org50b8993" class="outline-3">
-<h3 id="org50b8993">为什么 JS 是单线程</h3>
-<div class="outline-text-3" id="text-org50b8993">
+<div id="outline-container-org94e88db" class="outline-3">
+<h3 id="org94e88db">为什么 JS 是单线程</h3>
+<div class="outline-text-3" id="text-org94e88db">
 <p>
 JavaScript 语言的一大特点就是单线程，即同一时间只能做一件事。前面我们已经讲述过为什么 JavaScript 不能有多个线程（多线程能提高效率啊），我们这里再稍微赘述一下。
 </p>
@@ -382,9 +388,9 @@ JavaScript 语言的一大特点就是单线程，即同一时间只能做一件
 </div>
 </div>
 
-<div id="outline-container-org75f90c4" class="outline-3">
-<h3 id="org75f90c4">任务队列</h3>
-<div class="outline-text-3" id="text-org75f90c4">
+<div id="outline-container-org974924a" class="outline-3">
+<h3 id="org974924a">任务队列</h3>
+<div class="outline-text-3" id="text-org974924a">
 <p>
 单线程就意味着，所有任务需要排队，前一个任务结束，才会执行后一个任务。如果前一个任务耗时很长，后一个任务就不得不一直等着。
 </p>
@@ -447,9 +453,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org9a603a3" class="outline-3">
-<h3 id="org9a603a3">事件和回调函数</h3>
-<div class="outline-text-3" id="text-org9a603a3">
+<div id="outline-container-org7100552" class="outline-3">
+<h3 id="org7100552">事件和回调函数</h3>
+<div class="outline-text-3" id="text-org7100552">
 <p>
 “任务队列”是一个事件的队列（也可以理解成消息的队列），I/O 设备完成一项任务，就在“任务队列”中添加一个事件，表示相关的异步任务可以进入“执行栈”了。主线程读取“任务队列”，就是读取里面有哪些事件。
 </p>
@@ -468,9 +474,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgf4e6d46" class="outline-3">
-<h3 id="orgf4e6d46">Event Loop</h3>
-<div class="outline-text-3" id="text-orgf4e6d46">
+<div id="outline-container-org07ceac0" class="outline-3">
+<h3 id="org07ceac0">Event Loop</h3>
+<div class="outline-text-3" id="text-org07ceac0">
 <p>
 主线程从“任务队列”中读取事件，这个过程是循环不断的，所以整个的这种运行机制又称为 Event Loop （事件循环）。
 </p>
@@ -493,9 +499,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org9f73a37" class="outline-3">
-<h3 id="org9f73a37">定时器</h3>
-<div class="outline-text-3" id="text-org9f73a37">
+<div id="outline-container-org3e5edec" class="outline-3">
+<h3 id="org3e5edec">定时器</h3>
+<div class="outline-text-3" id="text-org3e5edec">
 <p>
 除了放置异步任务的事件，“任务队列”还可以放置定时事件，即指定某些代码在多少时间之后执行。这叫做“定时器”（timer）功能，也就是定时执行的代码。
 </p>
@@ -521,9 +527,9 @@ HTML5 标准规定了 <code>setTimeout()</code> 的第二个参数的最小值�
 </div>
 </div>
 
-<div id="outline-container-orga8f5548" class="outline-3">
-<h3 id="orga8f5548">NodeJS 的 Event Loop</h3>
-<div class="outline-text-3" id="text-orga8f5548">
+<div id="outline-container-org30379f7" class="outline-3">
+<h3 id="org30379f7">NodeJS 的 Event Loop</h3>
+<div class="outline-text-3" id="text-org30379f7">
 <p>
 NodeJS 也是单线程的 Event Loop，但是它的运行机制不同于浏览器环境。
 </p>
@@ -574,9 +580,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgbe7cfee" class="outline-2">
-<h2 id="orgbe7cfee">Ajax 异步的原理</h2>
-<div class="outline-text-2" id="text-orgbe7cfee">
+<div id="outline-container-org034abb1" class="outline-2">
+<h2 id="org034abb1">Ajax 异步的原理</h2>
+<div class="outline-text-2" id="text-org034abb1">
 <essay>
 Hmm... 终于讲到 Ajax 了……
 </essay>
@@ -611,9 +617,17 @@ GUI 渲染线程和 JavaScript 引擎线程是互斥的。其他线程相互之�
 </div>
 </div>
 
-<div id="outline-container-orgd2265f0" class="outline-2">
-<h2 id="orgd2265f0">Ajax 的请求过程</h2>
-<div class="outline-text-2" id="text-orgd2265f0">
+<div id="outline-container-orgbfe8ef6" class="outline-2">
+<h2 id="orgbfe8ef6">Ajax 的请求过程</h2>
+<div class="outline-text-2" id="text-orgbfe8ef6">
+<img
+src="/images/web/ajax-7.png"
+width="500"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
+
 <ol class="org-ol">
 <li>创建 <code>XMLHttpRequest</code> 对象；</li>
 <li>浏览器与服务器建立连接 <code>open</code> ；</li>
@@ -622,6 +636,112 @@ GUI 渲染线程和 JavaScript 引擎线程是互斥的。其他线程相互之�
 <li>服务器向浏览器响应请求，客户端获取异步调用返回的数据；</li>
 <li>实现局部刷新。</li>
 </ol>
+
+<p>
+下面我们就按照这个过程来逐步地认识一下 Ajax 喽。
+</p>
+</div>
+
+<div id="outline-container-org73eb7c0" class="outline-3">
+<h3 id="org73eb7c0">创建 XMLHttpRequest 对象</h3>
+<div class="outline-text-3" id="text-org73eb7c0">
+<p>
+<b>*注：以下 XMLHttpRequest 均简写为 XHR。</b>
+</p>
+
+<p>
+所有现代浏览器均支持 <code>XMLHttpRequest</code> 对象（IE5 和 IE6 使用 <code>ActiveXObject</code> ）。
+</p>
+
+<p>
+为了应对所有的现代浏览器，包括 IE5 和 IE6，请检查浏览器是否支持 <code>XMLHttpRequest</code> 对象。如果支持，则创建 <code>XMLHttpRequest</code> 对象。如果不支持，则创建 <code>ActiveXObject</code> ，我们不妨自己封装一个函数来实现获取 XHR 对象的目的，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #F92672;">function</span> <span style="color: #A6E22E;">getXHR</span><span style="color: #AE81FF;">()</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">var</span> <span style="color: #FD971F;">xhr</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>    <span style="color: #F92672;">if</span> <span style="color: #66D9EF;">(</span>window.XMLHttpRequest<span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 5: </span>        xhr = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">XMLHttpRequest</span><span style="color: #A6E22E;">()</span>
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span>    <span style="color: #66D9EF;">}</span> <span style="color: #F92672;">else</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 8: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">IE5/6</span>
+<span class="linenr"> 9: </span>        xhr = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">ActiveXObject</span><span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">'Microsoft.XMLHTTP'</span><span style="color: #A6E22E;">)</span>
+<span class="linenr">10: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>    <span style="color: #F92672;">return</span> xhr
+<span class="linenr">13: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd3cacf8" class="outline-3">
+<h3 id="orgd3cacf8">XHR 请求</h3>
+<div class="outline-text-3" id="text-orgd3cacf8">
+<p>
+其中，2、3、4 三步都为 XHR 请求，我们放在一起来讲述。
+</p>
+
+<p>
+XHR 对象用于和服务器交换数据，如需将请求发送到服务器，使用 XHR 对象的 <code>open()</code> 和 <code>send()</code> 方法即可，如下：
+</p>
+
+<pre class="example">
+open(method, url, async)
+
+# 规定请求的类型、URL以及是否异步处理请求
+# - method 请求的类型：GET 或 POST 等
+# - url ：文件在服务器上的位置
+# - async ：true （异步，默认值） false （同步）
+
+send([data])
+
+# 将请求发送到服务器
+# - data：可选，仅用于 POST 请求
+</pre>
+
+<p>
+来看个实例：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">GET</span>
+<span class="linenr"> 2: </span>xhr.open<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'GET'</span>, <span style="color: #E6DB74;">'/try/ajax/demo_get'</span>, <span style="color: #AE81FF;">true</span><span style="color: #AE81FF;">)</span>
+<span class="linenr"> 3: </span>xhr.send<span style="color: #AE81FF;">()</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">POST</span>
+<span class="linenr"> 6: </span>xhr.open<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'POST'</span>, <span style="color: #E6DB74;">'/try/ajax/demo_post'</span>, <span style="color: #AE81FF;">true</span><span style="color: #AE81FF;">)</span>
+<span class="linenr"> 7: </span>xhr.send<span style="color: #AE81FF;">()</span>
+<span class="linenr"> 8: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#22914;&#26524;&#38656;&#35201;&#20687; HTML &#34920;&#21333;&#37027;&#26679; POST &#25968;&#25454;&#65292;</span>
+<span class="linenr"> 9: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#35831;&#20351;&#29992; setRequestHeader() &#26469;&#28155;&#21152; HTTP &#22836;&#65292;</span>
+<span class="linenr">10: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#28982;&#21518;&#22312; send() &#26041;&#27861;&#20013;&#20256;&#20837;&#35201;&#21457;&#36865;&#30340;&#25968;&#25454;</span>
+<span class="linenr">11: </span>xhr.open<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'POST'</span>, <span style="color: #E6DB74;">'/try/ajax/demo_post'</span>, <span style="color: #AE81FF;">true</span><span style="color: #AE81FF;">)</span>
+<span class="linenr">12: </span>xhr.setRequestHeader<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'Content-type'</span>, <span style="color: #E6DB74;">'application/x-www-form-urlencode'</span><span style="color: #AE81FF;">)</span>
+<span class="linenr">13: </span>xhr.send<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'fname=Jack&amp;lname=Liu'</span><span style="color: #AE81FF;">)</span>
+</pre>
+</div>
+
+<p>
+XHR 对象如果要用于 AJAX 的话，其 <code>open()</code> 方法的 <code>async</code> 参数必须设置为 <code>true</code> ，当使用 <code>async=true</code> 时，请规定在响应处于 <code>onreadystatechange</code> 事件中的就绪状态时执行的函数：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span>xhr.open<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'GET'</span>, <span style="color: #E6DB74;">'/try/ajax/ajax_info.txt'</span>, <span style="color: #AE81FF;">true</span><span style="color: #AE81FF;">)</span>
+<span class="linenr">2: </span>xhr.onreadystatechange = <span style="color: #F92672;">function</span><span style="color: #AE81FF;">()</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">3: </span>    <span style="color: #F92672;">if</span> <span style="color: #66D9EF;">(</span>xhr.readyState == 4 &amp;&amp; xhr.status == 200<span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">4: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">xhr.reponseText</span>
+<span class="linenr">5: </span>        console.log<span style="color: #A6E22E;">(</span>xhr.responseText<span style="color: #A6E22E;">)</span>
+<span class="linenr">6: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">7: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">8: </span>xhr.send<span style="color: #AE81FF;">()</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb7d46bf" class="outline-3">
+<h3 id="orgb7d46bf">XHR 响应</h3>
 </div>
 </div>
 <div id="footnotes">
@@ -645,7 +765,7 @@ GUI 渲染线程和 JavaScript 引擎线程是互斥的。其他线程相互之�
 <div id="postamble" class="status">
 <p class="date">Date: 2020-11-26 Thu 17:49</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-11-27 Fri 17:26</p>
+<p class="date">Created: 2020-11-27 Fri 18:12</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

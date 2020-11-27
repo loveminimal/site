@@ -353,12 +353,101 @@ GUI 渲染线程和 JavaScript 引擎线程是互斥的。其他线程相互之�
 
 ** Ajax 的请求过程
 
+#+BEGIN_EXPORT html
+<img
+src="/images/web/ajax-7.png"
+width="500"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
+#+END_EXPORT
+
 1. 创建 =XMLHttpRequest= 对象；
 2. 浏览器与服务器建立连接 =open= ；
 3. 设置超时，回调函数；
 4. 浏览器向服务器发送请求 =send= ；
 5. 服务器向浏览器响应请求，客户端获取异步调用返回的数据；
 6. 实现局部刷新。
+
+下面我们就按照这个过程来逐步地认识一下 Ajax 喽。
+
+*** 创建 XMLHttpRequest 对象
+
+**注：以下 XMLHttpRequest 均简写为 XHR。*
+
+所有现代浏览器均支持 =XMLHttpRequest= 对象（IE5 和 IE6 使用 =ActiveXObject= ）。
+
+为了应对所有的现代浏览器，包括 IE5 和 IE6，请检查浏览器是否支持 =XMLHttpRequest= 对象。如果支持，则创建 =XMLHttpRequest= 对象。如果不支持，则创建 =ActiveXObject= ，我们不妨自己封装一个函数来实现获取 XHR 对象的目的，如下：
+
+#+BEGIN_SRC js -n
+  function getXHR() {
+      var xhr
+
+      if (window.XMLHttpRequest) {
+          xhr = new XMLHttpRequest()
+
+      } else {
+          // IE5/6
+          xhr = new ActiveXObject('Microsoft.XMLHTTP')
+      }
+
+      return xhr
+  }
+#+END_SRC
+
+*** XHR 请求
+
+其中，2、3、4 三步都为 XHR 请求，我们放在一起来讲述。
+
+XHR 对象用于和服务器交换数据，如需将请求发送到服务器，使用 XHR 对象的 =open()= 和 =send()= 方法即可，如下：
+
+#+BEGIN_EXAMPLE
+open(method, url, async)
+
+# 规定请求的类型、URL以及是否异步处理请求
+# - method 请求的类型：GET 或 POST 等
+# - url ：文件在服务器上的位置
+# - async ：true （异步，默认值） false （同步）
+
+send([data])
+
+# 将请求发送到服务器
+# - data：可选，仅用于 POST 请求
+#+END_EXAMPLE
+
+来看个实例：
+
+#+BEGIN_SRC js -n
+  // GET
+  xhr.open('GET', '/try/ajax/demo_get', true)
+  xhr.send()
+
+  // POST
+  xhr.open('POST', '/try/ajax/demo_post', true)
+  xhr.send()
+  // 如果需要像 HTML 表单那样 POST 数据，
+  // 请使用 setRequestHeader() 来添加 HTTP 头，
+  // 然后在 send() 方法中传入要发送的数据
+  xhr.open('POST', '/try/ajax/demo_post', true)
+  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencode')
+  xhr.send('fname=Jack&lname=Liu')
+#+END_SRC
+
+XHR 对象如果要用于 AJAX 的话，其 =open()= 方法的 =async= 参数必须设置为 =true= ，当使用 =async=true= 时，请规定在响应处于 =onreadystatechange= 事件中的就绪状态时执行的函数：
+
+#+BEGIN_SRC js -n
+  xhr.open('GET', '/try/ajax/ajax_info.txt', true)
+  xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+          // xhr.reponseText
+          console.log(xhr.responseText)
+      }
+  }
+  xhr.send()
+#+END_SRC
+
+*** XHR 响应
 
 * Footnotes
 
