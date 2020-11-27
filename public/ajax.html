@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2020-11-27 Fri 17:26 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ajax</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
+<link rel="stylesheet" href="/css/animate.min.css" />
+<link rel="stylesheet" href="/css/all.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script src="/js/jquery.min.js"></script>
+<script src="/js/darkreader.js"></script>
+<script src="/user.config.js"></script>
+<script src="/js/main.js"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Ajax</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org76b5905">什么是 AJAX</a></li>
+<li><a href="#orgaff65d2">*进程、线程</a>
+<ul>
+<li><a href="#orgf4ff839">单线程的 JS</a></li>
+<li><a href="#org8eac1ae">多线程的浏览器</a></li>
+</ul>
+</li>
+<li><a href="#org4fc007f">*JavaScript 运行机制</a>
+<ul>
+<li><a href="#org50b8993">为什么 JS 是单线程</a></li>
+<li><a href="#org75f90c4">任务队列</a></li>
+<li><a href="#org9a603a3">事件和回调函数</a></li>
+<li><a href="#orgf4e6d46">Event Loop</a></li>
+<li><a href="#org9f73a37">定时器</a></li>
+<li><a href="#orga8f5548">NodeJS 的 Event Loop</a></li>
+</ul>
+</li>
+<li><a href="#orgbe7cfee">Ajax 异步的原理</a></li>
+<li><a href="#orgd2265f0">Ajax 的请求过程</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org76b5905" class="outline-2">
+<h2 id="org76b5905">什么是 AJAX</h2>
+<div class="outline-text-2" id="text-org76b5905">
+<img
+src="/images/web/ajax-1.png"
+width="600"
+height=""
+style=""
+title=""
+/>
+
+<p>
+AJAX（Asynchronous JavaScript and XML），是一种异步请求数据的 Web 开发技术。它不是新的编程语言，而是一种使用现有标准的新方法。其最大的优点是在不重新加载整个页面的情况下，可以与服务器交换数据并更新部分网页内容。
+</p>
+
+<p>
+*注：AJAX 不需要任何浏览器插件，但需要用户允许JavaScript在浏览器上执行。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgaff65d2" class="outline-2">
+<h2 id="orgaff65d2">*进程、线程<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-orgaff65d2">
+<essay>
+在讲述 AJAX 之前，有必要先了解一些进程和线程方面的知识。
+</essay>
+
+<p>
+进程（process）和线程（thread）是操作系统的基本概念，比较抽象，不易掌握。
+</p>
+
+<p>
+对于操作系统，一个任务就是一个 <span class="underline">进程</span> （process），比如打开一个浏览器就是启动一个浏览器进程，打开一个记事本就启动了一个记事本进程，打开两个记事本就是启动了两个记事本进程。
+</p>
+
+<p>
+有些进程不止同时只做一件事，比如 Word ，它可以同时进行打字、拼写检查、打印等事情。
+</p>
+
+<p>
+在一个进程内部，要同时干多件事，就需要同时运行多个“子任务”，我们把进程内的这些“子任务”称为 <span class="underline">线程</span> （Thread）。
+</p>
+
+<p>
+*注：一个进程至少有一个线程。
+</p>
+
+<essay>
+哈哈，线程才是真正做事的喽。
+</essay>
+
+<p>
+线程是最小的执行单元，而进程由至少一个线程组成。如何调度进程和线程，完全由操作系统决定，程序自己不能决定什么时候执行，执行多长时间。
+</p>
+
+<p>
+多进程和多线程的程序涉及到同步、数据共享的问题，编写进来更复杂。
+</p>
+
+<blockquote>
+<p>
+阮一峰老师写过一篇 <a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html">进程与线程的一个简单解释</a> 也不错，浅显易懂，推荐一下。
+</p>
+</blockquote>
+
+<p>
+操作系统的设计，可以归结为三点：
+</p>
+<ol class="org-ol">
+<li>以多进程形式，允许多个任务同时进行；</li>
+<li>以多线程形式，允许单个任务分成不同的部分进行；</li>
+<li>提供协调机制，一方面防止进程之间和线程之间产生冲突，另一方面允许进程之间和线程之间共享资源。</li>
+</ol>
+
+<p>
+由此，也就容易理解，如果有很多任务需要执行，不外乎三种解决办法：
+</p>
+<ol class="org-ol">
+<li><b>排队</b> 。因为一个进程一次只能执行一个任务，只好等前面的任务执行完了，再执行后面的任务；</li>
+<li><b>新建进程</b> 。使用 fork 命令，为每个任务新建一个进程；</li>
+<li><b>新建线程</b> 。因为进程太耗费资源，所以如今的程序往往允许一个进程包含多个线程，由线程去完成任务。</li>
+</ol>
+
+<p>
+*注：一般情况下，一个进程一次只能执行一个任务（即包含一个线程）。
+</p>
+</div>
+
+<div id="outline-container-orgf4ff839" class="outline-3">
+<h3 id="orgf4ff839">单线程的 JS</h3>
+<div class="outline-text-3" id="text-orgf4ff839">
+<p>
+以 JavaScript 语言为例，它是一种单线程语言，所有任务都在一个线程上完成，任务只好排队喽。一旦遇到大量任务或者遇到一个耗时的任务，网页就会出现“假死”（JavaScript 停不下来，也就无法响应用户的行为）。
+</p>
+
+<img
+src="/images/web/ajax-2.png"
+width="360"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
+
+<p>
+<b>那么，JavaScript 是如何解决这个问题的呢？</b> 事件循环（Event Loop）。
+</p>
+
+<blockquote>
+<p>
+Event Loop 是一个程序结构，用于等待和发送消息和事件。
+</p>
+</blockquote>
+
+<p>
+简单说，就是在程序中设置两个线程：一个负责程序本身的运行，称为“主线程”；另一个负责主线程与其他线程（主要是各种 I/O 操作）的通信，被称为“Event Loop 线程”（或“消息线程”）。
+</p>
+
+<p>
+如右图所示，主线程的绿色部分，表示运行时间，橙色部分表示空闲时间。每当遇到I/O的时候，主线程就让Event Loop线程去通知相应的I/O程序，然后接着往后运行，所以不存在红色的等待时间。等到I/O程序完成操作，Event Loop线程再把结果返回主线程。主线程就调用事先设定的回调函数，完成整个任务。
+</p>
+
+<p>
+不难看出，由于多出了橙色的空闲时间，所以主线程得以运行更多的任务，这就提高了效率。这种运行模式称为“异步模式”（asynchronous I/O）或“非堵塞模式”（non-blocking mode）。
+</p>
+
+<p>
+<b>这正是 JavaScript 语言的运行方式</b> 。
+</p>
+
+<p>
+我们前面说过了，执行多任务的话，还可以新建进程或线程，为什么 JavaScript 是单线程，难道不能实现多线程吗？有兴趣的话，可以自己去捉摸一下。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8eac1ae" class="outline-3">
+<h3 id="org8eac1ae">多线程的浏览器<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
+<div class="outline-text-3" id="text-org8eac1ae">
+<p>
+前面我们已经大概了解了进程和线程，稍微回顾下相关概念。
+</p>
+
+<p>
+处理器（CPU）是计算机的核心，其负责承担计算机的计算任务。
+</p>
+
+<p>
+进程是一个具有一定独立功能的程序在一个数据集上的一次动态执行的过程，是操作系统进行资源分配和调度的一个独立单位，是应用程序运行的载体。
+</p>
+
+<p>
+*注：任一时刻，一个单核 CPU 只能运行一个进程，其他进程则处于非运行状态。
+</p>
+
+<p>
+线程是程序执行中单一和顺序流程，是程序执行的最小单元。
+</p>
+
+<p>
+<b>那么，进程和线程是什么关系呢？</b>
+</p>
+
+<p>
+（1）进程是操作系统分配资源的最小单位，线程是程序执行的最小单位；
+</p>
+
+<p>
+（2）一个进程由一个或多个线程组成，线程是一个进程中代码的不同执行路线；
+</p>
+
+<p>
+（3）进程之间相互独立，但同一个进程下和各个线程之间共享程序的内存空间（包括代码段、数据集、堆等）及一些进程级的资源（如打开文件和信号）；
+</p>
+
+<p>
+（4）调试和切换：线程上下文切换比进程上下文切换要快得多。
+</p>
+
+<img
+src="/images/web/ajax-3.png"
+width="160"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
+
+<p>
+<b>浏览器内核</b> 是通过取得页面内容、整理信息（应用 CSS）、计算和组合最终输出可视化的图像结果，通常也被称为渲染引擎。
+</p>
+
+<p>
+Chrome 浏览器为每个 tab 页面单独启用进程，在浏览器中打开一个网页相当于新起了一个进程（进程内有自己的多线程）。
+</p>
+
+<p>
+浏览器内核是多线程，在内核控制下各线程相互配合以保持同步，一个浏览器通常由以下常驻线程组成：
+</p>
+
+<pre class="example">
+- GUI 渲染线程；
+- JS 引擎线程；
+- 事件触发线程；
+- 定时触发线程；
+- 异步 http 请求线程。
+</pre>
+
+<p>
+下面我们分别来了解下浏览器的这些常驻线程。
+</p>
+
+<p>
+<span class="underline">1. GUI 渲染线程</span>
+</p>
+
+<p>
+GUI 渲染线程负责渲染浏览器界面 HTML 元素，解析 HTML、CSS，构建 DOM  树和 RenderObject 树，布局和绘制等。
+</p>
+
+<p>
+当界面需要重绘（Repaint）或由于某种操作引发回流（重排 reflow）时，该线程就会执行。
+</p>
+
+<p>
+在 JavaScript 引擎运行脚本期间，GUI 渲染线程都是处于挂起状态的，GUI 更新会被保存在一个队列中等到 JS 引擎空闲时立即被执行。
+</p>
+
+<p>
+<span class="underline">2. JavaScript 引擎线程</span>
+</p>
+
+<p>
+JavaScript 引擎，也可以称为 JS 内核，主要负责处理 JavaScript 脚本程序，如 V8 引擎。
+</p>
+
+<p>
+JS 引擎一直等待着任务队列中的任务的到来，然后加以处理，一个 Tab 页面（render 进程）中无论什么时候都只有一个 JS 线程在运行 JS 程序（因为 JS 是单线程的啊）。
+</p>
+
+<p>
+<b>*注：GUI 渲染线程和 JavaScript 引擎线程互斥！</b>
+</p>
+
+<p>
+但是，为什么要互斥呢？
+</p>
+
+<p>
+由于 JavaScript 中可操纵 DOM 的，如果在修改这些元素同时渲染界面（即 JavaScript 线程和 GUI 线程同时运行），那么渲染线程前后获得的元素数据就可能不一致了。因此，为了防止渲染出现不可预期的结果，浏览器就设置 GUI 渲染线程与 JavaScript 引擎为互斥的关系了。
+</p>
+
+<p>
+<span class="underline">3. 事件触发线程</span>
+</p>
+
+<p>
+当一个事件被触发时该线程会把事件添加到待处理队列的队尾，等待 JS 引擎的处理。
+</p>
+
+<p>
+这些事件可以是当前执行的代码块，如定时任务，也可以是来自浏览器内核的其他线程，如鼠标点击、AJAX 异步请求等，但由于 JS 的单线程关系，所有这些事件都得排队等待 JS 引擎处理。
+</p>
+
+<p>
+<span class="underline">4. 定时触发器线程</span>
+</p>
+
+<p>
+浏览器定时计数器并不是由 JavaScript 引擎计数的，因为 JavaScript 引擎是单线程的，如果处于阻塞线程状态就会影响计时的准确。
+</p>
+
+<p>
+通过单独线程来计时并触发定时（计时完毕后，添加到事件队列中，等待 JS 引擎空闲后执行）。
+</p>
+
+<p>
+*注：W3C 在 HTML 标准中规定 <code>setTimeout</code> 中低于 4ms 的时间间隔算为 4ms 。
+</p>
+
+<p>
+<span class="underline">5. 异步 http 请求线程</span>
+</p>
+
+<p>
+XMLHttpRequest 在连接后是通过浏览器新开一个线程请求，在检测到状态变更时，如果设置有回调函数，异步线程就产生状态变更事件，将这个回调放入事件队列中，再由 JavaScript 引擎执行。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4fc007f" class="outline-2">
+<h2 id="org4fc007f">*JavaScript 运行机制<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
+<div class="outline-text-2" id="text-org4fc007f">
+<essay>
+学习一门语言，再怎么了解它的运行机制都是不为过的。
+</essay>
+
+<p>
+在了解 AJAX 之前，我们再通过以下几个方面，来加强一下对 JavaScript 的运行机制的认识。
+</p>
+
+<pre class="example">
+- JavaScript 是单线程的；
+- 任务队列；
+- 事件和回调函数；
+- Event Loop ；
+- 定时器；
+- NodeJS 中的 Event Loop 。
+</pre>
+</div>
+
+<div id="outline-container-org50b8993" class="outline-3">
+<h3 id="org50b8993">为什么 JS 是单线程</h3>
+<div class="outline-text-3" id="text-org50b8993">
+<p>
+JavaScript 语言的一大特点就是单线程，即同一时间只能做一件事。前面我们已经讲述过为什么 JavaScript 不能有多个线程（多线程能提高效率啊），我们这里再稍微赘述一下。
+</p>
+
+<p>
+原来，JavaScript 的单线程，与它的用途有关。
+</p>
+
+<p>
+作为浏览器的脚本语言，JavaScript 的主要用途是与用户互动，以及操作 DOM 。这决定了它只能是单线程，否则会带来很复杂的同步问题。比如，假定 JavaScript 同时有两个线程，一个线程在某个 DOM 节点上添加内容，另一个线程删除了这个节点，这时浏览器应该以哪个线程为准？
+</p>
+
+<p>
+所以，为了避免复杂性，从一诞生，JavaScript 就是单线程，这已经成了这门语言的核心特征。
+</p>
+
+<p>
+为了利用多核 CPU 的计算能力，HTML5 提出了 Web Worker 标准，允许 JavaScript 脚本创建多个线程，但是子线程完全受主线程控制，且不得操作 DOM 。所以，这个新标准并没有改变 JavaScript 单线程的本质。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org75f90c4" class="outline-3">
+<h3 id="org75f90c4">任务队列</h3>
+<div class="outline-text-3" id="text-org75f90c4">
+<p>
+单线程就意味着，所有任务需要排队，前一个任务结束，才会执行后一个任务。如果前一个任务耗时很长，后一个任务就不得不一直等着。
+</p>
+
+<p>
+如果排队是因为计算量大，CPU 忙不过来，倒也算了，但是多数时候 CPU 是闲着的，因为 I/O 设备很慢（比如 Ajax 操作从网络读取数据），不得不等着结果出来，再往下执行。
+</p>
+
+<essay>
+明显对 CPU “压榨”的不够啊，嘿嘿……
+</essay>
+
+<p>
+JavaScript 语言的设计者意识到，这时主线程完全可以不管 I/O 设备，挂起处于等待中的任务，先运行排在后面的任务。等待 I/O 设备返回了结果，再回过头，把挂起的任务继续执行下去。
+</p>
+
+<p>
+于是，所有任务可以分成两种： <span class="underline">同步任务</span> （synchronous）和 <span class="underline">异步任务</span> （asynchronous）。
+</p>
+
+<p>
+同步任务指的是，在主线程上排队执行的任务，只有前一个任务执行完毕，才能执行后一个任务。
+</p>
+
+<p>
+异步任务指的是，不进入主线程，而进入“任务队列”（task queue）的任务，只有“任务队列”通知主线程，某个异步任务可以执行了，该任务才会进入主线程执行。
+</p>
+
+<img
+src="/images/web/ajax-4.jpg"
+width="460"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
+
+<p>
+具体来说，异步执行的运行机制如下：
+</p>
+
+<p>
+（1）所有同步任务都在主线程上执行，形成一个执行栈（execution context stack）。
+</p>
+
+<p>
+（2）主线程之外，还存在一个“任务队列”（task queue）。只要异步任务有了运行结果，就在“任务队列”这中放置一个事件。
+</p>
+
+<p>
+（3）一旦“执行栈”中的所有同步任务执行完毕，系统就会读取“任务队列”，看看里面哪些事件。那些对应的异步任务，于是结束等待状态，进入执行栈，开妈执行。
+</p>
+
+<p>
+（4）主线程不断重复上面的第三步。
+</p>
+
+<p>
+<b>只要主线程空了，就会去读取“任务队列”，这就是 JavaScript 的运行机制，且这个过程会不断重复。</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9a603a3" class="outline-3">
+<h3 id="org9a603a3">事件和回调函数</h3>
+<div class="outline-text-3" id="text-org9a603a3">
+<p>
+“任务队列”是一个事件的队列（也可以理解成消息的队列），I/O 设备完成一项任务，就在“任务队列”中添加一个事件，表示相关的异步任务可以进入“执行栈”了。主线程读取“任务队列”，就是读取里面有哪些事件。
+</p>
+
+<p>
+“任务队列”中的事件，除了 I/O 设备的事件以外，还包括一些用户产生的事件（比如鼠标点击、页面滚动等等）。只要指定过回调函数，这些事件发生时就会进入“任务队列”，等待主线程读取。
+</p>
+
+<p>
+所谓“回调函数”（callback），就是那些会被主线程挂起来的代码。异步任务必须指定回调函数，当主线程开始异步任务，就是执行对应的回调函数。
+</p>
+
+<p>
+“任务队列”是一个先进先出的数据结构，排在前面的事件，优先被主线程读取。主线程的读取过程基本上的自动的，只要执行栈一清空，“任务队列”上第一位的事件就自动进入主线程。但是，由于存在后文提到的“定时器”功能，主线程首先要检查一下执行时间，某些事件只有到了规定的时间，才能返回主线程。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf4e6d46" class="outline-3">
+<h3 id="orgf4e6d46">Event Loop</h3>
+<div class="outline-text-3" id="text-orgf4e6d46">
+<p>
+主线程从“任务队列”中读取事件，这个过程是循环不断的，所以整个的这种运行机制又称为 Event Loop （事件循环）。
+</p>
+
+<img
+src="/images/web/ajax-5.png"
+width="400"
+height=""
+style="float: left; margin-right: 8px;"
+title=""
+/>
+
+<p>
+如左图中，主线程运行的时候，产生堆（heap）和栈（stack），栈中的代码调用各种外部 API，它们在“任务队列”中加入各种事件（click，load，done）。只要栈中的代码执行完毕，主线程就会去读取“任务队列”，依次执行那些事件所对应的回调函数。
+</p>
+
+<p>
+<b>执行栈中的代码（同步任务），总是在读取“任务队列”（异步任务）之前执行。</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9f73a37" class="outline-3">
+<h3 id="org9f73a37">定时器</h3>
+<div class="outline-text-3" id="text-org9f73a37">
+<p>
+除了放置异步任务的事件，“任务队列”还可以放置定时事件，即指定某些代码在多少时间之后执行。这叫做“定时器”（timer）功能，也就是定时执行的代码。
+</p>
+
+<p>
+定时器功能主要由 <code>setTimeout()</code> 和 <code>setInterval()</code> 这两个函数来完成，它们的内部运行机制完全一样，区别在于前者指定的代码是一次性执行，后者则为反复执行。
+</p>
+
+<p>
+语法如下：
+</p>
+<pre class="example">
+setTimeout(fn, time)
+</pre>
+
+<p>
+HTML5 标准规定了 <code>setTimeout()</code> 的第二个参数的最小值（最短间隔），不得低于 4ms ，如果低于这个值，就会自动增加。
+</p>
+
+<p>
+*注： <code>setTimeout()</code> 只是将事件插入了“任务队列”，必须等到当前代码（执行栈）执行完，主线程才会去执行它指定的回调函数。要是当前代码耗时很长，有可能要等很久，所以并没有办法保证，回调函数一定会在 <code>setTimeout()</code> 指定的时间执行。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga8f5548" class="outline-3">
+<h3 id="orga8f5548">NodeJS 的 Event Loop</h3>
+<div class="outline-text-3" id="text-orga8f5548">
+<p>
+NodeJS 也是单线程的 Event Loop，但是它的运行机制不同于浏览器环境。
+</p>
+
+<img
+src="/images/web/ajax-6.png"
+width="500"
+height=""
+style=""
+title=""
+/>
+
+<p>
+根据上图，NodeJS 的运行机制如下：
+</p>
+
+<pre class="example">
+1. V8 引擎解析 JavaScript 脚本；
+2. 解析后的代码，调用 Node API；
+3. libuv 库负责 Node API 的执行；
+4. V8 引擎再将结果返回给用户。
+</pre>
+
+<p>
+其中， <code>libuv</code> 将不同的任务分配给不同的线程，形成一个 Event Loop ，以异步的方式将任务的执行结果返回给 V8 引擎。
+</p>
+
+<p>
+除了 <code>setTimeout</code> 和 <code>setInterval</code> 这两个方法，NodeJS 还提供了另外两个与“任务队列”有关的方法： <code>process.nextTick</code> 和 <code>setImmediate</code> ，它们可以帮助我们加深对“任务队列”的理解。
+</p>
+
+<p>
+<code>process.nextTick</code> 方法可以在当前“执行栈”的尾部 &#x2013; 下一次 Event Loop （主线程读取“任务队列”）之前 &#x2013; 触发回调函数。也就是说， <b>它指定的任务总是发生在所有异步任务之前。</b>
+</p>
+
+<p>
+<code>setImmediate</code> 方法则是当前“任务队列”的尾部添加事件，也就是说，它指定的任务总是在下一次 Event Loop 时执行，这与 <code>setTimeout(fn, 0)</code> 很像。
+</p>
+
+<p>
+*注：如果有多个 <code>process.nextTick</code> 语句（不管它们是否嵌套），将全部在当前“执行栈”执行。即多个 <code>process.nextTick</code> 语句总是在当前“执行栈”一次执行完。
+</p>
+
+<p>
+由于 <code>process.nextTick</code> 指定的回调函数是在本次"事件循环"触发，而 <code>setImmediate</code> 指定的是在下次"事件循环"触发，所以很显然，前者总是比后者发生得早，而且执行效率也高（因为不用检查"任务队列"）。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbe7cfee" class="outline-2">
+<h2 id="orgbe7cfee">Ajax 异步的原理</h2>
+<div class="outline-text-2" id="text-orgbe7cfee">
+<essay>
+Hmm... 终于讲到 Ajax 了……
+</essay>
+
+<p>
+在正式了解 Ajax 之前，我们先来看看它的原理。前面的章节中，我们了解了浏览器的多线程：GUI 渲染线程、JavaScript 引擎线程、事件触发线程、Http 请求线程、定时器触发线程。
+</p>
+
+<p>
+对于一个 Ajax 请求：
+</p>
+
+<p>
+（1）JavaScript 引擎首先生成 XMLHttpRequest 实例对象， <code>open</code> 过后再调用 <code>send</code> 方法。至此，所有的语句都是同步执行。
+</p>
+
+<p>
+（2）但是从 <code>send</code> 内部开始，浏览器为将要发生的网络请求创建了新的 Http 请求线程，这个线程独立于 JavaScript 引擎线程，于是网络请求异步被发送出去了。另一方面，JavaScript 引擎并不会等待 Ajax 发起的 Http 请求收到结果，而是直接顺序往下执行。
+</p>
+
+<p>
+（3）当 Http 请求收到 response 后，浏览器事件触发线程捕获到了 Ajax 的回调事件，该回调事件并不会立即被执行，而是以先进先出的方式添加到任务队列的末尾，等到 JavaScript 引擎空闲时，任务队列中排队的任务将会依次被执行，循环读取事件。这些事件回调包括 <code>setTimeout、setInterval、click、ajax 异步请求</code> 等。
+</p>
+
+<p>
+（4）在回调事件内部，有可能对 DOM 进行操作，此时浏览器便会挂起 JavaScript 引擎线程，转而执行 GUI 渲染线程，进行页面重绘（repaint）或者回流（reflow）。当 JavaScript 引擎重新执行时，GUI 渲染线程又会被挂起，GUI 更新将被保存起来，等到 JavaScript 引擎空闲时立即被执行。
+</p>
+
+<p>
+GUI 渲染线程和 JavaScript 引擎线程是互斥的。其他线程相互之间，都是可能并行执行的，Ajax 并没有破坏 JavaScript 的单线程机制。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd2265f0" class="outline-2">
+<h2 id="orgd2265f0">Ajax 的请求过程</h2>
+<div class="outline-text-2" id="text-orgd2265f0">
+<ol class="org-ol">
+<li>创建 <code>XMLHttpRequest</code> 对象；</li>
+<li>浏览器与服务器建立连接 <code>open</code> ；</li>
+<li>设置超时，回调函数；</li>
+<li>浏览器向服务器发送请求 <code>send</code> ；</li>
+<li>服务器向浏览器响应请求，客户端获取异步调用返回的数据；</li>
+<li>实现局部刷新。</li>
+</ol>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017627212385376">https://www.liaoxuefeng.com/wiki/1016959663602400/1017627212385376</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://www.cnblogs.com/gg-qq/p/11125652.html">https://www.cnblogs.com/gg-qq/p/11125652.html</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+<a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html">http://www.ruanyifeng.com/blog/2014/10/event-loop.html</a>
+</p></div></div>
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-11-26 Thu 17:49</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2020-11-27 Fri 17:26</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
