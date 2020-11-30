@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-11-27 Fri 18:12 -->
+<!-- 2020-11-30 Mon 18:04 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ajax</title>
@@ -23,7 +23,7 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org802d101">什么是 AJAX</a></li>
+<li><a href="#org75d2b3f">什么是 Ajax</a></li>
 <li><a href="#orgc056ac2">*进程、线程</a>
 <ul>
 <li><a href="#org5b2a467">单线程的 JS</a></li>
@@ -48,13 +48,32 @@
 <li><a href="#orgb7d46bf">XHR 响应</a></li>
 </ul>
 </li>
+<li><a href="#org2fdaf1a">*HTTP 协议</a>
+<ul>
+<li><a href="#org0eb4d59">HTTP 消息结构</a></li>
+<li><a href="#org2428785">HTTP 请求方法</a></li>
+<li><a href="#orgaa8be5f">HTTP 响应头信息</a></li>
+</ul>
+</li>
+<li><a href="#org6a51cc5">jQuery 中的 Ajax</a></li>
+<li><a href="#org50f00ab">Axios</a>
+<ul>
+<li><a href="#org629ebfc">Axios 起步</a></li>
+<li><a href="#org3ce0062">Axios 请求配置</a></li>
+<li><a href="#orgbea37f7">Axios 响应结构</a></li>
+<li><a href="#org5098d0a">配置默认值</a></li>
+<li><a href="#org0b1d549">拦截器</a></li>
+<li><a href="#org6c6b3b6">*使用 application/x-www-form-urlencoded 格式</a></li>
+<li><a href="#org6a62be8">框架、插件</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org802d101" class="outline-2">
-<h2 id="org802d101">什么是 AJAX</h2>
-<div class="outline-text-2" id="text-org802d101">
+<div id="outline-container-org75d2b3f" class="outline-2">
+<h2 id="org75d2b3f">什么是 Ajax</h2>
+<div class="outline-text-2" id="text-org75d2b3f">
 <img
 src="/images/web/ajax-1.png"
 width="600"
@@ -742,6 +761,923 @@ XHR 对象如果要用于 AJAX 的话，其 <code>open()</code> 方法的 <code>
 
 <div id="outline-container-orgb7d46bf" class="outline-3">
 <h3 id="orgb7d46bf">XHR 响应</h3>
+<div class="outline-text-3" id="text-orgb7d46bf">
+<p>
+如需获得来自服务器的响应，请使用 XHR 对象的 <code>responseText</code> （字符串形式的响应数据）或 <code>responseXML</code> （XML 形式的响应数据）属性。
+</p>
+
+<p>
+当请求被发送到服务器时，我们需要执行一些基于响应的任务，每当 <code>readyState</code> 改变时，就会触发 <code>onreadystatechange</code> 事件，其中， <code>readyState</code> 属性存有 XHR 的状态信息。
+</p>
+
+<table>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">属性</th>
+<th scope="col" class="org-left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>onreadystatechange</code></td>
+<td class="org-left">存储函数（或函数名），每当 <code>readyState</code> 属性改变时，就会调用该函数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>readyState</code></td>
+<td class="org-left">存有 XHR 的状态：</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>0</code> ：请求未初始化</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>1</code> ：服务器连接已建立</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>2</code> ：请求已接收</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>3</code> ：请求处理中</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>4</code> ：请求已完成，且响应已就绪</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>status</code></td>
+<td class="org-left"><code>200</code> ：OK</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>404</code> :未找到页面</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+当 <code>readyState</code> 等于 <code>4</code> 且状态为 <code>200</code> 时，表示响应已就绪。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span>xhr.onreadystatechange = <span style="color: #F92672;">function</span><span style="color: #AE81FF;">()</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #F92672;">if</span> <span style="color: #66D9EF;">(</span>xhr.readyState == 4 &amp;&amp; xhr.status == 200<span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">3: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">...</span>
+<span class="linenr">4: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">5: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+*注： <code>onreadystatechange</code> 事件被触发 4 次（0 - 4），分别是： <code>0-1、1-2、2-3、3-4</code> 对应着 <code>readyState</code> 的每个变化。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2fdaf1a" class="outline-2">
+<h2 id="org2fdaf1a">*HTTP 协议</h2>
+<div class="outline-text-2" id="text-org2fdaf1a">
+<essay>
+我们已经初步了解 AJAX 了，深入地话，就需要进一步认识一下 HTTP 协议喽。
+</essay>
+
+<p>
+HTTP 协议（HyperText Transfer Protocol，超文本传输协议），是一个基于 TCP/IP 通信协议来传递数据（HTML 文件、图片、查询结果等）的协议。
+</p>
+
+<img
+src="/images/web/ajax-8.gif"
+width="300"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
+
+<p>
+HTTP 协议工作于“客户端-服务端”架构上，如浏览器（HTTP 客户端）通过 URL 向 WEB 服务器（ HTTP 服务端）发送所有请求。
+</p>
+
+<p>
+<b>HTTP 三点注意事项：</b>
+</p>
+
+<p>
+（1）HTTP 是无连接：无连接的含义是限制每次连接只处理一个请求，采用这种方式可以节省传输时间。服务器处理完客户的请求，并收到客户的应答后，即断开连接。
+</p>
+
+<essay>
+无连接？？？
+</essay>
+
+<p>
+（2）HTTP 是媒体独立的：只要客户端和服务器 <b>知道如何处理</b> 的数据内容，任何类型的数据都可以通过 HTTP 发送，客户端以及服务器指定使用适合的 MIME-type 内容类型。
+</p>
+
+<p>
+（3）HTTP 是无状态：HTTP 协议是无状态协议。 <span class="underline">无状态</span> 是指协议对于事务处理没有记忆能力，缺少状态意味着如果后续处理需要前面的信息，则它 <b>必须重传</b> ，这样可能导致每次连接传送的数据量增大；另一方面，在服务器不需要先前信息时它的应答就较快。
+</p>
+</div>
+
+<div id="outline-container-org0eb4d59" class="outline-3">
+<h3 id="org0eb4d59">HTTP 消息结构</h3>
+<div class="outline-text-3" id="text-org0eb4d59">
+<p>
+HTTP 是基于“客户端/服务端”的架构模型，通过一个可靠的链接来交换信息，是一个 <b>无状态的请求/响应</b> 协议。
+</p>
+
+<p>
+一个 HTTP 客户端，是一个应用程序，如 Web 浏览器或其他任何客户端，它通过连接服务器达到向服务器发送一个或多个 HTTP 请求的目的。
+</p>
+
+<p>
+一个 HTTP 服务器，同样是一个应用程序，通常是一个 Web 服务器，如 Apache、Nginx 或 IIS 服务器等，它通过接收客户端的请求并向客户端发送 HTTP 响应数据。
+</p>
+
+<p>
+一个可靠的链接，HTTP 使用 URI（Uniform Resource Identifiers，统一资源标识符）来传输数据和建立连接。
+</p>
+
+<p>
+<span class="underline">1. 客户端请求消息</span>
+</p>
+
+<img
+src="/images/web/ajax-9.png"
+width="460"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
+
+<p>
+客户端发送一个 HTTP 请求到服务器的请求消息包括以下格式：
+</p>
+<ul class="org-ul">
+<li>请求行（request line）；</li>
+<li>请求头部（header）；</li>
+<li>空行；</li>
+<li>请求数据。</li>
+</ul>
+
+<p>
+<span class="underline">2. 服务器响应消息</span>
+</p>
+
+<img
+src="/images/web/ajax-10.jpg"
+width="600"
+height=""
+style=""
+title=""
+/>
+
+<p>
+HTTP 响应也由四个部分组成，分别是：状态行、消息报头、空行和响应正文。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2428785" class="outline-3">
+<h3 id="org2428785">HTTP 请求方法</h3>
+<div class="outline-text-3" id="text-org2428785">
+<table>
+<caption class="t-above"><span class="table-number">Table 1:</span> HTTP 请求方法</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">方法</th>
+<th scope="col" class="org-left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>GET</code></td>
+<td class="org-left">请求指定的页面信息，并返回实体主体</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>HEAD</code></td>
+<td class="org-left">类似于 <code>GET</code> ，只不过返回的响应中没有具体的内容，用于获取报头</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>POST</code></td>
+<td class="org-left">向指定资源提交数据进行处理请求（如提交表单或者上传文件），数据被包含在请求体中</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>PUT</code></td>
+<td class="org-left">从客户端向服务器传送的数据取代指定的文档的内容</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>DELETE</code></td>
+<td class="org-left">请求服务器删除指定的页面</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>CONNECT</code></td>
+<td class="org-left">HTTP/1.1 协议中预留给能够将连接改为管道方式的代理服务器</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>OPTIONS</code></td>
+<td class="org-left">允许客户端服务器的性能</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgaa8be5f" class="outline-3">
+<h3 id="orgaa8be5f">HTTP 响应头信息</h3>
+<div class="outline-text-3" id="text-orgaa8be5f">
+<table>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">响应头信息</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>Allow</code></td>
+<td class="org-left">服务器支持哪些请求方法（如 <code>GET、POST</code> 等）</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Content-Encoding</code></td>
+<td class="org-left">文档的编码（Encode）方法</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Content-Length</code></td>
+<td class="org-left">表示内容长度（只有当浏览器 使用持久 HTTP 连接时才需要这个数据）</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Content-Type</code></td>
+<td class="org-left">表示后面的档属于什么 MIME 类型</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Date</code></td>
+<td class="org-left">当前的 GMT 时间，可以用 <code>setDateHeader</code> 来设置这个头以避免转换时间格式的麻烦</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Expires</code></td>
+<td class="org-left">应该在什么时候认为文档已经过期，从而不再缓存它</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Last-Modified</code></td>
+<td class="org-left">文档的最后改动时间</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Location</code></td>
+<td class="org-left">表示福州市应当到哪里支提取文档。通常不是直接设置的</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Refresh</code></td>
+<td class="org-left">表示浏览器应该在多少时间之后刷新文档，以秒计</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Server</code></td>
+<td class="org-left">服务器名字。Servlet 一般不设置这个值，面是由 Web 服务器自己设置</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>Set-Cookie</code></td>
+<td class="org-left">设置和页面关联的 Cookie</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>WWW-Authenticate</code></td>
+<td class="org-left">客户应该在 <code>Authorization</code> 中提供什么类型的授权信息</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<span class="underline">1. Content-Type</span>
+</p>
+
+<p>
+其中， <code>Content-Type</code> （内容类型），用于定义网络文件的类型和网页的编码，决定浏览器将以什么形式、什么编码读取这个文件。也就是说， <code>Content-Type</code> 标头告诉客户端实际返回的内容的内容类型。
+</p>
+
+<p>
+语法格式如下：
+</p>
+
+<pre class="example">
+Content-Type: text/html; charset=utf-8
+Content-Type: multipart/form-data; boundary=something
+</pre>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 2:</span> 常见的媒体格式类型</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">类型</th>
+<th scope="col" class="org-left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>text/html</code></td>
+<td class="org-left">HTML 格式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>text/plain</code></td>
+<td class="org-left">纯文本格式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>text/xml</code></td>
+<td class="org-left">XML 格式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>image/gif</code></td>
+<td class="org-left">gif 图片格式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>image/jpeg</code></td>
+<td class="org-left">jpg 图片格式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>image/png</code></td>
+<td class="org-left">png 图片格式</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>以 application 开头的媒体格式类型</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>application/xhtml+xml</code></td>
+<td class="org-left">XHTML 格式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>application/xml</code></td>
+<td class="org-left">XML 格式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>application/atom+xml</code></td>
+<td class="org-left">Atom XML 聚合格式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>application/json</code></td>
+<td class="org-left">JSON 数据格式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>application/pdf</code></td>
+<td class="org-left">pdf 格式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>application/msword</code></td>
+<td class="org-left">Word 文档格式</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>application/octet-stream</code></td>
+<td class="org-left">二进制流数据（如常见的文件下载）</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>application/x-www-form-urlencoded</code></td>
+<td class="org-left">表单默认的提交数据的格式</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>application/form-data</code></td>
+<td class="org-left">需要在表单中进行文件上传时，就需要使用该格式</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<span class="underline">2. HTTP 状态码</span>
+</p>
+
+<p>
+i.e. HTTP Status Code
+</p>
+
+<p>
+当浏览者访问一个网页时，浏览者的浏览器会向网页所在服务器发出请求。当 <b>浏览器接收并显示网页前</b> ，此网页所在的服务器会返回一个包含 HTTP 状态码的信息头（server header）用以响应浏览器的请求。
+</p>
+
+<p>
+<span class="underline">HTTP 状态码</span> 由三个十进制数字组成，其中，第一个数字定义了状态码的类型，后两个数字没有分类的作用，总共分为 5 种类型：
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 3:</span> HTTP 状态码分类</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">分类</th>
+<th scope="col" class="org-left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>1**</code></td>
+<td class="org-left">信息，服务器收到请求，需要请求者继续执行操作</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>2**</code></td>
+<td class="org-left">成功，操作被成功接收并处理</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>3**</code></td>
+<td class="org-left">重定向，需要进一步的操作以完成请求</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>4**</code></td>
+<td class="org-left">客户端错误，请求包含语法错误或无法完成请求</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>5**</code></td>
+<td class="org-left">服务器错误，服务器在处理请求的过程中发生了错误</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+下面是常见的状态码：
+</p>
+<ul class="org-ul">
+<li>200 - 请求成功；</li>
+<li>301 - 资源（网页等）被永久转移到其它 URL；</li>
+<li>404 - 请求的资源（网页等）不存在；</li>
+<li>500 - 内部服务器错误。</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6a51cc5" class="outline-2">
+<h2 id="org6a51cc5">jQuery 中的 Ajax<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup></h2>
+<div class="outline-text-2" id="text-org6a51cc5">
+<p>
+jQuery 提供多个与 AJAX 有关的方法。
+</p>
+
+<p>
+通过 jQuery AJAX 方法，您能够使用 HTTP Get 和 HTTP Post 从远程服务器上请求文本、HTML、XML 或 JSON - 同时您能够把这些外部数据直接载入网页的被选元素中。
+</p>
+
+<blockquote>
+<p>
+编写常规的 AJAX 代码并不容易，因为不同的浏览器对 AJAX 的实现并不相同。这意味着您必须编写额外的代码对浏览器进行测试。不过，jQuery 团队为我们解决了这个难题，我们只需要一行简单的代码，就可以实现 AJAX 功能。
+</p>
+</blockquote>
+
+<essay>
+jQuery 也算是 DOM 时代的霸主了……
+</essay>
+
+<p>
+在现代 Web 项目中，我们已经很少使用 jQuery 做主力了，除非你要和万恶的 IE 打交道，我们这里只稍微认识一下 jQuery 中 Ajax 的一般应用。
+</p>
+
+<table>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">方法</th>
+<th scope="col" class="org-left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>$.ajax()</code></td>
+<td class="org-left">执行异步 AJAX 请求</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>$.ajaxSetup()</code></td>
+<td class="org-left">为将来的 AJAX 请求设置默认值</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>$.ajaxStart()</code></td>
+<td class="org-left">规定第一个 AJAX 请求开始时运行的函数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>$.ajaxStop()</code></td>
+<td class="org-left">规定所有的 AJAX 请求完成时运行的函数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>$.ajaxSend()</code></td>
+<td class="org-left">规定 AJAX 请求发送之前运行的函数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>$.ajaxSuccess()</code></td>
+<td class="org-left">规定 AJAX 请求成功完成时运行的函数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>$.ajaxError()</code></td>
+<td class="org-left">规定 AJAX 请求失败时运行的函数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>$.load()</code></td>
+<td class="org-left">从服务器加载数据，并把返回的数据放置到指定的元素中</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>$.serialize()</code></td>
+<td class="org-left">编码表单元素集为字符串以便提交</td>
+</tr>
+
+<tr>
+<td class="org-left">&#x2026;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+&#x2026;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org50f00ab" class="outline-2">
+<h2 id="org50f00ab">Axios<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup></h2>
+<div class="outline-text-2" id="text-org50f00ab">
+<essay>
+来看看这个比较火热的 Ajax 封装库吧。
+</essay>
+
+<p>
+Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 NodeJS 中，它具有以下特性：
+</p>
+
+<pre class="example">
+- 从浏览器中创建 XMLHttpRequests
+- 从 NodeJS 创建 http 请求
+- 支持 Promise API
+- 拦截请求和响应
+- 转换请求数据和响应数据
+- 取消请求
+- 自动转换 JSON 数据
+- 客户端支持防御 XSRF
+</pre>
+
+<p>
+*注：Axios 依赖原生的 ES6 Promise 实现而被支持，如果你的环境不支持 ES6 Promise ，可以使用 <a href="https://github.com/jakearchibald/es6-promise">polyfill</a> 。
+</p>
+</div>
+
+<div id="outline-container-org629ebfc" class="outline-3">
+<h3 id="org629ebfc">Axios 起步</h3>
+<div class="outline-text-3" id="text-org629ebfc">
+<p>
+先安装喽……
+</p>
+
+<pre class="example">
+npm install axios                                                 # NPM
+&lt;script src="https://unpkg.com/axios/dist/axios.min.js"&gt;&lt;/script&gt; # CDN
+</pre>
+
+<essay>
+我们提供 JavaScript 软件包的时候，一般也需要提供 NPM 和 CDN 两种分发方式。
+</essay>
+
+<p>
+在项目（模块化开发）中，我们一般通过如下两种方式引入 axios ：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">import</span> axios from <span style="color: #E6DB74;">'axios'</span>       <span style="color: #75715E;">// </span><span style="color: #75715E;">ES6 Module</span>
+<span class="linenr">2: </span><span style="color: #F92672;">const</span> <span style="color: #FD971F;">axios</span> = require<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'axios'</span><span style="color: #AE81FF;">)</span>  <span style="color: #75715E;">// </span><span style="color: #75715E;">CommonJS Module</span>
+</pre>
+</div>
+
+<p>
+当我们引入 <code>axios</code> 之后，会默认导出一个 axios 实例，一般情况下就可以满足需求了。可以通过向 <code>axios</code> 传递相关配置来创建请求，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #F92672;">import</span> axios from <span style="color: #E6DB74;">'axios'</span>
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">axios(config)</span>
+<span class="linenr"> 4: </span>axios<span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">{</span>
+<span class="linenr"> 5: </span>    method: <span style="color: #E6DB74;">'post'</span>,
+<span class="linenr"> 6: </span>    url: <span style="color: #E6DB74;">'/user/12345'</span>,
+<span class="linenr"> 7: </span>    data: <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 8: </span>        firstName: <span style="color: #E6DB74;">'Jack'</span>,
+<span class="linenr"> 9: </span>        lastName: <span style="color: #E6DB74;">'Liu'</span>
+<span class="linenr">10: </span>    <span style="color: #A6E22E;">}</span>
+<span class="linenr">11: </span><span style="color: #66D9EF;">}</span><span style="color: #AE81FF;">)</span>
+</pre>
+</div>
+
+<p>
+当然，如果默认的 axios 实例不能满足要求时，可以使用自定义配置创建一个新的 axios 实例（如 <code>instance</code> ）：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">import</span> axios from <span style="color: #E6DB74;">'axios'</span>
+<span class="linenr">2: </span>
+<span class="linenr">3: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">axios.create([config])</span>
+<span class="linenr">4: </span><span style="color: #F92672;">const</span> <span style="color: #FD971F;">instance</span> = axios.create<span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">{</span>
+<span class="linenr">5: </span>    baseURL: <span style="color: #E6DB74;">'https://some-domain.com/api/'</span>,
+<span class="linenr">6: </span>    timeout: 1000,
+<span class="linenr">7: </span>    headers: <span style="color: #A6E22E;">{</span><span style="color: #E6DB74;">'X-Custom-Header'</span>&#65306; <span style="color: #E6DB74;">'foobar'</span><span style="color: #A6E22E;">}</span>
+<span class="linenr">8: </span><span style="color: #66D9EF;">}</span><span style="color: #AE81FF;">)</span>
+</pre>
+</div>
+
+<p>
+*注：使用创建的 axios 实例请求时，请求的配置项将与实例的配置合并。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3ce0062" class="outline-3">
+<h3 id="org3ce0062">Axios 请求配置<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup></h3>
+<div class="outline-text-3" id="text-org3ce0062">
+<p>
+这些都是创建请求时可以用的配置选项， <b>只有 <code>url</code> 是必需的</b> ，如果没有指定的 <code>method</code> ，请求将默认使用 <code>get</code> 方法。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">url &#26159;&#29992;&#20110;&#35831;&#27714;&#30340;&#26381;&#21153;&#22120; URL</span>
+<span class="linenr"> 3: </span>    url: <span style="color: #E6DB74;">'/user'</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">method &#26159;&#21019;&#24314;&#35831;&#27714;&#26102;&#20351;&#29992;&#30340;&#26041;&#27861;</span>
+<span class="linenr"> 6: </span>    method: <span style="color: #E6DB74;">'get'</span>,    <span style="color: #75715E;">// </span><span style="color: #75715E;">default</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">baseURL &#23558;&#33258;&#21160;&#21152;&#22312; url &#21069;&#38754;&#65292;&#38500;&#38750; url &#26159;&#19968;&#20010;&#32477;&#23545; URL</span>
+<span class="linenr"> 9: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23427;&#21487;&#20197;&#36890;&#36807;&#35774;&#32622;&#19968;&#20010; baseURL &#20415;&#20110;&#20026; axios &#23454;&#20363;&#30340;&#26041;&#27861;&#20256;&#36882;&#30456;&#23545; URL</span>
+<span class="linenr">10: </span>    baseURL: <span style="color: #E6DB74;">'https://some-domain.com/api/'</span>,
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">transformRequest &#20801;&#35768;&#22312;&#21521;&#26381;&#21153;&#22120;&#21457;&#36865;&#21069;&#65292;&#20462;&#25913;&#35831;&#27714;&#25968;&#25454;</span>
+<span class="linenr">13: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21482;&#33021;&#29992;&#22312; PUT&#12289;POST &#21644; PATCH &#36825;&#20960;&#20010;&#35831;&#27714;&#26041;&#27861;</span>
+<span class="linenr">14: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21518;&#38754;&#25968;&#32452;&#20013;&#30340;&#20989;&#25968;&#24517;&#39035;&#36820;&#22238;&#19968;&#20010;&#23383;&#31526;&#20018;&#65292;&#25110; ArrayBuffer&#65292;&#25110; Stream</span>
+<span class="linenr">15: </span>    transformRequest: <span style="color: #66D9EF;">[</span><span style="color: #F92672;">function</span> <span style="color: #A6E22E;">(</span><span style="color: #FD971F;">data</span>, <span style="color: #FD971F;">headers</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr">16: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23545; data &#36827;&#34892;&#20219;&#24847;&#36716;&#25442;&#22788;&#29702;</span>
+<span class="linenr">17: </span>        <span style="color: #F92672;">return</span> data;
+<span class="linenr">18: </span>    <span style="color: #A6E22E;">}</span><span style="color: #66D9EF;">]</span>,
+<span class="linenr">19: </span>
+<span class="linenr">20: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">transformResponse &#22312;&#20256;&#36882;&#32473; then/catch &#21069;&#65292;&#20801;&#35768;&#20462;&#25913;&#21709;&#24212;&#25968;&#25454;</span>
+<span class="linenr">21: </span>    transformResponse: <span style="color: #66D9EF;">[</span><span style="color: #F92672;">function</span> <span style="color: #A6E22E;">(</span><span style="color: #FD971F;">data</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr">22: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23545; data &#36827;&#34892;&#20219;&#24847;&#36716;&#25442;&#22788;&#29702;</span>
+<span class="linenr">23: </span>        <span style="color: #F92672;">return</span> data;
+<span class="linenr">24: </span>    <span style="color: #A6E22E;">}</span><span style="color: #66D9EF;">]</span>,
+<span class="linenr">25: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">...</span>
+<span class="linenr">26: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbea37f7" class="outline-3">
+<h3 id="orgbea37f7">Axios 响应结构</h3>
+<div class="outline-text-3" id="text-orgbea37f7">
+<p>
+某个请求的响应包含以下信息：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">data &#30001;&#26381;&#21153;&#22120;&#25552;&#20379;&#30340;&#21709;&#24212;</span>
+<span class="linenr"> 3: </span>    data: <span style="color: #66D9EF;">{}</span>,
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">status &#26469;&#33258;&#26381;&#21153;&#22120;&#21709;&#24212;&#30340; HTTP &#29366;&#24577;&#30721;</span>
+<span class="linenr"> 6: </span>    status: 200,
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">statusText &#26469;&#33258;&#26381;&#21153;&#22120;&#21709;&#24212;&#30340; HTTP &#29366;&#24577;&#20449;&#24687;</span>
+<span class="linenr"> 9: </span>    statusText: <span style="color: #E6DB74;">'OK'</span>,
+<span class="linenr">10: </span>
+<span class="linenr">11: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">headers &#26381;&#21153;&#22120;&#21709;&#24212;&#30340;&#22836;</span>
+<span class="linenr">12: </span>    headers: <span style="color: #66D9EF;">{}</span>,
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">config &#26159;&#20026;&#35831;&#27714;&#25552;&#20379;&#30340;&#37197;&#32622;&#20449;&#24687;</span>
+<span class="linenr">15: </span>    config: <span style="color: #66D9EF;">{}</span>,
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">request &#26159;&#29983;&#25104;&#24403;&#21069;&#21709;&#24212;&#30340;&#35831;&#27714;</span>
+<span class="linenr">18: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22312; node.js &#20013;&#26159;&#26368;&#21518;&#19968;&#20010; ClientRequest &#23454;&#20363; (&#22312;&#37325;&#23450;&#21521;&#20013;)</span>
+<span class="linenr">19: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22312;&#27983;&#35272;&#22120;&#20013;&#26159; XMLHttpRequest &#23454;&#20363;</span>
+<span class="linenr">20: </span>    request: <span style="color: #66D9EF;">{}</span>
+<span class="linenr">21: </span><span style="color: #AE81FF;">}</span>
+</pre>
+</div>
+
+<p>
+使用 <code>then</code> 时，你将接收下面这样的响应：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span>axios.get<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'/user/12345'</span><span style="color: #AE81FF;">)</span>
+<span class="linenr">2: </span>    .then<span style="color: #AE81FF;">(</span><span style="color: #F92672;">function</span> <span style="color: #66D9EF;">(</span><span style="color: #FD971F;">response</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">3: </span>        console.log<span style="color: #A6E22E;">(</span>response.data<span style="color: #A6E22E;">)</span>;
+<span class="linenr">4: </span>        console.log<span style="color: #A6E22E;">(</span>response.status<span style="color: #A6E22E;">)</span>;
+<span class="linenr">5: </span>        console.log<span style="color: #A6E22E;">(</span>response.statusText<span style="color: #A6E22E;">)</span>;
+<span class="linenr">6: </span>        console.log<span style="color: #A6E22E;">(</span>response.headers<span style="color: #A6E22E;">)</span>;
+<span class="linenr">7: </span>        console.log<span style="color: #A6E22E;">(</span>response.config<span style="color: #A6E22E;">)</span>;
+<span class="linenr">8: </span>    <span style="color: #66D9EF;">}</span><span style="color: #AE81FF;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5098d0a" class="outline-3">
+<h3 id="org5098d0a">配置默认值</h3>
+<div class="outline-text-3" id="text-org5098d0a">
+<p>
+你可以指定将被用在各个请求的配置默认值。
+</p>
+
+<p>
+<span class="underline">1. 全局的 axios 默认值</span>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span>axios.defaults.baseURL = <span style="color: #E6DB74;">'http://api.example.com'</span>;
+<span class="linenr">2: </span>axios.defaults.headers.common<span style="color: #AE81FF;">[</span><span style="color: #E6DB74;">'Authorization'</span><span style="color: #AE81FF;">]</span> = AUTH_TOKEN;
+<span class="linenr">3: </span>axios.defaults.headers.post<span style="color: #AE81FF;">[</span><span style="color: #E6DB74;">'Content-Type'</span><span style="color: #AE81FF;">]</span> = <span style="color: #E6DB74;">'application/x-www-form-urlencoded'</span>;
+</pre>
+</div>
+
+<p>
+<span class="underline">2. 自定义实例默认值</span>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#21019;&#24314;&#23454;&#20363;&#26102;&#35774;&#32622;&#37197;&#32622;&#40664;&#35748;&#20540;</span>
+<span class="linenr">2: </span><span style="color: #F92672;">const</span> <span style="color: #FD971F;">instance</span> = axios.create<span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">{</span>
+<span class="linenr">3: </span>    baseURL: <span style="color: #E6DB74;">'https://api.example.com'</span>
+<span class="linenr">4: </span><span style="color: #66D9EF;">}</span><span style="color: #AE81FF;">)</span>;
+<span class="linenr">5: </span>
+<span class="linenr">6: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#23454;&#20363;&#21019;&#24314;&#20043;&#21518;&#21487;&#20462;&#25913;&#40664;&#35748;&#37197;&#32622;</span>
+<span class="linenr">7: </span>instance.defaults.headers.common<span style="color: #AE81FF;">[</span><span style="color: #E6DB74;">'Authorization'</span><span style="color: #AE81FF;">]</span> = AUTH_TOKEN;
+</pre>
+</div>
+
+<p>
+<span class="underline">3. 配置的优先顺序</span>
+</p>
+
+<p>
+配置会以一个优先顺序进行合并。这个顺序是：在 <code>lib/defaults.js</code> 找到的库的默认值，然后是实例的 <code>defaults</code> 属性，最后是请求的 <code>config</code> 参数，后者将优先于前者。如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#20351;&#29992;&#30001;&#24211;&#25552;&#20379;&#30340;&#37197;&#32622;&#40664;&#35748;&#20540;&#26469;&#21019;&#24314;&#23454;&#20363;</span>
+<span class="linenr"> 2: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#27492;&#26102;&#36229;&#26102;&#37197;&#32622;&#30340;&#40664;&#35748;&#20540;&#26159; 0</span>
+<span class="linenr"> 3: </span><span style="color: #F92672;">const</span> <span style="color: #FD971F;">instance</span> = axios.create<span style="color: #AE81FF;">()</span>;
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#35206;&#20889;&#24211;&#30340;&#36229;&#26102;&#40664;&#35748;&#20540;</span>
+<span class="linenr"> 6: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#29616;&#22312;&#65292;&#22312;&#36229;&#26102;&#21069;&#65292;&#25152;&#26377;&#35831;&#27714;&#37117;&#20250;&#31561;&#24453; 2.5 &#31186;</span>
+<span class="linenr"> 7: </span>instance.defaults.timeout = 2500;
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#20026;&#24050;&#30693;&#38656;&#35201;&#33457;&#36153;&#24456;&#38271;&#26102;&#38388;&#30340;&#35831;&#27714;&#35206;&#20889;&#36229;&#26102;&#35774;&#32622;</span>
+<span class="linenr">10: </span>instance.get<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'/longRequest'</span>, <span style="color: #66D9EF;">{</span>
+<span class="linenr">11: </span>    timeout: 5000
+<span class="linenr">12: </span><span style="color: #66D9EF;">}</span><span style="color: #AE81FF;">)</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0b1d549" class="outline-3">
+<h3 id="org0b1d549">拦截器</h3>
+<div class="outline-text-3" id="text-org0b1d549">
+<p>
+在请求或响应被 <code>then</code> 或 <code>catch</code> 处理前拦截它们。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#28155;&#21152;&#35831;&#27714;&#25318;&#25130;&#22120;</span>
+<span class="linenr"> 2: </span>axios.interceptors.request.use<span style="color: #AE81FF;">(</span>
+<span class="linenr"> 3: </span>    <span style="color: #F92672;">function</span><span style="color: #66D9EF;">(</span><span style="color: #FD971F;">config</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 4: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22312;&#21457;&#36865;&#35831;&#27714;&#20043;&#21069;&#20570;&#20123;&#20160;&#20040;</span>
+<span class="linenr"> 5: </span>        <span style="color: #F92672;">return</span> config;
+<span class="linenr"> 6: </span>    <span style="color: #66D9EF;">}</span>,
+<span class="linenr"> 7: </span>    <span style="color: #F92672;">function</span><span style="color: #66D9EF;">(</span><span style="color: #FD971F;">error</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 8: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23545;&#35831;&#27714;&#38169;&#35823;&#20570;&#20123;&#20160;&#20040;</span>
+<span class="linenr"> 9: </span>        <span style="color: #F92672;">return</span> Promise.reject<span style="color: #A6E22E;">(</span>error<span style="color: #A6E22E;">)</span>;
+<span class="linenr">10: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">11: </span><span style="color: #AE81FF;">)</span>
+<span class="linenr">12: </span>
+<span class="linenr">13: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#28155;&#21152;&#21709;&#24212;&#25318;&#25130;&#22120;</span>
+<span class="linenr">14: </span>axios.interceptors.response.use<span style="color: #AE81FF;">(</span>
+<span class="linenr">15: </span>    <span style="color: #F92672;">function</span> <span style="color: #66D9EF;">(</span><span style="color: #FD971F;">response</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">16: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23545;&#21709;&#24212;&#25968;&#25454;&#20570;&#28857;&#20160;&#20040;</span>
+<span class="linenr">17: </span>        <span style="color: #F92672;">return</span> response;
+<span class="linenr">18: </span>    <span style="color: #66D9EF;">}</span>,
+<span class="linenr">19: </span>    <span style="color: #F92672;">function</span> <span style="color: #66D9EF;">(</span><span style="color: #FD971F;">error</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">20: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#23545;&#21709;&#24212;&#38169;&#35823;&#20570;&#28857;&#20160;&#20040;</span>
+<span class="linenr">21: </span>        <span style="color: #F92672;">return</span> Promise.reject<span style="color: #A6E22E;">(</span>error<span style="color: #A6E22E;">)</span>;
+<span class="linenr">22: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">23: </span><span style="color: #AE81FF;">)</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6c6b3b6" class="outline-3">
+<h3 id="org6c6b3b6">*使用 application/x-www-form-urlencoded 格式</h3>
+<div class="outline-text-3" id="text-org6c6b3b6">
+<p>
+默认情况下，axios 将 JavaScript 对象序列化为 JSON。要以 <code>application/x-www-form-urlencoded</code> 格式发送数据，使用 <code>qs</code> 库编码数据，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">const</span> <span style="color: #FD971F;">qs</span> = require<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'qs'</span><span style="color: #AE81FF;">)</span>;
+<span class="linenr">2: </span>axios.post<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'/foo'</span>, qs.stringify<span style="color: #66D9EF;">(</span><span style="color: #A6E22E;">{</span> <span style="color: #E6DB74;">'bar'</span>: 123 <span style="color: #A6E22E;">}</span><span style="color: #66D9EF;">)</span><span style="color: #AE81FF;">)</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6a62be8" class="outline-3">
+<h3 id="org6a62be8">框架、插件</h3>
+<div class="outline-text-3" id="text-org6a62be8">
+<p>
+如果你想了解更多，请参考 <a href="https://www.w3cschool.cn/jquti/jquti-b4sf360b.html">W3Cschool Axios</a> 。
+</p>
+</div>
 </div>
 </div>
 <div id="footnotes">
@@ -760,12 +1696,24 @@ XHR 对象如果要用于 AJAX 的话，其 <code>open()</code> 方法的 <code>
 <a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html">http://www.ruanyifeng.com/blog/2014/10/event-loop.html</a>
 </p></div></div>
 
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://www.runoob.com/jquery/jquery-ref-ajax.html">https://www.runoob.com/jquery/jquery-ref-ajax.html</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://www.w3cschool.cn/jquti/jquti-kb3a35x1.html">https://www.w3cschool.cn/jquti/jquti-kb3a35x1.html</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://www.w3cschool.cn/jquti/jquti-rksl35xd.html">https://www.w3cschool.cn/jquti/jquti-rksl35xd.html</a>
+</p></div></div>
+
 </div>
 </div></div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-11-26 Thu 17:49</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-11-27 Fri 18:12</p>
+<p class="date">Created: 2020-11-30 Mon 18:04</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

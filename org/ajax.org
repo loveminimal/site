@@ -2,7 +2,7 @@
 #+DATE: <2020-11-26 Thu 17:49>
 #+TITLE: Ajax
 
-** 什么是 AJAX
+** 什么是 Ajax
 
 #+BEGIN_EXPORT html
 <img
@@ -449,7 +449,478 @@ XHR 对象如果要用于 AJAX 的话，其 =open()= 方法的 =async= 参数必
 
 *** XHR 响应
 
+如需获得来自服务器的响应，请使用 XHR 对象的 =responseText= （字符串形式的响应数据）或 =responseXML= （XML 形式的响应数据）属性。
+
+当请求被发送到服务器时，我们需要执行一些基于响应的任务，每当 =readyState= 改变时，就会触发 =onreadystatechange= 事件，其中， =readyState= 属性存有 XHR 的状态信息。
+
+| 属性                 | 描述                                                               |
+|----------------------+--------------------------------------------------------------------|
+| =onreadystatechange= | 存储函数（或函数名），每当 =readyState= 属性改变时，就会调用该函数 |
+|----------------------+--------------------------------------------------------------------|
+| =readyState=         | 存有 XHR 的状态：                                                  |
+|                      | ~0~ ：请求未初始化                                                 |
+|                      | ~1~ ：服务器连接已建立                                             |
+|                      | ~2~ ：请求已接收                                                   |
+|                      | ~3~ ：请求处理中                                                   |
+|                      | ~4~ ：请求已完成，且响应已就绪                                     |
+|----------------------+--------------------------------------------------------------------|
+| =status=             | ~200~ ：OK                                                         |
+|                      | ~404~ :未找到页面                                                  |
+
+当 =readyState= 等于 =4= 且状态为 =200= 时，表示响应已就绪。
+
+#+BEGIN_SRC js -n
+  xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+          // ...
+      }
+  }
+#+END_SRC
+
+*注： =onreadystatechange= 事件被触发 4 次（0 - 4），分别是： =0-1、1-2、2-3、3-4= 对应着 =readyState= 的每个变化。
+
+** *HTTP 协议
+
+#+BEGIN_EXPORT html
+<essay>
+我们已经初步了解 AJAX 了，深入地话，就需要进一步认识一下 HTTP 协议喽。
+</essay>
+#+END_EXPORT
+
+HTTP 协议（HyperText Transfer Protocol，超文本传输协议），是一个基于 TCP/IP 通信协议来传递数据（HTML 文件、图片、查询结果等）的协议。
+
+#+BEGIN_EXPORT html
+<img
+src="/images/web/ajax-8.gif"
+width="300"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
+#+END_EXPORT
+
+HTTP 协议工作于“客户端-服务端”架构上，如浏览器（HTTP 客户端）通过 URL 向 WEB 服务器（ HTTP 服务端）发送所有请求。
+
+*HTTP 三点注意事项：*
+
+（1）HTTP 是无连接：无连接的含义是限制每次连接只处理一个请求，采用这种方式可以节省传输时间。服务器处理完客户的请求，并收到客户的应答后，即断开连接。
+
+#+BEGIN_EXPORT html
+<essay>
+无连接？？？
+</essay>
+#+END_EXPORT
+
+（2）HTTP 是媒体独立的：只要客户端和服务器 *知道如何处理* 的数据内容，任何类型的数据都可以通过 HTTP 发送，客户端以及服务器指定使用适合的 MIME-type 内容类型。
+
+（3）HTTP 是无状态：HTTP 协议是无状态协议。 _无状态_ 是指协议对于事务处理没有记忆能力，缺少状态意味着如果后续处理需要前面的信息，则它 *必须重传* ，这样可能导致每次连接传送的数据量增大；另一方面，在服务器不需要先前信息时它的应答就较快。
+
+*** HTTP 消息结构
+
+HTTP 是基于“客户端/服务端”的架构模型，通过一个可靠的链接来交换信息，是一个 *无状态的请求/响应* 协议。
+
+一个 HTTP 客户端，是一个应用程序，如 Web 浏览器或其他任何客户端，它通过连接服务器达到向服务器发送一个或多个 HTTP 请求的目的。
+
+一个 HTTP 服务器，同样是一个应用程序，通常是一个 Web 服务器，如 Apache、Nginx 或 IIS 服务器等，它通过接收客户端的请求并向客户端发送 HTTP 响应数据。
+
+一个可靠的链接，HTTP 使用 URI（Uniform Resource Identifiers，统一资源标识符）来传输数据和建立连接。
+
+_1. 客户端请求消息_
+
+#+BEGIN_EXPORT html
+<img
+src="/images/web/ajax-9.png"
+width="460"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
+#+END_EXPORT
+
+客户端发送一个 HTTP 请求到服务器的请求消息包括以下格式：
+- 请求行（request line）；
+- 请求头部（header）；
+- 空行；
+- 请求数据。
+
+_2. 服务器响应消息_
+
+#+BEGIN_EXPORT html
+<img
+src="/images/web/ajax-10.jpg"
+width="600"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+HTTP 响应也由四个部分组成，分别是：状态行、消息报头、空行和响应正文。
+
+*** HTTP 请求方法
+
+#+CAPTION: HTTP 请求方法
+| 方法      | 描述                                                                           |
+|-----------+--------------------------------------------------------------------------------|
+| =GET=     | 请求指定的页面信息，并返回实体主体                                             |
+| =HEAD=    | 类似于 =GET= ，只不过返回的响应中没有具体的内容，用于获取报头                  |
+| =POST=    | 向指定资源提交数据进行处理请求（如提交表单或者上传文件），数据被包含在请求体中 |
+|-----------+--------------------------------------------------------------------------------|
+| =PUT=     | 从客户端向服务器传送的数据取代指定的文档的内容                                 |
+| =DELETE=  | 请求服务器删除指定的页面                                                       |
+| =CONNECT= | HTTP/1.1 协议中预留给能够将连接改为管道方式的代理服务器                        |
+| =OPTIONS= | 允许客户端服务器的性能                                                         |
+
+*** HTTP 响应头信息
+
+| 响应头信息         | 说明                                                                         |
+|--------------------+------------------------------------------------------------------------------|
+| =Allow=            | 服务器支持哪些请求方法（如 =GET、POST= 等）                                  |
+| =Content-Encoding= | 文档的编码（Encode）方法                                                     |
+| =Content-Length=   | 表示内容长度（只有当浏览器 使用持久 HTTP 连接时才需要这个数据）              |
+| =Content-Type=     | 表示后面的档属于什么 MIME 类型                                               |
+| =Date=             | 当前的 GMT 时间，可以用 =setDateHeader= 来设置这个头以避免转换时间格式的麻烦 |
+| =Expires=          | 应该在什么时候认为文档已经过期，从而不再缓存它                               |
+| =Last-Modified=    | 文档的最后改动时间                                                           |
+| =Location=         | 表示福州市应当到哪里支提取文档。通常不是直接设置的                           |
+| =Refresh=          | 表示浏览器应该在多少时间之后刷新文档，以秒计                                 |
+| =Server=           | 服务器名字。Servlet 一般不设置这个值，面是由 Web 服务器自己设置              |
+| =Set-Cookie=       | 设置和页面关联的 Cookie                                                      |
+| =WWW-Authenticate= | 客户应该在 =Authorization= 中提供什么类型的授权信息                          |
+
+_1. Content-Type_
+
+其中， =Content-Type= （内容类型），用于定义网络文件的类型和网页的编码，决定浏览器将以什么形式、什么编码读取这个文件。也就是说， =Content-Type= 标头告诉客户端实际返回的内容的内容类型。
+
+语法格式如下：
+
+#+BEGIN_EXAMPLE
+Content-Type: text/html; charset=utf-8
+Content-Type: multipart/form-data; boundary=something
+#+END_EXAMPLE
+
+#+CAPTION: 常见的媒体格式类型
+| 类型                                | 描述                                         |
+|-------------------------------------+----------------------------------------------|
+| =text/html=                         | HTML 格式                                    |
+| =text/plain=                        | 纯文本格式                                   |
+| =text/xml=                          | XML 格式                                     |
+| =image/gif=                         | gif 图片格式                                 |
+| =image/jpeg=                        | jpg 图片格式                                 |
+| =image/png=                         | png 图片格式                                 |
+|-------------------------------------+----------------------------------------------|
+| *以 application 开头的媒体格式类型* |                                              |
+|-------------------------------------+----------------------------------------------|
+| =application/xhtml+xml=             | XHTML 格式                                   |
+| =application/xml=                   | XML 格式                                     |
+| =application/atom+xml=              | Atom XML 聚合格式                            |
+| =application/json=                  | JSON 数据格式                                |
+| =application/pdf=                   | pdf 格式                                     |
+| =application/msword=                | Word 文档格式                                |
+| =application/octet-stream=          | 二进制流数据（如常见的文件下载）             |
+| =application/x-www-form-urlencoded= | 表单默认的提交数据的格式                     |
+|-------------------------------------+----------------------------------------------|
+| =application/form-data=             | 需要在表单中进行文件上传时，就需要使用该格式 |
+
+_2. HTTP 状态码_
+
+i.e. HTTP Status Code
+
+当浏览者访问一个网页时，浏览者的浏览器会向网页所在服务器发出请求。当 *浏览器接收并显示网页前* ，此网页所在的服务器会返回一个包含 HTTP 状态码的信息头（server header）用以响应浏览器的请求。
+
+_HTTP 状态码_ 由三个十进制数字组成，其中，第一个数字定义了状态码的类型，后两个数字没有分类的作用，总共分为 5 种类型：
+
+#+CAPTION: HTTP 状态码分类
+| 分类  | 描述                                           |
+|-------+------------------------------------------------|
+| =1**= | 信息，服务器收到请求，需要请求者继续执行操作   |
+| =2**= | 成功，操作被成功接收并处理                     |
+| =3**= | 重定向，需要进一步的操作以完成请求             |
+| =4**= | 客户端错误，请求包含语法错误或无法完成请求     |
+| =5**= | 服务器错误，服务器在处理请求的过程中发生了错误 |
+
+下面是常见的状态码：
+- 200 - 请求成功；
+- 301 - 资源（网页等）被永久转移到其它 URL；
+- 404 - 请求的资源（网页等）不存在；
+- 500 - 内部服务器错误。
+
+** jQuery 中的 Ajax[fn:6]
+
+jQuery 提供多个与 AJAX 有关的方法。
+
+通过 jQuery AJAX 方法，您能够使用 HTTP Get 和 HTTP Post 从远程服务器上请求文本、HTML、XML 或 JSON - 同时您能够把这些外部数据直接载入网页的被选元素中。
+
+#+BEGIN_QUOTE
+编写常规的 AJAX 代码并不容易，因为不同的浏览器对 AJAX 的实现并不相同。这意味着您必须编写额外的代码对浏览器进行测试。不过，jQuery 团队为我们解决了这个难题，我们只需要一行简单的代码，就可以实现 AJAX 功能。
+#+END_QUOTE
+
+#+BEGIN_EXPORT html
+<essay>
+jQuery 也算是 DOM 时代的霸主了……
+</essay>
+#+END_EXPORT
+
+在现代 Web 项目中，我们已经很少使用 jQuery 做主力了，除非你要和万恶的 IE 打交道，我们这里只稍微认识一下 jQuery 中 Ajax 的一般应用。
+
+| 方法              | 描述                                               |
+|-------------------+----------------------------------------------------|
+| =$.ajax()=        | 执行异步 AJAX 请求                                 |
+| =$.ajaxSetup()=   | 为将来的 AJAX 请求设置默认值                       |
+| =$.ajaxStart()=   | 规定第一个 AJAX 请求开始时运行的函数               |
+| =$.ajaxStop()=    | 规定所有的 AJAX 请求完成时运行的函数               |
+| =$.ajaxSend()=    | 规定 AJAX 请求发送之前运行的函数                   |
+| =$.ajaxSuccess()= | 规定 AJAX 请求成功完成时运行的函数                 |
+| =$.ajaxError()=   | 规定 AJAX 请求失败时运行的函数                     |
+| =$.load()=        | 从服务器加载数据，并把返回的数据放置到指定的元素中 |
+| =$.serialize()=   | 编码表单元素集为字符串以便提交                     |
+| ...               |                                                    |
+
+...
+
+** Axios[fn:4]
+
+#+BEGIN_EXPORT html
+<essay>
+来看看这个比较火热的 Ajax 封装库吧。
+</essay>
+#+END_EXPORT
+
+Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 NodeJS 中，它具有以下特性：
+
+#+BEGIN_EXAMPLE
+- 从浏览器中创建 XMLHttpRequests
+- 从 NodeJS 创建 http 请求
+- 支持 Promise API
+- 拦截请求和响应
+- 转换请求数据和响应数据
+- 取消请求
+- 自动转换 JSON 数据
+- 客户端支持防御 XSRF
+#+END_EXAMPLE
+
+*注：Axios 依赖原生的 ES6 Promise 实现而被支持，如果你的环境不支持 ES6 Promise ，可以使用 [[https://github.com/jakearchibald/es6-promise][polyfill]] 。
+
+*** Axios 起步
+
+先安装喽……
+
+#+BEGIN_EXAMPLE
+  npm install axios                                                 # NPM
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script> # CDN
+#+END_EXAMPLE
+
+#+BEGIN_EXPORT html
+<essay>
+我们提供 JavaScript 软件包的时候，一般也需要提供 NPM 和 CDN 两种分发方式。
+</essay>
+#+END_EXPORT
+
+在项目（模块化开发）中，我们一般通过如下两种方式引入 axios ：
+
+#+BEGIN_SRC js -n
+  import axios from 'axios'       // ES6 Module
+  const axios = require('axios')  // CommonJS Module
+#+END_SRC
+
+当我们引入 =axios= 之后，会默认导出一个 axios 实例，一般情况下就可以满足需求了。可以通过向 =axios= 传递相关配置来创建请求，如下：
+
+#+BEGIN_SRC js -n
+  import axios from 'axios'
+
+  // axios(config)
+  axios({
+      method: 'post',
+      url: '/user/12345',
+      data: {
+          firstName: 'Jack',
+          lastName: 'Liu'
+      }
+  })
+#+END_SRC
+
+当然，如果默认的 axios 实例不能满足要求时，可以使用自定义配置创建一个新的 axios 实例（如 =instance= ）：
+
+#+BEGIN_SRC js -n
+  import axios from 'axios'
+
+  // axios.create([config])
+  const instance = axios.create({
+      baseURL: 'https://some-domain.com/api/',
+      timeout: 1000,
+      headers: {'X-Custom-Header'： 'foobar'}
+  })
+#+END_SRC
+
+*注：使用创建的 axios 实例请求时，请求的配置项将与实例的配置合并。
+
+*** Axios 请求配置[fn:5]
+
+这些都是创建请求时可以用的配置选项， *只有 =url= 是必需的* ，如果没有指定的 =method= ，请求将默认使用 =get= 方法。
+
+#+BEGIN_SRC js -n
+  {
+      // url 是用于请求的服务器 URL
+      url: '/user'
+
+      // method 是创建请求时使用的方法
+      method: 'get',    // default
+
+      // baseURL 将自动加在 url 前面，除非 url 是一个绝对 URL
+      // 它可以通过设置一个 baseURL 便于为 axios 实例的方法传递相对 URL
+      baseURL: 'https://some-domain.com/api/',
+
+      // transformRequest 允许在向服务器发送前，修改请求数据
+      // 只能用在 PUT、POST 和 PATCH 这几个请求方法
+      // 后面数组中的函数必须返回一个字符串，或 ArrayBuffer，或 Stream
+      transformRequest: [function (data, headers) {
+          // 对 data 进行任意转换处理
+          return data;
+      }],
+
+      // transformResponse 在传递给 then/catch 前，允许修改响应数据
+      transformResponse: [function (data) {
+          // 对 data 进行任意转换处理
+          return data;
+      }],
+      // ...
+  }
+#+END_SRC
+
+*** Axios 响应结构
+
+某个请求的响应包含以下信息：
+
+#+BEGIN_SRC js -n
+  {
+      // data 由服务器提供的响应
+      data: {},
+
+      // status 来自服务器响应的 HTTP 状态码
+      status: 200,
+
+      // statusText 来自服务器响应的 HTTP 状态信息
+      statusText: 'OK',
+
+      // headers 服务器响应的头
+      headers: {},
+
+      // config 是为请求提供的配置信息
+      config: {},
+
+      // request 是生成当前响应的请求
+      // 在 node.js 中是最后一个 ClientRequest 实例 (在重定向中)
+      // 在浏览器中是 XMLHttpRequest 实例
+      request: {}
+  }
+#+END_SRC
+
+使用 =then= 时，你将接收下面这样的响应：
+
+#+BEGIN_SRC js -n
+  axios.get('/user/12345')
+      .then(function (response) {
+          console.log(response.data);
+          console.log(response.status);
+          console.log(response.statusText);
+          console.log(response.headers);
+          console.log(response.config);
+      })
+#+END_SRC
+
+*** 配置默认值
+
+你可以指定将被用在各个请求的配置默认值。
+
+_1. 全局的 axios 默认值_
+
+#+BEGIN_SRC js -n
+  axios.defaults.baseURL = 'http://api.example.com';
+  axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+  axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+#+END_SRC
+
+_2. 自定义实例默认值_
+
+#+BEGIN_SRC js -n
+  // 创建实例时设置配置默认值
+  const instance = axios.create({
+      baseURL: 'https://api.example.com'
+  });
+
+  // 实例创建之后可修改默认配置
+  instance.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+#+END_SRC
+
+_3. 配置的优先顺序_
+
+配置会以一个优先顺序进行合并。这个顺序是：在 =lib/defaults.js= 找到的库的默认值，然后是实例的 =defaults= 属性，最后是请求的 =config= 参数，后者将优先于前者。如下：
+
+#+BEGIN_SRC js -n
+  // 使用由库提供的配置默认值来创建实例
+  // 此时超时配置的默认值是 0
+  const instance = axios.create();
+
+  // 覆写库的超时默认值
+  // 现在，在超时前，所有请求都会等待 2.5 秒
+  instance.defaults.timeout = 2500;
+
+  // 为已知需要花费很长时间的请求覆写超时设置
+  instance.get('/longRequest', {
+      timeout: 5000
+  });
+#+END_SRC
+
+*** 拦截器
+
+在请求或响应被 =then= 或 =catch= 处理前拦截它们。
+
+#+BEGIN_SRC js -n
+  // 添加请求拦截器
+  axios.interceptors.request.use(
+      function(config) {
+          // 在发送请求之前做些什么
+          return config;
+      },
+      function(error) {
+          // 对请求错误做些什么
+          return Promise.reject(error);
+      }
+  )
+
+  // 添加响应拦截器
+  axios.interceptors.response.use(
+      function (response) {
+          // 对响应数据做点什么
+          return response;
+      },
+      function (error) {
+          // 对响应错误做点什么
+          return Promise.reject(error);
+      }
+  );
+#+END_SRC
+
+*** *使用 application/x-www-form-urlencoded 格式
+
+默认情况下，axios 将 JavaScript 对象序列化为 JSON。要以 =application/x-www-form-urlencoded= 格式发送数据，使用 =qs= 库编码数据，如下：
+
+#+BEGIN_SRC js -n
+  const qs = require('qs');
+  axios.post('/foo', qs.stringify({ 'bar': 123 }));
+#+END_SRC
+
+*** 框架、插件
+
+如果你想了解更多，请参考 [[https://www.w3cschool.cn/jquti/jquti-b4sf360b.html][W3Cschool Axios]] 。
+
 * Footnotes
+
+[fn:6] https://www.runoob.com/jquery/jquery-ref-ajax.html
+
+[fn:5] https://www.w3cschool.cn/jquti/jquti-rksl35xd.html
+
+[fn:4] https://www.w3cschool.cn/jquti/jquti-kb3a35x1.html
 
 [fn:3] http://www.ruanyifeng.com/blog/2014/10/event-loop.html
 
