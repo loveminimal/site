@@ -39,6 +39,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./drag-and-drop.org][Drag and Drop]]         |
 | [[./file-conversion.org][File Conversion]]       |
 | [[./ajax.org][Ajax]]                  |
+| [[./virtual-dom.org][Virtual DOM]]           |
 
 | JS 高级程序设计 |
 |-----------------|

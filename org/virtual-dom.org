@@ -1,0 +1,355 @@
+#+SETUPFILE: ../theme-rose.setup
+#+DATE: <2020-12-02 Wed 16:14>
+#+TITLE: Virtual DOM
+
+Before learning Virtual DOM, lets take a look at DOM.
+
+** What, exactly, is the DOM?[fn:1]
+
+The Document Object Model, or the "DOM", is an interface to web pages. It is essentially an API to the page, allowing programs to read an manipulate the page's content, structure, and styles. Let'w break this down.
+
+*** How is a web page built?
+
+How a browser goes from a source HTML document to displaying a styled and interactive page in the viewport is called the *"Critical Rendering Path"*. Although this process can be broken down into several steps, as I cover in my article on [[https://bitsofco.de/understanding-the-critical-rendering-path/][Understanding the Critical Rendering Path]], these steps can be roughy grouped into two stages.
+
+The first stage involves the browser parsing the document to determine what will ultimately be rendered on the page, and the second stage involves the browser performing the render.
+
+#+BEGIN_EXPORT html
+<img
+src="/images/web/vdom-1.png"
+width="660"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+The result of the first stage is what is called a *"render tree"*.
+
+The render tree is a representation of the HTML elements that will be rendered on the page and their related styles. In order to build this tree, the browser needs two things:
+1. The *CSSOM*, a representation of the styles associated with elements;
+2. The *DOM*, a representation of the elements.
+
+*** How is the DOM created?
+
+#+BEGIN_EXPORT html
+<img
+src="/images/web/vdom-2.png"
+width="300"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
+#+END_EXPORT
+
+And what does it look like?
+
+The DOM is an object-based representation of the source HTML document. It has some differences, as we will see below, but it is essentially an attempt to convert the structure and content of the HTML document into an object model that can be used by various programs.
+
+The object structure of the DOM is represented by what is called a *"node tree"*. It is so called because it can be thought of as a tree with a single parent stem that branches out into several child branches, each which may have leaves. In this case, the parent "stem" is the root =<html>= element, the child "branches" are the nested elements, and the "leaves" are the content within the elements.
+
+Let's take this HTML document as an example:
+
+#+BEGIN_SRC html -n
+  <!doctype html>
+  <html lang="en">
+   <head>
+     <title>My first web page</title>
+    </head>
+   <body>
+      <h1>Hello, world!</h1>
+      <p>How are you?</p>
+    </body>
+  </html>
+#+END_SRC
+
+This document can be represented as the above node tree.
+
+*** What the DOM is not
+
+In the example I gabe above, it seems like the DOM is a 1-to-1 mapping of the source HTML document or what you see your DevTools. However, as I mentioned, there are differences. In order to fully understand what the DOM *is*, we need to look at what it is *not*.
+
+*1.The DOM is not your source HTML*
+
+Although the DOM is created from the source HTML document, it is not always exactly the same. There are two instances in which the DOm can be different from the source HTML.
+
+(1) When the HTML is not valid
+
+The DOM is an interface for *valid* HTML documents. During the process of creating the DOM, the browser may correct some invalidities in the HTML code. Like this:
+
+#+BEGIN_SRC html -n
+  <!doctype html>
+  <html>
+    Hello, world!
+  </html>
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<img
+src="/images/web/vdom-3.png"
+width="200"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
+#+END_EXPORT
+
+The document is missing a =<head>= and =<body>= element, which is a requirement for valid HTML. If we look at the resulting DOM tree, we will see that this has been corrected:
+
+(2) When the DOM is modified by JavaScript
+
+Beside being an interface to viewing the content of an HTML document, the DOM can alse modified, making it a living resource.
+
+We can, for example, crate additional nodes to the DOM using JavaScript.
+
+#+BEGIN_SRC js -n
+  var newParagraph = document.crateElement('p')
+  var paragraphContent = document.createTextNode('I\'m new!')
+
+  newParagraph.appendChild(paragraphContent)
+  document.body.appendChild(newParagraph)
+#+END_SRC
+
+This will update the DOM, but of course not our HTML document.
+
+*2.The DOM is not what you see in the browser (i.e., the render tree)*
+
+What you see in the browser viewport is the render tree which, as I mentioned, is a combination of the DOM and the CSSOM.
+
+What really separates the *DOM* from the *render tree*, is that the latter only consists of what will eventually be painted on the screen.
+
+Becuase the render tree is only concerned with what is rendered, it excludes elements that are visually hidden. For example, elements that have =display: none= styles associated to them.
+
+#+BEGIN_SRC html -n
+  <!doctype html>
+  <html lang="en">
+    <head></head>
+    <body>
+      <h1>Hello, world!</h1>
+      <p style="display: none;">How are you?</p>
+    </body>
+  </html>
+#+END_SRC
+
+The DOM will include the =<p>= element:
+
+#+BEGIN_EXPORT html
+<img
+src="/images/web/vdom-4.png"
+width="250"
+height=""
+style=""
+title="DOM"
+/>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<img
+src="/images/web/vdom-5.png"
+width="200"
+height=""
+style="float: right; margin-left: 8px; border: 3px solid #acf;"
+title="render tree"
+/>
+#+END_EXPORT
+
+However, the render tree, and therefore what is seen in the viewport, will not include that element.
+
+*3.The DOM is not what is in DevTools*
+
+This differentce is a bit more minuscule because the DevTools element inspector provides the closest approximation to the DOM that we have in the browser. However, the DevTools inspector includes addtional information that isn't in the DOM.
+
+The best example of this is CSS pseudo-elements. Pseudo-elements created using the =::before= and =::after= selectors form part of the CSSOM and render tree, but are not technically part of the DOM. This is because the DOM is built from the source HTML document alone, not including the styles applied to the element.
+
+Despite the fact that pseudo-elements are not part of the DOM, they are in our devtools element inspector.
+
+#+BEGIN_EXPORT html
+<img
+src="/images/web/vdom-6.png"
+width="800"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+This is why pseudo-elements cannot be targetted by JavaScript, because they are not part of the DOM.
+
+*** Recap
+
+The DOM is an interface to an HTML document. It is used by browsers as a first step towards determining what to render in the viewport, and by Javascript programs to modify the content, structure, or styling of the page.
+
+Although similar to other forms of the source HTML document, the DOM is different in a number of ways:
+- It is always valid HTML
+- It is a living model that can be modifed by Javascript
+- It doesn't include pseudo-elements (e.g. ::after)
+- It does include hidden elements (e.g. with display: none)
+
+** Understanding the Critical Rendering Path[fn:2]
+
+When a browser receives the HTML response for a page from the server, there are lot of steps to be taken before pixels are drawn on the screen. This sequence the browser needs to run through for the initial paint of the page is called the *"Critical Rendering Path"*.
+
+#+BEGIN_QUOTE
+*Tip: we will use CRP represent Critical Rendering Path.
+#+END_QUOTE
+
+Knowledge of the CRP is incredibly useful for understanding how a site's performance can be improved. There are 6 stages to the CRP:
+
+#+BEGIN_EXAMPLE
+1. Constructing the DOM Tree
+2. Construting the CSSOM Tree
+3. Running JavaScript
+4. Creating the Render Tree
+5. Generating the Layout
+6. Painting
+#+END_EXAMPLE
+
+#+BEGIN_EXPORT html
+<img
+src="/images/web/vdom-7.png"
+width="760"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+*** 1.Constructing the DOM Tree
+
+The DOM (Document Object Model) Tree is an Object representation of the fully parsed HTML page.
+
+Starting with the root element, =<html>=, nodes are created for each element/text on the page. Elements nested within other elements are represented as child nodes and each node contains the full attributes for that element. For example, an =<a>= element will have the =href= attribute associated with it's node.
+
+Take, for example, this sample document:
+
+#+BEGIN_SRC html -n
+<html>
+<head>
+  <title>Understanding the Critical Rendering Path</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+      <h1>Understanding the Critical Rendering Path</h1>
+  </header>
+  <main>
+      <h2>Introduction</h2>
+      <p>Lorem ipsum dolor sit amet</p>
+  </main>
+  <footer>
+      <small>Copyright 2017</small>
+  </footer>
+</body>
+</html>
+#+END_SRC
+
+This will create the following DOM Tree:
+
+#+BEGIN_EXPORT html
+<img
+src="/images/web/vdom-8.png"
+width="720"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+A good thing about HTML is that it can be executed in parts. The full document doesn't have to be loaded for content to start appearing on the page. However, other resources, CSS and JavaScript, can block the render of the page.
+
+*** 2.Constructing the CSSOM Tree
+
+The CSSOM (CSS Object Model) is an Object representation of the styles associated with the DOM. It is represented in a similar way to the DOM, but with the associated styles for each node, whether they explicitly declared or implicitly inherited, included.
+
+In the =style.css= file from the document mentioned above, we have the following styles:
+
+#+BEGIN_SRC css -n
+  body { font-size: 18px; }
+
+  header { color: plum; }
+  h1 { font-size: 28px; }
+
+  main { color: firebrick; }
+  h2 { font-size: 20px; }
+
+  footer { display: none; }
+#+END_SRC
+
+This will create the following CSSOM Tree:
+
+#+BEGIN_EXPORT html
+<img
+src="/images/web/vdom-9.png"
+width="720"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+CSS is considered a *"render blocking resource"*. This means that the [[*4.Creating the Render Tree][Render Tree (see below)]] cannot be constructed without first fully parsing the resource.
+
+Unlike HTML, CSS cannot be used in parts because of its inherit cascading nature. Styles defined later in the document can override and change styles that were previously defined. So, if we start using CSS styles defined earlier in the stylesheet before the entirety of the stylesheet has been parsed, we may get a situation where the wrong CSS is being applied.
+
+*This means that CSS must be fully parsed before we can move on to the next stage.*
+
+CSS files are only considered render blocking if they apply to the current device. The ~<link rel="stylesheet">~ tag can accept a =media= attribute, in which we can specify any media query which the styles within apply to. If, for example, we have a stylesheet with a media attribute of =orientation: landscape=, and we are viewing the page in portrait mode, that resource will not be considered render blocking.
+
+CSS can also be *"script blocking"*. This is because JavaScript files must wait until the CSSOM has been constructed before it can run.
+
+*** 3.Running JavaScript
+
+JavaScript is considered a *"parser blocking resource"*. This means that the parsing of the HTML document itself is blocked by JavaScript.
+
+When the parser reaches a =<script>= tag, whether that be internal or external, it stops to fetch (if it is external) and run it. This why, if we have a JavaScript file that references elements within the document, it must be placed after the appearance of that document.
+
+To avoid JavaScript being parse blocking, it can be loaded asynchronously be applying the =async= attribute.
+
+#+BEGIN_SRC html -n
+  <script async src="script.js"></script>
+#+END_SRC
+
+*** 4.Creating the Render Tree
+
+The Render Tree is a combination of both the DOM and CSSOM. It is a Tree that represents what will be eventually rendered on the page. This means that it only captures the visible content and will not include, for example, elements that have been hidden with CSS using =display: none=.
+
+Using the example DOM and CSSOM above, the following Render Tree will be created:
+
+#+BEGIN_EXPORT html
+<img
+src="/images/web/vdom-10.png"
+width="720"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+*** 5.Generating the Layout
+
+The Layout is what determines *what the size of the viewport is* , which provides context for CSS styles that are dependent on it, e.g. percentage or viewport units. The viewport size is determined by meta viewport tag provided in the document head or, if no tag is provided, the default viewport width of 980px is used.
+
+For example, the most common meta viewport value is to set the viewport size to correspond to the device width:
+
+#+BEGIN_SRC html -n
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+#+END_SRC
+
+If the user visits the webpage on a device with a width of, for example, 1000px, then sizes will be based on that unit. Half the viewport will be 500px, 10vw will be 100px, and so on.
+
+*** 6.Painting
+
+Finally, in the Painting step, the visible content of the page can be converted to pixels to be displayed on the screen.
+
+How much time the paint step takes depends on the size of the DOM, as well as what styles are applied. Some styles require more work to execute than others. For example, a complicated gradient background-image will require more time than a simple solid background colour.
+
+*** Putting it All Together
+
+To see
+
+* Footnotes
+
+[fn:2] https://bitsofco.de/understanding-the-critical-rendering-path/
+
+[fn:1] https://bitsofco.de/what-exact
+
