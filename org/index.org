@@ -46,6 +46,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 
 | CSS          |
 |--------------|
+| [[./css-talking.org][CSS 那些事儿]] |
 | [[./css-tta.org][CSS 中的动效]] |
 
 | Asm                    |

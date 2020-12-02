@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2020-12-02 Wed 15:56 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS 那些事儿</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
+<link rel="stylesheet" href="/css/animate.min.css" />
+<link rel="stylesheet" href="/css/all.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script src="/js/jquery.min.js"></script>
+<script src="/js/darkreader.js"></script>
+<script src="/user.config.js"></script>
+<script src="/js/main.js"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">CSS 那些事儿</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org6383bc0">Basics</a>
+<ul>
+<li><a href="#org906dad9">Box Model</a></li>
+<li><a href="#org82fc159">CSS Grid</a></li>
+</ul>
+</li>
+<li><a href="#orgb608903">CSS Architecture</a>
+<ul>
+<li><a href="#org05faf91">BEM</a></li>
+</ul>
+</li>
+<li><a href="#orgba78dd1">CSS Preprocessor</a>
+<ul>
+<li><a href="#org6f3f2e3">Sass</a></li>
+<li><a href="#org89463f1">PostCSS</a></li>
+</ul>
+</li>
+<li><a href="#org64584be">Modern CSS</a>
+<ul>
+<li><a href="#orgcecd044">CSS Modules</a></li>
+</ul>
+</li>
+<li><a href="#org25c3ed6">CSS Frameworks</a></li>
+</ul>
+</div>
+</div>
+<p>
+我们在这里做一些约定，如下：
+</p>
+
+<pre class="example">
+*R → - Personal Recommendattion/ Opinion
+*O → - Alternative Option - Pick this or purple
+*A → - Order in roadmap not strict (Learn anytime)
+*X → - I wouldn't recommend
+</pre>
+
+<div id="outline-container-org6383bc0" class="outline-2">
+<h2 id="org6383bc0">Basics</h2>
+<div class="outline-text-2" id="text-org6383bc0">
+<blockquote>
+<p>
+CSS:
+</p>
+<ul class="org-ul">
+<li class="off"><code>[&#xa0;]</code> *R → Learn th basics</li>
+<li class="trans"><code>[-]</code> *R → Making Layouts
+<ul class="org-ul">
+<li class="off"><code>[&#xa0;]</code> *R → Floats</li>
+<li class="off"><code>[&#xa0;]</code> *R → Positioning</li>
+<li class="off"><code>[&#xa0;]</code> *R → Display</li>
+<li class="on"><code>[X]</code> *R → Box Model</li>
+<li class="on"><code>[X]</code> *R → CSS Grid</li>
+<li class="off"><code>[&#xa0;]</code> *R → Flex Box</li>
+</ul></li>
+<li class="off"><code>[&#xa0;]</code> *R → Responsive design and Media Queries</li>
+</ul>
+</blockquote>
+</div>
+
+<div id="outline-container-org906dad9" class="outline-3">
+<h3 id="org906dad9">Box Model</h3>
+<div class="outline-text-3" id="text-org906dad9">
+<p>
+Box Model（CSS 盒模型），本质上是一个盒子，封装周围的 HTML 元素，它包括：
+</p>
+
+<pre class="example">
+- margin 外边距
+- border 边框
+- padding 内边距
+- content 实际内容
+</pre>
+
+<p>
+在 CSS3 中新增了一个属性 <code>box-sizing: content-box|border-box|inherit</code> ，默认值为 <code>content-box</code> ，这个属性什么用途呢？
+</p>
+
+<p>
+原来，我们日常使用的盒子模型为 <span class="underline">W3C 盒模型</span> ，它以内容（content）的宽高为基点：
+</p>
+
+<pre class="example">
+width/height = content
+</pre>
+
+<p>
+但是 IE6 以下的版本以边框（border）的宽高为基点，称为 <span class="underline">IE 盒模型</span> ：
+</p>
+
+<pre class="example">
+width/height = content + padding + border
+</pre>
+
+<p>
+*注：其实，IE 盒模型更符合逻辑。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org82fc159" class="outline-3">
+<h3 id="org82fc159">CSS Grid</h3>
+<div class="outline-text-3" id="text-org82fc159">
+<p>
+更多了解，可以参考 <a href="http://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html">CSS Grid 网格布局教程</a> 。
+</p>
+
+<p>
+网格布局（Grid）是最强大的 CSS 布局方案。它将网页划分成一个个网络，可以任意组合不同的风格，做出各种各样的布局。以前，只能通过复杂的 CSS 框架达到的效果，现在浏览器内置了。
+</p>
+
+<p>
+Grid 布局与 Flex 布局有一定的相似性，都可以指定容器内部多个项目的位置。但是，它们也存在重大区别。
+</p>
+
+<p>
+Flex 布局是轴线布局，只能指定"项目"针对轴线的位置，可以看作是一维布局。Grid 布局则是将容器划分成"行"和"列"，产生单元格，然后指定"项目所在"的单元格，可以看作是二维布局。
+</p>
+
+<p>
+Grid 布局远比 Flex 布局强大。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb608903" class="outline-2">
+<h2 id="orgb608903">CSS Architecture</h2>
+<div class="outline-text-2" id="text-orgb608903">
+<blockquote>
+<p>
+CSS Architecture:
+</p>
+<ul class="org-ul">
+<li class="on"><code>[X]</code> *A → BEM</li>
+<li class="off"><code>[&#xa0;]</code> *X → OOCS</li>
+<li class="off"><code>[&#xa0;]</code> *X → SMACSS</li>
+</ul>
+</blockquote>
+
+<p>
+Witdh modern frameworks and CSS-in-JS you don't have to worry about these anymore but still it would be a good idea to get familiarized with BEM at least.
+</p>
+</div>
+
+<div id="outline-container-org05faf91" class="outline-3">
+<h3 id="org05faf91">BEM</h3>
+<div class="outline-text-3" id="text-org05faf91">
+<p>
+BEM（Block 块、Element 元素、Modifier 修饰符），是一种前端命名的方法论，主要是针对 CSS，便于统一团队开发规范和维护。
+</p>
+
+<p>
+BEM 命名规则如下：
+</p>
+
+<pre class="example">
+// 模块名__元素名--修饰符名
+block-name__element-name--modifier-name
+</pre>
+
+<p>
+其中：
+</p>
+<ul class="org-ul">
+<li><code>block</code> 代表了更高级别的抽象或组件；</li>
+<li><code>block__element</code> 代表 <code>block</code> 的后代，用于形成一个完整的 <code>block</code> 整体；</li>
+<li><code>block--modifier</code> 代表 <code>block</code> 的不同状态或不同版本。</li>
+</ul>
+
+<p>
+来看个例子吧。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-css"><span class="linenr">1: </span><span style="color: #87D700;">.person </span><span style="color: #AF87FF;">{}</span>                      <span style="color: #8B8878;">/*</span><span style="color: #8B8878;">&#20154;</span><span style="color: #8B8878;">*/</span>
+<span class="linenr">2: </span><span style="color: #87D700;">.person__hand </span><span style="color: #AF87FF;">{}</span>                <span style="color: #8B8878;">/*</span><span style="color: #8B8878;">&#20154;&#30340;&#25163;</span><span style="color: #8B8878;">*/</span>
+<span class="linenr">3: </span><span style="color: #87D700;">.person--female </span><span style="color: #AF87FF;">{}</span>              <span style="color: #8B8878;">/*</span><span style="color: #8B8878;">&#22899;&#20154;</span><span style="color: #8B8878;">*/</span>
+<span class="linenr">4: </span><span style="color: #87D700;">.person--female__hand </span><span style="color: #AF87FF;">{}</span>        <span style="color: #8B8878;">/*</span><span style="color: #8B8878;">&#22899;&#20154;&#30340;&#25163;</span><span style="color: #8B8878;">*/</span>
+<span class="linenr">5: </span><span style="color: #87D700;">.person__hand--left </span><span style="color: #AF87FF;">{}</span>          <span style="color: #8B8878;">/*</span><span style="color: #8B8878;">&#20154;&#30340;&#24038;&#25163;</span><span style="color: #8B8878;">*/</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgba78dd1" class="outline-2">
+<h2 id="orgba78dd1">CSS Preprocessor</h2>
+<div class="outline-text-2" id="text-orgba78dd1">
+<blockquote>
+<p>
+CSS Preprocessor:
+</p>
+<ul class="org-ul">
+<li class="on"><code>[X]</code> *A → Sass</li>
+<li class="on"><code>[X]</code> *A → PostCSS</li>
+<li class="off"><code>[&#xa0;]</code> *X → Less</li>
+</ul>
+</blockquote>
+
+<p>
+With how the modern frameworks there has been more push towards CSS-in-JS so you may not need these but still a good idea to familiarize yourself.
+</p>
+
+<p>
+CSS Preprocesssor（CSS 预处理器）是什么？为什么我们需要它？
+</p>
+
+<p>
+众所周知，CSS 并不能算是一门真正意义上的编程语言，它本身无法完成像其它编程语言一样的嵌套、继承、设置变量等工作。为了解决 CSS 的不足，开发者们想到了编写一种对 CSS 进行预处理的 <b>“中间语言”</b> ，可以实现一些编程语言才有的功能，然后自动编译成 CSS 供浏览器识别。
+</p>
+</div>
+
+<div id="outline-container-org6f3f2e3" class="outline-3">
+<h3 id="org6f3f2e3">Sass</h3>
+<div class="outline-text-3" id="text-org6f3f2e3">
+<p>
+<b>Sass 就是最早的 CSS 预处理语言！</b>
+</p>
+
+<p>
+Sass 是采用 Ruby 语言编写的，最初采用缩进式语法。从第三代开始，放弃了缩进式风格，并且完全向下兼容普通的 CSS 代码，这一代的 Sass 也被称为 <span class="underline">Scss</span> 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org89463f1" class="outline-3">
+<h3 id="org89463f1">PostCSS<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h3>
+<div class="outline-text-3" id="text-org89463f1">
+<p>
+PostCSS 是一个用 JavaScript 工具和插件转换 CSS 代码的工具。
+</p>
+
+<p>
+<b>PostCSS 能为我们做什么呢？</b>
+</p>
+
+<p>
+（1）增强代码的可读性
+</p>
+
+<p>
+利用从 Can I Use 网站获取的数据为 CSS 规则添加特定厂商的前缀。 <a href="https://github.com/postcss/autoprefixer">Autoprefixer</a> 自动获取浏览器的流行度和能够支持的属性，并根据这些数据帮你自动为 CSS 规则添加前缀。
+</p>
+
+<p>
+（2）将未来的 CSS 特性带来到今天
+</p>
+
+<p>
+<a href="https://preset-env.cssdb.org/">PostCSS Preset Env</a> 帮你将最新的 CSS 语法转换成大多数浏览器都能理解的语法，并根据你的目标浏览器或运行时环境来确定你需要的 polyfills ，此功能基于 <a href="https://cssdb.org/">cssdb</a> 实现。
+</p>
+
+<p>
+（3）终结全局 CSS
+</p>
+
+<p>
+<a href="https://github.com/css-modules/css-modules">CSS 模块</a> 能让你永远不用担心命名太大众化而造成冲突，只要用最有意义的名字就行了。
+</p>
+
+<p>
+（4）避免 CSS 代码中的错误
+</p>
+
+<p>
+通过 <a href="https://stylelint.io/">stylelint</a> 强化一致性约束并避免样式表中的错误。stylelint 是一个现代化 CSS 代码检查工具，它支持最新的 CSS 语法，也包括类似 CSS 的语法，如 SCSS 。
+</p>
+
+<essay>
+所有的工具都是为了解决实际工程中遇到的痛点，你懂得！
+</essay>
+
+<p>
+<b>如何使用 PostCSS 呢？</b>
+</p>
+
+<p>
+You can start using PostCSS in just two steps:
+</p>
+<ol class="org-ol">
+<li>Find and add PostCSS extensions for your build tool;</li>
+<li><a href="https://www.postcss.parts/">Select plugins</a> and add them to your PostCSS process.</li>
+</ol>
+
+<p>
+下面我们来几种 PostCSS 的使用场景：
+</p>
+
+<p>
+<span class="underline">1. CSS-in-JS</span>
+</p>
+
+<p>
+The best way to use PostCSS with CSS-in-JS is <a href="https://github.com/4Catalyzer/astroturf">astroturf</a> . Add its loader to your <code>webpack.config.js</code> :
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 2: </span>    module: <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 3: </span>        rules: <span style="color: #87D700;">[</span>
+<span class="linenr"> 4: </span>            <span style="color: #CDC673;">{</span>
+<span class="linenr"> 5: </span>                test: <span style="color: #CDC673;">/\.css$/</span>,
+<span class="linenr"> 6: </span>                use: <span style="color: #FF8C00;">[</span><span style="color: #CDC673;">'style-loader'</span>, <span style="color: #CDC673;">'postcss-loader'</span><span style="color: #FF8C00;">]</span>,
+<span class="linenr"> 7: </span>            <span style="color: #CDC673;">}</span>,
+<span class="linenr"> 8: </span>            <span style="color: #CDC673;">{</span>
+<span class="linenr"> 9: </span>                text: <span style="color: #CDC673;">/\.jsx?$/</span>,
+<span class="linenr">10: </span>                use: <span style="color: #FF8C00;">[</span><span style="color: #CDC673;">'babel-loader'</span>, <span style="color: #CDC673;">'astroturf/loader'</span><span style="color: #FF8C00;">]</span>,
+<span class="linenr">11: </span>            <span style="color: #CDC673;">}</span>
+<span class="linenr">12: </span>        <span style="color: #87D700;">]</span>
+<span class="linenr">13: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">14: </span><span style="color: #AF87FF;">}</span>
+</pre>
+</div>
+
+<p>
+Then create <code>postcss.config.js</code> :
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span>module.exports = <span style="color: #AF87FF;">{</span>
+<span class="linenr">2: </span>    plugins: <span style="color: #5FD7FF;">[</span>
+<span class="linenr">3: </span>        require<span style="color: #87D700;">(</span><span style="color: #CDC673;">'autoprefixer'</span><span style="color: #87D700;">)</span>,
+<span class="linenr">4: </span>        require<span style="color: #87D700;">(</span><span style="color: #CDC673;">'postcss-nested'</span><span style="color: #87D700;">)</span>
+<span class="linenr">5: </span>    <span style="color: #5FD7FF;">]</span>
+<span class="linenr">6: </span><span style="color: #AF87FF;">}</span>
+</pre>
+</div>
+
+<p>
+What is <b>astroturf</b> ?
+</p>
+
+<p>
+<a href="https://github.com/4Catalyzer/astroturf">astroturf</a> lets you write CSS in your JavaScript files without adding any runtime layer, and with your existing CSS processing pipeline.
+</p>
+
+<p>
+来看一段关于它的简单使用吧。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #FF1493;">import</span> React from <span style="color: #CDC673;">'react'</span>
+<span class="linenr"> 2: </span><span style="color: #FF1493;">import</span> <span style="color: #AF87FF;">{</span> css <span style="color: #AF87FF;">}</span> from <span style="color: #CDC673;">'astroturf'</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #FF1493;">const</span> <span style="color: #FF8C00;">styles</span> = css<span style="color: #CDC673;">`</span>
+<span class="linenr"> 5: </span><span style="color: #CDC673;">    .button {</span>
+<span class="linenr"> 6: </span><span style="color: #CDC673;">        color: black;</span>
+<span class="linenr"> 7: </span><span style="color: #CDC673;">        border: 1px solid black;</span>
+<span class="linenr"> 8: </span><span style="color: #CDC673;">        background-color: white;</span>
+<span class="linenr"> 9: </span><span style="color: #CDC673;">    }</span>
+<span class="linenr">10: </span><span style="color: #CDC673;">`</span>
+<span class="linenr">11: </span>
+<span class="linenr">12: </span><span style="color: #FF1493;">export</span> <span style="color: #FF1493;">default</span> <span style="color: #FF1493;">function</span> Button<span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">{</span> children <span style="color: #5FD7FF;">}</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
+<span class="linenr">13: </span>    <span style="color: #FF1493;">return</span> &lt;button className=<span style="color: #5FD7FF;">{</span>styles.button<span style="color: #5FD7FF;">}</span>&gt;<span style="color: #5FD7FF;">{</span> children <span style="color: #5FD7FF;">}</span>&lt;button/&gt;
+<span class="linenr">14: </span><span style="color: #AF87FF;">}</span>
+</pre>
+</div>
+
+<p>
+When processed, the <code>css</code> block will be extracted into a <code>.css</code> file, taking advantage of any and all of the other loaders configured to handle css.
+</p>
+
+<p>
+<span class="underline">2. Webpack</span>
+</p>
+
+<p>
+Use <code>postcss-loader</code> in <code>webpack.config.js</code> :
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr"> 1: </span>modult.exports = <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 2: </span>    module: <span style="color: #5FD7FF;">{</span>
+<span class="linenr"> 3: </span>        rules: <span style="color: #87D700;">[</span>
+<span class="linenr"> 4: </span>            <span style="color: #CDC673;">{</span>
+<span class="linenr"> 5: </span>                test: <span style="color: #CDC673;">/\.css$/</span>,
+<span class="linenr"> 6: </span>                exclude: <span style="color: #CDC673;">/node_modules/</span>,
+<span class="linenr"> 7: </span>                use: <span style="color: #FF8C00;">[</span>
+<span class="linenr"> 8: </span>                    <span style="color: #FF1493;">{</span>
+<span class="linenr"> 9: </span>                        loader: <span style="color: #CDC673;">'style-loader'</span>,
+<span class="linenr">10: </span>                    <span style="color: #FF1493;">}</span>,
+<span class="linenr">11: </span>                    <span style="color: #FF1493;">{</span>
+<span class="linenr">12: </span>                        loader: <span style="color: #CDC673;">'css-loader'</span>,
+<span class="linenr">13: </span>                        options: <span style="color: #AF87FF;">{</span>
+<span class="linenr">14: </span>                            importLoader: 1,
+<span class="linenr">15: </span>                        <span style="color: #AF87FF;">}</span>
+<span class="linenr">16: </span>                    <span style="color: #FF1493;">}</span>,
+<span class="linenr">17: </span>                    <span style="color: #FF1493;">{</span>
+<span class="linenr">18: </span>                        loader: <span style="color: #CDC673;">'postcss-loader'</span>
+<span class="linenr">19: </span>                    <span style="color: #FF1493;">}</span>
+<span class="linenr">20: </span>                <span style="color: #FF8C00;">]</span>
+<span class="linenr">21: </span>            <span style="color: #CDC673;">}</span>
+<span class="linenr">22: </span>        <span style="color: #87D700;">]</span>
+<span class="linenr">23: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">24: </span><span style="color: #AF87FF;">}</span>
+</pre>
+</div>
+
+<p>
+Then create <code>post.config.js</code> :
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span>module.exports = <span style="color: #AF87FF;">{</span>
+<span class="linenr">2: </span>    plugins: <span style="color: #5FD7FF;">[</span>
+<span class="linenr">3: </span>        require<span style="color: #87D700;">(</span><span style="color: #CDC673;">'precss'</span><span style="color: #87D700;">)</span>,
+<span class="linenr">4: </span>        require<span style="color: #87D700;">(</span><span style="color: #CDC673;">'autoprefixer'</span><span style="color: #87D700;">)</span>
+<span class="linenr">5: </span>    <span style="color: #5FD7FF;">]</span>
+<span class="linenr">6: </span><span style="color: #AF87FF;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org64584be" class="outline-2">
+<h2 id="org64584be">Modern CSS</h2>
+<div class="outline-text-2" id="text-org64584be">
+<blockquote>
+<p>
+Modern CSS:
+</p>
+<ul class="org-ul">
+<li class="off"><code>[&#xa0;]</code> *R → Styled Component</li>
+<li class="on"><code>[X]</code> *R → CSS Modules</li>
+<li class="off"><code>[&#xa0;]</code> *O → Styled JSX</li>
+<li class="off"><code>[&#xa0;]</code> *O → Emotion</li>
+<li class="off"><code>[&#xa0;]</code> *X → Radium</li>
+<li class="off"><code>[&#xa0;]</code> *X → Glamorous</li>
+</ul>
+</blockquote>
+</div>
+
+<div id="outline-container-orgcecd044" class="outline-3">
+<h3 id="orgcecd044">CSS Modules<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
+<div class="outline-text-3" id="text-orgcecd044">
+<p>
+学过网页开发就会知道，CSS 不能算编程语言，只是网页样式的一种描述方法。
+</p>
+
+<p>
+为了让 CSS 也能适用软件工程方法，开发者想了各种办法，让它变得像一门编程语言。从最早的 Less、Sass ，到后来的 PostCSS ，再到最近的 Css in JS ，都是为了解决这个问题。
+</p>
+
+<p>
+<b>那么，<a href="https://github.com/css-modules/css-modules">CSS Modules</a> 有什么不同呢？</b>
+</p>
+
+<p>
+A CSS Module is a CSS file in which all class names and animation names are scoped locally by default. All URLs( <code>url(...)</code> ) and <code>@imports</code> are in module request format( <code>./xxx</code> and <code>../xxx</code> means relative, <code>xxx</code> and <code>xxx/yyy</code> means in modules folder, i.e. in <code>node_modules</code>).
+</p>
+
+<p>
+CSS Modules 并不是将 CSS 改造成编程语言，它的功能很单纯，只是为了加入 <b>局部作用域和模块依赖</b> ，这恰恰是网页组件最急需的功能。
+</p>
+
+<p>
+CSS Modules 易学，规则少、实用，可以保证某个组件的样式，不会影响到其他组件。
+</p>
+
+<p>
+CSS Moudles compile to a low-level interchange format called ICSS or <a href="https://github.com/css-modules/icss">Interoperable CSS</a>, but are written like normal CSS files.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-css"><span class="linenr">1: </span><span style="color: #8B8878;">/* </span><span style="color: #8B8878;">style.css </span><span style="color: #8B8878;">*/</span>
+<span class="linenr">2: </span><span style="color: #87D700;">.className </span><span style="color: #AF87FF;">{</span>
+<span class="linenr">3: </span>    <span style="color: #FF1493;">color</span>: <span style="color: #ffffff; background-color: #008000;">green</span>;
+<span class="linenr">4: </span><span style="color: #AF87FF;">}</span>
+</pre>
+</div>
+
+<p>
+When importing the <b>CSS Moudle</b> from a JS Module, it exports an object with all mappings from local names to global names.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #FF1493;">import</span> style from <span style="color: #CDC673;">'./style.css'</span>
+<span class="linenr">2: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">import { className } from './style.css'</span>
+<span class="linenr">3: </span>
+<span class="linenr">4: </span>element.innerHTML = <span style="color: #CDC673;">'&lt;div class="'</span> + styles.className + <span style="color: #CDC673;">'"&gt;'</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org25c3ed6" class="outline-2">
+<h2 id="org25c3ed6">CSS Frameworks</h2>
+<div class="outline-text-2" id="text-org25c3ed6">
+<p>
+JS based and better to use with your framework based JavaScript applications:
+</p>
+
+<blockquote>
+<p>
+CSS Frameworks:
+</p>
+<ul class="org-ul">
+<li class="off"><code>[&#xa0;]</code> *R → Reactstrap</li>
+<li class="off"><code>[&#xa0;]</code> *R → Material UI</li>
+<li class="off"><code>[&#xa0;]</code> *O → Tailwind CSS</li>
+<li class="off"><code>[&#xa0;]</code> *O → Chakra UI</li>
+</ul>
+</blockquote>
+
+<p>
+CSS first frameworks which don't come with JavaScript components by default:
+</p>
+
+<blockquote>
+<ul class="org-ul">
+<li class="off"><code>[&#xa0;]</code> *R → Bootstrap</li>
+<li class="off"><code>[&#xa0;]</code> *O → Materialize CSS</li>
+<li class="off"><code>[&#xa0;]</code> *O → Bulma</li>
+</ul>
+</blockquote>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://github.com/postcss/postcss#usage">https://github.com/postcss/postcss#usage</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+<a href="http://www.ruanyifeng.com/blog/2016/06/css_modules.html">http://www.ruanyifeng.com/blog/2016/06/css_modules.html</a>
+</p></div></div>
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-12-02 Wed 09:53</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2020-12-02 Wed 15:56</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

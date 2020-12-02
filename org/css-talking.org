@@ -1,0 +1,329 @@
+#+SETUPFILE: ../theme-rose.setup
+#+DATE: <2020-12-02 Wed 09:53>
+#+TITLE: CSS 那些事儿
+
+我们在这里做一些约定，如下：
+
+#+BEGIN_EXAMPLE
+*R → - Personal Recommendattion/ Opinion
+*O → - Alternative Option - Pick this or purple
+*A → - Order in roadmap not strict (Learn anytime)
+*X → - I wouldn't recommend
+#+END_EXAMPLE
+
+** Basics
+
+#+BEGIN_QUOTE
+CSS:
+- [ ] *R → Learn th basics
+- [-] *R → Making Layouts
+  - [ ] *R → Floats
+  - [ ] *R → Positioning
+  - [ ] *R → Display
+  - [X] *R → Box Model
+  - [X] *R → CSS Grid
+  - [ ] *R → Flex Box
+- [ ] *R → Responsive design and Media Queries
+#+END_QUOTE
+
+*** Box Model
+
+Box Model（CSS 盒模型），本质上是一个盒子，封装周围的 HTML 元素，它包括：
+
+#+BEGIN_EXAMPLE
+- margin 外边距
+- border 边框
+- padding 内边距
+- content 实际内容
+#+END_EXAMPLE
+
+在 CSS3 中新增了一个属性 =box-sizing: content-box|border-box|inherit= ，默认值为 =content-box= ，这个属性什么用途呢？
+
+原来，我们日常使用的盒子模型为 _W3C 盒模型_ ，它以内容（content）的宽高为基点：
+
+#+BEGIN_EXAMPLE
+width/height = content
+#+END_EXAMPLE
+
+但是 IE6 以下的版本以边框（border）的宽高为基点，称为 _IE 盒模型_ ：
+
+#+BEGIN_EXAMPLE
+width/height = content + padding + border
+#+END_EXAMPLE
+
+*注：其实，IE 盒模型更符合逻辑。
+
+*** CSS Grid
+
+更多了解，可以参考 [[http://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html][CSS Grid 网格布局教程]] 。
+
+网格布局（Grid）是最强大的 CSS 布局方案。它将网页划分成一个个网络，可以任意组合不同的风格，做出各种各样的布局。以前，只能通过复杂的 CSS 框架达到的效果，现在浏览器内置了。
+
+Grid 布局与 Flex 布局有一定的相似性，都可以指定容器内部多个项目的位置。但是，它们也存在重大区别。
+
+Flex 布局是轴线布局，只能指定"项目"针对轴线的位置，可以看作是一维布局。Grid 布局则是将容器划分成"行"和"列"，产生单元格，然后指定"项目所在"的单元格，可以看作是二维布局。
+
+Grid 布局远比 Flex 布局强大。
+
+** CSS Architecture
+
+#+BEGIN_QUOTE
+CSS Architecture:
+- [X] *A → BEM
+- [ ] *X → OOCS
+- [ ] *X → SMACSS
+#+END_QUOTE
+
+Witdh modern frameworks and CSS-in-JS you don't have to worry about these anymore but still it would be a good idea to get familiarized with BEM at least.
+
+*** BEM
+
+BEM（Block 块、Element 元素、Modifier 修饰符），是一种前端命名的方法论，主要是针对 CSS，便于统一团队开发规范和维护。
+
+BEM 命名规则如下：
+
+#+BEGIN_EXAMPLE
+// 模块名__元素名--修饰符名
+block-name__element-name--modifier-name
+#+END_EXAMPLE
+
+其中：
+- =block= 代表了更高级别的抽象或组件；
+- =block__element= 代表 =block= 的后代，用于形成一个完整的 =block= 整体；
+- =block--modifier= 代表 =block= 的不同状态或不同版本。
+
+来看个例子吧。
+
+#+BEGIN_SRC css -n
+  .person {}                      /*人*/
+  .person__hand {}                /*人的手*/
+  .person--female {}              /*女人*/
+  .person--female__hand {}        /*女人的手*/
+  .person__hand--left {}          /*人的左手*/
+#+END_SRC
+
+** CSS Preprocessor
+
+#+BEGIN_QUOTE
+CSS Preprocessor:
+- [X] *A → Sass
+- [X] *A → PostCSS
+- [ ] *X → Less
+#+END_QUOTE
+
+With how the modern frameworks there has been more push towards CSS-in-JS so you may not need these but still a good idea to familiarize yourself.
+
+CSS Preprocesssor（CSS 预处理器）是什么？为什么我们需要它？
+
+众所周知，CSS 并不能算是一门真正意义上的编程语言，它本身无法完成像其它编程语言一样的嵌套、继承、设置变量等工作。为了解决 CSS 的不足，开发者们想到了编写一种对 CSS 进行预处理的 *“中间语言”* ，可以实现一些编程语言才有的功能，然后自动编译成 CSS 供浏览器识别。
+
+*** Sass
+
+*Sass 就是最早的 CSS 预处理语言！*
+
+Sass 是采用 Ruby 语言编写的，最初采用缩进式语法。从第三代开始，放弃了缩进式风格，并且完全向下兼容普通的 CSS 代码，这一代的 Sass 也被称为 _Scss_ 。
+
+*** PostCSS[fn:1]
+
+PostCSS 是一个用 JavaScript 工具和插件转换 CSS 代码的工具。
+
+*PostCSS 能为我们做什么呢？*
+
+（1）增强代码的可读性
+
+利用从 Can I Use 网站获取的数据为 CSS 规则添加特定厂商的前缀。 [[https://github.com/postcss/autoprefixer][Autoprefixer]] 自动获取浏览器的流行度和能够支持的属性，并根据这些数据帮你自动为 CSS 规则添加前缀。
+
+（2）将未来的 CSS 特性带来到今天
+
+[[https://preset-env.cssdb.org/][PostCSS Preset Env]] 帮你将最新的 CSS 语法转换成大多数浏览器都能理解的语法，并根据你的目标浏览器或运行时环境来确定你需要的 polyfills ，此功能基于 [[https://cssdb.org/][cssdb]] 实现。
+
+（3）终结全局 CSS
+
+[[https://github.com/css-modules/css-modules][CSS 模块]] 能让你永远不用担心命名太大众化而造成冲突，只要用最有意义的名字就行了。
+
+（4）避免 CSS 代码中的错误
+
+通过 [[https://stylelint.io/][stylelint]] 强化一致性约束并避免样式表中的错误。stylelint 是一个现代化 CSS 代码检查工具，它支持最新的 CSS 语法，也包括类似 CSS 的语法，如 SCSS 。
+
+#+BEGIN_EXPORT html
+<essay>
+所有的工具都是为了解决实际工程中遇到的痛点，你懂得！
+</essay>
+#+END_EXPORT
+
+*如何使用 PostCSS 呢？*
+
+You can start using PostCSS in just two steps:
+1. Find and add PostCSS extensions for your build tool;
+2. [[https://www.postcss.parts/][Select plugins]] and add them to your PostCSS process.
+
+下面我们来几种 PostCSS 的使用场景：
+
+_1. CSS-in-JS_
+
+The best way to use PostCSS with CSS-in-JS is [[https://github.com/4Catalyzer/astroturf][astroturf]] . Add its loader to your =webpack.config.js= :
+
+#+BEGIN_SRC js -n
+  module.exports = {
+      module: {
+          rules: [
+              {
+                  test: /\.css$/,
+                  use: ['style-loader', 'postcss-loader'],
+              },
+              {
+                  text: /\.jsx?$/,
+                  use: ['babel-loader', 'astroturf/loader'],
+              }
+          ]
+      }
+  }
+#+END_SRC
+
+Then create =postcss.config.js= :
+
+#+BEGIN_SRC js -n
+  module.exports = {
+      plugins: [
+          require('autoprefixer'),
+          require('postcss-nested')
+      ]
+  }
+#+END_SRC
+
+What is *astroturf* ?
+
+[[https://github.com/4Catalyzer/astroturf][astroturf]] lets you write CSS in your JavaScript files without adding any runtime layer, and with your existing CSS processing pipeline.
+
+来看一段关于它的简单使用吧。
+
+#+BEGIN_SRC js -n
+  import React from 'react'
+  import { css } from 'astroturf'
+
+  const styles = css`
+      .button {
+          color: black;
+          border: 1px solid black;
+          background-color: white;
+      }
+  `
+
+  export default function Button({ children }) {
+      return <button className={styles.button}>{ children }<button/>
+  }
+#+END_SRC
+
+When processed, the =css= block will be extracted into a =.css= file, taking advantage of any and all of the other loaders configured to handle css.
+
+_2. Webpack_
+
+Use =postcss-loader= in =webpack.config.js= :
+
+#+BEGIN_SRC js -n
+  modult.exports = {
+      module: {
+          rules: [
+              {
+                  test: /\.css$/,
+                  exclude: /node_modules/,
+                  use: [
+                      {
+                          loader: 'style-loader',
+                      },
+                      {
+                          loader: 'css-loader',
+                          options: {
+                              importLoader: 1,
+                          }
+                      },
+                      {
+                          loader: 'postcss-loader'
+                      }
+                  ]
+              }
+          ]
+      }
+  }
+#+END_SRC
+
+Then create =post.config.js= :
+
+#+BEGIN_SRC js -n
+  module.exports = {
+      plugins: [
+          require('precss'),
+          require('autoprefixer')
+      ]
+  }
+#+END_SRC
+
+** Modern CSS
+
+#+BEGIN_QUOTE
+Modern CSS:
+- [ ] *R → Styled Component
+- [X] *R → CSS Modules
+- [ ] *O → Styled JSX
+- [ ] *O → Emotion
+- [ ] *X → Radium
+- [ ] *X → Glamorous
+#+END_QUOTE
+
+*** CSS Modules[fn:2]
+
+学过网页开发就会知道，CSS 不能算编程语言，只是网页样式的一种描述方法。
+
+为了让 CSS 也能适用软件工程方法，开发者想了各种办法，让它变得像一门编程语言。从最早的 Less、Sass ，到后来的 PostCSS ，再到最近的 Css in JS ，都是为了解决这个问题。
+
+*那么，[[https://github.com/css-modules/css-modules][CSS Modules]] 有什么不同呢？*
+
+A CSS Module is a CSS file in which all class names and animation names are scoped locally by default. All URLs( =url(...)= ) and =@imports= are in module request format( =./xxx= and =../xxx= means relative, =xxx= and =xxx/yyy= means in modules folder, i.e. in =node_modules=).
+
+CSS Modules 并不是将 CSS 改造成编程语言，它的功能很单纯，只是为了加入 *局部作用域和模块依赖* ，这恰恰是网页组件最急需的功能。
+
+CSS Modules 易学，规则少、实用，可以保证某个组件的样式，不会影响到其他组件。
+
+CSS Moudles compile to a low-level interchange format called ICSS or [[https://github.com/css-modules/icss][Interoperable CSS]], but are written like normal CSS files.
+
+#+BEGIN_SRC css -n
+  /* style.css */
+  .className {
+      color: green;
+  }
+#+END_SRC
+
+When importing the *CSS Moudle* from a JS Module, it exports an object with all mappings from local names to global names.
+
+#+BEGIN_SRC js -n
+  import style from './style.css'
+  // import { className } from './style.css'
+
+  element.innerHTML = '<div class="' + styles.className + '">'
+#+END_SRC
+
+** CSS Frameworks
+
+JS based and better to use with your framework based JavaScript applications:
+
+#+BEGIN_QUOTE
+CSS Frameworks:
+- [ ] *R → Reactstrap
+- [ ] *R → Material UI
+- [ ] *O → Tailwind CSS
+- [ ] *O → Chakra UI
+#+END_QUOTE
+
+CSS first frameworks which don't come with JavaScript components by default:
+
+#+BEGIN_QUOTE
+- [ ] *R → Bootstrap
+- [ ] *O → Materialize CSS
+- [ ] *O → Bulma
+#+END_QUOTE
+
+* Footnotes
+
+[fn:2] http://www.ruanyifeng.com/blog/2016/06/css_modules.html
+
+[fn:1] https://github.com/postcss/postcss#usage
