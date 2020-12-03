@@ -19,7 +19,7 @@
 |      | [[http://www.nginx.cn/doc/][Nginx Doc]]  | [[http://c.biancheng.net/][C 语言中文网]] | [[https://www.lmonkey.com/][学习猿地]]       |                |                |
 |------+------------+--------------+----------------+----------------+----------------|
 | 博客 | [[https://bitsofco.de/][Bitsofco]]   | [[http://www.ruanyifeng.com/blog/developer/][阮一峰]]       | [[http://xahlee.org/][李杀网]]         | [[https://coolshell.cn/][酷壳]]           | [[https://www.zhangxinxu.com/][张鑫旭]]         |
-|      |            |              | [[https://manateelazycat.github.io/index.html][ManateeLazyCat]] |                |                |
+|      | [[http://www.tripod.fun/][阿汤]]       |              | [[https://manateelazycat.github.io/index.html][ManateeLazyCat]] |                |                |
 
  *Bookmarks InboX*
 
@@ -52,3 +52,6 @@
 - https://blog.csdn.net/weixin_41648325/article/details/79412158
 - https://www.jianshu.com/p/c8f9c61c2f20
 - https://www.jianshu.com/p/001818b28ef2
+- https://zhuanlan.zhihu.com/p/74792085
+- https://www.zhihu.com/question/29504639
+
