@@ -8,7 +8,7 @@
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-15.jpg"
+src="/images/java-15.jpg"
 width="300"
 height=""
 style=""
@@ -77,7 +77,7 @@ IP 地址又分为 _公网 IP 地址_ （可以直接被访问）和 _内网 IP 
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-16.png"
+src="/images/java-16.png"
 width="400"
 height=""
 style=""
@@ -163,7 +163,7 @@ i.e. Transmission Control Protocol
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-17.png"
+src="/images/java-17.png"
 width=""
 height=""
 style=""
@@ -488,7 +488,7 @@ HTTP（HyperText Transfer Protocol）的缩写，超文本传输协议，它是�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-18.png"
+src="/images/java-18.png"
 width=""
 height=""
 style=""
@@ -581,7 +581,7 @@ Content-Length: 18391
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-19.png"
+src="/images/java-19.png"
 width=""
 height=""
 style=""
@@ -601,7 +601,7 @@ TCP 连接是能复用了，等待响应又成问题了……
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-20.png"
+src="/images/java-20.png"
 width=""
 height=""
 style=""

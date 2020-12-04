@@ -6,7 +6,7 @@
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-0.png"
+src="/images/java-0.png"
 width="50"
 height=""
 style="float: left; margin-right: 8px;"
@@ -32,7 +32,7 @@ Java SE 允许开发和部署在桌面、服务器、嵌入式环境和实时环
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-1.jpg"
+src="/images/java-1.jpg"
 width="100%"
 height=""
 style=""
@@ -114,7 +114,7 @@ JVM（Java Virtual Machine, Java 虚拟机），是整个 Java 实现跨平台�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-2.jpg"
+src="/images/java-2.jpg"
 width="300"
 height=""
 style=""
@@ -124,7 +124,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-3.png"
+src="/images/java-3.png"
 width="400"
 height=""
 style=""
@@ -165,7 +165,7 @@ Java 程序的运行必须经过编写、编译和运行 3 个步骤：
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-4.png"
+src="/images/java-4.png"
 width="100%"
 height=""
 style=""
@@ -187,7 +187,7 @@ JVM 把这种不同软硬件平台的具体差别隐藏起来，从而实现了�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-5.png"
+src="/images/java-5.png"
 width="660"
 height=""
 style=""

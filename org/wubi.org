@@ -6,7 +6,7 @@
 
 #+BEGIN_EXPORT html
 <img
-src="/images/wubi/wenwen.jpg"
+src="/images/wenwen.jpg"
 width="300"
 height=""
 style="float: right; margin-left: 8px;"
@@ -55,7 +55,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/wubi/wubi-1.jpg"
+src="/images/wubi-1.jpg"
 width="400"
 height=""
 style=""
@@ -67,7 +67,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/wubi/wubi-2.jpg"
+src="/images/wubi-2.jpg"
 width="460"
 height=""
 style=""
@@ -145,7 +145,7 @@ _拆字_ 是学习五笔的一个重要环节，光背会了字根，有的汉�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/wubi/wubi-3.gif"
+src="/images/wubi-3.gif"
 width="150"
 height=""
 style=""
@@ -155,7 +155,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/wubi/wubi-4.gif"
+src="/images/wubi-4.gif"
 width="170"
 height=""
 style="margin-left: 32px;"
@@ -183,7 +183,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/wubi/wubi-5.gif"
+src="/images/wubi-5.gif"
 width="150"
 height=""
 style=""
@@ -197,7 +197,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/wubi/wubi-6.gif"
+src="/images/wubi-6.gif"
 width="120"
 height=""
 style=""
@@ -217,7 +217,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/wubi/wubi-7.gif"
+src="/images/wubi-7.gif"
 width="360"
 height=""
 style=""
@@ -229,7 +229,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/wubi/wubi-8.gif"
+src="/images/wubi-8.gif"
 width="500"
 height=""
 style="border-bottom: 2px solid #666;"
@@ -263,7 +263,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/wubi/wubi-9.gif"
+src="/images/wubi-9.gif"
 width="460"
 height=""
 style=""

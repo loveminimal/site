@@ -16,7 +16,7 @@ The first stage involves the browser parsing the document to determine what will
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/vdom-1.png"
+src="/images/vdom-1.png"
 width="660"
 height=""
 style=""
@@ -34,7 +34,7 @@ The render tree is a representation of the HTML elements that will be rendered o
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/vdom-2.png"
+src="/images/vdom-2.png"
 width="300"
 height=""
 style="float: right; margin-left: 8px;"
@@ -86,7 +86,7 @@ The DOM is an interface for *valid* HTML documents. During the process of creati
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/vdom-3.png"
+src="/images/vdom-3.png"
 width="200"
 height=""
 style="float: right; margin-left: 8px;"
@@ -135,7 +135,7 @@ The DOM will include the =<p>= element:
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/vdom-4.png"
+src="/images/vdom-4.png"
 width="250"
 height=""
 style=""
@@ -145,7 +145,7 @@ title="DOM"
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/vdom-5.png"
+src="/images/vdom-5.png"
 width="200"
 height=""
 style="float: right; margin-left: 8px; border: 3px solid #acf;"
@@ -165,7 +165,7 @@ Despite the fact that pseudo-elements are not part of the DOM, they are in our d
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/vdom-6.png"
+src="/images/vdom-6.png"
 width="800"
 height=""
 style=""
@@ -206,7 +206,7 @@ Knowledge of the CRP is incredibly useful for understanding how a site's perform
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/vdom-7.png"
+src="/images/vdom-7.png"
 width="760"
 height=""
 style=""
@@ -247,7 +247,7 @@ This will create the following DOM Tree:
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/vdom-8.png"
+src="/images/vdom-8.png"
 width="720"
 height=""
 style=""
@@ -279,7 +279,7 @@ This will create the following CSSOM Tree:
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/vdom-9.png"
+src="/images/vdom-9.png"
 width="720"
 height=""
 style=""
@@ -317,7 +317,7 @@ Using the example DOM and CSSOM above, the following Render Tree will be created
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/vdom-10.png"
+src="/images/vdom-10.png"
 width="720"
 height=""
 style=""
@@ -375,7 +375,7 @@ If we look at the Event Log for the page load, this is what we get:
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/vdom-11.png"
+src="/images/vdom-11.png"
 width="800"
 height=""
 style=""
@@ -430,7 +430,7 @@ This document can be represented as the following DOM tree:
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/vdom-12.png"
+src="/images/vdom-12.png"
 width="260"
 height=""
 style=""
@@ -483,7 +483,7 @@ Let's revisit the DOM tree we created earlier:
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/vdom-12.png"
+src="/images/vdom-12.png"
 width="260"
 height=""
 style=""

@@ -29,7 +29,7 @@ _输入_ 就是将数据从各种输入设备（包括文件、键盘等）中�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-11.png"
+src="/images/java-11.png"
 width="360"
 height=""
 style=""
@@ -39,7 +39,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-12.png"
+src="/images/java-12.png"
 width="360"
 height=""
 style="float: right;"
@@ -53,7 +53,7 @@ Java 流相关的类都封装在 =java.io= 包中，而且每个数据流都是�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-13.png"
+src="/images/java-13.png"
 width=""
 height=""
 style=""
@@ -87,7 +87,7 @@ Java 中字符是 Unicode 编码，即双字节的，而 InputStream 是用来�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-14.png"
+src="/images/java-14.png"
 width=""
 height=""
 style=""

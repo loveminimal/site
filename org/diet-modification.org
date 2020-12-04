@@ -12,7 +12,7 @@
 
 #+BEGIN_EXPORT html
 <img
-src="/images/leisure/seven.jpg"
+src="/images/seven.jpg"
 width="300"
 style=""
 />
@@ -22,7 +22,7 @@ style=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/leisure/level.jpg"
+src="/images/level.jpg"
 width="500"
 style=""
 />
@@ -34,7 +34,7 @@ style=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/leisure/seven-way1.jpg"
+src="/images/seven-way1.jpg"
 width="400"
 style=""
 />
@@ -44,7 +44,7 @@ style=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/leisure/seven-way2.jpg"
+src="/images/seven-way2.jpg"
 width="400"
 style=""
 />
@@ -66,7 +66,7 @@ style=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/leisure/breakfast-1.jpg"
+src="/images/breakfast-1.jpg"
 width=""
 height="200"
 style=""
@@ -75,7 +75,7 @@ style=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/leisure/breakfast-2.jpg"
+src="/images/breakfast-2.jpg"
 width=""
 height="200"
 style=""

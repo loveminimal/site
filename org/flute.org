@@ -34,7 +34,7 @@ _4. 音质_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/leisure/notation-5.jpg"
+src="/images/notation-5.jpg"
 width="600"
 height=""
 style=""
@@ -97,7 +97,7 @@ _1.3 半音与全音_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/leisure/notation-7.gif"
+src="/images/notation-7.gif"
 width="200"
 height=""
 style="float: right;"
@@ -141,7 +141,7 @@ _4. 调号_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/leisure/notation-6.png"
+src="/images/notation-6.png"
 width="400"
 height=""
 style="float:right;"
@@ -169,7 +169,7 @@ _6.1 大调式_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/leisure/notation-8.gif"
+src="/images/notation-8.gif"
 width="150"
 height=""
 style="float:right;"
@@ -236,7 +236,7 @@ _8.7 换气号_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/leisure/notation-0.jpg"
+src="/images/notation-0.jpg"
 width="300"
 height=""
 style="float: right;"
@@ -252,7 +252,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/leisure/notation-1.jpg"
+src="/images/notation-1.jpg"
 width="720"
 height=""
 style=""
@@ -266,7 +266,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/leisure/notation-2.jpg"
+src="/images/notation-2.jpg"
 width=""
 height=""
 style=""
@@ -314,7 +314,7 @@ _连音线_ 表示的是演奏法，可以把几个不同音高的音连在一�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/leisure/notation-3.jpg"
+src="/images/notation-3.jpg"
 width="300"
 height=""
 style="float: left; margin-right: 8px;"
@@ -332,7 +332,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/leisure/notation-4.jpg"
+src="/images/notation-4.jpg"
 width="660"
 height=""
 style=""

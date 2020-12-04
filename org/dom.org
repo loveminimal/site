@@ -41,7 +41,7 @@ DOM 可以将任何 HTML 或 XML 文档描绘成一个由多层节点构成的�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/js/dom-1.png"
+src="/images/dom-1.png"
 width="400"
 height=""
 style="float: right; margin-left: 8px;"

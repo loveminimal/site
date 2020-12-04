@@ -6,7 +6,7 @@
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/ajax-1.png"
+src="/images/ajax-1.png"
 width="600"
 height=""
 style=""
@@ -68,7 +68,7 @@ AJAX（Asynchronous JavaScript and XML），是一种异步请求数据的 Web �
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/ajax-2.png"
+src="/images/ajax-2.png"
 width="360"
 height=""
 style="float: right; margin-left: 8px;"
@@ -116,7 +116,7 @@ Event Loop 是一个程序结构，用于等待和发送消息和事件。
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/ajax-3.png"
+src="/images/ajax-3.png"
 width="160"
 height=""
 style="float: right; margin-left: 8px;"
@@ -231,7 +231,7 @@ JavaScript 语言的设计者意识到，这时主线程完全可以不管 I/O �
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/ajax-4.jpg"
+src="/images/ajax-4.jpg"
 width="460"
 height=""
 style="float: right; margin-left: 8px;"
@@ -267,7 +267,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/ajax-5.png"
+src="/images/ajax-5.png"
 width="400"
 height=""
 style="float: left; margin-right: 8px;"
@@ -300,7 +300,7 @@ NodeJS 也是单线程的 Event Loop，但是它的运行机制不同于浏览�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/ajax-6.png"
+src="/images/ajax-6.png"
 width="500"
 height=""
 style=""
@@ -355,7 +355,7 @@ GUI 渲染线程和 JavaScript 引擎线程是互斥的。其他线程相互之�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/ajax-7.png"
+src="/images/ajax-7.png"
 width="500"
 height=""
 style="float: right; margin-left: 8px;"
@@ -491,7 +491,7 @@ HTTP 协议（HyperText Transfer Protocol，超文本传输协议），是一个
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/ajax-8.gif"
+src="/images/ajax-8.gif"
 width="300"
 height=""
 style="float: right; margin-left: 8px;"
@@ -529,7 +529,7 @@ _1. 客户端请求消息_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/ajax-9.png"
+src="/images/ajax-9.png"
 width="460"
 height=""
 style="float: right; margin-left: 8px;"
@@ -547,7 +547,7 @@ _2. 服务器响应消息_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/web/ajax-10.jpg"
+src="/images/ajax-10.jpg"
 width="600"
 height=""
 style=""
