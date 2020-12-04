@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2020-12-04 Fri 11:32 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Android 那些事儿</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
+<link rel="stylesheet" href="/css/animate.min.css" />
+<link rel="stylesheet" href="/css/all.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<script src="/js/jquery.min.js"></script>
+<script src="/js/darkreader.js"></script>
+<script src="/user.config.js"></script>
+<script src="/js/main.js"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Android 那些事儿</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org19b9dbc">Android 是什么</a></li>
+<li><a href="#orga2107a8">Android 应用程序</a></li>
+<li><a href="#orge297401">Android 开发环境搭建</a></li>
+<li><a href="#org0c28ab0">Android 架构</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org19b9dbc" class="outline-2">
+<h2 id="org19b9dbc">Android 是什么<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-org19b9dbc">
+<img
+src="/images/android-1.jpg"
+width="200"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
+
+<p>
+Android 是一个开源的，基于 Linux 的移动设备操作系统，由谷歌及其他公司带领的开放手机联盟开发。
+</p>
+
+<p>
+Android 提供了一个统一的应用程序开发方法，这意味着开发人员只需要为 Android 进行开发，这样他们的应用程序就能够运行在不同搭载 Android 的移动设备上。
+</p>
+
+<p>
+谷歌在2007年发布了第一个测试版本的 Android 软件开发工具包（SDK），第一个商业版本的 Android 1.0，则发布于2008年9月。
+</p>
+
+<p>
+Android 源代码是根据自由和开放源码软件许可证。谷歌发布的大部分代码遵循 Apache 许可证2.0版，Linux 内核的变化遵循 GNU 通用公共许可证版本 GPL2.0。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga2107a8" class="outline-2">
+<h2 id="orga2107a8">Android 应用程序</h2>
+<div class="outline-text-2" id="text-orga2107a8">
+<p>
+Android 应用程序一般使用 Android 软件开发工具包，采用 Java 语言来开发。
+</p>
+
+<p>
+本教程的写作目的是教会你如何开发并打包 Android 应用程序。我们将从 Android 应用程序编程环境设置开始，然后深入 Android 应用程序开发的各个方面。
+</p>
+
+<p>
+市场上有许多 Android 应用。主要类别有：
+</p>
+
+<img
+src="/images/android-2.png"
+width="500"
+height=""
+style=""
+title=""
+/>
+
+<p>
+Android 的历史:
+</p>
+
+<img
+src="/images/android-3.jpg"
+width="500"
+height=""
+style=""
+title=""
+/>
+</div>
+</div>
+
+<div id="outline-container-orge297401" class="outline-2">
+<h2 id="orge297401">Android 开发环境搭建</h2>
+<div class="outline-text-2" id="text-orge297401">
+<p>
+以下是开始开发 Android 应用程序需要用到的软件列表：
+</p>
+
+<pre class="example">
+- Java JDK5 或 以后版本
+- Android SDK
+- Java 运行时环境（JRE）
+- Android Studio
+- (可选的) Java 开发者使用的 Eclipse IDE
+- (可选的) Android开发工具 (ADT)Eclipse 插件
+</pre>
+
+<p>
+Android Studio 的安装可以参考 <a href="https://www.runoob.com/android/android-studio-install.html">https://www.runoob.com/android/android-studio-install.html</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0c28ab0" class="outline-2">
+<h2 id="org0c28ab0">Android 架构</h2>
+<div class="outline-text-2" id="text-org0c28ab0">
+<p>
+Android 操作系统是一个软件组件的栈，在架构图中它大致可以分为五个部分和四个主要层。
+</p>
+
+<img
+src="/images/android-4.jpg"
+width="800"
+height=""
+style=""
+title=""
+/>
+
+<p>
+<span class="underline">1. Linux 内核</span>
+</p>
+
+<p>
+在所有层的最底下是 Linux，包括大约 115 个补丁的 Linux 3.6 。它提供了基本的系统功能，比如进程管理、内存管理、设备管理（如摄像头、键盘、显示器）。同时，内核处理所有 Linux 擅长的工件，如网络和大量的设备驱动，从而避免兼容大量外围硬件接口带来的不便。
+</p>
+
+<p>
+<span class="underline">2. 程序库</span>
+</p>
+
+<p>
+在 Linux 内核层的上面是一系列程序的集合，包括开源的 Web 浏览器引擎 Webkit、知名的 libc 库等，用于仓库存储和应用数据共享的 SQLite 数据库，用于播放、录制音视频的库，用于网络安全的 SSL 库等。
+</p>
+
+<p>
+（1）Android 程序库
+</p>
+
+<p>
+这个类别包括了专门为 Android 开发基于 Java 的程序库，这个类别程序库的示例包括应用程序框架库，如用户界面构建，图形绘制和数据库访问。
+</p>
+
+<p>
+一些 Android 开发者可用的 Android 核心程序库总结如下：
+</p>
+
+<table>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">库</th>
+<th scope="col" class="org-left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">android.app</td>
+<td class="org-left">提供应用程序模型的访问，是所有 Android 应用程序的基石</td>
+</tr>
+
+<tr>
+<td class="org-left">android.content</td>
+<td class="org-left">方便应用程序之间，应用程序组件之间的内容访问，发布，消息传递</td>
+</tr>
+
+<tr>
+<td class="org-left">android.database</td>
+<td class="org-left">用于访问内容提供者发布的数据，包含 SQLite 数据库管理类</td>
+</tr>
+
+<tr>
+<td class="org-left">android.opengl</td>
+<td class="org-left">OpenGL ES 3D 图片渲染 API 的 Java 接口</td>
+</tr>
+
+<tr>
+<td class="org-left">android.os</td>
+<td class="org-left">提供应用程序访问标注操作系统服务的能力，包括消息，系统服务和进程间通信</td>
+</tr>
+
+<tr>
+<td class="org-left">android.text</td>
+<td class="org-left">在设备显示上渲染和操作文本</td>
+</tr>
+
+<tr>
+<td class="org-left">android.view</td>
+<td class="org-left">应用程序用户界面的基础构建块</td>
+</tr>
+
+<tr>
+<td class="org-left">android.widget</td>
+<td class="org-left">丰富的预置用户界面组件集合，包括按钮，标签，列表，布局管理，单选按钮等</td>
+</tr>
+
+<tr>
+<td class="org-left">android.webkit</td>
+<td class="org-left">一系列类的集合，允许为应用程序提供内建的 Web 浏览能力</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+看过了 Android 运行层内的基于 Java 的核心程序库，是时候关注一下 Android 软件栈中的基于 C/C++ 的程序库。
+</p>
+
+<p>
+（2）Android 运行时
+</p>
+
+<p>
+这是架构中的第三部分，自下而上的第二层。这个部分提供名为 Dalvik 虚拟机的关键组件，类似于 Java 虚拟机，但专门为 Android 设计和优化。
+</p>
+
+<p>
+Dalvik 虚拟机使得可以在 Java 中使用 Linux 核心功能，如内存管理和多线程。Dalvik 虚拟机使得每一个 Android 应用程序运行在自己独立的虚拟机进程。
+</p>
+
+<p>
+Android 运行时同时提供一系列核心的库来为 Android 应用程序开发者使用标准的 Java 语言来编写 Android 应用程序。
+</p>
+
+<p>
+<span class="underline">3. 应用框架</span>
+</p>
+
+<p>
+应用框架层以 Java 类的形式为应用程序提供许多高级的服务，应用程序开发者被允许在应用中使用这些服务。
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://www.runoob.com/android/android-overview.html">https://www.runoob.com/android/android-overview.html</a>
+</p></div></div>
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-12-04 Fri 10:43</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2020-12-04 Fri 11:32</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

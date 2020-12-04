@@ -40,9 +40,9 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./ajax.org][Ajax]]                  |
 | [[./virtual-dom.org][Virtual DOM]]           |
 
-| JS 高级程序设计 |
-|-----------------|
-| [[./dom.org][DOM]]             |
+| JavaScript |
+|------------|
+| [[./dom.org][DOM]]        |
 
 | CSS          |
 |--------------|
@@ -75,6 +75,10 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./java-12.org][Java 反射机制]]         |
 | [[./java-13.org][Java 输入/输出流]]      |
 | [[./java-14.org][Java 注解]]             |
+
+| Android          |
+|------------------|
+| [[./android-talking.org][Android 那些事儿]] |
 
 | 休闲     |
 |----------|

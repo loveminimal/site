@@ -1,0 +1,126 @@
+#+SETUPFILE: ../theme-rose.setup
+#+DATE: <2020-12-04 Fri 10:43>
+#+TITLE: Android 那些事儿
+
+** Android 是什么[fn:1]
+
+#+BEGIN_EXPORT html
+<img
+src="/images/android-1.jpg"
+width="200"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
+#+END_EXPORT
+
+Android 是一个开源的，基于 Linux 的移动设备操作系统，由谷歌及其他公司带领的开放手机联盟开发。
+
+Android 提供了一个统一的应用程序开发方法，这意味着开发人员只需要为 Android 进行开发，这样他们的应用程序就能够运行在不同搭载 Android 的移动设备上。
+
+谷歌在2007年发布了第一个测试版本的 Android 软件开发工具包（SDK），第一个商业版本的 Android 1.0，则发布于2008年9月。
+
+Android 源代码是根据自由和开放源码软件许可证。谷歌发布的大部分代码遵循 Apache 许可证2.0版，Linux 内核的变化遵循 GNU 通用公共许可证版本 GPL2.0。
+
+** Android 应用程序
+
+Android 应用程序一般使用 Android 软件开发工具包，采用 Java 语言来开发。
+
+本教程的写作目的是教会你如何开发并打包 Android 应用程序。我们将从 Android 应用程序编程环境设置开始，然后深入 Android 应用程序开发的各个方面。
+
+市场上有许多 Android 应用。主要类别有：
+
+#+BEGIN_EXPORT html
+<img
+src="/images/android-2.png"
+width="500"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+Android 的历史:
+
+#+BEGIN_EXPORT html
+<img
+src="/images/android-3.jpg"
+width="500"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+** Android 开发环境搭建
+
+以下是开始开发 Android 应用程序需要用到的软件列表：
+
+#+BEGIN_EXAMPLE
+- Java JDK5 或 以后版本
+- Android SDK
+- Java 运行时环境（JRE）
+- Android Studio
+- (可选的) Java 开发者使用的 Eclipse IDE
+- (可选的) Android开发工具 (ADT)Eclipse 插件
+#+END_EXAMPLE
+
+Android Studio 的安装可以参考 https://www.runoob.com/android/android-studio-install.html
+
+** Android 架构
+
+Android 操作系统是一个软件组件的栈，在架构图中它大致可以分为五个部分和四个主要层。
+
+#+BEGIN_EXPORT html
+<img
+src="/images/android-4.jpg"
+width="800"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+_1. Linux 内核_
+
+在所有层的最底下是 Linux，包括大约 115 个补丁的 Linux 3.6 。它提供了基本的系统功能，比如进程管理、内存管理、设备管理（如摄像头、键盘、显示器）。同时，内核处理所有 Linux 擅长的工件，如网络和大量的设备驱动，从而避免兼容大量外围硬件接口带来的不便。
+
+_2. 程序库_
+
+在 Linux 内核层的上面是一系列程序的集合，包括开源的 Web 浏览器引擎 Webkit、知名的 libc 库等，用于仓库存储和应用数据共享的 SQLite 数据库，用于播放、录制音视频的库，用于网络安全的 SSL 库等。
+
+（1）Android 程序库
+
+这个类别包括了专门为 Android 开发基于 Java 的程序库，这个类别程序库的示例包括应用程序框架库，如用户界面构建，图形绘制和数据库访问。
+
+一些 Android 开发者可用的 Android 核心程序库总结如下：
+
+| 库               | 描述                                                                   |
+|------------------+------------------------------------------------------------------------|
+| android.app      | 提供应用程序模型的访问，是所有 Android 应用程序的基石                  |
+| android.content  | 方便应用程序之间，应用程序组件之间的内容访问，发布，消息传递           |
+| android.database | 用于访问内容提供者发布的数据，包含 SQLite 数据库管理类                 |
+| android.opengl   | OpenGL ES 3D 图片渲染 API 的 Java 接口                                 |
+| android.os       | 提供应用程序访问标注操作系统服务的能力，包括消息，系统服务和进程间通信 |
+| android.text     | 在设备显示上渲染和操作文本                                             |
+| android.view     | 应用程序用户界面的基础构建块                                           |
+| android.widget   | 丰富的预置用户界面组件集合，包括按钮，标签，列表，布局管理，单选按钮等 |
+| android.webkit   | 一系列类的集合，允许为应用程序提供内建的 Web 浏览能力                  |
+
+看过了 Android 运行层内的基于 Java 的核心程序库，是时候关注一下 Android 软件栈中的基于 C/C++ 的程序库。
+
+（2）Android 运行时
+
+这是架构中的第三部分，自下而上的第二层。这个部分提供名为 Dalvik 虚拟机的关键组件，类似于 Java 虚拟机，但专门为 Android 设计和优化。
+
+Dalvik 虚拟机使得可以在 Java 中使用 Linux 核心功能，如内存管理和多线程。Dalvik 虚拟机使得每一个 Android 应用程序运行在自己独立的虚拟机进程。
+
+Android 运行时同时提供一系列核心的库来为 Android 应用程序开发者使用标准的 Java 语言来编写 Android 应用程序。
+
+_3. 应用框架_
+
+应用框架层以 Java 类的形式为应用程序提供许多高级的服务，应用程序开发者被允许在应用中使用这些服务。
+
+* Footnotes
+
+[fn:1] https://www.runoob.com/android/android-overview.html
