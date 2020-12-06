@@ -55,6 +55,10 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./assembly-2.org][ASM x86 处理器架构]]     |
 | [[./assembly-3.org][ASM 汇编语言基础]]       |
 
+| C          |
+|------------|
+| [[./c-0.org][C 语言序言]] |
+
 | Java                  |
 |-----------------------|
 | [[./network-programming.org][网络编程]]              |
