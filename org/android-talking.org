@@ -2,6 +2,8 @@
 #+DATE: <2020-12-04 Fri 10:43>
 #+TITLE: Android 那些事儿
 
+→ 摘录自 https://www.runoob.com/android/android-tutorial.html
+
 ** Android 是什么[fn:1]
 
 #+BEGIN_EXPORT html
@@ -212,6 +214,83 @@ _4. 应用程序_
 | Resources | 外部元素，例如字符串资源、常量资源及图片资源等 |
 | Manifest  | 应用程序的配置文件                             |
 
+** Hello World
+
+*** Android 应用程序剖析
+
+在运行应用之前，我们来认识一下 Android 项目中的一些文件目录和文件。
+
+#+BEGIN_EXPORT html
+<img
+src="/images/android-5.jpg"
+width=""
+height=""
+style="box-shadow: 0 0 2px #ccc;"
+title=""
+/>
+#+END_EXPORT
+
+| 文件夹/文件           | 说明                                                                                                                                     |
+|-----------------------+------------------------------------------------------------------------------------------------------------------------------------------|
+| =src=                 | 包含项目中所有的 =.java= 源文件，默认情况下，它包括一个 =MainActivity.java= 源文件对应的活动类，当应用程序通过应用图标启动时，将运行它。 |
+| =gen=                 | 这包含由编译器生成的 =.R= 文件，引用了所有项目中的资源，该文件不能被修改。                                                               |
+| =bin=                 | 这个文件夹包含 Android 由 APT 构建的 =.apk= 包文件，以及运行 Android 应用程序所需要的其他所有东西。                                      |
+| =res/drawable-hdpi=   | 这个目录下包括所有的为高密度屏幕设计所需的 =drawable= 对象。                                                                             |
+| =res/layout=          | 这个目录存放用于定义用户界面的文件。                                                                                                     |
+| =res/values=          | 这个目录存放各种各样的包含一系列资源的 XML 文件，比如字符串和颜色的定义。                                                                |
+| =AndroidManifest.xml= | 这个是应用程序的清单文件，描述了应用程序的基础特性，定义它的各种组件。                                                                   |
+
+** Android FAQ
+
+*** Android studio 配置国内镜像源[fn:2]
+
+几个国内镜像源：
+
+#+BEGIN_EXAMPLE
+# 东软信息学院
+- mirrors.neusoft.edu.cn            port：80
+# 北京化工大学
+- ubuntu.buct.edu.cn/ubuntu.buct.cn port:80
+# 电子科技大学
+- mirrors.dormforce.net             port:80
+#+END_EXAMPLE
+
+*如何配置呢？*
+
+=File -> setting -> System Settings -> HTTP Proxy= ，配置镜像地址，如下：
+
+#+BEGIN_EXPORT html
+<img
+src="/images/android-6.jpg"
+width="400"
+height=""
+style="float: left; margin-right: 8px;"
+title=""
+/>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<img
+src="/images/android-7.jpg"
+width="400"
+height=""
+style=""
+title=""
+/>
+#+END_EXPORT
+
+重启 AS 查看。
+
+如果配置后还不可以，则有可能得查一下 Android SDK 中 SDK Update Sites 中的配置，如上右图。
+
+*** Waiting for Target Device to Come Online[fn:3]
+
+打开 AVD manager，选中你的模拟器，右键，wipe，擦出数据，OK。
+
 * Footnotes
+
+[fn:3] https://blog.csdn.net/meantobeyear/article/details/84778858
+
+[fn:2] https://blog.csdn.net/weixin_40849588/article/details/86559842
 
 [fn:1] https://www.runoob.com/android/android-overview.html

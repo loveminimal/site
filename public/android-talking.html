@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-12-04 Fri 12:16 -->
+<!-- 2020-12-05 Sat 11:55 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Android 那些事儿</title>
@@ -23,26 +23,40 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org11f3c9f">Android 是什么</a></li>
-<li><a href="#org56a7082">Android 应用程序</a></li>
-<li><a href="#orgc5cc758">Android 开发环境搭建</a></li>
-<li><a href="#org2067f55">Android 架构</a></li>
-<li><a href="#org168d01c">Android 应用程序组件</a>
+<li><a href="#orga6b810b">Android 是什么</a></li>
+<li><a href="#org4133dcc">Android 应用程序</a></li>
+<li><a href="#org5e6c512">Android 开发环境搭建</a></li>
+<li><a href="#org77e7c0b">Android 架构</a></li>
+<li><a href="#org8d27c14">Android 应用程序组件</a>
 <ul>
-<li><a href="#orgf8368f0">Activities</a></li>
-<li><a href="#org577c95f">Services</a></li>
-<li><a href="#org27ce86e">Broadcast Receivers</a></li>
-<li><a href="#org4fa72db">Content Providers</a></li>
-<li><a href="#orga400e9a">附件组件</a></li>
+<li><a href="#orgb184cd2">Activities</a></li>
+<li><a href="#orgb469074">Services</a></li>
+<li><a href="#org17a04b5">Broadcast Receivers</a></li>
+<li><a href="#org732f934">Content Providers</a></li>
+<li><a href="#org5cb2489">附件组件</a></li>
+</ul>
+</li>
+<li><a href="#org4547266">Hello World</a>
+<ul>
+<li><a href="#org88e0236">Android 应用程序剖析</a></li>
+</ul>
+</li>
+<li><a href="#org36d4979">Android FAQ</a>
+<ul>
+<li><a href="#org1e93c60">Android studio 配置国内镜像源</a></li>
+<li><a href="#orga965251">Waiting for Target Device to Come Online</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
+<p>
+→ 摘录自 <a href="https://www.runoob.com/android/android-tutorial.html">https://www.runoob.com/android/android-tutorial.html</a>
+</p>
 
-<div id="outline-container-org11f3c9f" class="outline-2">
-<h2 id="org11f3c9f">Android 是什么<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-org11f3c9f">
+<div id="outline-container-orga6b810b" class="outline-2">
+<h2 id="orga6b810b">Android 是什么<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-orga6b810b">
 <img
 src="/images/android-1.jpg"
 width="200"
@@ -69,9 +83,9 @@ Android 源代码是根据自由和开放源码软件许可证。谷歌发布的
 </div>
 </div>
 
-<div id="outline-container-org56a7082" class="outline-2">
-<h2 id="org56a7082">Android 应用程序</h2>
-<div class="outline-text-2" id="text-org56a7082">
+<div id="outline-container-org4133dcc" class="outline-2">
+<h2 id="org4133dcc">Android 应用程序</h2>
+<div class="outline-text-2" id="text-org4133dcc">
 <p>
 Android 应用程序一般使用 Android 软件开发工具包，采用 Java 语言来开发。
 </p>
@@ -106,9 +120,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgc5cc758" class="outline-2">
-<h2 id="orgc5cc758">Android 开发环境搭建</h2>
-<div class="outline-text-2" id="text-orgc5cc758">
+<div id="outline-container-org5e6c512" class="outline-2">
+<h2 id="org5e6c512">Android 开发环境搭建</h2>
+<div class="outline-text-2" id="text-org5e6c512">
 <p>
 以下是开始开发 Android 应用程序需要用到的软件列表：
 </p>
@@ -128,9 +142,9 @@ Android Studio 的安装可以参考 <a href="https://www.runoob.com/android/and
 </div>
 </div>
 
-<div id="outline-container-org2067f55" class="outline-2">
-<h2 id="org2067f55">Android 架构</h2>
-<div class="outline-text-2" id="text-org2067f55">
+<div id="outline-container-org77e7c0b" class="outline-2">
+<h2 id="org77e7c0b">Android 架构</h2>
+<div class="outline-text-2" id="text-org77e7c0b">
 <p>
 Android 操作系统是一个软件组件的栈，在架构图中它大致可以分为五个部分和四个主要层。
 </p>
@@ -277,9 +291,9 @@ Android 运行时同时提供一系列核心的库来为 Android 应用程序开
 </div>
 </div>
 
-<div id="outline-container-org168d01c" class="outline-2">
-<h2 id="org168d01c">Android 应用程序组件</h2>
-<div class="outline-text-2" id="text-org168d01c">
+<div id="outline-container-org8d27c14" class="outline-2">
+<h2 id="org8d27c14">Android 应用程序组件</h2>
+<div class="outline-text-2" id="text-org8d27c14">
 <p>
 应用程序组件是一个 Android 应用程序的基本构建块，这些组件由应用清单文件松耦合的组织， <code>AndroidManifest.xml</code> 描述了应用程序的每个组件，以及他们如何交互。
 </p>
@@ -325,9 +339,9 @@ Android 运行时同时提供一系列核心的库来为 Android 应用程序开
 </table>
 </div>
 
-<div id="outline-container-orgf8368f0" class="outline-3">
-<h3 id="orgf8368f0">Activities</h3>
-<div class="outline-text-3" id="text-orgf8368f0">
+<div id="outline-container-orgb184cd2" class="outline-3">
+<h3 id="orgb184cd2">Activities</h3>
+<div class="outline-text-3" id="text-orgb184cd2">
 <p>
 <b>一个活动标识一个具有用户界面的单一屏幕。</b>
 </p>
@@ -345,17 +359,17 @@ Android 运行时同时提供一系列核心的库来为 Android 应用程序开
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">MainActivity</span> <span style="color: #FF1493;">extends</span> <span style="color: #5FD7FF;">Activity</span> <span style="color: #AF87FF;">{</span>
-<span class="linenr">2: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">...</span>
-<span class="linenr">3: </span><span style="color: #AF87FF;">}</span>
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">MainActivity</span> <span style="color: #F92672;">extends</span> <span style="color: #66D9EF;">Activity</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">...</span>
+<span class="linenr">3: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org577c95f" class="outline-3">
-<h3 id="org577c95f">Services</h3>
-<div class="outline-text-3" id="text-org577c95f">
+<div id="outline-container-orgb469074" class="outline-3">
+<h3 id="orgb469074">Services</h3>
+<div class="outline-text-3" id="text-orgb469074">
 <p>
 <b>服务是运行在后台，执行长时间操作的组件。</b>
 </p>
@@ -369,17 +383,17 @@ Android 运行时同时提供一系列核心的库来为 Android 应用程序开
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">MyService</span> <span style="color: #FF1493;">extends</span> <span style="color: #5FD7FF;">Service</span> <span style="color: #AF87FF;">{</span>
-<span class="linenr">2: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">...</span>
-<span class="linenr">3: </span><span style="color: #AF87FF;">}</span>
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">MyService</span> <span style="color: #F92672;">extends</span> <span style="color: #66D9EF;">Service</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">...</span>
+<span class="linenr">3: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org27ce86e" class="outline-3">
-<h3 id="org27ce86e">Broadcast Receivers</h3>
-<div class="outline-text-3" id="text-org27ce86e">
+<div id="outline-container-org17a04b5" class="outline-3">
+<h3 id="org17a04b5">Broadcast Receivers</h3>
+<div class="outline-text-3" id="text-org17a04b5">
 <p>
 广播接收器简单地响应从其他应用程序或者系统发来的广播消息。
 </p>
@@ -393,17 +407,17 @@ Android 运行时同时提供一系列核心的库来为 Android 应用程序开
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">MyReceiver</span> <span style="color: #FF1493;">extends</span> <span style="color: #5FD7FF;">BroadcastReceiver</span> <span style="color: #AF87FF;">{</span>
-<span class="linenr">2: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">...</span>
-<span class="linenr">3: </span><span style="color: #AF87FF;">}</span>
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">MyReceiver</span> <span style="color: #F92672;">extends</span> <span style="color: #66D9EF;">BroadcastReceiver</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">...</span>
+<span class="linenr">3: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4fa72db" class="outline-3">
-<h3 id="org4fa72db">Content Providers</h3>
-<div class="outline-text-3" id="text-org4fa72db">
+<div id="outline-container-org732f934" class="outline-3">
+<h3 id="org732f934">Content Providers</h3>
+<div class="outline-text-3" id="text-org732f934">
 <p>
 <b>内容提供者组件通过请求从一个应用程序到另一个应用程序提供数据。</b> 这些请求由 ContentResolver 类的方法来处理，这些数据可以是存储在文件系统、数据库或者其他地方。
 </p>
@@ -413,17 +427,17 @@ Android 运行时同时提供一系列核心的库来为 Android 应用程序开
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">MyContentProvider</span> <span style="color: #FF1493;">extends</span> <span style="color: #5FD7FF;">ContentProvider</span> <span style="color: #AF87FF;">{</span>
-<span class="linenr">2: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">...</span>
-<span class="linenr">3: </span><span style="color: #AF87FF;">}</span>
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">MyContentProvider</span> <span style="color: #F92672;">extends</span> <span style="color: #66D9EF;">ContentProvider</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">...</span>
+<span class="linenr">3: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orga400e9a" class="outline-3">
-<h3 id="orga400e9a">附件组件</h3>
-<div class="outline-text-3" id="text-orga400e9a">
+<div id="outline-container-org5cb2489" class="outline-3">
+<h3 id="org5cb2489">附件组件</h3>
+<div class="outline-text-3" id="text-org5cb2489">
 <p>
 有一些附件的组件用于以上提到的实体、他们之间逻辑、及他们之间连线的构造，这些组件如下：
 </p>
@@ -476,6 +490,143 @@ Android 运行时同时提供一系列核心的库来为 Android 应用程序开
 </div>
 </div>
 </div>
+
+<div id="outline-container-org4547266" class="outline-2">
+<h2 id="org4547266">Hello World</h2>
+<div class="outline-text-2" id="text-org4547266">
+</div>
+<div id="outline-container-org88e0236" class="outline-3">
+<h3 id="org88e0236">Android 应用程序剖析</h3>
+<div class="outline-text-3" id="text-org88e0236">
+<p>
+在运行应用之前，我们来认识一下 Android 项目中的一些文件目录和文件。
+</p>
+
+<img
+src="/images/android-5.jpg"
+width=""
+height=""
+style="box-shadow: 0 0 2px #ccc;"
+title=""
+/>
+
+<table>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">文件夹/文件</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>src</code></td>
+<td class="org-left">包含项目中所有的 <code>.java</code> 源文件，默认情况下，它包括一个 <code>MainActivity.java</code> 源文件对应的活动类，当应用程序通过应用图标启动时，将运行它。</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>gen</code></td>
+<td class="org-left">这包含由编译器生成的 <code>.R</code> 文件，引用了所有项目中的资源，该文件不能被修改。</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>bin</code></td>
+<td class="org-left">这个文件夹包含 Android 由 APT 构建的 <code>.apk</code> 包文件，以及运行 Android 应用程序所需要的其他所有东西。</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>res/drawable-hdpi</code></td>
+<td class="org-left">这个目录下包括所有的为高密度屏幕设计所需的 <code>drawable</code> 对象。</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>res/layout</code></td>
+<td class="org-left">这个目录存放用于定义用户界面的文件。</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>res/values</code></td>
+<td class="org-left">这个目录存放各种各样的包含一系列资源的 XML 文件，比如字符串和颜色的定义。</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>AndroidManifest.xml</code></td>
+<td class="org-left">这个是应用程序的清单文件，描述了应用程序的基础特性，定义它的各种组件。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org36d4979" class="outline-2">
+<h2 id="org36d4979">Android FAQ</h2>
+<div class="outline-text-2" id="text-org36d4979">
+</div>
+<div id="outline-container-org1e93c60" class="outline-3">
+<h3 id="org1e93c60">Android studio 配置国内镜像源<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
+<div class="outline-text-3" id="text-org1e93c60">
+<p>
+几个国内镜像源：
+</p>
+
+<pre class="example">
+# 东软信息学院
+- mirrors.neusoft.edu.cn            port：80
+# 北京化工大学
+- ubuntu.buct.edu.cn/ubuntu.buct.cn port:80
+# 电子科技大学
+- mirrors.dormforce.net             port:80
+</pre>
+
+<p>
+<b>如何配置呢？</b>
+</p>
+
+<p>
+<code>File -&gt; setting -&gt; System Settings -&gt; HTTP Proxy</code> ，配置镜像地址，如下：
+</p>
+
+<img
+src="/images/android-6.jpg"
+width="400"
+height=""
+style="float: left; margin-right: 8px;"
+title=""
+/>
+
+<img
+src="/images/android-7.jpg"
+width="400"
+height=""
+style=""
+title=""
+/>
+
+<p>
+重启 AS 查看。
+</p>
+
+<p>
+如果配置后还不可以，则有可能得查一下 Android SDK 中 SDK Update Sites 中的配置，如上右图。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga965251" class="outline-3">
+<h3 id="orga965251">Waiting for Target Device to Come Online<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h3>
+<div class="outline-text-3" id="text-orga965251">
+<p>
+打开 AVD manager，选中你的模拟器，右键，wipe，擦出数据，OK。
+</p>
+</div>
+</div>
+</div>
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
 <div id="text-footnotes">
@@ -484,12 +635,20 @@ Android 运行时同时提供一系列核心的库来为 Android 应用程序开
 <a href="https://www.runoob.com/android/android-overview.html">https://www.runoob.com/android/android-overview.html</a>
 </p></div></div>
 
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://blog.csdn.net/weixin_40849588/article/details/86559842">https://blog.csdn.net/weixin_40849588/article/details/86559842</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://blog.csdn.net/meantobeyear/article/details/84778858">https://blog.csdn.net/meantobeyear/article/details/84778858</a>
+</p></div></div>
+
 </div>
 </div></div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-12-04 Fri 10:43</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-04 Fri 12:16</p>
+<p class="date">Created: 2020-12-05 Sat 11:55</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

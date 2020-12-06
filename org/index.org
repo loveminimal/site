@@ -80,6 +80,11 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 |------------------|
 | [[./android-talking.org][Android 那些事儿]] |
 
+| CS                     |
+|------------------------|
+| [[./cs-0.org][深入理解计算机系统序言]] |
+| [[./cs-1.org][第 1 章 计算机系统漫游]] |
+
 | 休闲     |
 |----------|
 | [[./diet-modification.org][饮食调整]] |
