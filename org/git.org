@@ -29,8 +29,8 @@ title=""
 请参考这个《Pro Git》中的 [[https://git-scm.com/book/zh/v2/%25E8%25B5%25B7%25E6%25AD%25A5-%25E5%25AE%2589%25E8%25A3%2585-Git][安装 Git]] 一节即可，不再赘述喽。
 
 #+BEGIN_SRC sh -n
-  → git --version
-  git version 2.7.4
+  jack@jk:~$ git --version
+  git version 2.17.1
 #+END_SRC
 
 ** 配置
@@ -38,8 +38,12 @@ title=""
 Git 是分布式版本控制系统，需要每台电脑自报家门：你的名字和 Email 地址。我们使用 =git config= 来完成这件事情，如下：
 
 #+BEGIN_SRC sh -n
-→ git config --global user.name "Jack Liu"
-→ git config --global user.email "loveminimal@163.com"
+  jack@jk:~$ git config --global user.name "Jack Liu"
+  jack@jk:~$ git config --global user.email "loveminimal@163.com"
+  # 查询配置结果
+  jack@jk:~$ git config -l
+  user.name=Jack Liu
+  user.email=loveminimal@163.com
 #+END_SRC
 
 #+BEGIN_EXPORT html
@@ -47,3 +51,123 @@ Git 是分布式版本控制系统，需要每台电脑自报家门：你的名�
 这里为什么要加 `--global` 呢？有没有其他的参数可用？
 </essay>
 #+END_EXPORT
+
+** 创建
+
+两种创建方式：
+- 初始化本地项目
+- 直接拉取远程仓库（稍后讲述）
+
+假设，本地存在文件夹 =my-git-repo= ，现在我们对它进行 Git 初始化，如下：
+
+#+BEGIN_SRC sh -n
+  jack@jk:~$ ls
+  Desktop  Documents  Downloads  Music  my-git-repo  Pictures  Public Videos
+  # 进入文件目录
+  jack@jk:~$ cd my-git-repo/
+  # 初始化该文件为 git 仓库
+  jack@jk:~/my-git-repo$ git init
+  Initialized empty Git repository in /home/jack/my-git-repo/.git/
+#+END_SRC
+
+*^_^ 你总是可以通过 =git xxx -h= 去获取更多帮助。*
+
+** 本地仓库
+
+*** git status
+
+我们总是可以用 =git status= 查询当前仓库的状态，如下：
+
+#+BEGIN_SRC sh -n
+jack@jk:~/my-git-repo$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	file1
+
+nothing added to commit but untracked files present (use "git add" to track)
+#+END_SRC
+
+看，它不仅给出了当前的仓库状态，还给出了你可能需要执行的操作。
+
+*** git add
+
+我们按照上面提示的操作，使用 =git add= 去开始追踪 =file1= 文件，如下：
+
+#+BEGIN_SRC sh -n
+jack@jk:~/my-git-repo$ git add file1
+jack@jk:~/my-git-repo$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+	new file:   file1
+#+END_SRC
+
+*通过 =git add= ，我们做了些什么呢？*
+
+我们通过 =git add file1= 把文件 *添加* 到暂存区。
+
+*** git commit
+
+我们可以通过 =git commit= 命令，把暂存区中的文件 *提交* 到仓库。
+
+#+BEGIN_SRC sh -n
+  jack@jk:~/my-git-repo$ git commit -m "Commit file1."
+  [master (root-commit) c5e4830] Commit file1.
+   1 file changed, 1 insertion(+)
+   create mode 100644 file1
+   # 查询一下当前的仓库状态
+  jack@jk:~/my-git-repo$ git status
+  On branch master
+  nothing to commit, working tree clean
+#+END_SRC
+
+*** git log
+
+经过上边的步骤，我们已经完成了一次提交。我们可以通过 =git log= 去查看，我们的提交历史，如下：
+
+#+BEGIN_SRC sh -n
+jack@jk:~/my-git-repo$ git log
+commit c5e48307b1e39459287e049b84bc6f606f9dd38e (HEAD -> master)
+Author: Jack Liu <loveminimal@163.com>
+Date:   Mon Dec 7 17:18:15 2020 +0800
+
+    Commit file1.
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<essay>
+Git 的命令不少，常用的其实没有几个，学习它的唯一方法，就是在使用中不断的深化。
+</essay>
+#+END_EXPORT
+
+** 分支
+
+*** git branch
+
+通过 =git branch= 列出仓库包含哪些分支，如下：
+
+#+BEGIN_SRC sh -n
+jack@jk:~/my-git-repo$ git branch
+\* master
+#+END_SRC
+
+*** git checkout
+
+通过 =git checkout= 可以创建和切换分支，如下：
+
+#+BEGIN_SRC sh -n
+
+#+END_SRC
+
+** 远程仓库
+
+什么是远程仓库呢？就是放在远程主机上的仓库喽。
