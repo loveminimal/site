@@ -39,6 +39,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./file-conversion.org][File Conversion]]       |
 | [[./ajax.org][Ajax]]                  |
 | [[./virtual-dom.org][Virtual DOM]]           |
+| [[./build-tools.org][Build Tools]]           |
 
 | JavaScript |
 |------------|

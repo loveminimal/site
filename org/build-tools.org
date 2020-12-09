@@ -1,0 +1,84 @@
+#+SETUPFILE: ../theme-rose.setup
+#+DATE: <2020-12-08 Tue 17:42>
+#+TITLE: Build Tools
+
+我们在这里做一些约定，如下：
+
+#+BEGIN_EXAMPLE
+*R → - Personal Recommendattion/ Opinion
+*O → - Alternative Option - Pick this or purple
+*A → - Order in roadmap not strict (Learn anytime)
+*X → - I wouldn't recommend
+#+END_EXAMPLE
+
+** Task Runners
+
+#+BEGIN_QUOTE
+Task Runners:
+- [ ] *R → npm scripts
+- [ ] *X → Gulp
+#+END_QUOTE
+
+** Module Bundlers
+
+#+BEGIN_QUOTE
+Module Bundlers:
+- [ ] *R → Webpack
+- [ ] *O → Rollup
+- [ ] *O → Parcel
+#+END_QUOTE
+
+** Linters and Formatters
+
+#+BEGIN_QUOTE
+Linters and Formatters:
+- [X] *A → Prettier
+- [X] *A → ESLint
+- [ ] *X → StandardJS
+#+END_QUOTE
+
+*** Prettier[fn:2]
+
+Prettier is an opinionated code formatter. It enforces a consistent style by parsing your code and re-printing it with its own rules that take the maximum line length into account, wrapping code when necessary.
+
+_1. Prettier vs. Linters_
+
+*How does it compare to ESLint/TSLint/stylelint, etc.?*
+
+Linters have two categories of rules:
+
+*1.Formatting rules*: eg: max-len, no-mixed-spaces-and-tabs, keyword-spacing, comma-style...
+
+Prettier alleviates the need for this whole category of rules! Prettier is going to reprint the entire program from scratch in a consistent way, so it's not possible for the programmer to make a mistake there anymore.
+
+*2.Code-quality rules:* eg: no-unused-vars, no-extra-bind, no-implicit-globals, prefer-promise-reject-errors...
+
+Prettier does nothing to help with those kind of rules. They are also the most important ones provided by linters as they are likely to catch real bugs with your code!
+
+In other words, use *Prettier for formating* and *linters for catching bugs!*
+
+*** ESLint[fn:1]
+
+ESLint 是一个开源的 JavaScript 代码检查工具，由 Nicholas C. Zakas 于 2013 年 6 月创建。它使用 Node.js 编写，这样既可以有一个快速的运行环境的同时也便于安装。
+
+#+BEGIN_QUOTE
+代码检查是一种静态的分析，常用于寻找有问题的模式或者代码，并且不依赖于具体的编码风格。对大多数编程语言来说都会有代码检查，一般来说编译程序会内置检查工具。
+#+END_QUOTE
+
+JavaScript 是一门动态的弱类型语言，在开发中比较容易出错。因为没有编译程序，为了寻找 JavaScript 代码错误通常需要在执行过程中不断调试，ESLint 可以让程序员在编码的过程中就发现问题，而不是代码在执行的过程中。
+
+ESLint 的初衷是为了让程序员可以创建自己的检测规则。
+
+ESLint 的所有规则都被设计成可插入的，其默认规则与其他的插件并没有什么区别，规则本身和测试可以依赖于同样的模式。为了便于人们使用，ESLint 内置了一些规则，当然，你可以在使用的过程中自定义规则。
+
+ESLint 是在 ECMAScript/JavaScript 代码中识别和报告模式匹配的工具，它的目标是保证代码的一致性和避免错误：
+- ESLint 使用 [[https://github.com/eslint/espree][Espree]] 解析 JavaScript ；
+- ESLint 使用 AST 去分析代码中的模式；
+- ESLint 是完全插件化的，每一个规则都是一个插件并且你可以在运行时添加更多的规则。
+
+* Footnotes
+
+[fn:2] https://prettier.io/
+
+[fn:1] https://eslint.bootcss.com/docs/user-guide/getting-started
+
