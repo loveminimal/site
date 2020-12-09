@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-12-09 Wed 11:53 -->
+<!-- 2020-12-09 Wed 16:02 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Build Tools</title>
@@ -25,7 +25,28 @@
 <ul>
 <li><a href="#orgfe8b69c">Task Runners</a></li>
 <li><a href="#org182f021">Module Bundlers</a></li>
-<li><a href="#orgc4088ca">Linters and Formatters</a></li>
+<li><a href="#orgc4088ca">Linters and Formatters</a>
+<ul>
+<li><a href="#orgc29a6fc">Prettier</a>
+<ul>
+<li><a href="#org58f0bcb">Intro</a></li>
+<li><a href="#orga625fd2">Pretter vs. Linters</a></li>
+<li><a href="#orgc6e3115">Usage</a></li>
+<li><a href="#org5021a51">Set up your editor</a></li>
+<li><a href="#orgdad3a82">ESLint (and other linters)</a></li>
+<li><a href="#org933f900">Configuration</a></li>
+</ul>
+</li>
+<li><a href="#org3de12b1">ESLint</a>
+<ul>
+<li><a href="#orgde3c835">Intro</a></li>
+<li><a href="#org123f35b">Usage</a></li>
+<li><a href="#orge68f1e8">Configuration</a></li>
+<li><a href="#org527d8be">Command Line Interface</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -79,18 +100,352 @@ Module Bundlers:
 Linters and Formatters:
 </p>
 <ul class="org-ul">
-<li class="off"><code>[&#xa0;]</code> *A → Prettier</li>
-<li class="off"><code>[&#xa0;]</code> *A → ESLint</li>
+<li class="on"><code>[X]</code> *A → Prettier</li>
+<li class="on"><code>[X]</code> *A → ESLint</li>
 <li class="off"><code>[&#xa0;]</code> *X → StandardJS</li>
 </ul>
 </blockquote>
 </div>
+
+<div id="outline-container-orgc29a6fc" class="outline-3">
+<h3 id="orgc29a6fc">Prettier<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h3>
+<div class="outline-text-3" id="text-orgc29a6fc">
+</div>
+<div id="outline-container-org58f0bcb" class="outline-4">
+<h4 id="org58f0bcb">Intro</h4>
+<div class="outline-text-4" id="text-org58f0bcb">
+<p>
+Prettier is an opinionated code formatter. It enforces a consistent style by parsing your code and re-printing it with its own rules that take the maximum line length into account, wrapping code when necessary.
+</p>
 </div>
 </div>
+
+<div id="outline-container-orga625fd2" class="outline-4">
+<h4 id="orga625fd2">Pretter vs. Linters</h4>
+<div class="outline-text-4" id="text-orga625fd2">
+<p>
+How does it compare to ESLint/TSLint/stylelint, etc.?
+</p>
+
+<p>
+Linters have two categories of rules:
+</p>
+
+<p>
+<b>1.Formatting rules</b>
+</p>
+
+<p>
+e.g: max-len, no-mixed-spaces-and-tabs, keyword-spacing, comma-style&#x2026;
+</p>
+
+<p>
+Prettier alleviates the need for this whole category of rules! Prettier is going to reprint the entire program from scratch in a consistent way, so it's not possible for the programmer to make a mistake there anymore.
+</p>
+
+<p>
+<b>2.Code-quality rules</b>
+</p>
+
+<p>
+e.g: no-unused-vars, no-extra-bind, no-implicit-globals, prefer-promise-reject-errors&#x2026;
+</p>
+
+<p>
+Prettier does nothing to help with those kind of rules. They are also the most important ones provided by linters as they are likely to catch real bugs with your code!
+</p>
+
+<p>
+In other words, use <b>Prettier for formatting</b> and <b>Linters for catching bugs!</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc6e3115" class="outline-4">
+<h4 id="orgc6e3115">Usage</h4>
+<div class="outline-text-4" id="text-orgc6e3115">
+<p>
+First, install Prettier locally:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr">1: </span>npm install --save-dev --save-exact prettier
+</pre>
+</div>
+
+<p>
+Then, create an empty config file to let editors and other tooling know you are using Prettier:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr">1: </span><span style="color: #F92672;">echo</span> <span style="color: #AE81FF;">{}</span>&gt; .pretterrc.json
+</pre>
+</div>
+
+<p>
+Next, create a <code>.prettierignore</code> file to let the Prettier CLI and editors know which files to not format. Here's an example:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr">1: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">Ignore artifacts:</span>
+<span class="linenr">2: </span>build
+<span class="linenr">3: </span>coverage
+</pre>
+</div>
+
+<p>
+Now, <b>format all files with Prettier</b>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr">1: </span>npx prettier --write .
+</pre>
+</div>
+
+<note>
+`npx` ships with `npm` and lets you run locally installed tools.
+</note>
+
+<p>
+<code>prettier --write .</code> is great for formatting everything, but for a big project it might take a litter while. You may run:
+</p>
+<ul class="org-ul">
+<li><code>prettier --write app/</code> to format a certain directory, or</li>
+<li><code>prettier --write app/components/Button.js</code> to format a certain file, or</li>
+<li>use a glob like <code>prettier --write "app/**/*.test.js"</code> to format all tests in a directory (see <a href="https://github.com/mrmlnc/fast-glob#pattern-syntax">fast-glob</a> for supported glob syntax).</li>
+</ul>
+
+<p>
+If you have a CI setup, run the following as part of it to make sure that everyone runs Prettier. This avoids merge conflicts and other collabortion issues!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr">1: </span>prettier --check .
+</pre>
+</div>
+
+<p>
+<code>--check</code> is like <code>--write</code>, but only checks that files are already formatted, rather than overwriting them.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5021a51" class="outline-4">
+<h4 id="org5021a51">Set up your editor</h4>
+<div class="outline-text-4" id="text-org5021a51">
+<p>
+See <a href="https://prettier.io/docs/en/editors.html">Editor Integration</a> for how to set up your editor. If your editor does not support Prettier, you can instead <a href="https://prettier.io/docs/en/watching-files.html">run Prettier with a file watcher</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdad3a82" class="outline-4">
+<h4 id="orgdad3a82">ESLint (and other linters)</h4>
+<div class="outline-text-4" id="text-orgdad3a82">
+<p>
+If you use ESLint, install <a href="https://github.com/prettier/eslint-config-prettier#installation">eslint-config-prettier</a> to make ESLint and Prettier play nice with each other. It turns off all ESLint rules that are unnecessary or might conflict with Prettier.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org933f900" class="outline-4">
+<h4 id="org933f900">Configuration</h4>
+<div class="outline-text-4" id="text-org933f900">
+<p>
+List some frequent configurations:
+</p>
+
+<table>
+
+<colgroup>
+<col  class="org-center">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-center">Default</th>
+<th scope="col" class="org-left">CLI Override</th>
+<th scope="col" class="org-left">API Override</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-center"><code>80</code></td>
+<td class="org-left"><code>--print-width &lt;int&gt;</code></td>
+<td class="org-left"><code>printWidth: &lt;int&gt;</code></td>
+<td class="org-left">Specify the line length that the printer will wrap on.</td>
+</tr>
+
+<tr>
+<td class="org-center"><code>2</code></td>
+<td class="org-left"><code>--tab-width &lt;int&gt;</code></td>
+<td class="org-left"><code>tabWidth: &lt;int&gt;</code></td>
+<td class="org-left">Specify the number of spaces per indentation-level.</td>
+</tr>
+
+<tr>
+<td class="org-center"><code>false</code></td>
+<td class="org-left"><code>--use-tabs</code></td>
+<td class="org-left"><code>useTabs: &lt;bool&gt;</code></td>
+<td class="org-left">Indent lines with tabs instead of spaces.</td>
+</tr>
+
+<tr>
+<td class="org-center"><code>true</code></td>
+<td class="org-left"><code>--no-semi</code></td>
+<td class="org-left"><code>semi: &lt;bool&gt;</code></td>
+<td class="org-left">Print semicolons at the ends of statements.</td>
+</tr>
+
+<tr>
+<td class="org-center"><code>false</code></td>
+<td class="org-left"><code>--single-quote</code></td>
+<td class="org-left"><code>singleQuote: &lt;bool&gt;</code></td>
+<td class="org-left">Use single quotes instead of double quotes.</td>
+</tr>
+
+<tr>
+<td class="org-center"><code>true</code></td>
+<td class="org-left"><code>--no-bracket-spacing</code></td>
+<td class="org-left"><code>bracketSpacing: &lt;bool&gt;</code></td>
+<td class="org-left">Print spaces between in object literals.</td>
+</tr>
+
+<tr>
+<td class="org-center">&#x2026;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<essay>
+永远不要期待一蹴而就，认识是螺旋上升的，只需所需即可。
+</essay>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3de12b1" class="outline-3">
+<h3 id="org3de12b1">ESLint<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
+<div class="outline-text-3" id="text-org3de12b1">
+</div>
+<div id="outline-container-orgde3c835" class="outline-4">
+<h4 id="orgde3c835">Intro</h4>
+<div class="outline-text-4" id="text-orgde3c835">
+<p>
+ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs.
+</p>
+<ul class="org-ul">
+<li>ESLint uses <a href="https://github.com/eslint/espree">Espree</a> for JavaScript parsing;</li>
+<li>ESLint uses an AST to evaluate patterns in code;</li>
+<li>ESLint is completely pluggable, every single rule is a plugin and you can add more at runtime.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org123f35b" class="outline-4">
+<h4 id="org123f35b">Usage</h4>
+<div class="outline-text-4" id="text-org123f35b">
+<p>
+First, you can install ESLint using npm:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr">1: </span>npm install eslint --save-dev
+</pre>
+</div>
+
+<p>
+Then, you should set up a configuration file:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr">1: </span>./node_modules/.bin/eslint --init
+<span class="linenr">2: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">or</span>
+<span class="linenr">3: </span>npx eslint --init
+</pre>
+</div>
+
+<p>
+After that, you can run ESLint on any file or directory like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr">1: </span>npx eslint yourfile.js
+</pre>
+</div>
+
+<p>
+It is also possible to install ESLint globally rather than locally (using <code>npm install eslint --global</code> ).
+</p>
+
+<p>
+<b>*! However, any plugins or shareable configs that you use must be installed locally in either case.</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge68f1e8" class="outline-4">
+<h4 id="orge68f1e8">Configuration</h4>
+<div class="outline-text-4" id="text-orge68f1e8">
+<p>
+There are two primary ways to configure ESLint:
+</p>
+
+<p>
+<b>1.Configuration Comments</b>
+</p>
+
+<p>
+Use JavaScript comments to embed configuration information directly into a file.
+</p>
+
+<p>
+<b>2.Configuration Files</b>
+</p>
+
+<p>
+Use a JavaScript, JSON or YAML file to specify configuration information for an entire directory and all of its subdirectories. This can be in the form of an <code>.eslintrc.*</code> file or an <code>eslintConfig</code> field in a <code>package.json</code> file, both of which ESLint will look for and read automatically, or you can specify a configuration file on the command line.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org527d8be" class="outline-4">
+<h4 id="org527d8be">Command Line Interface</h4>
+<div class="outline-text-4" id="text-org527d8be">
+<p>
+&#x2026;
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://prettier.io/docs/en/index.html">https://prettier.io/docs/en/index.html</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://eslint.bootcss.com/docs/user-guide/getting-started">https://eslint.bootcss.com/docs/user-guide/getting-started</a>
+</p></div></div>
+
+</div>
+</div></div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-12-08 Tue 17:42</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-09 Wed 11:53</p>
+<p class="date">Created: 2020-12-09 Wed 16:02</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

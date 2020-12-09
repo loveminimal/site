@@ -16,7 +16,7 @@
 | 插件 | [[https://www.crx4chrome.com/][Crx4Chrome]] |              | [[https://vimawesome.com/][VimAwesome]]     | [[http://www.melpa.org/#/][Melpa]]          | [[https://chocolatey.org/packages][Chocolatey]]     |
 |------+------------+--------------+----------------+----------------+----------------|
 | 教程 | [[http://www.runoob.com/][菜鸟教程]]   | [[http://es6.ruanyifeng.com/][ES6]]          | [[https://www.liaoxuefeng.com/][廖雪峰]]         | [[http://www.softwhy.com/][蚂蚁部落]]       | [[https://www.interviewcake.com/data-structures-reference][Interview Cake]] |
-|      | [[http://www.nginx.cn/doc/][Nginx Doc]]  | [[http://c.biancheng.net/][C 语言中文网]] | [[https://www.lmonkey.com/][学习猿地]]       |                |                |
+|      | [[http://www.nginx.cn/doc/][Nginx Doc]]  | [[http://c.biancheng.net/][C 语言中文网]] | [[https://www.lmonkey.com/][学习猿地]]       | [[https://cloud.tencent.com/developer/devdocs][腾讯云开发手册]] | [[https://help.aliyun.com/?spm=a2c4g.750001.J_8058803260.1296.30757b132G3d1w][阿里云文档]]     |
 |------+------------+--------------+----------------+----------------+----------------|
 | 博客 | [[https://bitsofco.de/][Bitsofco]]   | [[http://www.ruanyifeng.com/blog/developer/][阮一峰]]       | [[http://xahlee.org/][李杀网]]         | [[https://coolshell.cn/][酷壳]]           | [[https://www.zhangxinxu.com/][张鑫旭]]         |
 |      | [[http://www.tripod.fun/][阿汤]]       |              | [[https://manateelazycat.github.io/index.html][ManateeLazyCat]] |                |                |

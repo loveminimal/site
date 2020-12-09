@@ -39,7 +39,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./ajax.org][Ajax]]                  |
 | [[./virtual-dom.org][Virtual DOM]]           |
 | [[./build-tools.org][Build Tools]]           |
-| [[./css-talking.org][Css Talking]]           |
+| [[./css-talking.org][CSS Talking]]         |
 | [[./css-tta.org][CSS 中的动效]]          |
 
 | Asm                    |

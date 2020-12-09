@@ -32,7 +32,167 @@ Module Bundlers:
 
 #+BEGIN_QUOTE
 Linters and Formatters:
-- [ ] *A → Prettier
-- [ ] *A → ESLint
+- [X] *A → Prettier
+- [X] *A → ESLint
 - [ ] *X → StandardJS
 #+END_QUOTE
+
+*** Prettier[fn:1]
+
+**** Intro
+
+Prettier is an opinionated code formatter. It enforces a consistent style by parsing your code and re-printing it with its own rules that take the maximum line length into account, wrapping code when necessary.
+
+**** Pretter vs. Linters
+
+How does it compare to ESLint/TSLint/stylelint, etc.?
+
+Linters have two categories of rules:
+
+*1.Formatting rules*
+
+e.g: max-len, no-mixed-spaces-and-tabs, keyword-spacing, comma-style...
+
+Prettier alleviates the need for this whole category of rules! Prettier is going to reprint the entire program from scratch in a consistent way, so it's not possible for the programmer to make a mistake there anymore.
+
+*2.Code-quality rules*
+
+e.g: no-unused-vars, no-extra-bind, no-implicit-globals, prefer-promise-reject-errors...
+
+Prettier does nothing to help with those kind of rules. They are also the most important ones provided by linters as they are likely to catch real bugs with your code!
+
+In other words, use *Prettier for formatting* and *Linters for catching bugs!*
+
+**** Usage
+
+First, install Prettier locally:
+
+#+BEGIN_SRC sh -n
+  npm install --save-dev --save-exact prettier
+#+END_SRC
+
+Then, create an empty config file to let editors and other tooling know you are using Prettier:
+
+#+BEGIN_SRC sh -n
+  echo {}> .pretterrc.json
+#+END_SRC
+
+Next, create a =.prettierignore= file to let the Prettier CLI and editors know which files to not format. Here's an example:
+
+#+BEGIN_SRC sh -n
+  # Ignore artifacts:
+  build
+  coverage
+#+END_SRC
+
+Now, *format all files with Prettier*:
+
+#+BEGIN_SRC sh -n
+  npx prettier --write .
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<note>
+`npx` ships with `npm` and lets you run locally installed tools.
+</note>
+#+END_EXPORT
+
+=prettier --write .= is great for formatting everything, but for a big project it might take a litter while. You may run:
+- =prettier --write app/= to format a certain directory, or
+- =prettier --write app/components/Button.js= to format a certain file, or
+- use a glob like =prettier --write "app/**/*.test.js"= to format all tests in a directory (see [[https://github.com/mrmlnc/fast-glob#pattern-syntax][fast-glob]] for supported glob syntax).
+
+If you have a CI setup, run the following as part of it to make sure that everyone runs Prettier. This avoids merge conflicts and other collabortion issues!
+
+#+BEGIN_SRC sh -n
+  prettier --check .
+#+END_SRC
+
+=--check= is like =--write=, but only checks that files are already formatted, rather than overwriting them.
+
+**** Set up your editor
+
+See [[https://prettier.io/docs/en/editors.html][Editor Integration]] for how to set up your editor. If your editor does not support Prettier, you can instead [[https://prettier.io/docs/en/watching-files.html][run Prettier with a file watcher]].
+
+**** ESLint (and other linters)
+
+If you use ESLint, install [[https://github.com/prettier/eslint-config-prettier#installation][eslint-config-prettier]] to make ESLint and Prettier play nice with each other. It turns off all ESLint rules that are unnecessary or might conflict with Prettier.
+
+**** Configuration
+
+List some frequent configurations:
+
+| Default | CLI Override           | API Override             | Description                                            |
+| <c>     |                        |                          |                                                        |
+|---------+------------------------+--------------------------+--------------------------------------------------------|
+| =80=    | =--print-width <int>=  | =printWidth: <int>=      | Specify the line length that the printer will wrap on. |
+| =2=     | =--tab-width <int>=    | =tabWidth: <int>=        | Specify the number of spaces per indentation-level.    |
+| =false= | =--use-tabs=           | =useTabs: <bool>=        | Indent lines with tabs instead of spaces.              |
+| =true=  | =--no-semi=            | =semi: <bool>=           | Print semicolons at the ends of statements.            |
+| =false= | =--single-quote=       | =singleQuote: <bool>=    | Use single quotes instead of double quotes.            |
+| =true=  | =--no-bracket-spacing= | =bracketSpacing: <bool>= | Print spaces between in object literals.               |
+| ...     |                        |                          |                                                        |
+
+#+BEGIN_EXPORT html
+<essay>
+永远不要期待一蹴而就，认识是螺旋上升的，只需所需即可。
+</essay>
+#+END_EXPORT
+
+*** ESLint[fn:2]
+
+**** Intro
+
+ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs.
+- ESLint uses [[https://github.com/eslint/espree][Espree]] for JavaScript parsing;
+- ESLint uses an AST to evaluate patterns in code;
+- ESLint is completely pluggable, every single rule is a plugin and you can add more at runtime.
+
+**** Usage
+
+First, you can install ESLint using npm:
+
+#+BEGIN_SRC sh -n
+  npm install eslint --save-dev
+#+END_SRC
+
+Then, you should set up a configuration file:
+
+#+BEGIN_SRC sh -n
+  ./node_modules/.bin/eslint --init
+  # or
+  npx eslint --init
+#+END_SRC
+
+After that, you can run ESLint on any file or directory like this:
+
+#+BEGIN_SRC sh -n
+  npx eslint yourfile.js
+#+END_SRC
+
+It is also possible to install ESLint globally rather than locally (using =npm install eslint --global= ).
+
+**! However, any plugins or shareable configs that you use must be installed locally in either case.*
+
+**** Configuration
+
+There are two primary ways to configure ESLint:
+
+*1.Configuration Comments*
+
+Use JavaScript comments to embed configuration information directly into a file.
+
+*2.Configuration Files*
+
+Use a JavaScript, JSON or YAML file to specify configuration information for an entire directory and all of its subdirectories. This can be in the form of an =.eslintrc.*= file or an =eslintConfig= field in a =package.json= file, both of which ESLint will look for and read automatically, or you can specify a configuration file on the command line.
+
+**** Command Line Interface
+
+...
+
+* Footnotes
+
+[fn:2] https://eslint.bootcss.com/docs/user-guide/getting-started
+
+[fn:1] https://prettier.io/docs/en/index.html
+
