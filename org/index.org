@@ -14,16 +14,16 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 
  ░ 文章列表 ❐ ⓛⓞⓥⓔ
 
-| Misc                     |
-|--------------------------|
-| [[./tmux.org][Tmux]]                     |
-| [[./manjaro-linux.org][Manjaro Linux]]            |
-| [[./source-code-compile.org][Source Code Compile]]      |
-| [[./nginx.org][Nginx]]                    |
-| [[./compilers.org][Compilers]]                |
-| [[./wubi.org][WuBi Learning]]            |
-| [[./git.org][Git]]                      |
-| [[./sdk.org][Software Development Kit]] |
+| Misc                |
+|---------------------|
+| [[./tmux.org][Tmux]]                |
+| [[./manjaro-linux.org][Manjaro Linux]]       |
+| [[./source-code-compile.org][Source Code Compile]] |
+| [[./nginx.org][Nginx]]               |
+| [[./compilers.org][Compilers]]           |
+| [[./wubi.org][WuBi]]                |
+| [[./git.org][Git]]                 |
+| [[./sdk.org][SDK]]                 |
 
 | GTD             |
 |-----------------|
@@ -32,7 +32,6 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | Web                   |
 |-----------------------|
 | [[./web-developer-roadmap.org][Web Developer Roadmap]] |
-| [[./js-module.org][JavaScript Module]]     |
 | [[./webpack-dev-server-proxy.org][Webpack Proxy]]         |
 | [[./cross-domain.org][Cross Domain]]          |
 | [[./drag-and-drop.org][Drag and Drop]]         |
@@ -40,21 +39,14 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./ajax.org][Ajax]]                  |
 | [[./virtual-dom.org][Virtual DOM]]           |
 | [[./build-tools.org][Build Tools]]           |
-
-| JavaScript |
-|------------|
-| [[./dom.org][DOM]]        |
-
-| CSS          |
-|--------------|
-| [[./css-talking.org][CSS 那些事儿]] |
-| [[./css-tta.org][CSS 中的动效]] |
+| [[./css-talking.org][Css Talking]]           |
+| [[./css-tta.org][CSS 中的动效]]          |
 
 | Asm                    |
 |------------------------|
-| [[./assembly-1.org][ASM 汇编语言的基本概念]] |
-| [[./assembly-2.org][ASM x86 处理器架构]]     |
-| [[./assembly-3.org][ASM 汇编语言基础]]       |
+| [[./assembly-1.org][Asm 汇编语言的基本概念]] |
+| [[./assembly-2.org][Asm x86 处理器架构]]     |
+| [[./assembly-3.org][Asm 汇编语言基础]]       |
 
 | C          |
 |------------|
@@ -81,9 +73,9 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./java-13.org][Java 输入/输出流]]      |
 | [[./java-14.org][Java 注解]]             |
 
-| Android          |
-|------------------|
-| [[./android-talking.org][Android 那些事儿]] |
+| Android         |
+|-----------------|
+| [[./android-talking.org][Android Talking]] |
 
 | CS                     |
 |------------------------|

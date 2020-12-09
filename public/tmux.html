@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-07-26 Sun 20:14 -->
+<!-- 2020-12-09 Wed 12:11 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>十分钟掌握 TMUX</title>
@@ -23,9 +23,7 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8fb8692">Layouts 布局</a></li>
-<li><a href="#org8a92a7e">Window 窗口</a></li>
-<li><a href="#orgb719c43">Pane 窗格</a></li>
+<li><a href="#org95036a6">Layouts 布局、Window 窗口、Pane 窗格</a></li>
 <li><a href="#org03ea513">配置</a></li>
 </ul>
 </div>
@@ -36,146 +34,124 @@
 → <a href="http://www.ruanyifeng.com/blog/2019/10/tmux.html">友情链接</a>
 </p>
 
-<div id="outline-container-org8fb8692" class="outline-2">
-<h2 id="org8fb8692">Layouts 布局</h2>
-<div class="outline-text-2" id="text-org8fb8692">
+<div id="outline-container-org95036a6" class="outline-2">
+<h2 id="org95036a6">Layouts 布局、Window 窗口、Pane 窗格</h2>
+<div class="outline-text-2" id="text-org95036a6">
 <table>
 
 <colgroup>
+<col  class="org-center">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-center">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-center">
+
 <col  class="org-left">
 
 <col  class="org-left">
 </colgroup>
 <thead>
 <tr>
+<th scope="col" class="org-center">布局</th>
 <th scope="col" class="org-left">层级</th>
 <th scope="col" class="org-left">描述</th>
+<th scope="col" class="org-center">窗口</th>
+<th scope="col" class="org-left">命令</th>
+<th scope="col" class="org-left">描述</th>
+<th scope="col" class="org-center">窗格</th>
+<th scope="col" class="org-left">命令</th>
+<th scope="col" class="org-left">描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td class="org-center">*</td>
 <td class="org-left">server</td>
 <td class="org-left">服务</td>
-</tr>
-
-<tr>
-<td class="org-left">session</td>
-<td class="org-left">会话</td>
-</tr>
-
-<tr>
-<td class="org-left">window</td>
-<td class="org-left">窗口</td>
-</tr>
-
-<tr>
-<td class="org-left">pane</td>
-<td class="org-left">窗格</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-
-<div id="outline-container-org8a92a7e" class="outline-2">
-<h2 id="org8a92a7e">Window 窗口</h2>
-<div class="outline-text-2" id="text-org8a92a7e">
-<table>
-
-<colgroup>
-<col  class="org-left">
-
-<col  class="org-left">
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">命令</th>
-<th scope="col" class="org-left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
+<td class="org-center">*</td>
 <td class="org-left">c</td>
 <td class="org-left">新建窗口</td>
-</tr>
-
-<tr>
-<td class="org-left">&amp;</td>
-<td class="org-left">关闭窗口</td>
-</tr>
-
-<tr>
-<td class="org-left">l</td>
-<td class="org-left">切换窗口</td>
-</tr>
-
-<tr>
-<td class="org-left">n</td>
-<td class="org-left">切换到下一个窗口</td>
-</tr>
-
-<tr>
-<td class="org-left">p</td>
-<td class="org-left">切换到上一个窗口</td>
-</tr>
-
-<tr>
-<td class="org-left">w</td>
-<td class="org-left">窗口的菜单列表</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-
-<div id="outline-container-orgb719c43" class="outline-2">
-<h2 id="orgb719c43">Pane 窗格</h2>
-<div class="outline-text-2" id="text-orgb719c43">
-<table>
-
-<colgroup>
-<col  class="org-left">
-
-<col  class="org-left">
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">命令</th>
-<th scope="col" class="org-left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
+<td class="org-center">*</td>
 <td class="org-left">%</td>
 <td class="org-left">水平分屏</td>
 </tr>
 
 <tr>
+<td class="org-center">*</td>
+<td class="org-left">session</td>
+<td class="org-left">会话</td>
+<td class="org-center">*</td>
+<td class="org-left">&amp;</td>
+<td class="org-left">关闭窗口</td>
+<td class="org-center">*</td>
 <td class="org-left">"</td>
 <td class="org-left">垂直分屏</td>
 </tr>
 
 <tr>
+<td class="org-center">*</td>
+<td class="org-left">window</td>
+<td class="org-left">窗口</td>
+<td class="org-center">*</td>
+<td class="org-left">l</td>
+<td class="org-left">切换窗口</td>
+<td class="org-center">*</td>
 <td class="org-left">x</td>
 <td class="org-left">关闭窗格</td>
 </tr>
 
 <tr>
+<td class="org-center">*</td>
+<td class="org-left">pane</td>
+<td class="org-left">窗格</td>
+<td class="org-center">*</td>
+<td class="org-left">n</td>
+<td class="org-left">切换到下一个窗口</td>
+<td class="org-center">*</td>
 <td class="org-left">;</td>
 <td class="org-left">切换窗格</td>
 </tr>
 
 <tr>
+<td class="org-center">*</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-center">*</td>
+<td class="org-left">p</td>
+<td class="org-left">切换到上一个窗口</td>
+<td class="org-center">*</td>
 <td class="org-left">o</td>
 <td class="org-left">顺时针切换窗格</td>
 </tr>
 
 <tr>
+<td class="org-center">*</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-center">*</td>
+<td class="org-left">w</td>
+<td class="org-left">窗口的菜单列表</td>
+<td class="org-center">*</td>
 <td class="org-left">C-o</td>
 <td class="org-left">逆时针转换窗格</td>
 </tr>
 
 <tr>
+<td class="org-center">*</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-center">*</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-center">*</td>
 <td class="org-left">M-o</td>
 <td class="org-left">顺时针转换窗格</td>
 </tr>
@@ -228,7 +204,7 @@
 <div id="postamble" class="status">
 <p class="date">Date: 2020-02-26 Wed 18:00</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-07-26 Sun 20:14</p>
+<p class="date">Created: 2020-12-09 Wed 12:11</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

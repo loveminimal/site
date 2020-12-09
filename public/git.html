@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-12-07 Mon 17:40 -->
+<!-- 2020-12-09 Wed 12:13 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Git</title>
@@ -24,24 +24,6 @@
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#orgca263af">序言</a></li>
-<li><a href="#org58d0310">安装</a></li>
-<li><a href="#org422e31f">配置</a></li>
-<li><a href="#org359829e">创建</a></li>
-<li><a href="#orgb29dbf6">本地仓库</a>
-<ul>
-<li><a href="#org3b09799">git status</a></li>
-<li><a href="#orgc89dbe4">git add</a></li>
-<li><a href="#orgfc7d314">git commit</a></li>
-<li><a href="#orgbade08b">git log</a></li>
-</ul>
-</li>
-<li><a href="#orgbe291bb">分支</a>
-<ul>
-<li><a href="#org1c288b2">git branch</a></li>
-<li><a href="#org37c05e3">git checkout</a></li>
-</ul>
-</li>
-<li><a href="#org1122323">远程仓库</a></li>
 </ul>
 </div>
 </div>
@@ -69,232 +51,11 @@ title=""
 </essay>
 </div>
 </div>
-
-<div id="outline-container-org58d0310" class="outline-2">
-<h2 id="org58d0310">安装</h2>
-<div class="outline-text-2" id="text-org58d0310">
-<p>
-请参考这个《Pro Git》中的 <a href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git">安装 Git</a> 一节即可，不再赘述喽。
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span class="linenr">1: </span>jack@jk:~$ git --version
-<span class="linenr">2: </span>git version 2.17.1
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org422e31f" class="outline-2">
-<h2 id="org422e31f">配置</h2>
-<div class="outline-text-2" id="text-org422e31f">
-<p>
-Git 是分布式版本控制系统，需要每台电脑自报家门：你的名字和 Email 地址。我们使用 <code>git config</code> 来完成这件事情，如下：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span class="linenr">1: </span>jack@jk:~$ git config --global user.name <span style="color: #E6DB74;">"Jack Liu"</span>
-<span class="linenr">2: </span>jack@jk:~$ git config --global user.email <span style="color: #E6DB74;">"loveminimal@163.com"</span>
-<span class="linenr">3: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#26597;&#35810;&#37197;&#32622;&#32467;&#26524;</span>
-<span class="linenr">4: </span>jack@jk:~$ git config -l
-<span class="linenr">5: </span>user.name=Jack Liu
-<span class="linenr">6: </span>user.email=loveminimal@163.com
-</pre>
-</div>
-
-<essay>
-这里为什么要加 `--global` 呢？有没有其他的参数可用？
-</essay>
-</div>
-</div>
-
-<div id="outline-container-org359829e" class="outline-2">
-<h2 id="org359829e">创建</h2>
-<div class="outline-text-2" id="text-org359829e">
-<p>
-两种创建方式：
-</p>
-<ul class="org-ul">
-<li>初始化本地项目</li>
-<li>直接拉取远程仓库（稍后讲述）</li>
-</ul>
-
-<p>
-假设，本地存在文件夹 <code>my-git-repo</code> ，现在我们对它进行 Git 初始化，如下：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span class="linenr">1: </span>jack@jk:~$ ls
-<span class="linenr">2: </span>Desktop  Documents  Downloads  Music  my-git-repo  Pictures  Public Videos
-<span class="linenr">3: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#36827;&#20837;&#25991;&#20214;&#30446;&#24405;</span>
-<span class="linenr">4: </span>jack@jk:~$ cd my-git-repo/
-<span class="linenr">5: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#21021;&#22987;&#21270;&#35813;&#25991;&#20214;&#20026; git &#20179;&#24211;</span>
-<span class="linenr">6: </span>jack@jk:~/my-git-repo$ git init
-<span class="linenr">7: </span>Initialized empty Git repository<span style="color: #F92672;"> in</span> /home/jack/my-git-repo/.git/
-</pre>
-</div>
-
-<p>
-<b>^_^ 你总是可以通过 <code>git xxx -h</code> 去获取更多帮助。</b>
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgb29dbf6" class="outline-2">
-<h2 id="orgb29dbf6">本地仓库</h2>
-<div class="outline-text-2" id="text-orgb29dbf6">
-</div>
-<div id="outline-container-org3b09799" class="outline-3">
-<h3 id="org3b09799">git status</h3>
-<div class="outline-text-3" id="text-org3b09799">
-<p>
-我们总是可以用 <code>git status</code> 查询当前仓库的状态，如下：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span class="linenr"> 1: </span>jack@jk:~/my-git-repo$ git status
-<span class="linenr"> 2: </span>On branch master
-<span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span>No commits yet
-<span class="linenr"> 5: </span>
-<span class="linenr"> 6: </span>Untracked files:
-<span class="linenr"> 7: </span>  <span style="color: #AE81FF;">(</span>use <span style="color: #E6DB74;">"git add &lt;file&gt;..."</span> to include<span style="color: #F92672;"> in</span> what will be committed<span style="color: #AE81FF;">)</span>
-<span class="linenr"> 8: </span>
-<span class="linenr"> 9: </span>        file1
-<span class="linenr">10: </span>
-<span class="linenr">11: </span>nothing added to commit but untracked files present <span style="color: #AE81FF;">(</span>use <span style="color: #E6DB74;">"git add"</span> to track<span style="color: #AE81FF;">)</span>
-</pre>
-</div>
-
-<p>
-看，它不仅给出了当前的仓库状态，还给出了你可能需要执行的操作。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgc89dbe4" class="outline-3">
-<h3 id="orgc89dbe4">git add</h3>
-<div class="outline-text-3" id="text-orgc89dbe4">
-<p>
-我们按照上面提示的操作，使用 <code>git add</code> 去开始追踪 <code>file1</code> 文件，如下：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span class="linenr"> 1: </span>jack@jk:~/my-git-repo$ git add file1
-<span class="linenr"> 2: </span>jack@jk:~/my-git-repo$ git status
-<span class="linenr"> 3: </span>On branch master
-<span class="linenr"> 4: </span>
-<span class="linenr"> 5: </span>No commits yet
-<span class="linenr"> 6: </span>
-<span class="linenr"> 7: </span>Changes to be committed:
-<span class="linenr"> 8: </span>  <span style="color: #AE81FF;">(</span>use <span style="color: #E6DB74;">"git rm --cached &lt;file&gt;..."</span> to unstage<span style="color: #AE81FF;">)</span>
-<span class="linenr"> 9: </span>
-<span class="linenr">10: </span>        new file:   file1
-</pre>
-</div>
-
-<p>
-<b>通过 <code>git add</code> ，我们做了些什么呢？</b>
-</p>
-
-<p>
-我们通过 <code>git add file1</code> 把文件 <b>添加</b> 到暂存区。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgfc7d314" class="outline-3">
-<h3 id="orgfc7d314">git commit</h3>
-<div class="outline-text-3" id="text-orgfc7d314">
-<p>
-我们可以通过 <code>git commit</code> 命令，把暂存区中的文件 <b>提交</b> 到仓库。
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span class="linenr">1: </span>jack@jk:~/my-git-repo$ git commit -m <span style="color: #E6DB74;">"Commit file1."</span>
-<span class="linenr">2: </span><span style="color: #AE81FF;">[</span>master <span style="color: #66D9EF;">(</span>root-commit<span style="color: #66D9EF;">)</span> c5e4830<span style="color: #AE81FF;">]</span> Commit file1.
-<span class="linenr">3: </span> 1 file changed, 1 insertion<span style="color: #AE81FF;">(</span>+<span style="color: #AE81FF;">)</span>
-<span class="linenr">4: </span> create mode 100644 file1
-<span class="linenr">5: </span> <span style="color: #75715E;"># </span><span style="color: #75715E;">&#26597;&#35810;&#19968;&#19979;&#24403;&#21069;&#30340;&#20179;&#24211;&#29366;&#24577;</span>
-<span class="linenr">6: </span>jack@jk:~/my-git-repo$ git status
-<span class="linenr">7: </span>On branch master
-<span class="linenr">8: </span>nothing to commit, working tree clean
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgbade08b" class="outline-3">
-<h3 id="orgbade08b">git log</h3>
-<div class="outline-text-3" id="text-orgbade08b">
-<p>
-经过上边的步骤，我们已经完成了一次提交。我们可以通过 <code>git log</code> 去查看，我们的提交历史，如下：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span class="linenr">1: </span>jack@jk:~/my-git-repo$ git log
-<span class="linenr">2: </span>commit c5e48307b1e39459287e049b84bc6f606f9dd38e <span style="color: #AE81FF;">(</span>HEAD -&gt; master<span style="color: #AE81FF;">)</span>
-<span class="linenr">3: </span>Author: Jack Liu <a href="mailto:loveminimal%40163.com">&lt;loveminimal@163.com&gt;</a>
-<span class="linenr">4: </span>Date:   Mon Dec 7 17:18:15 2020 +0800
-<span class="linenr">5: </span>
-<span class="linenr">6: </span>    Commit file1.
-</pre>
-</div>
-
-<essay>
-Git 的命令不少，常用的其实没有几个，学习它的唯一方法，就是在使用中不断的深化。
-</essay>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgbe291bb" class="outline-2">
-<h2 id="orgbe291bb">分支</h2>
-<div class="outline-text-2" id="text-orgbe291bb">
-</div>
-<div id="outline-container-org1c288b2" class="outline-3">
-<h3 id="org1c288b2">git branch</h3>
-<div class="outline-text-3" id="text-org1c288b2">
-<p>
-通过 <code>git branch</code> 列出仓库包含哪些分支，如下：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span class="linenr">1: </span>jack@jk:~/my-git-repo$ git branch
-<span class="linenr">2: </span><span style="color: #E6DB74;">\*</span> master
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org37c05e3" class="outline-3">
-<h3 id="org37c05e3">git checkout</h3>
-<div class="outline-text-3" id="text-org37c05e3">
-<p>
-通过 <code>git checkout</code> 可以创建和切换分支，如下：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-sh"><span class="linenr">1: </span>
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org1122323" class="outline-2">
-<h2 id="org1122323">远程仓库</h2>
-<div class="outline-text-2" id="text-org1122323">
-<p>
-什么是远程仓库呢？就是放在远程主机上的仓库喽。
-</p>
-</div>
-</div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-11-20 Fri 14:59</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-07 Mon 17:40</p>
+<p class="date">Created: 2020-12-09 Wed 12:13</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-12-09 Wed 11:36 -->
+<!-- 2020-12-09 Wed 11:53 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Build Tools</title>
@@ -23,14 +23,9 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0356297">Task Runners</a></li>
-<li><a href="#org59ae14e">Module Bundlers</a></li>
-<li><a href="#org5f1430d">Linters and Formatters</a>
-<ul>
-<li><a href="#org4010685">Prettier</a></li>
-<li><a href="#org97dab76">ESLint</a></li>
-</ul>
-</li>
+<li><a href="#orgfe8b69c">Task Runners</a></li>
+<li><a href="#org182f021">Module Bundlers</a></li>
+<li><a href="#orgc4088ca">Linters and Formatters</a></li>
 </ul>
 </div>
 </div>
@@ -45,9 +40,9 @@
 *X → - I wouldn't recommend
 </pre>
 
-<div id="outline-container-org0356297" class="outline-2">
-<h2 id="org0356297">Task Runners</h2>
-<div class="outline-text-2" id="text-org0356297">
+<div id="outline-container-orgfe8b69c" class="outline-2">
+<h2 id="orgfe8b69c">Task Runners</h2>
+<div class="outline-text-2" id="text-orgfe8b69c">
 <blockquote>
 <p>
 Task Runners:
@@ -60,9 +55,9 @@ Task Runners:
 </div>
 </div>
 
-<div id="outline-container-org59ae14e" class="outline-2">
-<h2 id="org59ae14e">Module Bundlers</h2>
-<div class="outline-text-2" id="text-org59ae14e">
+<div id="outline-container-org182f021" class="outline-2">
+<h2 id="org182f021">Module Bundlers</h2>
+<div class="outline-text-2" id="text-org182f021">
 <blockquote>
 <p>
 Module Bundlers:
@@ -76,116 +71,26 @@ Module Bundlers:
 </div>
 </div>
 
-<div id="outline-container-org5f1430d" class="outline-2">
-<h2 id="org5f1430d">Linters and Formatters</h2>
-<div class="outline-text-2" id="text-org5f1430d">
+<div id="outline-container-orgc4088ca" class="outline-2">
+<h2 id="orgc4088ca">Linters and Formatters</h2>
+<div class="outline-text-2" id="text-orgc4088ca">
 <blockquote>
 <p>
 Linters and Formatters:
 </p>
 <ul class="org-ul">
-<li class="on"><code>[X]</code> *A → Prettier</li>
-<li class="on"><code>[X]</code> *A → ESLint</li>
+<li class="off"><code>[&#xa0;]</code> *A → Prettier</li>
+<li class="off"><code>[&#xa0;]</code> *A → ESLint</li>
 <li class="off"><code>[&#xa0;]</code> *X → StandardJS</li>
 </ul>
 </blockquote>
 </div>
-
-<div id="outline-container-org4010685" class="outline-3">
-<h3 id="org4010685">Prettier<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h3>
-<div class="outline-text-3" id="text-org4010685">
-<p>
-Prettier is an opinionated code formatter. It enforces a consistent style by parsing your code and re-printing it with its own rules that take the maximum line length into account, wrapping code when necessary.
-</p>
-
-<p>
-<span class="underline">1. Prettier vs. Linters</span>
-</p>
-
-<p>
-<b>How does it compare to ESLint/TSLint/stylelint, etc.?</b>
-</p>
-
-<p>
-Linters have two categories of rules:
-</p>
-
-<p>
-<b>1.Formatting rules</b>: eg: max-len, no-mixed-spaces-and-tabs, keyword-spacing, comma-style&#x2026;
-</p>
-
-<p>
-Prettier alleviates the need for this whole category of rules! Prettier is going to reprint the entire program from scratch in a consistent way, so it's not possible for the programmer to make a mistake there anymore.
-</p>
-
-<p>
-<b>2.Code-quality rules:</b> eg: no-unused-vars, no-extra-bind, no-implicit-globals, prefer-promise-reject-errors&#x2026;
-</p>
-
-<p>
-Prettier does nothing to help with those kind of rules. They are also the most important ones provided by linters as they are likely to catch real bugs with your code!
-</p>
-
-<p>
-In other words, use <b>Prettier for formating</b> and <b>linters for catching bugs!</b>
-</p>
 </div>
 </div>
-
-<div id="outline-container-org97dab76" class="outline-3">
-<h3 id="org97dab76">ESLint<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
-<div class="outline-text-3" id="text-org97dab76">
-<p>
-ESLint 是一个开源的 JavaScript 代码检查工具，由 Nicholas C. Zakas 于 2013 年 6 月创建。它使用 Node.js 编写，这样既可以有一个快速的运行环境的同时也便于安装。
-</p>
-
-<blockquote>
-<p>
-代码检查是一种静态的分析，常用于寻找有问题的模式或者代码，并且不依赖于具体的编码风格。对大多数编程语言来说都会有代码检查，一般来说编译程序会内置检查工具。
-</p>
-</blockquote>
-
-<p>
-JavaScript 是一门动态的弱类型语言，在开发中比较容易出错。因为没有编译程序，为了寻找 JavaScript 代码错误通常需要在执行过程中不断调试，ESLint 可以让程序员在编码的过程中就发现问题，而不是代码在执行的过程中。
-</p>
-
-<p>
-ESLint 的初衷是为了让程序员可以创建自己的检测规则。
-</p>
-
-<p>
-ESLint 的所有规则都被设计成可插入的，其默认规则与其他的插件并没有什么区别，规则本身和测试可以依赖于同样的模式。为了便于人们使用，ESLint 内置了一些规则，当然，你可以在使用的过程中自定义规则。
-</p>
-
-<p>
-ESLint 是在 ECMAScript/JavaScript 代码中识别和报告模式匹配的工具，它的目标是保证代码的一致性和避免错误：
-</p>
-<ul class="org-ul">
-<li>ESLint 使用 <a href="https://github.com/eslint/espree">Espree</a> 解析 JavaScript ；</li>
-<li>ESLint 使用 AST 去分析代码中的模式；</li>
-<li>ESLint 是完全插件化的，每一个规则都是一个插件并且你可以在运行时添加更多的规则。</li>
-</ul>
-</div>
-</div>
-</div>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
-
-<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://prettier.io/">https://prettier.io/</a>
-</p></div></div>
-
-<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://eslint.bootcss.com/docs/user-guide/getting-started">https://eslint.bootcss.com/docs/user-guide/getting-started</a>
-</p></div></div>
-
-</div>
-</div></div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-12-08 Tue 17:42</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-09 Wed 11:36</p>
+<p class="date">Created: 2020-12-09 Wed 11:53</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
