@@ -49,7 +49,8 @@
 - https://blog.csdn.net/weixin_41648325/article/details/79412158
 - https://www.jianshu.com/p/c8f9c61c2f20
 - https://www.jianshu.com/p/001818b28ef2
-- https://zhuanlan.zhihu.com/p/74792085
-- https://www.zhihu.com/question/29504639
+- Browser render https://zhuanlan.zhihu.com/p/74792085
+- VDOM https://www.zhihu.com/question/29504639
 - yarn VS npm https://zhuanlan.zhihu.com/p/23493436
 - SDK https://zhuanlan.zhihu.com/p/2
+- ESLint and Prettier https://vsnail.cn/static/doc/blog/eslintPrettier.html

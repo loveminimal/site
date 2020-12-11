@@ -15,18 +15,40 @@
 
 #+BEGIN_QUOTE
 Task Runners:
-- [ ] *R → npm scripts
+- [X] *R → npm scripts
 - [ ] *X → Gulp
 #+END_QUOTE
+
+*** NPM Scripts[fn:3]
+
+The ="scripts"= property of your =package.json= file supports a number of build-in scripts and theri preset life cycle events as well as arbitrary scripts.
+
+There all can be executed by running =npm run-script <stage>=  or =npm run <stage>= for short, *pre* and *post* commands with matching names will be run for those as well (e.g. =premyscript, myscript, postmyscript= ).
+
+Scripts form dependencies can be run with =npm explore <pkg> -- npm run <stage>= .
+
+#+BEGIN_SRC json -n
+{
+  "scripts": {
+    "precompress": "{{ executes BEFORE the `compress` script }}",
+    "compress": "{{ run command to compress files }}",
+    "postcompress": "{{ executes AFTER `compress` script }}"
+  }
+}
+#+END_SRC
 
 ** Module Bundlers
 
 #+BEGIN_QUOTE
 Module Bundlers:
-- [ ] *R → Webpack
+- [X] *R → Webpack
 - [ ] *O → Rollup
 - [ ] *O → Parcel
 #+END_QUOTE
+
+*** Webpack
+
+Readmore about [[file:webpack.org][Webpack]] .
 
 ** Linters and Formatters
 
@@ -191,6 +213,8 @@ Use a JavaScript, JSON or YAML file to specify configuration information for an 
 ...
 
 * Footnotes
+
+[fn:3] https://docs.npmjs.com/cli/v6/using-npm/scripts
 
 [fn:2] https://eslint.bootcss.com/docs/user-guide/getting-started
 
