@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-<!-- 2020-11-26 Thu 17:32 -->
+<!-- 2020-12-11 Fri 10:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>File Conversion</title>
@@ -23,18 +23,18 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgea2805c">Blob</a></li>
-<li><a href="#org78d208f">File</a></li>
-<li><a href="#orgd69c4c0">Base64</a></li>
-<li><a href="#orga07aca1">FormData</a></li>
-<li><a href="#orge256570">转换</a>
+<li><a href="#org93f2969">Blob</a></li>
+<li><a href="#orgd11c8d1">File</a></li>
+<li><a href="#orgb3b94a8">Base64</a></li>
+<li><a href="#org3fa1c3a">FormData</a></li>
+<li><a href="#orge2a7186">转换</a>
 <ul>
-<li><a href="#org211ffc9">fileToBase64</a></li>
-<li><a href="#org7303ac5">fileToBlob</a></li>
-<li><a href="#orge9e1a66">base64ToFile</a></li>
-<li><a href="#orgef0c0e2">base64ToBlob</a></li>
-<li><a href="#org971e08a">blobToFile</a></li>
-<li><a href="#org1e77db7">blobToBase64</a></li>
+<li><a href="#orgfe8c27d">fileToBase64</a></li>
+<li><a href="#orge81e5c0">fileToBlob</a></li>
+<li><a href="#orge298461">base64ToFile</a></li>
+<li><a href="#orge8fdeba">base64ToBlob</a></li>
+<li><a href="#org65eeb36">blobToFile</a></li>
+<li><a href="#orge5b6982">blobToBase64</a></li>
 </ul>
 </li>
 </ul>
@@ -44,9 +44,9 @@
 JavaScript 中的 file、blob 和 base64 。
 </p>
 
-<div id="outline-container-orgea2805c" class="outline-2">
-<h2 id="orgea2805c">Blob<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-orgea2805c">
+<div id="outline-container-org93f2969" class="outline-2">
+<h2 id="org93f2969">Blob<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-org93f2969">
 <p>
 Blob 对象表示一个不可变、原始数据的 <span class="underline">类文件对象</span> ，它的数据可以按文本或二进制的格式进行读取，也可以转换成 <code>ReadableStream</code> 来用于数据操作。
 </p>
@@ -72,8 +72,8 @@ Blob 表示的不一定是 JavaScript 原生格式的数据。 <code>File</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">obj</span> = <span style="color: #AF87FF;">{</span>name: <span style="color: #CDC673;">'Jack Liu'</span><span style="color: #AF87FF;">}</span>;
-<span class="linenr">2: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">blob</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Blob</span><span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">[</span>JSON.stringify<span style="color: #87D700;">(</span>obj<span style="color: #87D700;">)</span><span style="color: #5FD7FF;">]</span>, <span style="color: #5FD7FF;">{</span>type: <span style="color: #CDC673;">'application/json'</span><span style="color: #5FD7FF;">}</span><span style="color: #AF87FF;">)</span>;
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">obj</span> = <span style="color: #AE81FF;">{</span>name: <span style="color: #E6DB74;">'Jack Liu'</span><span style="color: #AE81FF;">}</span>;
+<span class="linenr">2: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">blob</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Blob</span><span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">[</span>JSON.stringify<span style="color: #A6E22E;">(</span>obj<span style="color: #A6E22E;">)</span><span style="color: #66D9EF;">]</span>, <span style="color: #66D9EF;">{</span>type: <span style="color: #E6DB74;">'application/json'</span><span style="color: #66D9EF;">}</span><span style="color: #AE81FF;">)</span>;
 </pre>
 </div>
 
@@ -82,12 +82,12 @@ Blob 表示的不一定是 JavaScript 原生格式的数据。 <code>File</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">typeArray</span> = GetTheTypedArraySomehow<span style="color: #AF87FF;">()</span>;
-<span class="linenr">2: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20256;&#20837;&#19968;&#20010;&#21512;&#36866;&#30340; MIME &#31867;&#22411;</span>
-<span class="linenr">3: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">blob</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Blob</span><span style="color: #AF87FF;">(</span><span style="color: #5FD7FF;">[</span>typeArray.buffer<span style="color: #5FD7FF;">]</span>, <span style="color: #5FD7FF;">{</span>type: <span style="color: #CDC673;">'application/octet-stream'</span><span style="color: #5FD7FF;">}</span><span style="color: #AF87FF;">)</span>;
-<span class="linenr">4: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">url</span> = URL.creatObjectURL<span style="color: #AF87FF;">(</span>blob<span style="color: #AF87FF;">)</span>;
-<span class="linenr">5: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20250;&#20135;&#29983;&#19968;&#20010;&#31867;&#20284; blob:d3958f5c-0777-0845-9dcf-2cb28783acaf &#36825;&#26679;&#30340; URL &#23383;&#31526;&#20018;</span>
-<span class="linenr">6: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20320;&#21487;&#20197;&#20687;&#20351;&#29992;&#26222;&#36890;&#30340; URL &#37027;&#26679;&#20351;&#29992;&#23427;&#65292;&#27604;&#22914;&#29992;&#22312; img.src &#19978;</span>
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">typeArray</span> = GetTheTypedArraySomehow<span style="color: #AE81FF;">()</span>;
+<span class="linenr">2: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#20256;&#20837;&#19968;&#20010;&#21512;&#36866;&#30340; MIME &#31867;&#22411;</span>
+<span class="linenr">3: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">blob</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Blob</span><span style="color: #AE81FF;">(</span><span style="color: #66D9EF;">[</span>typeArray.buffer<span style="color: #66D9EF;">]</span>, <span style="color: #66D9EF;">{</span>type: <span style="color: #E6DB74;">'application/octet-stream'</span><span style="color: #66D9EF;">}</span><span style="color: #AE81FF;">)</span>;
+<span class="linenr">4: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">url</span> = URL.creatObjectURL<span style="color: #AE81FF;">(</span>blob<span style="color: #AE81FF;">)</span>;
+<span class="linenr">5: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#20250;&#20135;&#29983;&#19968;&#20010;&#31867;&#20284; blob:d3958f5c-0777-0845-9dcf-2cb28783acaf &#36825;&#26679;&#30340; URL &#23383;&#31526;&#20018;</span>
+<span class="linenr">6: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#20320;&#21487;&#20197;&#20687;&#20351;&#29992;&#26222;&#36890;&#30340; URL &#37027;&#26679;&#20351;&#29992;&#23427;&#65292;&#27604;&#22914;&#29992;&#22312; img.src &#19978;</span>
 </pre>
 </div>
 
@@ -100,11 +100,11 @@ Blob 表示的不一定是 JavaScript 原生格式的数据。 <code>File</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">reader</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">FileReader</span><span style="color: #AF87FF;">()</span>;
-<span class="linenr">2: </span>reader.addEventListener<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">"loadend"</span>, <span style="color: #FF1493;">function</span><span style="color: #5FD7FF;">()</span> <span style="color: #5FD7FF;">{</span>
-<span class="linenr">3: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">reader.result &#21253;&#21547;&#34987;&#36716;&#21270;&#20026;&#31867;&#22411;&#25968;&#32452; typed array &#30340; blob</span>
-<span class="linenr">4: </span><span style="color: #5FD7FF;">}</span><span style="color: #AF87FF;">)</span>
-<span class="linenr">5: </span>reader.readAsArrayBuffer<span style="color: #AF87FF;">(</span>blob<span style="color: #AF87FF;">)</span>;
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">reader</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">FileReader</span><span style="color: #AE81FF;">()</span>;
+<span class="linenr">2: </span>reader.addEventListener<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">"loadend"</span>, <span style="color: #F92672;">function</span><span style="color: #66D9EF;">()</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">3: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">reader.result &#21253;&#21547;&#34987;&#36716;&#21270;&#20026;&#31867;&#22411;&#25968;&#32452; typed array &#30340; blob</span>
+<span class="linenr">4: </span><span style="color: #66D9EF;">}</span><span style="color: #AE81FF;">)</span>
+<span class="linenr">5: </span>reader.readAsArrayBuffer<span style="color: #AE81FF;">(</span>blob<span style="color: #AE81FF;">)</span>;
 </pre>
 </div>
 
@@ -113,7 +113,7 @@ Blob 表示的不一定是 JavaScript 原生格式的数据。 <code>File</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">text</span> = <span style="color: #FF1493;">await</span> <span style="color: #AF87FF;">(</span><span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Response</span><span style="color: #5FD7FF;">(</span>blob<span style="color: #5FD7FF;">)</span><span style="color: #AF87FF;">)</span>.text<span style="color: #AF87FF;">()</span>;
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">text</span> = <span style="color: #F92672;">await</span> <span style="color: #AE81FF;">(</span><span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Response</span><span style="color: #66D9EF;">(</span>blob<span style="color: #66D9EF;">)</span><span style="color: #AE81FF;">)</span>.text<span style="color: #AE81FF;">()</span>;
 </pre>
 </div>
 
@@ -123,9 +123,9 @@ Blob 表示的不一定是 JavaScript 原生格式的数据。 <code>File</code>
 </div>
 </div>
 
-<div id="outline-container-org78d208f" class="outline-2">
-<h2 id="org78d208f">File<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
-<div class="outline-text-2" id="text-org78d208f">
+<div id="outline-container-orgd11c8d1" class="outline-2">
+<h2 id="orgd11c8d1">File<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
+<div class="outline-text-2" id="text-orgd11c8d1">
 <p>
 文件（ <code>File</code> ）接口提供有关文件的信息，并允许网页中的 JavaScript 访问其内容。
 </p>
@@ -140,9 +140,9 @@ File 对象是特殊类型的 <code>Blob</code> ，且可以用在任意的 Blob
 </div>
 </div>
 
-<div id="outline-container-orgd69c4c0" class="outline-2">
-<h2 id="orgd69c4c0">Base64<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
-<div class="outline-text-2" id="text-orgd69c4c0">
+<div id="outline-container-orgb3b94a8" class="outline-2">
+<h2 id="orgb3b94a8">Base64<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
+<div class="outline-text-2" id="text-orgb3b94a8">
 <p>
 Base64 是一组相似的二进制到文本（binary-to-text）的 <b>编码规则</b> ，使得二进制数据在解释成 radix-64 的表现形式后能够用 ASCII 字符串的格式表示出来。
 </p>
@@ -164,13 +164,13 @@ Base64 编码普遍应用于需要通过被设计为处理文本数据的媒介�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">atob() &#23558; base64 &#35299;&#30721;</span>
-<span class="linenr">2: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">btoa() &#23558; &#23383;&#31526;&#20018;&#36716;&#30721;&#20026; base64</span>
-<span class="linenr">3: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">str</span> = <span style="color: #CDC673;">'javascript'</span>
-<span class="linenr">4: </span>window.btoa<span style="color: #AF87FF;">(</span>str<span style="color: #AF87FF;">)</span>                <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#36716;&#30721; &#8594; amF2YXNjcmlwdA==</span>
-<span class="linenr">5: </span>window.atob<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'amF2YXNjcmlwdA=='</span><span style="color: #AF87FF;">)</span> <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#35299;&#30721; &#8594; javascript</span>
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">atob() &#23558; base64 &#35299;&#30721;</span>
+<span class="linenr">2: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">btoa() &#23558; &#23383;&#31526;&#20018;&#36716;&#30721;&#20026; base64</span>
+<span class="linenr">3: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">str</span> = <span style="color: #E6DB74;">'javascript'</span>
+<span class="linenr">4: </span>window.btoa<span style="color: #AE81FF;">(</span>str<span style="color: #AE81FF;">)</span>                <span style="color: #75715E;">// </span><span style="color: #75715E;">&#36716;&#30721; &#8594; amF2YXNjcmlwdA==</span>
+<span class="linenr">5: </span>window.atob<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'amF2YXNjcmlwdA=='</span><span style="color: #AE81FF;">)</span> <span style="color: #75715E;">// </span><span style="color: #75715E;">&#35299;&#30721; &#8594; javascript</span>
 <span class="linenr">6: </span>
-<span class="linenr">7: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20013;&#26041;&#38656;&#35201;&#20808;&#29992; encodeURIComponent &#21644; decodeURIComponent &#36716;/&#35299;&#30721;</span>
+<span class="linenr">7: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#20013;&#26041;&#38656;&#35201;&#20808;&#29992; encodeURIComponent &#21644; decodeURIComponent &#36716;/&#35299;&#30721;</span>
 <span class="linenr">8: </span>
 </pre>
 </div>
@@ -223,9 +223,9 @@ Base64 要求把每三个 8bit 的字节转换为四个 6bit 的字节（3*8 = 4
 </div>
 </div>
 
-<div id="outline-container-orga07aca1" class="outline-2">
-<h2 id="orga07aca1">FormData</h2>
-<div class="outline-text-2" id="text-orga07aca1">
+<div id="outline-container-org3fa1c3a" class="outline-2">
+<h2 id="org3fa1c3a">FormData</h2>
+<div class="outline-text-2" id="text-org3fa1c3a">
 <p>
 FormData 接口提供了一种表示表单数据的键值 <code>key/value</code> 的构造方式，并且可以轻松地将数据通过 <code>XMLHttpRequest.send()</code> 方法发送出去。如果送出时的编码类型被设为 <code>multipart/form-data</code> ，它会使用和表单一样的格式。
 </p>
@@ -259,11 +259,11 @@ FormData 类型是在 XMLHttpRequest 2 级定义的，它是为序列化表单�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-html"><span class="linenr">1: </span>&lt;<span style="color: #87D700;">form</span> <span style="color: #FF8C00;">id</span>=<span style="color: #CDC673;">"myForm"</span> <span style="color: #FF8C00;">method</span>=<span style="color: #CDC673;">"post"</span> <span style="color: #FF8C00;">action</span>=<span style="color: #CDC673;">""</span>&gt;
-<span class="linenr">2: </span>  &lt;<span style="color: #87D700;">input</span> <span style="color: #FF8C00;">name</span>=<span style="color: #CDC673;">"name"</span> <span style="color: #FF8C00;">type</span>=<span style="color: #CDC673;">"text"</span> <span style="color: #FF8C00;">value</span>=<span style="color: #CDC673;">"jack"</span> /&gt;
-<span class="linenr">3: </span>  &lt;<span style="color: #87D700;">input</span> <span style="color: #FF8C00;">name</span>=<span style="color: #CDC673;">"pswd"</span> <span style="color: #FF8C00;">type</span>=<span style="color: #CDC673;">"password"</span> <span style="color: #FF8C00;">value</span>=<span style="color: #CDC673;">"12345678"</span> /&gt;
-<span class="linenr">4: </span>  &lt;<span style="color: #87D700;">input</span> <span style="color: #FF8C00;">type</span>=<span style="color: #CDC673;">"submit"</span> <span style="color: #FF8C00;">value</span>=<span style="color: #CDC673;">"&#25552;&#20132;"</span> /&gt;
-<span class="linenr">5: </span>&lt;/<span style="color: #87D700;">form</span>&gt;
+<pre class="src src-html"><span class="linenr">1: </span>&lt;<span style="color: #A6E22E;">form</span> <span style="color: #FD971F;">id</span>=<span style="color: #E6DB74;">"myForm"</span> <span style="color: #FD971F;">method</span>=<span style="color: #E6DB74;">"post"</span> <span style="color: #FD971F;">action</span>=<span style="color: #E6DB74;">""</span>&gt;
+<span class="linenr">2: </span>  &lt;<span style="color: #A6E22E;">input</span> <span style="color: #FD971F;">name</span>=<span style="color: #E6DB74;">"name"</span> <span style="color: #FD971F;">type</span>=<span style="color: #E6DB74;">"text"</span> <span style="color: #FD971F;">value</span>=<span style="color: #E6DB74;">"jack"</span> /&gt;
+<span class="linenr">3: </span>  &lt;<span style="color: #A6E22E;">input</span> <span style="color: #FD971F;">name</span>=<span style="color: #E6DB74;">"pswd"</span> <span style="color: #FD971F;">type</span>=<span style="color: #E6DB74;">"password"</span> <span style="color: #FD971F;">value</span>=<span style="color: #E6DB74;">"12345678"</span> /&gt;
+<span class="linenr">4: </span>  &lt;<span style="color: #A6E22E;">input</span> <span style="color: #FD971F;">type</span>=<span style="color: #E6DB74;">"submit"</span> <span style="color: #FD971F;">value</span>=<span style="color: #E6DB74;">"&#25552;&#20132;"</span> /&gt;
+<span class="linenr">5: </span>&lt;/<span style="color: #A6E22E;">form</span>&gt;
 </pre>
 </div>
 
@@ -272,28 +272,28 @@ FormData 类型是在 XMLHttpRequest 2 级定义的，它是为序列化表单�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">1. &#33719;&#21462;&#39029;&#38754;&#24050;&#26377;&#30340;&#19968;&#20010; form &#34920;&#21333;</span>
-<span class="linenr"> 2: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">myForm</span> = document.getElementById<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'myForm'</span><span style="color: #AF87FF;">)</span>
-<span class="linenr"> 3: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">2. &#29992;&#34920;&#21333;&#26469;&#21021;&#22987;&#21270;</span>
-<span class="linenr"> 4: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">formData</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">FormData</span><span style="color: #AF87FF;">(</span>form<span style="color: #AF87FF;">)</span>
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">1. &#33719;&#21462;&#39029;&#38754;&#24050;&#26377;&#30340;&#19968;&#20010; form &#34920;&#21333;</span>
+<span class="linenr"> 2: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">myForm</span> = document.getElementById<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'myForm'</span><span style="color: #AE81FF;">)</span>
+<span class="linenr"> 3: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">2. &#29992;&#34920;&#21333;&#26469;&#21021;&#22987;&#21270;</span>
+<span class="linenr"> 4: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">formData</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">FormData</span><span style="color: #AE81FF;">(</span>form<span style="color: #AE81FF;">)</span>
 <span class="linenr"> 5: </span>
-<span class="linenr"> 6: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#25105;&#20204;&#21487;&#20197;&#26681;&#25454; name &#26469;&#35775;&#38382;&#34920;&#21333;&#20013;&#30340;&#23383;&#27573;</span>
-<span class="linenr"> 7: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">name</span> = formData.get<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'name'</span><span style="color: #AF87FF;">)</span> <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#8594; jack</span>
-<span class="linenr"> 8: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">pswd</span> = formData.get<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'pswd'</span><span style="color: #AF87FF;">)</span> <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#8594; 12345678</span>
+<span class="linenr"> 6: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#25105;&#20204;&#21487;&#20197;&#26681;&#25454; name &#26469;&#35775;&#38382;&#34920;&#21333;&#20013;&#30340;&#23383;&#27573;</span>
+<span class="linenr"> 7: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">name</span> = formData.get<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'name'</span><span style="color: #AE81FF;">)</span> <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; jack</span>
+<span class="linenr"> 8: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">pswd</span> = formData.get<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'pswd'</span><span style="color: #AE81FF;">)</span> <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; 12345678</span>
 <span class="linenr"> 9: </span>
-<span class="linenr">10: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#24403;&#28982;&#65292;&#25105;&#20204;&#20063;&#21487;&#20197;&#22312;&#27492;&#22522;&#30784;&#19978;&#28155;&#21152;&#20854;&#20182;&#25968;&#25454;</span>
-<span class="linenr">11: </span>formData.append<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'token'</span>, <span style="color: #CDC673;">'fajskd.fj23jkf.sdfk'</span><span style="color: #AF87FF;">)</span>
+<span class="linenr">10: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#24403;&#28982;&#65292;&#25105;&#20204;&#20063;&#21487;&#20197;&#22312;&#27492;&#22522;&#30784;&#19978;&#28155;&#21152;&#20854;&#20182;&#25968;&#25454;</span>
+<span class="linenr">11: </span>formData.append<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'token'</span>, <span style="color: #E6DB74;">'fajskd.fj23jkf.sdfk'</span><span style="color: #AE81FF;">)</span>
 <span class="linenr">12: </span>
-<span class="linenr">13: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20320;&#36824;&#21487;&#20197;&#36890;&#36807; xhr &#26469;&#21457;&#36865;&#25968;&#25454;</span>
-<span class="linenr">14: </span><span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">xhr</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">XMLHttpRequest</span><span style="color: #AF87FF;">()</span>
-<span class="linenr">15: </span>xhr.open<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'post'</span>, <span style="color: #CDC673;">'http://127.0.0.1/login'</span><span style="color: #AF87FF;">)</span>
-<span class="linenr">16: </span>xhr.setHeader<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'Content-Type'</span>, <span style="color: #CDC673;">'application/x-www-form-urlencoded'</span><span style="color: #AF87FF;">)</span>
-<span class="linenr">17: </span>xhr.send<span style="color: #AF87FF;">(</span>formData<span style="color: #AF87FF;">)</span>
-<span class="linenr">18: </span>xhr.onload = <span style="color: #FF1493;">function</span><span style="color: #AF87FF;">()</span> <span style="color: #AF87FF;">{</span>
-<span class="linenr">19: </span>    <span style="color: #FF1493;">if</span> <span style="color: #5FD7FF;">(</span>xhr.status === 200<span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
-<span class="linenr">20: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">...</span>
-<span class="linenr">21: </span>    <span style="color: #5FD7FF;">}</span>
-<span class="linenr">22: </span><span style="color: #AF87FF;">}</span>
+<span class="linenr">13: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#20320;&#36824;&#21487;&#20197;&#36890;&#36807; xhr &#26469;&#21457;&#36865;&#25968;&#25454;</span>
+<span class="linenr">14: </span><span style="color: #F92672;">var</span> <span style="color: #FD971F;">xhr</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">XMLHttpRequest</span><span style="color: #AE81FF;">()</span>
+<span class="linenr">15: </span>xhr.open<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'post'</span>, <span style="color: #E6DB74;">'http://127.0.0.1/login'</span><span style="color: #AE81FF;">)</span>
+<span class="linenr">16: </span>xhr.setHeader<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'Content-Type'</span>, <span style="color: #E6DB74;">'application/x-www-form-urlencoded'</span><span style="color: #AE81FF;">)</span>
+<span class="linenr">17: </span>xhr.send<span style="color: #AE81FF;">(</span>formData<span style="color: #AE81FF;">)</span>
+<span class="linenr">18: </span>xhr.onload = <span style="color: #F92672;">function</span><span style="color: #AE81FF;">()</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">19: </span>    <span style="color: #F92672;">if</span> <span style="color: #66D9EF;">(</span>xhr.status === 200<span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">20: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">...</span>
+<span class="linenr">21: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">22: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
 
@@ -376,162 +376,162 @@ FormData 类型是在 XMLHttpRequest 2 级定义的，它是为序列化表单�
 </div>
 </div>
 
-<div id="outline-container-orge256570" class="outline-2">
-<h2 id="orge256570">转换<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup></h2>
-<div class="outline-text-2" id="text-orge256570">
+<div id="outline-container-orge2a7186" class="outline-2">
+<h2 id="orge2a7186">转换<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup></h2>
+<div class="outline-text-2" id="text-orge2a7186">
 </div>
-<div id="outline-container-org211ffc9" class="outline-3">
-<h3 id="org211ffc9">fileToBase64</h3>
-<div class="outline-text-3" id="text-org211ffc9">
+<div id="outline-container-orgfe8c27d" class="outline-3">
+<h3 id="orgfe8c27d">fileToBase64</h3>
+<div class="outline-text-3" id="text-orgfe8c27d">
 <p>
 主要应用场景：图片预览。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #FF1493;">function</span> <span style="color: #87D700;">fileToBase64</span><span style="color: #AF87FF;">(</span><span style="color: #FF8C00;">file</span>, <span style="color: #FF8C00;">callback</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">reader</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">FileReader</span><span style="color: #5FD7FF;">()</span>
-<span class="linenr"> 3: </span>    reader.readAsDataURL<span style="color: #5FD7FF;">(</span>file<span style="color: #5FD7FF;">)</span>
-<span class="linenr"> 4: </span>    reader.onload = <span style="color: #FF1493;">function</span><span style="color: #5FD7FF;">(</span><span style="color: #FF8C00;">e</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
-<span class="linenr"> 5: </span>        <span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">base64</span> = e.target.result
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #F92672;">function</span> <span style="color: #A6E22E;">fileToBase64</span><span style="color: #AE81FF;">(</span><span style="color: #FD971F;">file</span>, <span style="color: #FD971F;">callback</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">var</span> <span style="color: #FD971F;">reader</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">FileReader</span><span style="color: #66D9EF;">()</span>
+<span class="linenr"> 3: </span>    reader.readAsDataURL<span style="color: #66D9EF;">(</span>file<span style="color: #66D9EF;">)</span>
+<span class="linenr"> 4: </span>    reader.onload = <span style="color: #F92672;">function</span><span style="color: #66D9EF;">(</span><span style="color: #FD971F;">e</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 5: </span>        <span style="color: #F92672;">var</span> <span style="color: #FD971F;">base64</span> = e.target.result
 <span class="linenr"> 6: </span>
-<span class="linenr"> 7: </span>        <span style="color: #FF1493;">if</span> <span style="color: #87D700;">(</span><span style="color: #FF1493;">typeof</span> callback === <span style="color: #CDC673;">'function'</span><span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
-<span class="linenr"> 8: </span>            callback<span style="color: #CDC673;">(</span>base64<span style="color: #CDC673;">)</span>
+<span class="linenr"> 7: </span>        <span style="color: #F92672;">if</span> <span style="color: #A6E22E;">(</span><span style="color: #F92672;">typeof</span> callback === <span style="color: #E6DB74;">'function'</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 8: </span>            callback<span style="color: #E6DB74;">(</span>base64<span style="color: #E6DB74;">)</span>
 <span class="linenr"> 9: </span>
-<span class="linenr">10: </span>        <span style="color: #87D700;">}</span> <span style="color: #FF1493;">else</span> <span style="color: #87D700;">{</span>
-<span class="linenr">11: </span>            console.log<span style="color: #CDC673;">(</span><span style="color: #CDC673;">'base64: '</span>, base64<span style="color: #CDC673;">)</span>
-<span class="linenr">12: </span>        <span style="color: #87D700;">}</span>
-<span class="linenr">13: </span>    <span style="color: #5FD7FF;">}</span>
-<span class="linenr">14: </span><span style="color: #AF87FF;">}</span>
+<span class="linenr">10: </span>        <span style="color: #A6E22E;">}</span> <span style="color: #F92672;">else</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr">11: </span>            console.log<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">'base64: '</span>, base64<span style="color: #E6DB74;">)</span>
+<span class="linenr">12: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">13: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">14: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7303ac5" class="outline-3">
-<h3 id="org7303ac5">fileToBlob</h3>
-<div class="outline-text-3" id="text-org7303ac5">
+<div id="outline-container-orge81e5c0" class="outline-3">
+<h3 id="orge81e5c0">fileToBlob</h3>
+<div class="outline-text-3" id="text-orge81e5c0">
 <p>
 主要应用场景：文件上传。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #FF1493;">function</span> <span style="color: #87D700;">fileToBlob</span><span style="color: #AF87FF;">(</span><span style="color: #FF8C00;">file</span>, <span style="color: #FF8C00;">callback</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">type</span> = file.type
-<span class="linenr"> 3: </span>    <span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">reader</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">FileReader</span><span style="color: #5FD7FF;">()</span>
-<span class="linenr"> 4: </span>    reader.readAsDataURL<span style="color: #5FD7FF;">(</span>file<span style="color: #5FD7FF;">)</span>
-<span class="linenr"> 5: </span>    reader.onload = <span style="color: #FF1493;">function</span><span style="color: #5FD7FF;">(</span><span style="color: #FF8C00;">e</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
-<span class="linenr"> 6: </span>        <span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">blob</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Blob</span><span style="color: #87D700;">(</span><span style="color: #CDC673;">[</span>e.target.result<span style="color: #CDC673;">]</span>, <span style="color: #CDC673;">{</span>type<span style="color: #CDC673;">}</span><span style="color: #87D700;">)</span>
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #F92672;">function</span> <span style="color: #A6E22E;">fileToBlob</span><span style="color: #AE81FF;">(</span><span style="color: #FD971F;">file</span>, <span style="color: #FD971F;">callback</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">var</span> <span style="color: #FD971F;">type</span> = file.type
+<span class="linenr"> 3: </span>    <span style="color: #F92672;">var</span> <span style="color: #FD971F;">reader</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">FileReader</span><span style="color: #66D9EF;">()</span>
+<span class="linenr"> 4: </span>    reader.readAsDataURL<span style="color: #66D9EF;">(</span>file<span style="color: #66D9EF;">)</span>
+<span class="linenr"> 5: </span>    reader.onload = <span style="color: #F92672;">function</span><span style="color: #66D9EF;">(</span><span style="color: #FD971F;">e</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 6: </span>        <span style="color: #F92672;">var</span> <span style="color: #FD971F;">blob</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Blob</span><span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">[</span>e.target.result<span style="color: #E6DB74;">]</span>, <span style="color: #E6DB74;">{</span>type<span style="color: #E6DB74;">}</span><span style="color: #A6E22E;">)</span>
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span>        <span style="color: #FF1493;">if</span> <span style="color: #87D700;">(</span><span style="color: #FF1493;">typeof</span> callback === <span style="color: #CDC673;">'function'</span><span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
-<span class="linenr"> 9: </span>            callback<span style="color: #CDC673;">(</span>blob<span style="color: #CDC673;">)</span>
+<span class="linenr"> 8: </span>        <span style="color: #F92672;">if</span> <span style="color: #A6E22E;">(</span><span style="color: #F92672;">typeof</span> callback === <span style="color: #E6DB74;">'function'</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 9: </span>            callback<span style="color: #E6DB74;">(</span>blob<span style="color: #E6DB74;">)</span>
 <span class="linenr">10: </span>
-<span class="linenr">11: </span>        <span style="color: #87D700;">}</span> <span style="color: #FF1493;">else</span> <span style="color: #87D700;">{</span>
-<span class="linenr">12: </span>            console.log<span style="color: #CDC673;">(</span><span style="color: #CDC673;">'blob: '</span>, blob<span style="color: #CDC673;">)</span>
-<span class="linenr">13: </span>            <span style="color: #FF1493;">return</span> blob
-<span class="linenr">14: </span>        <span style="color: #87D700;">}</span>
-<span class="linenr">15: </span>    <span style="color: #5FD7FF;">}</span>
-<span class="linenr">16: </span><span style="color: #AF87FF;">}</span>
+<span class="linenr">11: </span>        <span style="color: #A6E22E;">}</span> <span style="color: #F92672;">else</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr">12: </span>            console.log<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">'blob: '</span>, blob<span style="color: #E6DB74;">)</span>
+<span class="linenr">13: </span>            <span style="color: #F92672;">return</span> blob
+<span class="linenr">14: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">15: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">16: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge9e1a66" class="outline-3">
-<h3 id="orge9e1a66">base64ToFile</h3>
-<div class="outline-text-3" id="text-orge9e1a66">
+<div id="outline-container-orge298461" class="outline-3">
+<h3 id="orge298461">base64ToFile</h3>
+<div class="outline-text-3" id="text-orge298461">
 <p>
 主要应用场景：文件上传。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #FF1493;">function</span> <span style="color: #87D700;">base64ToFile</span><span style="color: #AF87FF;">(</span><span style="color: #FF8C00;">base64</span>, <span style="color: #FF8C00;">callback</span><span style="color: #5FD7FF;">(</span><span style="color: #FF8C00;">fileName</span><span style="color: #5FD7FF;">)</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">arr</span> = base64.split<span style="color: #5FD7FF;">(</span><span style="color: #CDC673;">','</span><span style="color: #5FD7FF;">)</span>,
-<span class="linenr"> 3: </span>        type = arr<span style="color: #5FD7FF;">[</span>0<span style="color: #5FD7FF;">]</span>.match<span style="color: #5FD7FF;">(</span><span style="color: #CDC673;">/:(.*?);/</span><span style="color: #5FD7FF;">)[</span>1<span style="color: #5FD7FF;">]</span>,
-<span class="linenr"> 4: </span>        bstr = atob<span style="color: #5FD7FF;">(</span>arr<span style="color: #87D700;">[</span>1<span style="color: #87D700;">]</span><span style="color: #5FD7FF;">)</span>,
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #F92672;">function</span> <span style="color: #A6E22E;">base64ToFile</span><span style="color: #AE81FF;">(</span><span style="color: #FD971F;">base64</span>, <span style="color: #FD971F;">callback</span><span style="color: #66D9EF;">(</span><span style="color: #FD971F;">fileName</span><span style="color: #66D9EF;">)</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">var</span> <span style="color: #FD971F;">arr</span> = base64.split<span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">','</span><span style="color: #66D9EF;">)</span>,
+<span class="linenr"> 3: </span>        type = arr<span style="color: #66D9EF;">[</span>0<span style="color: #66D9EF;">]</span>.match<span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">/:(.*?);/</span><span style="color: #66D9EF;">)[</span>1<span style="color: #66D9EF;">]</span>,
+<span class="linenr"> 4: </span>        bstr = atob<span style="color: #66D9EF;">(</span>arr<span style="color: #A6E22E;">[</span>1<span style="color: #A6E22E;">]</span><span style="color: #66D9EF;">)</span>,
 <span class="linenr"> 5: </span>        n = bstr.length,
-<span class="linenr"> 6: </span>        u8arr = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Unit8Array</span><span style="color: #5FD7FF;">(</span>n<span style="color: #5FD7FF;">)</span>
+<span class="linenr"> 6: </span>        u8arr = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Unit8Array</span><span style="color: #66D9EF;">(</span>n<span style="color: #66D9EF;">)</span>
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span>    <span style="color: #FF1493;">while</span><span style="color: #5FD7FF;">(</span>n--<span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
-<span class="linenr"> 9: </span>        u8arr<span style="color: #87D700;">[</span>n<span style="color: #87D700;">]</span> = bstr.charCodeAt<span style="color: #87D700;">(</span>n<span style="color: #87D700;">)</span>
-<span class="linenr">10: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr"> 8: </span>    <span style="color: #F92672;">while</span><span style="color: #66D9EF;">(</span>n--<span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 9: </span>        u8arr<span style="color: #A6E22E;">[</span>n<span style="color: #A6E22E;">]</span> = bstr.charCodeAt<span style="color: #A6E22E;">(</span>n<span style="color: #A6E22E;">)</span>
+<span class="linenr">10: </span>    <span style="color: #66D9EF;">}</span>
 <span class="linenr">11: </span>
-<span class="linenr">12: </span>    <span style="color: #FF1493;">return</span> <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">File</span><span style="color: #5FD7FF;">(</span><span style="color: #87D700;">[</span>u8arr<span style="color: #87D700;">]</span>, fileName, <span style="color: #87D700;">{</span>type<span style="color: #87D700;">}</span><span style="color: #5FD7FF;">)</span>
-<span class="linenr">13: </span><span style="color: #AF87FF;">}</span>
+<span class="linenr">12: </span>    <span style="color: #F92672;">return</span> <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">File</span><span style="color: #66D9EF;">(</span><span style="color: #A6E22E;">[</span>u8arr<span style="color: #A6E22E;">]</span>, fileName, <span style="color: #A6E22E;">{</span>type<span style="color: #A6E22E;">}</span><span style="color: #66D9EF;">)</span>
+<span class="linenr">13: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgef0c0e2" class="outline-3">
-<h3 id="orgef0c0e2">base64ToBlob</h3>
-<div class="outline-text-3" id="text-orgef0c0e2">
+<div id="outline-container-orge8fdeba" class="outline-3">
+<h3 id="orge8fdeba">base64ToBlob</h3>
+<div class="outline-text-3" id="text-orge8fdeba">
 <p>
 主要应用场景：文件上传。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #8B8878;">//</span><span style="color: #8B8878;">dataURL &#31867;&#20284;&#20026; data:img/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2w...</span>
-<span class="linenr"> 2: </span><span style="color: #FF1493;">function</span> <span style="color: #87D700;">base64ToBlob</span><span style="color: #AF87FF;">(</span><span style="color: #FF8C00;">base64</span>, <span style="color: #FF8C00;">callback</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
-<span class="linenr"> 3: </span>    <span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">arr</span> = base64.split<span style="color: #5FD7FF;">(</span><span style="color: #CDC673;">','</span><span style="color: #5FD7FF;">)</span>,
-<span class="linenr"> 4: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">mimeString</span>
-<span class="linenr"> 5: </span>        type = arr<span style="color: #5FD7FF;">[</span>0<span style="color: #5FD7FF;">]</span>.match<span style="color: #5FD7FF;">(</span><span style="color: #CDC673;">/:(.*?);/</span><span style="color: #5FD7FF;">)[</span>1<span style="color: #5FD7FF;">]</span>,
-<span class="linenr"> 6: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">byteString</span>
-<span class="linenr"> 7: </span>        bstr = atob<span style="color: #5FD7FF;">(</span>arr<span style="color: #87D700;">[</span>1<span style="color: #87D700;">]</span><span style="color: #5FD7FF;">)</span>,
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #75715E;">//</span><span style="color: #75715E;">dataURL &#31867;&#20284;&#20026; data:img/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2w...</span>
+<span class="linenr"> 2: </span><span style="color: #F92672;">function</span> <span style="color: #A6E22E;">base64ToBlob</span><span style="color: #AE81FF;">(</span><span style="color: #FD971F;">base64</span>, <span style="color: #FD971F;">callback</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 3: </span>    <span style="color: #F92672;">var</span> <span style="color: #FD971F;">arr</span> = base64.split<span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">','</span><span style="color: #66D9EF;">)</span>,
+<span class="linenr"> 4: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">mimeString</span>
+<span class="linenr"> 5: </span>        type = arr<span style="color: #66D9EF;">[</span>0<span style="color: #66D9EF;">]</span>.match<span style="color: #66D9EF;">(</span><span style="color: #E6DB74;">/:(.*?);/</span><span style="color: #66D9EF;">)[</span>1<span style="color: #66D9EF;">]</span>,
+<span class="linenr"> 6: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">byteString</span>
+<span class="linenr"> 7: </span>        bstr = atob<span style="color: #66D9EF;">(</span>arr<span style="color: #A6E22E;">[</span>1<span style="color: #A6E22E;">]</span><span style="color: #66D9EF;">)</span>,
 <span class="linenr"> 8: </span>        n = bstr.length,
-<span class="linenr"> 9: </span>        u8arr = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Uint8Array</span><span style="color: #5FD7FF;">(</span>n<span style="color: #5FD7FF;">)</span>
+<span class="linenr"> 9: </span>        u8arr = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Uint8Array</span><span style="color: #66D9EF;">(</span>n<span style="color: #66D9EF;">)</span>
 <span class="linenr">10: </span>
-<span class="linenr">11: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">for (var i = 0; i &lt; byteString.length; i++) {</span>
-<span class="linenr">12: </span>    <span style="color: #8B8878;">//     </span><span style="color: #8B8878;">ia[i] = byteString.charCodeAt(i)</span>
-<span class="linenr">13: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">}</span>
+<span class="linenr">11: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">for (var i = 0; i &lt; byteString.length; i++) {</span>
+<span class="linenr">12: </span>    <span style="color: #75715E;">//     </span><span style="color: #75715E;">ia[i] = byteString.charCodeAt(i)</span>
+<span class="linenr">13: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">}</span>
 <span class="linenr">14: </span>
-<span class="linenr">15: </span>    <span style="color: #FF1493;">while</span><span style="color: #5FD7FF;">(</span>n--<span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
-<span class="linenr">16: </span>        u8arr<span style="color: #87D700;">[</span>n<span style="color: #87D700;">]</span> = bstr.charCodeAt<span style="color: #87D700;">(</span>n<span style="color: #87D700;">)</span>
-<span class="linenr">17: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">15: </span>    <span style="color: #F92672;">while</span><span style="color: #66D9EF;">(</span>n--<span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">16: </span>        u8arr<span style="color: #A6E22E;">[</span>n<span style="color: #A6E22E;">]</span> = bstr.charCodeAt<span style="color: #A6E22E;">(</span>n<span style="color: #A6E22E;">)</span>
+<span class="linenr">17: </span>    <span style="color: #66D9EF;">}</span>
 <span class="linenr">18: </span>
-<span class="linenr">19: </span>    <span style="color: #FF1493;">return</span> <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Blob</span><span style="color: #5FD7FF;">(</span><span style="color: #87D700;">[</span>u8arr<span style="color: #87D700;">]</span>, <span style="color: #87D700;">{</span>type<span style="color: #87D700;">}</span><span style="color: #5FD7FF;">)</span>
-<span class="linenr">20: </span><span style="color: #AF87FF;">}</span>
+<span class="linenr">19: </span>    <span style="color: #F92672;">return</span> <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Blob</span><span style="color: #66D9EF;">(</span><span style="color: #A6E22E;">[</span>u8arr<span style="color: #A6E22E;">]</span>, <span style="color: #A6E22E;">{</span>type<span style="color: #A6E22E;">}</span><span style="color: #66D9EF;">)</span>
+<span class="linenr">20: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org971e08a" class="outline-3">
-<h3 id="org971e08a">blobToFile</h3>
-<div class="outline-text-3" id="text-org971e08a">
+<div id="outline-container-org65eeb36" class="outline-3">
+<h3 id="org65eeb36">blobToFile</h3>
+<div class="outline-text-3" id="text-org65eeb36">
 <p>
 主要应用场景：文件上传。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #FF1493;">function</span> <span style="color: #87D700;">blobToFile</span><span style="color: #AF87FF;">(</span><span style="color: #FF8C00;">blob</span>, <span style="color: #FF8C00;">fileName</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
-<span class="linenr">2: </span>    <span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">file</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">File</span><span style="color: #5FD7FF;">(</span><span style="color: #87D700;">[</span>blob<span style="color: #87D700;">]</span>, fileName, <span style="color: #87D700;">{</span>type: blob.type<span style="color: #87D700;">}</span><span style="color: #5FD7FF;">)</span>
-<span class="linenr">3: </span>    <span style="color: #FF1493;">return</span> file
-<span class="linenr">4: </span><span style="color: #AF87FF;">}</span>
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">function</span> <span style="color: #A6E22E;">blobToFile</span><span style="color: #AE81FF;">(</span><span style="color: #FD971F;">blob</span>, <span style="color: #FD971F;">fileName</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #F92672;">var</span> <span style="color: #FD971F;">file</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">File</span><span style="color: #66D9EF;">(</span><span style="color: #A6E22E;">[</span>blob<span style="color: #A6E22E;">]</span>, fileName, <span style="color: #A6E22E;">{</span>type: blob.type<span style="color: #A6E22E;">}</span><span style="color: #66D9EF;">)</span>
+<span class="linenr">3: </span>    <span style="color: #F92672;">return</span> file
+<span class="linenr">4: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org1e77db7" class="outline-3">
-<h3 id="org1e77db7">blobToBase64</h3>
-<div class="outline-text-3" id="text-org1e77db7">
+<div id="outline-container-orge5b6982" class="outline-3">
+<h3 id="orge5b6982">blobToBase64</h3>
+<div class="outline-text-3" id="text-orge5b6982">
 <p>
 主要应用场景：图片预览。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #FF1493;">function</span> <span style="color: #87D700;">blobToBase64</span><span style="color: #AF87FF;">(</span><span style="color: #FF8C00;">blob</span>, <span style="color: #FF8C00;">callback</span><span style="color: #AF87FF;">)</span> <span style="color: #AF87FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #FF1493;">var</span> <span style="color: #FF8C00;">reader</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">FileReader</span><span style="color: #5FD7FF;">()</span>
-<span class="linenr"> 3: </span>    reader.readAsDataURL<span style="color: #5FD7FF;">(</span>blob<span style="color: #5FD7FF;">)</span>
-<span class="linenr"> 4: </span>    reader.onload = <span style="color: #FF1493;">function</span><span style="color: #5FD7FF;">(</span><span style="color: #FF8C00;">e</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
-<span class="linenr"> 5: </span>        <span style="color: #FF1493;">if</span> <span style="color: #87D700;">(</span><span style="color: #FF1493;">typeof</span> callback === <span style="color: #CDC673;">'function'</span><span style="color: #87D700;">)</span> <span style="color: #87D700;">{</span>
-<span class="linenr"> 6: </span>            callback<span style="color: #CDC673;">(</span>e.target.result<span style="color: #CDC673;">)</span>
-<span class="linenr"> 7: </span>        <span style="color: #87D700;">}</span> <span style="color: #FF1493;">else</span> <span style="color: #87D700;">{</span>
-<span class="linenr"> 8: </span>            console.log<span style="color: #CDC673;">(</span><span style="color: #CDC673;">'base64: '</span>, e.target.result<span style="color: #CDC673;">)</span>
-<span class="linenr"> 9: </span>            <span style="color: #FF1493;">return</span> e.target.result
-<span class="linenr">10: </span>        <span style="color: #87D700;">}</span>
-<span class="linenr">11: </span>    <span style="color: #5FD7FF;">}</span>
-<span class="linenr">12: </span><span style="color: #AF87FF;">}</span>
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #F92672;">function</span> <span style="color: #A6E22E;">blobToBase64</span><span style="color: #AE81FF;">(</span><span style="color: #FD971F;">blob</span>, <span style="color: #FD971F;">callback</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #F92672;">var</span> <span style="color: #FD971F;">reader</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">FileReader</span><span style="color: #66D9EF;">()</span>
+<span class="linenr"> 3: </span>    reader.readAsDataURL<span style="color: #66D9EF;">(</span>blob<span style="color: #66D9EF;">)</span>
+<span class="linenr"> 4: </span>    reader.onload = <span style="color: #F92672;">function</span><span style="color: #66D9EF;">(</span><span style="color: #FD971F;">e</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 5: </span>        <span style="color: #F92672;">if</span> <span style="color: #A6E22E;">(</span><span style="color: #F92672;">typeof</span> callback === <span style="color: #E6DB74;">'function'</span><span style="color: #A6E22E;">)</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 6: </span>            callback<span style="color: #E6DB74;">(</span>e.target.result<span style="color: #E6DB74;">)</span>
+<span class="linenr"> 7: </span>        <span style="color: #A6E22E;">}</span> <span style="color: #F92672;">else</span> <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 8: </span>            console.log<span style="color: #E6DB74;">(</span><span style="color: #E6DB74;">'base64: '</span>, e.target.result<span style="color: #E6DB74;">)</span>
+<span class="linenr"> 9: </span>            <span style="color: #F92672;">return</span> e.target.result
+<span class="linenr">10: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">11: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">12: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
 </div>
@@ -566,7 +566,7 @@ FormData 类型是在 XMLHttpRequest 2 级定义的，它是为序列化表单�
 <div id="postamble" class="status">
 <p class="date">Date: 2020-11-26 Thu 12:01</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-11-26 Thu 17:32</p>
+<p class="date">Created: 2020-12-11 Fri 10:59</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

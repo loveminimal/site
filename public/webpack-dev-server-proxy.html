@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-<!-- 2020-11-02 Mon 15:07 -->
+<!-- 2020-12-11 Fri 11:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Webpack Dev Server Proxy</title>
@@ -23,15 +23,15 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org031ebab">基本用法</a></li>
-<li><a href="#orgd5400a0">代理多个路径</a></li>
-<li><a href="#orgd79441f">忽略API前缀</a></li>
-<li><a href="#orge20ccb4">忽略https安全提示</a></li>
-<li><a href="#org889266f">自定义规则</a></li>
-<li><a href="#orgea741fd">跨域</a></li>
-<li><a href="#org5a36a39">配置多个规则：Vue-cli中 `proxyTable` 配置接口</a></li>
-<li><a href="#org6fcdfb3">更多参数</a></li>
-<li><a href="#orge1e0de9">vue-element-admin分析代码</a></li>
+<li><a href="#org4f1162e">基本用法</a></li>
+<li><a href="#org4db738d">代理多个路径</a></li>
+<li><a href="#org1071e1e">忽略API前缀</a></li>
+<li><a href="#orga1db647">忽略https安全提示</a></li>
+<li><a href="#orgc9318d0">自定义规则</a></li>
+<li><a href="#org6d183bf">跨域</a></li>
+<li><a href="#org0de4ec2">配置多个规则：Vue-cli中 `proxyTable` 配置接口</a></li>
+<li><a href="#org341532a">更多参数</a></li>
+<li><a href="#org9b2e2fa">vue-element-admin分析代码</a></li>
 </ul>
 </div>
 </div>
@@ -47,187 +47,187 @@
 *注：F12 查看网络请求路径，还是原来的，所以只能从效果上去观察是否正确代理了。
 </p>
 
-<div id="outline-container-org031ebab" class="outline-2">
-<h2 id="org031ebab">基本用法</h2>
-<div class="outline-text-2" id="text-org031ebab">
+<div id="outline-container-org4f1162e" class="outline-2">
+<h2 id="org4f1162e">基本用法</h2>
+<div class="outline-text-2" id="text-org4f1162e">
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AF87FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #8B8878;">//</span><span style="color: #8B8878;">...</span>
-<span class="linenr"> 3: </span>    devServer: <span style="color: #5FD7FF;">{</span>
-<span class="linenr"> 4: </span>        proxy: <span style="color: #87D700;">{</span>
-<span class="linenr"> 5: </span>            <span style="color: #CDC673;">'/api'</span>: <span style="color: #CDC673;">'http://localhost:3000'</span>
-<span class="linenr"> 6: </span>        <span style="color: #87D700;">}</span>
-<span class="linenr"> 7: </span>    <span style="color: #5FD7FF;">}</span>
-<span class="linenr"> 8: </span><span style="color: #AF87FF;">}</span>;
+<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #75715E;">//</span><span style="color: #75715E;">...</span>
+<span class="linenr"> 3: </span>    devServer: <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 4: </span>        proxy: <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 5: </span>            <span style="color: #E6DB74;">'/api'</span>: <span style="color: #E6DB74;">'http://localhost:3000'</span>
+<span class="linenr"> 6: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr"> 7: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr"> 8: </span><span style="color: #AE81FF;">}</span>;
 <span class="linenr"> 9: </span>
-<span class="linenr">10: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#35831;&#27714;&#21040; `/api/xxx` &#29616;&#22312;&#20250;&#34987;&#20195;&#29702;&#21040;&#35831;&#27714; http://localhost:3000/api/xxx &#65292;</span>
-<span class="linenr">11: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20363;&#22914; `/api/user` &#29616;&#22312;&#20250;&#34987;&#20195;&#29702;&#21040;&#35831;&#27714; http://localhost:3000/api/user</span>
+<span class="linenr">10: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#35831;&#27714;&#21040; `/api/xxx` &#29616;&#22312;&#20250;&#34987;&#20195;&#29702;&#21040;&#35831;&#27714; http://localhost:3000/api/xxx &#65292;</span>
+<span class="linenr">11: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#20363;&#22914; `/api/user` &#29616;&#22312;&#20250;&#34987;&#20195;&#29702;&#21040;&#35831;&#27714; http://localhost:3000/api/user</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd5400a0" class="outline-2">
-<h2 id="orgd5400a0">代理多个路径</h2>
-<div class="outline-text-2" id="text-orgd5400a0">
+<div id="outline-container-org4db738d" class="outline-2">
+<h2 id="org4db738d">代理多个路径</h2>
+<div class="outline-text-2" id="text-org4db738d">
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AF87FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #8B8878;">//</span><span style="color: #8B8878;">...</span>
-<span class="linenr"> 3: </span>    devServer: <span style="color: #5FD7FF;">{</span>
-<span class="linenr"> 4: </span>        proxy: <span style="color: #87D700;">[</span><span style="color: #CDC673;">{</span>
-<span class="linenr"> 5: </span>            context: <span style="color: #FF8C00;">[</span><span style="color: #CDC673;">'/auth'</span>, <span style="color: #CDC673;">'/api'</span><span style="color: #FF8C00;">]</span>,
-<span class="linenr"> 6: </span>            target: <span style="color: #CDC673;">'http://localhost:3000'</span>,
-<span class="linenr"> 7: </span>        <span style="color: #CDC673;">}</span><span style="color: #87D700;">]</span>
-<span class="linenr"> 8: </span>    <span style="color: #5FD7FF;">}</span>
-<span class="linenr"> 9: </span><span style="color: #AF87FF;">}</span>;
+<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #75715E;">//</span><span style="color: #75715E;">...</span>
+<span class="linenr"> 3: </span>    devServer: <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 4: </span>        proxy: <span style="color: #A6E22E;">[</span><span style="color: #E6DB74;">{</span>
+<span class="linenr"> 5: </span>            context: <span style="color: #FD971F;">[</span><span style="color: #E6DB74;">'/auth'</span>, <span style="color: #E6DB74;">'/api'</span><span style="color: #FD971F;">]</span>,
+<span class="linenr"> 6: </span>            target: <span style="color: #E6DB74;">'http://localhost:3000'</span>,
+<span class="linenr"> 7: </span>        <span style="color: #E6DB74;">}</span><span style="color: #A6E22E;">]</span>
+<span class="linenr"> 8: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr"> 9: </span><span style="color: #AE81FF;">}</span>;
 <span class="linenr">10: </span>
-<span class="linenr">11: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22914;&#26524;&#20320;&#24819;&#35201;&#20195;&#30721;&#22810;&#20010;&#36335;&#24452;&#20195;&#29702;&#21040;&#21516;&#19968;&#20010; `target` &#19979;&#65292;</span>
-<span class="linenr">12: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20320;&#21487;&#20197;&#20351;&#29992;&#30001;&#19968;&#20010;&#25110;&#22810;&#20010;&#12300;&#20855;&#26377; `context` &#23646;&#24615;&#30340;&#23545;&#35937;&#12301;&#26500;&#25104;&#30340;&#25968;&#32452;&#65306;</span>
+<span class="linenr">11: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#22914;&#26524;&#20320;&#24819;&#35201;&#20195;&#30721;&#22810;&#20010;&#36335;&#24452;&#20195;&#29702;&#21040;&#21516;&#19968;&#20010; `target` &#19979;&#65292;</span>
+<span class="linenr">12: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#20320;&#21487;&#20197;&#20351;&#29992;&#30001;&#19968;&#20010;&#25110;&#22810;&#20010;&#12300;&#20855;&#26377; `context` &#23646;&#24615;&#30340;&#23545;&#35937;&#12301;&#26500;&#25104;&#30340;&#25968;&#32452;&#65306;</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd79441f" class="outline-2">
-<h2 id="orgd79441f">忽略API前缀</h2>
-<div class="outline-text-2" id="text-orgd79441f">
+<div id="outline-container-org1071e1e" class="outline-2">
+<h2 id="org1071e1e">忽略API前缀</h2>
+<div class="outline-text-2" id="text-org1071e1e">
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AF87FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #8B8878;">//</span><span style="color: #8B8878;">...</span>
-<span class="linenr"> 3: </span>    devServer: <span style="color: #5FD7FF;">{</span>
-<span class="linenr"> 4: </span>        proxy: <span style="color: #87D700;">{</span>
-<span class="linenr"> 5: </span>            <span style="color: #CDC673;">'/api'</span>: <span style="color: #CDC673;">{</span>
-<span class="linenr"> 6: </span>                target: <span style="color: #CDC673;">'http://localhost:3000'</span>,
-<span class="linenr"> 7: </span>                pathRewrite: <span style="color: #FF8C00;">{</span><span style="color: #CDC673;">'^/api'</span> : <span style="color: #CDC673;">''</span><span style="color: #FF8C00;">}</span>
-<span class="linenr"> 8: </span>            <span style="color: #CDC673;">}</span>
-<span class="linenr"> 9: </span>        <span style="color: #87D700;">}</span>
-<span class="linenr">10: </span>    <span style="color: #5FD7FF;">}</span>
-<span class="linenr">11: </span><span style="color: #AF87FF;">}</span>;
+<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #75715E;">//</span><span style="color: #75715E;">...</span>
+<span class="linenr"> 3: </span>    devServer: <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 4: </span>        proxy: <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 5: </span>            <span style="color: #E6DB74;">'/api'</span>: <span style="color: #E6DB74;">{</span>
+<span class="linenr"> 6: </span>                target: <span style="color: #E6DB74;">'http://localhost:3000'</span>,
+<span class="linenr"> 7: </span>                pathRewrite: <span style="color: #FD971F;">{</span><span style="color: #E6DB74;">'^/api'</span> : <span style="color: #E6DB74;">''</span><span style="color: #FD971F;">}</span>
+<span class="linenr"> 8: </span>            <span style="color: #E6DB74;">}</span>
+<span class="linenr"> 9: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">10: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">11: </span><span style="color: #AE81FF;">}</span>;
 <span class="linenr">12: </span>
-<span class="linenr">13: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#35831;&#27714;&#21040; `/api/xxx` &#29616;&#22312;&#20250;&#34987;&#20195;&#29702;&#21040;&#35831;&#27714; http://localhost:3000/xxx &#65292;</span>
-<span class="linenr">14: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20363;&#22914; `/api/user` &#29616;&#22312;&#20250;&#34987;&#20195;&#29702;&#21040;&#35831;&#27714; http://localhost:3000/user</span>
+<span class="linenr">13: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#35831;&#27714;&#21040; `/api/xxx` &#29616;&#22312;&#20250;&#34987;&#20195;&#29702;&#21040;&#35831;&#27714; http://localhost:3000/xxx &#65292;</span>
+<span class="linenr">14: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#20363;&#22914; `/api/user` &#29616;&#22312;&#20250;&#34987;&#20195;&#29702;&#21040;&#35831;&#27714; http://localhost:3000/user</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge20ccb4" class="outline-2">
-<h2 id="orge20ccb4">忽略https安全提示</h2>
-<div class="outline-text-2" id="text-orge20ccb4">
+<div id="outline-container-orga1db647" class="outline-2">
+<h2 id="orga1db647">忽略https安全提示</h2>
+<div class="outline-text-2" id="text-orga1db647">
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AF87FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #8B8878;">//</span><span style="color: #8B8878;">...</span>
-<span class="linenr"> 3: </span>    devServer: <span style="color: #5FD7FF;">{</span>
-<span class="linenr"> 4: </span>        proxy: <span style="color: #87D700;">{</span>
-<span class="linenr"> 5: </span>            <span style="color: #CDC673;">'/api'</span>: <span style="color: #CDC673;">{</span>
-<span class="linenr"> 6: </span>                target: <span style="color: #CDC673;">'https://other-server.example.com'</span>,
-<span class="linenr"> 7: </span>                secure: <span style="color: #AF87FF;">false</span>
-<span class="linenr"> 8: </span>            <span style="color: #CDC673;">}</span>
-<span class="linenr"> 9: </span>        <span style="color: #87D700;">}</span>
-<span class="linenr">10: </span>    <span style="color: #5FD7FF;">}</span>
-<span class="linenr">11: </span><span style="color: #AF87FF;">}</span>;
+<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #75715E;">//</span><span style="color: #75715E;">...</span>
+<span class="linenr"> 3: </span>    devServer: <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 4: </span>        proxy: <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 5: </span>            <span style="color: #E6DB74;">'/api'</span>: <span style="color: #E6DB74;">{</span>
+<span class="linenr"> 6: </span>                target: <span style="color: #E6DB74;">'https://other-server.example.com'</span>,
+<span class="linenr"> 7: </span>                secure: <span style="color: #AE81FF;">false</span>
+<span class="linenr"> 8: </span>            <span style="color: #E6DB74;">}</span>
+<span class="linenr"> 9: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">10: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">11: </span><span style="color: #AE81FF;">}</span>;
 <span class="linenr">12: </span>
-<span class="linenr">13: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#40664;&#35748;&#24773;&#20917;&#19979;&#65292;&#19981;&#25509;&#21463;&#36816;&#34892;&#22312; HTTPS &#19978;&#65292;&#19988;&#20351;&#29992;&#20102;&#26080;&#25928;&#35777;&#20070;&#30340;&#21518;&#31471;&#26381;&#21153;&#22120;&#12290;</span>
-<span class="linenr">14: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22914;&#26524;&#20320;&#24819;&#35201;&#25509;&#21463;&#65292;&#21482;&#35201;&#35774;&#32622; `secure: false` &#23601;&#34892;&#12290;</span>
+<span class="linenr">13: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#40664;&#35748;&#24773;&#20917;&#19979;&#65292;&#19981;&#25509;&#21463;&#36816;&#34892;&#22312; HTTPS &#19978;&#65292;&#19988;&#20351;&#29992;&#20102;&#26080;&#25928;&#35777;&#20070;&#30340;&#21518;&#31471;&#26381;&#21153;&#22120;&#12290;</span>
+<span class="linenr">14: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#22914;&#26524;&#20320;&#24819;&#35201;&#25509;&#21463;&#65292;&#21482;&#35201;&#35774;&#32622; `secure: false` &#23601;&#34892;&#12290;</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org889266f" class="outline-2">
-<h2 id="org889266f">自定义规则</h2>
-<div class="outline-text-2" id="text-org889266f">
+<div id="outline-container-orgc9318d0" class="outline-2">
+<h2 id="orgc9318d0">自定义规则</h2>
+<div class="outline-text-2" id="text-orgc9318d0">
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AF87FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #8B8878;">//</span><span style="color: #8B8878;">...</span>
-<span class="linenr"> 3: </span>    devServer: <span style="color: #5FD7FF;">{</span>
-<span class="linenr"> 4: </span>        proxy: <span style="color: #87D700;">{</span>
-<span class="linenr"> 5: </span>            <span style="color: #CDC673;">'/api'</span>: <span style="color: #CDC673;">{</span>
-<span class="linenr"> 6: </span>                target: <span style="color: #CDC673;">'http://localhost:3000'</span>,
-<span class="linenr"> 7: </span>                <span style="color: #87D700;">bypass</span>: <span style="color: #FF1493;">function</span><span style="color: #FF8C00;">(</span><span style="color: #FF8C00;">req</span>, <span style="color: #FF8C00;">res</span>, <span style="color: #FF8C00;">proxyOptions</span><span style="color: #FF8C00;">)</span> <span style="color: #FF8C00;">{</span>
-<span class="linenr"> 8: </span>                    <span style="color: #FF1493;">if</span> <span style="color: #FF1493;">(</span>req.headers.accept.indexOf<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'html'</span><span style="color: #AF87FF;">)</span> !== -1<span style="color: #FF1493;">)</span> <span style="color: #FF1493;">{</span>
-<span class="linenr"> 9: </span>                        console.log<span style="color: #AF87FF;">(</span><span style="color: #CDC673;">'Skipping proxy for browser request.'</span><span style="color: #AF87FF;">)</span>;
-<span class="linenr">10: </span>                        <span style="color: #FF1493;">return</span> <span style="color: #CDC673;">'/index.html'</span>;
-<span class="linenr">11: </span>                    <span style="color: #FF1493;">}</span>
-<span class="linenr">12: </span>                <span style="color: #FF8C00;">}</span>
-<span class="linenr">13: </span>            <span style="color: #CDC673;">}</span>
-<span class="linenr">14: </span>        <span style="color: #87D700;">}</span>
-<span class="linenr">15: </span>    <span style="color: #5FD7FF;">}</span>
-<span class="linenr">16: </span><span style="color: #AF87FF;">}</span>;
+<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #75715E;">//</span><span style="color: #75715E;">...</span>
+<span class="linenr"> 3: </span>    devServer: <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 4: </span>        proxy: <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 5: </span>            <span style="color: #E6DB74;">'/api'</span>: <span style="color: #E6DB74;">{</span>
+<span class="linenr"> 6: </span>                target: <span style="color: #E6DB74;">'http://localhost:3000'</span>,
+<span class="linenr"> 7: </span>                <span style="color: #A6E22E;">bypass</span>: <span style="color: #F92672;">function</span><span style="color: #FD971F;">(</span><span style="color: #FD971F;">req</span>, <span style="color: #FD971F;">res</span>, <span style="color: #FD971F;">proxyOptions</span><span style="color: #FD971F;">)</span> <span style="color: #FD971F;">{</span>
+<span class="linenr"> 8: </span>                    <span style="color: #F92672;">if</span> <span style="color: #F92672;">(</span>req.headers.accept.indexOf<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'html'</span><span style="color: #AE81FF;">)</span> !== -1<span style="color: #F92672;">)</span> <span style="color: #F92672;">{</span>
+<span class="linenr"> 9: </span>                        console.log<span style="color: #AE81FF;">(</span><span style="color: #E6DB74;">'Skipping proxy for browser request.'</span><span style="color: #AE81FF;">)</span>;
+<span class="linenr">10: </span>                        <span style="color: #F92672;">return</span> <span style="color: #E6DB74;">'/index.html'</span>;
+<span class="linenr">11: </span>                    <span style="color: #F92672;">}</span>
+<span class="linenr">12: </span>                <span style="color: #FD971F;">}</span>
+<span class="linenr">13: </span>            <span style="color: #E6DB74;">}</span>
+<span class="linenr">14: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">15: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">16: </span><span style="color: #AE81FF;">}</span>;
 <span class="linenr">17: </span>
-<span class="linenr">18: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#26377;&#26102;&#20320;&#19981;&#24819;&#20195;&#29702;&#25152;&#26377;&#30340;&#35831;&#27714;&#65292;&#21487;&#20197;&#22522;&#20110;&#19968;&#20010;&#20989;&#25968;&#30340;&#36820;&#22238;&#20540;&#32469;&#36807;&#20195;&#29702;&#12290;</span>
-<span class="linenr">19: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22312;&#20989;&#25968;&#20013;&#20320;&#21487;&#20197;&#35775;&#38382;&#35831;&#27714;&#20307;&#12289;&#21709;&#24212;&#20307;&#21644;&#20195;&#29702;&#36873;&#39033;&#65292;&#24517;&#39035;&#36820;&#22238; false &#25110;&#36335;&#24452;&#65292;&#26469;&#36339;&#36807;&#20195;&#29702;&#35831;&#27714;&#12290;</span>
+<span class="linenr">18: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#26377;&#26102;&#20320;&#19981;&#24819;&#20195;&#29702;&#25152;&#26377;&#30340;&#35831;&#27714;&#65292;&#21487;&#20197;&#22522;&#20110;&#19968;&#20010;&#20989;&#25968;&#30340;&#36820;&#22238;&#20540;&#32469;&#36807;&#20195;&#29702;&#12290;</span>
+<span class="linenr">19: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#22312;&#20989;&#25968;&#20013;&#20320;&#21487;&#20197;&#35775;&#38382;&#35831;&#27714;&#20307;&#12289;&#21709;&#24212;&#20307;&#21644;&#20195;&#29702;&#36873;&#39033;&#65292;&#24517;&#39035;&#36820;&#22238; false &#25110;&#36335;&#24452;&#65292;&#26469;&#36339;&#36807;&#20195;&#29702;&#35831;&#27714;&#12290;</span>
 <span class="linenr">20: </span>
-<span class="linenr">21: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20363;&#22914;&#65306;&#23545;&#20110;&#27983;&#35272;&#22120;&#35831;&#27714;&#65292;&#20320;&#24819;&#35201;&#25552;&#20379;&#19968;&#20010; HTML &#39029;&#38754;&#65292;&#20294;&#26159;&#23545;&#20110; API &#35831;&#27714;&#21017;&#20445;&#25345;&#20195;&#29702;&#12290;</span>
+<span class="linenr">21: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#20363;&#22914;&#65306;&#23545;&#20110;&#27983;&#35272;&#22120;&#35831;&#27714;&#65292;&#20320;&#24819;&#35201;&#25552;&#20379;&#19968;&#20010; HTML &#39029;&#38754;&#65292;&#20294;&#26159;&#23545;&#20110; API &#35831;&#27714;&#21017;&#20445;&#25345;&#20195;&#29702;&#12290;</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgea741fd" class="outline-2">
-<h2 id="orgea741fd">跨域</h2>
-<div class="outline-text-2" id="text-orgea741fd">
+<div id="outline-container-org6d183bf" class="outline-2">
+<h2 id="org6d183bf">跨域</h2>
+<div class="outline-text-2" id="text-org6d183bf">
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AF87FF;">{</span>
-<span class="linenr"> 2: </span>    <span style="color: #8B8878;">//</span><span style="color: #8B8878;">...</span>
-<span class="linenr"> 3: </span>    devServer: <span style="color: #5FD7FF;">{</span>
-<span class="linenr"> 4: </span>        proxy: <span style="color: #87D700;">{</span>
-<span class="linenr"> 5: </span>            <span style="color: #CDC673;">'/api'</span>: <span style="color: #CDC673;">{</span>
-<span class="linenr"> 6: </span>                target: <span style="color: #CDC673;">'http://localhost:3000'</span>,
-<span class="linenr"> 7: </span>                changeOrigin: <span style="color: #AF87FF;">true</span>,
-<span class="linenr"> 8: </span>            <span style="color: #CDC673;">}</span>
-<span class="linenr"> 9: </span>        <span style="color: #87D700;">}</span>
-<span class="linenr">10: </span>    <span style="color: #5FD7FF;">}</span>
-<span class="linenr">11: </span><span style="color: #AF87FF;">}</span>;
+<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #75715E;">//</span><span style="color: #75715E;">...</span>
+<span class="linenr"> 3: </span>    devServer: <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 4: </span>        proxy: <span style="color: #A6E22E;">{</span>
+<span class="linenr"> 5: </span>            <span style="color: #E6DB74;">'/api'</span>: <span style="color: #E6DB74;">{</span>
+<span class="linenr"> 6: </span>                target: <span style="color: #E6DB74;">'http://localhost:3000'</span>,
+<span class="linenr"> 7: </span>                changeOrigin: <span style="color: #AE81FF;">true</span>,
+<span class="linenr"> 8: </span>            <span style="color: #E6DB74;">}</span>
+<span class="linenr"> 9: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">10: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">11: </span><span style="color: #AE81FF;">}</span>;
 <span class="linenr">12: </span>
-<span class="linenr">13: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#19978;&#38754;&#30340;&#21442;&#25968;&#21015;&#34920;&#20013;&#26377;&#19968;&#20010; `changeOrigin` &#21442;&#25968;, &#26159;&#19968;&#20010;&#24067;&#23572;&#20540;,</span>
-<span class="linenr">14: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#35774;&#32622;&#20026; `true`, &#26412;&#22320;&#23601;&#20250;&#34394;&#25311;&#19968;&#20010;&#26381;&#21153;&#22120;&#25509;&#25910;&#20320;&#30340;&#35831;&#27714;&#24182;&#20195;&#20320;&#21457;&#36865;&#35813;&#35831;&#27714;</span>
+<span class="linenr">13: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#19978;&#38754;&#30340;&#21442;&#25968;&#21015;&#34920;&#20013;&#26377;&#19968;&#20010; `changeOrigin` &#21442;&#25968;, &#26159;&#19968;&#20010;&#24067;&#23572;&#20540;,</span>
+<span class="linenr">14: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#35774;&#32622;&#20026; `true`, &#26412;&#22320;&#23601;&#20250;&#34394;&#25311;&#19968;&#20010;&#26381;&#21153;&#22120;&#25509;&#25910;&#20320;&#30340;&#35831;&#27714;&#24182;&#20195;&#20320;&#21457;&#36865;&#35813;&#35831;&#27714;</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org5a36a39" class="outline-2">
-<h2 id="org5a36a39">配置多个规则：Vue-cli中 `proxyTable` 配置接口</h2>
-<div class="outline-text-2" id="text-org5a36a39">
+<div id="outline-container-org0de4ec2" class="outline-2">
+<h2 id="org0de4ec2">配置多个规则：Vue-cli中 `proxyTable` 配置接口</h2>
+<div class="outline-text-2" id="text-org0de4ec2">
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AF87FF;">{</span>
-<span class="linenr"> 2: </span>    dev: <span style="color: #5FD7FF;">{</span>
-<span class="linenr"> 3: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#38745;&#24577;&#36164;&#28304;&#25991;&#20214;&#22841;</span>
-<span class="linenr"> 4: </span>        assetsSubDirectory: <span style="color: #CDC673;">'static'</span>,
-<span class="linenr"> 5: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#21457;&#24067;&#36335;&#24452;</span>
-<span class="linenr"> 6: </span>        assetsPublicPath: <span style="color: #CDC673;">'/'</span>,
+<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 2: </span>    dev: <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#38745;&#24577;&#36164;&#28304;&#25991;&#20214;&#22841;</span>
+<span class="linenr"> 4: </span>        assetsSubDirectory: <span style="color: #E6DB74;">'static'</span>,
+<span class="linenr"> 5: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#21457;&#24067;&#36335;&#24452;</span>
+<span class="linenr"> 6: </span>        assetsPublicPath: <span style="color: #E6DB74;">'/'</span>,
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20195;&#29702;&#37197;&#32622;&#34920;&#65292;&#22312;&#36825;&#37324;&#21487;&#20197;&#37197;&#32622;&#29305;&#23450;&#30340;&#35831;&#27714;&#20195;&#29702;&#21040;&#23545;&#24212;&#30340;API&#25509;&#21475;</span>
-<span class="linenr"> 9: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20351;&#29992;&#26041;&#27861;&#65306;https://vuejs-templates.github.io/webpack/proxy.html</span>
-<span class="linenr">10: </span>        proxyTable: <span style="color: #87D700;">{</span>
-<span class="linenr">11: </span>            <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20363;&#22914;&#23558;'localhost:8080/api/xxx'&#20195;&#29702;&#21040;'https://wangyaxing.cn/api/xxx'</span>
-<span class="linenr">12: </span>            <span style="color: #CDC673;">'/api'</span>: <span style="color: #CDC673;">{</span>
-<span class="linenr">13: </span>                target: <span style="color: #CDC673;">'https://wangyaxing.cn'</span>, <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#25509;&#21475;&#30340;&#22495;&#21517;</span>
-<span class="linenr">14: </span>                secure: <span style="color: #AF87FF;">false</span>,                   <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22914;&#26524;&#26159;https&#25509;&#21475;&#65292;&#38656;&#35201;&#37197;&#32622;&#36825;&#20010;&#21442;&#25968;</span>
-<span class="linenr">15: </span>                changeOrigin: <span style="color: #AF87FF;">true</span>,              <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22914;&#26524;&#25509;&#21475;&#36328;&#22495;&#65292;&#38656;&#35201;&#36827;&#34892;&#36825;&#20010;&#21442;&#25968;&#37197;&#32622;</span>
-<span class="linenr">16: </span>            <span style="color: #CDC673;">}</span>,
-<span class="linenr">17: </span>            <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#20363;&#22914;&#23558;'localhost:8080/img/xxx'&#20195;&#29702;&#21040;'https://cdn.wangyaxing.cn/xxx'</span>
-<span class="linenr">18: </span>            <span style="color: #CDC673;">'/img'</span>: <span style="color: #CDC673;">{</span>
-<span class="linenr">19: </span>                target: <span style="color: #CDC673;">'https://cdn.wangyaxing.cn'</span>, <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#25509;&#21475;&#30340;&#22495;&#21517;</span>
-<span class="linenr">20: </span>                secure: <span style="color: #AF87FF;">false</span>,                       <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22914;&#26524;&#26159;https&#25509;&#21475;&#65292;&#38656;&#35201;&#37197;&#32622;&#36825;&#20010;&#21442;&#25968;</span>
-<span class="linenr">21: </span>                changeOrigin: <span style="color: #AF87FF;">true</span>,                  <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#22914;&#26524;&#25509;&#21475;&#36328;&#22495;&#65292;&#38656;&#35201;&#36827;&#34892;&#36825;&#20010;&#21442;&#25968;&#37197;&#32622;</span>
-<span class="linenr">22: </span>                pathRewrite: <span style="color: #FF8C00;">{</span><span style="color: #CDC673;">'^/img'</span>: <span style="color: #CDC673;">''</span><span style="color: #FF8C00;">}</span>           <span style="color: #8B8878;">// </span><span style="color: #8B8878;">pathRewrite &#26469;&#37325;&#20889;&#22320;&#22336;&#65292;&#23558;&#21069;&#32512; '/api' &#36716;&#20026; '/'&#12290;</span>
-<span class="linenr">23: </span>            <span style="color: #CDC673;">}</span>
-<span class="linenr">24: </span>        <span style="color: #87D700;">}</span>,
-<span class="linenr">25: </span>        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">Various Dev Server settings</span>
-<span class="linenr">26: </span>        host: <span style="color: #CDC673;">'localhost'</span>, <span style="color: #8B8878;">// </span><span style="color: #8B8878;">can be overwritten by process.env.HOST</span>
-<span class="linenr">27: </span>        port: 4200,        <span style="color: #8B8878;">// </span><span style="color: #8B8878;">can be overwritten by process.env.PORT, if port is in use, a free one will be determined</span>
-<span class="linenr">28: </span>    <span style="color: #5FD7FF;">}</span>
-<span class="linenr">29: </span><span style="color: #AF87FF;">}</span>
+<span class="linenr"> 8: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#20195;&#29702;&#37197;&#32622;&#34920;&#65292;&#22312;&#36825;&#37324;&#21487;&#20197;&#37197;&#32622;&#29305;&#23450;&#30340;&#35831;&#27714;&#20195;&#29702;&#21040;&#23545;&#24212;&#30340;API&#25509;&#21475;</span>
+<span class="linenr"> 9: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">&#20351;&#29992;&#26041;&#27861;&#65306;https://vuejs-templates.github.io/webpack/proxy.html</span>
+<span class="linenr">10: </span>        proxyTable: <span style="color: #A6E22E;">{</span>
+<span class="linenr">11: </span>            <span style="color: #75715E;">// </span><span style="color: #75715E;">&#20363;&#22914;&#23558;'localhost:8080/api/xxx'&#20195;&#29702;&#21040;'https://wangyaxing.cn/api/xxx'</span>
+<span class="linenr">12: </span>            <span style="color: #E6DB74;">'/api'</span>: <span style="color: #E6DB74;">{</span>
+<span class="linenr">13: </span>                target: <span style="color: #E6DB74;">'https://wangyaxing.cn'</span>, <span style="color: #75715E;">// </span><span style="color: #75715E;">&#25509;&#21475;&#30340;&#22495;&#21517;</span>
+<span class="linenr">14: </span>                secure: <span style="color: #AE81FF;">false</span>,                   <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22914;&#26524;&#26159;https&#25509;&#21475;&#65292;&#38656;&#35201;&#37197;&#32622;&#36825;&#20010;&#21442;&#25968;</span>
+<span class="linenr">15: </span>                changeOrigin: <span style="color: #AE81FF;">true</span>,              <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22914;&#26524;&#25509;&#21475;&#36328;&#22495;&#65292;&#38656;&#35201;&#36827;&#34892;&#36825;&#20010;&#21442;&#25968;&#37197;&#32622;</span>
+<span class="linenr">16: </span>            <span style="color: #E6DB74;">}</span>,
+<span class="linenr">17: </span>            <span style="color: #75715E;">// </span><span style="color: #75715E;">&#20363;&#22914;&#23558;'localhost:8080/img/xxx'&#20195;&#29702;&#21040;'https://cdn.wangyaxing.cn/xxx'</span>
+<span class="linenr">18: </span>            <span style="color: #E6DB74;">'/img'</span>: <span style="color: #E6DB74;">{</span>
+<span class="linenr">19: </span>                target: <span style="color: #E6DB74;">'https://cdn.wangyaxing.cn'</span>, <span style="color: #75715E;">// </span><span style="color: #75715E;">&#25509;&#21475;&#30340;&#22495;&#21517;</span>
+<span class="linenr">20: </span>                secure: <span style="color: #AE81FF;">false</span>,                       <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22914;&#26524;&#26159;https&#25509;&#21475;&#65292;&#38656;&#35201;&#37197;&#32622;&#36825;&#20010;&#21442;&#25968;</span>
+<span class="linenr">21: </span>                changeOrigin: <span style="color: #AE81FF;">true</span>,                  <span style="color: #75715E;">// </span><span style="color: #75715E;">&#22914;&#26524;&#25509;&#21475;&#36328;&#22495;&#65292;&#38656;&#35201;&#36827;&#34892;&#36825;&#20010;&#21442;&#25968;&#37197;&#32622;</span>
+<span class="linenr">22: </span>                pathRewrite: <span style="color: #FD971F;">{</span><span style="color: #E6DB74;">'^/img'</span>: <span style="color: #E6DB74;">''</span><span style="color: #FD971F;">}</span>           <span style="color: #75715E;">// </span><span style="color: #75715E;">pathRewrite &#26469;&#37325;&#20889;&#22320;&#22336;&#65292;&#23558;&#21069;&#32512; '/api' &#36716;&#20026; '/'&#12290;</span>
+<span class="linenr">23: </span>            <span style="color: #E6DB74;">}</span>
+<span class="linenr">24: </span>        <span style="color: #A6E22E;">}</span>,
+<span class="linenr">25: </span>        <span style="color: #75715E;">// </span><span style="color: #75715E;">Various Dev Server settings</span>
+<span class="linenr">26: </span>        host: <span style="color: #E6DB74;">'localhost'</span>, <span style="color: #75715E;">// </span><span style="color: #75715E;">can be overwritten by process.env.HOST</span>
+<span class="linenr">27: </span>        port: 4200,        <span style="color: #75715E;">// </span><span style="color: #75715E;">can be overwritten by process.env.PORT, if port is in use, a free one will be determined</span>
+<span class="linenr">28: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">29: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6fcdfb3" class="outline-2">
-<h2 id="org6fcdfb3">更多参数</h2>
-<div class="outline-text-2" id="text-org6fcdfb3">
+<div id="outline-container-org341532a" class="outline-2">
+<h2 id="org341532a">更多参数</h2>
+<div class="outline-text-2" id="text-org341532a">
 <pre class="example">
 dev-server 使用了非常强大的http-proxy-middleware ,
 http-proxy-middleware 基于 http-proxy 实现的，
@@ -249,24 +249,24 @@ http-proxy-middleware 基于 http-proxy 实现的，
 </div>
 </div>
 
-<div id="outline-container-orge1e0de9" class="outline-2">
-<h2 id="orge1e0de9">vue-element-admin分析代码</h2>
-<div class="outline-text-2" id="text-orge1e0de9">
+<div id="outline-container-org9b2e2fa" class="outline-2">
+<h2 id="org9b2e2fa">vue-element-admin分析代码</h2>
+<div class="outline-text-2" id="text-org9b2e2fa">
 <div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#29615;&#22659;&#21464;&#37327;:VUE_APP_BASE_API = '/dev-api'</span>
-<span class="linenr"> 2: </span><span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#21457;&#36865;&#30340;&#35831;&#27714;:127.0.0.1/dev-api/login</span>
+<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#29615;&#22659;&#21464;&#37327;:VUE_APP_BASE_API = '/dev-api'</span>
+<span class="linenr"> 2: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#21457;&#36865;&#30340;&#35831;&#27714;:127.0.0.1/dev-api/login</span>
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span>proxy: <span style="color: #AF87FF;">{</span>
-<span class="linenr"> 5: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">change dev-api/login =&gt; /login</span>
-<span class="linenr"> 6: </span>    <span style="color: #8B8878;">// </span><span style="color: #8B8878;">detail: https://cli.vuejs.org/config/#devserver-proxy</span>
-<span class="linenr"> 7: </span>    <span style="color: #5FD7FF;">[</span>process.env.VUE_APP_BASE_API<span style="color: #5FD7FF;">]</span>: <span style="color: #5FD7FF;">{</span>
-<span class="linenr"> 8: </span>        target: <span style="color: #CDC673;">`https://my.baidu.com`</span>,
-<span class="linenr"> 9: </span>        changeOrigin: <span style="color: #AF87FF;">true</span>,
-<span class="linenr">10: </span>        pathRewrite: <span style="color: #87D700;">{</span>
-<span class="linenr">11: </span>            <span style="color: #CDC673;">[</span><span style="color: #CDC673;">'^'</span> + process.env.VUE_APP_BASE_API<span style="color: #CDC673;">]</span>: <span style="color: #CDC673;">''</span>
-<span class="linenr">12: </span>        <span style="color: #87D700;">}</span>
-<span class="linenr">13: </span>    <span style="color: #5FD7FF;">}</span>
-<span class="linenr">14: </span><span style="color: #AF87FF;">}</span>,
+<span class="linenr"> 4: </span>proxy: <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 5: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">change dev-api/login =&gt; /login</span>
+<span class="linenr"> 6: </span>    <span style="color: #75715E;">// </span><span style="color: #75715E;">detail: https://cli.vuejs.org/config/#devserver-proxy</span>
+<span class="linenr"> 7: </span>    <span style="color: #66D9EF;">[</span>process.env.VUE_APP_BASE_API<span style="color: #66D9EF;">]</span>: <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 8: </span>        target: <span style="color: #E6DB74;">`https://my.baidu.com`</span>,
+<span class="linenr"> 9: </span>        changeOrigin: <span style="color: #AE81FF;">true</span>,
+<span class="linenr">10: </span>        pathRewrite: <span style="color: #A6E22E;">{</span>
+<span class="linenr">11: </span>            <span style="color: #E6DB74;">[</span><span style="color: #E6DB74;">'^'</span> + process.env.VUE_APP_BASE_API<span style="color: #E6DB74;">]</span>: <span style="color: #E6DB74;">''</span>
+<span class="linenr">12: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">13: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">14: </span><span style="color: #AE81FF;">}</span>,
 </pre>
 </div>
 </div>
@@ -284,7 +284,7 @@ http-proxy-middleware 基于 http-proxy 实现的，
 <div id="postamble" class="status">
 <p class="date">Date: 2020-11-02 Mon 14:39</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-11-02 Mon 15:07</p>
+<p class="date">Created: 2020-12-11 Fri 11:00</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

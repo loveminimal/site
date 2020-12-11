@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-<!-- 2020-09-18 Fri 18:44 -->
+<!-- 2020-12-11 Fri 10:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>数字和日期处理</title>
@@ -23,13 +23,13 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8a0265a">Math 类的常用方法</a></li>
-<li><a href="#orgd2379ea">生成随机数</a></li>
-<li><a href="#org3e7aa5f"><span class="todo TODO">TODO</span> 数字格式化</a></li>
-<li><a href="#org82a4c13">时间日期的处理</a>
+<li><a href="#orge2011f8">Math 类的常用方法</a></li>
+<li><a href="#org2db1def">生成随机数</a></li>
+<li><a href="#org6ac9f5a"><span class="todo TODO">TODO</span> 数字格式化</a></li>
+<li><a href="#org9216348">时间日期的处理</a>
 <ul>
-<li><a href="#org2570fac">Date 类</a></li>
-<li><a href="#org2cf74c0"><span class="todo TODO">TODO</span> Calendar 类</a></li>
+<li><a href="#org5177618">Date 类</a></li>
+<li><a href="#org52c3737"><span class="todo TODO">TODO</span> Calendar 类</a></li>
 </ul>
 </li>
 </ul>
@@ -39,9 +39,9 @@
 在解决实际问题时，对数字和日期的处理是非常普遍的，如数学问题、随机数问题和日期问题等。为了解决这些问题，Java 提供了处理相关问题的类，包括 Math 类、Random 类、BigInteger 类、Date 类等。
 </p>
 
-<div id="outline-container-org8a0265a" class="outline-2">
-<h2 id="org8a0265a">Math 类的常用方法</h2>
-<div class="outline-text-2" id="text-org8a0265a">
+<div id="outline-container-orge2011f8" class="outline-2">
+<h2 id="orge2011f8">Math 类的常用方法</h2>
+<div class="outline-text-2" id="text-orge2011f8">
 <p>
 在 Java 中 Math 类封装了常用的数学运算，提供了基本的数学操作，如指数、对数、平方根和三角函数等。Math 类位于 <code>java.lang</code> 包，它的构造方法是 <code>private</code> 的，因此无法创建 Math 类的对象，并且 Math 类中的所有方法都是类方法，可以直接通过类名来调用它们。
 </p>
@@ -59,13 +59,13 @@ Math 类中包含 <code>E</code> 和 <code>PI</code> 两个静态常量，分别
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">Test02</span> <span style="color: #AF87FF;">{</span>
-<span class="linenr">2: </span>    <span style="color: #FF1493;">public</span> <span style="color: #FF1493;">static</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">main</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">String</span><span style="color: #87D700;">[]</span> <span style="color: #FF8C00;">args</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
-<span class="linenr">3: </span>        System.out.println<span style="color: #87D700;">(</span><span style="color: #CDC673;">"10 &#21644; 20 &#30340;&#36739;&#22823;&#20540;&#65306;"</span> + Math.max<span style="color: #CDC673;">(</span>10, 20<span style="color: #CDC673;">)</span><span style="color: #87D700;">)</span>;     <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#8594; 20</span>
-<span class="linenr">4: </span>        System.out.println<span style="color: #87D700;">(</span><span style="color: #CDC673;">"15.6 &#21644; 15 &#30340;&#36739;&#23567;&#20540;&#65306;"</span> + Math.min<span style="color: #CDC673;">(</span>15.6, 15<span style="color: #CDC673;">)</span><span style="color: #87D700;">)</span>; <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#8594; 15.0</span>
-<span class="linenr">5: </span>        System.out.println<span style="color: #87D700;">(</span><span style="color: #CDC673;">"-12 &#30340;&#32477;&#23545;&#20540;&#65306;"</span> + Math.abs<span style="color: #CDC673;">(</span>-12<span style="color: #CDC673;">)</span><span style="color: #87D700;">)</span>;             <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#8594; 12</span>
-<span class="linenr">6: </span>    <span style="color: #5FD7FF;">}</span>
-<span class="linenr">7: </span><span style="color: #AF87FF;">}</span>
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Test02</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr">3: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"10 &#21644; 20 &#30340;&#36739;&#22823;&#20540;&#65306;"</span> + Math.max<span style="color: #E6DB74;">(</span>10, 20<span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span>;     <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; 20</span>
+<span class="linenr">4: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"15.6 &#21644; 15 &#30340;&#36739;&#23567;&#20540;&#65306;"</span> + Math.min<span style="color: #E6DB74;">(</span>15.6, 15<span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; 15.0</span>
+<span class="linenr">5: </span>        System.out.println<span style="color: #A6E22E;">(</span><span style="color: #E6DB74;">"-12 &#30340;&#32477;&#23545;&#20540;&#65306;"</span> + Math.abs<span style="color: #E6DB74;">(</span>-12<span style="color: #E6DB74;">)</span><span style="color: #A6E22E;">)</span>;             <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; 12</span>
+<span class="linenr">6: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">7: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
 
@@ -83,9 +83,9 @@ Math 类中包含 <code>E</code> 和 <code>PI</code> 两个静态常量，分别
 </div>
 </div>
 
-<div id="outline-container-orgd2379ea" class="outline-2">
-<h2 id="orgd2379ea">生成随机数</h2>
-<div class="outline-text-2" id="text-orgd2379ea">
+<div id="outline-container-org2db1def" class="outline-2">
+<h2 id="org2db1def">生成随机数</h2>
+<div class="outline-text-2" id="text-org2db1def">
 <p>
 在 Java 中要生成一个指定范围之内的随机数字在两种方法：
 </p>
@@ -111,20 +111,20 @@ Random 类提供的所有方法生成的随机数字都是均匀分布的，也�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #FF1493;">import</span> <span style="color: #AF87FF;">java</span>.<span style="color: #AF87FF;">util</span>.<span style="color: #5FD7FF;">Random</span>;
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #F92672;">import</span> <span style="color: #AE81FF;">java</span>.<span style="color: #AE81FF;">util</span>.<span style="color: #66D9EF;">Random</span>;
 <span class="linenr"> 2: </span>
-<span class="linenr"> 3: </span><span style="color: #FF1493;">public</span> <span style="color: #FF1493;">class</span> <span style="color: #5FD7FF;">Test06</span> <span style="color: #AF87FF;">{</span>
-<span class="linenr"> 4: </span>    <span style="color: #FF1493;">public</span> <span style="color: #FF1493;">static</span> <span style="color: #5FD7FF;">void</span> <span style="color: #87D700;">main</span><span style="color: #5FD7FF;">(</span><span style="color: #5FD7FF;">String</span><span style="color: #87D700;">[]</span> <span style="color: #FF8C00;">args</span><span style="color: #5FD7FF;">)</span> <span style="color: #5FD7FF;">{</span>
-<span class="linenr"> 5: </span>        <span style="color: #5FD7FF;">Random</span> <span style="color: #FF8C00;">r</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Random</span><span style="color: #87D700;">()</span>;
-<span class="linenr"> 6: </span>        <span style="color: #5FD7FF;">double</span> <span style="color: #FF8C00;">d1</span> = r.nextDouble<span style="color: #87D700;">()</span>;       <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#29983;&#25104;[0,1.0]&#21306;&#38388;&#30340;&#23567;&#25968;</span>
-<span class="linenr"> 7: </span>        <span style="color: #5FD7FF;">double</span> <span style="color: #FF8C00;">d2</span> = r.nextDouble<span style="color: #87D700;">()</span> * 7;   <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#29983;&#25104;[0,7.0]&#21306;&#38388;&#30340;&#23567;&#25968;</span>
-<span class="linenr"> 8: </span>        <span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">i1</span> = r.nextInt<span style="color: #87D700;">(</span>10<span style="color: #87D700;">)</span>;           <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#29983;&#25104;[0,10]&#21306;&#38388;&#30340;&#25972;&#25968;</span>
-<span class="linenr"> 9: </span>        <span style="color: #5FD7FF;">int</span> <span style="color: #FF8C00;">i2</span> = r.nextInt<span style="color: #87D700;">(</span>18<span style="color: #87D700;">)</span> - 3;       <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#29983;&#25104;[-3,15]&#21306;&#38388;&#30340;&#25972;&#25968;</span>
-<span class="linenr">10: </span>        <span style="color: #5FD7FF;">long</span> <span style="color: #FF8C00;">l1</span> = r.nextLong<span style="color: #87D700;">()</span>;           <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#29983;&#25104;&#19968;&#20010;&#38543;&#26426;&#38271;&#25972;&#22411;&#20540;</span>
-<span class="linenr">11: </span>        <span style="color: #5FD7FF;">boolean</span> <span style="color: #FF8C00;">b1</span> = r.nextBoolean<span style="color: #87D700;">()</span>;     <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#29983;&#25104;&#19968;&#20010;&#38543;&#26426;&#24067;&#23572;&#22411;&#20540;</span>
-<span class="linenr">12: </span>        <span style="color: #5FD7FF;">float</span> <span style="color: #FF8C00;">f1</span> = r.nextFloat<span style="color: #87D700;">()</span>;         <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#29983;&#25104;&#19968;&#20010;&#38543;&#26426;&#28014;&#28857;&#22411;&#20540;</span>
-<span class="linenr">13: </span>    <span style="color: #5FD7FF;">}</span>
-<span class="linenr">14: </span><span style="color: #AF87FF;">}</span>
+<span class="linenr"> 3: </span><span style="color: #F92672;">public</span> <span style="color: #F92672;">class</span> <span style="color: #66D9EF;">Test06</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 4: </span>    <span style="color: #F92672;">public</span> <span style="color: #F92672;">static</span> <span style="color: #66D9EF;">void</span> <span style="color: #A6E22E;">main</span><span style="color: #66D9EF;">(</span><span style="color: #66D9EF;">String</span><span style="color: #A6E22E;">[]</span> <span style="color: #FD971F;">args</span><span style="color: #66D9EF;">)</span> <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 5: </span>        <span style="color: #66D9EF;">Random</span> <span style="color: #FD971F;">r</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Random</span><span style="color: #A6E22E;">()</span>;
+<span class="linenr"> 6: </span>        <span style="color: #66D9EF;">double</span> <span style="color: #FD971F;">d1</span> = r.nextDouble<span style="color: #A6E22E;">()</span>;       <span style="color: #75715E;">// </span><span style="color: #75715E;">&#29983;&#25104;[0,1.0]&#21306;&#38388;&#30340;&#23567;&#25968;</span>
+<span class="linenr"> 7: </span>        <span style="color: #66D9EF;">double</span> <span style="color: #FD971F;">d2</span> = r.nextDouble<span style="color: #A6E22E;">()</span> * 7;   <span style="color: #75715E;">// </span><span style="color: #75715E;">&#29983;&#25104;[0,7.0]&#21306;&#38388;&#30340;&#23567;&#25968;</span>
+<span class="linenr"> 8: </span>        <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">i1</span> = r.nextInt<span style="color: #A6E22E;">(</span>10<span style="color: #A6E22E;">)</span>;           <span style="color: #75715E;">// </span><span style="color: #75715E;">&#29983;&#25104;[0,10]&#21306;&#38388;&#30340;&#25972;&#25968;</span>
+<span class="linenr"> 9: </span>        <span style="color: #66D9EF;">int</span> <span style="color: #FD971F;">i2</span> = r.nextInt<span style="color: #A6E22E;">(</span>18<span style="color: #A6E22E;">)</span> - 3;       <span style="color: #75715E;">// </span><span style="color: #75715E;">&#29983;&#25104;[-3,15]&#21306;&#38388;&#30340;&#25972;&#25968;</span>
+<span class="linenr">10: </span>        <span style="color: #66D9EF;">long</span> <span style="color: #FD971F;">l1</span> = r.nextLong<span style="color: #A6E22E;">()</span>;           <span style="color: #75715E;">// </span><span style="color: #75715E;">&#29983;&#25104;&#19968;&#20010;&#38543;&#26426;&#38271;&#25972;&#22411;&#20540;</span>
+<span class="linenr">11: </span>        <span style="color: #66D9EF;">boolean</span> <span style="color: #FD971F;">b1</span> = r.nextBoolean<span style="color: #A6E22E;">()</span>;     <span style="color: #75715E;">// </span><span style="color: #75715E;">&#29983;&#25104;&#19968;&#20010;&#38543;&#26426;&#24067;&#23572;&#22411;&#20540;</span>
+<span class="linenr">12: </span>        <span style="color: #66D9EF;">float</span> <span style="color: #FD971F;">f1</span> = r.nextFloat<span style="color: #A6E22E;">()</span>;         <span style="color: #75715E;">// </span><span style="color: #75715E;">&#29983;&#25104;&#19968;&#20010;&#38543;&#26426;&#28014;&#28857;&#22411;&#20540;</span>
+<span class="linenr">13: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">14: </span><span style="color: #AE81FF;">}</span>
 </pre>
 </div>
 
@@ -134,21 +134,21 @@ Math 类的 <code>random()</code> 方法没有参数，它默认会返回大于�
 </div>
 </div>
 
-<div id="outline-container-org3e7aa5f" class="outline-2">
-<h2 id="org3e7aa5f"><span class="todo TODO">TODO</span> 数字格式化</h2>
+<div id="outline-container-org6ac9f5a" class="outline-2">
+<h2 id="org6ac9f5a"><span class="todo TODO">TODO</span> 数字格式化</h2>
 </div>
 
-<div id="outline-container-org82a4c13" class="outline-2">
-<h2 id="org82a4c13">时间日期的处理</h2>
-<div class="outline-text-2" id="text-org82a4c13">
+<div id="outline-container-org9216348" class="outline-2">
+<h2 id="org9216348">时间日期的处理</h2>
+<div class="outline-text-2" id="text-org9216348">
 <p>
 在 Java 中获取当前时间，可以使用 <code>java.util.Date</code> 类和 <code>java.util.Calendar</code> 类完成。其中，Date 类主要封装了系统的日期和时间信息，Calendar 类则会根据系统的日历来解释 Date 对象。
 </p>
 </div>
 
-<div id="outline-container-org2570fac" class="outline-3">
-<h3 id="org2570fac">Date 类</h3>
-<div class="outline-text-3" id="text-org2570fac">
+<div id="outline-container-org5177618" class="outline-3">
+<h3 id="org5177618">Date 类</h3>
+<div class="outline-text-3" id="text-org5177618">
 <p>
 Date 类表示系统特定的时间戳，可以精确到毫秒。Date 对象表示时间的默认顺序是 <span class="underline">星期、月、日、小时、分、秒、年</span> 。
 </p>
@@ -162,10 +162,10 @@ Date 类有如下两个构造方法：
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-java"><span class="linenr">1: </span><span style="color: #5FD7FF;">Date</span> <span style="color: #FF8C00;">date1</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Date</span><span style="color: #AF87FF;">()</span>;              <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#35843;&#29992;&#26080;&#21442;&#25968;&#26500;&#36896;&#20989;&#25968;</span>
-<span class="linenr">2: </span>System.out.println<span style="color: #AF87FF;">(</span>date1.toString<span style="color: #5FD7FF;">()</span><span style="color: #AF87FF;">)</span>; <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#36755;&#20986;&#65306;Wed May 18 21:24:40 CST 2016</span>
-<span class="linenr">3: </span><span style="color: #5FD7FF;">Date</span> <span style="color: #FF8C00;">date2</span> = <span style="color: #FF1493;">new</span> <span style="color: #5FD7FF;">Date</span><span style="color: #AF87FF;">(</span>60000<span style="color: #AF87FF;">)</span>;         <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#35843;&#29992;&#21547;&#26377;&#19968;&#20010;long&#31867;&#22411;&#21442;&#25968;&#30340;&#26500;&#36896;&#20989;&#25968;</span>
-<span class="linenr">4: </span>System.out.println<span style="color: #AF87FF;">(</span>date2<span style="color: #AF87FF;">)</span>;            <span style="color: #8B8878;">// </span><span style="color: #8B8878;">&#36755;&#20986;&#65306;Thu Jan 0108:01:00 CST 1970</span>
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #66D9EF;">Date</span> <span style="color: #FD971F;">date1</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Date</span><span style="color: #AE81FF;">()</span>;              <span style="color: #75715E;">// </span><span style="color: #75715E;">&#35843;&#29992;&#26080;&#21442;&#25968;&#26500;&#36896;&#20989;&#25968;</span>
+<span class="linenr">2: </span>System.out.println<span style="color: #AE81FF;">(</span>date1.toString<span style="color: #66D9EF;">()</span><span style="color: #AE81FF;">)</span>; <span style="color: #75715E;">// </span><span style="color: #75715E;">&#36755;&#20986;&#65306;Wed May 18 21:24:40 CST 2016</span>
+<span class="linenr">3: </span><span style="color: #66D9EF;">Date</span> <span style="color: #FD971F;">date2</span> = <span style="color: #F92672;">new</span> <span style="color: #66D9EF;">Date</span><span style="color: #AE81FF;">(</span>60000<span style="color: #AE81FF;">)</span>;         <span style="color: #75715E;">// </span><span style="color: #75715E;">&#35843;&#29992;&#21547;&#26377;&#19968;&#20010;long&#31867;&#22411;&#21442;&#25968;&#30340;&#26500;&#36896;&#20989;&#25968;</span>
+<span class="linenr">4: </span>System.out.println<span style="color: #AE81FF;">(</span>date2<span style="color: #AE81FF;">)</span>;            <span style="color: #75715E;">// </span><span style="color: #75715E;">&#36755;&#20986;&#65306;Thu Jan 0108:01:00 CST 1970</span>
 </pre>
 </div>
 
@@ -177,15 +177,15 @@ Date 类有如下两个构造方法：
 </div>
 </div>
 
-<div id="outline-container-org2cf74c0" class="outline-3">
-<h3 id="org2cf74c0"><span class="todo TODO">TODO</span> Calendar 类</h3>
+<div id="outline-container-org52c3737" class="outline-3">
+<h3 id="org52c3737"><span class="todo TODO">TODO</span> Calendar 类</h3>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-18 Fri 17:13</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-09-18 Fri 18:44</p>
+<p class="date">Created: 2020-12-11 Fri 10:59</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
