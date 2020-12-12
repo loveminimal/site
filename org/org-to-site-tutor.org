@@ -432,7 +432,7 @@ NOTE: 这个章节只是补充，可以不了解。
 
 #+BEGIN_EXPORT html
 <img
-src="/images/tutor/page1.jpg"
+src="/images/page1.jpg"
 width="390"
 style="box-shadow: 3px 3px 5px #aaa;"
 />
@@ -440,7 +440,7 @@ style="box-shadow: 3px 3px 5px #aaa;"
 
 #+BEGIN_EXPORT html
 <img
-src="/images/tutor/page2.jpg"
+src="/images/page2.jpg"
 width="390"
 style="box-shadow: 3px 3px 5px #aaa; float: right;"
 />
@@ -456,7 +456,7 @@ _2. 主题切换_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/tutor/page3.jpg"
+src="/images/page3.jpg"
 width="390"
 style="box-shadow: 3px 3px 5px #aaa;"
 />
@@ -464,7 +464,7 @@ style="box-shadow: 3px 3px 5px #aaa;"
 
 #+BEGIN_EXPORT html
 <img
-src="/images/tutor/page4.jpg"
+src="/images/page4.jpg"
 width="390"
 style="box-shadow: 3px 3px 5px #aaa; float: right;"
 />

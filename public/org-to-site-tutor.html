@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<!-- 2020-12-11 Fri 11:00 -->
+<!-- 2020-12-12 Sat 22:22 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Org To Site Tutor</title>
@@ -23,39 +23,39 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org6637954">更新日志</a></li>
-<li><a href="#org55239ce">起步</a></li>
-<li><a href="#org1490593">简介</a></li>
-<li><a href="#org7d6357a">文件组织方式</a></li>
-<li><a href="#org699f414">Emacs 中的配置</a>
+<li><a href="#org7c1df1a">更新日志</a></li>
+<li><a href="#org39d5b31">起步</a></li>
+<li><a href="#org13479db">简介</a></li>
+<li><a href="#org5aa325c">文件组织方式</a></li>
+<li><a href="#orgefbcedb">Emacs 中的配置</a>
 <ul>
-<li><a href="#org54634a0">htmlize</a></li>
-<li><a href="#orgefc2860">ox-html</a></li>
-<li><a href="#orgee53ea6">ox-publish</a></li>
-<li><a href="#orgf549b43">默认输出设置</a></li>
+<li><a href="#orge9e38a5">htmlize</a></li>
+<li><a href="#org351f6de">ox-html</a></li>
+<li><a href="#org6b828cc">ox-publish</a></li>
+<li><a href="#org435d459">默认输出设置</a></li>
 </ul>
 </li>
-<li><a href="#orgaf1d3db">自定义函数</a>
+<li><a href="#orgcba1a6a">自定义函数</a>
 <ul>
-<li><a href="#orgb7d8c87">保存并输出页面</a></li>
-<li><a href="#org252a0ab">预览当前页面</a></li>
-<li><a href="#org4bb38e7">删除 Org 及 Html</a></li>
+<li><a href="#org0f0cf42">保存并输出页面</a></li>
+<li><a href="#orga39cc20">预览当前页面</a></li>
+<li><a href="#org330bb90">删除 Org 及 Html</a></li>
 </ul>
 </li>
-<li><a href="#org46ef656">自定义宏</a>
+<li><a href="#org991575b">自定义宏</a>
 <ul>
-<li><a href="#org7e15760">删除当前文章</a></li>
+<li><a href="#org1a448ee">删除当前文章</a></li>
 </ul>
 </li>
-<li><a href="#org412fb17">自定义模式</a></li>
-<li><a href="#org268db66">图片</a></li>
-<li><a href="#org4332bb4">总结</a></li>
-<li><a href="#org4db0cec">附录</a>
+<li><a href="#org1bccf04">自定义模式</a></li>
+<li><a href="#orgbc51266">图片</a></li>
+<li><a href="#org9797097">总结</a></li>
+<li><a href="#orgd93d15a">附录</a>
 <ul>
-<li><a href="#org0623567">网站功能图示</a></li>
-<li><a href="#orgc18239e">关于执行脚本</a></li>
-<li><a href="#orge1de0c6">右侧批注样式</a></li>
-<li><a href="#org60b7fd6">文内随笔样式</a></li>
+<li><a href="#orgd57017e">网站功能图示</a></li>
+<li><a href="#org62142ba">关于执行脚本</a></li>
+<li><a href="#orgdd125a4">右侧批注样式</a></li>
+<li><a href="#org31aec63">文内随笔样式</a></li>
 </ul>
 </li>
 </ul>
@@ -66,7 +66,7 @@
 </p>
 
 <p>
-<b>如果你是第一次访问这个页面，强烈建议先跳转至附录的 <a href="#org0623567">网站功能图示</a> 章节，浏览一下站点的功能使用概要 :)</b>
+<b>如果你是第一次访问这个页面，强烈建议先跳转至附录的 <a href="#orgd57017e">网站功能图示</a> 章节，浏览一下站点的功能使用概要 :)</b>
 </p>
 
 <blockquote>
@@ -75,9 +75,9 @@ Emacs China 中的描述，比较散乱，这里整理一下。我尽量把所�
 </p>
 </blockquote>
 
-<div id="outline-container-org6637954" class="outline-2">
-<h2 id="org6637954">更新日志</h2>
-<div class="outline-text-2" id="text-org6637954">
+<div id="outline-container-org7c1df1a" class="outline-2">
+<h2 id="org7c1df1a">更新日志</h2>
+<div class="outline-text-2" id="text-org7c1df1a">
 <p>
 <span class="underline">1. 预计更新</span>
 </p>
@@ -104,7 +104,7 @@ Emacs China 中的描述，比较散乱，这里整理一下。我尽量把所�
 <ul class="org-ul">
 <li>新增 <code>user.config.js</code> ，抽离一些配置项（微博、GitHub、Author 等）（2020-07-26 Sun 22:36）</li>
 <li>新增执行脚本 <code>copy.sh</code> ，用来在 Emacs 外部同步拷贝图片、JS、CSS 等资源文件（2020-05-29 Fri 21:04）</li>
-<li>新增执行脚本 <code>update.sh</code> ，原因详见 <a href="#orgc18239e">关于执行脚本</a>  (2020-05-26 Tue 16:45)</li>
+<li>新增执行脚本 <code>update.sh</code> ，原因详见 <a href="#org62142ba">关于执行脚本</a>  (2020-05-26 Tue 16:45)</li>
 <li>双击代码块开始复制，10s 后自动恢复行号（原来的悬浮隐藏有的体验不好）（2020-05-17 Sun 13:04）</li>
 <li>激活毛玻璃风格（总看纯白色，有点腻歪了……）（2020-05-16 Sat 21:05）</li>
 <li>对带行号代码块的处理（复制时隐藏行号，确保复制内容只含代码）（2020-04-17 Fri 15:04）</li>
@@ -112,7 +112,7 @@ Emacs China 中的描述，比较散乱，这里整理一下。我尽量把所�
 <li>调整 IDEA 页面样式（2020-04-04 Sat 02:36）</li>
 <li>本地化依赖库，实现点击查看页面全屏尺寸图片（2020-04-03 Fri 21:58）</li>
 <li>显示当前代码块类型（2020-04-02 Thu 15:02）</li>
-<li>添加 <a href="#org0623567">网站功能图示</a> (2020-03-27 Fri 19:49)</li>
+<li>添加 <a href="#orgd57017e">网站功能图示</a> (2020-03-27 Fri 19:49)</li>
 <li>录制删除当前文章的宏（2020-03-22 Sun 18:55）</li>
 <li><a href="https://www.bilibili.com/video/av90738660">视频闲聊这个项目</a> （2020-03-04 Wed 22:46）</li>
 </ul>
@@ -120,9 +120,9 @@ Emacs China 中的描述，比较散乱，这里整理一下。我尽量把所�
 </div>
 </div>
 
-<div id="outline-container-org55239ce" class="outline-2">
-<h2 id="org55239ce">起步</h2>
-<div class="outline-text-2" id="text-org55239ce">
+<div id="outline-container-org39d5b31" class="outline-2">
+<h2 id="org39d5b31">起步</h2>
+<div class="outline-text-2" id="text-org39d5b31">
 <blockquote>
 <p>
 这个章节中，我们会叙述如何 <span class="underline">让项目先运行起来</span> ，这才是主要的，不是吗？放心，我们会在后续章节中介绍细节。
@@ -203,9 +203,9 @@ Emacs China 中的描述，比较散乱，这里整理一下。我尽量把所�
 </div>
 </div>
 
-<div id="outline-container-org1490593" class="outline-2">
-<h2 id="org1490593">简介</h2>
-<div class="outline-text-2" id="text-org1490593">
+<div id="outline-container-org13479db" class="outline-2">
+<h2 id="org13479db">简介</h2>
+<div class="outline-text-2" id="text-org13479db">
 <p>
 本文旨在介绍如何利用 <code>org-publish</code> 把 <code>.org</code> 文件生成为 <code>.html</code> ，以及如何解决静态文件（主要是图片）的缩放问题。
 </p>
@@ -220,9 +220,9 @@ Emacs 是一个强大的 <span class="underline">“编辑器”</span> ，或�
 </div>
 </div>
 
-<div id="outline-container-org7d6357a" class="outline-2">
-<h2 id="org7d6357a">文件组织方式</h2>
-<div class="outline-text-2" id="text-org7d6357a">
+<div id="outline-container-org5aa325c" class="outline-2">
+<h2 id="org5aa325c">文件组织方式</h2>
+<div class="outline-text-2" id="text-org5aa325c">
 <p>
 <a href="https://github.com/loveminimal/site">→ loveminimal/site</a>
 </p>
@@ -273,9 +273,9 @@ site
 </div>
 </div>
 
-<div id="outline-container-org699f414" class="outline-2">
-<h2 id="org699f414">Emacs 中的配置</h2>
-<div class="outline-text-2" id="text-org699f414">
+<div id="outline-container-orgefbcedb" class="outline-2">
+<h2 id="orgefbcedb">Emacs 中的配置</h2>
+<div class="outline-text-2" id="text-orgefbcedb">
 <blockquote>
 <p>
 目前，并没有把在 Emacs 中的配置，组织成插件，比较分散，这个主题用来介绍 Virgo 站点生成所需要的配置。
@@ -287,9 +287,9 @@ site
 </p>
 </div>
 
-<div id="outline-container-org54634a0" class="outline-3">
-<h3 id="org54634a0">htmlize</h3>
-<div class="outline-text-3" id="text-org54634a0">
+<div id="outline-container-orge9e38a5" class="outline-3">
+<h3 id="orge9e38a5">htmlize</h3>
+<div class="outline-text-3" id="text-orge9e38a5">
 <p>
 该插件用来转换并打开生成的 <code>.html</code> 文件。
 </p>
@@ -305,9 +305,9 @@ site
 </div>
 </div>
 
-<div id="outline-container-orgefc2860" class="outline-3">
-<h3 id="orgefc2860">ox-html</h3>
-<div class="outline-text-3" id="text-orgefc2860">
+<div id="outline-container-org351f6de" class="outline-3">
+<h3 id="org351f6de">ox-html</h3>
+<div class="outline-text-3" id="text-org351f6de">
 <div class="org-src-container">
 <pre class="src src-elisp"><span class="linenr">1: </span><span style="color: #AE81FF;">(</span><span style="color: #F92672;">use-package</span> <span style="color: #AE81FF;">ox-html</span>
 <span class="linenr">2: </span>  <span style="color: #F92672;">:config</span>
@@ -320,15 +320,15 @@ site
 </div>
 </div>
 
-<div id="outline-container-orgee53ea6" class="outline-3">
-<h3 id="orgee53ea6">ox-publish</h3>
-<div class="outline-text-3" id="text-orgee53ea6">
+<div id="outline-container-org6b828cc" class="outline-3">
+<h3 id="org6b828cc">ox-publish</h3>
+<div class="outline-text-3" id="text-org6b828cc">
 <p>
 这个是 Emacs 中内置的输出功能，它也是 Virgo 站点生成的核心所在。为了不让大家感到困扰，我把 Virgo 没有用到的一些配置代码全部删除了，如果你想了解更多可以查看 <a href="https://github.com/loveminimal/emacs.d/blob/master/lisp/init-orgs.el">init-orgs.el</a> 文件。强烈建议按照默认的配置使用，等熟悉之后再自定义。
 </p>
 
 <p>
-如 <a href="#org7d6357a">文件组织方式</a> 所述，把 <code>site</code> 文件夹放在家目录，配置中设置 <code>:base-directory</code> 等时设置目录比较方便。
+如 <a href="#org5aa325c">文件组织方式</a> 所述，把 <code>site</code> 文件夹放在家目录，配置中设置 <code>:base-directory</code> 等时设置目录比较方便。
 </p>
 
 <div class="org-src-container">
@@ -408,9 +408,9 @@ site
 </div>
 </div>
 
-<div id="outline-container-orgf549b43" class="outline-3">
-<h3 id="orgf549b43">默认输出设置</h3>
-<div class="outline-text-3" id="text-orgf549b43">
+<div id="outline-container-org435d459" class="outline-3">
+<h3 id="org435d459">默认输出设置</h3>
+<div class="outline-text-3" id="text-org435d459">
 <p>
 Emacs 默认的 <code>ox-publish</code> 会输出一些默认格式，因为比较原生，我们把它禁止掉，只保留对于代码块的高亮。
 </p>
@@ -430,13 +430,13 @@ Emacs 默认的 <code>ox-publish</code> 会输出一些默认格式，因为比�
 </div>
 </div>
 
-<div id="outline-container-orgaf1d3db" class="outline-2">
-<h2 id="orgaf1d3db">自定义函数</h2>
-<div class="outline-text-2" id="text-orgaf1d3db">
+<div id="outline-container-orgcba1a6a" class="outline-2">
+<h2 id="orgcba1a6a">自定义函数</h2>
+<div class="outline-text-2" id="text-orgcba1a6a">
 </div>
-<div id="outline-container-orgb7d8c87" class="outline-3">
-<h3 id="orgb7d8c87">保存并输出页面</h3>
-<div class="outline-text-3" id="text-orgb7d8c87">
+<div id="outline-container-org0f0cf42" class="outline-3">
+<h3 id="org0f0cf42">保存并输出页面</h3>
+<div class="outline-text-3" id="text-org0f0cf42">
 <p>
 为了减少频繁重复性的操作，我们对默认的输出函数进行了一些封装，如下：
 </p>
@@ -479,9 +479,9 @@ Emacs 默认的 <code>ox-publish</code> 会输出一些默认格式，因为比�
 </div>
 </div>
 
-<div id="outline-container-org252a0ab" class="outline-3">
-<h3 id="org252a0ab">预览当前页面</h3>
-<div class="outline-text-3" id="text-org252a0ab">
+<div id="outline-container-orga39cc20" class="outline-3">
+<h3 id="orga39cc20">预览当前页面</h3>
+<div class="outline-text-3" id="text-orga39cc20">
 <div class="org-src-container">
 <pre class="src src-elisp"><span class="linenr">1: </span><span style="color: #AE81FF;">(</span><span style="color: #F92672;">defun</span> <span style="color: #A6E22E;">preview-current-buffer-in-browser</span> <span style="color: #66D9EF;">()</span>
 <span class="linenr">2: </span>  <span style="color: #E6DB74;">"Open current buffer as html."</span>
@@ -511,9 +511,9 @@ Emacs 默认的 <code>ox-publish</code> 会输出一些默认格式，因为比�
 </div>
 </div>
 
-<div id="outline-container-org4bb38e7" class="outline-3">
-<h3 id="org4bb38e7">删除 Org 及 Html</h3>
-<div class="outline-text-3" id="text-org4bb38e7">
+<div id="outline-container-org330bb90" class="outline-3">
+<h3 id="org330bb90">删除 Org 及 Html</h3>
+<div class="outline-text-3" id="text-org330bb90">
 <p>
 有时候，我们会对 <code>.org</code> 文件进行删除操作，为了使网站也删除这个页面，就需要删除其对应的 <code>.html</code> 文件，然而，每次都进行这样的步骤是一件令人讨厌的事。现在，我们可以使用下面这个函数，它会删除当前 <code>.org</code> 文件，且同时删除其生成的 <code>.html</code> 文件。
 </p>
@@ -536,13 +536,13 @@ Emacs 默认的 <code>ox-publish</code> 会输出一些默认格式，因为比�
 </div>
 </div>
 
-<div id="outline-container-org46ef656" class="outline-2">
-<h2 id="org46ef656">自定义宏</h2>
-<div class="outline-text-2" id="text-org46ef656">
+<div id="outline-container-org991575b" class="outline-2">
+<h2 id="org991575b">自定义宏</h2>
+<div class="outline-text-2" id="text-org991575b">
 </div>
-<div id="outline-container-org7e15760" class="outline-3">
-<h3 id="org7e15760">删除当前文章</h3>
-<div class="outline-text-3" id="text-org7e15760">
+<div id="outline-container-org1a448ee" class="outline-3">
+<h3 id="org1a448ee">删除当前文章</h3>
+<div class="outline-text-3" id="text-org1a448ee">
 <p>
 目前，我们在 <code>./index.org</code> 的列表 <code>Table</code> 中管理所有的文章。通过执行这个宏 <code>mc/delete-this-post</code> ，可以同时删除当前光标下的 <code>.org</code> 文件及其对应的 <code>.html</code> 文件。
 </p>
@@ -554,7 +554,7 @@ Emacs 默认的 <code>ox-publish</code> 会输出一些默认格式，因为比�
 </div>
 
 <p>
-注：这个宏依赖于 <a href="#org4bb38e7">delete-org-and-html</a> 这个函数。
+注：这个宏依赖于 <a href="#org330bb90">delete-org-and-html</a> 这个函数。
 </p>
 
 <blockquote>
@@ -576,9 +576,9 @@ Emacs 默认的 <code>ox-publish</code> 会输出一些默认格式，因为比�
 </div>
 </div>
 
-<div id="outline-container-org412fb17" class="outline-2">
-<h2 id="org412fb17">自定义模式</h2>
-<div class="outline-text-2" id="text-org412fb17">
+<div id="outline-container-org1bccf04" class="outline-2">
+<h2 id="org1bccf04">自定义模式</h2>
+<div class="outline-text-2" id="text-org1bccf04">
 <p>
 <a href="https://github.com/kaushalmodi/ox-hugo/blob/master/org-hugo-auto-export-mode.el">→ org-hugo-auto-export-mode</a>
 </p>
@@ -607,9 +607,9 @@ Emacs 默认的 <code>ox-publish</code> 会输出一些默认格式，因为比�
 </div>
 </div>
 
-<div id="outline-container-org268db66" class="outline-2">
-<h2 id="org268db66">图片</h2>
-<div class="outline-text-2" id="text-org268db66">
+<div id="outline-container-orgbc51266" class="outline-2">
+<h2 id="orgbc51266">图片</h2>
+<div class="outline-text-2" id="text-orgbc51266">
 <blockquote>
 <p>
 NOTE: 这个章节只是补充，可以不了解。
@@ -640,16 +640,16 @@ NOTE: 这个章节只是补充，可以不了解。
 </div>
 </div>
 
-<div id="outline-container-org4332bb4" class="outline-2">
-<h2 id="org4332bb4">总结</h2>
-<div class="outline-text-2" id="text-org4332bb4">
+<div id="outline-container-org9797097" class="outline-2">
+<h2 id="org9797097">总结</h2>
+<div class="outline-text-2" id="text-org9797097">
 <p>
 总体来说，比较简单，也不需要下载多少额外的插件，充分利用 Emacs 本身拥有的功能。综上所述，我们来总结一下步骤：
 </p>
 <ol class="org-ol">
 <li><code>git clone https://github.com/loveminimal/site.git ~/site</code> ，即把 site 文件夹放在家目录；</li>
-<li>把 <a href="#org699f414">Emacs 中的配置</a> 的配置添加到 Emacs 的配置文件中；</li>
-<li>在 Emacs 中执行封装的 <a href="#orgaf1d3db">自定义函数</a> 即可。</li>
+<li>把 <a href="#orgefbcedb">Emacs 中的配置</a> 的配置添加到 Emacs 的配置文件中；</li>
+<li>在 Emacs 中执行封装的 <a href="#orgcba1a6a">自定义函数</a> 即可。</li>
 </ol>
 
 <p>
@@ -658,21 +658,21 @@ NOTE: 这个章节只是补充，可以不了解。
 </div>
 </div>
 
-<div id="outline-container-org4db0cec" class="outline-2">
-<h2 id="org4db0cec">附录</h2>
-<div class="outline-text-2" id="text-org4db0cec">
+<div id="outline-container-orgd93d15a" class="outline-2">
+<h2 id="orgd93d15a">附录</h2>
+<div class="outline-text-2" id="text-orgd93d15a">
 </div>
-<div id="outline-container-org0623567" class="outline-3">
-<h3 id="org0623567">网站功能图示</h3>
-<div class="outline-text-3" id="text-org0623567">
+<div id="outline-container-orgd57017e" class="outline-3">
+<h3 id="orgd57017e">网站功能图示</h3>
+<div class="outline-text-3" id="text-orgd57017e">
 <img
-src="/images/tutor/page1.jpg"
+src="/images/page1.jpg"
 width="390"
 style="box-shadow: 3px 3px 5px #aaa;"
 />
 
 <img
-src="/images/tutor/page2.jpg"
+src="/images/page2.jpg"
 width="390"
 style="box-shadow: 3px 3px 5px #aaa; float: right;"
 />
@@ -694,13 +694,13 @@ style="box-shadow: 3px 3px 5px #aaa; float: right;"
 </p>
 
 <img
-src="/images/tutor/page3.jpg"
+src="/images/page3.jpg"
 width="390"
 style="box-shadow: 3px 3px 5px #aaa;"
 />
 
 <img
-src="/images/tutor/page4.jpg"
+src="/images/page4.jpg"
 width="390"
 style="box-shadow: 3px 3px 5px #aaa; float: right;"
 />
@@ -723,9 +723,9 @@ style="box-shadow: 3px 3px 5px #aaa; float: right;"
 </div>
 </div>
 
-<div id="outline-container-orgc18239e" class="outline-3">
-<h3 id="orgc18239e">关于执行脚本</h3>
-<div class="outline-text-3" id="text-orgc18239e">
+<div id="outline-container-org62142ba" class="outline-3">
+<h3 id="org62142ba">关于执行脚本</h3>
+<div class="outline-text-3" id="text-org62142ba">
 <p>
 为什么会有这个脚本？我们来看这样一种场景。
 </p>
@@ -785,9 +785,9 @@ style="box-shadow: 3px 3px 5px #aaa; float: right;"
 </p>
 </div>
 </div>
-<div id="outline-container-orge1de0c6" class="outline-3">
-<h3 id="orge1de0c6">右侧批注样式</h3>
-<div class="outline-text-3" id="text-orge1de0c6">
+<div id="outline-container-orgdd125a4" class="outline-3">
+<h3 id="orgdd125a4">右侧批注样式</h3>
+<div class="outline-text-3" id="text-orgdd125a4">
 <p>
 其实，使用很简单，我们把要加的批注写在 <code>&lt;note&gt;...&lt;/note&gt;</code> 中就可以了，放心，在渲染的时候已经做好了处理，如下：
 </p>
@@ -811,9 +811,9 @@ Tips：诸如此类经常需要插入的片段，可以尝试使用 abbr 或 yas
 </div>
 </div>
 
-<div id="outline-container-org60b7fd6" class="outline-3">
-<h3 id="org60b7fd6">文内随笔样式</h3>
-<div class="outline-text-3" id="text-org60b7fd6">
+<div id="outline-container-org31aec63" class="outline-3">
+<h3 id="org31aec63">文内随笔样式</h3>
+<div class="outline-text-3" id="text-org31aec63">
 <essay>
   <p>沁园春·雪</p>
 
@@ -834,7 +834,7 @@ Tips：诸如此类经常需要插入的片段，可以尝试使用 abbr 或 yas
 <div id="postamble" class="status">
 <p class="date">Date: 2020-01-01 Wed 14:26</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 11:00</p>
+<p class="date">Created: 2020-12-12 Sat 22:22</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
