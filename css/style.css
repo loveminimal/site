@@ -75,7 +75,7 @@ body, #content::before,#postamble::before {
 .js-essay::before {
     content: '✍';
     position: absolute;
-    font-size: .48rem;
+    font-size: .30rem;
     right: 0;
     top: -30px;
 }
@@ -580,5 +580,11 @@ th:last-child, td:last-child { border-right: rgba(255, 255, 255, 0); }
     .js-note::before {
         position: initial;
         float: right;
+    }
+    
+    .js-essay::before {
+        font-size: .24rem;
+        right: 0;
+        top: -20px;
     }
 }
