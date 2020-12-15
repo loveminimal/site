@@ -451,7 +451,68 @@ ES Module 模块功能主要由两个命令构成： =export= 和 =import= ：
   export default var a = 1        // ✘
 #+END_SRC
 
+*** import()
+
+前面介绍过， =import= 命令会被 JavaScript 引擎静态分析，先于模块内的其他语句执行。
+
+这样的设计，固然有利于编译器提高效率，但也导致无法在运行时加载。在语法上，条件加载就不可能实现。如果 =import= 命令要取代 Node 的 =require= 方法，就形成了一个障碍。
+
+#+BEGIN_SRC js -n
+  // 报错
+  if (x === 2) {
+      import MyModule from './myModule' // ✘ `import` 命令不支持动态加载
+  }
+#+END_SRC
+
+*ES2020 提案引入了 =import()= 函数，支持动态加载模块。*
+
+#+BEGIN_EXAMPLE
+  import(specifier)               // `specifier` 指定所要加载的模块的位置
+#+END_EXAMPLE
+
+=import()= 函数和 =import= 命令接受的参数相同，区别在于 =import()= 可以动态加载，且与所加载的模块并没有静态链接关系，返回一个 Promise 对象。
+
+=import()= 函数类似于 Node 的 =require= 方法，区别在于 =import()= 是异步加载，而 =require= 是同步加载。
+
+#+BEGIN_SRC js -n
+  if (condition) {
+      import('moduleA').then( /* ... */ )    // ✔
+
+  } else {
+      import('moduleB').then( /* ... */ )    // ✔
+  }
+#+END_SRC
+
+*注： =import()= 加载模块成功以后，这个模块会作为一个对象，当作 =then= 方法的参数。
+
+** Webpack Module[fn:4]
+
+在模块化编程中，开发者将程序分解成离散功能块（Discrete Chunks of Funtionality），并称之为模块。
+
+每个模块具有比完整程序更小的接触面，使得校验、调试、测试轻而易举。精心编写的模块提供了可靠的抽象和封装界限，使得应用程序中每个模块都具有条理清楚的设计和明确的目的。
+
+NodeJS 从一开始就支持模块化编程，而 Web 浏览器对于模块化的支持却姗姗来迟。在 Web 存在多种支持 JavaScript 模块化的工具，如 AMD、CMD 等，这些工具各有优势和限制。
+
+Webpack 基于从这些系统获得的经验教训，并将模块的概念应用于项目中的任何文件。
+
+*什么是 Webpack 模块呢？*
+
+Webpack 模块能够以各种方式表达模块之间的依赖关系，如：
+- ES2015 的 =import= 语句；
+- CommonJS 的 =require()= 语句；
+- AMD 的 =define= 和 =require= 语句；
+- CSS/SASS/LESS 文件中的 =@import= 语句；
+- 样式 =url(...)= 或 HTML 文件 ~<img src=...>~ 中的图片链接。
+
+*Webpack 是怎么做到这一点的呢？* loader ！
+
+Webpack 通过 loader 可以支持各种语言和预处理器编写模块。loader 描述了 webpack 如何处理非 JavaScript 的模块，并且在 bundle 中引入这些依赖。另外，webpack 社区已经为各种就行语言和语言处理器构建了 loader ，如： CoffeeScript、TypeScript、ESNext(Babel)、Sass、Less 等。
+
+*注：有关完整列表，请参考 [[https://www.webpackjs.com/loaders][loader 列表]] 或 [[https://www.webpackjs.com/api/loaders][自己编写]] 。
+
 * Footnotes
+
+[fn:4] https://www.webpackjs.com/concepts/modules/
 
 [fn:3] https://es6.ruanyifeng.com/#docs/module
 

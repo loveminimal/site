@@ -43,6 +43,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./css-tta.org][CSS 中的动效]]          |
 | [[./webpack.org][Webpack]]               |
 | [[./modular-programming.org][模块化编程]]            |
+| [[./test-talking.org][Test Talking]]          |
 
 | Asm                    |
 |------------------------|
