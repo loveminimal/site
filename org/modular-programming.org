@@ -99,7 +99,7 @@ title=""
   })
 #+END_SRC
 
-上边的函数 =m1()= 和 =m2()= ，都封装在 =module1= 对象里，使用的时候，就是调用这个对象的属性，如 =module1.m1()= 。但是，这样的写法会暴露所有模块成员，内部状态可以被外部改写，如 =module1._count = 5= 。
+上边的函数 =m1()= 和 =m2()= ，都封装在 =module1= 对象里（现在它们有关系了，都属于一个对象嘛），使用的时候，就是调用这个对象的属性，如 =module1.m1()= 。但是，这样的写法会暴露所有模块成员，内部状态可以被外部改写，如 =module1._count = 5= 。
 
 #+BEGIN_EXPORT html
 <essay>
@@ -194,10 +194,9 @@ _1. 模块隔离_
 我们编写的 =hello.js= 代码是这样的：
 
 #+BEGIN_SRC js -n
-var s = 'Hello';
 var name = 'world';
 
-console.log(s + ' ' + name + '!');
+console.log('Hello, ' + name + '!');
 #+END_SRC
 
 NodeJS 加载了 =hello.js= 之后，把代码包装了一下，变成了这样执行 ↓ ：
