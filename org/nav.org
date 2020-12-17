@@ -55,3 +55,5 @@
 - SDK https://zhuanlan.zhihu.com/p/2
 - ESLint and Prettier https://vsnail.cn/static/doc/blog/eslintPrettier.html
 - JS bind() https://www.smashingmagazine.com/2014/01/understanding-javascript-function-prototype-bind/#top
+- call、apply、bind https://www.cnblogs.com/moqiutao/p/7371988.html
+- JS this https://www.ibm.com/developerworks/cn/web/1207_wangqf_jsthis/index.html
