@@ -462,7 +462,7 @@ public class class_name<data_type1, data_type2, ...> {}
 #+BEGIN_SRC java -n
   public class Test {
       public static void main(String[] args) {
-          Stu<String, Integer, Character> stu = new Stu<String, Integer, Character>("Amy", 32, "Female" );
+          Stu<String, Integer, Character> stu = new Stu<String, Integer, Character>("Amy", 32, 'F' );
           String name = stu.getName();
           Integer age = stu.getAge();
           Character sex = stu.getSex();
