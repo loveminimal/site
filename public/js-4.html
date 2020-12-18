@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<!-- 2020-12-17 Thu 18:45 -->
+<!-- 2020-12-18 Fri 11:25 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>第四章 变量、作用域与内存</title>
@@ -23,11 +23,11 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org73b82a4">原始值与引用值</a>
+<li><a href="#orgbba121c">原始值与引用值</a>
 <ul>
-<li><a href="#orgb2268b2">动态属性</a></li>
-<li><a href="#org0b139fe">复制值</a></li>
-<li><a href="#org140526c">传递参数</a></li>
+<li><a href="#orgab6bf04">动态属性</a></li>
+<li><a href="#orgb307131">复制值</a></li>
+<li><a href="#org2e6a27d">传递参数</a></li>
 </ul>
 </li>
 </ul>
@@ -52,9 +52,9 @@ JavaScript 变量是松散类型的，而且变量不过就是特定时间点一
 这样的变量很有意思，很强大，当然也有不少问题。
 </essay>
 
-<div id="outline-container-org73b82a4" class="outline-2">
-<h2 id="org73b82a4">原始值与引用值</h2>
-<div class="outline-text-2" id="text-org73b82a4">
+<div id="outline-container-orgbba121c" class="outline-2">
+<h2 id="orgbba121c">原始值与引用值</h2>
+<div class="outline-text-2" id="text-orgbba121c">
 <p>
 ES 变量可以包含两种不同类型的数据：原始值（primitive value）和引用值（reference value）。在把一个值赋给变量时，JavaScript 引擎必须确定这个值是原始值还是引用值。
 </p>
@@ -72,9 +72,9 @@ ES 变量可以包含两种不同类型的数据：原始值（primitive value�
 </p>
 </div>
 
-<div id="outline-container-orgb2268b2" class="outline-3">
-<h3 id="orgb2268b2">动态属性</h3>
-<div class="outline-text-3" id="text-orgb2268b2">
+<div id="outline-container-orgab6bf04" class="outline-3">
+<h3 id="orgab6bf04">动态属性</h3>
+<div class="outline-text-3" id="text-orgab6bf04">
 <p>
 原始值和引用值的定义方式很类似，都是创建一个变量，然后给它赋一个值。不过，在变量保存了这个值之后，可以对这个值做什么，则大有不同。对于引用值而言，可以随时添加、修改和删除其属性和方法。而原始值不能有属性，尽管尝试给原始值添加属性不会报错。
 </p>
@@ -85,9 +85,9 @@ ES 变量可以包含两种不同类型的数据：原始值（primitive value�
 </div>
 </div>
 
-<div id="outline-container-org0b139fe" class="outline-3">
-<h3 id="org0b139fe">复制值</h3>
-<div class="outline-text-3" id="text-org0b139fe">
+<div id="outline-container-orgb307131" class="outline-3">
+<h3 id="orgb307131">复制值</h3>
+<div class="outline-text-3" id="text-orgb307131">
 <p>
 除了存储方式不同，原始值和引用值在通过变量复制时也有不同。
 </p>
@@ -118,12 +118,33 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org140526c" class="outline-3">
-<h3 id="org140526c">传递参数</h3>
-<div class="outline-text-3" id="text-org140526c">
+<div id="outline-container-org2e6a27d" class="outline-3">
+<h3 id="org2e6a27d">传递参数</h3>
+<div class="outline-text-3" id="text-org2e6a27d">
 <p>
-<b>ES 中所有函数的参数都是按值传递的。</b> 这意味着函数外的值会复制到函数内部的参数中，就像从一个变量复制到另一个变量一样。
+<b>ES 中所有函数的参数都是按值传递的。</b>
 </p>
+
+<p>
+这意味着函数外的值会复制到函数内部的参数中，就像从一个变量复制到另一个变量一样。如果是原始值，那么就跟原始值变量的复制一样，如果是引用值，那么就跟引用值变量的复制一样。
+</p>
+
+<p>
+在按值传递参数时，值会被复制到一个局部变量（即一个命名参数，就是 <code>arguments</code> 对象的中的一个槽位）。在按引用传递参数时，值在内存中的置会被保存在一个局部变量，这意味着对本地变量的修改会反映到函数外部。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #F92672;">function</span> <span style="color: #A6E22E;">addTen</span><span style="color: #AE81FF;">(</span><span style="color: #FD971F;">num</span><span style="color: #AE81FF;">)</span> <span style="color: #AE81FF;">{</span>
+<span class="linenr">2: </span>    num += 10
+<span class="linenr">3: </span>    <span style="color: #F92672;">return</span> num
+<span class="linenr">4: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">5: </span>
+<span class="linenr">6: </span><span style="color: #F92672;">let</span> <span style="color: #FD971F;">count</span> = 20
+<span class="linenr">7: </span><span style="color: #F92672;">let</span> <span style="color: #FD971F;">result</span> = addTen<span style="color: #AE81FF;">(</span>count<span style="color: #AE81FF;">)</span>
+<span class="linenr">8: </span>console.log<span style="color: #AE81FF;">(</span>count<span style="color: #AE81FF;">)</span>              <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; 20 &#27809;&#26377;&#21464;&#21270;</span>
+<span class="linenr">9: </span>console.log<span style="color: #AE81FF;">(</span>result<span style="color: #AE81FF;">)</span>             <span style="color: #75715E;">// </span><span style="color: #75715E;">&#8594; 30</span>
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -131,7 +152,7 @@ title=""
 <div id="postamble" class="status">
 <p class="date">Date: 2020-12-17 Thu 17:54</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-17 Thu 18:45</p>
+<p class="date">Created: 2020-12-18 Fri 11:25</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
