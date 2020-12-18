@@ -29,26 +29,24 @@
 - [[http://theory.people.com.cn/n/2015/0812/c40531-27449964.html][马克思主义基本原理、文本及其解读]]
 - [[https://www.jianshu.com/p/5d492224c71e][element-ui 单元格点击事件,行点击+单元格点击,获取某一行的index]]
 - [[https://blog.csdn.net/qq_38128179/article/details/84956552][什么是跨域？跨域解决方法]]
-- https://segmentfault.com/a/1190000015681014?utm_source=tag-newest
-- https://www.jiweichengzhu.com/article/93afbed1245d4ee69b82ed1b067f48a4
-- https://blog.csdn.net/qq_25800311/article/details/87024665
-- https://blog.csdn.net/pashanhu6402/article/details/96428887
-- https://blog.csdn.net/weixin_40396459/article/details/81706543
-- https://www.jianshu.com/p/ae61623ce9b7
-- https://www.zhihu.com/question/24723688
-- https://blog.csdn.net/nanhuaibeian/article/details/106927143
-- https://www.jianshu.com/p/bff8aa23fe4d
-- https://www.softwhy.com/article-9982-1.html
-- https://zhuanlan.zhihu.com/p/266708344
-- https://zhuanlan.zhihu.com/p/161237861
-- https://juejin.im/post/6844903521163182088
-- https://www.cnblogs.com/luoxuemei/p/10005572.html
-- http://dangshi.people.com.cn/n1/2020/1111/c85037-31926429.html
-- https://segmentfault.com/a/1190000010032501
-- https://www.cnblogs.com/sloong/p/cors.html
-- https://blog.csdn.net/weixin_41648325/article/details/79412158
-- https://www.jianshu.com/p/c8f9c61c2f20
-- https://www.jianshu.com/p/001818b28ef2
+- H5下载文件 https://segmentfault.com/a/1190000015681014?utm_source=tag-newest
+- IDEA 2019 激活 https://www.jiweichengzhu.com/article/93afbed1245d4ee69b82ed1b067f48a4
+- 网络模型 https://blog.csdn.net/qq_25800311/article/details/87024665
+- Socket 原理 https://blog.csdn.net/pashanhu6402/article/details/96428887
+- Tomcat 使用 https://blog.csdn.net/weixin_40396459/article/details/81706543
+- JS replace() https://www.jianshu.com/p/ae61623ce9b7
+- Nginx 深入 https://blog.csdn.net/nanhuaibeian/article/details/106927143
+- WebAssmebly https://www.jianshu.com/p/bff8aa23fe4d
+- encodeURI 与 encodeURIComponent https://www.softwhy.com/article-9982-1.html
+- Chrome V8 https://zhuanlan.zhihu.com/p/266708344
+- 编译原理龙书 https://zhuanlan.zhihu.com/p/161237861
+- 跨域 https://juejin.im/post/6844903521163182088
+- 跟着毛泽东学读书 http://dangshi.people.com.cn/n1/2020/1111/c85037-31926429.html
+- Web图片资源的加载与渲染时机 https://segmentfault.com/a/1190000010032501
+- CORS 跨域 实现思路及相关解决方案 https://www.cnblogs.com/sloong/p/cors.html
+- Socket和Http之间的区别和概述 https://blog.csdn.net/weixin_41648325/article/details/79412158
+- 从头到脚瞧一瞧process.env.NODE_ENV https://www.jianshu.com/p/c8f9c61c2f20
+- onDrag & onDrop 使用dataTransfer传输数据 https://www.jianshu.com/p/001818b28ef2
 - Browser render https://zhuanlan.zhihu.com/p/74792085
 - VDOM https://www.zhihu.com/question/29504639
 - yarn VS npm https://zhuanlan.zhihu.com/p/23493436
