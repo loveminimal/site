@@ -8,7 +8,7 @@
 |      | [[https://cloud.huawei.com/home#/notepad/task/2f0739e3$ee3c$4049$8422$461c7e46d116/none][华为云]]     | [[https://cloud.tencent.com/developer/labs][腾讯云]]       | [[https://www.youtube.com/][YouTube]]        | [[https://www.icourse163.org/][MOOC]]           | [[https://www.daodejing.org/][道德经]]         |
 |      | [[https://twitter.com/home][Twitter]]    | [[https://gitee.com/loveminimal][Gitee]]        | [[https://www.quora.com/][Quora]]          | [[http://www.people.com.cn/][人民网]]         |                |
 |------+------------+--------------+----------------+----------------+----------------|
-| 工具 | [[http://fanyi.youdao.com/][有道翻译]]   | [[http://www.fhdq.net/][符号大全]]     | [[https://www.bejson.com/ui/compress_img/][图压缩]]         | [[https://man.linuxde.net/][Linux 命令大全]] |                |
+| 工具 | [[http://fanyi.youdao.com/][有道翻译]]   | [[http://www.fhdq.net/][符号大全]]     | [[https://www.bejson.com/ui/compress_img/][图压缩]]         | [[https://man.linuxde.net/][Linux 命令大全]] | [[https://www.bootcss.com/][BootNav]]        |
 |      | [[http://tool.c7sky.com/webcolor/][Web Color]]  | [[https://pixabay.com/zh/][Pixabay]]      | [[http://www.fonts.net.cn/][字体之家]]       | [[http://tools.jb51.net/][脚本之家]]       |                |
 |------+------------+--------------+----------------+----------------+----------------|
 | 娱乐 | [[http://www.etymon.cn/index.html][英语字根]]   | [[https://www.hanjutv.com/][韩剧]]         |                | [[https://www.meijutt.tv/][天天美剧]]       | [[https://www.gushiwen.org/][古诗文网]]       |
@@ -57,4 +57,4 @@
 - JS this https://www.ibm.com/developerworks/cn/web/1207_wangqf_jsthis/index.html
 - 函数柯里化 https://www.jianshu.com/p/2975c25e4d71
 - JS Doc https://www.html.cn/doc/jsdoc/about-namepaths.html
-
+- Package.json https://www.cnblogs.com/tzyy/p/5193811.html
