@@ -58,3 +58,4 @@
 - 函数柯里化 https://www.jianshu.com/p/2975c25e4d71
 - JS Doc https://www.html.cn/doc/jsdoc/about-namepaths.html
 - Package.json https://www.cnblogs.com/tzyy/p/5193811.html
+- .sync https://blog.csdn.net/fabulous1111/article/details/79399696
