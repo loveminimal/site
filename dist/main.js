@@ -16479,6 +16479,22 @@ return jQuery;
 }).call(this,require("UYZiDK"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/..\\node_modules\\jquery\\dist\\jquery.js","/..\\node_modules\\jquery\\dist")
 },{"UYZiDK":2,"buffer":3}],7:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+module.exports = {
+    // Pages array of card style
+    cardPages: [
+        "idea",
+        "diary",
+        "joker",
+        "gtd",
+        "story",
+        "wiki",
+        "web-developer-roadmap",
+    ],
+};
+
+}).call(this,require("UYZiDK"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/config\\index.js","/config")
+},{"UYZiDK":2,"buffer":3}],8:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 "use strict";
 
 var $ = require("jquery");
@@ -16489,7 +16505,10 @@ var USERCONFIG = require("../user.config");
 
 var _require = require("./utils"),
     browserRedirect = _require.browserRedirect,
-    isCurPage = _require.isCurPage; // Init global variables
+    isCurPage = _require.isCurPage;
+
+var _require2 = require("./config"),
+    cardPages = _require2.cardPages; // Init global variables
 // ------------------------------------------------------------------
 
 
@@ -16497,14 +16516,12 @@ var isHome = false,
     isPC = false,
     isMB = false,
     isZoom = false,
-    isCard = false,
-    cent = "",
+    isCard = false;
+var cent = "",
     topBtn = ""; // ------------------------------------------------------------------
 // Pages array of card style
-// ---------------------------------
-
-var CARDPAGES = ["idea", "diary", "joker", "gtd", "story", "wiki", "web-developer-roadmap"]; // Activate/Deactivate global card style
-// isCard = true; CARDPAGES = [];
+// Activate/Deactivate global card style
+// isCard = true; cardPages = [];
 // Custom some special pages
 // ---------------------------------
 
@@ -16712,7 +16729,7 @@ $(document).ready(function () {
   }); // Beautify item like `Idea`
   // ---------------------------------
 
-  if (isCurPage(CARDPAGES)) {
+  if (isCurPage(cardPages)) {
     $(".outline-2").each(function () {
       $(this).addClass("js-outline-2");
     });
@@ -17001,8 +17018,8 @@ $(window).scroll(function () {
     }
   });
 });
-}).call(this,require("UYZiDK"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_67aa7cf3.js","/")
-},{"../user.config":9,"./utils":8,"UYZiDK":2,"buffer":3,"darkreader":4,"jquery":6}],8:[function(require,module,exports){
+}).call(this,require("UYZiDK"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_69611080.js","/")
+},{"../user.config":10,"./config":7,"./utils":9,"UYZiDK":2,"buffer":3,"darkreader":4,"jquery":6}],9:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 const DarkReader = require("darkreader");
 
@@ -17069,7 +17086,7 @@ module.exports = {
 };
 
 }).call(this,require("UYZiDK"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/utils\\index.js","/utils")
-},{"UYZiDK":2,"buffer":3,"darkreader":4}],9:[function(require,module,exports){
+},{"UYZiDK":2,"buffer":3,"darkreader":4}],10:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 // Config your info here
 
@@ -17087,4 +17104,4 @@ const USERCONFIG = {
 module.exports = USERCONFIG;
 
 }).call(this,require("UYZiDK"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/..\\user.config.js","/..")
-},{"UYZiDK":2,"buffer":3}]},{},[7])
+},{"UYZiDK":2,"buffer":3}]},{},[8])

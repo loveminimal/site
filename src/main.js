@@ -2,6 +2,7 @@ const $ = require("jquery");
 const DarkReader = require("darkreader");
 const USERCONFIG = require("../user.config");
 const { browserRedirect, isCurPage } = require("./utils");
+const { cardPages } = require("./config");
 
 // Init global variables
 // ------------------------------------------------------------------
@@ -9,25 +10,15 @@ let isHome = false,
     isPC = false,
     isMB = false,
     isZoom = false,
-    isCard = false,
-    cent = "",
+    isCard = false;
+
+let cent = "",
     topBtn = "";
 
 // ------------------------------------------------------------------
 // Pages array of card style
-// ---------------------------------
-const CARDPAGES = [
-    "idea",
-    "diary",
-    "joker",
-    "gtd",
-    "story",
-    "wiki",
-    "web-developer-roadmap",
-];
-
 // Activate/Deactivate global card style
-// isCard = true; CARDPAGES = [];
+// isCard = true; cardPages = [];
 
 // Custom some special pages
 // ---------------------------------
@@ -277,7 +268,7 @@ $(document).ready(() => {
 
     // Beautify item like `Idea`
     // ---------------------------------
-    if (isCurPage(CARDPAGES)) {
+    if (isCurPage(cardPages)) {
         $(".outline-2").each(function () {
             $(this).addClass("js-outline-2");
         });
