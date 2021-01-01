@@ -1,4 +1,4 @@
-const { src, dest, series, parallel } = require("gulp");
+const { src, dest, series, parallel, watch } = require("gulp");
 const babel = require("gulp-babel");
 const uglify = require("gulp-uglify");
 const browserify = require("gulp-browserify");
@@ -32,5 +32,9 @@ function css(cb) {
 
     cb();
 }
+
+watch(["./src"], (cb) => {
+    cb();
+});
 
 module.exports.default = parallel(css);
