@@ -19,7 +19,7 @@ function js(cb) {
                 // debug: !gulp.env.production,
             })
         )
-        // .pipe(uglify())
+        .pipe(uglify())
         .pipe(dest("dist"));
 
     cb();

@@ -28,11 +28,10 @@ module.exports = {
             return "PC";
         }
     },
- 
 
     // If `args` is current page
     // `args` - String or Array
-    isCurPage(args) {
+    isCurPageFn(args) {
         if (typeof args === "string") {
             if (
                 [
@@ -58,6 +57,22 @@ module.exports = {
             });
 
             if (_res > 0) return true;
+        }
+    },
+    isHomeFn() {
+        if (
+            [
+                "/public/index.html",
+                "/public/index",
+                "/public/",
+                "/index.html",
+                "/index",
+                "/",
+            ].includes(location.pathname)
+        ) {
+            return true;
+        } else {
+            return false;
         }
     },
 };

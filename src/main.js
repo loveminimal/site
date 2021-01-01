@@ -1,12 +1,11 @@
 const $ = require("jquery");
 const DarkReader = require("darkreader");
 const USERCONFIG = require("../user.config");
-const { browserRedirect, isCurPage } = require("./utils");
+const { browserRedirect, isCurPageFn, isHomeFn } = require("./utils");
 const { cardPages } = require("./config");
 
 // Init global variables
-// ------------------------------------------------------------------
-let isHome = false,
+let isHome = isHomeFn(),
     isPC = false,
     isMB = false,
     isZoom = false,
@@ -15,27 +14,11 @@ let isHome = false,
 let cent = "",
     topBtn = "";
 
-// ------------------------------------------------------------------
-// Pages array of card style
 // Activate/Deactivate global card style
 // isCard = true; cardPages = [];
 
 // Custom some special pages
-// ---------------------------------
-if (
-    [
-        "/public/index.html",
-        "/public/index",
-        "/public/",
-        "/index.html",
-        "/index",
-        "/",
-    ].includes(location.pathname)
-) {
-    isHome = true;
-}
-
-if (isCurPage("joker")) {
+if (isCurPageFn("joker")) {
     if (sessionStorage.getItem("pw")) {
         console.log("Welcome, Sir.");
     } else {
@@ -50,7 +33,6 @@ if (isCurPage("joker")) {
 }
 
 // Diff PC and Mobile
-// ---------------------------------
 if (browserRedirect() == "PC") {
     isPC = true;
 } else {
@@ -59,216 +41,223 @@ if (browserRedirect() == "PC") {
 
 // Customizations after DOM rendering
 // ------------------------------------------------------------------
-$(document).ready(() => {
-    // Set local variables
-    // ---------------------------------
-    const TOC = $("#table-of-contents"),
-        BODY = $("body"),
-        TITLE = $(".title"),
-        CONTENT = $("#content");
+// Set local variables
+// ---------------------------------
+const TOC = $("#table-of-contents"),
+    BODY = $("body"),
+    TITLE = $(".title"),
+    CONTENT = $("#content");
 
-    BODY.addClass("animated fadeIn slow"); // Add animate effects.
-    TITLE.click(toggleColor); // Toggle color of site.
+BODY.addClass("animated fadeIn slow"); // Add animate effects.
+TITLE.click(toggleColor); // Toggle color of site.
 
-    createNavButton(); // Create nav button.
-    topBtn = createTopButton(); // Create top button.
-    $(window).scroll(scrollToTop); // Calculate the scroll top distance.
+createNavButton(); // Create nav button.
+topBtn = createTopButton(); // Create top button.
+$(window).scroll(scrollToTop); // Calculate the scroll top distance.
 
-    // Listen touch event in Moblie
-    BODY.on("touchstart", touchStart);
-    BODY.on("touchend", touchEnd);
+// Listen touch event in Moblie
+BODY.on("touchstart", touchStart);
+BODY.on("touchend", touchEnd);
 
-    if (TOC) TOC.click(hideDir); // Hide directory when click it of Mobile.
-    if (isPC && TOC) {
-        // Auto adjust TOC width to avoid it hover the main contents.
-        let t_w =
-            "" + -parseInt((TOC.width() / $(document).width()) * 100) + "%";
-        TOC.css("left", t_w);
-        TOC.mouseenter(() => TOC.css("left", 0));
-        TOC.mouseleave(() => TOC.css("left", t_w));
-    }
+if (TOC) TOC.click(hideDir); // Hide directory when click it of Mobile.
+if (isPC && TOC) {
+    // Auto adjust TOC width to avoid it hover the main contents.
+    let t_w = "" + -parseInt((TOC.width() / $(document).width()) * 100) + "%";
+    TOC.css("left", t_w);
+    TOC.mouseenter(() => TOC.css("left", 0));
+    TOC.mouseleave(() => TOC.css("left", t_w));
+}
 
-    // Customize home page style
-    // ---------------------------------
-    if (isHome) {
-        // Hide nav and top button in index page.
-        CONTENT.addClass("js-home-content");
+// Customize home page style
+// ---------------------------------
+if (isHome) {
+    // Hide nav and top button in index page.
+    CONTENT.addClass("js-home-content");
 
-        if (TOC) TOC.css("display", "none"); // Hide table of contents.
-        $(".top-btn").css("display", "none"); // Hide top button.
-        $(".nav-btn").css("display", "none"); // Hide nav button.
+    if (TOC) TOC.css("display", "none"); // Hide table of contents.
+    $(".top-btn").css("display", "none"); // Hide top button.
+    $(".nav-btn").css("display", "none"); // Hide nav button.
 
-        // Customize posts list showwing
-        $("thead").each(function () {
-            if (isPC) {
-                $(this)
-                    .parent()
-                    .hover(function () {
-                        $(this).find("tbody").fadeToggle();
-                    });
-            } else {
-                $(this)
-                    .parent()
-                    .click(function () {
-                        $(this).find("tbody").fadeToggle();
-                    });
-            }
-
-            // Show post counts of current category
-            let _len = $(this).parent().find("td").length;
-            let _text = $(this).find("th").text();
+    // Customize posts list showwing
+    $("thead").each(function () {
+        if (isPC) {
             $(this)
-                .find("th")
-                .html(
-                    `${_text} <span style="font-size: 12px; color: #ace; float: right;">(${_len})</span>`
-                );
-        });
+                .parent()
+                .hover(function () {
+                    $(this).find("tbody").fadeToggle();
+                });
+        } else {
+            $(this)
+                .parent()
+                .click(function () {
+                    $(this).find("tbody").fadeToggle();
+                });
+        }
 
-        // Show/Hide wechat QRcode
-        $("#wechat").hide();
-        $(".wechat").hover(function () {
-            $("#wechat").fadeToggle();
-        });
-
-        // Open link in a new tab
-        // $('a').each(function() {
-        //     $(this).attr('target', '_blank')
-        // })
-    }
-
-    // Customize annotations
-    $("note").each(function () {
-        $(this).addClass("js-note");
+        // Show post counts of current category
+        let _len = $(this).parent().find("td").length;
+        let _text = $(this).find("th").text();
+        $(this)
+            .find("th")
+            .html(
+                `${_text} <span style="font-size: 12px; color: #ace; float: right;">(${_len})</span>`
+            );
     });
 
-    $("essay").each(function () {
-        $(this).addClass("js-essay");
+    // Show/Hide wechat QRcode
+    $("#wechat").hide();
+    $(".wechat").hover(function () {
+        $("#wechat").fadeToggle();
     });
 
-    // Customize contacts way
-    $(".me .contact #weibo").attr("href", "//weibo.com/u/" + USERCONFIG.weibo);
-    $(".me #wechat img").attr("src", "/images/" + USERCONFIG.wechat);
-    $(".me .contact #email").attr("href", "mailto:" + USERCONFIG.email);
-    $(".me .contact #github").attr(
-        "href",
-        (USERCONFIG.gitee || "//github.com/") + USERCONFIG.github
-    );
-    $(".me .contact #bilibili").attr(
-        "href",
-        "//space.bilibili.com/" + USERCONFIG.bilibili
-    );
+    // Open link in a new tab
+    // $('a').each(function() {
+    //     $(this).attr('target', '_blank')
+    // })
+}
 
-    // Customize page footer
-    $(".validation").html(
-        '<a href="http://beian.miit.gov.cn" target="_blank">' +
+// Customize annotations
+$("note").each(function () {
+    $(this).addClass("js-note");
+});
+
+$("essay").each(function () {
+    $(this).addClass("js-essay");
+});
+
+// Customize contacts way
+$(".me .contact #weibo").attr("href", "//weibo.com/u/" + USERCONFIG.weibo);
+$(".me #wechat img").attr("src", "/images/" + USERCONFIG.wechat);
+$(".me .contact #email").attr("href", "mailto:" + USERCONFIG.email);
+$(".me .contact #github").attr(
+    "href",
+    (USERCONFIG.gitee || "//github.com/") + USERCONFIG.github
+);
+$(".me .contact #bilibili").attr(
+    "href",
+    "//space.bilibili.com/" + USERCONFIG.bilibili
+);
+
+// Customize page footer
+$(".validation").html(
+    '<a href="http://beian.miit.gov.cn" target="_blank">' +
+        USERCONFIG.icp +
+        "</a>"
+); // Update copyright.
+$(".timestamp-wrapper").parent().addClass("gtd-timestamp");
+$("#postamble .date")[1].innerText =
+    "Updated: " + $("#postamble .date")[1].innerText.substring(8);
+$("#postamble .author")[0].innerText = "Author: " + USERCONFIG.author;
+
+// $('#postamble .date')[0].innerText = 'Created: ' + $('#postamble .date')[0].innerText.substring(5)
+
+// Listen mousewheel event
+// ---------------------------------
+// Firefox
+if (document.addEventListener) {
+    document.addEventListener("DOMMouseScroll", scrollFunc, false);
+}
+// IE
+window.addEventListener("mousewheel", scrollFunc);
+document.addEventListener("mousewheel", scrollFunc);
+
+// Add mouse-click animation
+// ---------------------------------
+if (isPC) {
+    $(document).click((e) => {
+        let size = 120; // size of water block
+        BODY.append("<div class='water-animate'>"); // create a water block
+
+        $(".water-animate")
+            .css({
+                // init style
+                position: "fixed", // set position as 'fixed'
+                left: e.clientX,
+                top: e.clientY,
+                borderRadius: size + "px",
+                border: "2px solid #19f",
+                "z-index": -1,
+            })
+            .stop() // to stop non-end previous animate
+            .animate(
+                {
+                    width: size,
+                    height: size,
+                    left: e.clientX - size / 2,
+                    top: e.clientY - size / 2,
+                    opacity: "0",
+                },
+                "slow",
+                () => $("body .water-animate").remove()
+            );
+    });
+}
+
+if (isMB) {
+    $("#postamble").css("display", "none");
+    $("body").append(
+        '<a class="js-footer-slogan" href="http://beian.miit.gov.cn/" target="_blank">' +
             USERCONFIG.icp +
             "</a>"
-    ); // Update copyright.
-    $(".timestamp-wrapper").parent().addClass("gtd-timestamp");
-    $("#postamble .date")[1].innerText =
-        "Updated: " + $("#postamble .date")[1].innerText.substring(8);
-    $("#postamble .author")[0].innerText = "Author: " + USERCONFIG.author;
+    );
+    // $('body').append('<div class="js-footer-slogan">Talk is cheap, show me the code.</div>')
+    $(".me #wechat img").width("40%");
+}
 
-    // $('#postamble .date')[0].innerText = 'Created: ' + $('#postamble .date')[0].innerText.substring(5)
+// Show type of code block
+// ---------------------------------
+$(".src").each(function () {
+    let str = $(this)[0].className.split(" src-")[1];
+    $('<span class="js-code-src">' + str + "</span>").prependTo($(this));
+});
 
-    // Listen mousewheel event
-    // ---------------------------------
-    // Firefox
-    if (document.addEventListener) {
-        document.addEventListener("DOMMouseScroll", scrollFunc, false);
-    }
-    // IE
-    window.addEventListener("mousewheel", scrollFunc);
-    document.addEventListener("mousewheel", scrollFunc);
+// Hide line number when copy
+$("pre").each(function () {
+    $(this).dblclick(function () {
+        let _this = $(this);
+        _this.addClass("js-pre-dblclick");
 
-    // Add mouse-click animation
-    // ---------------------------------
-    if (isPC) {
-        $(document).click((e) => {
-            let size = 120; // size of water block
-            BODY.append("<div class='water-animate'>"); // create a water block
-
-            $(".water-animate")
-                .css({
-                    // init style
-                    position: "fixed", // set position as 'fixed'
-                    left: e.clientX,
-                    top: e.clientY,
-                    borderRadius: size + "px",
-                    border: "2px solid #19f",
-                    "z-index": -1,
-                })
-                .stop() // to stop non-end previous animate
-                .animate(
-                    {
-                        width: size,
-                        height: size,
-                        left: e.clientX - size / 2,
-                        top: e.clientY - size / 2,
-                        opacity: "0",
-                    },
-                    "slow",
-                    () => $("body .water-animate").remove()
-                );
-        });
-    }
-
-    if (isMB) {
-        $("#postamble").css("display", "none");
-        $("body").append(
-            '<a class="js-footer-slogan" href="http://beian.miit.gov.cn/" target="_blank">' +
-                USERCONFIG.icp +
-                "</a>"
-        );
-        // $('body').append('<div class="js-footer-slogan">Talk is cheap, show me the code.</div>')
-        $(".me #wechat img").width("40%");
-    }
-
-    // Show type of code block
-    // ---------------------------------
-    $(".src").each(function () {
-        let str = $(this)[0].className.split(" src-")[1];
-        $('<span class="js-code-src">' + str + "</span>").prependTo($(this));
+        setTimeout(function () {
+            _this.removeClass("js-pre-dblclick");
+        }, 10000);
     });
+});
 
-    // Hide line number when copy
-    $("pre").each(function () {
-        $(this).dblclick(function () {
-            let _this = $(this);
-            _this.addClass("js-pre-dblclick");
-
-            setTimeout(function () {
-                _this.removeClass("js-pre-dblclick");
-            }, 10000);
-        });
-    });
-
-    // Image zoom
-    // ---------------------------------
-    $("img").each(function (idx, ele) {
-        $(this).click(function () {
-            if (!isZoom) {
-                $("html").append(
-                    `
+// Image zoom
+// ---------------------------------
+$("img").each(function (idx, ele) {
+    $(this).click(function () {
+        if (!isZoom) {
+            $("html").append(
+                `
                     <div class='img-wrapper animated pulse faster'>
                         <img class='img-zoom' src=${ele.src} />
                     </div>
                     `
-                );
+            );
 
-                $(".img-wrapper").click(function () {
-                    $(".img-wrapper").remove();
-                    isZoom = false;
-                });
+            $(".img-wrapper").click(function () {
+                $(".img-wrapper").remove();
+                isZoom = false;
+            });
 
-                isZoom = true;
-            }
-        });
+            isZoom = true;
+        }
+    });
+});
+
+// Beautify item like `Idea`
+// ---------------------------------
+if (isCurPageFn(cardPages)) {
+    $(".outline-2").each(function () {
+        $(this).addClass("js-outline-2");
     });
 
-    // Beautify item like `Idea`
-    // ---------------------------------
-    if (isCurPage(cardPages)) {
+    $(".outline-3").each(function () {
+        $(this).addClass("js-outline-3");
+    });
+} else {
+    if (isCard) {
         $(".outline-2").each(function () {
             $(this).addClass("js-outline-2");
         });
@@ -276,62 +265,50 @@ $(document).ready(() => {
         $(".outline-3").each(function () {
             $(this).addClass("js-outline-3");
         });
-    } else {
-        if (isCard) {
-            $(".outline-2").each(function () {
-                $(this).addClass("js-outline-2");
-            });
+    }
+}
 
-            $(".outline-3").each(function () {
-                $(this).addClass("js-outline-3");
-            });
-        }
+// Beautify navigations
+// ---------------------------------
+if (isCurPageFn("nav")) {
+    BODY.addClass("js-nav-body");
+
+    $('<div class="js-nav-link-container"></div>').insertAfter(TITLE);
+
+    $("td a").each(function (idx, item) {
+        $(this).attr("target", "_blank");
+        $(".js-nav-link-container").append(item);
+    });
+
+    $(".org-ul a").each(function () {
+        $(this).attr("target", "_blank");
+    });
+
+    let NL = $(".js-nav-link-container a");
+    let _len = NL.length,
+        _remainder = 0;
+
+    _remainder = _len % 5;
+
+    if (_remainder == 0) _remainder = 5;
+
+    for (let i = 0; i < 5 - _remainder; i++) {
+        $(".js-nav-link-container").append("<a></a>");
     }
 
-    // Beautify navigations
-    // ---------------------------------
-    if (isCurPage("nav")) {
-        BODY.addClass("js-nav-body");
+    // Bookmark tips
+    $("#content p").addClass("js-nav-bookmarks");
+    let _bmLen = $("li").length - 1,
+        _tip = "";
 
-        $('<div class="js-nav-link-container"></div>').insertAfter(TITLE);
+    _tip =
+        _bmLen > 20 ? "（🔥太多了，赶快处理吧，亲！）" : "（😤状态还不错！）";
+    $("#content p").append(
+        `<span style="float: right;"><progress value="${_bmLen}" max="100"></progress> ${_tip}${_bmLen} 条</span>`
+    );
 
-        $("td a").each(function (idx, item) {
-            $(this).attr("target", "_blank");
-            $(".js-nav-link-container").append(item);
-        });
-
-        $(".org-ul a").each(function () {
-            $(this).attr("target", "_blank");
-        });
-
-        let NL = $(".js-nav-link-container a");
-        let _len = NL.length,
-            _remainder = 0;
-
-        _remainder = _len % 5;
-
-        if (_remainder == 0) _remainder = 5;
-
-        for (let i = 0; i < 5 - _remainder; i++) {
-            $(".js-nav-link-container").append("<a></a>");
-        }
-
-        // Bookmark tips
-        $("#content p").addClass("js-nav-bookmarks");
-        let _bmLen = $("li").length - 1,
-            _tip = "";
-
-        _tip =
-            _bmLen > 20
-                ? "（🔥太多了，赶快处理吧，亲！）"
-                : "（😤状态还不错！）";
-        $("#content p").append(
-            `<span style="float: right;"><progress value="${_bmLen}" max="100"></progress> ${_tip}${_bmLen} 条</span>`
-        );
-
-        $(".org-ul").addClass("js-nav-bookmarks-container");
-    }
-});
+    $(".org-ul").addClass("js-nav-bookmarks-container");
+}
 
 // Resolve current theme color
 // ------------------------------------------------------------------
