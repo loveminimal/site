@@ -4,7 +4,7 @@ const uglify = require("gulp-uglify");
 
 const sass = require("gulp-dart-sass");
 
-function defaultTask(cb) {
+function js(cb) {
     // ...
     return src("./src/main.js")
         .pipe(
@@ -19,7 +19,9 @@ function defaultTask(cb) {
 }
 
 function css(cb) {
-    return src("./src/style.scss").pipe(sass()).pipe(dest('dist'));
+    return src("./src/style.scss").pipe(sass()).pipe(dest("dist"));
+
+    cb();
 }
 
 module.exports.default = parallel(css);

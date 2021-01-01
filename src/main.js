@@ -1,5 +1,6 @@
 const $ = require('jquery');
 const DarkReader = require('darkreader')
+const USERCONFIG = require('../user.config')
 
 // Init global variables
 // ------------------------------------------------------------------
