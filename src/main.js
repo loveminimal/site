@@ -1,7 +1,7 @@
 const $ = require("jquery");
 const DarkReader = require("darkreader");
 const USERCONFIG = require("../user.config");
-const { browserRedirect, toggleColor, isCurPage } = require("./utils");
+const { browserRedirect, isCurPage } = require("./utils");
 
 // Init global variables
 // ------------------------------------------------------------------
@@ -340,12 +340,6 @@ $(document).ready(() => {
 
         $(".org-ul").addClass("js-nav-bookmarks-container");
     }
-
-    // Custom content and postamble margin but home&nav of PC
-    //     if (isPC && (!isCurPage('nav') && !isHome)) {
-    //         $('#content').css('margin-left', '10%')
-    //         $('#postamble').css('margin-left', '10%')
-    //     }
 });
 
 // Resolve current theme color
@@ -354,6 +348,27 @@ let isDark = "false";
 
 if (localStorage.getItem("isDark") == "true") {
     toggleColor();
+}
+// Encapsulation darkreader and bind it to title.
+// DarkReader - https://github.com/darkreader/darkreader
+function toggleColor() {
+    if (isDark === "false") {
+        DarkReader.enable({
+            brightness: 100,
+            contrast: 90,
+            sepia: 10,
+        });
+
+        isDark = "true";
+        localStorage.setItem("isDark", isDark);
+    } else {
+        DarkReader.disable();
+
+        isDark = "false";
+        localStorage.setItem("isDark", isDark);
+
+        location.reload();
+    }
 }
 
 // Hide directory when click it

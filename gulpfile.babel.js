@@ -19,7 +19,7 @@ function js(cb) {
                 // debug: !gulp.env.production,
             })
         )
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(dest("dist"));
 
     cb();
@@ -33,7 +33,7 @@ function css(cb) {
     cb();
 }
 
-// watch(["./src"], (cb) => {
+// watch(['./src/**/*.js', './src/**/*.scss'], (cb) => {
 //     cb();
 // });
 

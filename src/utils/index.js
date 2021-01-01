@@ -1,4 +1,6 @@
-module.export = {
+const DarkReader = require("darkreader");
+
+module.exports = {
     // Diff device type
     browserRedirect() {
         let sUserAgent = navigator.userAgent.toLowerCase();
@@ -26,27 +28,7 @@ module.export = {
             return "PC";
         }
     },
-    // Encapsulation darkreader and bind it to title.
-    // DarkReader - https://github.com/darkreader/darkreader
-    toggleColor() {
-        if (isDark === "false") {
-            DarkReader.enable({
-                brightness: 100,
-                contrast: 90,
-                sepia: 10,
-            });
-
-            isDark = "true";
-            localStorage.setItem("isDark", isDark);
-        } else {
-            DarkReader.disable();
-
-            isDark = "false";
-            localStorage.setItem("isDark", isDark);
-
-            location.reload();
-        }
-    },
+ 
 
     // If `args` is current page
     // `args` - String or Array
