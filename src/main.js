@@ -5,14 +5,14 @@ const { browserRedirect, isCurPageFn, isHomeFn } = require("./utils");
 const { cardPages } = require("./config");
 
 // Init global variables
-let isHome = isHomeFn(),
-    isPC = false,
-    isMB = false,
-    isZoom = false,
-    isCard = false;
+let isHome = isHomeFn();
+let isPC = false;
+let isMB = false;
+let isZoom = false;
+let isCard = false;
 
-let cent = "",
-    topBtn = "";
+let cent = "";
+let topBtn = "";
 
 // Activate/Deactivate global card style
 // isCard = true; cardPages = [];

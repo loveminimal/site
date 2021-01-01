@@ -5,7 +5,7 @@ if [ -d "public" ]
 then
     echo -e "Copying..."
     
-    for i in 1 2 3 4 5 6
+    for i in 1 2 3 4 5
     do 
         sleep 0.1
         echo -e "    |>>> +++ +++ +++ +++ +++ >>>|"
