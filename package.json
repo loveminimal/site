@@ -16,6 +16,7 @@
         "darkreader": "4.9.26",
         "gulp": "4.0.2",
         "gulp-babel": "8.0.0",
+        "gulp-browserify": "0.5.1",
         "gulp-dart-sass": "1.0.2",
         "gulp-uglify": "3.0.2",
         "jquery": "3.5.1"

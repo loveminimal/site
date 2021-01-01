@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<!-- 2020-12-11 Fri 11:00 -->
+<!-- 2021-01-01 Fri 12:33 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Virtual DOM</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js"></script>
 </head>
 <body>
 <div id="content">
@@ -23,32 +18,32 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgcb87ba4">What, exactly, is the DOM?</a>
+<li><a href="#orgc122a69">What, exactly, is the DOM?</a>
 <ul>
-<li><a href="#org06052a5">How is a web page built?</a></li>
-<li><a href="#org23abc01">How is the DOM created?</a></li>
-<li><a href="#orga2e2e53">What the DOM is not</a></li>
-<li><a href="#orgacf9c89">Recap</a></li>
+<li><a href="#org9c27c8f">How is a web page built?</a></li>
+<li><a href="#orgb01e2a6">How is the DOM created?</a></li>
+<li><a href="#orgd711939">What the DOM is not</a></li>
+<li><a href="#orgae1fc92">Recap</a></li>
 </ul>
 </li>
-<li><a href="#org3150f49">Understanding the Critical Rendering Path</a>
+<li><a href="#orgefae47a">Understanding the Critical Rendering Path</a>
 <ul>
-<li><a href="#org6323f68">1.Constructing the DOM Tree</a></li>
-<li><a href="#org5bcc480">2.Constructing the CSSOM Tree</a></li>
-<li><a href="#org3c4631c">3.Running JavaScript</a></li>
-<li><a href="#orgef54cd7">4.Creating the Render Tree</a></li>
-<li><a href="#orgd7701f1">5.Generating the Layout</a></li>
-<li><a href="#orgb38fce1">6.Painting</a></li>
-<li><a href="#org7a7e2e9">Putting it All Together</a></li>
+<li><a href="#org349fdd7">1.Constructing the DOM Tree</a></li>
+<li><a href="#org66bad98">2.Constructing the CSSOM Tree</a></li>
+<li><a href="#orgf5881ee">3.Running JavaScript</a></li>
+<li><a href="#orga4819e9">4.Creating the Render Tree</a></li>
+<li><a href="#org2207bde">5.Generating the Layout</a></li>
+<li><a href="#orga4b0382">6.Painting</a></li>
+<li><a href="#org228de68">Putting it All Together</a></li>
 </ul>
 </li>
-<li><a href="#orgbb49c36">Understanding the Virtual DOM</a>
+<li><a href="#orge6f2d6e">Understanding the Virtual DOM</a>
 <ul>
-<li><a href="#org2dbfb19">Why do we need a virtual DOM?</a></li>
-<li><a href="#org72050d0">What does a virtual DOM look like?</a></li>
-<li><a href="#orgb17c5cc">Under the hood of the virtual DOM</a></li>
-<li><a href="#org82ff473">The virtual DOM and frameworks</a></li>
-<li><a href="#org59800c5">The DOM vs the virtual DOM</a></li>
+<li><a href="#org141408b">Why do we need a virtual DOM?</a></li>
+<li><a href="#orgcc96325">What does a virtual DOM look like?</a></li>
+<li><a href="#org865dbb0">Under the hood of the virtual DOM</a></li>
+<li><a href="#orgf4c87b6">The virtual DOM and frameworks</a></li>
+<li><a href="#org80c6ace">The DOM vs the virtual DOM</a></li>
 </ul>
 </li>
 </ul>
@@ -58,17 +53,17 @@
 Before learning Virtual DOM, lets take a look at DOM.
 </p>
 
-<div id="outline-container-orgcb87ba4" class="outline-2">
-<h2 id="orgcb87ba4">What, exactly, is the DOM?<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-orgcb87ba4">
+<div id="outline-container-orgc122a69" class="outline-2">
+<h2 id="orgc122a69">What, exactly, is the DOM?<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-orgc122a69">
 <p>
 The Document Object Model, or the "DOM", is an interface to web pages. It is essentially an API to the page, allowing programs to read an manipulate the page's content, structure, and styles. Let'w break this down.
 </p>
 </div>
 
-<div id="outline-container-org06052a5" class="outline-3">
-<h3 id="org06052a5">How is a web page built?</h3>
-<div class="outline-text-3" id="text-org06052a5">
+<div id="outline-container-org9c27c8f" class="outline-3">
+<h3 id="org9c27c8f">How is a web page built?</h3>
+<div class="outline-text-3" id="text-org9c27c8f">
 <p>
 How a browser goes from a source HTML document to displaying a styled and interactive page in the viewport is called the <b>"Critical Rendering Path"</b>. Although this process can be broken down into several steps, as I cover in my article on <a href="https://bitsofco.de/understanding-the-critical-rendering-path/">Understanding the Critical Rendering Path</a>, these steps can be roughy grouped into two stages.
 </p>
@@ -99,9 +94,9 @@ The render tree is a representation of the HTML elements that will be rendered o
 </div>
 </div>
 
-<div id="outline-container-org23abc01" class="outline-3">
-<h3 id="org23abc01">How is the DOM created?</h3>
-<div class="outline-text-3" id="text-org23abc01">
+<div id="outline-container-orgb01e2a6" class="outline-3">
+<h3 id="orgb01e2a6">How is the DOM created?</h3>
+<div class="outline-text-3" id="text-orgb01e2a6">
 <img
 src="/images/vdom-2.png"
 width="300"
@@ -146,9 +141,9 @@ This document can be represented as the above node tree.
 </div>
 </div>
 
-<div id="outline-container-orga2e2e53" class="outline-3">
-<h3 id="orga2e2e53">What the DOM is not</h3>
-<div class="outline-text-3" id="text-orga2e2e53">
+<div id="outline-container-orgd711939" class="outline-3">
+<h3 id="orgd711939">What the DOM is not</h3>
+<div class="outline-text-3" id="text-orgd711939">
 <p>
 In the example I gabe above, it seems like the DOM is a 1-to-1 mapping of the source HTML document or what you see your DevTools. However, as I mentioned, there are differences. In order to fully understand what the DOM <b>is</b>, we need to look at what it is <b>not</b>.
 </p>
@@ -296,9 +291,9 @@ This is why pseudo-elements cannot be targetted by JavaScript, because they are 
 </div>
 </div>
 
-<div id="outline-container-orgacf9c89" class="outline-3">
-<h3 id="orgacf9c89">Recap</h3>
-<div class="outline-text-3" id="text-orgacf9c89">
+<div id="outline-container-orgae1fc92" class="outline-3">
+<h3 id="orgae1fc92">Recap</h3>
+<div class="outline-text-3" id="text-orgae1fc92">
 <p>
 The DOM is an interface to an HTML document. It is used by browsers as a first step towards determining what to render in the viewport, and by Javascript programs to modify the content, structure, or styling of the page.
 </p>
@@ -316,9 +311,9 @@ Although similar to other forms of the source HTML document, the DOM is differen
 </div>
 </div>
 
-<div id="outline-container-org3150f49" class="outline-2">
-<h2 id="org3150f49">Understanding the Critical Rendering Path<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
-<div class="outline-text-2" id="text-org3150f49">
+<div id="outline-container-orgefae47a" class="outline-2">
+<h2 id="orgefae47a">Understanding the Critical Rendering Path<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
+<div class="outline-text-2" id="text-orgefae47a">
 <p>
 When a browser receives the HTML response for a page from the server, there are lot of steps to be taken before pixels are drawn on the screen. This sequence the browser needs to run through for the initial paint of the page is called the <b>"Critical Rendering Path"</b>.
 </p>
@@ -351,9 +346,9 @@ title=""
 />
 </div>
 
-<div id="outline-container-org6323f68" class="outline-3">
-<h3 id="org6323f68">1.Constructing the DOM Tree</h3>
-<div class="outline-text-3" id="text-org6323f68">
+<div id="outline-container-org349fdd7" class="outline-3">
+<h3 id="org349fdd7">1.Constructing the DOM Tree</h3>
+<div class="outline-text-3" id="text-org349fdd7">
 <p>
 The DOM (Document Object Model) Tree is an Object representation of the fully parsed HTML page.
 </p>
@@ -406,9 +401,9 @@ A good thing about HTML is that it can be executed in parts. The full document d
 </div>
 </div>
 
-<div id="outline-container-org5bcc480" class="outline-3">
-<h3 id="org5bcc480">2.Constructing the CSSOM Tree</h3>
-<div class="outline-text-3" id="text-org5bcc480">
+<div id="outline-container-org66bad98" class="outline-3">
+<h3 id="org66bad98">2.Constructing the CSSOM Tree</h3>
+<div class="outline-text-3" id="text-org66bad98">
 <p>
 The CSSOM (CSS Object Model) is an Object representation of the styles associated with the DOM. It is represented in a similar way to the DOM, but with the associated styles for each node, whether they explicitly declared or implicitly inherited, included.
 </p>
@@ -443,7 +438,7 @@ title=""
 />
 
 <p>
-CSS is considered a <b>"render blocking resource"</b>. This means that the <a href="#orgef54cd7">Render Tree (see below)</a> cannot be constructed without first fully parsing the resource.
+CSS is considered a <b>"render blocking resource"</b>. This means that the <a href="#orga4819e9">Render Tree (see below)</a> cannot be constructed without first fully parsing the resource.
 </p>
 
 <p>
@@ -464,9 +459,9 @@ CSS can also be <b>"script blocking"</b>. This is because JavaScript files must 
 </div>
 </div>
 
-<div id="outline-container-org3c4631c" class="outline-3">
-<h3 id="org3c4631c">3.Running JavaScript</h3>
-<div class="outline-text-3" id="text-org3c4631c">
+<div id="outline-container-orgf5881ee" class="outline-3">
+<h3 id="orgf5881ee">3.Running JavaScript</h3>
+<div class="outline-text-3" id="text-orgf5881ee">
 <p>
 JavaScript is considered a <b>"parser blocking resource"</b>. This means that the parsing of the HTML document itself is blocked by JavaScript.
 </p>
@@ -486,9 +481,9 @@ To avoid JavaScript being parse blocking, it can be loaded asynchronously be app
 </div>
 </div>
 
-<div id="outline-container-orgef54cd7" class="outline-3">
-<h3 id="orgef54cd7">4.Creating the Render Tree</h3>
-<div class="outline-text-3" id="text-orgef54cd7">
+<div id="outline-container-orga4819e9" class="outline-3">
+<h3 id="orga4819e9">4.Creating the Render Tree</h3>
+<div class="outline-text-3" id="text-orga4819e9">
 <p>
 The Render Tree is a combination of both the DOM and CSSOM. It is a Tree that represents what will be eventually rendered on the page. This means that it only captures the visible content and will not include, for example, elements that have been hidden with CSS using <code>display: none</code>.
 </p>
@@ -507,9 +502,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgd7701f1" class="outline-3">
-<h3 id="orgd7701f1">5.Generating the Layout</h3>
-<div class="outline-text-3" id="text-orgd7701f1">
+<div id="outline-container-org2207bde" class="outline-3">
+<h3 id="org2207bde">5.Generating the Layout</h3>
+<div class="outline-text-3" id="text-org2207bde">
 <p>
 The Layout is what determines <b>what the size of the viewport is</b> , which provides context for CSS styles that are dependent on it, e.g. percentage or viewport units. The viewport size is determined by meta viewport tag provided in the document head or, if no tag is provided, the default viewport width of 980px is used.
 </p>
@@ -529,9 +524,9 @@ If the user visits the webpage on a device with a width of, for example, 1000px,
 </div>
 </div>
 
-<div id="outline-container-orgb38fce1" class="outline-3">
-<h3 id="orgb38fce1">6.Painting</h3>
-<div class="outline-text-3" id="text-orgb38fce1">
+<div id="outline-container-orga4b0382" class="outline-3">
+<h3 id="orga4b0382">6.Painting</h3>
+<div class="outline-text-3" id="text-orga4b0382">
 <p>
 Finally, in the Painting step, the visible content of the page can be converted to pixels to be displayed on the screen.
 </p>
@@ -542,9 +537,9 @@ How much time the paint step takes depends on the size of the DOM, as well as wh
 </div>
 </div>
 
-<div id="outline-container-org7a7e2e9" class="outline-3">
-<h3 id="org7a7e2e9">Putting it All Together</h3>
-<div class="outline-text-3" id="text-org7a7e2e9">
+<div id="outline-container-org228de68" class="outline-3">
+<h3 id="org228de68">Putting it All Together</h3>
+<div class="outline-text-3" id="text-org228de68">
 <p>
 To see the Critical Rendering Path in process, we can inspect it in DevTools. In Chrome, it is under the <b>Timeline</b> tab (in Canary, and soon to be Chrome stable, it's renamed <b>Performance</b>).
 </p>
@@ -604,9 +599,9 @@ Based on this information, we can make decisions on how to optimize the Critical
 </div>
 </div>
 
-<div id="outline-container-orgbb49c36" class="outline-2">
-<h2 id="orgbb49c36">Understanding the Virtual DOM<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
-<div class="outline-text-2" id="text-orgbb49c36">
+<div id="outline-container-orge6f2d6e" class="outline-2">
+<h2 id="orge6f2d6e">Understanding the Virtual DOM<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
+<div class="outline-text-2" id="text-orge6f2d6e">
 <p>
 I've recently been writing about what exactly the DOM and the shodow DOM are and how they differ.
 </p>
@@ -628,9 +623,9 @@ Although the concep has been around for several years, it was made more popular 
 </p>
 </div>
 
-<div id="outline-container-org2dbfb19" class="outline-3">
-<h3 id="org2dbfb19">Why do we need a virtual DOM?</h3>
-<div class="outline-text-3" id="text-org2dbfb19">
+<div id="outline-container-org141408b" class="outline-3">
+<h3 id="org141408b">Why do we need a virtual DOM?</h3>
+<div class="outline-text-3" id="text-org141408b">
 <p>
 To understand why the concept of the virtual DOM arose, let's revisit the original DOM.
 </p>
@@ -731,9 +726,9 @@ The virtual DOM was created to solve these problems of needing to frequently upd
 </div>
 </div>
 
-<div id="outline-container-org72050d0" class="outline-3">
-<h3 id="org72050d0">What does a virtual DOM look like?</h3>
-<div class="outline-text-3" id="text-org72050d0">
+<div id="outline-container-orgcc96325" class="outline-3">
+<h3 id="orgcc96325">What does a virtual DOM look like?</h3>
+<div class="outline-text-3" id="text-orgcc96325">
 <p>
 The name "virtual DOM" tends to add to the mystery of what the concept actually is. <b>In fact, a virtual DOM is just a regular JavaScript object.</b>
 </p>
@@ -805,9 +800,9 @@ Instead of using one object for the entire object, it is more common to work wit
 </div>
 </div>
 
-<div id="outline-container-orgb17c5cc" class="outline-3">
-<h3 id="orgb17c5cc">Under the hood of the virtual DOM</h3>
-<div class="outline-text-3" id="text-orgb17c5cc">
+<div id="outline-container-org865dbb0" class="outline-3">
+<h3 id="org865dbb0">Under the hood of the virtual DOM</h3>
+<div class="outline-text-3" id="text-org865dbb0">
 <p>
 Now that we've seen what a virtual DOM looks like, how does it work to solve the performance and usability problems of the DOM?
 </p>
@@ -893,9 +888,9 @@ Note that this is a really simplified and stripped-back version of how a virtual
 </div>
 </div>
 
-<div id="outline-container-org82ff473" class="outline-3">
-<h3 id="org82ff473">The virtual DOM and frameworks</h3>
-<div class="outline-text-3" id="text-org82ff473">
+<div id="outline-container-orgf4c87b6" class="outline-3">
+<h3 id="orgf4c87b6">The virtual DOM and frameworks</h3>
+<div class="outline-text-3" id="text-orgf4c87b6">
 <p>
 It's more common to work with the virtual DOM via a framework, rather than interfacing with it directly as I showed in the example above.
 </p>
@@ -938,9 +933,9 @@ Because React uses the virtual DOM, even though we are re-rendering the entire t
 </div>
 </div>
 
-<div id="outline-container-org59800c5" class="outline-3">
-<h3 id="org59800c5">The DOM vs the virtual DOM</h3>
-<div class="outline-text-3" id="text-org59800c5">
+<div id="outline-container-org80c6ace" class="outline-3">
+<h3 id="org80c6ace">The DOM vs the virtual DOM</h3>
+<div class="outline-text-3" id="text-org80c6ace">
 <p>
 To recap, the virtual DOM is a tool that enables us to interface with DOM elements in an easier and more performant way. It is a JavaScript object representation of the DOM, which we can modify as frequently as we need to. Changes made to this object are then collated, and modifications to the actual DOM are targetted and made less often.
 </p>
@@ -968,7 +963,7 @@ To recap, the virtual DOM is a tool that enables us to interface with DOM elemen
 <div id="postamble" class="status">
 <p class="date">Date: 2020-12-02 Wed 16:14</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 11:00</p>
+<p class="date">Created: 2021-01-01 Fri 12:33</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

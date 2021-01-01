@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<!-- 2020-12-11 Fri 10:58 -->
+<!-- 2021-01-01 Fri 12:31 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>汇编语言基础</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js"></script>
 </head>
 <body>
 <div id="content">
@@ -23,11 +18,11 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org66b73f0">第一个汇编语言程序</a></li>
-<li><a href="#orgf560e05">汇编语言常量</a>
+<li><a href="#org1ce36cf">第一个汇编语言程序</a></li>
+<li><a href="#org0d7a01c">汇编语言常量</a>
 <ul>
-<li><a href="#org2e35336">整数常量</a></li>
-<li><a href="#orgbcb5dd9">整型常量表达式</a></li>
+<li><a href="#orge71bd18">整数常量</a></li>
+<li><a href="#org08c3889">整型常量表达式</a></li>
 </ul>
 </li>
 </ul>
@@ -37,9 +32,9 @@
 本章侧重于 Microsoft MASM 汇编程序的基本组成部分，通过学习将会了解到如何定义常数和变量，数字和字符常量的标准格式，以及怎样汇编并运行你的第一个程序。
 </p>
 
-<div id="outline-container-org66b73f0" class="outline-2">
-<h2 id="org66b73f0">第一个汇编语言程序</h2>
-<div class="outline-text-2" id="text-org66b73f0">
+<div id="outline-container-org1ce36cf" class="outline-2">
+<h2 id="org1ce36cf">第一个汇编语言程序</h2>
+<div class="outline-text-2" id="text-org1ce36cf">
 <p>
 汇编语言以隐晦难懂而著名，但是它也是一种几乎提供了全部信息的语言。程序员可以看到正在发生的事情，甚至包括 CPU 中的寄存器和标志。
 </p>
@@ -118,17 +113,17 @@
 </div>
 </div>
 
-<div id="outline-container-orgf560e05" class="outline-2">
-<h2 id="orgf560e05">汇编语言常量</h2>
-<div class="outline-text-2" id="text-orgf560e05">
+<div id="outline-container-org0d7a01c" class="outline-2">
+<h2 id="org0d7a01c">汇编语言常量</h2>
+<div class="outline-text-2" id="text-org0d7a01c">
 <p>
 <span class="underline">常量</span> （constant）是程序中使用的一个确定数值，在汇编阶段就可以确定，直接编码于指令代码中，不是保存在存储器中可变的变量，因为是编码在指令中的量，和指令一起存储了，所以不用单独开辟主存空间，所以也就没法动态改变它了，这也正是高级语言常量无法修改的原因。
 </p>
 </div>
 
-<div id="outline-container-org2e35336" class="outline-3">
-<h3 id="org2e35336">整数常量</h3>
-<div class="outline-text-3" id="text-org2e35336">
+<div id="outline-container-orge71bd18" class="outline-3">
+<h3 id="orge71bd18">整数常量</h3>
+<div class="outline-text-3" id="text-orge71bd18">
 <p>
 整数常量（integer literal），又称为整型常量（integer constant），由一个可选前置符号、一个或多个数字，以及一个指明其基数的可选基数字符构成：
 </p>
@@ -195,9 +190,9 @@
 </div>
 </div>
 
-<div id="outline-container-orgbcb5dd9" class="outline-3">
-<h3 id="orgbcb5dd9">整型常量表达式</h3>
-<div class="outline-text-3" id="text-orgbcb5dd9">
+<div id="outline-container-org08c3889" class="outline-3">
+<h3 id="org08c3889">整型常量表达式</h3>
+<div class="outline-text-3" id="text-org08c3889">
 <p>
 整型常量表达式（constant integer expression）是一种算术表达式，它包含了整数常量和算术运算符。每个结果必须是一个整数，并可用 32 位（从 <code>0</code> 到 <code>FFFFFFh</code> ）来存放。
 </p>
@@ -265,7 +260,7 @@
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-12 Sat 17:24</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:58</p>
+<p class="date">Created: 2021-01-01 Fri 12:31</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<!-- 2020-12-11 Fri 10:59 -->
+<!-- 2021-01-01 Fri 12:32 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cross Domain</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js"></script>
 </head>
 <body>
 <div id="content">
@@ -23,27 +18,27 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3edf0e4">什么是跨域</a></li>
-<li><a href="#org797b50b">Cookie</a></li>
-<li><a href="#org153b55f">iframe</a>
+<li><a href="#org24ad6ab">什么是跨域</a></li>
+<li><a href="#orgf36aaa5">Cookie</a></li>
+<li><a href="#org55100bf">iframe</a>
 <ul>
-<li><a href="#org2b6e510">片段识别符</a></li>
-<li><a href="#org3d1792c">window.name</a></li>
-<li><a href="#org7803c30">window.postMessage</a></li>
+<li><a href="#orgd84222f">片段识别符</a></li>
+<li><a href="#org19c5dd8">window.name</a></li>
+<li><a href="#org950e22b">window.postMessage</a></li>
 </ul>
 </li>
-<li><a href="#org3504bdb">AJAX</a>
+<li><a href="#org29f2ed4">AJAX</a>
 <ul>
-<li><a href="#org1df0b52">JSONP</a></li>
-<li><a href="#org691f0db">WebSocket</a></li>
-<li><a href="#org52b5de4">CORS</a></li>
+<li><a href="#org8047e8e">JSONP</a></li>
+<li><a href="#orgbec7576">WebSocket</a></li>
+<li><a href="#org1ad2d4b">CORS</a></li>
 </ul>
 </li>
-<li><a href="#org907204a">CORS 详解</a>
+<li><a href="#org8e5d590">CORS 详解</a>
 <ul>
-<li><a href="#orgbdb1d6b">两种请求</a></li>
-<li><a href="#orgdbe70c1">简单请求</a></li>
-<li><a href="#org64ae2c2">非简单请求</a></li>
+<li><a href="#org4659b3d">两种请求</a></li>
+<li><a href="#org5db1e41">简单请求</a></li>
+<li><a href="#org49f6770">非简单请求</a></li>
 </ul>
 </li>
 </ul>
@@ -53,9 +48,9 @@
 → 本文摘录自 <a href="http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html">浏览器同源政策及其规避方法</a>
 </p>
 
-<div id="outline-container-org3edf0e4" class="outline-2">
-<h2 id="org3edf0e4">什么是跨域</h2>
-<div class="outline-text-2" id="text-org3edf0e4">
+<div id="outline-container-org24ad6ab" class="outline-2">
+<h2 id="org24ad6ab">什么是跨域</h2>
+<div class="outline-text-2" id="text-org24ad6ab">
 <p>
 <span class="underline">跨域</span> ，是指浏览器不能执行其他网站的脚本，它是浏览器的同源策略造成的，是浏览器对 JavaScript 实施的安全限制。
 </p>
@@ -107,9 +102,9 @@ Cookie 往往用来保存用户的登录状态，所以“同源策略”是必�
 </div>
 </div>
 
-<div id="outline-container-org797b50b" class="outline-2">
-<h2 id="org797b50b">Cookie</h2>
-<div class="outline-text-2" id="text-org797b50b">
+<div id="outline-container-orgf36aaa5" class="outline-2">
+<h2 id="orgf36aaa5">Cookie</h2>
+<div class="outline-text-2" id="text-orgf36aaa5">
 <p>
 <b>Cookie 是服务器写入浏览器的一小段信息</b> ，只有同源网页才能共享。但是，如果两个网页的一级域名相同，只是二级域名不同，浏览器允许通过设置 <code>document.domain</code> 共享 Cookie 。
 </p>
@@ -169,9 +164,9 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </div>
 </div>
 
-<div id="outline-container-org153b55f" class="outline-2">
-<h2 id="org153b55f">iframe</h2>
-<div class="outline-text-2" id="text-org153b55f">
+<div id="outline-container-org55100bf" class="outline-2">
+<h2 id="org55100bf">iframe</h2>
+<div class="outline-text-2" id="text-org55100bf">
 <p>
 如果两个网页不同源，就无法拿到对方的 DOM ，典型的例子是 <code>iframe</code> 窗口和 <code>window.open</code> 方法打开的窗口，它们与父窗口无法通信。
 </p>
@@ -190,9 +185,9 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </ul>
 </div>
 
-<div id="outline-container-org2b6e510" class="outline-3">
-<h3 id="org2b6e510">片段识别符</h3>
-<div class="outline-text-3" id="text-org2b6e510">
+<div id="outline-container-orgd84222f" class="outline-3">
+<h3 id="orgd84222f">片段识别符</h3>
+<div class="outline-text-3" id="text-orgd84222f">
 <p>
 <span class="underline">片段识别符</span> （fragment identifier），是指 URL 的 <code>#</code> 号后面的部分，如 <code>http://example.com/x.html#fragment</code> 的 <code>#fragment</code> 。如果，只是改变片段识别符，页面不会重新刷新。
 </p>
@@ -232,9 +227,9 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </div>
 </div>
 
-<div id="outline-container-org3d1792c" class="outline-3">
-<h3 id="org3d1792c">window.name</h3>
-<div class="outline-text-3" id="text-org3d1792c">
+<div id="outline-container-org19c5dd8" class="outline-3">
+<h3 id="org19c5dd8">window.name</h3>
+<div class="outline-text-3" id="text-org19c5dd8">
 <p>
 浏览器窗口有 <code>window.name</code> 属性，它的最大特点是，无论是否同源，只要在同一个窗口里，前一个网页设置了这个属性，后一个网页就可以读取它。
 </p>
@@ -280,9 +275,9 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </div>
 </div>
 
-<div id="outline-container-org7803c30" class="outline-3">
-<h3 id="org7803c30">window.postMessage</h3>
-<div class="outline-text-3" id="text-org7803c30">
+<div id="outline-container-org950e22b" class="outline-3">
+<h3 id="org950e22b">window.postMessage</h3>
+<div class="outline-text-3" id="text-org950e22b">
 <p>
 片段识别符和 <code>window.name</code> 两种方法都属于破解，HTML5 为了解决这个问题，引入了一个全新的 API &#x2013; 跨文档通信 API （Cross-document messaging）。
 </p>
@@ -460,9 +455,9 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </div>
 </div>
 
-<div id="outline-container-org3504bdb" class="outline-2">
-<h2 id="org3504bdb">AJAX</h2>
-<div class="outline-text-2" id="text-org3504bdb">
+<div id="outline-container-org29f2ed4" class="outline-2">
+<h2 id="org29f2ed4">AJAX</h2>
+<div class="outline-text-2" id="text-org29f2ed4">
 <p>
 浏览器的同源策略规定， <b>AJAX 请求只能发给同源的网址</b> ，否则就报错。
 </p>
@@ -476,9 +471,9 @@ Set-Cookie: key=value; domain=.example.com; path=/
 </note>
 </div>
 
-<div id="outline-container-org1df0b52" class="outline-3">
-<h3 id="org1df0b52">JSONP</h3>
-<div class="outline-text-3" id="text-org1df0b52">
+<div id="outline-container-org8047e8e" class="outline-3">
+<h3 id="org8047e8e">JSONP</h3>
+<div class="outline-text-3" id="text-org8047e8e">
 <p>
 JSONP是服务器与客户端跨源通信的常用方法。最大特点就是简单适用，老式浏览器全部支持，服务器改造非常小。
 </p>
@@ -548,9 +543,9 @@ JSONP是服务器与客户端跨源通信的常用方法。最大特点就是简
 </div>
 </div>
 
-<div id="outline-container-org691f0db" class="outline-3">
-<h3 id="org691f0db">WebSocket</h3>
-<div class="outline-text-3" id="text-org691f0db">
+<div id="outline-container-orgbec7576" class="outline-3">
+<h3 id="orgbec7576">WebSocket</h3>
+<div class="outline-text-3" id="text-orgbec7576">
 <p>
 WebSocket 是一种通信协议，使用 <code>ws://</code> （非加密）和 <code>wss://</code> （加密）作为协议前缀。该协议 <b>不实行同源策略</b> ，只要服务器支持，就可以通过它进行跨源通信。
 </p>
@@ -594,9 +589,9 @@ Sec-WebSocket-Protocol: chat
 </div>
 </div>
 
-<div id="outline-container-org52b5de4" class="outline-3">
-<h3 id="org52b5de4">CORS</h3>
-<div class="outline-text-3" id="text-org52b5de4">
+<div id="outline-container-org1ad2d4b" class="outline-3">
+<h3 id="org1ad2d4b">CORS</h3>
+<div class="outline-text-3" id="text-org1ad2d4b">
 <p>
 CORS （Cross-Origin Resource Sharing）是跨域资源分享的缩写，它是 W3C 标准，是 <b>跨源 AJAX 请求的根本解决办法</b> 。相比 JSONP 只能发 <code>GET</code> 请求，CORS 允许任何类型的请求。
 </p>
@@ -604,9 +599,9 @@ CORS （Cross-Origin Resource Sharing）是跨域资源分享的缩写，它是 
 </div>
 </div>
 
-<div id="outline-container-org907204a" class="outline-2">
-<h2 id="org907204a">CORS 详解</h2>
-<div class="outline-text-2" id="text-org907204a">
+<div id="outline-container-org8e5d590" class="outline-2">
+<h2 id="org8e5d590">CORS 详解</h2>
+<div class="outline-text-2" id="text-org8e5d590">
 <p>
 CORS 允许浏览器向跨源服务器，发出 <code>XMLHttpRequest</code> 请求，从而克服了 AJAX 只能同源使用的限制。接下来，我们来深入认识下 CORS 的内部机制。
 </p>
@@ -630,9 +625,9 @@ CORS 需要浏览器和服务器同时支持， <b>整个 CORS 通信过程，�
 </p>
 </div>
 
-<div id="outline-container-orgbdb1d6b" class="outline-3">
-<h3 id="orgbdb1d6b">两种请求</h3>
-<div class="outline-text-3" id="text-orgbdb1d6b">
+<div id="outline-container-org4659b3d" class="outline-3">
+<h3 id="org4659b3d">两种请求</h3>
+<div class="outline-text-3" id="text-org4659b3d">
 <p>
 浏览器将 CORS 请求分为两类： <span class="underline">简单请求</span> （simple request）和 <span class="underline">非简单请求</span> （not-so-simple request）。
 </p>
@@ -667,9 +662,9 @@ CORS 需要浏览器和服务器同时支持， <b>整个 CORS 通信过程，�
 </div>
 </div>
 
-<div id="outline-container-orgdbe70c1" class="outline-3">
-<h3 id="orgdbe70c1">简单请求</h3>
-<div class="outline-text-3" id="text-orgdbe70c1">
+<div id="outline-container-org5db1e41" class="outline-3">
+<h3 id="org5db1e41">简单请求</h3>
+<div class="outline-text-3" id="text-org5db1e41">
 <p>
 <span class="underline">1. 基本流程</span>
 </p>
@@ -799,9 +794,9 @@ Access-Control-Allow-Credentials: true
 </div>
 </div>
 
-<div id="outline-container-org64ae2c2" class="outline-3">
-<h3 id="org64ae2c2">非简单请求</h3>
-<div class="outline-text-3" id="text-org64ae2c2">
+<div id="outline-container-org49f6770" class="outline-3">
+<h3 id="org49f6770">非简单请求</h3>
+<div class="outline-text-3" id="text-org49f6770">
 <p>
 <span class="underline">1. 预检请求</span>
 </p>
@@ -1006,7 +1001,7 @@ Content-Type: text/html; charset=utf-8
 <div id="postamble" class="status">
 <p class="date">Date: 2020-11-03 Tue 09:36</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:59</p>
+<p class="date">Created: 2021-01-01 Fri 12:32</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

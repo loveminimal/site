@@ -1,7 +1,6 @@
 const { src, dest, series, parallel } = require("gulp");
 const babel = require("gulp-babel");
 const uglify = require("gulp-uglify");
-const browserify = require("gulp-browserify");
 
 const sass = require("gulp-dart-sass");
 
@@ -11,12 +10,6 @@ function js(cb) {
         .pipe(
             babel({
                 presets: ["@babel/env"],
-            })
-        )
-        .pipe(
-            browserify({
-                insertGlobals: true,
-                // debug: !gulp.env.production,
             })
         )
         .pipe(uglify())
@@ -31,4 +24,4 @@ function css(cb) {
     cb();
 }
 
-module.exports.default = parallel(js);
+module.exports.default = parallel(js, css);

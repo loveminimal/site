@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<!-- 2020-12-11 Fri 11:00 -->
+<!-- 2021-01-01 Fri 12:33 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nginx</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js"></script>
 </head>
 <body>
 <div id="content">
@@ -23,21 +18,21 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc302e9e">关于代理</a>
+<li><a href="#org15ffd55">关于代理</a>
 <ul>
-<li><a href="#org45ab2d8">单点服务的 C/S 架构</a></li>
-<li><a href="#org391c8c7">基于代理的 C/S 架构</a></li>
-<li><a href="#org1e5e146">Proxy 是什么</a></li>
-<li><a href="#orgdc89542">正向代理和反向代理</a></li>
+<li><a href="#orga427540">单点服务的 C/S 架构</a></li>
+<li><a href="#org24c87c2">基于代理的 C/S 架构</a></li>
+<li><a href="#orgd6eadf2">Proxy 是什么</a></li>
+<li><a href="#org555c615">正向代理和反向代理</a></li>
 </ul>
 </li>
-<li><a href="#orgf22af00">Nginx 那些事</a>
+<li><a href="#orgca88bba">Nginx 那些事</a>
 <ul>
-<li><a href="#org04e3826">安装</a></li>
-<li><a href="#org37a50db">静态网站部署</a></li>
-<li><a href="#orgb24e37c">配置虚拟主机</a></li>
-<li><a href="#org0f99b1f">反向代理</a></li>
-<li><a href="#orgb9d0cda">负载均衡</a></li>
+<li><a href="#org3d77481">安装</a></li>
+<li><a href="#org04380da">静态网站部署</a></li>
+<li><a href="#org3dcc32d">配置虚拟主机</a></li>
+<li><a href="#org46fa992">反向代理</a></li>
+<li><a href="#orgb6fd76e">负载均衡</a></li>
 </ul>
 </li>
 </ul>
@@ -47,9 +42,9 @@
 在认识、学习 Nginx 之前，我们先来看一下代理是什么，如果你已经非常熟悉代理，可以直接跳到第二个章节。
 </p>
 
-<div id="outline-container-orgc302e9e" class="outline-2">
-<h2 id="orgc302e9e">关于代理<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-orgc302e9e">
+<div id="outline-container-org15ffd55" class="outline-2">
+<h2 id="org15ffd55">关于代理<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-org15ffd55">
 <blockquote>
 <p>
 *注：该节原创发布于慕课网，作者：咚咚呛。
@@ -61,9 +56,9 @@
 </p>
 </div>
 
-<div id="outline-container-org45ab2d8" class="outline-3">
-<h3 id="org45ab2d8">单点服务的 C/S 架构</h3>
-<div class="outline-text-3" id="text-org45ab2d8">
+<div id="outline-container-orga427540" class="outline-3">
+<h3 id="orga427540">单点服务的 C/S 架构</h3>
+<div class="outline-text-3" id="text-orga427540">
 <p>
 在普通的开发中，单点 Server 的服务方式非常常见，比如使用 Django 框架做后台服务的时候，就可以通过简单的 <code>run server</code> 命令起一个临时的服务，接着通过地址就可能访问到这个服务了。
 </p>
@@ -108,9 +103,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org391c8c7" class="outline-3">
-<h3 id="org391c8c7">基于代理的 C/S 架构</h3>
-<div class="outline-text-3" id="text-org391c8c7">
+<div id="outline-container-org24c87c2" class="outline-3">
+<h3 id="org24c87c2">基于代理的 C/S 架构</h3>
+<div class="outline-text-3" id="text-org24c87c2">
 <p>
 一种基于代理的可横向拓展的 C/S 架构，如下：
 </p>
@@ -173,9 +168,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org1e5e146" class="outline-3">
-<h3 id="org1e5e146">Proxy 是什么</h3>
-<div class="outline-text-3" id="text-org1e5e146">
+<div id="outline-container-orgd6eadf2" class="outline-3">
+<h3 id="orgd6eadf2">Proxy 是什么</h3>
+<div class="outline-text-3" id="text-orgd6eadf2">
 <p>
 <b>Proxy ，就是代理。</b> 如何理解呢？
 </p>
@@ -204,9 +199,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgdc89542" class="outline-3">
-<h3 id="orgdc89542">正向代理和反向代理</h3>
-<div class="outline-text-3" id="text-orgdc89542">
+<div id="outline-container-org555c615" class="outline-3">
+<h3 id="org555c615">正向代理和反向代理</h3>
+<div class="outline-text-3" id="text-org555c615">
 <p>
 本质上来讲，代理都是存在于 Client 和 Server 之间，但是由于性质不同，可以分为正向代理和反向代理两种。那么，什么是反向代理？什么是正向代理呢？
 </p>
@@ -323,9 +318,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgf22af00" class="outline-2">
-<h2 id="orgf22af00">Nginx 那些事<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
-<div class="outline-text-2" id="text-orgf22af00">
+<div id="outline-container-orgca88bba" class="outline-2">
+<h2 id="orgca88bba">Nginx 那些事<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
+<div class="outline-text-2" id="text-orgca88bba">
 <img
 src="/images/nginx-1.jpg"
 width="260"
@@ -352,9 +347,9 @@ Nginx 这么强劲，都有些什么应用场景呢？如下：
 </ul>
 </div>
 
-<div id="outline-container-org04e3826" class="outline-3">
-<h3 id="org04e3826">安装</h3>
-<div class="outline-text-3" id="text-org04e3826">
+<div id="outline-container-org3d77481" class="outline-3">
+<h3 id="org3d77481">安装</h3>
+<div class="outline-text-3" id="text-org3d77481">
 <p>
 → 具体安装过程可以参考<a href="https://blog.csdn.net/nanhuaibeian/article/details/106916313">该链接</a> 。
 </p>
@@ -397,9 +392,9 @@ Nginx 这么强劲，都有些什么应用场景呢？如下：
 </div>
 </div>
 
-<div id="outline-container-org37a50db" class="outline-3">
-<h3 id="org37a50db">静态网站部署</h3>
-<div class="outline-text-3" id="text-org37a50db">
+<div id="outline-container-org04380da" class="outline-3">
+<h3 id="org04380da">静态网站部署</h3>
+<div class="outline-text-3" id="text-org04380da">
 <p>
 将我们的网页内容（假设为 <code>index</code> 文件夹 ）上传到服务器的 <code>/usr/local/nginx</code> 下，并更新 <code>/usr/local/nginx/conf</code> 下的 <code>nginx.conf</code> 配置文件，如下：
 </p>
@@ -429,9 +424,9 @@ Nginx 这么强劲，都有些什么应用场景呢？如下：
 </div>
 </div>
 
-<div id="outline-container-orgb24e37c" class="outline-3">
-<h3 id="orgb24e37c">配置虚拟主机</h3>
-<div class="outline-text-3" id="text-orgb24e37c">
+<div id="outline-container-org3dcc32d" class="outline-3">
+<h3 id="org3dcc32d">配置虚拟主机</h3>
+<div class="outline-text-3" id="text-org3dcc32d">
 <p>
 （1）上传静态网站：
 </p>
@@ -508,9 +503,9 @@ Nginx 这么强劲，都有些什么应用场景呢？如下：
 </div>
 </div>
 
-<div id="outline-container-org0f99b1f" class="outline-3">
-<h3 id="org0f99b1f">反向代理</h3>
-<div class="outline-text-3" id="text-org0f99b1f">
+<div id="outline-container-org46fa992" class="outline-3">
+<h3 id="org46fa992">反向代理</h3>
+<div class="outline-text-3" id="text-org46fa992">
 <p>
 这里我们将实现好的案例（war 包）部署到服务器的 Tomcat 中的根目录下：
 </p>
@@ -541,9 +536,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgb9d0cda" class="outline-3">
-<h3 id="orgb9d0cda">负载均衡</h3>
-<div class="outline-text-3" id="text-orgb9d0cda">
+<div id="outline-container-orgb6fd76e" class="outline-3">
+<h3 id="orgb6fd76e">负载均衡</h3>
+<div class="outline-text-3" id="text-orgb6fd76e">
 <p>
 什么是负载均衡呢？
 </p>
@@ -628,7 +623,7 @@ title=""
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-23 Fri 10:38</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 11:00</p>
+<p class="date">Created: 2021-01-01 Fri 12:33</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

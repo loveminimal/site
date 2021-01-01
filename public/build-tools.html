@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<!-- 2020-12-11 Fri 10:58 -->
+<!-- 2021-01-01 Fri 12:31 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Build Tools</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js"></script>
 </head>
 <body>
 <div id="content">
@@ -23,34 +18,34 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfe8b69c">Task Runners</a>
+<li><a href="#org115712f">Task Runners</a>
 <ul>
-<li><a href="#org5496ee4">NPM Scripts</a></li>
+<li><a href="#org34c5bb7">NPM Scripts</a></li>
 </ul>
 </li>
-<li><a href="#org182f021">Module Bundlers</a>
+<li><a href="#org60c221f">Module Bundlers</a>
 <ul>
-<li><a href="#org94c5f3f">Webpack</a></li>
+<li><a href="#org5f5ed42">Webpack</a></li>
 </ul>
 </li>
-<li><a href="#orgc4088ca">Linters and Formatters</a>
+<li><a href="#orga164f5b">Linters and Formatters</a>
 <ul>
-<li><a href="#orgc29a6fc">Prettier</a>
+<li><a href="#org8d52760">Prettier</a>
 <ul>
-<li><a href="#org174e13f">Intro</a></li>
-<li><a href="#orga625fd2">Pretter vs. Linters</a></li>
-<li><a href="#org359d509">Usage</a></li>
-<li><a href="#org5021a51">Set up your editor</a></li>
-<li><a href="#orgdad3a82">ESLint (and other linters)</a></li>
-<li><a href="#orgee4b789">Configuration</a></li>
+<li><a href="#orgaf272d8">Intro</a></li>
+<li><a href="#org5fab78d">Pretter vs. Linters</a></li>
+<li><a href="#org44df899">Usage</a></li>
+<li><a href="#org218b0d3">Set up your editor</a></li>
+<li><a href="#orgac19009">ESLint (and other linters)</a></li>
+<li><a href="#org2c1041b">Configuration</a></li>
 </ul>
 </li>
-<li><a href="#org3de12b1">ESLint</a>
+<li><a href="#org63c2011">ESLint</a>
 <ul>
-<li><a href="#org426a51b">Intro</a></li>
-<li><a href="#org0fb75bc">Usage</a></li>
-<li><a href="#org4d0732a">Configuration</a></li>
-<li><a href="#org527d8be">Command Line Interface</a></li>
+<li><a href="#orgac354ba">Intro</a></li>
+<li><a href="#orgb50acb6">Usage</a></li>
+<li><a href="#orgc76a55c">Configuration</a></li>
+<li><a href="#orga303d6d">Command Line Interface</a></li>
 </ul>
 </li>
 </ul>
@@ -69,9 +64,9 @@
 *X → - I wouldn't recommend
 </pre>
 
-<div id="outline-container-orgfe8b69c" class="outline-2">
-<h2 id="orgfe8b69c">Task Runners</h2>
-<div class="outline-text-2" id="text-orgfe8b69c">
+<div id="outline-container-org115712f" class="outline-2">
+<h2 id="org115712f">Task Runners</h2>
+<div class="outline-text-2" id="text-org115712f">
 <blockquote>
 <p>
 Task Runners:
@@ -83,9 +78,9 @@ Task Runners:
 </blockquote>
 </div>
 
-<div id="outline-container-org5496ee4" class="outline-3">
-<h3 id="org5496ee4">NPM Scripts<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h3>
-<div class="outline-text-3" id="text-org5496ee4">
+<div id="outline-container-org34c5bb7" class="outline-3">
+<h3 id="org34c5bb7">NPM Scripts<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h3>
+<div class="outline-text-3" id="text-org34c5bb7">
 <p>
 The <code>"scripts"</code> property of your <code>package.json</code> file supports a number of build-in scripts and theri preset life cycle events as well as arbitrary scripts.
 </p>
@@ -112,9 +107,9 @@ Scripts form dependencies can be run with <code>npm explore &lt;pkg&gt; -- npm r
 </div>
 </div>
 
-<div id="outline-container-org182f021" class="outline-2">
-<h2 id="org182f021">Module Bundlers</h2>
-<div class="outline-text-2" id="text-org182f021">
+<div id="outline-container-org60c221f" class="outline-2">
+<h2 id="org60c221f">Module Bundlers</h2>
+<div class="outline-text-2" id="text-org60c221f">
 <blockquote>
 <p>
 Module Bundlers:
@@ -127,9 +122,9 @@ Module Bundlers:
 </blockquote>
 </div>
 
-<div id="outline-container-org94c5f3f" class="outline-3">
-<h3 id="org94c5f3f">Webpack</h3>
-<div class="outline-text-3" id="text-org94c5f3f">
+<div id="outline-container-org5f5ed42" class="outline-3">
+<h3 id="org5f5ed42">Webpack</h3>
+<div class="outline-text-3" id="text-org5f5ed42">
 <p>
 Readmore about <a href="webpack.html">Webpack</a> .
 </p>
@@ -137,9 +132,9 @@ Readmore about <a href="webpack.html">Webpack</a> .
 </div>
 </div>
 
-<div id="outline-container-orgc4088ca" class="outline-2">
-<h2 id="orgc4088ca">Linters and Formatters</h2>
-<div class="outline-text-2" id="text-orgc4088ca">
+<div id="outline-container-orga164f5b" class="outline-2">
+<h2 id="orga164f5b">Linters and Formatters</h2>
+<div class="outline-text-2" id="text-orga164f5b">
 <blockquote>
 <p>
 Linters and Formatters:
@@ -152,22 +147,22 @@ Linters and Formatters:
 </blockquote>
 </div>
 
-<div id="outline-container-orgc29a6fc" class="outline-3">
-<h3 id="orgc29a6fc">Prettier<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
-<div class="outline-text-3" id="text-orgc29a6fc">
+<div id="outline-container-org8d52760" class="outline-3">
+<h3 id="org8d52760">Prettier<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
+<div class="outline-text-3" id="text-org8d52760">
 </div>
-<div id="outline-container-org174e13f" class="outline-4">
-<h4 id="org174e13f">Intro</h4>
-<div class="outline-text-4" id="text-org174e13f">
+<div id="outline-container-orgaf272d8" class="outline-4">
+<h4 id="orgaf272d8">Intro</h4>
+<div class="outline-text-4" id="text-orgaf272d8">
 <p>
 Prettier is an opinionated code formatter. It enforces a consistent style by parsing your code and re-printing it with its own rules that take the maximum line length into account, wrapping code when necessary.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga625fd2" class="outline-4">
-<h4 id="orga625fd2">Pretter vs. Linters</h4>
-<div class="outline-text-4" id="text-orga625fd2">
+<div id="outline-container-org5fab78d" class="outline-4">
+<h4 id="org5fab78d">Pretter vs. Linters</h4>
+<div class="outline-text-4" id="text-org5fab78d">
 <p>
 How does it compare to ESLint/TSLint/stylelint, etc.?
 </p>
@@ -206,9 +201,9 @@ In other words, use <b>Prettier for formatting</b> and <b>Linters for catching b
 </div>
 </div>
 
-<div id="outline-container-org359d509" class="outline-4">
-<h4 id="org359d509">Usage</h4>
-<div class="outline-text-4" id="text-org359d509">
+<div id="outline-container-org44df899" class="outline-4">
+<h4 id="org44df899">Usage</h4>
+<div class="outline-text-4" id="text-org44df899">
 <p>
 First, install Prettier locally:
 </p>
@@ -275,27 +270,27 @@ If you have a CI setup, run the following as part of it to make sure that everyo
 </div>
 </div>
 
-<div id="outline-container-org5021a51" class="outline-4">
-<h4 id="org5021a51">Set up your editor</h4>
-<div class="outline-text-4" id="text-org5021a51">
+<div id="outline-container-org218b0d3" class="outline-4">
+<h4 id="org218b0d3">Set up your editor</h4>
+<div class="outline-text-4" id="text-org218b0d3">
 <p>
 See <a href="https://prettier.io/docs/en/editors.html">Editor Integration</a> for how to set up your editor. If your editor does not support Prettier, you can instead <a href="https://prettier.io/docs/en/watching-files.html">run Prettier with a file watcher</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgdad3a82" class="outline-4">
-<h4 id="orgdad3a82">ESLint (and other linters)</h4>
-<div class="outline-text-4" id="text-orgdad3a82">
+<div id="outline-container-orgac19009" class="outline-4">
+<h4 id="orgac19009">ESLint (and other linters)</h4>
+<div class="outline-text-4" id="text-orgac19009">
 <p>
 If you use ESLint, install <a href="https://github.com/prettier/eslint-config-prettier#installation">eslint-config-prettier</a> to make ESLint and Prettier play nice with each other. It turns off all ESLint rules that are unnecessary or might conflict with Prettier.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgee4b789" class="outline-4">
-<h4 id="orgee4b789">Configuration</h4>
-<div class="outline-text-4" id="text-orgee4b789">
+<div id="outline-container-org2c1041b" class="outline-4">
+<h4 id="org2c1041b">Configuration</h4>
+<div class="outline-text-4" id="text-org2c1041b">
 <p>
 List some frequent configurations:
 </p>
@@ -378,13 +373,13 @@ List some frequent configurations:
 </div>
 </div>
 
-<div id="outline-container-org3de12b1" class="outline-3">
-<h3 id="org3de12b1">ESLint<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h3>
-<div class="outline-text-3" id="text-org3de12b1">
+<div id="outline-container-org63c2011" class="outline-3">
+<h3 id="org63c2011">ESLint<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h3>
+<div class="outline-text-3" id="text-org63c2011">
 </div>
-<div id="outline-container-org426a51b" class="outline-4">
-<h4 id="org426a51b">Intro</h4>
-<div class="outline-text-4" id="text-org426a51b">
+<div id="outline-container-orgac354ba" class="outline-4">
+<h4 id="orgac354ba">Intro</h4>
+<div class="outline-text-4" id="text-orgac354ba">
 <p>
 ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs.
 </p>
@@ -396,9 +391,9 @@ ESLint is a tool for identifying and reporting on patterns found in ECMAScript/J
 </div>
 </div>
 
-<div id="outline-container-org0fb75bc" class="outline-4">
-<h4 id="org0fb75bc">Usage</h4>
-<div class="outline-text-4" id="text-org0fb75bc">
+<div id="outline-container-orgb50acb6" class="outline-4">
+<h4 id="orgb50acb6">Usage</h4>
+<div class="outline-text-4" id="text-orgb50acb6">
 <p>
 First, you can install ESLint using npm:
 </p>
@@ -438,9 +433,9 @@ It is also possible to install ESLint globally rather than locally (using <code>
 </div>
 </div>
 
-<div id="outline-container-org4d0732a" class="outline-4">
-<h4 id="org4d0732a">Configuration</h4>
-<div class="outline-text-4" id="text-org4d0732a">
+<div id="outline-container-orgc76a55c" class="outline-4">
+<h4 id="orgc76a55c">Configuration</h4>
+<div class="outline-text-4" id="text-orgc76a55c">
 <p>
 There are two primary ways to configure ESLint:
 </p>
@@ -463,9 +458,9 @@ Use a JavaScript, JSON or YAML file to specify configuration information for an 
 </div>
 </div>
 
-<div id="outline-container-org527d8be" class="outline-4">
-<h4 id="org527d8be">Command Line Interface</h4>
-<div class="outline-text-4" id="text-org527d8be">
+<div id="outline-container-orga303d6d" class="outline-4">
+<h4 id="orga303d6d">Command Line Interface</h4>
+<div class="outline-text-4" id="text-orga303d6d">
 <p>
 &#x2026;
 </p>
@@ -494,7 +489,7 @@ Use a JavaScript, JSON or YAML file to specify configuration information for an 
 <div id="postamble" class="status">
 <p class="date">Date: 2020-12-08 Tue 17:42</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:58</p>
+<p class="date">Created: 2021-01-01 Fri 12:31</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

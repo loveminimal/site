@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<!-- 2020-12-11 Fri 10:58 -->
+<!-- 2021-01-01 Fri 12:31 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ajax</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js"></script>
 </head>
 <body>
 <div id="content">
@@ -23,57 +18,57 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org75d2b3f">什么是 Ajax</a></li>
-<li><a href="#orgc056ac2">*进程、线程</a>
+<li><a href="#org4eb4168">什么是 Ajax</a></li>
+<li><a href="#org03533dd">*进程、线程</a>
 <ul>
-<li><a href="#org5b2a467">单线程的 JS</a></li>
-<li><a href="#org5d55648">多线程的浏览器</a></li>
+<li><a href="#org1ccda5d">单线程的 JS</a></li>
+<li><a href="#orgc60c1ac">多线程的浏览器</a></li>
 </ul>
 </li>
-<li><a href="#orgfd77b8c">*JavaScript 运行机制</a>
+<li><a href="#orgf59d5e6">*JavaScript 运行机制</a>
 <ul>
-<li><a href="#org94e88db">为什么 JS 是单线程</a></li>
-<li><a href="#org974924a">任务队列</a></li>
-<li><a href="#org7100552">事件和回调函数</a></li>
-<li><a href="#org07ceac0">Event Loop</a></li>
-<li><a href="#org3e5edec">定时器</a></li>
-<li><a href="#org30379f7">NodeJS 的 Event Loop</a></li>
+<li><a href="#org24adecf">为什么 JS 是单线程</a></li>
+<li><a href="#org9015e32">任务队列</a></li>
+<li><a href="#org41547bb">事件和回调函数</a></li>
+<li><a href="#org3a58e2a">Event Loop</a></li>
+<li><a href="#orgb70e579">定时器</a></li>
+<li><a href="#org041cdfa">NodeJS 的 Event Loop</a></li>
 </ul>
 </li>
-<li><a href="#org034abb1">Ajax 异步的原理</a></li>
-<li><a href="#orgbfe8ef6">Ajax 的请求过程</a>
+<li><a href="#org81c68ae">Ajax 异步的原理</a></li>
+<li><a href="#org6f5506a">Ajax 的请求过程</a>
 <ul>
-<li><a href="#org73eb7c0">创建 XMLHttpRequest 对象</a></li>
-<li><a href="#orgd3cacf8">XHR 请求</a></li>
-<li><a href="#orgb7d46bf">XHR 响应</a></li>
+<li><a href="#org17dbdce">创建 XMLHttpRequest 对象</a></li>
+<li><a href="#org8015109">XHR 请求</a></li>
+<li><a href="#org71d9872">XHR 响应</a></li>
 </ul>
 </li>
-<li><a href="#org2fdaf1a">*HTTP 协议</a>
+<li><a href="#orgad18e6a">*HTTP 协议</a>
 <ul>
-<li><a href="#org0eb4d59">HTTP 消息结构</a></li>
-<li><a href="#org2428785">HTTP 请求方法</a></li>
-<li><a href="#orgaa8be5f">HTTP 响应头信息</a></li>
+<li><a href="#org43096a8">HTTP 消息结构</a></li>
+<li><a href="#orgd361d50">HTTP 请求方法</a></li>
+<li><a href="#org2a28218">HTTP 响应头信息</a></li>
 </ul>
 </li>
-<li><a href="#org6a51cc5">jQuery 中的 Ajax</a></li>
-<li><a href="#org50f00ab">Axios</a>
+<li><a href="#orgbaa0938">jQuery 中的 Ajax</a></li>
+<li><a href="#org8f6171f">Axios</a>
 <ul>
-<li><a href="#org629ebfc">Axios 起步</a></li>
-<li><a href="#org3ce0062">Axios 请求配置</a></li>
-<li><a href="#orgbea37f7">Axios 响应结构</a></li>
-<li><a href="#org5098d0a">配置默认值</a></li>
-<li><a href="#org0b1d549">拦截器</a></li>
-<li><a href="#org6c6b3b6">*使用 application/x-www-form-urlencoded 格式</a></li>
-<li><a href="#org6a62be8">框架、插件</a></li>
+<li><a href="#orgb1f5b5b">Axios 起步</a></li>
+<li><a href="#org505f39b">Axios 请求配置</a></li>
+<li><a href="#orgb1ddcd5">Axios 响应结构</a></li>
+<li><a href="#org1d43cb4">配置默认值</a></li>
+<li><a href="#org9387f29">拦截器</a></li>
+<li><a href="#org1f1224a">*使用 application/x-www-form-urlencoded 格式</a></li>
+<li><a href="#orgf528727">框架、插件</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org75d2b3f" class="outline-2">
-<h2 id="org75d2b3f">什么是 Ajax</h2>
-<div class="outline-text-2" id="text-org75d2b3f">
+<div id="outline-container-org4eb4168" class="outline-2">
+<h2 id="org4eb4168">什么是 Ajax</h2>
+<div class="outline-text-2" id="text-org4eb4168">
 <img
 src="/images/ajax-1.png"
 width="600"
@@ -92,9 +87,9 @@ AJAX（Asynchronous JavaScript and XML），是一种异步请求数据的 Web �
 </div>
 </div>
 
-<div id="outline-container-orgc056ac2" class="outline-2">
-<h2 id="orgc056ac2">*进程、线程<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-orgc056ac2">
+<div id="outline-container-org03533dd" class="outline-2">
+<h2 id="org03533dd">*进程、线程<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-org03533dd">
 <essay>
 在讲述 AJAX 之前，有必要先了解一些进程和线程方面的知识。
 </essay>
@@ -160,9 +155,9 @@ AJAX（Asynchronous JavaScript and XML），是一种异步请求数据的 Web �
 </p>
 </div>
 
-<div id="outline-container-org5b2a467" class="outline-3">
-<h3 id="org5b2a467">单线程的 JS</h3>
-<div class="outline-text-3" id="text-org5b2a467">
+<div id="outline-container-org1ccda5d" class="outline-3">
+<h3 id="org1ccda5d">单线程的 JS</h3>
+<div class="outline-text-3" id="text-org1ccda5d">
 <p>
 以 JavaScript 语言为例，它是一种单线程语言，所有任务都在一个线程上完成，任务只好排队喽。一旦遇到大量任务或者遇到一个耗时的任务，网页就会出现“假死”（JavaScript 停不下来，也就无法响应用户的行为）。
 </p>
@@ -207,9 +202,9 @@ Event Loop 是一个程序结构，用于等待和发送消息和事件。
 </div>
 </div>
 
-<div id="outline-container-org5d55648" class="outline-3">
-<h3 id="org5d55648">多线程的浏览器<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
-<div class="outline-text-3" id="text-org5d55648">
+<div id="outline-container-orgc60c1ac" class="outline-3">
+<h3 id="orgc60c1ac">多线程的浏览器<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
+<div class="outline-text-3" id="text-orgc60c1ac">
 <p>
 前面我们已经大概了解了进程和线程，稍微回顾下相关概念。
 </p>
@@ -361,9 +356,9 @@ XMLHttpRequest 在连接后是通过浏览器新开一个线程请求，在检�
 </div>
 </div>
 
-<div id="outline-container-orgfd77b8c" class="outline-2">
-<h2 id="orgfd77b8c">*JavaScript 运行机制<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
-<div class="outline-text-2" id="text-orgfd77b8c">
+<div id="outline-container-orgf59d5e6" class="outline-2">
+<h2 id="orgf59d5e6">*JavaScript 运行机制<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
+<div class="outline-text-2" id="text-orgf59d5e6">
 <essay>
 学习一门语言，再怎么了解它的运行机制都是不为过的。
 </essay>
@@ -382,9 +377,9 @@ XMLHttpRequest 在连接后是通过浏览器新开一个线程请求，在检�
 </pre>
 </div>
 
-<div id="outline-container-org94e88db" class="outline-3">
-<h3 id="org94e88db">为什么 JS 是单线程</h3>
-<div class="outline-text-3" id="text-org94e88db">
+<div id="outline-container-org24adecf" class="outline-3">
+<h3 id="org24adecf">为什么 JS 是单线程</h3>
+<div class="outline-text-3" id="text-org24adecf">
 <p>
 JavaScript 语言的一大特点就是单线程，即同一时间只能做一件事。前面我们已经讲述过为什么 JavaScript 不能有多个线程（多线程能提高效率啊），我们这里再稍微赘述一下。
 </p>
@@ -407,9 +402,9 @@ JavaScript 语言的一大特点就是单线程，即同一时间只能做一件
 </div>
 </div>
 
-<div id="outline-container-org974924a" class="outline-3">
-<h3 id="org974924a">任务队列</h3>
-<div class="outline-text-3" id="text-org974924a">
+<div id="outline-container-org9015e32" class="outline-3">
+<h3 id="org9015e32">任务队列</h3>
+<div class="outline-text-3" id="text-org9015e32">
 <p>
 单线程就意味着，所有任务需要排队，前一个任务结束，才会执行后一个任务。如果前一个任务耗时很长，后一个任务就不得不一直等着。
 </p>
@@ -472,9 +467,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org7100552" class="outline-3">
-<h3 id="org7100552">事件和回调函数</h3>
-<div class="outline-text-3" id="text-org7100552">
+<div id="outline-container-org41547bb" class="outline-3">
+<h3 id="org41547bb">事件和回调函数</h3>
+<div class="outline-text-3" id="text-org41547bb">
 <p>
 “任务队列”是一个事件的队列（也可以理解成消息的队列），I/O 设备完成一项任务，就在“任务队列”中添加一个事件，表示相关的异步任务可以进入“执行栈”了。主线程读取“任务队列”，就是读取里面有哪些事件。
 </p>
@@ -493,9 +488,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org07ceac0" class="outline-3">
-<h3 id="org07ceac0">Event Loop</h3>
-<div class="outline-text-3" id="text-org07ceac0">
+<div id="outline-container-org3a58e2a" class="outline-3">
+<h3 id="org3a58e2a">Event Loop</h3>
+<div class="outline-text-3" id="text-org3a58e2a">
 <p>
 主线程从“任务队列”中读取事件，这个过程是循环不断的，所以整个的这种运行机制又称为 Event Loop （事件循环）。
 </p>
@@ -518,9 +513,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org3e5edec" class="outline-3">
-<h3 id="org3e5edec">定时器</h3>
-<div class="outline-text-3" id="text-org3e5edec">
+<div id="outline-container-orgb70e579" class="outline-3">
+<h3 id="orgb70e579">定时器</h3>
+<div class="outline-text-3" id="text-orgb70e579">
 <p>
 除了放置异步任务的事件，“任务队列”还可以放置定时事件，即指定某些代码在多少时间之后执行。这叫做“定时器”（timer）功能，也就是定时执行的代码。
 </p>
@@ -546,9 +541,9 @@ HTML5 标准规定了 <code>setTimeout()</code> 的第二个参数的最小值�
 </div>
 </div>
 
-<div id="outline-container-org30379f7" class="outline-3">
-<h3 id="org30379f7">NodeJS 的 Event Loop</h3>
-<div class="outline-text-3" id="text-org30379f7">
+<div id="outline-container-org041cdfa" class="outline-3">
+<h3 id="org041cdfa">NodeJS 的 Event Loop</h3>
+<div class="outline-text-3" id="text-org041cdfa">
 <p>
 NodeJS 也是单线程的 Event Loop，但是它的运行机制不同于浏览器环境。
 </p>
@@ -599,9 +594,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org034abb1" class="outline-2">
-<h2 id="org034abb1">Ajax 异步的原理</h2>
-<div class="outline-text-2" id="text-org034abb1">
+<div id="outline-container-org81c68ae" class="outline-2">
+<h2 id="org81c68ae">Ajax 异步的原理</h2>
+<div class="outline-text-2" id="text-org81c68ae">
 <essay>
 Hmm... 终于讲到 Ajax 了……
 </essay>
@@ -636,9 +631,9 @@ GUI 渲染线程和 JavaScript 引擎线程是互斥的。其他线程相互之�
 </div>
 </div>
 
-<div id="outline-container-orgbfe8ef6" class="outline-2">
-<h2 id="orgbfe8ef6">Ajax 的请求过程</h2>
-<div class="outline-text-2" id="text-orgbfe8ef6">
+<div id="outline-container-org6f5506a" class="outline-2">
+<h2 id="org6f5506a">Ajax 的请求过程</h2>
+<div class="outline-text-2" id="text-org6f5506a">
 <img
 src="/images/ajax-7.png"
 width="500"
@@ -661,9 +656,9 @@ title=""
 </p>
 </div>
 
-<div id="outline-container-org73eb7c0" class="outline-3">
-<h3 id="org73eb7c0">创建 XMLHttpRequest 对象</h3>
-<div class="outline-text-3" id="text-org73eb7c0">
+<div id="outline-container-org17dbdce" class="outline-3">
+<h3 id="org17dbdce">创建 XMLHttpRequest 对象</h3>
+<div class="outline-text-3" id="text-org17dbdce">
 <p>
 <b>*注：以下 XMLHttpRequest 均简写为 XHR。</b>
 </p>
@@ -695,9 +690,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgd3cacf8" class="outline-3">
-<h3 id="orgd3cacf8">XHR 请求</h3>
-<div class="outline-text-3" id="text-orgd3cacf8">
+<div id="outline-container-org8015109" class="outline-3">
+<h3 id="org8015109">XHR 请求</h3>
+<div class="outline-text-3" id="text-org8015109">
 <p>
 其中，2、3、4 三步都为 XHR 请求，我们放在一起来讲述。
 </p>
@@ -759,9 +754,9 @@ XHR 对象如果要用于 AJAX 的话，其 <code>open()</code> 方法的 <code>
 </div>
 </div>
 
-<div id="outline-container-orgb7d46bf" class="outline-3">
-<h3 id="orgb7d46bf">XHR 响应</h3>
-<div class="outline-text-3" id="text-orgb7d46bf">
+<div id="outline-container-org71d9872" class="outline-3">
+<h3 id="org71d9872">XHR 响应</h3>
+<div class="outline-text-3" id="text-org71d9872">
 <p>
 如需获得来自服务器的响应，请使用 XHR 对象的 <code>responseText</code> （字符串形式的响应数据）或 <code>responseXML</code> （XML 形式的响应数据）属性。
 </p>
@@ -853,9 +848,9 @@ XHR 对象如果要用于 AJAX 的话，其 <code>open()</code> 方法的 <code>
 </div>
 </div>
 
-<div id="outline-container-org2fdaf1a" class="outline-2">
-<h2 id="org2fdaf1a">*HTTP 协议</h2>
-<div class="outline-text-2" id="text-org2fdaf1a">
+<div id="outline-container-orgad18e6a" class="outline-2">
+<h2 id="orgad18e6a">*HTTP 协议</h2>
+<div class="outline-text-2" id="text-orgad18e6a">
 <essay>
 我们已经初步了解 AJAX 了，深入地话，就需要进一步认识一下 HTTP 协议喽。
 </essay>
@@ -897,9 +892,9 @@ HTTP 协议工作于“客户端-服务端”架构上，如浏览器（HTTP 客
 </p>
 </div>
 
-<div id="outline-container-org0eb4d59" class="outline-3">
-<h3 id="org0eb4d59">HTTP 消息结构</h3>
-<div class="outline-text-3" id="text-org0eb4d59">
+<div id="outline-container-org43096a8" class="outline-3">
+<h3 id="org43096a8">HTTP 消息结构</h3>
+<div class="outline-text-3" id="text-org43096a8">
 <p>
 HTTP 是基于“客户端/服务端”的架构模型，通过一个可靠的链接来交换信息，是一个 <b>无状态的请求/响应</b> 协议。
 </p>
@@ -956,9 +951,9 @@ HTTP 响应也由四个部分组成，分别是：状态行、消息报头、空
 </div>
 </div>
 
-<div id="outline-container-org2428785" class="outline-3">
-<h3 id="org2428785">HTTP 请求方法</h3>
-<div class="outline-text-3" id="text-org2428785">
+<div id="outline-container-orgd361d50" class="outline-3">
+<h3 id="orgd361d50">HTTP 请求方法</h3>
+<div class="outline-text-3" id="text-orgd361d50">
 <table>
 <caption class="t-above"><span class="table-number">Table 1:</span> HTTP 请求方法</caption>
 
@@ -1014,9 +1009,9 @@ HTTP 响应也由四个部分组成，分别是：状态行、消息报头、空
 </div>
 </div>
 
-<div id="outline-container-orgaa8be5f" class="outline-3">
-<h3 id="orgaa8be5f">HTTP 响应头信息</h3>
-<div class="outline-text-3" id="text-orgaa8be5f">
+<div id="outline-container-org2a28218" class="outline-3">
+<h3 id="org2a28218">HTTP 响应头信息</h3>
+<div class="outline-text-3" id="text-org2a28218">
 <table>
 
 <colgroup>
@@ -1281,9 +1276,9 @@ i.e. HTTP Status Code
 </div>
 </div>
 
-<div id="outline-container-org6a51cc5" class="outline-2">
-<h2 id="org6a51cc5">jQuery 中的 Ajax<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup></h2>
-<div class="outline-text-2" id="text-org6a51cc5">
+<div id="outline-container-orgbaa0938" class="outline-2">
+<h2 id="orgbaa0938">jQuery 中的 Ajax<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup></h2>
+<div class="outline-text-2" id="text-orgbaa0938">
 <p>
 jQuery 提供多个与 AJAX 有关的方法。
 </p>
@@ -1378,9 +1373,9 @@ jQuery 也算是 DOM 时代的霸主了……
 </div>
 </div>
 
-<div id="outline-container-org50f00ab" class="outline-2">
-<h2 id="org50f00ab">Axios<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup></h2>
-<div class="outline-text-2" id="text-org50f00ab">
+<div id="outline-container-org8f6171f" class="outline-2">
+<h2 id="org8f6171f">Axios<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup></h2>
+<div class="outline-text-2" id="text-org8f6171f">
 <essay>
 来看看这个比较火热的 Ajax 封装库吧。
 </essay>
@@ -1405,9 +1400,9 @@ Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 NodeJS 中
 </p>
 </div>
 
-<div id="outline-container-org629ebfc" class="outline-3">
-<h3 id="org629ebfc">Axios 起步</h3>
-<div class="outline-text-3" id="text-org629ebfc">
+<div id="outline-container-orgb1f5b5b" class="outline-3">
+<h3 id="orgb1f5b5b">Axios 起步</h3>
+<div class="outline-text-3" id="text-orgb1f5b5b">
 <p>
 先安装喽……
 </p>
@@ -1472,9 +1467,9 @@ npm install axios                                                 # NPM
 </div>
 </div>
 
-<div id="outline-container-org3ce0062" class="outline-3">
-<h3 id="org3ce0062">Axios 请求配置<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup></h3>
-<div class="outline-text-3" id="text-org3ce0062">
+<div id="outline-container-org505f39b" class="outline-3">
+<h3 id="org505f39b">Axios 请求配置<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup></h3>
+<div class="outline-text-3" id="text-org505f39b">
 <p>
 这些都是创建请求时可以用的配置选项， <b>只有 <code>url</code> 是必需的</b> ，如果没有指定的 <code>method</code> ，请求将默认使用 <code>get</code> 方法。
 </p>
@@ -1511,9 +1506,9 @@ npm install axios                                                 # NPM
 </div>
 </div>
 
-<div id="outline-container-orgbea37f7" class="outline-3">
-<h3 id="orgbea37f7">Axios 响应结构</h3>
-<div class="outline-text-3" id="text-orgbea37f7">
+<div id="outline-container-orgb1ddcd5" class="outline-3">
+<h3 id="orgb1ddcd5">Axios 响应结构</h3>
+<div class="outline-text-3" id="text-orgb1ddcd5">
 <p>
 某个请求的响应包含以下信息：
 </p>
@@ -1561,9 +1556,9 @@ npm install axios                                                 # NPM
 </div>
 </div>
 
-<div id="outline-container-org5098d0a" class="outline-3">
-<h3 id="org5098d0a">配置默认值</h3>
-<div class="outline-text-3" id="text-org5098d0a">
+<div id="outline-container-org1d43cb4" class="outline-3">
+<h3 id="org1d43cb4">配置默认值</h3>
+<div class="outline-text-3" id="text-org1d43cb4">
 <p>
 你可以指定将被用在各个请求的配置默认值。
 </p>
@@ -1620,9 +1615,9 @@ npm install axios                                                 # NPM
 </div>
 </div>
 
-<div id="outline-container-org0b1d549" class="outline-3">
-<h3 id="org0b1d549">拦截器</h3>
-<div class="outline-text-3" id="text-org0b1d549">
+<div id="outline-container-org9387f29" class="outline-3">
+<h3 id="org9387f29">拦截器</h3>
+<div class="outline-text-3" id="text-org9387f29">
 <p>
 在请求或响应被 <code>then</code> 或 <code>catch</code> 处理前拦截它们。
 </p>
@@ -1656,9 +1651,9 @@ npm install axios                                                 # NPM
 </div>
 </div>
 
-<div id="outline-container-org6c6b3b6" class="outline-3">
-<h3 id="org6c6b3b6">*使用 application/x-www-form-urlencoded 格式</h3>
-<div class="outline-text-3" id="text-org6c6b3b6">
+<div id="outline-container-org1f1224a" class="outline-3">
+<h3 id="org1f1224a">*使用 application/x-www-form-urlencoded 格式</h3>
+<div class="outline-text-3" id="text-org1f1224a">
 <p>
 默认情况下，axios 将 JavaScript 对象序列化为 JSON。要以 <code>application/x-www-form-urlencoded</code> 格式发送数据，使用 <code>qs</code> 库编码数据，如下：
 </p>
@@ -1671,9 +1666,9 @@ npm install axios                                                 # NPM
 </div>
 </div>
 
-<div id="outline-container-org6a62be8" class="outline-3">
-<h3 id="org6a62be8">框架、插件</h3>
-<div class="outline-text-3" id="text-org6a62be8">
+<div id="outline-container-orgf528727" class="outline-3">
+<h3 id="orgf528727">框架、插件</h3>
+<div class="outline-text-3" id="text-orgf528727">
 <p>
 如果你想了解更多，请参考 <a href="https://www.w3cschool.cn/jquti/jquti-b4sf360b.html">W3Cschool Axios</a> 。
 </p>
@@ -1713,7 +1708,7 @@ npm install axios                                                 # NPM
 <div id="postamble" class="status">
 <p class="date">Date: 2020-11-26 Thu 17:49</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:58</p>
+<p class="date">Created: 2021-01-01 Fri 12:31</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

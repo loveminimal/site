@@ -1,11 +1,5 @@
 # -*- mode: org; -*-
 
 #+HTML_HEAD: <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-#+HTML_HEAD: <link rel="stylesheet" href="/css/animate.min.css" />
-#+HTML_HEAD: <link rel="stylesheet" href="/css/all.min.css" />
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/css/style.css" />
-
-#+HTML_HEAD: <script src="/js/jquery.min.js"></script>
-#+HTML_HEAD: <script src="/js/darkreader.js"></script>
-#+HTML_HEAD: <script src="/user.config.js"></script>
-#+HTML_HEAD: <script src="/js/main.js"></script>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/dist/style.css" />
+#+HTML_HEAD: <script src="/dist/main.js"></script>

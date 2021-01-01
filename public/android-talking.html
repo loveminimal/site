@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<!-- 2020-12-11 Fri 10:58 -->
+<!-- 2021-01-01 Fri 12:31 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Android 那些事儿</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js"></script>
 </head>
 <body>
 <div id="content">
@@ -23,28 +18,28 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org19b9dbc">Android 是什么</a></li>
-<li><a href="#orga2107a8">Android 应用程序</a></li>
-<li><a href="#orge297401">Android 开发环境搭建</a></li>
-<li><a href="#org0c28ab0">Android 架构</a></li>
-<li><a href="#org1499d34">Android 应用程序组件</a>
+<li><a href="#orga6b810b">Android 是什么</a></li>
+<li><a href="#org4133dcc">Android 应用程序</a></li>
+<li><a href="#org5e6c512">Android 开发环境搭建</a></li>
+<li><a href="#org77e7c0b">Android 架构</a></li>
+<li><a href="#org8d27c14">Android 应用程序组件</a>
 <ul>
-<li><a href="#orgb04f98b">Activities</a></li>
-<li><a href="#org0b74e62">Services</a></li>
-<li><a href="#org78631d0">Broadcast Receivers</a></li>
-<li><a href="#orgdc4607b">Content Providers</a></li>
-<li><a href="#org18023ac">附件组件</a></li>
+<li><a href="#orgb184cd2">Activities</a></li>
+<li><a href="#orgb469074">Services</a></li>
+<li><a href="#org17a04b5">Broadcast Receivers</a></li>
+<li><a href="#org732f934">Content Providers</a></li>
+<li><a href="#org5cb2489">附件组件</a></li>
 </ul>
 </li>
-<li><a href="#org7043c33">Hello World</a>
+<li><a href="#org4547266">Hello World</a>
 <ul>
-<li><a href="#org67be183">Android 应用程序剖析</a></li>
+<li><a href="#org88e0236">Android 应用程序剖析</a></li>
 </ul>
 </li>
-<li><a href="#org2bf76a3">Android FAQ</a>
+<li><a href="#org36d4979">Android FAQ</a>
 <ul>
-<li><a href="#org8093c48">Android studio 配置国内镜像源</a></li>
-<li><a href="#org452b864">Waiting for Target Device to Come Online</a></li>
+<li><a href="#org1e93c60">Android studio 配置国内镜像源</a></li>
+<li><a href="#orga965251">Waiting for Target Device to Come Online</a></li>
 </ul>
 </li>
 </ul>
@@ -54,9 +49,9 @@
 → 摘录自 <a href="https://www.runoob.com/android/android-tutorial.html">https://www.runoob.com/android/android-tutorial.html</a>
 </p>
 
-<div id="outline-container-org19b9dbc" class="outline-2">
-<h2 id="org19b9dbc">Android 是什么<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-org19b9dbc">
+<div id="outline-container-orga6b810b" class="outline-2">
+<h2 id="orga6b810b">Android 是什么<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-orga6b810b">
 <img
 src="/images/android-1.jpg"
 width="200"
@@ -83,9 +78,9 @@ Android 源代码是根据自由和开放源码软件许可证。谷歌发布的
 </div>
 </div>
 
-<div id="outline-container-orga2107a8" class="outline-2">
-<h2 id="orga2107a8">Android 应用程序</h2>
-<div class="outline-text-2" id="text-orga2107a8">
+<div id="outline-container-org4133dcc" class="outline-2">
+<h2 id="org4133dcc">Android 应用程序</h2>
+<div class="outline-text-2" id="text-org4133dcc">
 <p>
 Android 应用程序一般使用 Android 软件开发工具包，采用 Java 语言来开发。
 </p>
@@ -120,9 +115,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orge297401" class="outline-2">
-<h2 id="orge297401">Android 开发环境搭建</h2>
-<div class="outline-text-2" id="text-orge297401">
+<div id="outline-container-org5e6c512" class="outline-2">
+<h2 id="org5e6c512">Android 开发环境搭建</h2>
+<div class="outline-text-2" id="text-org5e6c512">
 <p>
 以下是开始开发 Android 应用程序需要用到的软件列表：
 </p>
@@ -142,9 +137,9 @@ Android Studio 的安装可以参考 <a href="https://www.runoob.com/android/and
 </div>
 </div>
 
-<div id="outline-container-org0c28ab0" class="outline-2">
-<h2 id="org0c28ab0">Android 架构</h2>
-<div class="outline-text-2" id="text-org0c28ab0">
+<div id="outline-container-org77e7c0b" class="outline-2">
+<h2 id="org77e7c0b">Android 架构</h2>
+<div class="outline-text-2" id="text-org77e7c0b">
 <p>
 Android 操作系统是一个软件组件的栈，在架构图中它大致可以分为五个部分和四个主要层。
 </p>
@@ -291,9 +286,9 @@ Android 运行时同时提供一系列核心的库来为 Android 应用程序开
 </div>
 </div>
 
-<div id="outline-container-org1499d34" class="outline-2">
-<h2 id="org1499d34">Android 应用程序组件</h2>
-<div class="outline-text-2" id="text-org1499d34">
+<div id="outline-container-org8d27c14" class="outline-2">
+<h2 id="org8d27c14">Android 应用程序组件</h2>
+<div class="outline-text-2" id="text-org8d27c14">
 <p>
 应用程序组件是一个 Android 应用程序的基本构建块，这些组件由应用清单文件松耦合的组织， <code>AndroidManifest.xml</code> 描述了应用程序的每个组件，以及他们如何交互。
 </p>
@@ -339,9 +334,9 @@ Android 运行时同时提供一系列核心的库来为 Android 应用程序开
 </table>
 </div>
 
-<div id="outline-container-orgb04f98b" class="outline-3">
-<h3 id="orgb04f98b">Activities</h3>
-<div class="outline-text-3" id="text-orgb04f98b">
+<div id="outline-container-orgb184cd2" class="outline-3">
+<h3 id="orgb184cd2">Activities</h3>
+<div class="outline-text-3" id="text-orgb184cd2">
 <p>
 <b>一个活动标识一个具有用户界面的单一屏幕。</b>
 </p>
@@ -367,9 +362,9 @@ Android 运行时同时提供一系列核心的库来为 Android 应用程序开
 </div>
 </div>
 
-<div id="outline-container-org0b74e62" class="outline-3">
-<h3 id="org0b74e62">Services</h3>
-<div class="outline-text-3" id="text-org0b74e62">
+<div id="outline-container-orgb469074" class="outline-3">
+<h3 id="orgb469074">Services</h3>
+<div class="outline-text-3" id="text-orgb469074">
 <p>
 <b>服务是运行在后台，执行长时间操作的组件。</b>
 </p>
@@ -391,9 +386,9 @@ Android 运行时同时提供一系列核心的库来为 Android 应用程序开
 </div>
 </div>
 
-<div id="outline-container-org78631d0" class="outline-3">
-<h3 id="org78631d0">Broadcast Receivers</h3>
-<div class="outline-text-3" id="text-org78631d0">
+<div id="outline-container-org17a04b5" class="outline-3">
+<h3 id="org17a04b5">Broadcast Receivers</h3>
+<div class="outline-text-3" id="text-org17a04b5">
 <p>
 广播接收器简单地响应从其他应用程序或者系统发来的广播消息。
 </p>
@@ -415,9 +410,9 @@ Android 运行时同时提供一系列核心的库来为 Android 应用程序开
 </div>
 </div>
 
-<div id="outline-container-orgdc4607b" class="outline-3">
-<h3 id="orgdc4607b">Content Providers</h3>
-<div class="outline-text-3" id="text-orgdc4607b">
+<div id="outline-container-org732f934" class="outline-3">
+<h3 id="org732f934">Content Providers</h3>
+<div class="outline-text-3" id="text-org732f934">
 <p>
 <b>内容提供者组件通过请求从一个应用程序到另一个应用程序提供数据。</b> 这些请求由 ContentResolver 类的方法来处理，这些数据可以是存储在文件系统、数据库或者其他地方。
 </p>
@@ -435,9 +430,9 @@ Android 运行时同时提供一系列核心的库来为 Android 应用程序开
 </div>
 </div>
 
-<div id="outline-container-org18023ac" class="outline-3">
-<h3 id="org18023ac">附件组件</h3>
-<div class="outline-text-3" id="text-org18023ac">
+<div id="outline-container-org5cb2489" class="outline-3">
+<h3 id="org5cb2489">附件组件</h3>
+<div class="outline-text-3" id="text-org5cb2489">
 <p>
 有一些附件的组件用于以上提到的实体、他们之间逻辑、及他们之间连线的构造，这些组件如下：
 </p>
@@ -491,13 +486,13 @@ Android 运行时同时提供一系列核心的库来为 Android 应用程序开
 </div>
 </div>
 
-<div id="outline-container-org7043c33" class="outline-2">
-<h2 id="org7043c33">Hello World</h2>
-<div class="outline-text-2" id="text-org7043c33">
+<div id="outline-container-org4547266" class="outline-2">
+<h2 id="org4547266">Hello World</h2>
+<div class="outline-text-2" id="text-org4547266">
 </div>
-<div id="outline-container-org67be183" class="outline-3">
-<h3 id="org67be183">Android 应用程序剖析</h3>
-<div class="outline-text-3" id="text-org67be183">
+<div id="outline-container-org88e0236" class="outline-3">
+<h3 id="org88e0236">Android 应用程序剖析</h3>
+<div class="outline-text-3" id="text-org88e0236">
 <p>
 在运行应用之前，我们来认识一下 Android 项目中的一些文件目录和文件。
 </p>
@@ -564,13 +559,13 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org2bf76a3" class="outline-2">
-<h2 id="org2bf76a3">Android FAQ</h2>
-<div class="outline-text-2" id="text-org2bf76a3">
+<div id="outline-container-org36d4979" class="outline-2">
+<h2 id="org36d4979">Android FAQ</h2>
+<div class="outline-text-2" id="text-org36d4979">
 </div>
-<div id="outline-container-org8093c48" class="outline-3">
-<h3 id="org8093c48">Android studio 配置国内镜像源<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
-<div class="outline-text-3" id="text-org8093c48">
+<div id="outline-container-org1e93c60" class="outline-3">
+<h3 id="org1e93c60">Android studio 配置国内镜像源<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
+<div class="outline-text-3" id="text-org1e93c60">
 <p>
 几个国内镜像源：
 </p>
@@ -618,9 +613,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org452b864" class="outline-3">
-<h3 id="org452b864">Waiting for Target Device to Come Online<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h3>
-<div class="outline-text-3" id="text-org452b864">
+<div id="outline-container-orga965251" class="outline-3">
+<h3 id="orga965251">Waiting for Target Device to Come Online<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h3>
+<div class="outline-text-3" id="text-orga965251">
 <p>
 打开 AVD manager，选中你的模拟器，右键，wipe，擦出数据，OK。
 </p>
@@ -648,7 +643,7 @@ title=""
 <div id="postamble" class="status">
 <p class="date">Date: 2020-12-04 Fri 10:43</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:58</p>
+<p class="date">Created: 2021-01-01 Fri 12:31</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

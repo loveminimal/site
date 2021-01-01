@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<!-- 2020-12-11 Fri 11:00 -->
+<!-- 2021-01-01 Fri 12:33 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Software Developement Kit</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js"></script>
 </head>
 <body>
 <div id="content">
@@ -23,18 +18,18 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org610f965">简介</a></li>
-<li><a href="#org2983ec1">设计原则</a></li>
-<li><a href="#orgd68a459">如何实现</a>
+<li><a href="#org8bba61e">简介</a></li>
+<li><a href="#org869ca3f">设计原则</a></li>
+<li><a href="#org160807f">如何实现</a>
 <ul>
-<li><a href="#orga00601f">明职责，定边界</a></li>
-<li><a href="#org463a444">筑框架，夯基础</a></li>
-<li><a href="#org5d10eff">领域分析，模块划分</a></li>
-<li><a href="#org3b768d5">测试覆盖，线上无忧</a></li>
-<li><a href="#org5a9c9e4">细节打磨，极致体验</a></li>
+<li><a href="#orgfac4110">明职责，定边界</a></li>
+<li><a href="#orgf75bf86">筑框架，夯基础</a></li>
+<li><a href="#org26a5db8">领域分析，模块划分</a></li>
+<li><a href="#org7d1949a">测试覆盖，线上无忧</a></li>
+<li><a href="#org374c722">细节打磨，极致体验</a></li>
 </ul>
 </li>
-<li><a href="#org463512f">结语</a></li>
+<li><a href="#orgcdf6d29">结语</a></li>
 </ul>
 </div>
 </div>
@@ -42,9 +37,9 @@
 → 转载自 <a href="https://zhuanlan.zhihu.com/p/272614462">如何打造一款标准的 JS-SDK</a>
 </p>
 
-<div id="outline-container-org610f965" class="outline-2">
-<h2 id="org610f965">简介</h2>
-<div class="outline-text-2" id="text-org610f965">
+<div id="outline-container-org8bba61e" class="outline-2">
+<h2 id="org8bba61e">简介</h2>
+<div class="outline-text-2" id="text-org8bba61e">
 <img
 src="/images/sdk-1.jpg"
 width="400"
@@ -67,9 +62,9 @@ SDK（Software Development Kit，软件开发工具包），一般都是一些�
 </div>
 </div>
 
-<div id="outline-container-org2983ec1" class="outline-2">
-<h2 id="org2983ec1">设计原则</h2>
-<div class="outline-text-2" id="text-org2983ec1">
+<div id="outline-container-org869ca3f" class="outline-2">
+<h2 id="org869ca3f">设计原则</h2>
+<div class="outline-text-2" id="text-org869ca3f">
 <p>
 <b>如何设计 SDK ？</b> 更多取决于其应用场景和最终用途。比如，实现一个给网页调用的 SDK 与用于服务端的 SDK 就有明显的差异，但综们之间存在着一些共通的原则：
 </p>
@@ -113,17 +108,17 @@ SDK 一般都是偏向于某个领域，所以，同时在设计和实现的时�
 </div>
 </div>
 
-<div id="outline-container-orgd68a459" class="outline-2">
-<h2 id="orgd68a459">如何实现</h2>
-<div class="outline-text-2" id="text-orgd68a459">
+<div id="outline-container-org160807f" class="outline-2">
+<h2 id="org160807f">如何实现</h2>
+<div class="outline-text-2" id="text-org160807f">
 <p>
 下面我们将通过剖析岳鹰前端监控 SDK 的设计过程，来看看上述的设计原则是如何应用到实际的开发过程中的。
 </p>
 </div>
 
-<div id="outline-container-orga00601f" class="outline-3">
-<h3 id="orga00601f">明职责，定边界</h3>
-<div class="outline-text-3" id="text-orga00601f">
+<div id="outline-container-orgfac4110" class="outline-3">
+<h3 id="orgfac4110">明职责，定边界</h3>
+<div class="outline-text-3" id="text-orgfac4110">
 <p>
 岳鹰前端监控 SDK 是前端稳定性和性能监控的 SDK，主要面向前端 H5 领域。因此，稍加分析即可得出以下结论：
 </p>
@@ -159,9 +154,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org463a444" class="outline-3">
-<h3 id="org463a444">筑框架，夯基础</h3>
-<div class="outline-text-3" id="text-org463a444">
+<div id="outline-container-orgf75bf86" class="outline-3">
+<h3 id="orgf75bf86">筑框架，夯基础</h3>
+<div class="outline-text-3" id="text-orgf75bf86">
 <p>
 <span class="underline">1. 确定 SDK 的引用形式</span>
 </p>
@@ -276,9 +271,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org5d10eff" class="outline-3">
-<h3 id="org5d10eff">领域分析，模块划分</h3>
-<div class="outline-text-3" id="text-org5d10eff">
+<div id="outline-container-org26a5db8" class="outline-3">
+<h3 id="org26a5db8">领域分析，模块划分</h3>
+<div class="outline-text-3" id="text-org26a5db8">
 <p>
 确定边界的时候，我们已经清楚划分了 SDK 的几个关键部分：全局异常、API 异常、页面性能和白屏， <b>每一块都对应一个专业的领域</b> ，因此对应到 SDK 也是每一个独立的模块。
 </p>
@@ -323,9 +318,9 @@ Biz 部分更多是对于不同宿主环境的多入口适配，当前支持浏�
 </div>
 </div>
 
-<div id="outline-container-org3b768d5" class="outline-3">
-<h3 id="org3b768d5">测试覆盖，线上无忧</h3>
-<div class="outline-text-3" id="text-org3b768d5">
+<div id="outline-container-org7d1949a" class="outline-3">
+<h3 id="org7d1949a">测试覆盖，线上无忧</h3>
+<div class="outline-text-3" id="text-org7d1949a">
 <p>
 SDK是一个基础服务，相对于前台业务而言可能更底层些。其影响面跟应用的范围是正比的关系，更多的用户意味着更大的责任。所以 SDK 的质量保障也是很重要的一个环节。
 岳鹰前端监控SDK的质量保障策略很简单，只有两条：
@@ -349,9 +344,9 @@ SDK是一个基础服务，相对于前台业务而言可能更底层些。其�
 </div>
 </div>
 
-<div id="outline-container-org5a9c9e4" class="outline-3">
-<h3 id="org5a9c9e4">细节打磨，极致体验</h3>
-<div class="outline-text-3" id="text-org5a9c9e4">
+<div id="outline-container-org374c722" class="outline-3">
+<h3 id="org374c722">细节打磨，极致体验</h3>
+<div class="outline-text-3" id="text-org374c722">
 <p>
 快捷引入：
 </p>
@@ -399,9 +394,9 @@ SDK是一个基础服务，相对于前台业务而言可能更底层些。其�
 </div>
 </div>
 
-<div id="outline-container-org463512f" class="outline-2">
-<h2 id="org463512f">结语</h2>
-<div class="outline-text-2" id="text-org463512f">
+<div id="outline-container-orgcdf6d29" class="outline-2">
+<h2 id="orgcdf6d29">结语</h2>
+<div class="outline-text-2" id="text-orgcdf6d29">
 <p>
 实际在SDK的设计和开发过程中，要处理的问题还远不止本文所述的内容，比如 NPM 模块开发时本地如何引用，构建的 bundle 大小如何调优等等。不过还是希望阅完此文，对你有所启发。
 </p>
@@ -411,7 +406,7 @@ SDK是一个基础服务，相对于前台业务而言可能更底层些。其�
 <div id="postamble" class="status">
 <p class="date">Date: 2020-12-01 Tue 11:10</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 11:00</p>
+<p class="date">Created: 2021-01-01 Fri 12:33</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

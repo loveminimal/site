@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<!-- 2020-12-11 Fri 11:00 -->
+<!-- 2021-01-01 Fri 12:33 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Servlet 是什么</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js"></script>
 </head>
 <body>
 <div id="content">
@@ -23,56 +18,56 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org00ec675">Web 开发</a></li>
-<li><a href="#orgda162d3">Servlet 入门</a></li>
-<li><a href="#org993d8b2">Servlet 开发</a></li>
-<li><a href="#org4f2e6b6">Servlet 是什么</a></li>
-<li><a href="#org8caff6a">Servlet 相关的接口和类</a></li>
-<li><a href="#org863af58">Servlet 生命周期</a></li>
-<li><a href="#org1d7c57f">第一个 Servlet 程序</a></li>
-<li><a href="#org4a30b02">Servlet 虚拟路径映射的配置</a>
+<li><a href="#org5cbed6a">Web 开发</a></li>
+<li><a href="#org59fe7b1">Servlet 入门</a></li>
+<li><a href="#orgba97e38">Servlet 开发</a></li>
+<li><a href="#org9032a21">Servlet 是什么</a></li>
+<li><a href="#org78beacb">Servlet 相关的接口和类</a></li>
+<li><a href="#org45e9657">Servlet 生命周期</a></li>
+<li><a href="#orgfde3b69">第一个 Servlet 程序</a></li>
+<li><a href="#org47fec96">Servlet 虚拟路径映射的配置</a>
 <ul>
-<li><a href="#org9ff7fb0">Servlet 的多重映射</a></li>
-<li><a href="#org6bcd272">Servlet 映射路径中使用通配符</a></li>
-<li><a href="#orgfa95d30">默认 Servlet</a></li>
+<li><a href="#org86ac605">Servlet 的多重映射</a></li>
+<li><a href="#org6e93ea8">Servlet 映射路径中使用通配符</a></li>
+<li><a href="#orge3860a6">默认 Servlet</a></li>
 </ul>
 </li>
-<li><a href="#orgf0264fb">ServletConfig 和 ServletContext 接口</a>
+<li><a href="#org3dd613a">ServletConfig 和 ServletContext 接口</a>
 <ul>
-<li><a href="#orgf36789b">ServletConfig 接口</a></li>
-<li><a href="#org4b38eb9">ServletContext 接口</a></li>
+<li><a href="#org261f363">ServletConfig 接口</a></li>
+<li><a href="#org092966c">ServletContext 接口</a></li>
 </ul>
 </li>
-<li><a href="#org5573327">Servlet 处理用户请求的完整流程</a></li>
-<li><a href="#org6fa569b">HttpServletRequest</a>
+<li><a href="#org66b8bba">Servlet 处理用户请求的完整流程</a></li>
+<li><a href="#org643c6cc">HttpServletRequest</a>
 <ul>
-<li><a href="#org2e6eb50">获取请求行信息的相关方法</a></li>
-<li><a href="#org6b85d99">获取请求消息头的相关方法</a></li>
-<li><a href="#org9212f46"><span class="todo TODO">TODO</span> Servlet 获取 form 表单数据</a></li>
-<li><a href="#org430f353">RequestDispatcher 实现请求转发</a></li>
+<li><a href="#orgb19c2ad">获取请求行信息的相关方法</a></li>
+<li><a href="#orgd299c23">获取请求消息头的相关方法</a></li>
+<li><a href="#org45ac8b9"><span class="todo TODO">TODO</span> Servlet 获取 form 表单数据</a></li>
+<li><a href="#orga106e8a">RequestDispatcher 实现请求转发</a></li>
 </ul>
 </li>
-<li><a href="#orge72f188">HttpServletResponse</a>
+<li><a href="#orgb5a40f6">HttpServletResponse</a>
 <ul>
-<li><a href="#org2312f82">发送状态码相关的方法</a></li>
-<li><a href="#orgdb6e6ac">发送响应消息头相关的方法</a></li>
-<li><a href="#orgad43dd1">发送响应消息体相关的方法</a></li>
-<li><a href="#orga6b9181">sendRedirect() 实现重写向</a></li>
+<li><a href="#orgc4f9be9">发送状态码相关的方法</a></li>
+<li><a href="#org4f83f63">发送响应消息头相关的方法</a></li>
+<li><a href="#org9d93136">发送响应消息体相关的方法</a></li>
+<li><a href="#org7927f5b">sendRedirect() 实现重写向</a></li>
 </ul>
 </li>
-<li><a href="#orgebe1723">request/response 中文乱码问题</a>
+<li><a href="#org9454394">request/response 中文乱码问题</a>
 <ul>
-<li><a href="#orge56bbcf">request 中文乱码问题以及解决方案</a></li>
-<li><a href="#org1709055">response中文乱码问题以及解决方案</a></li>
+<li><a href="#orga5802e8">request 中文乱码问题以及解决方案</a></li>
+<li><a href="#orge8ef3c8">response中文乱码问题以及解决方案</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org00ec675" class="outline-2">
-<h2 id="org00ec675">Web 开发<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-org00ec675">
+<div id="outline-container-org5cbed6a" class="outline-2">
+<h2 id="org5cbed6a">Web 开发<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-org5cbed6a">
 <p>
 JavaEE 是什么？它并不是一个软件产品，更多的是一种软件架构和设计思想，它是在 JavaSE 的基础上，开发的一系列基于服务的组件、API 标准和通用架构。
 </p>
@@ -248,9 +243,9 @@ HTTP 3.0 为了进一步提高速度，将抛弃 TCP 协议，改为使用无需
 </div>
 </div>
 
-<div id="outline-container-orgda162d3" class="outline-2">
-<h2 id="orgda162d3">Servlet 入门</h2>
-<div class="outline-text-2" id="text-orgda162d3">
+<div id="outline-container-org59fe7b1" class="outline-2">
+<h2 id="org59fe7b1">Servlet 入门</h2>
+<div class="outline-text-2" id="text-org59fe7b1">
 <p>
 在上一节中，可见，编写 HTTP 服务器其实是非常简单的，只需要先编写基于多线程的 TCP 服务，然后在一个 TCP 连接中读取 HTTP 请求，发送 HTTP 响应即可。
 </p>
@@ -405,9 +400,9 @@ Servlet API 是一个 jar 包，我们需要通过 Maven 来引入它，才能�
 </div>
 </div>
 
-<div id="outline-container-org993d8b2" class="outline-2">
-<h2 id="org993d8b2">Servlet 开发</h2>
-<div class="outline-text-2" id="text-org993d8b2">
+<div id="outline-container-orgba97e38" class="outline-2">
+<h2 id="orgba97e38">Servlet 开发</h2>
+<div class="outline-text-2" id="text-orgba97e38">
 <p>
 通常，一个完整的 Web 应用程序的开发流程如下：
 </p>
@@ -569,9 +564,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org4f2e6b6" class="outline-2">
-<h2 id="org4f2e6b6">Servlet 是什么</h2>
-<div class="outline-text-2" id="text-org4f2e6b6">
+<div id="outline-container-org9032a21" class="outline-2">
+<h2 id="org9032a21">Servlet 是什么</h2>
+<div class="outline-text-2" id="text-org9032a21">
 <p>
 好的，下面我们就来具体认识一下 Servlet 是什么。
 </p>
@@ -634,9 +629,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org8caff6a" class="outline-2">
-<h2 id="org8caff6a">Servlet 相关的接口和类</h2>
-<div class="outline-text-2" id="text-org8caff6a">
+<div id="outline-container-org78beacb" class="outline-2">
+<h2 id="org78beacb">Servlet 相关的接口和类</h2>
+<div class="outline-text-2" id="text-org78beacb">
 <p>
 SUN 公司提供了一系列的接口和类用于 Servlet 技术的开发（缅怀一下 SUN 公司吧），其中最重要的接口是 <code>javax.servlet.Servlet</code> 。在 Servlet 接口中定义了 5 个抽象方法，如下表：
 </p>
@@ -751,9 +746,9 @@ HttpServlet 主要有两大功能，具体如下：
 </div>
 </div>
 
-<div id="outline-container-org863af58" class="outline-2">
-<h2 id="org863af58">Servlet 生命周期</h2>
-<div class="outline-text-2" id="text-org863af58">
+<div id="outline-container-org45e9657" class="outline-2">
+<h2 id="org45e9657">Servlet 生命周期</h2>
+<div class="outline-text-2" id="text-org45e9657">
 <p>
 在 Java 中，任何对象都有生命周期，Servlet 也不例外，其生命周期如下：
 </p>
@@ -816,9 +811,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org1d7c57f" class="outline-2">
-<h2 id="org1d7c57f">第一个 Servlet 程序</h2>
-<div class="outline-text-2" id="text-org1d7c57f">
+<div id="outline-container-orgfde3b69" class="outline-2">
+<h2 id="orgfde3b69">第一个 Servlet 程序</h2>
+<div class="outline-text-2" id="text-orgfde3b69">
 <p>
 <span class="underline">1. 创建 Web 项目</span>
 </p>
@@ -837,9 +832,9 @@ Hmmm... 大致就是这么个过程，具体如何结合的，找个专题慢慢
 </div>
 </div>
 
-<div id="outline-container-org4a30b02" class="outline-2">
-<h2 id="org4a30b02">Servlet 虚拟路径映射的配置</h2>
-<div class="outline-text-2" id="text-org4a30b02">
+<div id="outline-container-org47fec96" class="outline-2">
+<h2 id="org47fec96">Servlet 虚拟路径映射的配置</h2>
+<div class="outline-text-2" id="text-org47fec96">
 <p>
 在 <code>web.xml</code> 文件中，一个 <code>&lt;servlet-mapping&gt;</code> 元素用于映射一个 Servlet 的对外访问路径，该路径也称为虚拟路径。
 </p>
@@ -870,9 +865,9 @@ Hmmm... 大致就是这么个过程，具体如何结合的，找个专题慢慢
 </blockquote>
 </div>
 
-<div id="outline-container-org9ff7fb0" class="outline-3">
-<h3 id="org9ff7fb0">Servlet 的多重映射</h3>
-<div class="outline-text-3" id="text-org9ff7fb0">
+<div id="outline-container-org86ac605" class="outline-3">
+<h3 id="org86ac605">Servlet 的多重映射</h3>
+<div class="outline-text-3" id="text-org86ac605">
 <p>
 Servlet 的多重映射指同一个 Servlet 可以被映射成多条虚拟路径。也就是说，客户端可以通过多条路径实现对同一个 Servlet 的访问。
 </p>
@@ -919,9 +914,9 @@ Servlet 的多重映射指同一个 Servlet 可以被映射成多条虚拟路径
 </div>
 </div>
 
-<div id="outline-container-org6bcd272" class="outline-3">
-<h3 id="org6bcd272">Servlet 映射路径中使用通配符</h3>
-<div class="outline-text-3" id="text-org6bcd272">
+<div id="outline-container-org6e93ea8" class="outline-3">
+<h3 id="org6e93ea8">Servlet 映射路径中使用通配符</h3>
+<div class="outline-text-3" id="text-org6e93ea8">
 <p>
 在实际开发过程中，开发者有时会希望某个目录下的所有路径都可以访问同一个 Servlet ，这时，可以在 Servlet 映射的路径中使用通配符 <code>*</code> 。
 </p>
@@ -944,9 +939,9 @@ Servlet 的多重映射指同一个 Servlet 可以被映射成多条虚拟路径
 </div>
 </div>
 
-<div id="outline-container-orgfa95d30" class="outline-3">
-<h3 id="orgfa95d30">默认 Servlet</h3>
-<div class="outline-text-3" id="text-orgfa95d30">
+<div id="outline-container-orge3860a6" class="outline-3">
+<h3 id="orge3860a6">默认 Servlet</h3>
+<div class="outline-text-3" id="text-orge3860a6">
 <p>
 如果某个 Servlet 的映射路径仅仅是一个正斜线（ <code>/</code> ），那么这个 Servlet 就是当前 Web 应用的默认 Servlet。Servlet 服务器在接收到访问请求时，如果在 <code>web.xml</code> 文件中找不到匹配的 <code>&lt;servlet-mapping&gt;</code> 元素的 URL ，则会将访问请求交给默认 Servlet 处理。
 </p>
@@ -954,13 +949,13 @@ Servlet 的多重映射指同一个 Servlet 可以被映射成多条虚拟路径
 </div>
 </div>
 
-<div id="outline-container-orgf0264fb" class="outline-2">
-<h2 id="orgf0264fb">ServletConfig 和 ServletContext 接口</h2>
-<div class="outline-text-2" id="text-orgf0264fb">
+<div id="outline-container-org3dd613a" class="outline-2">
+<h2 id="org3dd613a">ServletConfig 和 ServletContext 接口</h2>
+<div class="outline-text-2" id="text-org3dd613a">
 </div>
-<div id="outline-container-orgf36789b" class="outline-3">
-<h3 id="orgf36789b">ServletConfig 接口</h3>
-<div class="outline-text-3" id="text-orgf36789b">
+<div id="outline-container-org261f363" class="outline-3">
+<h3 id="org261f363">ServletConfig 接口</h3>
+<div class="outline-text-3" id="text-org261f363">
 <p>
 在运行 Servlet 程序时，可能需要一些辅助信息，例如，文件使用的编码、使用 Servlet 程序的共享信息等，这些信息可以在 web.xml 文件中使用一个或多个 <code>&lt;init-param&gt;</code> 元素进行配置。
 </p>
@@ -1008,9 +1003,9 @@ Servlet 的多重映射指同一个 Servlet 可以被映射成多条虚拟路径
 </div>
 </div>
 
-<div id="outline-container-org4b38eb9" class="outline-3">
-<h3 id="org4b38eb9">ServletContext 接口</h3>
-<div class="outline-text-3" id="text-org4b38eb9">
+<div id="outline-container-org092966c" class="outline-3">
+<h3 id="org092966c">ServletContext 接口</h3>
+<div class="outline-text-3" id="text-org092966c">
 <p>
 当 Tomcat 启动时，Tomcat 会为每个 Web 应用创建一个唯一的 <code>ServletContext</code> 对象代表当前的 Web 应用，该对象封装了当前 Web 应用的所有信息。可以利用该对象获取 Web 应用程序的初始化信息、读取资源文件等。
 </p>
@@ -1087,9 +1082,9 @@ Servlet 容器根据资源文件相对于 Web 应用的路径，返回关联资�
 </div>
 </div>
 
-<div id="outline-container-org5573327" class="outline-2">
-<h2 id="org5573327">Servlet 处理用户请求的完整流程</h2>
-<div class="outline-text-2" id="text-org5573327">
+<div id="outline-container-org66b8bba" class="outline-2">
+<h2 id="org66b8bba">Servlet 处理用户请求的完整流程</h2>
+<div class="outline-text-2" id="text-org66b8bba">
 <p>
 针对 Servlet 的每次请求，Web 服务器在调用 <code>service()</code> 方法之前，都会创建 <code>HttpServletRequest</code> 和 <code>HttpServletResponse</code> 对象。其中， <code>HttpServletRequest</code> 对象用于封装 HTTP 请求消息，简称 <code>request</code> 对象。 <code>HttpServletResponse</code> 对象用于封装 HTTP 响应信息，简称 <code>response</code> 对象。
 </p>
@@ -1119,9 +1114,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org6fa569b" class="outline-2">
-<h2 id="org6fa569b">HttpServletRequest</h2>
-<div class="outline-text-2" id="text-org6fa569b">
+<div id="outline-container-org643c6cc" class="outline-2">
+<h2 id="org643c6cc">HttpServletRequest</h2>
+<div class="outline-text-2" id="text-org643c6cc">
 <p>
 <code>HttpServletRequest</code> 接口继承处 <code>ServletRequest</code> 接口，其主要使用是封装 HTTP 请求信息。
 </p>
@@ -1131,9 +1126,9 @@ title=""
 </p>
 </div>
 
-<div id="outline-container-org2e6eb50" class="outline-3">
-<h3 id="org2e6eb50">获取请求行信息的相关方法<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
-<div class="outline-text-3" id="text-org2e6eb50">
+<div id="outline-container-orgb19c2ad" class="outline-3">
+<h3 id="orgb19c2ad">获取请求行信息的相关方法<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
+<div class="outline-text-3" id="text-orgb19c2ad">
 <p>
 当访问 Servlet 时，所有请求消息将被封装到 <code>HttpServletRequest</code> 对象中，请求消息的请求行中包含请求方法、请求资源名、请求路径等信息，为了获取这些信息， <code>HttpServletRequest</code> 接口定义了一系列方法。
 </p>
@@ -1144,27 +1139,27 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org6b85d99" class="outline-3">
-<h3 id="org6b85d99">获取请求消息头的相关方法</h3>
-<div class="outline-text-3" id="text-org6b85d99">
+<div id="outline-container-orgd299c23" class="outline-3">
+<h3 id="orgd299c23">获取请求消息头的相关方法</h3>
+<div class="outline-text-3" id="text-orgd299c23">
 <p>
 当浏览器发送 Servlet 请求时，需要通过请求消息头向服务器传递附加信息，例如，客户端可以接收的数据类型、压缩方式、语言等。为此，在 <code>HttpServletRequest</code> 接口中定义了一系列获取 HTTP 请求字段的方法。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9212f46" class="outline-3">
-<h3 id="org9212f46"><span class="todo TODO">TODO</span> Servlet 获取 form 表单数据</h3>
-<div class="outline-text-3" id="text-org9212f46">
+<div id="outline-container-org45ac8b9" class="outline-3">
+<h3 id="org45ac8b9"><span class="todo TODO">TODO</span> Servlet 获取 form 表单数据</h3>
+<div class="outline-text-3" id="text-org45ac8b9">
 <p>
 Request 对象不仅可以获取一系列数据，还可以通过属性传递数据。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org430f353" class="outline-3">
-<h3 id="org430f353">RequestDispatcher 实现请求转发<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h3>
-<div class="outline-text-3" id="text-org430f353">
+<div id="outline-container-orga106e8a" class="outline-3">
+<h3 id="orga106e8a">RequestDispatcher 实现请求转发<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h3>
+<div class="outline-text-3" id="text-orga106e8a">
 <p>
 当一个 Web 资源收到客户端的请求后，如果希望服务器通知另外一个资源处理请求，可以通过 <code>RequestDispatcher</code> 接口的实例对象实现。
 </p>
@@ -1195,9 +1190,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orge72f188" class="outline-2">
-<h2 id="orge72f188">HttpServletResponse</h2>
-<div class="outline-text-2" id="text-orge72f188">
+<div id="outline-container-orgb5a40f6" class="outline-2">
+<h2 id="orgb5a40f6">HttpServletResponse</h2>
+<div class="outline-text-2" id="text-orgb5a40f6">
 <p>
 <code>HttpServletResponse</code> 接口继承自 <code>ServletResponse</code> 接口，主要用于封装 HTTP 响应消息。
 </p>
@@ -1207,9 +1202,9 @@ title=""
 </p>
 </div>
 
-<div id="outline-container-org2312f82" class="outline-3">
-<h3 id="org2312f82">发送状态码相关的方法</h3>
-<div class="outline-text-3" id="text-org2312f82">
+<div id="outline-container-orgc4f9be9" class="outline-3">
+<h3 id="orgc4f9be9">发送状态码相关的方法</h3>
+<div class="outline-text-3" id="text-orgc4f9be9">
 <p>
 当 Servlet 向客户端回送响应消息时，需要在响应消息中设置状态码。因此， <code>HttpServletResponse</code> 接口定义了两个发送状态码的方法。
 </p>
@@ -1253,18 +1248,18 @@ public void sendError(int code, String message) throws java.io.IOException
 </div>
 </div>
 
-<div id="outline-container-orgdb6e6ac" class="outline-3">
-<h3 id="orgdb6e6ac">发送响应消息头相关的方法</h3>
-<div class="outline-text-3" id="text-orgdb6e6ac">
+<div id="outline-container-org4f83f63" class="outline-3">
+<h3 id="org4f83f63">发送响应消息头相关的方法</h3>
+<div class="outline-text-3" id="text-org4f83f63">
 <p>
 Servlet 向客户端发送的响应消息中包含响应头字段，由于 HTTP 协议的响应头字段有很多种，因此， <code>HttpServletResponse</code> 接口定义了一系列设置 HTTP 响应头字段的方法。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgad43dd1" class="outline-3">
-<h3 id="orgad43dd1">发送响应消息体相关的方法</h3>
-<div class="outline-text-3" id="text-orgad43dd1">
+<div id="outline-container-org9d93136" class="outline-3">
+<h3 id="org9d93136">发送响应消息体相关的方法</h3>
+<div class="outline-text-3" id="text-org9d93136">
 <p>
 由于在 HTTP 响应消息中，大量的数据都是通过响应消息体传递的，因此， <code>ServletResponse</code> 遵循以 I/O 流传递大量数据的设计理念。在发送响应消息体时，定义了两个与输出流相关的方法。
 </p>
@@ -1299,9 +1294,9 @@ Servlet 向客户端发送的响应消息中包含响应头字段，由于 HTTP 
 </div>
 </div>
 
-<div id="outline-container-orga6b9181" class="outline-3">
-<h3 id="orga6b9181">sendRedirect() 实现重写向</h3>
-<div class="outline-text-3" id="text-orga6b9181">
+<div id="outline-container-org7927f5b" class="outline-3">
+<h3 id="org7927f5b">sendRedirect() 实现重写向</h3>
+<div class="outline-text-3" id="text-org7927f5b">
 <p>
 在某些情况下，针对客户端的请求，一个 Servlet 类可能无法完成全部工作，这时，可以使用请求重定向完成这一工作。
 </p>
@@ -1442,13 +1437,13 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgebe1723" class="outline-2">
-<h2 id="orgebe1723">request/response 中文乱码问题</h2>
-<div class="outline-text-2" id="text-orgebe1723">
+<div id="outline-container-org9454394" class="outline-2">
+<h2 id="org9454394">request/response 中文乱码问题</h2>
+<div class="outline-text-2" id="text-org9454394">
 </div>
-<div id="outline-container-orge56bbcf" class="outline-3">
-<h3 id="orge56bbcf">request 中文乱码问题以及解决方案</h3>
-<div class="outline-text-3" id="text-orge56bbcf">
+<div id="outline-container-orga5802e8" class="outline-3">
+<h3 id="orga5802e8">request 中文乱码问题以及解决方案</h3>
+<div class="outline-text-3" id="text-orga5802e8">
 <p>
 在填写表单数据时，难免需要输入中文，如用户名和公司名称，提交后控制台的显示乱码，如 <code>é??é??...</code> 。
 </p>
@@ -1499,9 +1494,9 @@ name = new String(name.getBytes("iso8859-1"),"utf-8");
 </div>
 </div>
 
-<div id="outline-container-org1709055" class="outline-3">
-<h3 id="org1709055">response中文乱码问题以及解决方案</h3>
-<div class="outline-text-3" id="text-org1709055">
+<div id="outline-container-orge8ef3c8" class="outline-3">
+<h3 id="orge8ef3c8">response中文乱码问题以及解决方案</h3>
+<div class="outline-text-3" id="text-orge8ef3c8">
 <p>
 由于计算机中的数据都是以二进制形式存储的，因此，当传输文本数据时，会发生字符和字节的转换。
 </p>
@@ -1565,7 +1560,7 @@ response.setContentType("text/html;charset=utf-8");            // 包含第一�
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-06 Tue 14:08</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 11:00</p>
+<p class="date">Created: 2021-01-01 Fri 12:33</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

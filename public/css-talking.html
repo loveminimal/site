@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<!-- 2020-12-11 Fri 10:59 -->
+<!-- 2021-01-01 Fri 12:32 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CSS 那些事儿</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js"></script>
 </head>
 <body>
 <div id="content">
@@ -23,29 +18,29 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga3ab8ad">Basics</a>
+<li><a href="#org7833016">Basics</a>
 <ul>
-<li><a href="#org702f22b">Box Model</a></li>
-<li><a href="#org54ad0d3">CSS Grid</a></li>
+<li><a href="#orge1a9fd2">Box Model</a></li>
+<li><a href="#orga89df89">CSS Grid</a></li>
 </ul>
 </li>
-<li><a href="#org1ec885e">CSS Architecture</a>
+<li><a href="#org3ede2b7">CSS Architecture</a>
 <ul>
-<li><a href="#org15b983a">BEM</a></li>
+<li><a href="#org1fb51a9">BEM</a></li>
 </ul>
 </li>
-<li><a href="#orgcb2b07b">CSS Preprocessor</a>
+<li><a href="#org08e86f1">CSS Preprocessor</a>
 <ul>
-<li><a href="#org10fc256">Sass</a></li>
-<li><a href="#orgbadd884">PostCSS</a></li>
+<li><a href="#orgb56b3fd">Sass</a></li>
+<li><a href="#org1cc5a1d">PostCSS</a></li>
 </ul>
 </li>
-<li><a href="#orgc4a2032">Modern CSS</a>
+<li><a href="#org27edd0e">Modern CSS</a>
 <ul>
-<li><a href="#org118154c">CSS Modules</a></li>
+<li><a href="#org358bcaf">CSS Modules</a></li>
 </ul>
 </li>
-<li><a href="#orgabd7d3f">CSS Frameworks</a></li>
+<li><a href="#org31a3b8f">CSS Frameworks</a></li>
 </ul>
 </div>
 </div>
@@ -60,9 +55,9 @@
 *X → - I wouldn't recommend
 </pre>
 
-<div id="outline-container-orga3ab8ad" class="outline-2">
-<h2 id="orga3ab8ad">Basics</h2>
-<div class="outline-text-2" id="text-orga3ab8ad">
+<div id="outline-container-org7833016" class="outline-2">
+<h2 id="org7833016">Basics</h2>
+<div class="outline-text-2" id="text-org7833016">
 <blockquote>
 <p>
 CSS:
@@ -83,9 +78,9 @@ CSS:
 </blockquote>
 </div>
 
-<div id="outline-container-org702f22b" class="outline-3">
-<h3 id="org702f22b">Box Model</h3>
-<div class="outline-text-3" id="text-org702f22b">
+<div id="outline-container-orge1a9fd2" class="outline-3">
+<h3 id="orge1a9fd2">Box Model</h3>
+<div class="outline-text-3" id="text-orge1a9fd2">
 <p>
 Box Model（CSS 盒模型），本质上是一个盒子，封装周围的 HTML 元素，它包括：
 </p>
@@ -123,9 +118,9 @@ width/height = content + padding + border
 </div>
 </div>
 
-<div id="outline-container-org54ad0d3" class="outline-3">
-<h3 id="org54ad0d3">CSS Grid</h3>
-<div class="outline-text-3" id="text-org54ad0d3">
+<div id="outline-container-orga89df89" class="outline-3">
+<h3 id="orga89df89">CSS Grid</h3>
+<div class="outline-text-3" id="text-orga89df89">
 <p>
 更多了解，可以参考 <a href="http://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html">CSS Grid 网格布局教程</a> 。
 </p>
@@ -149,9 +144,9 @@ Grid 布局远比 Flex 布局强大。
 </div>
 </div>
 
-<div id="outline-container-org1ec885e" class="outline-2">
-<h2 id="org1ec885e">CSS Architecture</h2>
-<div class="outline-text-2" id="text-org1ec885e">
+<div id="outline-container-org3ede2b7" class="outline-2">
+<h2 id="org3ede2b7">CSS Architecture</h2>
+<div class="outline-text-2" id="text-org3ede2b7">
 <blockquote>
 <p>
 CSS Architecture:
@@ -168,9 +163,9 @@ Witdh modern frameworks and CSS-in-JS you don't have to worry about these anymor
 </p>
 </div>
 
-<div id="outline-container-org15b983a" class="outline-3">
-<h3 id="org15b983a">BEM</h3>
-<div class="outline-text-3" id="text-org15b983a">
+<div id="outline-container-org1fb51a9" class="outline-3">
+<h3 id="org1fb51a9">BEM</h3>
+<div class="outline-text-3" id="text-org1fb51a9">
 <p>
 BEM（Block 块、Element 元素、Modifier 修饰符），是一种前端命名的方法论，主要是针对 CSS，便于统一团队开发规范和维护。
 </p>
@@ -209,9 +204,9 @@ block-name__element-name--modifier-name
 </div>
 </div>
 
-<div id="outline-container-orgcb2b07b" class="outline-2">
-<h2 id="orgcb2b07b">CSS Preprocessor</h2>
-<div class="outline-text-2" id="text-orgcb2b07b">
+<div id="outline-container-org08e86f1" class="outline-2">
+<h2 id="org08e86f1">CSS Preprocessor</h2>
+<div class="outline-text-2" id="text-org08e86f1">
 <blockquote>
 <p>
 CSS Preprocessor:
@@ -236,9 +231,9 @@ CSS Preprocesssor（CSS 预处理器）是什么？为什么我们需要它？
 </p>
 </div>
 
-<div id="outline-container-org10fc256" class="outline-3">
-<h3 id="org10fc256">Sass</h3>
-<div class="outline-text-3" id="text-org10fc256">
+<div id="outline-container-orgb56b3fd" class="outline-3">
+<h3 id="orgb56b3fd">Sass</h3>
+<div class="outline-text-3" id="text-orgb56b3fd">
 <p>
 <b>Sass 就是最早的 CSS 预处理语言！</b>
 </p>
@@ -249,9 +244,9 @@ Sass 是采用 Ruby 语言编写的，最初采用缩进式语法。从第三代
 </div>
 </div>
 
-<div id="outline-container-orgbadd884" class="outline-3">
-<h3 id="orgbadd884">PostCSS<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h3>
-<div class="outline-text-3" id="text-orgbadd884">
+<div id="outline-container-org1cc5a1d" class="outline-3">
+<h3 id="org1cc5a1d">PostCSS<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h3>
+<div class="outline-text-3" id="text-org1cc5a1d">
 <p>
 PostCSS 是一个用 JavaScript 工具和插件转换 CSS 代码的工具。
 </p>
@@ -439,9 +434,9 @@ Then create <code>post.config.js</code> :
 </div>
 </div>
 
-<div id="outline-container-orgc4a2032" class="outline-2">
-<h2 id="orgc4a2032">Modern CSS</h2>
-<div class="outline-text-2" id="text-orgc4a2032">
+<div id="outline-container-org27edd0e" class="outline-2">
+<h2 id="org27edd0e">Modern CSS</h2>
+<div class="outline-text-2" id="text-org27edd0e">
 <blockquote>
 <p>
 Modern CSS:
@@ -457,9 +452,9 @@ Modern CSS:
 </blockquote>
 </div>
 
-<div id="outline-container-org118154c" class="outline-3">
-<h3 id="org118154c">CSS Modules<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
-<div class="outline-text-3" id="text-org118154c">
+<div id="outline-container-org358bcaf" class="outline-3">
+<h3 id="org358bcaf">CSS Modules<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
+<div class="outline-text-3" id="text-org358bcaf">
 <p>
 学过网页开发就会知道，CSS 不能算编程语言，只是网页样式的一种描述方法。
 </p>
@@ -511,9 +506,9 @@ When importing the <b>CSS Moudle</b> from a JS Module, it exports an object with
 </div>
 </div>
 
-<div id="outline-container-orgabd7d3f" class="outline-2">
-<h2 id="orgabd7d3f">CSS Frameworks</h2>
-<div class="outline-text-2" id="text-orgabd7d3f">
+<div id="outline-container-org31a3b8f" class="outline-2">
+<h2 id="org31a3b8f">CSS Frameworks</h2>
+<div class="outline-text-2" id="text-org31a3b8f">
 <p>
 JS based and better to use with your framework based JavaScript applications:
 </p>
@@ -560,7 +555,7 @@ CSS first frameworks which don't come with JavaScript components by default:
 <div id="postamble" class="status">
 <p class="date">Date: 2020-12-02 Wed 09:53</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:59</p>
+<p class="date">Created: 2021-01-01 Fri 12:32</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

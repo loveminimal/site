@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<!-- 2020-12-11 Fri 10:59 -->
+<!-- 2021-01-01 Fri 12:32 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>数组处理</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js"></script>
 </head>
 <body>
 <div id="content">
@@ -23,19 +18,19 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org2706f48">数组是什么</a></li>
-<li><a href="#orged61473">数组也是一种数据类型</a></li>
-<li><a href="#org891e34a"><span class="todo TODO">TODO</span> Arrays 工具类</a>
+<li><a href="#org567081b">数组是什么</a></li>
+<li><a href="#org6c0fc34">数组也是一种数据类型</a></li>
+<li><a href="#org771bc06"><span class="todo TODO">TODO</span> Arrays 工具类</a>
 <ul>
-<li><a href="#org988b756">数组比较</a></li>
-<li><a href="#orgc698885">数组填充</a></li>
-<li><a href="#org658e0dd">数组查找</a></li>
-<li><a href="#org009493c">数组复制</a></li>
-<li><a href="#orgc0b262b">数组排序</a></li>
-<li><a href="#org66fc4ca">冒泡排序</a></li>
-<li><a href="#org341beab"><span class="todo TODO">TODO</span> 快速排序</a></li>
-<li><a href="#orged7d110"><span class="todo TODO">TODO</span> 选择排序</a></li>
-<li><a href="#orgfe3ee42"><span class="todo TODO">TODO</span> 插入排序</a></li>
+<li><a href="#orgc220a21">数组比较</a></li>
+<li><a href="#org4db22cf">数组填充</a></li>
+<li><a href="#org2779810">数组查找</a></li>
+<li><a href="#orga56c327">数组复制</a></li>
+<li><a href="#org4e95b4b">数组排序</a></li>
+<li><a href="#org847231e">冒泡排序</a></li>
+<li><a href="#orgbd751bb"><span class="todo TODO">TODO</span> 快速排序</a></li>
+<li><a href="#orgee32530"><span class="todo TODO">TODO</span> 选择排序</a></li>
+<li><a href="#orgdc363e7"><span class="todo TODO">TODO</span> 插入排序</a></li>
 </ul>
 </li>
 </ul>
@@ -49,9 +44,9 @@
 随着处理的信息量越来越大，工作也就越来越烦琐，这时可以使用数组或集合来存储信息。通过使用数组，可以在很大程度上缩短和简化程序代码，从而提高应用程序的效率。
 </p>
 
-<div id="outline-container-org2706f48" class="outline-2">
-<h2 id="org2706f48">数组是什么</h2>
-<div class="outline-text-2" id="text-org2706f48">
+<div id="outline-container-org567081b" class="outline-2">
+<h2 id="org567081b">数组是什么</h2>
+<div class="outline-text-2" id="text-org567081b">
 <p>
 <span class="underline">数组</span> （array）是一种最简单的复合数据类型，它是有序数据的集合，数组中的每个元素具有相同的数据类型，可以用一个统一的数组名和不同的下标来确定数组中唯一的元素。根据数组的维度，可以将其分为一维数组、二维数组和多维数组等。
 </p>
@@ -334,9 +329,9 @@ int intArray[][] = {{1,2}, {11}, {21,22,23}, {31,32,33}};
 </div>
 </div>
 
-<div id="outline-container-orged61473" class="outline-2">
-<h2 id="orged61473">数组也是一种数据类型</h2>
-<div class="outline-text-2" id="text-orged61473">
+<div id="outline-container-org6c0fc34" class="outline-2">
+<h2 id="org6c0fc34">数组也是一种数据类型</h2>
+<div class="outline-text-2" id="text-org6c0fc34">
 <p>
 Java 的数组要求所有的数组元素具有相同的数据类型。
 </p>
@@ -367,17 +362,17 @@ Java 的数组既可以存储基本类型的数据，也可以存储引用类型
 </div>
 </div>
 
-<div id="outline-container-org891e34a" class="outline-2">
-<h2 id="org891e34a"><span class="todo TODO">TODO</span> Arrays 工具类</h2>
-<div class="outline-text-2" id="text-org891e34a">
+<div id="outline-container-org771bc06" class="outline-2">
+<h2 id="org771bc06"><span class="todo TODO">TODO</span> Arrays 工具类</h2>
+<div class="outline-text-2" id="text-org771bc06">
 <p>
 Arrays 类是一个工具类，其中包含了数组操作的很多方法。这个 Arrays 类里均为 <code>static</code> 修饰的方法（ <code>static</code> 修饰的方法可以直接通过类名调用），可以直接通过 <code>Arrays.xxx(xxx)</code> 的形式调用方法。
 </p>
 </div>
 
-<div id="outline-container-org988b756" class="outline-3">
-<h3 id="org988b756">数组比较</h3>
-<div class="outline-text-3" id="text-org988b756">
+<div id="outline-container-orgc220a21" class="outline-3">
+<h3 id="orgc220a21">数组比较</h3>
+<div class="outline-text-3" id="text-orgc220a21">
 <p>
 数组相等的条件下不仅要求数组元素的个数必须相等，而且要求对应位置的元素也相等，Arrays 类提供了 <code>equals()</code> 方法比较整个数组。
 </p>
@@ -388,9 +383,9 @@ Arrays.equals(arrayA, arrayB);
 </div>
 </div>
 
-<div id="outline-container-orgc698885" class="outline-3">
-<h3 id="orgc698885">数组填充</h3>
-<div class="outline-text-3" id="text-orgc698885">
+<div id="outline-container-org4db22cf" class="outline-3">
+<h3 id="org4db22cf">数组填充</h3>
+<div class="outline-text-3" id="text-org4db22cf">
 <p>
 Arrays 类提供了一个 <code>fill()</code> 方法，可以在指定位置进行数值填充。 <code>fill()</code> 方法虽然可以填充数组，但是它的功能有限制，只能使用同一个数值进行填充。
 </p>
@@ -405,9 +400,9 @@ Arrays.fill(array, value);
 </div>
 </div>
 
-<div id="outline-container-org658e0dd" class="outline-3">
-<h3 id="org658e0dd">数组查找</h3>
-<div class="outline-text-3" id="text-org658e0dd">
+<div id="outline-container-org2779810" class="outline-3">
+<h3 id="org2779810">数组查找</h3>
+<div class="outline-text-3" id="text-org2779810">
 <p>
 查找数组是指从数组中查询指定位置的元素，或者查询某元素在指定数组中的位置。
 </p>
@@ -436,9 +431,9 @@ binarySearch(Object[] arr, int fromIndex, int toIndex, Object key);
 </div>
 </div>
 
-<div id="outline-container-org009493c" class="outline-3">
-<h3 id="org009493c">数组复制</h3>
-<div class="outline-text-3" id="text-org009493c">
+<div id="outline-container-orga56c327" class="outline-3">
+<h3 id="orga56c327">数组复制</h3>
+<div class="outline-text-3" id="text-orga56c327">
 <p>
 所谓复制数组，是指将一个数组中的元素在另一个数组中进行复制。
 </p>
@@ -550,9 +545,9 @@ System.arraycopy(dataType[] arcArray, int srcIndex, int destArray, int destIndex
 </div>
 </div>
 
-<div id="outline-container-orgc0b262b" class="outline-3">
-<h3 id="orgc0b262b">数组排序</h3>
-<div class="outline-text-3" id="text-orgc0b262b">
+<div id="outline-container-org4e95b4b" class="outline-3">
+<h3 id="org4e95b4b">数组排序</h3>
+<div class="outline-text-3" id="text-org4e95b4b">
 <p>
 Java 语言中使用 Arrays 类提供的 <code>sort()</code> 方法来对数组进行排序。
 </p>
@@ -634,9 +629,9 @@ Java 语言中使用 Arrays 类提供的 <code>sort()</code> 方法来对数组�
 </div>
 </div>
 
-<div id="outline-container-org66fc4ca" class="outline-3">
-<h3 id="org66fc4ca">冒泡排序</h3>
-<div class="outline-text-3" id="text-org66fc4ca">
+<div id="outline-container-org847231e" class="outline-3">
+<h3 id="org847231e">冒泡排序</h3>
+<div class="outline-text-3" id="text-org847231e">
 <p>
 i.e. Bubble Sort
 </p>
@@ -682,9 +677,9 @@ Java 中的冒泡排序在双层循环中实现，其中外层循环控制排序
 </div>
 </div>
 
-<div id="outline-container-org341beab" class="outline-3">
-<h3 id="org341beab"><span class="todo TODO">TODO</span> 快速排序</h3>
-<div class="outline-text-3" id="text-org341beab">
+<div id="outline-container-orgbd751bb" class="outline-3">
+<h3 id="orgbd751bb"><span class="todo TODO">TODO</span> 快速排序</h3>
+<div class="outline-text-3" id="text-orgbd751bb">
 <p>
 i.e. Quick Sort
 </p>
@@ -703,24 +698,24 @@ i.e. Quick Sort
 </div>
 </div>
 
-<div id="outline-container-orged7d110" class="outline-3">
-<h3 id="orged7d110"><span class="todo TODO">TODO</span> 选择排序</h3>
-<div class="outline-text-3" id="text-orged7d110">
+<div id="outline-container-orgee32530" class="outline-3">
+<h3 id="orgee32530"><span class="todo TODO">TODO</span> 选择排序</h3>
+<div class="outline-text-3" id="text-orgee32530">
 <p>
 选择排序是指每一趟从待排序的数据中选出最大（或最小）的一个元素，顺序放在已排好序的数列的最后，直到全部待排序的数据元素排完。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgfe3ee42" class="outline-3">
-<h3 id="orgfe3ee42"><span class="todo TODO">TODO</span> 插入排序</h3>
+<div id="outline-container-orgdc363e7" class="outline-3">
+<h3 id="orgdc363e7"><span class="todo TODO">TODO</span> 插入排序</h3>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-18 Fri 19:37</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:59</p>
+<p class="date">Created: 2021-01-01 Fri 12:32</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

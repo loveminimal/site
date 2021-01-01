@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-<!-- 2020-12-11 Fri 10:59 -->
+<!-- 2021-01-01 Fri 12:32 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>数字和日期处理</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js"></script>
 </head>
 <body>
 <div id="content">
@@ -23,13 +18,13 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge2011f8">Math 类的常用方法</a></li>
-<li><a href="#org2db1def">生成随机数</a></li>
-<li><a href="#org6ac9f5a"><span class="todo TODO">TODO</span> 数字格式化</a></li>
-<li><a href="#org9216348">时间日期的处理</a>
+<li><a href="#org73ea770">Math 类的常用方法</a></li>
+<li><a href="#org1eb475a">生成随机数</a></li>
+<li><a href="#org7a87e33"><span class="todo TODO">TODO</span> 数字格式化</a></li>
+<li><a href="#org9d55517">时间日期的处理</a>
 <ul>
-<li><a href="#org5177618">Date 类</a></li>
-<li><a href="#org52c3737"><span class="todo TODO">TODO</span> Calendar 类</a></li>
+<li><a href="#org2203df7">Date 类</a></li>
+<li><a href="#orgde4207c"><span class="todo TODO">TODO</span> Calendar 类</a></li>
 </ul>
 </li>
 </ul>
@@ -39,9 +34,9 @@
 在解决实际问题时，对数字和日期的处理是非常普遍的，如数学问题、随机数问题和日期问题等。为了解决这些问题，Java 提供了处理相关问题的类，包括 Math 类、Random 类、BigInteger 类、Date 类等。
 </p>
 
-<div id="outline-container-orge2011f8" class="outline-2">
-<h2 id="orge2011f8">Math 类的常用方法</h2>
-<div class="outline-text-2" id="text-orge2011f8">
+<div id="outline-container-org73ea770" class="outline-2">
+<h2 id="org73ea770">Math 类的常用方法</h2>
+<div class="outline-text-2" id="text-org73ea770">
 <p>
 在 Java 中 Math 类封装了常用的数学运算，提供了基本的数学操作，如指数、对数、平方根和三角函数等。Math 类位于 <code>java.lang</code> 包，它的构造方法是 <code>private</code> 的，因此无法创建 Math 类的对象，并且 Math 类中的所有方法都是类方法，可以直接通过类名来调用它们。
 </p>
@@ -83,9 +78,9 @@ Math 类中包含 <code>E</code> 和 <code>PI</code> 两个静态常量，分别
 </div>
 </div>
 
-<div id="outline-container-org2db1def" class="outline-2">
-<h2 id="org2db1def">生成随机数</h2>
-<div class="outline-text-2" id="text-org2db1def">
+<div id="outline-container-org1eb475a" class="outline-2">
+<h2 id="org1eb475a">生成随机数</h2>
+<div class="outline-text-2" id="text-org1eb475a">
 <p>
 在 Java 中要生成一个指定范围之内的随机数字在两种方法：
 </p>
@@ -134,21 +129,21 @@ Math 类的 <code>random()</code> 方法没有参数，它默认会返回大于�
 </div>
 </div>
 
-<div id="outline-container-org6ac9f5a" class="outline-2">
-<h2 id="org6ac9f5a"><span class="todo TODO">TODO</span> 数字格式化</h2>
+<div id="outline-container-org7a87e33" class="outline-2">
+<h2 id="org7a87e33"><span class="todo TODO">TODO</span> 数字格式化</h2>
 </div>
 
-<div id="outline-container-org9216348" class="outline-2">
-<h2 id="org9216348">时间日期的处理</h2>
-<div class="outline-text-2" id="text-org9216348">
+<div id="outline-container-org9d55517" class="outline-2">
+<h2 id="org9d55517">时间日期的处理</h2>
+<div class="outline-text-2" id="text-org9d55517">
 <p>
 在 Java 中获取当前时间，可以使用 <code>java.util.Date</code> 类和 <code>java.util.Calendar</code> 类完成。其中，Date 类主要封装了系统的日期和时间信息，Calendar 类则会根据系统的日历来解释 Date 对象。
 </p>
 </div>
 
-<div id="outline-container-org5177618" class="outline-3">
-<h3 id="org5177618">Date 类</h3>
-<div class="outline-text-3" id="text-org5177618">
+<div id="outline-container-org2203df7" class="outline-3">
+<h3 id="org2203df7">Date 类</h3>
+<div class="outline-text-3" id="text-org2203df7">
 <p>
 Date 类表示系统特定的时间戳，可以精确到毫秒。Date 对象表示时间的默认顺序是 <span class="underline">星期、月、日、小时、分、秒、年</span> 。
 </p>
@@ -177,15 +172,15 @@ Date 类有如下两个构造方法：
 </div>
 </div>
 
-<div id="outline-container-org52c3737" class="outline-3">
-<h3 id="org52c3737"><span class="todo TODO">TODO</span> Calendar 类</h3>
+<div id="outline-container-orgde4207c" class="outline-3">
+<h3 id="orgde4207c"><span class="todo TODO">TODO</span> Calendar 类</h3>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-18 Fri 17:13</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:59</p>
+<p class="date">Created: 2021-01-01 Fri 12:32</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
