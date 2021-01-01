@@ -26,9 +26,11 @@ function js(cb) {
 }
 
 function css(cb) {
-    return src("./src/style.scss").pipe(sass()).pipe(dest("dist"));
+    return src("./src/style.scss")
+        .pipe(sass({ outputStyle: "compressed" }))
+        .pipe(dest("dist"));
 
     cb();
 }
 
-module.exports.default = parallel(js);
+module.exports.default = parallel(css);
