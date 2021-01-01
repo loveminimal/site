@@ -33,8 +33,8 @@ function css(cb) {
     cb();
 }
 
-watch(["./src"], (cb) => {
-    cb();
-});
+// watch(["./src"], (cb) => {
+//     cb();
+// });
 
-module.exports.default = parallel(css);
+module.exports.default = parallel(js, css);

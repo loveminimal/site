@@ -1,6 +1,6 @@
-import $ from "jquery";
-import DarkReader from "darkreader";
-import USERCONFIG from "../user.config";
+const $ = require("jquery");
+const DarkReader = require("darkreader");
+const USERCONFIG = require("../user.config");
 
 // Init global variables
 // ------------------------------------------------------------------
