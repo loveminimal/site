@@ -2,4 +2,4 @@
 
 #+HTML_HEAD: <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/dist/style.css" />
-#+HTML_HEAD: <script src="/dist/main.js"></script>
+#+HTML_HEAD: <script src="/dist/main.js" defer></script>
