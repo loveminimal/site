@@ -7,8 +7,9 @@
     "author": "Jack Liu <loveminimal@163.com>",
     "license": "MIT",
     "scripts": {
-        "build": "gulp", 
-        "deploy": "gulp && bash copy.sh"
+        "dev": "gulp", 
+        "build": "gulp build",
+        "deploy": "gulp build && bash copy.sh"
     },
     "devDependencies": {
         "@babel/core": "7.12.10",

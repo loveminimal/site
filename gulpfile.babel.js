@@ -37,4 +37,12 @@ function css(cb) {
 //     cb();
 // });
 
-module.exports.default = parallel(js, css);
+module.exports.default = function () {
+    watch(
+        "src/**/*.(js|scss)",
+        { events: "all", queue: false, delay: 500 },
+        parallel(js, css)
+    );
+};
+
+module.exports.build = parallel(js, css);
