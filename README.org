@@ -6,7 +6,7 @@ A simple site based on org mode.
 
 Hexo and Hugo are also awesome static site generator, stable, flexible and simple. But as an emacser, you may feel bored, especially when it comes to *img showwing*. So I cannot have to try another way to construct my site, mainly for blog and wiki.
 
-[[./images/tutor/bg.jpg]]
+[[./images/bg/emacs.jpg]]
 
 Okay, let's go : )
 
