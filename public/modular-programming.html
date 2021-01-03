@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2020-12-15 Tue 10:13 -->
+<!-- 2021-01-01 Fri 14:36 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>模块化编程</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js" defer></script>
 </head>
 <body>
 <div id="content">
@@ -23,31 +18,31 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbaa684c">简介</a></li>
-<li><a href="#orgc03c3c7">JavaScript 的模块化</a>
+<li><a href="#org5f0807b">简介</a></li>
+<li><a href="#org13cf5e7">JavaScript 的模块化</a>
 <ul>
-<li><a href="#org4ddf3d9">原始划分</a></li>
-<li><a href="#org216ba26">对象划分</a></li>
-<li><a href="#orgd034464">立即执行函数划分</a></li>
-<li><a href="#org85f012c">模块依赖</a></li>
+<li><a href="#org9fc3643">原始划分</a></li>
+<li><a href="#org13912f6">对象划分</a></li>
+<li><a href="#org3bd94e2">立即执行函数划分</a></li>
+<li><a href="#orgf8a960f">模块依赖</a></li>
 </ul>
 </li>
-<li><a href="#org782b305">CommonJS</a>
+<li><a href="#org6b7df1c">CommonJS</a>
 <ul>
-<li><a href="#org8336450">CommonJS 模块原理</a></li>
-<li><a href="#orgf95df47">module.exports VS exports</a></li>
+<li><a href="#org593f0de">CommonJS 模块原理</a></li>
+<li><a href="#org1d43f0a">module.exports VS exports</a></li>
 </ul>
 </li>
-<li><a href="#orgf9c86c3">ES Module</a>
+<li><a href="#org2a214e1">ES Module</a>
 <ul>
-<li><a href="#org5180fd3">ES Module VS CommonJS</a></li>
-<li><a href="#org1334c84">export</a></li>
-<li><a href="#org830118b">import</a></li>
-<li><a href="#org261d2e6">export default</a></li>
-<li><a href="#orgd68b1fa">import()</a></li>
+<li><a href="#org50f71c2">ES Module VS CommonJS</a></li>
+<li><a href="#orgd9f2d63">export</a></li>
+<li><a href="#org47b2c85">import</a></li>
+<li><a href="#org06a5a6a">export default</a></li>
+<li><a href="#org5df7995">import()</a></li>
 </ul>
 </li>
-<li><a href="#org60f2955">Webpack Module</a></li>
+<li><a href="#orgcc5ccb7">Webpack Module</a></li>
 </ul>
 </div>
 </div>
@@ -67,9 +62,9 @@ i.e. Modular Programming
 </ul>
 </blockquote>
 
-<div id="outline-container-orgbaa684c" class="outline-2">
-<h2 id="orgbaa684c">简介</h2>
-<div class="outline-text-2" id="text-orgbaa684c">
+<div id="outline-container-org5f0807b" class="outline-2">
+<h2 id="org5f0807b">简介</h2>
+<div class="outline-text-2" id="text-org5f0807b">
 <p>
 <span class="underline">模块化编程</span> （模块化程序设计），是指在进行程序设计时将一个大程序 <b>按照功能划分</b> 为若干小程序模块，每个小程序模块完成一个确定的功能，并在这些模块之间 <b>建立必要的联系</b> ，通过模块的互相协作完成整个功能的程序设计方法。
 </p>
@@ -100,9 +95,9 @@ i.e. Modular Programming
 </div>
 </div>
 
-<div id="outline-container-orgc03c3c7" class="outline-2">
-<h2 id="orgc03c3c7">JavaScript 的模块化<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-orgc03c3c7">
+<div id="outline-container-org13cf5e7" class="outline-2">
+<h2 id="org13cf5e7">JavaScript 的模块化<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-org13cf5e7">
 <p>
 1991年8月6日 (农历六月廿六)，世界上第一个网页诞生。世界上的第一个网页是这样的 <a href="http://info.cern.ch/">http://info.cern.ch/</a> ，只用来作为文本的展示和极其简单的交互。
 </p>
@@ -139,9 +134,9 @@ title=""
 </p>
 </div>
 
-<div id="outline-container-org4ddf3d9" class="outline-3">
-<h3 id="org4ddf3d9">原始划分</h3>
-<div class="outline-text-3" id="text-org4ddf3d9">
+<div id="outline-container-org9fc3643" class="outline-3">
+<h3 id="org9fc3643">原始划分</h3>
+<div class="outline-text-3" id="text-org9fc3643">
 <p>
 我们可以认为模块就是实现特定功能的一组方法（以及记录状态），只要把不同函数简单地放在一起，就算是一个模块。
 </p>
@@ -165,9 +160,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org216ba26" class="outline-3">
-<h3 id="org216ba26">对象划分</h3>
-<div class="outline-text-3" id="text-org216ba26">
+<div id="outline-container-org13912f6" class="outline-3">
+<h3 id="org13912f6">对象划分</h3>
+<div class="outline-text-3" id="text-org13912f6">
 <p>
 为了解决上面的缺点，可以把模块写成一个对象，所有的模块成员都放到这个对象里面。
 </p>
@@ -191,9 +186,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgd034464" class="outline-3">
-<h3 id="orgd034464">立即执行函数划分</h3>
-<div class="outline-text-3" id="text-orgd034464">
+<div id="outline-container-org3bd94e2" class="outline-3">
+<h3 id="org3bd94e2">立即执行函数划分</h3>
+<div class="outline-text-3" id="text-org3bd94e2">
 <p>
 如何不暴露私有成员的目的，自然是做到外界不能直接访问原始对象内部，只能访问我们想让他访问的对象。使用“立即执行函数（Immediately-Invoked Function Expression, IIFE）”，可以砍到不暴露私有成员的目的。
 </p>
@@ -223,9 +218,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org85f012c" class="outline-3">
-<h3 id="org85f012c">模块依赖</h3>
-<div class="outline-text-3" id="text-org85f012c">
+<div id="outline-container-orgf8a960f" class="outline-3">
+<h3 id="orgf8a960f">模块依赖</h3>
+<div class="outline-text-3" id="text-orgf8a960f">
 <p>
 我们在前面已经讲述了 <b>如何分离模块的问题</b> ，那么，另一个问题也就随之而来了 &#x2013; 假如在一个程序中，模块 A 调用了 B ，B 又调用了 C、D ，我们如何处理 <b>模块之间的依赖关系</b> 呢？
 </p>
@@ -245,9 +240,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org782b305" class="outline-2">
-<h2 id="org782b305">CommonJS<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
-<div class="outline-text-2" id="text-org782b305">
+<div id="outline-container-org6b7df1c" class="outline-2">
+<h2 id="org6b7df1c">CommonJS<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
+<div class="outline-text-2" id="text-org6b7df1c">
 <p>
 在 Node 环境中，一个 <code>.js</code> 文件就称之为一个模块（module），它们遵循 CommonJS 模块规范。
 </p>
@@ -293,9 +288,9 @@ title=""
 </ul>
 </div>
 
-<div id="outline-container-org8336450" class="outline-3">
-<h3 id="org8336450">CommonJS 模块原理</h3>
-<div class="outline-text-3" id="text-org8336450">
+<div id="outline-container-org593f0de" class="outline-3">
+<h3 id="org593f0de">CommonJS 模块原理</h3>
+<div class="outline-text-3" id="text-org593f0de">
 <p>
 我们知道，JavaScript 语言本身并没有一种模块机制来保证不同模块可以使用相同的变量名。
 </p>
@@ -405,9 +400,9 @@ NodeJS 利用 JavaScript 的函数式编程特性 &#x2013; 闭包，轻松实现
 </div>
 </div>
 
-<div id="outline-container-orgf95df47" class="outline-3">
-<h3 id="orgf95df47">module.exports VS exports</h3>
-<div class="outline-text-3" id="text-orgf95df47">
+<div id="outline-container-org1d43f0a" class="outline-3">
+<h3 id="org1d43f0a">module.exports VS exports</h3>
+<div class="outline-text-3" id="text-org1d43f0a">
 <p>
 我们只需要知道， <code>module.exports</code> 是 NodeJS 为我们准备的用于模块输入的唯一真正的对象， <code>exports</code> 不过是对 <code>module.exports</code> 的引用罢了。这也就决定了，如下使用方式的对错：
 </p>
@@ -430,9 +425,9 @@ NodeJS 利用 JavaScript 的函数式编程特性 &#x2013; 闭包，轻松实现
 </div>
 </div>
 
-<div id="outline-container-orgf9c86c3" class="outline-2">
-<h2 id="orgf9c86c3">ES Module<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
-<div class="outline-text-2" id="text-orgf9c86c3">
+<div id="outline-container-org2a214e1" class="outline-2">
+<h2 id="org2a214e1">ES Module<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
+<div class="outline-text-2" id="text-org2a214e1">
 <p>
 在 ES6 之前，社区制定了一些模块加载方案，最主要的有 CommonJS（Node 服务器端） 和 AMD （浏览器端）两种。
 </p>
@@ -442,9 +437,9 @@ NodeJS 利用 JavaScript 的函数式编程特性 &#x2013; 闭包，轻松实现
 </p>
 </div>
 
-<div id="outline-container-org5180fd3" class="outline-3">
-<h3 id="org5180fd3">ES Module VS CommonJS</h3>
-<div class="outline-text-3" id="text-org5180fd3">
+<div id="outline-container-org50f71c2" class="outline-3">
+<h3 id="org50f71c2">ES Module VS CommonJS</h3>
+<div class="outline-text-3" id="text-org50f71c2">
 <p>
 ES Module 模块的设计思想是尽量的 <b>静态化</b> ，使得编译时就能确定模块的依赖关系，以及输入和输出的变量。CommonJS 和 AMD 模块，都只能在运行时确定这些东东。比如，CommonJS 模块输出的就是 <code>module.exports</code> 对象，输入时必须查找对象属性。
 </p>
@@ -488,9 +483,9 @@ ES Module 模块的设计思想是尽量的 <b>静态化</b> ，使得编译时�
 </div>
 </div>
 
-<div id="outline-container-org1334c84" class="outline-3">
-<h3 id="org1334c84">export</h3>
-<div class="outline-text-3" id="text-org1334c84">
+<div id="outline-container-orgd9f2d63" class="outline-3">
+<h3 id="orgd9f2d63">export</h3>
+<div class="outline-text-3" id="text-orgd9f2d63">
 <p>
 ES Module 模块功能主要由两个命令构成： <code>export</code> 和 <code>import</code> ：
 </p>
@@ -573,9 +568,9 @@ ES Module 模块功能主要由两个命令构成： <code>export</code> 和 <co
 </div>
 </div>
 
-<div id="outline-container-org830118b" class="outline-3">
-<h3 id="org830118b">import</h3>
-<div class="outline-text-3" id="text-org830118b">
+<div id="outline-container-org47b2c85" class="outline-3">
+<h3 id="org47b2c85">import</h3>
+<div class="outline-text-3" id="text-org47b2c85">
 <p>
 前面我们讲了输出 <code>export</code> ，这个章节我们来认识一下输入 <code>import</code> 。
 </p>
@@ -606,9 +601,9 @@ ES Module 模块功能主要由两个命令构成： <code>export</code> 和 <co
 </div>
 </div>
 
-<div id="outline-container-org261d2e6" class="outline-3">
-<h3 id="org261d2e6">export default</h3>
-<div class="outline-text-3" id="text-org261d2e6">
+<div id="outline-container-org06a5a6a" class="outline-3">
+<h3 id="org06a5a6a">export default</h3>
+<div class="outline-text-3" id="text-org06a5a6a">
 <p>
 前面说过，使用 <code>import</code> 命令的时候，用户需要知道所要加载的变量名或函数名，否则无法加载。为了给用户提供方便，让他们不用阅读文档就能加载模块，就要用到 <code>export default</code> 命令，为模块指定默认输出。
 </p>
@@ -686,9 +681,9 @@ ES Module 模块功能主要由两个命令构成： <code>export</code> 和 <co
 </div>
 </div>
 
-<div id="outline-container-orgd68b1fa" class="outline-3">
-<h3 id="orgd68b1fa">import()</h3>
-<div class="outline-text-3" id="text-orgd68b1fa">
+<div id="outline-container-org5df7995" class="outline-3">
+<h3 id="org5df7995">import()</h3>
+<div class="outline-text-3" id="text-org5df7995">
 <p>
 前面介绍过， <code>import</code> 命令会被 JavaScript 引擎静态分析，先于模块内的其他语句执行。
 </p>
@@ -738,9 +733,9 @@ import(specifier)               // `specifier` 指定所要加载的模块的位
 </div>
 </div>
 
-<div id="outline-container-org60f2955" class="outline-2">
-<h2 id="org60f2955">Webpack Module<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup></h2>
-<div class="outline-text-2" id="text-org60f2955">
+<div id="outline-container-orgcc5ccb7" class="outline-2">
+<h2 id="orgcc5ccb7">Webpack Module<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup></h2>
+<div class="outline-text-2" id="text-orgcc5ccb7">
 <p>
 在模块化编程中，开发者将程序分解成离散功能块（Discrete Chunks of Funtionality），并称之为模块。
 </p>
@@ -810,7 +805,7 @@ Webpack 通过 loader 可以支持各种语言和预处理器编写模块。load
 <div id="postamble" class="status">
 <p class="date">Date: 2020-12-11 Fri 12:12</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-15 Tue 10:13</p>
+<p class="date">Created: 2021-01-01 Fri 14:36</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

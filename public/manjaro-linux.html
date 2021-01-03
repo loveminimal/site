@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2020-12-11 Fri 10:59 -->
+<!-- 2021-01-01 Fri 14:36 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Manjaro Linux</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js" defer></script>
 </head>
 <body>
 <div id="content">
@@ -23,39 +18,39 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga8ff9d6">安装</a></li>
-<li><a href="#org889c9d1">换源</a></li>
-<li><a href="#orgaf90f6e">映射 Caps Lock</a>
+<li><a href="#org8e1560a">安装</a></li>
+<li><a href="#orgb34c559">换源</a></li>
+<li><a href="#orgd837320">映射 Caps Lock</a>
 <ul>
-<li><a href="#org3e7bd4e">使用 Xmodmap 工具 </a></li>
+<li><a href="#org00ad1a8">使用 Xmodmap 工具 </a></li>
 </ul>
 </li>
-<li><a href="#org13e8afe">中文输入法</a></li>
-<li><a href="#orgc84ad7d">五笔输入</a></li>
-<li><a href="#org8aef1f3">中文字体</a></li>
-<li><a href="#org9668bf6">美化</a></li>
-<li><a href="#org4a5d2e5">工具</a></li>
-<li><a href="#orgd4a91ff">FAQ</a>
+<li><a href="#orgbc3a73b">中文输入法</a></li>
+<li><a href="#org6e13b38">五笔输入</a></li>
+<li><a href="#org297533f">中文字体</a></li>
+<li><a href="#org387d0a6">美化</a></li>
+<li><a href="#org99973f9">工具</a></li>
+<li><a href="#orge4cd066">FAQ</a>
 <ul>
-<li><a href="#orgb3a8177">OBS 录制窗口撕裂</a></li>
+<li><a href="#orgce7825c">OBS 录制窗口撕裂</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga8ff9d6" class="outline-2">
-<h2 id="orga8ff9d6">安装</h2>
-<div class="outline-text-2" id="text-orga8ff9d6">
+<div id="outline-container-org8e1560a" class="outline-2">
+<h2 id="org8e1560a">安装</h2>
+<div class="outline-text-2" id="text-org8e1560a">
 <p>
 去 <a href="https://manjaro.org/">Manjaro</a> 官网下载镜像 ISO ，使用 <a href="https://rufus.ie/">rufus</a> 刻录，安装过程……
 </p>
 </div>
 </div>
 
-<div id="outline-container-org889c9d1" class="outline-2">
-<h2 id="org889c9d1">换源</h2>
-<div class="outline-text-2" id="text-org889c9d1">
+<div id="outline-container-orgb34c559" class="outline-2">
+<h2 id="orgb34c559">换源</h2>
+<div class="outline-text-2" id="text-orgb34c559">
 <p>
 <span class="underline">1. 编辑</span>
 </p>
@@ -121,9 +116,9 @@ Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
 </div>
 </div>
 
-<div id="outline-container-orgaf90f6e" class="outline-2">
-<h2 id="orgaf90f6e">映射 Caps Lock</h2>
-<div class="outline-text-2" id="text-orgaf90f6e">
+<div id="outline-container-orgd837320" class="outline-2">
+<h2 id="orgd837320">映射 Caps Lock</h2>
+<div class="outline-text-2" id="text-orgd837320">
 <p>
 编辑 <code>.zshrc</code> 或 <code>.bashrc</code> ，添加如下内容：
 </p>
@@ -137,9 +132,9 @@ setxkbmap -option ctrl:swapcaps
 </p>
 </div>
 
-<div id="outline-container-org3e7bd4e" class="outline-3">
-<h3 id="org3e7bd4e">使用 Xmodmap 工具 <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> <sup>, </sup><sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
-<div class="outline-text-3" id="text-org3e7bd4e">
+<div id="outline-container-org00ad1a8" class="outline-3">
+<h3 id="org00ad1a8">使用 Xmodmap 工具 <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> <sup>, </sup><sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
+<div class="outline-text-3" id="text-org00ad1a8">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="linenr"> 1: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#33258;&#23450;&#20041;&#26144;&#23556;&#34920;</span>
 <span class="linenr"> 2: </span>xmodmap -pke &gt; ~/.Xmodmap
@@ -158,9 +153,9 @@ setxkbmap -option ctrl:swapcaps
 </div>
 </div>
 
-<div id="outline-container-org13e8afe" class="outline-2">
-<h2 id="org13e8afe">中文输入法</h2>
-<div class="outline-text-2" id="text-org13e8afe">
+<div id="outline-container-orgbc3a73b" class="outline-2">
+<h2 id="orgbc3a73b">中文输入法</h2>
+<div class="outline-text-2" id="text-orgbc3a73b">
 <p>
 安装 <code>fcitx</code> 及其相关依赖，如下：
 </p>
@@ -186,9 +181,9 @@ export XMODIFIERS="@im=fcitx"
 </div>
 </div>
 
-<div id="outline-container-orgc84ad7d" class="outline-2">
-<h2 id="orgc84ad7d">五笔输入</h2>
-<div class="outline-text-2" id="text-orgc84ad7d">
+<div id="outline-container-org6e13b38" class="outline-2">
+<h2 id="org6e13b38">五笔输入</h2>
+<div class="outline-text-2" id="text-org6e13b38">
 <blockquote>
 <p>
 Windows 上使用的极品五笔，感觉很不错。 Linux 上的 fcitx 也是包含 Wubi 输入的，但是词库有点可怜， 所以 rime 是一个不错的选择，它是一个输入法框架，可以按需引入。
@@ -200,7 +195,7 @@ Windows 上使用的极品五笔，感觉很不错。 Linux 上的 fcitx 也是�
 </p>
 
 <p>
-去 <a href="https://rime.im/">rime</a> 官网下载，如果使用拼音输入的话，按照其教程操作后即可，以下内容针对 fcitx 五笔的初始化（ibus 的皮肤不好看，官方的是针对 ibus 的）， fcitx 的安装见 <a href="#org13e8afe">中文输入法 ↑</a> 。
+去 <a href="https://rime.im/">rime</a> 官网下载，如果使用拼音输入的话，按照其教程操作后即可，以下内容针对 fcitx 五笔的初始化（ibus 的皮肤不好看，官方的是针对 ibus 的）， fcitx 的安装见 <a href="#orgbc3a73b">中文输入法 ↑</a> 。
 </p>
 
 <p>
@@ -246,9 +241,9 @@ ibus-daemon -x -d
 </div>
 </div>
 
-<div id="outline-container-org8aef1f3" class="outline-2">
-<h2 id="org8aef1f3">中文字体<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
-<div class="outline-text-2" id="text-org8aef1f3">
+<div id="outline-container-org297533f" class="outline-2">
+<h2 id="org297533f">中文字体<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
+<div class="outline-text-2" id="text-org297533f">
 <div class="org-src-container">
 <pre class="src src-sh"><span class="linenr">1: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#25991;&#27849;&#39551;&#23383;&#20307;</span>
 <span class="linenr">2: </span>sudo pacman -S wqy-bitmapfont wqy-microhei wqy-microhei-lite wqy-zenhei
@@ -257,9 +252,9 @@ ibus-daemon -x -d
 </div>
 </div>
 
-<div id="outline-container-org9668bf6" class="outline-2">
-<h2 id="org9668bf6">美化</h2>
-<div class="outline-text-2" id="text-org9668bf6">
+<div id="outline-container-org387d0a6" class="outline-2">
+<h2 id="org387d0a6">美化</h2>
+<div class="outline-text-2" id="text-org387d0a6">
 <table>
 
 <colgroup>
@@ -298,9 +293,9 @@ ibus-daemon -x -d
 </div>
 </div>
 
-<div id="outline-container-org4a5d2e5" class="outline-2">
-<h2 id="org4a5d2e5">工具</h2>
-<div class="outline-text-2" id="text-org4a5d2e5">
+<div id="outline-container-org99973f9" class="outline-2">
+<h2 id="org99973f9">工具</h2>
+<div class="outline-text-2" id="text-org99973f9">
 <table>
 
 <colgroup>
@@ -329,13 +324,13 @@ ibus-daemon -x -d
 </div>
 </div>
 
-<div id="outline-container-orgd4a91ff" class="outline-2">
-<h2 id="orgd4a91ff">FAQ</h2>
-<div class="outline-text-2" id="text-orgd4a91ff">
+<div id="outline-container-orge4cd066" class="outline-2">
+<h2 id="orge4cd066">FAQ</h2>
+<div class="outline-text-2" id="text-orge4cd066">
 </div>
-<div id="outline-container-orgb3a8177" class="outline-3">
-<h3 id="orgb3a8177">OBS 录制窗口撕裂</h3>
-<div class="outline-text-3" id="text-orgb3a8177">
+<div id="outline-container-orgce7825c" class="outline-3">
+<h3 id="orgce7825c">OBS 录制窗口撕裂</h3>
+<div class="outline-text-3" id="text-orgce7825c">
 <pre class="example">
 System Settings → Display and Monitor → Compositor → Tearing prevention ("vsync")
 </pre>
@@ -367,7 +362,7 @@ System Settings → Display and Monitor → Compositor → Tearing prevention ("
 <div id="postamble" class="status">
 <p class="date">Date: 2020-05-06 Wed 14:47</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:59</p>
+<p class="date">Created: 2021-01-01 Fri 14:36</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

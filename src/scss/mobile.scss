@@ -1,0 +1,111 @@
+/* Mobile UI */
+@media screen and (max-width: 1026px) {
+    /* body, #content::before, #postamble::before { background: url('../images/bg/rose.jpg') center center / cover no-repeat fixed; } */
+
+    #content,
+    #postamble {
+        width: 91%;
+
+        &::before {
+            width: 100%;
+            display: block;
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            filter: blur(20px);
+            /* margin: -30px; */
+            z-index: -1;
+        }
+    }
+
+    .title {
+        font-size: 0.28rem;
+        white-space: nowrap;
+        overflow: auto;
+    }
+
+    #table-of-contents {
+        top: -380px;
+        left: 0;
+        height: 400px;
+        min-height: 400px;
+        width: 100%;
+        box-shadow: 0 1px 3px #999;
+        background: rgba(255, 255, 255, 0.86);
+        color: #369;
+        opacity: 0;
+        &:hover {
+            top: 0px;
+            opacity: 1;
+        }
+    }
+
+    .js-link-active {
+        color: #fff;
+        background: #19f;
+        padding: 1px 2px;
+    }
+
+    pre {
+        overflow: auto;
+    }
+
+    .top-btn {
+        right: 0;
+        bottom: 1%;
+        opacity: 0.1;
+    }
+    .nav-btn {
+        right: 0;
+        bottom: 7%;
+        opacity: 0.1;
+    }
+    .top-btn:hover,
+    .nav-btn:hover {
+        opacity: 0.1;
+    }
+
+    /* .js-outline-2, */
+    .js-outline-3 {
+        padding: 0.25rem 0.1rem 0.05rem 0.1rem;
+    }
+
+    .org-ul {
+        overflow: auto;
+    }
+    code,
+    a {
+        word-break: break-all;
+    }
+    .js-home-content {
+        background-size: 2.3rem;
+    }
+    .js-nav-link-container a {
+        width: 47%;
+    }
+
+    .js-footer-slogan {
+        position: absolute;
+        margin-bottom: 0.32rem;
+        width: 100%;
+        text-align: center;
+        /* font-style: oblique; */
+        font-size: 0.14rem;
+        /* color: #666; */
+    }
+
+    .js-note,
+    .js-note::before {
+        position: initial;
+        float: right;
+    }
+
+    .js-essay::before {
+        font-size: 0.24rem;
+        right: 0;
+        top: -20px;
+    }
+}

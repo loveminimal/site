@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2020-12-11 Fri 10:59 -->
+<!-- 2021-01-01 Fri 14:35 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>注解</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js" defer></script>
 </head>
 <body>
 <div id="content">
@@ -23,18 +18,18 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga6306f2">简介</a></li>
-<li><a href="#orgc451b79">基本注解</a>
+<li><a href="#org40a0a68">简介</a></li>
+<li><a href="#org7eba181">基本注解</a>
 <ul>
-<li><a href="#orgfd66cfe">@Override</a></li>
-<li><a href="#orgd043623">@Deprecated</a></li>
-<li><a href="#org1bd403b">@SuppressWarnings</a></li>
-<li><a href="#org7a577fd"><span class="todo TODO">TODO</span> @SafeVarargs</a></li>
-<li><a href="#org0a57c95"><span class="todo TODO">TODO</span> @FunctionalInterface</a></li>
+<li><a href="#orgd8d446b">@Override</a></li>
+<li><a href="#org44bfbee">@Deprecated</a></li>
+<li><a href="#org63c5847">@SuppressWarnings</a></li>
+<li><a href="#org2b22c5f"><span class="todo TODO">TODO</span> @SafeVarargs</a></li>
+<li><a href="#org79a2653"><span class="todo TODO">TODO</span> @FunctionalInterface</a></li>
 </ul>
 </li>
-<li><a href="#orgf2478e0"><span class="todo TODO">TODO</span> 元注解作用及使用</a></li>
-<li><a href="#orgeeb97ec"><span class="todo TODO">TODO</span> 自定义注解</a></li>
+<li><a href="#orgf1e1a2d"><span class="todo TODO">TODO</span> 元注解作用及使用</a></li>
+<li><a href="#orga7fe4b7"><span class="todo TODO">TODO</span> 自定义注解</a></li>
 </ul>
 </div>
 </div>
@@ -46,9 +41,9 @@
 注解与注释是有一定区别的，可以把注解理解为代码里的特殊标记，这些标记可以在编译、类加载和运行时被读取，并执行相应的处理。开发人员可以通过注解在不改变原有代码逻辑的情况下在源代码中嵌入补充信息。
 </p>
 
-<div id="outline-container-orga6306f2" class="outline-2">
-<h2 id="orga6306f2">简介</h2>
-<div class="outline-text-2" id="text-orga6306f2">
+<div id="outline-container-org40a0a68" class="outline-2">
+<h2 id="org40a0a68">简介</h2>
+<div class="outline-text-2" id="text-org40a0a68">
 <p>
 从 Java 1.5 开始可以在源代码中嵌入一些补充信息，这种补充信息称为 <span class="underline">注解</span> （Annotation）。
 </p>
@@ -108,26 +103,26 @@
 </div>
 </div>
 
-<div id="outline-container-orgc451b79" class="outline-2">
-<h2 id="orgc451b79">基本注解</h2>
-<div class="outline-text-2" id="text-orgc451b79">
+<div id="outline-container-org7eba181" class="outline-2">
+<h2 id="org7eba181">基本注解</h2>
+<div class="outline-text-2" id="text-org7eba181">
 <p>
 基本注解包括： <code>@Override、@Deprecated、@SuppressWarnings、@SafeVarargs</code> 和 <code>@FunctionalInterface</code> 。
 </p>
 </div>
 
-<div id="outline-container-orgfd66cfe" class="outline-3">
-<h3 id="orgfd66cfe">@Override</h3>
-<div class="outline-text-3" id="text-orgfd66cfe">
+<div id="outline-container-orgd8d446b" class="outline-3">
+<h3 id="orgd8d446b">@Override</h3>
+<div class="outline-text-3" id="text-orgd8d446b">
 <p>
 Java 中 <code>@Override</code> 注解是用来指定方法重写的，只能修饰方法并且只能用于方法重写，不能修饰其它的元素，它可以强制一个子类必须重写父类方法或者实现接口的方法。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd043623" class="outline-3">
-<h3 id="orgd043623">@Deprecated</h3>
-<div class="outline-text-3" id="text-orgd043623">
+<div id="outline-container-org44bfbee" class="outline-3">
+<h3 id="org44bfbee">@Deprecated</h3>
+<div class="outline-text-3" id="text-org44bfbee">
 <p>
 Java 中 <code>@Deprecated</code> 可以用来注解类、接口、成员方法和成员变量等，用于表示某个元素（类、方法等）已过时。当其他程序使用已过时的元素时，编译器将会给出警告。
 </p>
@@ -163,9 +158,9 @@ Java 9 为 <code>@Deprecated</code> 注解增加了以下两个属性：
 </div>
 </div>
 
-<div id="outline-container-org1bd403b" class="outline-3">
-<h3 id="org1bd403b">@SuppressWarnings</h3>
-<div class="outline-text-3" id="text-org1bd403b">
+<div id="outline-container-org63c5847" class="outline-3">
+<h3 id="org63c5847">@SuppressWarnings</h3>
+<div class="outline-text-3" id="text-org63c5847">
 <p>
 i.e. 抑制编译器警告
 </p>
@@ -209,32 +204,32 @@ Java 中的 <code>@SuppressWarnings</code> 注解指示被该注解修饰的程�
 </div>
 </div>
 
-<div id="outline-container-org7a577fd" class="outline-3">
-<h3 id="org7a577fd"><span class="todo TODO">TODO</span> @SafeVarargs</h3>
+<div id="outline-container-org2b22c5f" class="outline-3">
+<h3 id="org2b22c5f"><span class="todo TODO">TODO</span> @SafeVarargs</h3>
 </div>
 
-<div id="outline-container-org0a57c95" class="outline-3">
-<h3 id="org0a57c95"><span class="todo TODO">TODO</span> @FunctionalInterface</h3>
+<div id="outline-container-org79a2653" class="outline-3">
+<h3 id="org79a2653"><span class="todo TODO">TODO</span> @FunctionalInterface</h3>
 </div>
 </div>
 
-<div id="outline-container-orgf2478e0" class="outline-2">
-<h2 id="orgf2478e0"><span class="todo TODO">TODO</span> 元注解作用及使用</h2>
-<div class="outline-text-2" id="text-orgf2478e0">
+<div id="outline-container-orgf1e1a2d" class="outline-2">
+<h2 id="orgf1e1a2d"><span class="todo TODO">TODO</span> 元注解作用及使用</h2>
+<div class="outline-text-2" id="text-orgf1e1a2d">
 <p>
 元注解包括 <code>@Documented、@Target、@Retention、@Inherited</code> 和 <code>@Repeatable、@Native</code> 等 6 个注解，这些注解都可以在 <code>java.lang.annotation</code> 包中找到。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgeeb97ec" class="outline-2">
-<h2 id="orgeeb97ec"><span class="todo TODO">TODO</span> 自定义注解</h2>
+<div id="outline-container-orga7fe4b7" class="outline-2">
+<h2 id="orga7fe4b7"><span class="todo TODO">TODO</span> 自定义注解</h2>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-03 Sat 09:45</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:59</p>
+<p class="date">Created: 2021-01-01 Fri 14:35</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

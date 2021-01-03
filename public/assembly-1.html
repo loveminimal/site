@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2020-12-11 Fri 10:58 -->
+<!-- 2021-01-01 Fri 14:34 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>汇编语言基本概念简介</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js" defer></script>
 </head>
 <body>
 <div id="content">
@@ -23,35 +18,35 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf88c297">汇编语言是一种什么程序设计语言</a></li>
-<li><a href="#orgd805f76">虚拟机是什么</a></li>
-<li><a href="#org3aadc1a">汇编语言的数据表示</a>
+<li><a href="#org480af98">汇编语言是一种什么程序设计语言</a></li>
+<li><a href="#org49e74c6">虚拟机是什么</a></li>
+<li><a href="#orgd35c37b">汇编语言的数据表示</a>
 <ul>
-<li><a href="#org2ed3605">二进制整数</a></li>
-<li><a href="#org473089d">二进制加法运算</a></li>
-<li><a href="#org2e29289">字节</a></li>
-<li><a href="#org0d949aa">十六进制整数</a></li>
-<li><a href="#orgdcf2eef">补码及进制转换</a></li>
-<li><a href="#org13d8edd">二进制减法运算</a></li>
+<li><a href="#org5feefd5">二进制整数</a></li>
+<li><a href="#org1ef5eb4">二进制加法运算</a></li>
+<li><a href="#orgd065c8c">字节</a></li>
+<li><a href="#org6a98077">十六进制整数</a></li>
+<li><a href="#org9edd686">补码及进制转换</a></li>
+<li><a href="#org1b016b4">二进制减法运算</a></li>
 </ul>
 </li>
-<li><a href="#org0756a40">字符在计算机中是如何表示的</a>
+<li><a href="#org2a7fabe">字符在计算机中是如何表示的</a>
 <ul>
-<li><a href="#orgc06341f">ANSI 字符集</a></li>
-<li><a href="#orga665687">Unicode 标准</a></li>
-<li><a href="#orgaea0889">ASCII 字符串</a></li>
-<li><a href="#org0de1a43">使用 ASCII 表</a></li>
-<li><a href="#org8fa46fe">ASCII 控制符</a></li>
-<li><a href="#org5a60c47">数字数据表示术语</a></li>
+<li><a href="#orgfc41516">ANSI 字符集</a></li>
+<li><a href="#org8eb17b6">Unicode 标准</a></li>
+<li><a href="#orge7c747e">ASCII 字符串</a></li>
+<li><a href="#orge0ed5e5">使用 ASCII 表</a></li>
+<li><a href="#orga17d1f0">ASCII 控制符</a></li>
+<li><a href="#org422ceeb">数字数据表示术语</a></li>
 </ul>
 </li>
-<li><a href="#org7551a6f">汇编语言布尔表达式</a>
+<li><a href="#org82c0f47">汇编语言布尔表达式</a>
 <ul>
-<li><a href="#orga4e6d59">NOT</a></li>
-<li><a href="#org267e51e">AND</a></li>
-<li><a href="#orgd7e1a0c">OR</a></li>
-<li><a href="#org7e24d26">运算符优先级</a></li>
-<li><a href="#org3ff84c7">布尔函数真值表</a></li>
+<li><a href="#orgce6efae">NOT</a></li>
+<li><a href="#org232eecb">AND</a></li>
+<li><a href="#org5477a34">OR</a></li>
+<li><a href="#org4cd18a5">运算符优先级</a></li>
+<li><a href="#orgec0e94f">布尔函数真值表</a></li>
 </ul>
 </li>
 </ul>
@@ -69,9 +64,9 @@
 虚拟机的概念在理解软件与硬件之间的关系时非常重要。
 </essay>
 
-<div id="outline-container-orgf88c297" class="outline-2">
-<h2 id="orgf88c297">汇编语言是一种什么程序设计语言</h2>
-<div class="outline-text-2" id="text-orgf88c297">
+<div id="outline-container-org480af98" class="outline-2">
+<h2 id="org480af98">汇编语言是一种什么程序设计语言</h2>
+<div class="outline-text-2" id="text-org480af98">
 <p>
 本文主要介绍与运行 Windows 32 位和 64 位系统的 Intel 和 AMD 处理器相兼容的微处理器编程，文中使用了 Microsoft 宏汇编器（MASM）。
 </p>
@@ -253,9 +248,9 @@
 </div>
 </div>
 
-<div id="outline-container-orgd805f76" class="outline-2">
-<h2 id="orgd805f76">虚拟机是什么</h2>
-<div class="outline-text-2" id="text-orgd805f76">
+<div id="outline-container-org49e74c6" class="outline-2">
+<h2 id="org49e74c6">虚拟机是什么</h2>
+<div class="outline-text-2" id="text-org49e74c6">
 <p>
 虚拟机概念（virtual machine machine）是一种说明计算机硬件和软件关系的有效方法。要说明这个概念，先从计算机的最基本的功能开始，即执行程序。
 </p>
@@ -343,9 +338,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org3aadc1a" class="outline-2">
-<h2 id="org3aadc1a">汇编语言的数据表示</h2>
-<div class="outline-text-2" id="text-org3aadc1a">
+<div id="outline-container-orgd35c37b" class="outline-2">
+<h2 id="orgd35c37b">汇编语言的数据表示</h2>
+<div class="outline-text-2" id="text-orgd35c37b">
 <p>
 汇编语言程序员处理的是物理级数据，因此他们必须善于检查内存和寄存器。通常，二进制数被用于描述计算机内容，有时也使用十进制和十六进制数。
 </p>
@@ -408,9 +403,9 @@ title=""
 </p>
 </div>
 
-<div id="outline-container-org2ed3605" class="outline-3">
-<h3 id="org2ed3605">二进制整数</h3>
-<div class="outline-text-3" id="text-org2ed3605">
+<div id="outline-container-org5feefd5" class="outline-3">
+<h3 id="org5feefd5">二进制整数</h3>
+<div class="outline-text-3" id="text-org5feefd5">
 <p>
 计算机以电子电荷集合的形式在内存中保存指令和数据。用数字来表示这些内容就需要系统能够适应 <b>开/关（on/off）</b> 或 <b>真/假（true/false）</b> 概念。
 </p>
@@ -614,9 +609,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org473089d" class="outline-3">
-<h3 id="org473089d">二进制加法运算</h3>
-<div class="outline-text-3" id="text-org473089d">
+<div id="outline-container-org1ef5eb4" class="outline-3">
+<h3 id="org1ef5eb4">二进制加法运算</h3>
+<div class="outline-text-3" id="text-org1ef5eb4">
 <p>
 两个二进制整数相加时，是位对位处理的，从最低的一位（右边）开始，依序将每一对位进行加法运算。两个二进制数字相加，有四种结果，如下所示：
 </p>
@@ -659,9 +654,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org2e29289" class="outline-3">
-<h3 id="org2e29289">字节</h3>
-<div class="outline-text-3" id="text-org2e29289">
+<div id="outline-container-orgd065c8c" class="outline-3">
+<h3 id="orgd065c8c">字节</h3>
+<div class="outline-text-3" id="text-orgd065c8c">
 <p>
 在 x86 计算机中，所有数据存储的基本单位都是字节（byte），一个字节有 8 位。
 </p>
@@ -721,9 +716,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org0d949aa" class="outline-3">
-<h3 id="org0d949aa">十六进制整数</h3>
-<div class="outline-text-3" id="text-org0d949aa">
+<div id="outline-container-org6a98077" class="outline-3">
+<h3 id="org6a98077">十六进制整数</h3>
+<div class="outline-text-3" id="text-org6a98077">
 <p>
 大的二进制数读起来很麻烦，因此十六进制数字就提供了一种简便的方式来表示二进制数据。 <b>十六进制整数的 1 个数字就表示 4 位二进制位，两个十六进制数字就能表示一个字节</b> 。
 </p>
@@ -940,9 +935,9 @@ dec = (D<sub>n-1</sub> X B<sup>n-1</sup>) + (D<sub>n-2</sub> X B<sup>n-2</sup>) 
 </div>
 </div>
 
-<div id="outline-container-orgdcf2eef" class="outline-3">
-<h3 id="orgdcf2eef">补码及进制转换</h3>
-<div class="outline-text-3" id="text-orgdcf2eef">
+<div id="outline-container-org9edd686" class="outline-3">
+<h3 id="org9edd686">补码及进制转换</h3>
+<div class="outline-text-3" id="text-org9edd686">
 <p>
 有符号的二进制数有正数和负数。在 x86 处理器中，MSB 表示的是符号位： <code>0</code> 表示正数， <code>1</code> 表示负数。
 </p>
@@ -1179,9 +1174,9 @@ n 位有符号整数只用 n-1 来表示该数的范围。下表列出了有符�
 </div>
 </div>
 
-<div id="outline-container-org13d8edd" class="outline-3">
-<h3 id="org13d8edd">二进制减法运算</h3>
-<div class="outline-text-3" id="text-org13d8edd">
+<div id="outline-container-org1b016b4" class="outline-3">
+<h3 id="org1b016b4">二进制减法运算</h3>
+<div class="outline-text-3" id="text-org1b016b4">
 <p>
 执行二进制减法还有更简单的方法，即将被减去的符号位求补，然后将两数相加。这个方法要求用一个额外的位来保存数的符号。
 </p>
@@ -1204,9 +1199,9 @@ n 位有符号整数只用 n-1 来表示该数的范围。下表列出了有符�
 </div>
 </div>
 
-<div id="outline-container-org0756a40" class="outline-2">
-<h2 id="org0756a40">字符在计算机中是如何表示的</h2>
-<div class="outline-text-2" id="text-org0756a40">
+<div id="outline-container-org2a7fabe" class="outline-2">
+<h2 id="org2a7fabe">字符在计算机中是如何表示的</h2>
+<div class="outline-text-2" id="text-org2a7fabe">
 <p>
 如果计算机只存储二进制数据，那么它如何表示字符呢？计算机使用的是字符集，将字符映射为整数。
 </p>
@@ -1224,9 +1219,9 @@ ASCII 是美国标准信息交换码（American Standard Code for Information In
 </p>
 </div>
 
-<div id="outline-container-orgc06341f" class="outline-3">
-<h3 id="orgc06341f">ANSI 字符集</h3>
-<div class="outline-text-3" id="text-orgc06341f">
+<div id="outline-container-orgfc41516" class="outline-3">
+<h3 id="orgfc41516">ANSI 字符集</h3>
+<div class="outline-text-3" id="text-orgfc41516">
 <p>
 美国国家标准协会（ANSI）定义了 8 位字符集来表示多达 256 个字符。前 128 个字符对应标准美国键盘上的字母和符号。后 128 个字符表示特殊字符，诸如国际字母表、重音符号、货币符号和分数。
 </p>
@@ -1237,9 +1232,9 @@ Microsoft Windows 早期版本使用 ANSI 字符集。
 </div>
 </div>
 
-<div id="outline-container-orga665687" class="outline-3">
-<h3 id="orga665687">Unicode 标准</h3>
-<div class="outline-text-3" id="text-orga665687">
+<div id="outline-container-org8eb17b6" class="outline-3">
+<h3 id="org8eb17b6">Unicode 标准</h3>
+<div class="outline-text-3" id="text-org8eb17b6">
 <p>
 当前，计算机必须能表示计算机软件中世界上各种各样的语言。因此，Unicode 被创建出来，用于提供一种定义文字和符号的通用方法。
 </p>
@@ -1260,9 +1255,9 @@ Microsoft Windows 近期版本使用了 UTF-16 ，其中的每个字符都有一
 </div>
 </div>
 
-<div id="outline-container-orgaea0889" class="outline-3">
-<h3 id="orgaea0889">ASCII 字符串</h3>
-<div class="outline-text-3" id="text-orgaea0889">
+<div id="outline-container-orge7c747e" class="outline-3">
+<h3 id="orge7c747e">ASCII 字符串</h3>
+<div class="outline-text-3" id="text-orge7c747e">
 <p>
 有一个或多个字符的序列被称为字符串（string）。更具体地说，一个 ASCII 字符串是保存在内存中的，包含了 ASCII 代码连续字节。比如，字符串 <code>"ABC123"</code> 的数字代码是 <code>41h、42h、43h、31h、32h、33h</code> 。
 </p>
@@ -1273,9 +1268,9 @@ Microsoft Windows 近期版本使用了 UTF-16 ，其中的每个字符都有一
 </div>
 </div>
 
-<div id="outline-container-org0de1a43" class="outline-3">
-<h3 id="org0de1a43">使用 ASCII 表</h3>
-<div class="outline-text-3" id="text-org0de1a43">
+<div id="outline-container-orge0ed5e5" class="outline-3">
+<h3 id="orge0ed5e5">使用 ASCII 表</h3>
+<div class="outline-text-3" id="text-orge0ed5e5">
 <p>
 下图中列出了在 Windows 控制台模式下运行时使用的 ASCII 码。
 </p>
@@ -1306,9 +1301,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org8fa46fe" class="outline-3">
-<h3 id="org8fa46fe">ASCII 控制符</h3>
-<div class="outline-text-3" id="text-org8fa46fe">
+<div id="outline-container-orga17d1f0" class="outline-3">
+<h3 id="orga17d1f0">ASCII 控制符</h3>
+<div class="outline-text-3" id="text-orga17d1f0">
 <p>
 0~31 的字符代码被称为 ASCII 控制字符。若程序用这些代码编写标准输出（比如 C++ 中），控制字符就会执行预先定义的动作。下表列出了该范围内最常用的字符：
 </p>
@@ -1358,9 +1353,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org5a60c47" class="outline-3">
-<h3 id="org5a60c47">数字数据表示术语</h3>
-<div class="outline-text-3" id="text-org5a60c47">
+<div id="outline-container-org422ceeb" class="outline-3">
+<h3 id="org422ceeb">数字数据表示术语</h3>
+<div class="outline-text-3" id="text-org422ceeb">
 <p>
 <b>用精确的术语描述 <span class="underline">内存中和显示屏上</span> 的数字及字符是非常重要的</b> 。
 </p>
@@ -1411,9 +1406,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org7551a6f" class="outline-2">
-<h2 id="org7551a6f">汇编语言布尔表达式</h2>
-<div class="outline-text-2" id="text-org7551a6f">
+<div id="outline-container-org82c0f47" class="outline-2">
+<h2 id="org82c0f47">汇编语言布尔表达式</h2>
+<div class="outline-text-2" id="text-org82c0f47">
 <p>
 布尔代数（boolean algebra）定义了一组操作，其值为真（true）或假（false），它的发明者是十九世纪中叶的数学家乔治·布尔（George Boole）。
 </p>
@@ -1436,9 +1431,9 @@ title=""
 </p>
 </div>
 
-<div id="outline-container-orga4e6d59" class="outline-3">
-<h3 id="orga4e6d59">NOT</h3>
-<div class="outline-text-3" id="text-orga4e6d59">
+<div id="outline-container-orgce6efae" class="outline-3">
+<h3 id="orgce6efae">NOT</h3>
+<div class="outline-text-3" id="text-orgce6efae">
 <p>
 NOT 运算符将布尔值取反。用数学符号书写为 <code>¬X</code> ，其中，X 是一个变量（或表达式），其值为真（T）或假（F）。下表列出了对变量 X 进行 NOT 运算后所有可能的输岀。 左边为输入，右边（阴影部分）为输出：
 </p>
@@ -1475,9 +1470,9 @@ NOT 运算符将布尔值取反。用数学符号书写为 <code>¬X</code> ，�
 </div>
 </div>
 
-<div id="outline-container-org267e51e" class="outline-3">
-<h3 id="org267e51e">AND</h3>
-<div class="outline-text-3" id="text-org267e51e">
+<div id="outline-container-org232eecb" class="outline-3">
+<h3 id="org232eecb">AND</h3>
+<div class="outline-text-3" id="text-org232eecb">
 <p>
 布尔运算符 AND 需要两个操作数，用符号表示为 <code>X ^ Y</code> 。下表列出了对变量 X 和 Y 进行 AND 运算后，所有可能的输出（阴影部分）：
 </p>
@@ -1543,9 +1538,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgd7e1a0c" class="outline-3">
-<h3 id="orgd7e1a0c">OR</h3>
-<div class="outline-text-3" id="text-orgd7e1a0c">
+<div id="outline-container-org5477a34" class="outline-3">
+<h3 id="org5477a34">OR</h3>
+<div class="outline-text-3" id="text-org5477a34">
 <p>
 布尔运算符 OR 需要两个操作数，用符号表示为 <code>XvY</code> 。下表列出了对变量 X 和 Y 进行 OR 运算后，所有可能的输出：
 </p>
@@ -1568,9 +1563,9 @@ OR 运算符也是按位操作。在下例中，X 的每一位与 Y 的对应位
 </div>
 </div>
 
-<div id="outline-container-org7e24d26" class="outline-3">
-<h3 id="org7e24d26">运算符优先级</h3>
-<div class="outline-text-3" id="text-org7e24d26">
+<div id="outline-container-org4cd18a5" class="outline-3">
+<h3 id="org4cd18a5">运算符优先级</h3>
+<div class="outline-text-3" id="text-org4cd18a5">
 <p>
 运算符优先级原则（operator precedence rule）用于指示在多运算符表达式中，先执行哪个运算。在包含多运算符的布尔表达式中，优先级是非常重要的。
 </p>
@@ -1581,9 +1576,9 @@ OR 运算符也是按位操作。在下例中，X 的每一位与 Y 的对应位
 </div>
 </div>
 
-<div id="outline-container-org3ff84c7" class="outline-3">
-<h3 id="org3ff84c7">布尔函数真值表</h3>
-<div class="outline-text-3" id="text-org3ff84c7">
+<div id="outline-container-orgec0e94f" class="outline-3">
+<h3 id="orgec0e94f">布尔函数真值表</h3>
+<div class="outline-text-3" id="text-orgec0e94f">
 <p>
 布尔函数（Boolean function）接收布尔输入，生成布尔输出。所有的布尔函数都可以构造一个真值表来展示全部可能的输入和输出。比如下面这个示例 <code>(Y^S)v(X^¬S)</code> ：
 </p>
@@ -1717,7 +1712,7 @@ title=""
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-06 Sun 19:16</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:58</p>
+<p class="date">Created: 2021-01-01 Fri 14:34</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2020-12-11 Fri 11:00 -->
+<!-- 2021-01-01 Fri 14:37 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Webpack Dev Server Proxy</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js" defer></script>
 </head>
 <body>
 <div id="content">
@@ -23,15 +18,15 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4f1162e">基本用法</a></li>
-<li><a href="#org4db738d">代理多个路径</a></li>
-<li><a href="#org1071e1e">忽略API前缀</a></li>
-<li><a href="#orga1db647">忽略https安全提示</a></li>
-<li><a href="#orgc9318d0">自定义规则</a></li>
-<li><a href="#org6d183bf">跨域</a></li>
-<li><a href="#org0de4ec2">配置多个规则：Vue-cli中 `proxyTable` 配置接口</a></li>
-<li><a href="#org341532a">更多参数</a></li>
-<li><a href="#org9b2e2fa">vue-element-admin分析代码</a></li>
+<li><a href="#org08b6e74">基本用法</a></li>
+<li><a href="#org6bf30d2">代理多个路径</a></li>
+<li><a href="#org7ae066a">忽略API前缀</a></li>
+<li><a href="#orgdbd6444">忽略https安全提示</a></li>
+<li><a href="#org83a508e">自定义规则</a></li>
+<li><a href="#org0478aae">跨域</a></li>
+<li><a href="#orgca5c7d9">配置多个规则：Vue-cli中 `proxyTable` 配置接口</a></li>
+<li><a href="#org289b696">更多参数</a></li>
+<li><a href="#org0165686">vue-element-admin分析代码</a></li>
 </ul>
 </div>
 </div>
@@ -47,9 +42,9 @@
 *注：F12 查看网络请求路径，还是原来的，所以只能从效果上去观察是否正确代理了。
 </p>
 
-<div id="outline-container-org4f1162e" class="outline-2">
-<h2 id="org4f1162e">基本用法</h2>
-<div class="outline-text-2" id="text-org4f1162e">
+<div id="outline-container-org08b6e74" class="outline-2">
+<h2 id="org08b6e74">基本用法</h2>
+<div class="outline-text-2" id="text-org08b6e74">
 <div class="org-src-container">
 <pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AE81FF;">{</span>
 <span class="linenr"> 2: </span>    <span style="color: #75715E;">//</span><span style="color: #75715E;">...</span>
@@ -67,9 +62,9 @@
 </div>
 </div>
 
-<div id="outline-container-org4db738d" class="outline-2">
-<h2 id="org4db738d">代理多个路径</h2>
-<div class="outline-text-2" id="text-org4db738d">
+<div id="outline-container-org6bf30d2" class="outline-2">
+<h2 id="org6bf30d2">代理多个路径</h2>
+<div class="outline-text-2" id="text-org6bf30d2">
 <div class="org-src-container">
 <pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AE81FF;">{</span>
 <span class="linenr"> 2: </span>    <span style="color: #75715E;">//</span><span style="color: #75715E;">...</span>
@@ -88,9 +83,9 @@
 </div>
 </div>
 
-<div id="outline-container-org1071e1e" class="outline-2">
-<h2 id="org1071e1e">忽略API前缀</h2>
-<div class="outline-text-2" id="text-org1071e1e">
+<div id="outline-container-org7ae066a" class="outline-2">
+<h2 id="org7ae066a">忽略API前缀</h2>
+<div class="outline-text-2" id="text-org7ae066a">
 <div class="org-src-container">
 <pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AE81FF;">{</span>
 <span class="linenr"> 2: </span>    <span style="color: #75715E;">//</span><span style="color: #75715E;">...</span>
@@ -111,9 +106,9 @@
 </div>
 </div>
 
-<div id="outline-container-orga1db647" class="outline-2">
-<h2 id="orga1db647">忽略https安全提示</h2>
-<div class="outline-text-2" id="text-orga1db647">
+<div id="outline-container-orgdbd6444" class="outline-2">
+<h2 id="orgdbd6444">忽略https安全提示</h2>
+<div class="outline-text-2" id="text-orgdbd6444">
 <div class="org-src-container">
 <pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AE81FF;">{</span>
 <span class="linenr"> 2: </span>    <span style="color: #75715E;">//</span><span style="color: #75715E;">...</span>
@@ -134,9 +129,9 @@
 </div>
 </div>
 
-<div id="outline-container-orgc9318d0" class="outline-2">
-<h2 id="orgc9318d0">自定义规则</h2>
-<div class="outline-text-2" id="text-orgc9318d0">
+<div id="outline-container-org83a508e" class="outline-2">
+<h2 id="org83a508e">自定义规则</h2>
+<div class="outline-text-2" id="text-org83a508e">
 <div class="org-src-container">
 <pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AE81FF;">{</span>
 <span class="linenr"> 2: </span>    <span style="color: #75715E;">//</span><span style="color: #75715E;">...</span>
@@ -164,9 +159,9 @@
 </div>
 </div>
 
-<div id="outline-container-org6d183bf" class="outline-2">
-<h2 id="org6d183bf">跨域</h2>
-<div class="outline-text-2" id="text-org6d183bf">
+<div id="outline-container-org0478aae" class="outline-2">
+<h2 id="org0478aae">跨域</h2>
+<div class="outline-text-2" id="text-org0478aae">
 <div class="org-src-container">
 <pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AE81FF;">{</span>
 <span class="linenr"> 2: </span>    <span style="color: #75715E;">//</span><span style="color: #75715E;">...</span>
@@ -187,9 +182,9 @@
 </div>
 </div>
 
-<div id="outline-container-org0de4ec2" class="outline-2">
-<h2 id="org0de4ec2">配置多个规则：Vue-cli中 `proxyTable` 配置接口</h2>
-<div class="outline-text-2" id="text-org0de4ec2">
+<div id="outline-container-orgca5c7d9" class="outline-2">
+<h2 id="orgca5c7d9">配置多个规则：Vue-cli中 `proxyTable` 配置接口</h2>
+<div class="outline-text-2" id="text-orgca5c7d9">
 <div class="org-src-container">
 <pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #AE81FF;">{</span>
 <span class="linenr"> 2: </span>    dev: <span style="color: #66D9EF;">{</span>
@@ -225,9 +220,9 @@
 </div>
 </div>
 
-<div id="outline-container-org341532a" class="outline-2">
-<h2 id="org341532a">更多参数</h2>
-<div class="outline-text-2" id="text-org341532a">
+<div id="outline-container-org289b696" class="outline-2">
+<h2 id="org289b696">更多参数</h2>
+<div class="outline-text-2" id="text-org289b696">
 <pre class="example">
 dev-server 使用了非常强大的http-proxy-middleware ,
 http-proxy-middleware 基于 http-proxy 实现的，
@@ -249,9 +244,9 @@ http-proxy-middleware 基于 http-proxy 实现的，
 </div>
 </div>
 
-<div id="outline-container-org9b2e2fa" class="outline-2">
-<h2 id="org9b2e2fa">vue-element-admin分析代码</h2>
-<div class="outline-text-2" id="text-org9b2e2fa">
+<div id="outline-container-org0165686" class="outline-2">
+<h2 id="org0165686">vue-element-admin分析代码</h2>
+<div class="outline-text-2" id="text-org0165686">
 <div class="org-src-container">
 <pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#29615;&#22659;&#21464;&#37327;:VUE_APP_BASE_API = '/dev-api'</span>
 <span class="linenr"> 2: </span><span style="color: #75715E;">// </span><span style="color: #75715E;">&#21457;&#36865;&#30340;&#35831;&#27714;:127.0.0.1/dev-api/login</span>
@@ -284,7 +279,7 @@ http-proxy-middleware 基于 http-proxy 实现的，
 <div id="postamble" class="status">
 <p class="date">Date: 2020-11-02 Mon 14:39</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 11:00</p>
+<p class="date">Created: 2021-01-01 Fri 14:37</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

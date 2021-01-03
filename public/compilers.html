@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2020-12-11 Fri 10:58 -->
+<!-- 2021-01-01 Fri 14:35 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Compilers</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js" defer></script>
 </head>
 <body>
 <div id="content">
@@ -23,26 +18,26 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4da8e78">编译过程概述</a>
+<li><a href="#org9e46df8">编译过程概述</a>
 <ul>
-<li><a href="#org905c809">词法分析</a></li>
-<li><a href="#orgdf6248c">语法分析</a></li>
-<li><a href="#orgd94f197">从语法树到中间代码再到目标代码</a></li>
+<li><a href="#orgb295725">词法分析</a></li>
+<li><a href="#orgc54df04">语法分析</a></li>
+<li><a href="#orgda03183">从语法树到中间代码再到目标代码</a></li>
 </ul>
 </li>
-<li><a href="#org2c45599">案例二</a>
+<li><a href="#org216e779">案例二</a>
 <ul>
-<li><a href="#orga1a765e">1.词法分析</a></li>
-<li><a href="#org8a142d4">2.语法分析</a></li>
-<li><a href="#org1993662">3.语义分析</a></li>
-<li><a href="#org9ba6fa1">4.中间代码生成</a></li>
-<li><a href="#orga3823ef">5.代码优化</a></li>
-<li><a href="#org6d06683">6.代码生成</a></li>
-<li><a href="#org6c57b47">7.编译的总过程</a></li>
-<li><a href="#org8ac5866">8.相关扩展</a></li>
+<li><a href="#orga26dbc5">1.词法分析</a></li>
+<li><a href="#org698ea71">2.语法分析</a></li>
+<li><a href="#org2c79291">3.语义分析</a></li>
+<li><a href="#org483677d">4.中间代码生成</a></li>
+<li><a href="#org97f4196">5.代码优化</a></li>
+<li><a href="#org9d31046">6.代码生成</a></li>
+<li><a href="#orgcd12d62">7.编译的总过程</a></li>
+<li><a href="#org4cb03c9">8.相关扩展</a></li>
 </ul>
 </li>
-<li><a href="#org6a0215c">编译原理三大经典</a></li>
+<li><a href="#org85c9faf">编译原理三大经典</a></li>
 </ul>
 </div>
 </div>
@@ -50,9 +45,9 @@
 谁能想到，有一天，百度百科上的资料，竟然也有料……
 </essay>
 
-<div id="outline-container-org4da8e78" class="outline-2">
-<h2 id="org4da8e78">编译过程概述<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-org4da8e78">
+<div id="outline-container-org9e46df8" class="outline-2">
+<h2 id="org9e46df8">编译过程概述<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-org9e46df8">
 <p>
 源程序是给人看的，本质上就是文本文件，可以用文本编辑程序打开、编辑，但计算机无法直接执行源程序，需要通过一个专门的程序将源程序编译为计算机可执行程序，这个专门的程序就是 <span class="underline">编译器</span> 。
 </p>
@@ -62,9 +57,9 @@
 </p>
 </div>
 
-<div id="outline-container-org905c809" class="outline-3">
-<h3 id="org905c809">词法分析</h3>
-<div class="outline-text-3" id="text-org905c809">
+<div id="outline-container-orgb295725" class="outline-3">
+<h3 id="orgb295725">词法分析</h3>
+<div class="outline-text-3" id="text-orgb295725">
 <p>
 我们眼中看到的源代码，如下：
 </p>
@@ -134,9 +129,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgdf6248c" class="outline-3">
-<h3 id="orgdf6248c">语法分析</h3>
-<div class="outline-text-3" id="text-orgdf6248c">
+<div id="outline-container-orgc54df04" class="outline-3">
+<h3 id="orgc54df04">语法分析</h3>
+<div class="outline-text-3" id="text-orgc54df04">
 <p>
 如果说词法分析的作用是从连续的字符中识别出标识符、关键字、数字、运算符并存储为 <span class="underline">符号（token）流</span> ，语法分析的作用就是从词法分析识别出的符号流中识别出符合 C 语言规范的语句。
 </p>
@@ -197,9 +192,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgd94f197" class="outline-3">
-<h3 id="orgd94f197">从语法树到中间代码再到目标代码</h3>
-<div class="outline-text-3" id="text-orgd94f197">
+<div id="outline-container-orgda03183" class="outline-3">
+<h3 id="orgda03183">从语法树到中间代码再到目标代码</h3>
+<div class="outline-text-3" id="text-orgda03183">
 <p>
 至此，语法树已经承载了源程序的全部信息，后续的转换工作就和源程序没关系了。
 </p>
@@ -248,9 +243,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org2c45599" class="outline-2">
-<h2 id="org2c45599">案例二<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
-<div class="outline-text-2" id="text-org2c45599">
+<div id="outline-container-org216e779" class="outline-2">
+<h2 id="org216e779">案例二<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
+<div class="outline-text-2" id="text-org216e779">
 <p>
 让我们再来看一个具体案例来深化一下对编译过程的认识。
 </p>
@@ -268,9 +263,9 @@ title=""
 />
 </div>
 
-<div id="outline-container-orga1a765e" class="outline-3">
-<h3 id="orga1a765e">1.词法分析</h3>
-<div class="outline-text-3" id="text-orga1a765e">
+<div id="outline-container-orga26dbc5" class="outline-3">
+<h3 id="orga26dbc5">1.词法分析</h3>
+<div class="outline-text-3" id="text-orga26dbc5">
 <p>
 词法分析，又叫线性分析或者线性扫描。
 </p>
@@ -289,9 +284,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org8a142d4" class="outline-3">
-<h3 id="org8a142d4">2.语法分析</h3>
-<div class="outline-text-3" id="text-org8a142d4">
+<div id="outline-container-org698ea71" class="outline-3">
+<h3 id="org698ea71">2.语法分析</h3>
+<div class="outline-text-3" id="text-org698ea71">
 <p>
 语法分析，又叫层次分析。
 </p>
@@ -319,9 +314,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org1993662" class="outline-3">
-<h3 id="org1993662">3.语义分析</h3>
-<div class="outline-text-3" id="text-org1993662">
+<div id="outline-container-org2c79291" class="outline-3">
+<h3 id="org2c79291">3.语义分析</h3>
+<div class="outline-text-3" id="text-org2c79291">
 <p>
 进行主义分析，生成语法树。其作用如下：
 </p>
@@ -340,9 +335,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org9ba6fa1" class="outline-3">
-<h3 id="org9ba6fa1">4.中间代码生成</h3>
-<div class="outline-text-3" id="text-org9ba6fa1">
+<div id="outline-container-org483677d" class="outline-3">
+<h3 id="org483677d">4.中间代码生成</h3>
+<div class="outline-text-3" id="text-org483677d">
 <img
 src="/images/compiler-10.png"
 width="220"
@@ -370,9 +365,9 @@ title="中间代码生成"
 </div>
 </div>
 
-<div id="outline-container-orga3823ef" class="outline-3">
-<h3 id="orga3823ef">5.代码优化</h3>
-<div class="outline-text-3" id="text-orga3823ef">
+<div id="outline-container-org97f4196" class="outline-3">
+<h3 id="org97f4196">5.代码优化</h3>
+<div class="outline-text-3" id="text-org97f4196">
 <img
 src="/images/compiler-11.png"
 width="220"
@@ -387,9 +382,9 @@ title="代码优化"
 </div>
 </div>
 
-<div id="outline-container-org6d06683" class="outline-3">
-<h3 id="org6d06683">6.代码生成</h3>
-<div class="outline-text-3" id="text-org6d06683">
+<div id="outline-container-org9d31046" class="outline-3">
+<h3 id="org9d31046">6.代码生成</h3>
+<div class="outline-text-3" id="text-org9d31046">
 <p>
 生成可重定位的机器代码或者汇编码，其功能如下：
 </p>
@@ -400,9 +395,9 @@ title="代码优化"
 </div>
 </div>
 
-<div id="outline-container-org6c57b47" class="outline-3">
-<h3 id="org6c57b47">7.编译的总过程</h3>
-<div class="outline-text-3" id="text-org6c57b47">
+<div id="outline-container-orgcd12d62" class="outline-3">
+<h3 id="orgcd12d62">7.编译的总过程</h3>
+<div class="outline-text-3" id="text-orgcd12d62">
 <img
 src="/images/compiler-12.png"
 width="460"
@@ -413,9 +408,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org8ac5866" class="outline-3">
-<h3 id="org8ac5866">8.相关扩展</h3>
-<div class="outline-text-3" id="text-org8ac5866">
+<div id="outline-container-org4cb03c9" class="outline-3">
+<h3 id="org4cb03c9">8.相关扩展</h3>
+<div class="outline-text-3" id="text-org4cb03c9">
 <p>
 <span class="underline">8.1 符号表管理</span>
 </p>
@@ -492,9 +487,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org6a0215c" class="outline-2">
-<h2 id="org6a0215c">编译原理三大经典</h2>
-<div class="outline-text-2" id="text-org6a0215c">
+<div id="outline-container-org85c9faf" class="outline-2">
+<h2 id="org85c9faf">编译原理三大经典</h2>
+<div class="outline-text-2" id="text-org85c9faf">
 <table>
 
 <colgroup>
@@ -568,7 +563,7 @@ title=""
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-29 Thu 12:06</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:58</p>
+<p class="date">Created: 2021-01-01 Fri 14:35</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

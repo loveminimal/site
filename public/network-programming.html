@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2020-12-11 Fri 11:00 -->
+<!-- 2021-01-01 Fri 14:36 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>网络编程</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js" defer></script>
 </head>
 <body>
 <div id="content">
@@ -23,34 +18,34 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd59213c">网络编程基础</a>
+<li><a href="#orgb323a0c">网络编程基础</a>
 <ul>
-<li><a href="#org23030b5">IP 地址</a></li>
-<li><a href="#org834eb0c">域名</a></li>
-<li><a href="#org7bc1c71">网络模型</a></li>
-<li><a href="#org6bf170c">常用协议</a></li>
-<li><a href="#orgb214c98">网络基本概念小结</a></li>
+<li><a href="#org2fe44df">IP 地址</a></li>
+<li><a href="#org09d6885">域名</a></li>
+<li><a href="#org609a373">网络模型</a></li>
+<li><a href="#org525abeb">常用协议</a></li>
+<li><a href="#org6d9ff54">网络基本概念小结</a></li>
 </ul>
 </li>
-<li><a href="#org47f939a">TCP 编程</a>
+<li><a href="#org5edac2d">TCP 编程</a>
 <ul>
-<li><a href="#org68863ff">服务器端</a></li>
-<li><a href="#orgb4761bc">客户端</a></li>
-<li><a href="#orge543541">Socket 流</a></li>
-<li><a href="#org00ca885">TCP 编程小结</a></li>
+<li><a href="#org0e25a3d">服务器端</a></li>
+<li><a href="#org156018d">客户端</a></li>
+<li><a href="#org3fe616a">Socket 流</a></li>
+<li><a href="#orgb339027">TCP 编程小结</a></li>
 </ul>
 </li>
-<li><a href="#orgf7d0de4">UDP 编程</a>
+<li><a href="#org50229e1">UDP 编程</a>
 <ul>
-<li><a href="#orgef08f3c">服务器端</a></li>
-<li><a href="#orgd400ac8">客户端</a></li>
-<li><a href="#org22443cc">UDP 编程小结</a></li>
+<li><a href="#org5ae98b2">服务器端</a></li>
+<li><a href="#org21b0287">客户端</a></li>
+<li><a href="#org2dd7492">UDP 编程小结</a></li>
 </ul>
 </li>
-<li><a href="#orgbddb4e5">HTTP 编程</a>
+<li><a href="#org73c02c2">HTTP 编程</a>
 <ul>
-<li><a href="#org538a472">HTTP 请求</a></li>
-<li><a href="#org769a935">HTTP 响应</a></li>
+<li><a href="#org6ce0c3d">HTTP 请求</a></li>
+<li><a href="#org4052417">HTTP 响应</a></li>
 </ul>
 </li>
 </ul>
@@ -72,9 +67,9 @@ style=""
 title=""
 />
 
-<div id="outline-container-orgd59213c" class="outline-2">
-<h2 id="orgd59213c">网络编程基础</h2>
-<div class="outline-text-2" id="text-orgd59213c">
+<div id="outline-container-orgb323a0c" class="outline-2">
+<h2 id="orgb323a0c">网络编程基础</h2>
+<div class="outline-text-2" id="text-orgb323a0c">
 <p>
 在学习 Java 网络编程之前，我们先来了解什么是计算机网络。
 </p>
@@ -88,9 +83,9 @@ title=""
 </p>
 </div>
 
-<div id="outline-container-org23030b5" class="outline-3">
-<h3 id="org23030b5">IP 地址</h3>
-<div class="outline-text-3" id="text-org23030b5">
+<div id="outline-container-org2fe44df" class="outline-3">
+<h3 id="org2fe44df">IP 地址</h3>
+<div class="outline-text-3" id="text-org2fe44df">
 <p>
 i.e. Internet Protocol
 </p>
@@ -218,9 +213,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org834eb0c" class="outline-3">
-<h3 id="org834eb0c">域名</h3>
-<div class="outline-text-3" id="text-org834eb0c">
+<div id="outline-container-org09d6885" class="outline-3">
+<h3 id="org09d6885">域名</h3>
+<div class="outline-text-3" id="text-org09d6885">
 <p>
 IP 地址不容易记忆，所以我们通常使用域名访问某个特定的服务， <b>域名解析服务器 DNS</b> 负责把域名翻译成对应的 IP ，客户端再根据 IP 地址访问服务器。
 </p>
@@ -245,9 +240,9 @@ Address: 193.112.245.112
 </div>
 </div>
 
-<div id="outline-container-org7bc1c71" class="outline-3">
-<h3 id="org7bc1c71">网络模型</h3>
-<div class="outline-text-3" id="text-org7bc1c71">
+<div id="outline-container-org609a373" class="outline-3">
+<h3 id="org609a373">网络模型</h3>
+<div class="outline-text-3" id="text-org609a373">
 <p>
 由于计算机网络从底层的传输到高层的软件设计十分复杂，要合理地设计计算机网络模型，必须采用分层模型，每一层负责处理自己的操作。
 </p>
@@ -339,9 +334,9 @@ OSI（Open System Interconnect）网络模型是 ISO 组织定义的一个计算
 </div>
 </div>
 
-<div id="outline-container-org6bf170c" class="outline-3">
-<h3 id="org6bf170c">常用协议</h3>
-<div class="outline-text-3" id="text-org6bf170c">
+<div id="outline-container-org525abeb" class="outline-3">
+<h3 id="org525abeb">常用协议</h3>
+<div class="outline-text-3" id="text-org525abeb">
 <p>
 IP 协议是一个 <b>分组交换传输协议</b> ，它不保证可靠传输，而 TCP 协议是传输控制协议，它是 <b>面向连接的协议</b> ，支持可靠传输和双向通信。
 </p>
@@ -368,9 +363,9 @@ UDP 协议（User Datagram Protocol）是一种数据报文协议，这是 <b>�
 </div>
 </div>
 
-<div id="outline-container-orgb214c98" class="outline-3">
-<h3 id="orgb214c98">网络基本概念小结</h3>
-<div class="outline-text-3" id="text-orgb214c98">
+<div id="outline-container-org6d9ff54" class="outline-3">
+<h3 id="org6d9ff54">网络基本概念小结</h3>
+<div class="outline-text-3" id="text-org6d9ff54">
 <ul class="org-ul">
 <li>计算机网络：由两台或更多计算机组成的网络；</li>
 <li>互联网：连接网络的网络；</li>
@@ -385,9 +380,9 @@ UDP 协议（User Datagram Protocol）是一种数据报文协议，这是 <b>�
 </div>
 </div>
 
-<div id="outline-container-org47f939a" class="outline-2">
-<h2 id="org47f939a">TCP 编程</h2>
-<div class="outline-text-2" id="text-org47f939a">
+<div id="outline-container-org5edac2d" class="outline-2">
+<h2 id="org5edac2d">TCP 编程</h2>
+<div class="outline-text-2" id="text-org5edac2d">
 <p>
 i.e. Transmission Control Protocol
 </p>
@@ -442,9 +437,9 @@ QQ: 101.202.99.2:1304
 </ul>
 </div>
 
-<div id="outline-container-org68863ff" class="outline-3">
-<h3 id="org68863ff">服务器端</h3>
-<div class="outline-text-3" id="text-org68863ff">
+<div id="outline-container-org0e25a3d" class="outline-3">
+<h3 id="org0e25a3d">服务器端</h3>
+<div class="outline-text-3" id="text-org0e25a3d">
 <p>
 要全用 Socket 编程，我们首先要编写服务器端程序。
 </p>
@@ -556,9 +551,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-orgb4761bc" class="outline-3">
-<h3 id="orgb4761bc">客户端</h3>
-<div class="outline-text-3" id="text-orgb4761bc">
+<div id="outline-container-org156018d" class="outline-3">
+<h3 id="org156018d">客户端</h3>
+<div class="outline-text-3" id="text-org156018d">
 <p>
 相比服务器端，客户端程序就要简单很多。一个典型的客户端程序如下：
 </p>
@@ -611,9 +606,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-orge543541" class="outline-3">
-<h3 id="orge543541">Socket 流</h3>
-<div class="outline-text-3" id="text-orge543541">
+<div id="outline-container-org3fe616a" class="outline-3">
+<h3 id="org3fe616a">Socket 流</h3>
+<div class="outline-text-3" id="text-org3fe616a">
 <p>
 当 Socket 连接创建后成功后，无论是服务器端，还是客户端，我们都使用 <code>Socket</code> 实例进行网络通信。
 </p>
@@ -644,9 +639,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-org00ca885" class="outline-3">
-<h3 id="org00ca885">TCP 编程小结</h3>
-<div class="outline-text-3" id="text-org00ca885">
+<div id="outline-container-orgb339027" class="outline-3">
+<h3 id="orgb339027">TCP 编程小结</h3>
+<div class="outline-text-3" id="text-orgb339027">
 <p>
 使用 Java 进行 TCP 编程时，需要使用 Socket 模型：
 </p>
@@ -662,9 +657,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-orgf7d0de4" class="outline-2">
-<h2 id="orgf7d0de4">UDP 编程</h2>
-<div class="outline-text-2" id="text-orgf7d0de4">
+<div id="outline-container-org50229e1" class="outline-2">
+<h2 id="org50229e1">UDP 编程</h2>
+<div class="outline-text-2" id="text-org50229e1">
 <p>
 和 TCP 编程相比，UDP 编程就简单得多，因为 UDP 没有创建连接，数据包也是一次收发一个，所以没有流的概念。
 </p>
@@ -678,9 +673,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 </div>
 
-<div id="outline-container-orgef08f3c" class="outline-3">
-<h3 id="orgef08f3c">服务器端</h3>
-<div class="outline-text-3" id="text-orgef08f3c">
+<div id="outline-container-org5ae98b2" class="outline-3">
+<h3 id="org5ae98b2">服务器端</h3>
+<div class="outline-text-3" id="text-org5ae98b2">
 <p>
 在服务器端，使用 UDP 也需要监听指定的端口，Java 提供了 <code>DatagramSocket</code> 来实现这个功能，代码如下：
 </p>
@@ -760,9 +755,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-orgd400ac8" class="outline-3">
-<h3 id="orgd400ac8">客户端</h3>
-<div class="outline-text-3" id="text-orgd400ac8">
+<div id="outline-container-org21b0287" class="outline-3">
+<h3 id="org21b0287">客户端</h3>
+<div class="outline-text-3" id="text-org21b0287">
 <p>
 和服务端相比，客户端使用 UDP 时，只需要直接向服务器端发送 UDP 包，然后接收返回的 UDP 包：
 </p>
@@ -830,9 +825,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-org22443cc" class="outline-3">
-<h3 id="org22443cc">UDP 编程小结</h3>
-<div class="outline-text-3" id="text-org22443cc">
+<div id="outline-container-org2dd7492" class="outline-3">
+<h3 id="org2dd7492">UDP 编程小结</h3>
+<div class="outline-text-3" id="text-org2dd7492">
 <p>
 使用 UDP 协议通信时，服务器和客户端双方无需建立连接：
 </p>
@@ -846,9 +841,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-orgbddb4e5" class="outline-2">
-<h2 id="orgbddb4e5">HTTP 编程</h2>
-<div class="outline-text-2" id="text-orgbddb4e5">
+<div id="outline-container-org73c02c2" class="outline-2">
+<h2 id="org73c02c2">HTTP 编程</h2>
+<div class="outline-text-2" id="text-org73c02c2">
 <p>
 什么是 HTTP ？HTTP 就是目前使用最广泛的 Web 应用程序使用的基础协议，例如，浏览器访问网站，手机 App 访问后台服务器，都是通过 HTTP 协议实现的。
 </p>
@@ -874,9 +869,9 @@ title=""
 />
 </div>
 
-<div id="outline-container-org538a472" class="outline-3">
-<h3 id="org538a472">HTTP 请求</h3>
-<div class="outline-text-3" id="text-org538a472">
+<div id="outline-container-org6ce0c3d" class="outline-3">
+<h3 id="org6ce0c3d">HTTP 请求</h3>
+<div class="outline-text-3" id="text-org6ce0c3d">
 <p>
 HTTP 请求的格式是固定的，它由 HTTP Header 和 HTTP Body 两部分构成。
 </p>
@@ -938,9 +933,9 @@ Content-Length: 38
 </div>
 </div>
 
-<div id="outline-container-org769a935" class="outline-3">
-<h3 id="org769a935">HTTP 响应</h3>
-<div class="outline-text-3" id="text-org769a935">
+<div id="outline-container-org4052417" class="outline-3">
+<h3 id="org4052417">HTTP 响应</h3>
+<div class="outline-text-3" id="text-org4052417">
 <p>
 <b>HTTP 响应也是由 Header 和 Body 两部分组成</b> ，一个典型的 HTTP 响应如下：
 </p>
@@ -1029,7 +1024,7 @@ title=""
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-05 Mon 09:53</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 11:00</p>
+<p class="date">Created: 2021-01-01 Fri 14:36</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

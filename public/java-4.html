@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2020-12-11 Fri 10:59 -->
+<!-- 2021-01-01 Fri 14:35 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java 字符串处理</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js" defer></script>
 </head>
 <body>
 <div id="content">
@@ -23,26 +18,26 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org77a0ab1">定义字符串</a></li>
-<li><a href="#org81ff971">String 和 int 的相互转换</a></li>
-<li><a href="#orgaaaab14">字符串拼接</a></li>
-<li><a href="#org06b32da">字符串的若干操作</a>
+<li><a href="#org387ce63">定义字符串</a></li>
+<li><a href="#org3d65473">String 和 int 的相互转换</a></li>
+<li><a href="#orgb6cecb1">字符串拼接</a></li>
+<li><a href="#org05e5dac">字符串的若干操作</a>
 <ul>
-<li><a href="#orga6b7c7e">获取字符串长度</a></li>
-<li><a href="#org9bd4e6d">字符串的大小写转换</a></li>
-<li><a href="#org4ec7a1d">去除字符串中的空格</a></li>
-<li><a href="#orgf359eb4">截取子字符串</a></li>
-<li><a href="#org5092c1a">分割字符串</a></li>
-<li><a href="#org0991717">字符串的替换</a></li>
-<li><a href="#orgbe3f86b">字符串比较</a></li>
-<li><a href="#org7b6dbef">字符串查找</a></li>
+<li><a href="#org21bc1c6">获取字符串长度</a></li>
+<li><a href="#orgad7db29">字符串的大小写转换</a></li>
+<li><a href="#org10a7f63">去除字符串中的空格</a></li>
+<li><a href="#org36737fe">截取子字符串</a></li>
+<li><a href="#orge72fabf">分割字符串</a></li>
+<li><a href="#org188d2d6">字符串的替换</a></li>
+<li><a href="#org3a10be1">字符串比较</a></li>
+<li><a href="#orgc4ffd25">字符串查找</a></li>
 </ul>
 </li>
-<li><a href="#orgf642029">StringBuffer 类</a></li>
-<li><a href="#org1b54789">正则表达式</a>
+<li><a href="#org6623c4b">StringBuffer 类</a></li>
+<li><a href="#org77fbe81">正则表达式</a>
 <ul>
-<li><a href="#org6f27e98">理解正则表达式</a></li>
-<li><a href="#org1c38371">Pattern 类和 Matcher 类</a></li>
+<li><a href="#org2519a92">理解正则表达式</a></li>
+<li><a href="#org0166b24">Pattern 类和 Matcher 类</a></li>
 </ul>
 </li>
 </ul>
@@ -58,9 +53,9 @@
 </p>
 </blockquote>
 
-<div id="outline-container-org77a0ab1" class="outline-2">
-<h2 id="org77a0ab1">定义字符串</h2>
-<div class="outline-text-2" id="text-org77a0ab1">
+<div id="outline-container-org387ce63" class="outline-2">
+<h2 id="org387ce63">定义字符串</h2>
+<div class="outline-text-2" id="text-org387ce63">
 <p>
 字符串是 Java 中特殊的类，使用方法像一般的基本数据类型，被广泛应用在 Java 编程中。 <b>Java 没有内置的字符类型，而是在标准 Java 类库中提供了一个 <code>String</code> 类来创建和操作字符串。</b>
 </p>
@@ -163,9 +158,9 @@ String 类的构造方法有多种重载形式，每种形式都可以定义字�
 </div>
 </div>
 
-<div id="outline-container-org81ff971" class="outline-2">
-<h2 id="org81ff971">String 和 int 的相互转换</h2>
-<div class="outline-text-2" id="text-org81ff971">
+<div id="outline-container-org3d65473" class="outline-2">
+<h2 id="org3d65473">String 和 int 的相互转换</h2>
+<div class="outline-text-2" id="text-org3d65473">
 <p>
 String 在编程中被广泛使用，所以掌握 String 和 int 的相互转换方法是极其重要的。
 </p>
@@ -271,9 +266,9 @@ String 字符串转整型 int 有以下两种方式：
 </div>
 </div>
 
-<div id="outline-container-orgaaaab14" class="outline-2">
-<h2 id="orgaaaab14">字符串拼接</h2>
-<div class="outline-text-2" id="text-orgaaaab14">
+<div id="outline-container-orgb6cecb1" class="outline-2">
+<h2 id="orgb6cecb1">字符串拼接</h2>
+<div class="outline-text-2" id="text-orgb6cecb1">
 <p>
 通过字符串连接，可以将两个或多个字符串、字符、整数和浮点数等类型的数据连成一个更大的字符，String 字符串拼接可以使用 <code>+</code> 运算符或 String 的 <code>concat(String str)</code> 方法。
 </p>
@@ -324,13 +319,13 @@ str1.concat(str2)
 </div>
 </div>
 
-<div id="outline-container-org06b32da" class="outline-2">
-<h2 id="org06b32da">字符串的若干操作</h2>
-<div class="outline-text-2" id="text-org06b32da">
+<div id="outline-container-org05e5dac" class="outline-2">
+<h2 id="org05e5dac">字符串的若干操作</h2>
+<div class="outline-text-2" id="text-org05e5dac">
 </div>
-<div id="outline-container-orga6b7c7e" class="outline-3">
-<h3 id="orga6b7c7e">获取字符串长度</h3>
-<div class="outline-text-3" id="text-orga6b7c7e">
+<div id="outline-container-org21bc1c6" class="outline-3">
+<h3 id="org21bc1c6">获取字符串长度</h3>
+<div class="outline-text-3" id="text-org21bc1c6">
 <p>
 在 Java 中，要获取字符串的长度，可以使用 String 类的 <code>length()</code> 方法，其语法形式如下：
 </p>
@@ -341,9 +336,9 @@ str1.concat(str2)
 </div>
 </div>
 
-<div id="outline-container-org9bd4e6d" class="outline-3">
-<h3 id="org9bd4e6d">字符串的大小写转换</h3>
-<div class="outline-text-3" id="text-org9bd4e6d">
+<div id="outline-container-orgad7db29" class="outline-3">
+<h3 id="orgad7db29">字符串的大小写转换</h3>
+<div class="outline-text-3" id="text-orgad7db29">
 <p>
 String 类的 <code>toLowerCase()</code> 方法可以将字符串中的所有字符全部转换成小写，而非字母的字符不受影响。语法格式如下：
 </p>
@@ -362,9 +357,9 @@ String 类的 <code>toLowerCase()</code> 方法可以将字符串中的所有字
 </div>
 </div>
 
-<div id="outline-container-org4ec7a1d" class="outline-3">
-<h3 id="org4ec7a1d">去除字符串中的空格</h3>
-<div class="outline-text-3" id="text-org4ec7a1d">
+<div id="outline-container-org10a7f63" class="outline-3">
+<h3 id="org10a7f63">去除字符串中的空格</h3>
+<div class="outline-text-3" id="text-org10a7f63">
 <p>
 字符串中存在的首尾空格一般情况下都没有任何意义，如字符串 <code>“ Hello ”</code> ，但是这些空格会影响到字符串的操作，如连接字符串或比较字符串等，所以应该去掉字符串中的首尾空格，这需要使用 String 类提供的 <code>trim()</code> 方法。语法格式如下：
 </p>
@@ -379,9 +374,9 @@ String 类的 <code>toLowerCase()</code> 方法可以将字符串中的所有字
 </div>
 </div>
 
-<div id="outline-container-orgf359eb4" class="outline-3">
-<h3 id="orgf359eb4">截取子字符串</h3>
-<div class="outline-text-3" id="text-orgf359eb4">
+<div id="outline-container-org36737fe" class="outline-3">
+<h3 id="org36737fe">截取子字符串</h3>
+<div class="outline-text-3" id="text-org36737fe">
 <p>
 形式如下：
 </p>
@@ -405,9 +400,9 @@ String 类的 <code>toLowerCase()</code> 方法可以将字符串中的所有字
 </div>
 </div>
 
-<div id="outline-container-org5092c1a" class="outline-3">
-<h3 id="org5092c1a">分割字符串</h3>
-<div class="outline-text-3" id="text-org5092c1a">
+<div id="outline-container-orge72fabf" class="outline-3">
+<h3 id="orge72fabf">分割字符串</h3>
+<div class="outline-text-3" id="text-orge72fabf">
 <p>
 String 类的 <code>split()</code> 方法可以按指定的分割符对目标字符串进行分割，分割后的内容存放在字符串数组中。该方法主要有以下两种重载形式：
 </p>
@@ -436,9 +431,9 @@ str.split(String sign, int limit)
 </div>
 </div>
 
-<div id="outline-container-org0991717" class="outline-3">
-<h3 id="org0991717">字符串的替换</h3>
-<div class="outline-text-3" id="text-org0991717">
+<div id="outline-container-org188d2d6" class="outline-3">
+<h3 id="org188d2d6">字符串的替换</h3>
+<div class="outline-text-3" id="text-org188d2d6">
 <p>
 <span class="underline">1. replace()</span>
 </p>
@@ -493,9 +488,9 @@ str.split(String sign, int limit)
 </div>
 </div>
 
-<div id="outline-container-orgbe3f86b" class="outline-3">
-<h3 id="orgbe3f86b">字符串比较</h3>
-<div class="outline-text-3" id="text-orgbe3f86b">
+<div id="outline-container-org3a10be1" class="outline-3">
+<h3 id="org3a10be1">字符串比较</h3>
+<div class="outline-text-3" id="text-org3a10be1">
 <p>
 字符串比较是常见的操作，包括比较相等、大小、前缀和后缀等。
 </p>
@@ -592,9 +587,9 @@ str.compartTo(String otherstr);
 </div>
 </div>
 
-<div id="outline-container-org7b6dbef" class="outline-3">
-<h3 id="org7b6dbef">字符串查找</h3>
-<div class="outline-text-3" id="text-org7b6dbef">
+<div id="outline-container-orgc4ffd25" class="outline-3">
+<h3 id="orgc4ffd25">字符串查找</h3>
+<div class="outline-text-3" id="text-orgc4ffd25">
 <p>
 在给定的字符串中查找字符或字符串是比较常见的操作。字符串查找分为两种形式：
 </p>
@@ -683,9 +678,9 @@ String 类的 <code>charAt()</code> 方法可以在字符串内根据指定的�
 </div>
 </div>
 
-<div id="outline-container-orgf642029" class="outline-2">
-<h2 id="orgf642029">StringBuffer 类</h2>
-<div class="outline-text-2" id="text-orgf642029">
+<div id="outline-container-org6623c4b" class="outline-2">
+<h2 id="org6623c4b">StringBuffer 类</h2>
+<div class="outline-text-2" id="text-org6623c4b">
 <p>
 在 Java 中，除了通过 String 类创建和处理字符串之外，还可以使用 StringBuffer 类来处理字符串，它可以比 String 类更高效地处理字符串。
 </p>
@@ -834,13 +829,13 @@ StringBuffer 就是为了解决大量拼接字符串时产生很多中间对象�
 </div>
 </div>
 
-<div id="outline-container-org1b54789" class="outline-2">
-<h2 id="org1b54789">正则表达式</h2>
-<div class="outline-text-2" id="text-org1b54789">
+<div id="outline-container-org77fbe81" class="outline-2">
+<h2 id="org77fbe81">正则表达式</h2>
+<div class="outline-text-2" id="text-org77fbe81">
 </div>
-<div id="outline-container-org6f27e98" class="outline-3">
-<h3 id="org6f27e98">理解正则表达式</h3>
-<div class="outline-text-3" id="text-org6f27e98">
+<div id="outline-container-org2519a92" class="outline-3">
+<h3 id="org2519a92">理解正则表达式</h3>
+<div class="outline-text-3" id="text-org2519a92">
 <p>
 正则表达式（Regular Expression）是一个强大的字符串处理工具，可以对字符进行查找、提取、分割、替换等操作，是一种用于模式匹配和替换的规范。
 </p>
@@ -1395,9 +1390,9 @@ Java 中的正则表达式和 Emacs Lisp 中的一样让人感到…… xx?+-^|.
 </div>
 </div>
 </div>
-<div id="outline-container-org1c38371" class="outline-3">
-<h3 id="org1c38371">Pattern 类和 Matcher 类</h3>
-<div class="outline-text-3" id="text-org1c38371">
+<div id="outline-container-org0166b24" class="outline-3">
+<h3 id="org0166b24">Pattern 类和 Matcher 类</h3>
+<div class="outline-text-3" id="text-org0166b24">
 <p>
 <code>java.util.regex</code> 是一个用正则表达式所订制的模式来对字符串进行匹配工作的类库包，它包括两个类： <code>Pattern</code> 和 <code>Matcher</code> 。
 </p>
@@ -1657,7 +1652,7 @@ easy子串的起始位置：13，其结束位置：17
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-17 Thu 07:54</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:59</p>
+<p class="date">Created: 2021-01-01 Fri 14:35</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2020-12-11 Fri 10:58 -->
+<!-- 2021-01-01 Fri 14:34 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>x86 处理器架构</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js" defer></script>
 </head>
 <body>
 <div id="content">
@@ -23,38 +18,38 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7340f8c">CPU 处理器架构和工作原理浅析</a>
+<li><a href="#orgb0c4b5e">CPU 处理器架构和工作原理浅析</a>
 <ul>
-<li><a href="#orga92bd28">基本微机设计</a></li>
-<li><a href="#org5db8686">指令执行周期</a></li>
-<li><a href="#org3200a59">读取内存</a></li>
-<li><a href="#org5ca0f09">加载并执行程序</a></li>
+<li><a href="#org1001168">基本微机设计</a></li>
+<li><a href="#orgba18ace">指令执行周期</a></li>
+<li><a href="#org7641001">读取内存</a></li>
+<li><a href="#org94940e1">加载并执行程序</a></li>
 </ul>
 </li>
-<li><a href="#orgbd18e25">32位x86处理器架构</a>
+<li><a href="#org3945de3">32位x86处理器架构</a>
 <ul>
-<li><a href="#orge0d6bee">操作模式</a></li>
-<li><a href="#orgc878e9e">基本执行环境</a></li>
-<li><a href="#org5e4bdeb">x86 内存管理</a></li>
+<li><a href="#orgc8d2186">操作模式</a></li>
+<li><a href="#org1aa5684">基本执行环境</a></li>
+<li><a href="#org5f8fbae">x86 内存管理</a></li>
 </ul>
 </li>
-<li><a href="#org12bac51">x86-64 处理器架构</a>
+<li><a href="#org71e33c2">x86-64 处理器架构</a>
 <ul>
-<li><a href="#orga6f9302">64 位操作模式</a></li>
-<li><a href="#orgd204330">基本 64 位执行环境</a></li>
+<li><a href="#org402bf4e">64 位操作模式</a></li>
+<li><a href="#orgdf6b5f6">基本 64 位执行环境</a></li>
 </ul>
 </li>
-<li><a href="#org9922272">x86 计算机组件</a>
+<li><a href="#org2215f99">x86 计算机组件</a>
 <ul>
-<li><a href="#org252d4a1">主板</a></li>
-<li><a href="#org1a7a54f">内存</a></li>
+<li><a href="#org630e549">主板</a></li>
+<li><a href="#org71c4f45">内存</a></li>
 </ul>
 </li>
-<li><a href="#orgb69f267">I/O 输入输出系统</a>
+<li><a href="#orga457875">I/O 输入输出系统</a>
 <ul>
-<li><a href="#org6854975">I/O 访问层次</a></li>
-<li><a href="#org42e5694">设备驱动程序</a></li>
-<li><a href="#org0e0e173">多层次编程</a></li>
+<li><a href="#orgaac11e3">I/O 访问层次</a></li>
+<li><a href="#org104a828">设备驱动程序</a></li>
+<li><a href="#orga53e40f">多层次编程</a></li>
 </ul>
 </li>
 </ul>
@@ -64,13 +59,13 @@
 汇编语言是学习计算机是如何工作的很好的工具，本章介绍与 x86 汇编语言相关的底层硬件知识，以及从程序员角度看到的主机系统，其中包括了所有的 Intel IA-32 和 Intel 64 处理器和高级微设备（AMD）处理器。还介绍了指令执行时处理器内部发生的一些基本操作，以及操作系统如何加载和执行程序，并通过样本主板布局来了解 x86 系统的硬件环境，最后还讨论了在应用程序与操作系统之间，层次化输入输出是如何工作的。
 </p>
 
-<div id="outline-container-org7340f8c" class="outline-2">
-<h2 id="org7340f8c">CPU 处理器架构和工作原理浅析</h2>
-<div class="outline-text-2" id="text-org7340f8c">
+<div id="outline-container-orgb0c4b5e" class="outline-2">
+<h2 id="orgb0c4b5e">CPU 处理器架构和工作原理浅析</h2>
+<div class="outline-text-2" id="text-orgb0c4b5e">
 </div>
-<div id="outline-container-orga92bd28" class="outline-3">
-<h3 id="orga92bd28">基本微机设计</h3>
-<div class="outline-text-3" id="text-orga92bd28">
+<div id="outline-container-org1001168" class="outline-3">
+<h3 id="org1001168">基本微机设计</h3>
+<div class="outline-text-3" id="text-org1001168">
 <p>
 下图给出了假想机的基本设计。中央处理单元（CPU）是进行算术和逻辑操作的部件，包含了有限数量的存储位置 &#x2013; <span class="underline">寄存器</span> （register），一个 <span class="underline">高频时钟</span> 、 一个 <span class="underline">控制单元</span> 和一个 <span class="underline">算术逻辑单元</span> 。
 </p>
@@ -145,9 +140,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org5db8686" class="outline-3">
-<h3 id="org5db8686">指令执行周期</h3>
-<div class="outline-text-3" id="text-org5db8686">
+<div id="outline-container-orgba18ace" class="outline-3">
+<h3 id="orgba18ace">指令执行周期</h3>
+<div class="outline-text-3" id="text-orgba18ace">
 <p>
 一条机器指令不会神奇地一下就执行完成。CPU 在执行一条机器指令时，需要经过一系列预先定义好的步骤，这些步骤被称为 <span class="underline">指令执行周期</span> （instruction execution cycle）。
 </p>
@@ -192,9 +187,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org3200a59" class="outline-3">
-<h3 id="org3200a59">读取内存</h3>
-<div class="outline-text-3" id="text-org3200a59">
+<div id="outline-container-org7641001" class="outline-3">
+<h3 id="org7641001">读取内存</h3>
+<div class="outline-text-3" id="text-org7641001">
 <p>
 作为一个常见现象，计算机从内存读取数据比从内部寄存器读取速度要慢很多。这是因为从内存读取一个值，需要经过下述步骤：
 </p>
@@ -235,9 +230,9 @@ x86 系列中的 cache 存储器有两种类型：一级 cache （或主 cache�
 </div>
 </div>
 
-<div id="outline-container-org5ca0f09" class="outline-3">
-<h3 id="org5ca0f09">加载并执行程序</h3>
-<div class="outline-text-3" id="text-org5ca0f09">
+<div id="outline-container-org94940e1" class="outline-3">
+<h3 id="org94940e1">加载并执行程序</h3>
+<div class="outline-text-3" id="text-org94940e1">
 <p>
 在程序执行之前，需要用一种工具程序将其加载到内存，这种工具程序称为 <span class="underline">程序加载器</span> （program loader）。加载后，操作系统必须将 CPU 指向程序的入口，即程序开始执行的地址。具体步骤如下：
 </p>
@@ -265,17 +260,17 @@ x86 系列中的 cache 存储器有两种类型：一级 cache （或主 cache�
 </div>
 </div>
 
-<div id="outline-container-orgbd18e25" class="outline-2">
-<h2 id="orgbd18e25">32位x86处理器架构</h2>
-<div class="outline-text-2" id="text-orgbd18e25">
+<div id="outline-container-org3945de3" class="outline-2">
+<h2 id="org3945de3">32位x86处理器架构</h2>
+<div class="outline-text-2" id="text-org3945de3">
 <p>
 本节我们来了解一下 32 位 x86 处理器的基本架构特点，包括了 Intel IA-32 系列中的成员和所有 32 位 AMD 处理器。
 </p>
 </div>
 
-<div id="outline-container-orge0d6bee" class="outline-3">
-<h3 id="orge0d6bee">操作模式</h3>
-<div class="outline-text-3" id="text-orge0d6bee">
+<div id="outline-container-orgc8d2186" class="outline-3">
+<h3 id="orgc8d2186">操作模式</h3>
+<div class="outline-text-3" id="text-orgc8d2186">
 <p>
 x86 处理器有三个主要的操作模式：保护模式、实地址模式和系统管理模式；以及一个子模式：虚拟 8086 模式，这是保护模式的特殊情况。
 </p>
@@ -314,9 +309,9 @@ x86 处理器有三个主要的操作模式：保护模式、实地址模式和�
 </div>
 </div>
 
-<div id="outline-container-orgc878e9e" class="outline-3">
-<h3 id="orgc878e9e">基本执行环境</h3>
-<div class="outline-text-3" id="text-orgc878e9e">
+<div id="outline-container-org1aa5684" class="outline-3">
+<h3 id="org1aa5684">基本执行环境</h3>
+<div class="outline-text-3" id="text-org1aa5684">
 <p>
 <span class="underline">1. 地址空间</span>
 </p>
@@ -572,9 +567,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org5e4bdeb" class="outline-3">
-<h3 id="org5e4bdeb">x86 内存管理</h3>
-<div class="outline-text-3" id="text-org5e4bdeb">
+<div id="outline-container-org5f8fbae" class="outline-3">
+<h3 id="org5f8fbae">x86 内存管理</h3>
+<div class="outline-text-3" id="text-org5f8fbae">
 <p>
 x86 处理器按照前面讨论的基本操作模式来管理内存。保护模式是最可靠、最强大的，但是它对应用程序直接访问系统硬件有着严格的限制。
 </p>
@@ -602,9 +597,9 @@ x86 处理器按照前面讨论的基本操作模式来管理内存。保护模�
 </div>
 </div>
 
-<div id="outline-container-org12bac51" class="outline-2">
-<h2 id="org12bac51">x86-64 处理器架构</h2>
-<div class="outline-text-2" id="text-org12bac51">
+<div id="outline-container-org71e33c2" class="outline-2">
+<h2 id="org71e33c2">x86-64 处理器架构</h2>
+<div class="outline-text-2" id="text-org71e33c2">
 <p>
 本节重点关注所有使用 x86-64 指令集的 64 位处理器的基本架构细节，这些处理器包括 Intel 64 和 AMD64 处理器系列，指令集是已讨论的 x86 指令集的 64 位扩展。以下为一些基本特征：
 </p>
@@ -633,9 +628,9 @@ x86 处理器按照前面讨论的基本操作模式来管理内存。保护模�
 </p>
 </div>
 
-<div id="outline-container-orga6f9302" class="outline-3">
-<h3 id="orga6f9302">64 位操作模式</h3>
-<div class="outline-text-3" id="text-orga6f9302">
+<div id="outline-container-org402bf4e" class="outline-3">
+<h3 id="org402bf4e">64 位操作模式</h3>
+<div class="outline-text-3" id="text-org402bf4e">
 <p>
 Intel 64 架构引入了一个新模式，称为 IA-32e 。从技术上看，这个模式包含两个子模式：兼容模式（compatibility mode）和 64 位模式（64-bit mode）。不过它们常常被看做是模式而不是子模式，因此，等来了解这两个模式。
 </p>
@@ -662,9 +657,9 @@ Intel 64 架构引入了一个新模式，称为 IA-32e 。从技术上看，这
 </div>
 </div>
 
-<div id="outline-container-orgd204330" class="outline-3">
-<h3 id="orgd204330">基本 64 位执行环境</h3>
-<div class="outline-text-3" id="text-orgd204330">
+<div id="outline-container-orgdf6b5f6" class="outline-3">
+<h3 id="orgdf6b5f6">基本 64 位执行环境</h3>
+<div class="outline-text-3" id="text-orgdf6b5f6">
 <p>
 64 位模式下，虽然处理器现在只能支持 48 位的地址，但是理论上，地址最大为 64 位。从寄存器来看，64 位模式与 32 位最主要的区别如下所示：
 </p>
@@ -743,17 +738,17 @@ Intel 64 架构引入了一个新模式，称为 IA-32e 。从技术上看，这
 </div>
 </div>
 
-<div id="outline-container-org9922272" class="outline-2">
-<h2 id="org9922272">x86 计算机组件</h2>
-<div class="outline-text-2" id="text-org9922272">
+<div id="outline-container-org2215f99" class="outline-2">
+<h2 id="org2215f99">x86 计算机组件</h2>
+<div class="outline-text-2" id="text-org2215f99">
 <p>
 本节首先通过检查典型主板配置以及围绕 CPU 的芯片组来了解 x86 如何与其他组件的集成，然后讨论内存、I/O 端口和通用设备接口，最后说明汇编语言程序怎样利用系统硬件、固件，并调用操作系统函数来实现不同访问层次的 I/O 操作。
 </p>
 </div>
 
-<div id="outline-container-org252d4a1" class="outline-3">
-<h3 id="org252d4a1">主板</h3>
-<div class="outline-text-3" id="text-org252d4a1">
+<div id="outline-container-org630e549" class="outline-3">
+<h3 id="org630e549">主板</h3>
+<div class="outline-text-3" id="text-org630e549">
 <p>
 <span class="underline">主板</span> 是微型计算机的心脏，它是一个平面电路板，其上集成了 CPU、支持处理器（芯片组（chipset））、主存、输入输出接口、电源接口和扩展插槽。
 </p>
@@ -839,9 +834,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org1a7a54f" class="outline-3">
-<h3 id="org1a7a54f">内存</h3>
-<div class="outline-text-3" id="text-org1a7a54f">
+<div id="outline-container-org71c4f45" class="outline-3">
+<h3 id="org71c4f45">内存</h3>
+<div class="outline-text-3" id="text-org71c4f45">
 <p>
 基于 Intel 的系统使用的是几种基础类型内存：只读存储器（ROM）、可擦写可编程只读存储器（EPROM）、动态随机访问存储器（DRAM）、静态 RAM （SRAM）、图像随机存储器（VRAM）和互补金属氧化物半导体（CMOS）RAM：
 </p>
@@ -857,17 +852,17 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgb69f267" class="outline-2">
-<h2 id="orgb69f267">I/O 输入输出系统</h2>
-<div class="outline-text-2" id="text-orgb69f267">
+<div id="outline-container-orga457875" class="outline-2">
+<h2 id="orga457875">I/O 输入输出系统</h2>
+<div class="outline-text-2" id="text-orga457875">
 <p>
 由于计算机游戏与内存和 I/O 有着非常密切的关系，因此，它们推动计算机达到其最大性能。善于游戏编程的程序员通常很了解视频和音频硬件，并会优化代码的硬件特性。
 </p>
 </div>
 
-<div id="outline-container-org6854975" class="outline-3">
-<h3 id="org6854975">I/O 访问层次</h3>
-<div class="outline-text-3" id="text-org6854975">
+<div id="outline-container-orgaac11e3" class="outline-3">
+<h3 id="orgaac11e3">I/O 访问层次</h3>
+<div class="outline-text-3" id="text-orgaac11e3">
 <p>
 应用程序通常从键盘和磁盘文件读取输入，而将输出写到显示器和文件中。完成 I/O 不需要直接访问硬件，相反，可以调用操作系统的函数。
 </p>
@@ -902,9 +897,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org42e5694" class="outline-3">
-<h3 id="org42e5694">设备驱动程序</h3>
-<div class="outline-text-3" id="text-org42e5694">
+<div id="outline-container-org104a828" class="outline-3">
+<h3 id="org104a828">设备驱动程序</h3>
+<div class="outline-text-3" id="text-org104a828">
 <p>
 设备驱动程序允许操作系统与硬件设备和系统 BIOS 直接通信。例如，设备驱动程序可能接收来自 OS 的请求来读取一些数据，而满足该请求的方法是，通过执行设备固件中代码，用设备特有的方式来读取数据。
 </p>
@@ -938,9 +933,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org0e0e173" class="outline-3">
-<h3 id="org0e0e173">多层次编程</h3>
-<div class="outline-text-3" id="text-org0e0e173">
+<div id="outline-container-orga53e40f" class="outline-3">
+<h3 id="orga53e40f">多层次编程</h3>
+<div class="outline-text-3" id="text-orga53e40f">
 <p>
 汇编语言程序在输入输出编程领域有着强大的能力和灵活性，它们可以从以下访问层次进行选择：
 </p>
@@ -1005,7 +1000,7 @@ title=""
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-11 Fri 14:42</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:58</p>
+<p class="date">Created: 2021-01-01 Fri 14:34</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

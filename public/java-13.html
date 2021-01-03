@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2020-12-11 Fri 10:59 -->
+<!-- 2021-01-01 Fri 14:35 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>输入/输出流</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js" defer></script>
 </head>
 <body>
 <div id="content">
@@ -23,27 +18,27 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1c8f560">流的概念</a>
+<li><a href="#orgdeeb047">流的概念</a>
 <ul>
-<li><a href="#org249b2a4">什么是输入/输出流</a></li>
-<li><a href="#org73ce5a3">输入流</a></li>
-<li><a href="#orgdcfe06e">输出流</a></li>
+<li><a href="#orgf9955e5">什么是输入/输出流</a></li>
+<li><a href="#org8146c49">输入流</a></li>
+<li><a href="#org75dbc94">输出流</a></li>
 </ul>
 </li>
-<li><a href="#org133a405">系统流</a></li>
-<li><a href="#orgd75e5c1"><span class="todo TODO">TODO</span> 字符编码</a></li>
-<li><a href="#orgf869725">File 类</a>
+<li><a href="#org9695dc7">系统流</a></li>
+<li><a href="#orge03ed2b"><span class="todo TODO">TODO</span> 字符编码</a></li>
+<li><a href="#orgacefb57">File 类</a>
 <ul>
-<li><a href="#org00201a6">获取文件属性</a></li>
-<li><a href="#org44941fa">创建和删除文件</a></li>
-<li><a href="#orga0a033b">创建和删除目录</a></li>
-<li><a href="#org217a8b6">遍历目录</a></li>
+<li><a href="#org9d4e4e2">获取文件属性</a></li>
+<li><a href="#org739be0c">创建和删除文件</a></li>
+<li><a href="#orge774f75">创建和删除目录</a></li>
+<li><a href="#orgee16f67">遍历目录</a></li>
 </ul>
 </li>
-<li><a href="#org2ad94ba"><span class="todo TODO">TODO</span> 字节流的使用</a></li>
-<li><a href="#orgeb17ede"><span class="todo TODO">TODO</span> 字符流的使用</a></li>
-<li><a href="#orgec57653"><span class="todo TODO">TODO</span> 转换流</a></li>
-<li><a href="#org7cfd58a"><span class="todo TODO">TODO</span> 保存图书信息</a></li>
+<li><a href="#org4f37c26"><span class="todo TODO">TODO</span> 字节流的使用</a></li>
+<li><a href="#org54f5ebb"><span class="todo TODO">TODO</span> 字符流的使用</a></li>
+<li><a href="#orgc7d681c"><span class="todo TODO">TODO</span> 转换流</a></li>
+<li><a href="#org761215c"><span class="todo TODO">TODO</span> 保存图书信息</a></li>
 </ul>
 </div>
 </div>
@@ -51,9 +46,9 @@
 在变量、数组、对象和集合中存储的数据是暂时存在的，一旦程序结束它们就会丢失。为以能够永久地保存程序创建的数据，需要将其保存到磁盘文件中，这样就可以在其他程序中使用它们。Java 的 I/O （输入输出）技术可以将数据保存到文本文件和二进制文件中，以达到永久保存数据的要求。
 </p>
 
-<div id="outline-container-org1c8f560" class="outline-2">
-<h2 id="org1c8f560">流的概念</h2>
-<div class="outline-text-2" id="text-org1c8f560">
+<div id="outline-container-orgdeeb047" class="outline-2">
+<h2 id="orgdeeb047">流的概念</h2>
+<div class="outline-text-2" id="text-orgdeeb047">
 <p>
 在 Java 中所有数据都是使用流读写的。流是一组有序的数据序列，将数据从一个地方带到另一个地方。根据数据流向的不同，可以分为输入流（Input）和输出流（Output）两种。
 </p>
@@ -71,9 +66,9 @@
 </p>
 </div>
 
-<div id="outline-container-org249b2a4" class="outline-3">
-<h3 id="org249b2a4">什么是输入/输出流</h3>
-<div class="outline-text-3" id="text-org249b2a4">
+<div id="outline-container-orgf9955e5" class="outline-3">
+<h3 id="orgf9955e5">什么是输入/输出流</h3>
+<div class="outline-text-3" id="text-orgf9955e5">
 <p>
 <b>Java 程序通过流来完成输入/输出，所有的输入/输出以流的形式处理。</b>
 </p>
@@ -113,9 +108,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org73ce5a3" class="outline-3">
-<h3 id="org73ce5a3">输入流</h3>
-<div class="outline-text-3" id="text-org73ce5a3">
+<div id="outline-container-org8146c49" class="outline-3">
+<h3 id="org8146c49">输入流</h3>
+<div class="outline-text-3" id="text-org8146c49">
 <p>
 Java 流相关的类都封装在 <code>java.io</code> 包中，而且每个数据流都是一个对象。所有输入流都是 InputStream 抽象类（字节输入流）和 Reader 抽象类（字符输入流）的子类。其中 InputStream 类是字节输入流的抽象类，是所有字节输入流的父类，其层次结构如图所示：
 </p>
@@ -205,9 +200,9 @@ Java 中字符是 Unicode 编码，即双字节的，而 InputStream 是用来�
 </div>
 </div>
 
-<div id="outline-container-orgdcfe06e" class="outline-3">
-<h3 id="orgdcfe06e">输出流</h3>
-<div class="outline-text-3" id="text-orgdcfe06e">
+<div id="outline-container-org75dbc94" class="outline-3">
+<h3 id="org75dbc94">输出流</h3>
+<div class="outline-text-3" id="text-org75dbc94">
 <p>
 在 Java 中所有输出流都是 OutputStream 抽象类（字节输出流）和 Writer 抽象类（字符输出流）的子类。其中 OutputStream 类是字节输出流的抽象类，是所有字节输出流的父类。
 </p>
@@ -269,9 +264,9 @@ OutputStream 类是所有字节输出流的超类，用于以二进制的形式�
 </div>
 </div>
 
-<div id="outline-container-org133a405" class="outline-2">
-<h2 id="org133a405">系统流</h2>
-<div class="outline-text-2" id="text-org133a405">
+<div id="outline-container-org9695dc7" class="outline-2">
+<h2 id="org9695dc7">系统流</h2>
+<div class="outline-text-2" id="text-org9695dc7">
 <p>
 每个 Java 程序运行时都带有一个系统流，系统流对应的类为 <code>java.lang.System</code> 。System 类封装了 Java 程序运行时的 3 个系统流，分别通过 <code>in、out</code> 和 <code>err</code> 变量来引用：
 </p>
@@ -334,13 +329,13 @@ void write(int byteval) throws IOException
 </div>
 </div>
 
-<div id="outline-container-orgd75e5c1" class="outline-2">
-<h2 id="orgd75e5c1"><span class="todo TODO">TODO</span> 字符编码</h2>
+<div id="outline-container-orge03ed2b" class="outline-2">
+<h2 id="orge03ed2b"><span class="todo TODO">TODO</span> 字符编码</h2>
 </div>
 
-<div id="outline-container-orgf869725" class="outline-2">
-<h2 id="orgf869725">File 类</h2>
-<div class="outline-text-2" id="text-orgf869725">
+<div id="outline-container-orgacefb57" class="outline-2">
+<h2 id="orgacefb57">File 类</h2>
+<div class="outline-text-2" id="text-orgacefb57">
 <p>
 在 Java 中， <b>File 类是 <code>java.io</code> 包中唯一代表磁盘文件本身的对象</b> ，也就是说，如果希望在程序中操作文件和目录，则都可以通过 File 类来完成。File 类定义了一些方法来操作文件，比如新建、删除、重命名文件和目录等。
 </p>
@@ -480,9 +475,9 @@ Windows 的路径分隔符使用反斜线 <code>\</code> ，而 Java 程序中�
 </p>
 </div>
 
-<div id="outline-container-org00201a6" class="outline-3">
-<h3 id="org00201a6">获取文件属性</h3>
-<div class="outline-text-3" id="text-org00201a6">
+<div id="outline-container-org9d4e4e2" class="outline-3">
+<h3 id="org9d4e4e2">获取文件属性</h3>
+<div class="outline-text-3" id="text-org9d4e4e2">
 <p>
 在 Java 中获取文件属性信息的第一步是先创建一个 File 类对象并指向一个已存在的文件，然后再调用上表中的方法进行操作。
 </p>
@@ -516,9 +511,9 @@ Windows 的路径分隔符使用反斜线 <code>\</code> ，而 Java 程序中�
 </div>
 </div>
 
-<div id="outline-container-org44941fa" class="outline-3">
-<h3 id="org44941fa">创建和删除文件</h3>
-<div class="outline-text-3" id="text-org44941fa">
+<div id="outline-container-org739be0c" class="outline-3">
+<h3 id="org739be0c">创建和删除文件</h3>
+<div class="outline-text-3" id="text-org739be0c">
 <p>
 File 类不仅可以获取已知文件的属性信息，还可以在指定路径创建文件，以及删除一个文件。创建文件需要调用 <code>createNewFile()</code> 方法，删除文件需要调用 <code>delete()</code> 方法。
 </p>
@@ -549,9 +544,9 @@ File 类不仅可以获取已知文件的属性信息，还可以在指定路径
 </div>
 </div>
 
-<div id="outline-container-orga0a033b" class="outline-3">
-<h3 id="orga0a033b">创建和删除目录</h3>
-<div class="outline-text-3" id="text-orga0a033b">
+<div id="outline-container-orge774f75" class="outline-3">
+<h3 id="orge774f75">创建和删除目录</h3>
+<div class="outline-text-3" id="text-orge774f75">
 <p>
 直接用示例来说明吧。
 </p>
@@ -573,9 +568,9 @@ File 类不仅可以获取已知文件的属性信息，还可以在指定路径
 </div>
 </div>
 
-<div id="outline-container-org217a8b6" class="outline-3">
-<h3 id="org217a8b6">遍历目录</h3>
-<div class="outline-text-3" id="text-org217a8b6">
+<div id="outline-container-orgee16f67" class="outline-3">
+<h3 id="orgee16f67">遍历目录</h3>
+<div class="outline-text-3" id="text-orgee16f67">
 <p>
 通过遍历目录可以在指定目录中查找文件，或者显示所有的文件列表。
 </p>
@@ -665,26 +660,26 @@ String[] fileList = f.list(new ImageFilter());
 </div>
 </div>
 
-<div id="outline-container-org2ad94ba" class="outline-2">
-<h2 id="org2ad94ba"><span class="todo TODO">TODO</span> 字节流的使用</h2>
+<div id="outline-container-org4f37c26" class="outline-2">
+<h2 id="org4f37c26"><span class="todo TODO">TODO</span> 字节流的使用</h2>
 </div>
 
-<div id="outline-container-orgeb17ede" class="outline-2">
-<h2 id="orgeb17ede"><span class="todo TODO">TODO</span> 字符流的使用</h2>
+<div id="outline-container-org54f5ebb" class="outline-2">
+<h2 id="org54f5ebb"><span class="todo TODO">TODO</span> 字符流的使用</h2>
 </div>
 
-<div id="outline-container-orgec57653" class="outline-2">
-<h2 id="orgec57653"><span class="todo TODO">TODO</span> 转换流</h2>
+<div id="outline-container-orgc7d681c" class="outline-2">
+<h2 id="orgc7d681c"><span class="todo TODO">TODO</span> 转换流</h2>
 </div>
 
-<div id="outline-container-org7cfd58a" class="outline-2">
-<h2 id="org7cfd58a"><span class="todo TODO">TODO</span> 保存图书信息</h2>
+<div id="outline-container-org761215c" class="outline-2">
+<h2 id="org761215c"><span class="todo TODO">TODO</span> 保存图书信息</h2>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-02 Fri 15:09</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:59</p>
+<p class="date">Created: 2021-01-01 Fri 14:35</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

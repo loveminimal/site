@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2020-12-11 Fri 10:59 -->
+<!-- 2021-01-01 Fri 14:35 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Java 程序设计基础</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js" defer></script>
 </head>
 <body>
 <div id="content">
@@ -23,32 +18,32 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org95c9962">标识符和关键字</a>
+<li><a href="#org0548be2">标识符和关键字</a>
 <ul>
-<li><a href="#orgc622b00">标识符</a></li>
-<li><a href="#orgf61fc26">关键字</a></li>
+<li><a href="#orgfac63cf">标识符</a></li>
+<li><a href="#orga7c3a08">关键字</a></li>
 </ul>
 </li>
-<li><a href="#org831dd18">注释</a></li>
-<li><a href="#org1ff34e0"><span class="todo TODO">TODO</span> Javadoc 文档注释</a></li>
-<li><a href="#orgc7d3b43">常量</a>
+<li><a href="#org279acd3">注释</a></li>
+<li><a href="#orgad8e8ae"><span class="todo TODO">TODO</span> Javadoc 文档注释</a></li>
+<li><a href="#org25629be">常量</a>
 <ul>
-<li><a href="#orga4d2115">常量值</a></li>
-<li><a href="#orgdf34eba">定义常量</a></li>
+<li><a href="#org2d297a4">常量值</a></li>
+<li><a href="#orgb4123d3">定义常量</a></li>
 </ul>
 </li>
-<li><a href="#org53eb5f8">变量</a>
+<li><a href="#orgd2f412e">变量</a>
 <ul>
-<li><a href="#org8430fb7">声明变量</a></li>
-<li><a href="#org671f57b">变量赋值</a></li>
-<li><a href="#orgbf74d35">变量作用域</a></li>
+<li><a href="#org42a3768">声明变量</a></li>
+<li><a href="#org93240ba">变量赋值</a></li>
+<li><a href="#org96f41c6">变量作用域</a></li>
 </ul>
 </li>
-<li><a href="#org72cd397">数据类型</a>
+<li><a href="#orgfc79a66">数据类型</a>
 <ul>
-<li><a href="#orgc7d0e4e">基本数据类型</a></li>
-<li><a href="#org4592f44">引用数据类型</a></li>
-<li><a href="#orgc3947a5">数据类型转换</a></li>
+<li><a href="#org070e1a6">基本数据类型</a></li>
+<li><a href="#orgdfce771">引用数据类型</a></li>
+<li><a href="#org0702e21">数据类型转换</a></li>
 </ul>
 </li>
 </ul>
@@ -62,9 +57,9 @@
 数据类型肯定是要有的，它关系到数据在内存中的存储。
 </essay>
 
-<div id="outline-container-org95c9962" class="outline-2">
-<h2 id="org95c9962">标识符和关键字</h2>
-<div class="outline-text-2" id="text-org95c9962">
+<div id="outline-container-org0548be2" class="outline-2">
+<h2 id="org0548be2">标识符和关键字</h2>
+<div class="outline-text-2" id="text-org0548be2">
 <p>
 任何一种计算机语言都离不开标识符和关键字。
 </p>
@@ -77,9 +72,9 @@ Hmm，机器语言就不需要……
 </essay>
 </div>
 
-<div id="outline-container-orgc622b00" class="outline-3">
-<h3 id="orgc622b00">标识符</h3>
-<div class="outline-text-3" id="text-orgc622b00">
+<div id="outline-container-orgfac63cf" class="outline-3">
+<h3 id="orgfac63cf">标识符</h3>
+<div class="outline-text-3" id="text-orgfac63cf">
 <p>
 Java 中标识符是为方法、变量或其他用户定义项所定义的名称，标识符可以有一个或多个字符。
 </p>
@@ -125,9 +120,9 @@ Java 中标识符是为方法、变量或其他用户定义项所定义的名称
 </div>
 </div>
 
-<div id="outline-container-orgf61fc26" class="outline-3">
-<h3 id="orgf61fc26">关键字</h3>
-<div class="outline-text-3" id="text-orgf61fc26">
+<div id="outline-container-orga7c3a08" class="outline-3">
+<h3 id="orga7c3a08">关键字</h3>
+<div class="outline-text-3" id="text-orga7c3a08">
 <p>
 关键字（或者保留字）是 <b>对编译器有特殊意义</b> 的固定单词，不能在程序中做其他目的使用。它们用来表示一种数据类型，或者表示程序的结构等。
 </p>
@@ -182,9 +177,9 @@ Java 语言目前定义了 51 个关键字，这些关键字不能作为变量�
 </div>
 </div>
 
-<div id="outline-container-org831dd18" class="outline-2">
-<h2 id="org831dd18">注释</h2>
-<div class="outline-text-2" id="text-org831dd18">
+<div id="outline-container-org279acd3" class="outline-2">
+<h2 id="org279acd3">注释</h2>
+<div class="outline-text-2" id="text-org279acd3">
 <p>
 注释是对程序语言的说明，有助于开发者和用户之间的交流，方便理解程序。注释不是编程语句，因此 <b>被编译器忽略</b> 。
 </p>
@@ -219,18 +214,18 @@ Java 语言目前定义了 51 个关键字，这些关键字不能作为变量�
 </div>
 </div>
 
-<div id="outline-container-org1ff34e0" class="outline-2">
-<h2 id="org1ff34e0"><span class="todo TODO">TODO</span> Javadoc 文档注释</h2>
-<div class="outline-text-2" id="text-org1ff34e0">
+<div id="outline-container-orgad8e8ae" class="outline-2">
+<h2 id="orgad8e8ae"><span class="todo TODO">TODO</span> Javadoc 文档注释</h2>
+<div class="outline-text-2" id="text-orgad8e8ae">
 <p>
 &#x2026;
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc7d3b43" class="outline-2">
-<h2 id="orgc7d3b43">常量</h2>
-<div class="outline-text-2" id="text-orgc7d3b43">
+<div id="outline-container-org25629be" class="outline-2">
+<h2 id="org25629be">常量</h2>
+<div class="outline-text-2" id="text-org25629be">
 <p>
 常量是指在程序的整个运行过程中值保持不变的量。
 </p>
@@ -250,9 +245,9 @@ Java 语言目前定义了 51 个关键字，这些关键字不能作为变量�
 </essay>
 </div>
 
-<div id="outline-container-orga4d2115" class="outline-3">
-<h3 id="orga4d2115">常量值</h3>
-<div class="outline-text-3" id="text-orga4d2115">
+<div id="outline-container-org2d297a4" class="outline-3">
+<h3 id="org2d297a4">常量值</h3>
+<div class="outline-text-3" id="text-org2d297a4">
 <p>
 常量值又称为字面常量，它是通过数据直接表示，如整型、字符串等。
 </p>
@@ -431,9 +426,9 @@ Java 的字符型常量值是用 <b>单引号</b> 引起来的一个字符，如
 </div>
 </div>
 
-<div id="outline-container-orgdf34eba" class="outline-3">
-<h3 id="orgdf34eba">定义常量</h3>
-<div class="outline-text-3" id="text-orgdf34eba">
+<div id="outline-container-orgb4123d3" class="outline-3">
+<h3 id="orgb4123d3">定义常量</h3>
+<div class="outline-text-3" id="text-orgb4123d3">
 <p>
 常量不同于常量值，它可以在程序中用符号来代替常量值使用，因此在使用前必须先定义。在声明常量的同时要赋予一个初始值，常量一旦初始化就不可以被修改。
 </p>
@@ -501,9 +496,9 @@ final dataType variableName = value
 </div>
 </div>
 
-<div id="outline-container-org53eb5f8" class="outline-2">
-<h2 id="org53eb5f8">变量</h2>
-<div class="outline-text-2" id="text-org53eb5f8">
+<div id="outline-container-orgd2f412e" class="outline-2">
+<h2 id="orgd2f412e">变量</h2>
+<div class="outline-text-2" id="text-orgd2f412e">
 <p>
 Java 语言是强类型（Strongly Typed）语言，强类型包含以下两方面的含义：
 </p>
@@ -521,9 +516,9 @@ Java 语言是强类型（Strongly Typed）语言，强类型包含以下两方�
 </p>
 </div>
 
-<div id="outline-container-org8430fb7" class="outline-3">
-<h3 id="org8430fb7">声明变量</h3>
-<div class="outline-text-3" id="text-org8430fb7">
+<div id="outline-container-org42a3768" class="outline-3">
+<h3 id="org42a3768">声明变量</h3>
+<div class="outline-text-3" id="text-org42a3768">
 <p>
 对开发人员来说，变量是用来描述一条信息的别名，可以在程序代码中使用一个或多个变量。其基本语法如下：
 </p>
@@ -546,9 +541,9 @@ DataType identifier = value;
 </div>
 </div>
 
-<div id="outline-container-org671f57b" class="outline-3">
-<h3 id="org671f57b">变量赋值</h3>
-<div class="outline-text-3" id="text-org671f57b">
+<div id="outline-container-org93240ba" class="outline-3">
+<h3 id="org93240ba">变量赋值</h3>
+<div class="outline-text-3" id="text-org93240ba">
 <p>
 初始化变量，是为变量指定一个明确的初始值。
 </p>
@@ -582,9 +577,9 @@ Java 中初始化变量时需要注意以下事项：
 </div>
 </div>
 
-<div id="outline-container-orgbf74d35" class="outline-3">
-<h3 id="orgbf74d35">变量作用域</h3>
-<div class="outline-text-3" id="text-orgbf74d35">
+<div id="outline-container-org96f41c6" class="outline-3">
+<h3 id="org96f41c6">变量作用域</h3>
+<div class="outline-text-3" id="text-org96f41c6">
 <p>
 变量的作用域规定了变量所能使用的范围，只有在作用域内变量才能被使用。根据变量声明地点的不同，变量的作用域也不同。
 </p>
@@ -666,17 +661,17 @@ Java 的成员变量有两种，分别是 <span class="underline">全局变量�
 </div>
 </div>
 
-<div id="outline-container-org72cd397" class="outline-2">
-<h2 id="org72cd397">数据类型</h2>
-<div class="outline-text-2" id="text-org72cd397">
+<div id="outline-container-orgfc79a66" class="outline-2">
+<h2 id="orgfc79a66">数据类型</h2>
+<div class="outline-text-2" id="text-orgfc79a66">
 <p>
 Java 语言支持的数据类型分为两种：基本数据类型（Primitive Type）和引用数据类型（Reference Type）。
 </p>
 </div>
 
-<div id="outline-container-orgc7d0e4e" class="outline-3">
-<h3 id="orgc7d0e4e">基本数据类型</h3>
-<div class="outline-text-3" id="text-orgc7d0e4e">
+<div id="outline-container-org070e1a6" class="outline-3">
+<h3 id="org070e1a6">基本数据类型</h3>
+<div class="outline-text-3" id="text-org070e1a6">
 <table>
 <caption class="t-above"><span class="table-number">Table 4:</span> Java 的基本数据类型</caption>
 
@@ -885,9 +880,9 @@ Unicode 字符通常用十六进制表示，范围从 <code>"\u0000" ~ "\uffff"<
 </div>
 </div>
 
-<div id="outline-container-org4592f44" class="outline-3">
-<h3 id="org4592f44">引用数据类型</h3>
-<div class="outline-text-3" id="text-org4592f44">
+<div id="outline-container-orgdfce771" class="outline-3">
+<h3 id="orgdfce771">引用数据类型</h3>
+<div class="outline-text-3" id="text-orgdfce771">
 <p>
 引用数据类型建立在基本数据类型的基础上，包括数组、类和接口。引用数据类型是由用户自定义， <b>用来限制其他数据的类型</b> 。另外，Java 语言中不支持 C++ 中的指针类型、结构类型、联合类型和枚举类型。
 </p>
@@ -920,9 +915,9 @@ Unicode 字符通常用十六进制表示，范围从 <code>"\u0000" ~ "\uffff"<
 </div>
 </div>
 
-<div id="outline-container-orgc3947a5" class="outline-3">
-<h3 id="orgc3947a5">数据类型转换</h3>
-<div class="outline-text-3" id="text-orgc3947a5">
+<div id="outline-container-org0702e21" class="outline-3">
+<h3 id="org0702e21">数据类型转换</h3>
+<div class="outline-text-3" id="text-org0702e21">
 <p>
 数据类型的转换是在所赋值的数值和被变量接收的数据类型不一致时发生的，它需要从一种数据类型转换成另一种数据类型。数据类型的转换可以分为隐式转换（自动类型转换）和显示转换（强制类型转换）两种。
 </p>
@@ -1014,7 +1009,7 @@ Unicode 字符通常用十六进制表示，范围从 <code>"\u0000" ~ "\uffff"<
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-15 Tue 07:30</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:59</p>
+<p class="date">Created: 2021-01-01 Fri 14:35</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

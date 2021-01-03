@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2020-12-11 Fri 10:59 -->
+<!-- 2021-01-01 Fri 14:35 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>File Conversion</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js" defer></script>
 </head>
 <body>
 <div id="content">
@@ -23,18 +18,18 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org93f2969">Blob</a></li>
-<li><a href="#orgd11c8d1">File</a></li>
-<li><a href="#orgb3b94a8">Base64</a></li>
-<li><a href="#org3fa1c3a">FormData</a></li>
-<li><a href="#orge2a7186">转换</a>
+<li><a href="#orga5b4446">Blob</a></li>
+<li><a href="#orgfad1f55">File</a></li>
+<li><a href="#orge5bfb2d">Base64</a></li>
+<li><a href="#org5f0d785">FormData</a></li>
+<li><a href="#orgcca6d95">转换</a>
 <ul>
-<li><a href="#orgfe8c27d">fileToBase64</a></li>
-<li><a href="#orge81e5c0">fileToBlob</a></li>
-<li><a href="#orge298461">base64ToFile</a></li>
-<li><a href="#orge8fdeba">base64ToBlob</a></li>
-<li><a href="#org65eeb36">blobToFile</a></li>
-<li><a href="#orge5b6982">blobToBase64</a></li>
+<li><a href="#org884123b">fileToBase64</a></li>
+<li><a href="#org77d9f57">fileToBlob</a></li>
+<li><a href="#orgc1d80e2">base64ToFile</a></li>
+<li><a href="#org6496f0d">base64ToBlob</a></li>
+<li><a href="#org69ed789">blobToFile</a></li>
+<li><a href="#org93a0eff">blobToBase64</a></li>
 </ul>
 </li>
 </ul>
@@ -44,9 +39,9 @@
 JavaScript 中的 file、blob 和 base64 。
 </p>
 
-<div id="outline-container-org93f2969" class="outline-2">
-<h2 id="org93f2969">Blob<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-org93f2969">
+<div id="outline-container-orga5b4446" class="outline-2">
+<h2 id="orga5b4446">Blob<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-orga5b4446">
 <p>
 Blob 对象表示一个不可变、原始数据的 <span class="underline">类文件对象</span> ，它的数据可以按文本或二进制的格式进行读取，也可以转换成 <code>ReadableStream</code> 来用于数据操作。
 </p>
@@ -123,9 +118,9 @@ Blob 表示的不一定是 JavaScript 原生格式的数据。 <code>File</code>
 </div>
 </div>
 
-<div id="outline-container-orgd11c8d1" class="outline-2">
-<h2 id="orgd11c8d1">File<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
-<div class="outline-text-2" id="text-orgd11c8d1">
+<div id="outline-container-orgfad1f55" class="outline-2">
+<h2 id="orgfad1f55">File<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
+<div class="outline-text-2" id="text-orgfad1f55">
 <p>
 文件（ <code>File</code> ）接口提供有关文件的信息，并允许网页中的 JavaScript 访问其内容。
 </p>
@@ -140,9 +135,9 @@ File 对象是特殊类型的 <code>Blob</code> ，且可以用在任意的 Blob
 </div>
 </div>
 
-<div id="outline-container-orgb3b94a8" class="outline-2">
-<h2 id="orgb3b94a8">Base64<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
-<div class="outline-text-2" id="text-orgb3b94a8">
+<div id="outline-container-orge5bfb2d" class="outline-2">
+<h2 id="orge5bfb2d">Base64<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
+<div class="outline-text-2" id="text-orge5bfb2d">
 <p>
 Base64 是一组相似的二进制到文本（binary-to-text）的 <b>编码规则</b> ，使得二进制数据在解释成 radix-64 的表现形式后能够用 ASCII 字符串的格式表示出来。
 </p>
@@ -223,9 +218,9 @@ Base64 要求把每三个 8bit 的字节转换为四个 6bit 的字节（3*8 = 4
 </div>
 </div>
 
-<div id="outline-container-org3fa1c3a" class="outline-2">
-<h2 id="org3fa1c3a">FormData</h2>
-<div class="outline-text-2" id="text-org3fa1c3a">
+<div id="outline-container-org5f0d785" class="outline-2">
+<h2 id="org5f0d785">FormData</h2>
+<div class="outline-text-2" id="text-org5f0d785">
 <p>
 FormData 接口提供了一种表示表单数据的键值 <code>key/value</code> 的构造方式，并且可以轻松地将数据通过 <code>XMLHttpRequest.send()</code> 方法发送出去。如果送出时的编码类型被设为 <code>multipart/form-data</code> ，它会使用和表单一样的格式。
 </p>
@@ -376,13 +371,13 @@ FormData 类型是在 XMLHttpRequest 2 级定义的，它是为序列化表单�
 </div>
 </div>
 
-<div id="outline-container-orge2a7186" class="outline-2">
-<h2 id="orge2a7186">转换<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup></h2>
-<div class="outline-text-2" id="text-orge2a7186">
+<div id="outline-container-orgcca6d95" class="outline-2">
+<h2 id="orgcca6d95">转换<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup></h2>
+<div class="outline-text-2" id="text-orgcca6d95">
 </div>
-<div id="outline-container-orgfe8c27d" class="outline-3">
-<h3 id="orgfe8c27d">fileToBase64</h3>
-<div class="outline-text-3" id="text-orgfe8c27d">
+<div id="outline-container-org884123b" class="outline-3">
+<h3 id="org884123b">fileToBase64</h3>
+<div class="outline-text-3" id="text-org884123b">
 <p>
 主要应用场景：图片预览。
 </p>
@@ -407,9 +402,9 @@ FormData 类型是在 XMLHttpRequest 2 级定义的，它是为序列化表单�
 </div>
 </div>
 
-<div id="outline-container-orge81e5c0" class="outline-3">
-<h3 id="orge81e5c0">fileToBlob</h3>
-<div class="outline-text-3" id="text-orge81e5c0">
+<div id="outline-container-org77d9f57" class="outline-3">
+<h3 id="org77d9f57">fileToBlob</h3>
+<div class="outline-text-3" id="text-org77d9f57">
 <p>
 主要应用场景：文件上传。
 </p>
@@ -436,9 +431,9 @@ FormData 类型是在 XMLHttpRequest 2 级定义的，它是为序列化表单�
 </div>
 </div>
 
-<div id="outline-container-orge298461" class="outline-3">
-<h3 id="orge298461">base64ToFile</h3>
-<div class="outline-text-3" id="text-orge298461">
+<div id="outline-container-orgc1d80e2" class="outline-3">
+<h3 id="orgc1d80e2">base64ToFile</h3>
+<div class="outline-text-3" id="text-orgc1d80e2">
 <p>
 主要应用场景：文件上传。
 </p>
@@ -462,9 +457,9 @@ FormData 类型是在 XMLHttpRequest 2 级定义的，它是为序列化表单�
 </div>
 </div>
 
-<div id="outline-container-orge8fdeba" class="outline-3">
-<h3 id="orge8fdeba">base64ToBlob</h3>
-<div class="outline-text-3" id="text-orge8fdeba">
+<div id="outline-container-org6496f0d" class="outline-3">
+<h3 id="org6496f0d">base64ToBlob</h3>
+<div class="outline-text-3" id="text-org6496f0d">
 <p>
 主要应用场景：文件上传。
 </p>
@@ -495,9 +490,9 @@ FormData 类型是在 XMLHttpRequest 2 级定义的，它是为序列化表单�
 </div>
 </div>
 
-<div id="outline-container-org65eeb36" class="outline-3">
-<h3 id="org65eeb36">blobToFile</h3>
-<div class="outline-text-3" id="text-org65eeb36">
+<div id="outline-container-org69ed789" class="outline-3">
+<h3 id="org69ed789">blobToFile</h3>
+<div class="outline-text-3" id="text-org69ed789">
 <p>
 主要应用场景：文件上传。
 </p>
@@ -512,9 +507,9 @@ FormData 类型是在 XMLHttpRequest 2 级定义的，它是为序列化表单�
 </div>
 </div>
 
-<div id="outline-container-orge5b6982" class="outline-3">
-<h3 id="orge5b6982">blobToBase64</h3>
-<div class="outline-text-3" id="text-orge5b6982">
+<div id="outline-container-org93a0eff" class="outline-3">
+<h3 id="org93a0eff">blobToBase64</h3>
+<div class="outline-text-3" id="text-org93a0eff">
 <p>
 主要应用场景：图片预览。
 </p>
@@ -566,7 +561,7 @@ FormData 类型是在 XMLHttpRequest 2 级定义的，它是为序列化表单�
 <div id="postamble" class="status">
 <p class="date">Date: 2020-11-26 Thu 12:01</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:59</p>
+<p class="date">Created: 2021-01-01 Fri 14:35</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

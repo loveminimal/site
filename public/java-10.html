@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2020-12-11 Fri 10:59 -->
+<!-- 2021-01-01 Fri 14:35 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>异常处理</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Jack Liu">
 <link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js" defer></script>
 </head>
 <body>
 <div id="content">
@@ -23,25 +18,25 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3f069e3">异常处理</a>
+<li><a href="#orgbaa973d">异常处理</a>
 <ul>
-<li><a href="#orgefcecd9">异常简介</a></li>
-<li><a href="#orgfadc906">异常类型</a></li>
-<li><a href="#orgcae549f">Error VS Exception</a></li>
+<li><a href="#orgb166538">异常简介</a></li>
+<li><a href="#orgec33b7a">异常类型</a></li>
+<li><a href="#orge6ae4cd">Error VS Exception</a></li>
 </ul>
 </li>
-<li><a href="#org8910e83">异常处理机制</a>
+<li><a href="#org3ddb317">异常处理机制</a>
 <ul>
-<li><a href="#org61808a9">try catch 语句</a></li>
-<li><a href="#orge8c08a0">多重 catch 语句</a></li>
-<li><a href="#org4a2c772">try catch finally 语句</a></li>
-<li><a href="#orgd21ea66"><span class="todo TODO">TODO</span> 自动资源管理</a></li>
+<li><a href="#org6782c35">try catch 语句</a></li>
+<li><a href="#orgc6dfacc">多重 catch 语句</a></li>
+<li><a href="#orge5be347">try catch finally 语句</a></li>
+<li><a href="#org569d631"><span class="todo TODO">TODO</span> 自动资源管理</a></li>
 </ul>
 </li>
-<li><a href="#orgb875105">throws 和 throw</a>
+<li><a href="#org75317ff">throws 和 throw</a>
 <ul>
-<li><a href="#org7462d75">throws 声明异常</a></li>
-<li><a href="#orgad94690">throw 抛出异常</a></li>
+<li><a href="#org9dd0555">throws 声明异常</a></li>
+<li><a href="#org46475ac">throw 抛出异常</a></li>
 </ul>
 </li>
 </ul>
@@ -51,17 +46,17 @@
 Java 提供了异常处理机制来帮助程序员检查可能出现的错误，以保证程序的可读性和可维护性。Java 将异常封装到一个类中，出现错误时就会拋出异常。
 </p>
 
-<div id="outline-container-org3f069e3" class="outline-2">
-<h2 id="org3f069e3">异常处理</h2>
-<div class="outline-text-2" id="text-org3f069e3">
+<div id="outline-container-orgbaa973d" class="outline-2">
+<h2 id="orgbaa973d">异常处理</h2>
+<div class="outline-text-2" id="text-orgbaa973d">
 <p>
 异常（exception）是在运行程序时产生的一种异常情况，已经成为了衡量一门语言是否成熟的标准之一。
 </p>
 </div>
 
-<div id="outline-container-orgefcecd9" class="outline-3">
-<h3 id="orgefcecd9">异常简介</h3>
-<div class="outline-text-3" id="text-orgefcecd9">
+<div id="outline-container-orgb166538" class="outline-3">
+<h3 id="orgb166538">异常简介</h3>
+<div class="outline-text-3" id="text-orgb166538">
 <p>
 <b>Java 中的异常又称为例外，是一个在程序执行期间发生的事件，它中断正在执行程序的正常指令流。</b> 为了能够及时有效地处理程序中的运行错误，必须使用异常类，这可以让程序具有极好的容错性且更加健壮。
 </p>
@@ -85,9 +80,9 @@ Java 通过面向对象的方法来处理异常。在一个方法的运行过程
 </div>
 </div>
 
-<div id="outline-container-orgfadc906" class="outline-3">
-<h3 id="orgfadc906">异常类型</h3>
-<div class="outline-text-3" id="text-orgfadc906">
+<div id="outline-container-orgec33b7a" class="outline-3">
+<h3 id="orgec33b7a">异常类型</h3>
+<div class="outline-text-3" id="text-orgec33b7a">
 <p>
 为了能够及时有效地处理程序中的运行错误，Java 专门引入了异常类。
 </p>
@@ -255,9 +250,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgcae549f" class="outline-3">
-<h3 id="orgcae549f">Error VS Exception</h3>
-<div class="outline-text-3" id="text-orgcae549f">
+<div id="outline-container-orge6ae4cd" class="outline-3">
+<h3 id="orge6ae4cd">Error VS Exception</h3>
+<div class="outline-text-3" id="text-orge6ae4cd">
 <p>
 Error（错误）和 Exception（异常）都是 <code>java.lang.Throwable</code> 类的子类，在 Java 代码中只有继承了 <code>Throwable</code> 类的实例才能被 <code>throw</code>  或者 <code>catch</code> 。
 </p>
@@ -309,9 +304,9 @@ Exception 又分为可检查（checked）异常和不检查（unchecked）异常
 </div>
 </div>
 
-<div id="outline-container-org8910e83" class="outline-2">
-<h2 id="org8910e83">异常处理机制</h2>
-<div class="outline-text-2" id="text-org8910e83">
+<div id="outline-container-org3ddb317" class="outline-2">
+<h2 id="org3ddb317">异常处理机制</h2>
+<div class="outline-text-2" id="text-org3ddb317">
 <p>
 前面介绍了异常的产生是不可避免的，那么为了保证程序有效地执行，需要对发生的异常进行相应的处理。
 </p>
@@ -353,9 +348,9 @@ Java 的异常处理机制提供了一种结构性和控制性的方式来处理
 </div>
 </div>
 
-<div id="outline-container-org61808a9" class="outline-3">
-<h3 id="org61808a9">try catch 语句</h3>
-<div class="outline-text-3" id="text-org61808a9">
+<div id="outline-container-org6782c35" class="outline-3">
+<h3 id="org6782c35">try catch 语句</h3>
+<div class="outline-text-3" id="text-org6782c35">
 <p>
 <code>try catch</code> 语句用于捕获并处理异常， <code>finally</code> 语句用于在任何情况下（除特殊情况外）都必须执行的代码， <code>throw</code> 语句用于拋出异常， <code>throws</code> 语句用于声明可能会出现的异常。
 </p>
@@ -398,9 +393,9 @@ Java 的异常处理机制提供了一种结构性和控制性的方式来处理
 </div>
 </div>
 
-<div id="outline-container-orge8c08a0" class="outline-3">
-<h3 id="orge8c08a0">多重 catch 语句</h3>
-<div class="outline-text-3" id="text-orge8c08a0">
+<div id="outline-container-orgc6dfacc" class="outline-3">
+<h3 id="orgc6dfacc">多重 catch 语句</h3>
+<div class="outline-text-3" id="text-orgc6dfacc">
 <p>
 如果 try 代码块中有很多语句会发生异常，而且发生的异常种类又很多。那么可以在 try 后面跟有多个 catch 代码块。多 catch 代码块语法如下：
 </p>
@@ -429,9 +424,9 @@ Java 的异常处理机制提供了一种结构性和控制性的方式来处理
 </div>
 </div>
 
-<div id="outline-container-org4a2c772" class="outline-3">
-<h3 id="org4a2c772">try catch finally 语句</h3>
-<div class="outline-text-3" id="text-org4a2c772">
+<div id="outline-container-orge5be347" class="outline-3">
+<h3 id="orge5be347">try catch finally 语句</h3>
+<div class="outline-text-3" id="text-orge5be347">
 <p>
 在实际开发中，根据 <code>try catch</code> 语句的执行过程， try 语句块和 catch 语句块有可能不被完全执行，而有些处理代码则要求必须执行。例如，程序在 try 块里打开了一些物理资源（如数据库连接、网络连接和磁盘文件等），这些物理资源都必须显式回收。
 </p>
@@ -518,14 +513,14 @@ Java 的垃圾回收机制不会回收任何物理资源，垃圾回收机制只
 </div>
 </div>
 
-<div id="outline-container-orgd21ea66" class="outline-3">
-<h3 id="orgd21ea66"><span class="todo TODO">TODO</span> 自动资源管理</h3>
+<div id="outline-container-org569d631" class="outline-3">
+<h3 id="org569d631"><span class="todo TODO">TODO</span> 自动资源管理</h3>
 </div>
 </div>
 
-<div id="outline-container-orgb875105" class="outline-2">
-<h2 id="orgb875105">throws 和 throw</h2>
-<div class="outline-text-2" id="text-orgb875105">
+<div id="outline-container-org75317ff" class="outline-2">
+<h2 id="org75317ff">throws 和 throw</h2>
+<div class="outline-text-2" id="text-org75317ff">
 <p>
 Java 中的异常处理除了捕获异常和处理异常之外，还包括声明异常和抛出异常。
 </p>
@@ -535,9 +530,9 @@ Java 中的异常处理除了捕获异常和处理异常之外，还包括声明
 </p>
 </div>
 
-<div id="outline-container-org7462d75" class="outline-3">
-<h3 id="org7462d75">throws 声明异常</h3>
-<div class="outline-text-3" id="text-org7462d75">
+<div id="outline-container-org9dd0555" class="outline-3">
+<h3 id="org9dd0555">throws 声明异常</h3>
+<div class="outline-text-3" id="text-org9dd0555">
 <p>
 当一个方法产生一个它不处理的异常时，那么就需要在该方法的头部声明这个异常，以便将该异常传递到方法的外部进行处理。使用 <code>throws</code> 声明的方法表示不处理异常，具体格式如下：
 </p>
@@ -610,9 +605,9 @@ returnType method_name(paramList) throws Exception 1, Exception2, ... {...}
 </div>
 </div>
 
-<div id="outline-container-orgad94690" class="outline-3">
-<h3 id="orgad94690">throw 抛出异常</h3>
-<div class="outline-text-3" id="text-orgad94690">
+<div id="outline-container-org46475ac" class="outline-3">
+<h3 id="org46475ac">throw 抛出异常</h3>
+<div class="outline-text-3" id="text-org46475ac">
 <p>
 与 <code>throws</code> 不同的是， <code>throw</code> 语句用来直接抛出一个异常，后接一个可抛出的异常类对象，语法格式如下：
 </p>
@@ -639,7 +634,7 @@ throw ExceptionObject;
 <div id="postamble" class="status">
 <p class="date">Date: 2020-09-28 Mon 19:23</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:59</p>
+<p class="date">Created: 2021-01-01 Fri 14:35</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
