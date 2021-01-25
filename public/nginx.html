@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2021-01-01 Fri 14:36 -->
+<!-- 2021-01-14 Thu 15:31 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nginx</title>
@@ -18,21 +18,21 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org15ffd55">关于代理</a>
+<li><a href="#org08955c7">关于代理</a>
 <ul>
-<li><a href="#orga427540">单点服务的 C/S 架构</a></li>
-<li><a href="#org24c87c2">基于代理的 C/S 架构</a></li>
-<li><a href="#orgd6eadf2">Proxy 是什么</a></li>
-<li><a href="#org555c615">正向代理和反向代理</a></li>
+<li><a href="#org711b5c0">单点服务的 C/S 架构</a></li>
+<li><a href="#org6c57c86">基于代理的 C/S 架构</a></li>
+<li><a href="#org5b3a185">Proxy 是什么</a></li>
+<li><a href="#org5051a9e">正向代理和反向代理</a></li>
 </ul>
 </li>
-<li><a href="#orgca88bba">Nginx 那些事</a>
+<li><a href="#org6be5381">Nginx 那些事</a>
 <ul>
-<li><a href="#org3d77481">安装</a></li>
-<li><a href="#org04380da">静态网站部署</a></li>
-<li><a href="#org3dcc32d">配置虚拟主机</a></li>
-<li><a href="#org46fa992">反向代理</a></li>
-<li><a href="#orgb6fd76e">负载均衡</a></li>
+<li><a href="#org0c5ea2e">安装</a></li>
+<li><a href="#org111a1ae">静态网站部署</a></li>
+<li><a href="#org53ad8b5">配置虚拟主机</a></li>
+<li><a href="#orgbf61b99">反向代理</a></li>
+<li><a href="#org51cf0a6">负载均衡</a></li>
 </ul>
 </li>
 </ul>
@@ -42,9 +42,9 @@
 在认识、学习 Nginx 之前，我们先来看一下代理是什么，如果你已经非常熟悉代理，可以直接跳到第二个章节。
 </p>
 
-<div id="outline-container-org15ffd55" class="outline-2">
-<h2 id="org15ffd55">关于代理<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-org15ffd55">
+<div id="outline-container-org08955c7" class="outline-2">
+<h2 id="org08955c7">关于代理<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-org08955c7">
 <blockquote>
 <p>
 *注：该节原创发布于慕课网，作者：咚咚呛。
@@ -56,9 +56,9 @@
 </p>
 </div>
 
-<div id="outline-container-orga427540" class="outline-3">
-<h3 id="orga427540">单点服务的 C/S 架构</h3>
-<div class="outline-text-3" id="text-orga427540">
+<div id="outline-container-org711b5c0" class="outline-3">
+<h3 id="org711b5c0">单点服务的 C/S 架构</h3>
+<div class="outline-text-3" id="text-org711b5c0">
 <p>
 在普通的开发中，单点 Server 的服务方式非常常见，比如使用 Django 框架做后台服务的时候，就可以通过简单的 <code>run server</code> 命令起一个临时的服务，接着通过地址就可能访问到这个服务了。
 </p>
@@ -103,9 +103,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org24c87c2" class="outline-3">
-<h3 id="org24c87c2">基于代理的 C/S 架构</h3>
-<div class="outline-text-3" id="text-org24c87c2">
+<div id="outline-container-org6c57c86" class="outline-3">
+<h3 id="org6c57c86">基于代理的 C/S 架构</h3>
+<div class="outline-text-3" id="text-org6c57c86">
 <p>
 一种基于代理的可横向拓展的 C/S 架构，如下：
 </p>
@@ -168,9 +168,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgd6eadf2" class="outline-3">
-<h3 id="orgd6eadf2">Proxy 是什么</h3>
-<div class="outline-text-3" id="text-orgd6eadf2">
+<div id="outline-container-org5b3a185" class="outline-3">
+<h3 id="org5b3a185">Proxy 是什么</h3>
+<div class="outline-text-3" id="text-org5b3a185">
 <p>
 <b>Proxy ，就是代理。</b> 如何理解呢？
 </p>
@@ -199,9 +199,15 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-org555c615" class="outline-3">
-<h3 id="org555c615">正向代理和反向代理</h3>
-<div class="outline-text-3" id="text-org555c615">
+<div id="outline-container-org5051a9e" class="outline-3">
+<h3 id="org5051a9e">正向代理和反向代理</h3>
+<div class="outline-text-3" id="text-org5051a9e">
+<essay>
+*开始先做个总结：
+
+所谓“正向代理”其实应该称为“客户端代理”，而“反向代理”应该称为“服务端代理”。
+</essay>
+
 <p>
 本质上来讲，代理都是存在于 Client 和 Server 之间，但是由于性质不同，可以分为正向代理和反向代理两种。那么，什么是反向代理？什么是正向代理呢？
 </p>
@@ -318,9 +324,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgca88bba" class="outline-2">
-<h2 id="orgca88bba">Nginx 那些事<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
-<div class="outline-text-2" id="text-orgca88bba">
+<div id="outline-container-org6be5381" class="outline-2">
+<h2 id="org6be5381">Nginx 那些事<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
+<div class="outline-text-2" id="text-org6be5381">
 <img
 src="/images/nginx-1.jpg"
 width="260"
@@ -347,54 +353,54 @@ Nginx 这么强劲，都有些什么应用场景呢？如下：
 </ul>
 </div>
 
-<div id="outline-container-org3d77481" class="outline-3">
-<h3 id="org3d77481">安装</h3>
-<div class="outline-text-3" id="text-org3d77481">
+<div id="outline-container-org0c5ea2e" class="outline-3">
+<h3 id="org0c5ea2e">安装</h3>
+<div class="outline-text-3" id="text-org0c5ea2e">
 <p>
 → 具体安装过程可以参考<a href="https://blog.csdn.net/nanhuaibeian/article/details/106916313">该链接</a> 。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span class="linenr"> 1: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#20934;&#22791;&#24037;&#20316;</span>
-<span class="linenr"> 2: </span>yum install gcc-c++                     <span style="color: #75715E;"># </span><span style="color: #75715E;">&#23433;&#35013;&#38656;&#35201;&#30340; gcc &#29615;&#22659;</span>
-<span class="linenr"> 3: </span>yum install -y pcre pcre-devel          <span style="color: #75715E;"># </span><span style="color: #75715E;">&#23433;&#35013; perl &#20860;&#23481;&#30340;&#27491;&#21017;&#34920;&#36798;&#24335;&#24211;</span>
-<span class="linenr"> 4: </span>yum install -y zlib zlib-devel          <span style="color: #75715E;"># </span><span style="color: #75715E;">nginx &#20351;&#29992; zlib &#23545; http &#21253;&#36827;&#34892; gzip</span>
-<span class="linenr"> 5: </span>yum install -y openssl openssl-devel    <span style="color: #75715E;"># </span><span style="color: #75715E;">&#25903;&#25345; https</span>
+<pre class="src src-sh"><span class="linenr"> 1: </span><span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#20934;&#22791;&#24037;&#20316;</span>
+<span class="linenr"> 2: </span>yum install gcc-c++                     <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#23433;&#35013;&#38656;&#35201;&#30340; gcc &#29615;&#22659;</span>
+<span class="linenr"> 3: </span>yum install -y pcre pcre-devel          <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#23433;&#35013; perl &#20860;&#23481;&#30340;&#27491;&#21017;&#34920;&#36798;&#24335;&#24211;</span>
+<span class="linenr"> 4: </span>yum install -y zlib zlib-devel          <span style="color: #8B8878;"># </span><span style="color: #8B8878;">nginx &#20351;&#29992; zlib &#23545; http &#21253;&#36827;&#34892; gzip</span>
+<span class="linenr"> 5: </span>yum install -y openssl openssl-devel    <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#25903;&#25345; https</span>
 <span class="linenr"> 6: </span>
-<span class="linenr"> 7: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#19979;&#36733;&#23433;&#35013; nginx - http://nginx.org</span>
-<span class="linenr"> 8: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#21487;&#20197;&#20462;&#25913;&#20026;&#20320;&#35201;&#30340;&#29256;&#26412;&#65292;&#30446;&#21069;&#26368;&#21069;&#20026; 1.19.3</span>
+<span class="linenr"> 7: </span><span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#19979;&#36733;&#23433;&#35013; nginx - http://nginx.org</span>
+<span class="linenr"> 8: </span><span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#21487;&#20197;&#20462;&#25913;&#20026;&#20320;&#35201;&#30340;&#29256;&#26412;&#65292;&#30446;&#21069;&#26368;&#21069;&#20026; 1.19.3</span>
 <span class="linenr"> 9: </span>wget http://nginx.org/download/nginx-1.8.0.tar.gz
 <span class="linenr">10: </span>tar zxvf nginx-1.8.0.tar.gz
-<span class="linenr">11: </span><span style="color: #F92672;">cd</span> nginx-1.8.0
-<span class="linenr">12: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#20351;&#29992; configure &#21629;&#20196;&#21019;&#24314; makeFile &#25991;&#20214;</span>
-<span class="linenr">13: </span>./configure --prefix=/usr/local/nginx   <span style="color: #75715E;"># </span><span style="color: #75715E;">&#25351;&#21521;&#23433;&#35013;&#30446;&#24405;</span>
+<span class="linenr">11: </span><span style="color: #FF1493;">cd</span> nginx-1.8.0
+<span class="linenr">12: </span><span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#20351;&#29992; configure &#21629;&#20196;&#21019;&#24314; makeFile &#25991;&#20214;</span>
+<span class="linenr">13: </span>./configure --prefix=/usr/local/nginx   <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#25351;&#21521;&#23433;&#35013;&#30446;&#24405;</span>
 <span class="linenr">14: </span>make &amp;&amp; make install
 <span class="linenr">15: </span>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span class="linenr">1: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">Nginx &#30340;&#21551;&#21160;&#21644;&#35775;&#38382;&#65306;</span>
-<span class="linenr">2: </span><span style="color: #F92672;">cd</span> nginx                        <span style="color: #75715E;"># </span><span style="color: #75715E;">&#36827;&#20837; nginx &#23433;&#35013;&#30446;&#24405;</span>
-<span class="linenr">3: </span><span style="color: #F92672;">cd</span> sbin &amp;&amp; ./nginx              <span style="color: #75715E;"># </span><span style="color: #75715E;">&#36827;&#20837; nginx &#30340;&#25191;&#34892;&#30446;&#24405;&#24182;&#21551;&#21160; ./nginx</span>
-<span class="linenr">4: </span>ps aux | grep nginx             <span style="color: #75715E;"># </span><span style="color: #75715E;">&#21551;&#21160;&#21518;&#21488;&#26597;&#30475;&#36827;&#31243;</span>
+<pre class="src src-sh"><span class="linenr">1: </span><span style="color: #8B8878;"># </span><span style="color: #8B8878;">Nginx &#30340;&#21551;&#21160;&#21644;&#35775;&#38382;&#65306;</span>
+<span class="linenr">2: </span><span style="color: #FF1493;">cd</span> nginx                        <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#36827;&#20837; nginx &#23433;&#35013;&#30446;&#24405;</span>
+<span class="linenr">3: </span><span style="color: #FF1493;">cd</span> sbin &amp;&amp; ./nginx              <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#36827;&#20837; nginx &#30340;&#25191;&#34892;&#30446;&#24405;&#24182;&#21551;&#21160; ./nginx</span>
+<span class="linenr">4: </span>ps aux | grep nginx             <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#21551;&#21160;&#21518;&#21488;&#26597;&#30475;&#36827;&#31243;</span>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span class="linenr">1: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">Nginx &#30340;&#19968;&#20123;&#24120;&#29992;&#25805;&#20316;&#65306;</span>
-<span class="linenr">2: </span>./nginx -s stop                 <span style="color: #75715E;"># </span><span style="color: #75715E;">&#20572;&#27490; nginx</span>
-<span class="linenr">3: </span>./nginx -s quit                 <span style="color: #75715E;"># </span><span style="color: #75715E;">&#24378;&#21046;&#20572;&#27490; nginx</span>
-<span class="linenr">4: </span>./nginx -t                      <span style="color: #75715E;"># </span><span style="color: #75715E;">&#26657;&#39564; nginx &#37197;&#32622;&#27491;&#30830;&#19982;&#21542;</span>
-<span class="linenr">5: </span>./nginx -s reload               <span style="color: #75715E;"># </span><span style="color: #75715E;">&#37325;&#21551; nginx&#65292;&#29992;&#20110;&#20462;&#25913;&#37197;&#32622;&#25991;&#20214;&#21518;&#26356;&#26032; nginx &#29366;&#24577;</span>
+<pre class="src src-sh"><span class="linenr">1: </span><span style="color: #8B8878;"># </span><span style="color: #8B8878;">Nginx &#30340;&#19968;&#20123;&#24120;&#29992;&#25805;&#20316;&#65306;</span>
+<span class="linenr">2: </span>./nginx -s stop                 <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#20572;&#27490; nginx</span>
+<span class="linenr">3: </span>./nginx -s quit                 <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#24378;&#21046;&#20572;&#27490; nginx</span>
+<span class="linenr">4: </span>./nginx -t                      <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#26657;&#39564; nginx &#37197;&#32622;&#27491;&#30830;&#19982;&#21542;</span>
+<span class="linenr">5: </span>./nginx -s reload               <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#37325;&#21551; nginx&#65292;&#29992;&#20110;&#20462;&#25913;&#37197;&#32622;&#25991;&#20214;&#21518;&#26356;&#26032; nginx &#29366;&#24577;</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org04380da" class="outline-3">
-<h3 id="org04380da">静态网站部署</h3>
-<div class="outline-text-3" id="text-org04380da">
+<div id="outline-container-org111a1ae" class="outline-3">
+<h3 id="org111a1ae">静态网站部署</h3>
+<div class="outline-text-3" id="text-org111a1ae">
 <p>
 将我们的网页内容（假设为 <code>index</code> 文件夹 ）上传到服务器的 <code>/usr/local/nginx</code> 下，并更新 <code>/usr/local/nginx/conf</code> 下的 <code>nginx.conf</code> 配置文件，如下：
 </p>
@@ -402,19 +408,19 @@ Nginx 这么强劲，都有些什么应用场景呢？如下：
 <div class="org-src-container">
 <pre class="src src-sh"><span class="linenr"> 1: </span>worker_processes 1;
 <span class="linenr"> 2: </span>...
-<span class="linenr"> 3: </span>http <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 3: </span>http <span style="color: #AF87FF;">{</span>
 <span class="linenr"> 4: </span>    ...
-<span class="linenr"> 5: </span>    server <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 5: </span>    server <span style="color: #5FD7FF;">{</span>
 <span class="linenr"> 6: </span>        listen      80;
 <span class="linenr"> 7: </span>        server_name localhost&#65307;
 <span class="linenr"> 8: </span>
-<span class="linenr"> 9: </span>        location / <span style="color: #A6E22E;">{</span>
-<span class="linenr">10: </span>            root  index;                <span style="color: #75715E;"># </span><span style="color: #75715E;">&#30446;&#24405;&#21517;&#31216;</span>
-<span class="linenr">11: </span>            index index.html index.htm; <span style="color: #75715E;"># </span><span style="color: #75715E;">&#25991;&#20214;&#21517;&#31216;</span>
-<span class="linenr">12: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr"> 9: </span>        location / <span style="color: #87D700;">{</span>
+<span class="linenr">10: </span>            root  index;                <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#30446;&#24405;&#21517;&#31216;</span>
+<span class="linenr">11: </span>            index index.html index.htm; <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#25991;&#20214;&#21517;&#31216;</span>
+<span class="linenr">12: </span>        <span style="color: #87D700;">}</span>
 <span class="linenr">13: </span>        ...
-<span class="linenr">14: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">15: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">14: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">15: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -424,9 +430,9 @@ Nginx 这么强劲，都有些什么应用场景呢？如下：
 </div>
 </div>
 
-<div id="outline-container-org3dcc32d" class="outline-3">
-<h3 id="org3dcc32d">配置虚拟主机</h3>
-<div class="outline-text-3" id="text-org3dcc32d">
+<div id="outline-container-org53ad8b5" class="outline-3">
+<h3 id="org53ad8b5">配置虚拟主机</h3>
+<div class="outline-text-3" id="text-org53ad8b5">
 <p>
 （1）上传静态网站：
 </p>
@@ -440,27 +446,27 @@ Nginx 这么强劲，都有些什么应用场景呢？如下：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span class="linenr"> 1: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#37197;&#32622; index &#35775;&#38382;&#36164;&#28304;</span>
-<span class="linenr"> 2: </span>server <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 3: </span>    listen        80;           <span style="color: #75715E;"># </span><span style="color: #75715E;">&#30417;&#21548;&#31471;&#21475;</span>
-<span class="linenr"> 4: </span>    server_name   localhost;    <span style="color: #75715E;"># </span><span style="color: #75715E;">&#22495;&#21517;&#25110; IP</span>
+<pre class="src src-sh"><span class="linenr"> 1: </span><span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#37197;&#32622; index &#35775;&#38382;&#36164;&#28304;</span>
+<span class="linenr"> 2: </span>server <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 3: </span>    listen        80;           <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#30417;&#21548;&#31471;&#21475;</span>
+<span class="linenr"> 4: </span>    server_name   localhost;    <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#22495;&#21517;&#25110; IP</span>
 <span class="linenr"> 5: </span>
-<span class="linenr"> 6: </span>    location / <span style="color: #66D9EF;">{</span>                <span style="color: #75715E;"># </span><span style="color: #75715E;">&#35775;&#38382;&#36335;&#24452;&#37197;&#32622;</span>
+<span class="linenr"> 6: </span>    location / <span style="color: #5FD7FF;">{</span>                <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#35775;&#38382;&#36335;&#24452;&#37197;&#32622;</span>
 <span class="linenr"> 7: </span>        root      index;
 <span class="linenr"> 8: </span>        index     index.html index.htm;
-<span class="linenr"> 9: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr"> 9: </span>    <span style="color: #5FD7FF;">}</span>
 <span class="linenr">10: </span>    ...
-<span class="linenr">11: </span><span style="color: #AE81FF;">}</span>
-<span class="linenr">12: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#37197;&#32622; regist &#35775;&#38382;&#36164;&#28304;</span>
-<span class="linenr">13: </span>server <span style="color: #AE81FF;">{</span>
+<span class="linenr">11: </span><span style="color: #AF87FF;">}</span>
+<span class="linenr">12: </span><span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#37197;&#32622; regist &#35775;&#38382;&#36164;&#28304;</span>
+<span class="linenr">13: </span>server <span style="color: #AF87FF;">{</span>
 <span class="linenr">14: </span>    listen        81;
 <span class="linenr">15: </span>    server_name   localhost;
 <span class="linenr">16: </span>
-<span class="linenr">17: </span>    location / <span style="color: #66D9EF;">{</span>
+<span class="linenr">17: </span>    location / <span style="color: #5FD7FF;">{</span>
 <span class="linenr">18: </span>        root regist;
 <span class="linenr">19: </span>        index regist.html;
-<span class="linenr">20: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">21: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">20: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">21: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -477,35 +483,35 @@ Nginx 这么强劲，都有些什么应用场景呢？如下：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span class="linenr"> 1: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#37197;&#32622; index &#35775;&#38382;&#36164;&#28304;</span>
-<span class="linenr"> 2: </span>server <span style="color: #AE81FF;">{</span>
-<span class="linenr"> 3: </span>    listen        80;             <span style="color: #75715E;"># </span><span style="color: #75715E;">&#30417;&#21548;&#31471;&#21475;</span>
-<span class="linenr"> 4: </span>    server_name   www.travel.com; <span style="color: #75715E;"># </span><span style="color: #75715E;">&#22495;&#21517;&#25110; IP</span>
+<pre class="src src-sh"><span class="linenr"> 1: </span><span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#37197;&#32622; index &#35775;&#38382;&#36164;&#28304;</span>
+<span class="linenr"> 2: </span>server <span style="color: #AF87FF;">{</span>
+<span class="linenr"> 3: </span>    listen        80;             <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#30417;&#21548;&#31471;&#21475;</span>
+<span class="linenr"> 4: </span>    server_name   www.travel.com; <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#22495;&#21517;&#25110; IP</span>
 <span class="linenr"> 5: </span>
-<span class="linenr"> 6: </span>    location / <span style="color: #66D9EF;">{</span>                  <span style="color: #75715E;"># </span><span style="color: #75715E;">&#35775;&#38382;&#36335;&#24452;&#37197;&#32622;</span>
+<span class="linenr"> 6: </span>    location / <span style="color: #5FD7FF;">{</span>                  <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#35775;&#38382;&#36335;&#24452;&#37197;&#32622;</span>
 <span class="linenr"> 7: </span>        root      index;
 <span class="linenr"> 8: </span>        index     index.html index.htm;
-<span class="linenr"> 9: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr"> 9: </span>    <span style="color: #5FD7FF;">}</span>
 <span class="linenr">10: </span>    ...
-<span class="linenr">11: </span><span style="color: #AE81FF;">}</span>
-<span class="linenr">12: </span><span style="color: #75715E;"># </span><span style="color: #75715E;">&#37197;&#32622; regist &#35775;&#38382;&#36164;&#28304;</span>
-<span class="linenr">13: </span>server <span style="color: #AE81FF;">{</span>
-<span class="linenr">14: </span>    listen        80;             <span style="color: #75715E;"># </span><span style="color: #75715E;">&#31471;&#21475;&#21495;&#30456;&#21516;</span>
-<span class="linenr">15: </span>    server_name   www.regist.com; <span style="color: #75715E;"># </span><span style="color: #75715E;">&#22495;&#21517;&#19981;&#21516;&#65292;&#20197;&#27492;&#36827;&#34892;&#21306;&#20998;</span>
+<span class="linenr">11: </span><span style="color: #AF87FF;">}</span>
+<span class="linenr">12: </span><span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#37197;&#32622; regist &#35775;&#38382;&#36164;&#28304;</span>
+<span class="linenr">13: </span>server <span style="color: #AF87FF;">{</span>
+<span class="linenr">14: </span>    listen        80;             <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#31471;&#21475;&#21495;&#30456;&#21516;</span>
+<span class="linenr">15: </span>    server_name   www.regist.com; <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#22495;&#21517;&#19981;&#21516;&#65292;&#20197;&#27492;&#36827;&#34892;&#21306;&#20998;</span>
 <span class="linenr">16: </span>
-<span class="linenr">17: </span>    location / <span style="color: #66D9EF;">{</span>
+<span class="linenr">17: </span>    location / <span style="color: #5FD7FF;">{</span>
 <span class="linenr">18: </span>        root regist;
 <span class="linenr">19: </span>        index regist.html;
-<span class="linenr">20: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">21: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">20: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">21: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org46fa992" class="outline-3">
-<h3 id="org46fa992">反向代理</h3>
-<div class="outline-text-3" id="text-org46fa992">
+<div id="outline-container-orgbf61b99" class="outline-3">
+<h3 id="orgbf61b99">反向代理</h3>
+<div class="outline-text-3" id="text-orgbf61b99">
 <p>
 这里我们将实现好的案例（war 包）部署到服务器的 Tomcat 中的根目录下：
 </p>
@@ -515,7 +521,7 @@ Nginx 这么强劲，都有些什么应用场景呢？如下：
 </ul>
 
 <p>
-此时，输入相应 IP:Port 如 <code>192.168.245.119:8080</code> 即可正常访问。
+此时，输入相应 IP:Port 如 <code>192.168.245.129:8080</code> 即可正常访问。
 </p>
 
 <p>
@@ -536,9 +542,9 @@ title=""
 </div>
 </div>
 
-<div id="outline-container-orgb6fd76e" class="outline-3">
-<h3 id="orgb6fd76e">负载均衡</h3>
-<div class="outline-text-3" id="text-orgb6fd76e">
+<div id="outline-container-org51cf0a6" class="outline-3">
+<h3 id="org51cf0a6">负载均衡</h3>
+<div class="outline-text-3" id="text-org51cf0a6">
 <p>
 什么是负载均衡呢？
 </p>
@@ -570,33 +576,33 @@ title=""
 <div class="org-src-container">
 <pre class="src src-sh"><span class="linenr"> 1: </span>worker_process 1;
 <span class="linenr"> 2: </span>...
-<span class="linenr"> 3: </span>http <span style="color: #AE81FF;">{</span>
+<span class="linenr"> 3: </span>http <span style="color: #AF87FF;">{</span>
 <span class="linenr"> 4: </span>    ...
-<span class="linenr"> 5: </span>    <span style="color: #75715E;"># </span><span style="color: #75715E;">&#37197;&#32622;&#35201;&#20195;&#29702;&#30340;&#32593;&#22336;</span>
-<span class="linenr"> 6: </span>    <span style="color: #75715E;"># </span><span style="color: #75715E;">&#40664;&#35748;&#22914;&#19979;&#37197;&#32622;&#26159;&#24179;&#26435;&#30340;&#65292;&#38543;&#26426;&#36873;&#27010;&#29575;&#30456;&#21516; 1:1:1</span>
-<span class="linenr"> 7: </span>    <span style="color: #75715E;"># </span><span style="color: #75715E;">&#20063;&#21487;&#20197;&#36890;&#36807;&#21152;&#26435;&#65292;&#22914;&#65306;</span>
-<span class="linenr"> 8: </span>    <span style="color: #75715E;"># </span><span style="color: #75715E;">server 192.168.245.129:8080 weight=2;</span>
-<span class="linenr"> 9: </span>    <span style="color: #75715E;"># </span><span style="color: #75715E;">&#27492;&#26102;&#30340;&#26435;&#37325;&#27604;&#20026; 2:1:1</span>
-<span class="linenr">10: </span>    upstream tomcat-travel <span style="color: #66D9EF;">{</span>
+<span class="linenr"> 5: </span>    <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#37197;&#32622;&#35201;&#20195;&#29702;&#30340;&#32593;&#22336;</span>
+<span class="linenr"> 6: </span>    <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#40664;&#35748;&#22914;&#19979;&#37197;&#32622;&#26159;&#24179;&#26435;&#30340;&#65292;&#38543;&#26426;&#36873;&#27010;&#29575;&#30456;&#21516; 1:1:1</span>
+<span class="linenr"> 7: </span>    <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#20063;&#21487;&#20197;&#36890;&#36807;&#21152;&#26435;&#65292;&#22914;&#65306;</span>
+<span class="linenr"> 8: </span>    <span style="color: #8B8878;"># </span><span style="color: #8B8878;">server 192.168.245.129:8080 weight=2;</span>
+<span class="linenr"> 9: </span>    <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#27492;&#26102;&#30340;&#26435;&#37325;&#27604;&#20026; 2:1:1</span>
+<span class="linenr">10: </span>    upstream tomcat-travel <span style="color: #5FD7FF;">{</span>
 <span class="linenr">11: </span>        server 192.168.245.129:8080;
 <span class="linenr">12: </span>        server 192.168.245.129:8081;
 <span class="linenr">13: </span>        server 192.168.245.129:8082;
-<span class="linenr">14: </span>    <span style="color: #66D9EF;">}</span>
+<span class="linenr">14: </span>    <span style="color: #5FD7FF;">}</span>
 <span class="linenr">15: </span>
-<span class="linenr">16: </span>    <span style="color: #75715E;"># </span><span style="color: #75715E;">&#37197;&#32622; index &#35775;&#38382;&#36164;&#28304;</span>
-<span class="linenr">17: </span>    server <span style="color: #66D9EF;">{</span>
+<span class="linenr">16: </span>    <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#37197;&#32622; index &#35775;&#38382;&#36164;&#28304;</span>
+<span class="linenr">17: </span>    server <span style="color: #5FD7FF;">{</span>
 <span class="linenr">18: </span>        listen        80;
 <span class="linenr">19: </span>        server_name   www.travel.com;
 <span class="linenr">20: </span>
-<span class="linenr">21: </span>        location / <span style="color: #A6E22E;">{</span>
-<span class="linenr">22: </span>            <span style="color: #75715E;"># </span><span style="color: #75715E;">root    index;</span>
-<span class="linenr">23: </span>            <span style="color: #75715E;"># </span><span style="color: #75715E;">&#23545;&#24212;&#35201;&#20195;&#29702;&#30340;&#32593;&#22336;</span>
+<span class="linenr">21: </span>        location / <span style="color: #87D700;">{</span>
+<span class="linenr">22: </span>            <span style="color: #8B8878;"># </span><span style="color: #8B8878;">root    index;</span>
+<span class="linenr">23: </span>            <span style="color: #8B8878;"># </span><span style="color: #8B8878;">&#23545;&#24212;&#35201;&#20195;&#29702;&#30340;&#32593;&#22336;</span>
 <span class="linenr">24: </span>            proxy_pass http://tomcat-travel;
 <span class="linenr">25: </span>            index      index.html index.htm;
-<span class="linenr">26: </span>        <span style="color: #A6E22E;">}</span>
+<span class="linenr">26: </span>        <span style="color: #87D700;">}</span>
 <span class="linenr">27: </span>        ...
-<span class="linenr">28: </span>    <span style="color: #66D9EF;">}</span>
-<span class="linenr">29: </span><span style="color: #AE81FF;">}</span>
+<span class="linenr">28: </span>    <span style="color: #5FD7FF;">}</span>
+<span class="linenr">29: </span><span style="color: #AF87FF;">}</span>
 </pre>
 </div>
 
@@ -623,7 +629,7 @@ title=""
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-23 Fri 10:38</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2021-01-01 Fri 14:36</p>
+<p class="date">Created: 2021-01-14 Thu 15:31</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

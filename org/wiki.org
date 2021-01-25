@@ -12,6 +12,31 @@
 # />
 # #+END_EXPORT
 
+** @vue/cli 3 切换为 dart-sass
+ [2021-01-06 Wed 17:55]
+
+首先，安装包 ：
+#+BEGIN_SRC sh -n
+  npm i sass sass-loader -D
+  # or
+  yarn add sass sass-loader -DE
+#+END_SRC
+
+然后，修改 =vue.config.js= ，增加如下配置：
+
+#+BEGIN_SRC js -n
+  module.exports = {
+    css: {
+      loaderOptions: {
+        sass: {
+          implementation: require('sass'), // This line must in sass option
+        },
+      },
+    }
+  //...
+  };
+#+END_SRC
+
 ** glob
  [2020-12-22 Tue 17:49]
 

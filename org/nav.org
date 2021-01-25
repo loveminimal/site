@@ -9,7 +9,7 @@
 |      | [[https://twitter.com/home][Twitter]]    | [[https://gitee.com/loveminimal][Gitee]]        | [[https://www.quora.com/][Quora]]          | [[http://www.people.com.cn/][人民网]]         |                |
 |------+------------+--------------+----------------+----------------+----------------|
 | 工具 | [[http://fanyi.youdao.com/][有道翻译]]   | [[http://www.fhdq.net/][符号大全]]     | [[https://www.bejson.com/ui/compress_img/][图压缩]]         | [[https://man.linuxde.net/][Linux 命令大全]] | [[https://www.bootcss.com/][BootNav]]        |
-|      | [[http://tool.c7sky.com/webcolor/][Web Color]]  | [[https://pixabay.com/zh/][Pixabay]]      | [[http://www.fonts.net.cn/][字体之家]]       | [[http://tools.jb51.net/][脚本之家]]       |                |
+|      | [[http://tool.c7sky.com/webcolor/][Web Color]]  | [[https://pixabay.com/zh/][Pixabay]]      | [[http://www.fonts.net.cn/][字体之家]]       | [[http://tools.jb51.net/][脚本之家]]       | [[https://www.sojson.com][SoJSON]]         |
 |------+------------+--------------+----------------+----------------+----------------|
 | 娱乐 | [[http://www.etymon.cn/index.html][英语字根]]   | [[https://www.hanjutv.com/][韩剧]]         |                | [[https://www.meijutt.tv/][天天美剧]]       | [[https://www.gushiwen.org/][古诗文网]]       |
 |------+------------+--------------+----------------+----------------+----------------|
@@ -17,6 +17,7 @@
 |------+------------+--------------+----------------+----------------+----------------|
 | 教程 | [[http://www.runoob.com/][菜鸟教程]]   | [[http://es6.ruanyifeng.com/][ES6]]          | [[https://www.liaoxuefeng.com/][廖雪峰]]         | [[http://www.softwhy.com/][蚂蚁部落]]       | [[https://www.interviewcake.com/data-structures-reference][Interview Cake]] |
 |      | [[http://www.nginx.cn/doc/][Nginx Doc]]  | [[http://c.biancheng.net/][C 语言中文网]] | [[https://www.lmonkey.com/][学习猿地]]       | [[https://cloud.tencent.com/developer/devdocs][腾讯云开发手册]] | [[https://help.aliyun.com/?spm=a2c4g.750001.J_8058803260.1296.30757b132G3d1w][阿里云文档]]     |
+|      | [[https://developer.huawei.com/consumer/cn/forum/][鸿蒙论坛]]   |              |                |                |                |
 |------+------------+--------------+----------------+----------------+----------------|
 | 博客 | [[https://bitsofco.de/][Bitsofco]]   | [[http://www.ruanyifeng.com/blog/developer/][阮一峰]]       | [[http://xahlee.org/][李杀网]]         | [[https://coolshell.cn/][酷壳]]           | [[https://www.zhangxinxu.com/][张鑫旭]]         |
 |      | [[http://www.tripod.fun/][阿汤]]       | [[https://www.ituring.com.cn/][图灵社区]]     | [[https://manateelazycat.github.io/index.html][ManateeLazyCat]] |                |                |
@@ -69,4 +70,10 @@
 - - https://segmentfault.com/a/1190000012066399
 - - https://www.cnblogs.com/youma/p/10559331.html
 - - https://www.cnblogs.com/momo798/p/9177767.html
-
+- 函数组件和类组件的区别 https://blog.csdn.net/wu_xianqiang/article/details/91320529
+- Fetch https://www.cnblogs.com/libin-1/p/6853677.html
+- 解决vue-cli3配置babel-polyfill的问题
+- - https://segmentfault.com/a/1190000021940616
+- - https://www.jianshu.com/p/f2082ed8e285
+- Iframe https://www.cnblogs.com/bester-ace/articles/9292779.html
+- - https://www.cnblogs.com/hq233/p/9849939.html
