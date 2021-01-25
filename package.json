@@ -7,7 +7,7 @@
     "author": "Jack Liu <loveminimal@163.com>",
     "license": "MIT",
     "scripts": {
-        "dev": "gulp", 
+        "dev": "gulp",
         "build": "gulp build",
         "deploy": "gulp build && bash copy.sh"
     },
@@ -20,6 +20,7 @@
         "gulp-babel": "8.0.0",
         "gulp-browserify": "0.5.1",
         "gulp-dart-sass": "1.0.2",
+        "gulp-live-server": "0.0.31",
         "gulp-uglify": "3.0.2",
         "jquery": "3.5.1"
     },
