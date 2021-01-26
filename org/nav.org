@@ -6,7 +6,7 @@
 |------+------------+--------------+----------------+----------------+----------------|
 | 我的 | [[./index.org][Virgo]]      | [[https://www.bilibili.com/][Bilibili]]     | [[https://emacs-china.org/][Emacs China]]    | [[https://github.com/loveminimal][Github]]         | [[https://www.zhihu.com/][知乎]]           |
 |      | [[https://cloud.huawei.com/home#/notepad/task/2f0739e3$ee3c$4049$8422$461c7e46d116/none][华为云]]     | [[https://cloud.tencent.com/developer/labs][腾讯云]]       | [[https://www.youtube.com/][YouTube]]        | [[https://www.icourse163.org/][MOOC]]           | [[https://www.daodejing.org/][道德经]]         |
-|      | [[https://twitter.com/home][Twitter]]    | [[https://gitee.com/loveminimal][Gitee]]        | [[https://www.quora.com/][Quora]]          | [[http://www.people.com.cn/][人民网]]         |                |
+|      | [[https://twitter.com/home][Twitter]]    | [[https://gitee.com/loveminimal][Gitee]]        | [[https://www.quora.com/][Quora]]          | [[http://www.people.com.cn/][人民网]]         | [[https://www.jianshu.com/u/eebc][简书]]           |
 |------+------------+--------------+----------------+----------------+----------------|
 | 工具 | [[http://fanyi.youdao.com/][有道翻译]]   | [[http://www.fhdq.net/][符号大全]]     | [[https://www.bejson.com/ui/compress_img/][图压缩]]         | [[https://man.linuxde.net/][Linux 命令大全]] | [[https://www.bootcss.com/][BootNav]]        |
 |      | [[http://tool.c7sky.com/webcolor/][Web Color]]  | [[https://pixabay.com/zh/][Pixabay]]      | [[http://www.fonts.net.cn/][字体之家]]       | [[http://tools.jb51.net/][脚本之家]]       | [[https://www.sojson.com][SoJSON]]         |
