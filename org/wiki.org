@@ -30,7 +30,7 @@
 # GitHub End
 #+END_EXAMPLE
 
-** @vue/cli 3 切换为 dart-sass
+** vue/cli 3 切换为 dart-sass
  [2021-01-06 Wed 17:55]
 
 首先，安装包 ：
