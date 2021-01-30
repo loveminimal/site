@@ -18,7 +18,6 @@ function js() {
                 debug: true,
             })
         )
-        .pipe(dest('dist'))
         .pipe(uglify())
         .pipe(dest('public/dist'));
 }
@@ -26,7 +25,6 @@ function js() {
 function css() {
     return src('./src/style.scss')
         .pipe(sass({ outputStyle: 'compressed' }))
-        .pipe(dest('dist'))
         .pipe(dest('public/dist'));
 }
 
