@@ -45,6 +45,6 @@ function watcher() {
     watch('src/**/*.scss', css);
 }
 
-exports.serve = series(watcher, webserver);
+exports.serve = webserver;
 exports.build = parallel(js, css);
 exports.watch = watcher;
