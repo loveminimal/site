@@ -1,14 +1,11 @@
 const { src, dest, series, parallel, watch } = require('gulp');
 const babel = require('gulp-babel');
-const uglify = require('gulp-uglify');
 const browserify = require('gulp-browserify');
-
+const uglify = require('gulp-uglify');
 const sass = require('gulp-dart-sass');
-
 const gls = require('gulp-live-server');
 
-function js(cb) {
-    // ...
+function js() {
     return src('./src/main.js')
         .pipe(
             babel({
@@ -21,23 +18,17 @@ function js(cb) {
                 // debug: !gulp.env.production,
             })
         )
+        .pipe(dest('dist'))
         .pipe(uglify())
-        .pipe(dest('dist'));
-
-    cb();
+        .pipe(dest('public/dist'));
 }
 
-function css(cb) {
+function css() {
     return src('./src/style.scss')
         .pipe(sass({ outputStyle: 'compressed' }))
-        .pipe(dest('dist'));
-
-    cb();
+        .pipe(dest('dist'))
+        .pipe(dest('public/dist'));
 }
-
-// watch(['./src/**/*.js', './src/**/*.scss'], (cb) => {
-//     cb();
-// });
 
 function devServer(cb) {
     let server = gls.static('public', 3000);
@@ -47,14 +38,11 @@ function devServer(cb) {
     cb();
 }
 
-module.exports.default = function () {
-    watch(
-        'src/**/*.(js|scss)',
-        { events: 'all', queue: false, delay: 500 },
-        parallel(js, css)
-    );
-};
+function watcher() {
+    watch('src/**/*.js', js);
+    watch('src/**/*.scss', css);
+}
+exports.build = parallel(js, css);
+exports.watch = watcher;
 
-module.exports.build = parallel(js, css);
-
-module.exports.dev = devServer;
+// module.exports.dev = devServer;
