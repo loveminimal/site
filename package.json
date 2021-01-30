@@ -7,9 +7,9 @@
     "author": "Jack Liu <loveminimal@163.com>",
     "license": "MIT",
     "scripts": {
+        "watch": "gulp watch",
         "serve": "gulp serve",
-        "build": "gulp build",
-        "watch": "gulp watch"
+        "build": "gulp build"
     },
     "devDependencies": {
         "@babel/core": "7.12.10",
