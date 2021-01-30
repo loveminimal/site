@@ -3,7 +3,7 @@ const babel = require('gulp-babel');
 const browserify = require('gulp-browserify');
 const uglify = require('gulp-uglify');
 const sass = require('gulp-dart-sass');
-// const gls = require('gulp-live-server');
+const gsl = require('gulp-server-livereload');
 
 function js() {
     return src('./src/main.js')
@@ -30,20 +30,21 @@ function css() {
         .pipe(dest('public/dist'));
 }
 
-// function devServer(cb) {
-//     let server = gls.static('public', 3000);
-//     server.start();
-//     watch('public/**/*', (file) => server.notify.apply(server, [file]))
-//     cb();
-// }
+function webserver() {
+    return src('public').pipe(
+        gsl({
+            livereload: true,
+            // directoryListing: true,
+            open: true,
+        })
+    );
+}
 
 function watcher() {
     watch('src/**/*.js', js);
     watch('src/**/*.scss', css);
 }
 
-// exports.serve = devServer;
+exports.serve = series(watcher, webserver);
 exports.build = parallel(js, css);
 exports.watch = watcher;
-
-// module.exports.dev = devServer;
