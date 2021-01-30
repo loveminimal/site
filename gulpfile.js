@@ -15,7 +15,7 @@ function js() {
         .pipe(
             browserify({
                 insertGlobals: true,
-                // debug: !gulp.env.production,
+                debug: true,
             })
         )
         .pipe(dest('dist'))
