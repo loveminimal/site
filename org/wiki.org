@@ -15,7 +15,7 @@
 ** GitHub 图片不加载问题
  [2021-01-25 Mon 14:20]
 
-修改 `C:\Windows\System32\drivers\etc\hosts` 文件，尾部添加如下内容：
+修改 =C:\Windows\System32\drivers\etc\hosts= 文件，尾部添加如下内容：
 
 #+BEGIN_EXAMPLE
 # GitHub Start
