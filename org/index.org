@@ -112,6 +112,10 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./yi-jing.org][易经]] |
 | [[./lao-zi.org][老子]] |
 
+| 读博客       |
+|--------------|
+| [[./read-wangyin.org][当然我在扯淡]] |
+
 #+BEGIN_EXPORT html
 <div class="me">
   <span><b>Contact me via :)</b><span>
