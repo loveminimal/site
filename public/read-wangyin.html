@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<!-- 2021-02-03 Wed 11:37 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Read Wangyin</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="/dist/style.css" />
+<script src="/dist/main.js" defer></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Read Wangyin</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org51efbef">什么是“对用户友好”</a></li>
+<li><a href="#org7dcc0da">GTF - Great Teacher Friedman</a></li>
+<li><a href="#org23747de">什么是语义学</a></li>
+<li><a href="#org292d2fa"><span class="todo TODO">TODO</span> 怎样写一个解释器</a>
+<ul>
+<li><a href="#org2ef6962">解释器是什么</a></li>
+<li><a href="#org17f4891">抽象语法树</a></li>
+<li><a href="#orga37448a">树遍历算法</a></li>
+</ul>
+</li>
+<li><a href="#org7c354d5">TeXmacs：一个真正“所见即所得”的排版系统</a></li>
+<li><a href="#org8130ce8">Braid - 一个发人深思的游戏</a></li>
+<li><a href="#org19b23f2">解密“设计模式”</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org51efbef" class="outline-2">
+<h2 id="org51efbef"><a href="http://www.yinwang.org/blog-cn/2012/05/18/user-friendliness">什么是“对用户友好”</a></h2>
+<div class="outline-text-2" id="text-org51efbef">
+<blockquote>
+<p>
+"Any intelligent fool can make things bigger, more complex, and more violent. It takes a touch of genius - and a lot of courage - to move in the opposite direction."<br>
+–- Albert Einstein
+</p>
+</blockquote>
+
+<p>
+简化一个东西，让它更“好用”，你需要认真了解它的本质和用途！
+</p>
+
+<p>
+对于用户（包括你）来说，它应该被合理地抽象，隐藏内部的细节，只需要告诉用户“你能用它来干什么”。
+</p>
+
+<p>
+如何使之对用户更加友好呢？统一、抽象、减冗、组合。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7dcc0da" class="outline-2">
+<h2 id="org7dcc0da"><a href="http://www.yinwang.org/blog-cn/2012/07/04/dan-friedman">GTF - Great Teacher Friedman</a></h2>
+<div class="outline-text-2" id="text-org7dcc0da">
+<p>
+程序语言的研究者们往往追逐一些“新概念”，Hmm&#x2026;煞有其事。
+</p>
+
+<p>
+知识的深度是无止境的。
+</p>
+
+<p>
+只有利用所学内容来完成有实际意义的目标，你才能真正体会到其概念的内涵和价值。
+</p>
+
+<p>
+重新“发明”，有利于独立思考。一旦一个东西被你“想”出来，而不是从别人那里“学”过来，那么你就知道这个想法是如何产生的。这比起直接学会这个想法要有用的多，因为你知道这里面所有的细节和犯过的负荆错误。而最重要的，其实是由此得到的直觉。
+</p>
+
+<essay>
+纸上得来终觉浅，绝知此事要躬行。
+</essay>
+</div>
+</div>
+
+<div id="outline-container-org23747de" class="outline-2">
+<h2 id="org23747de"><a href="http://www.yinwang.org/blog-cn/2012/07/25/semantics">什么是语义学</a></h2>
+<div class="outline-text-2" id="text-org23747de">
+<p>
+一个程序的“语义”通常是由另一个程序决定的，这另一个程序叫做“解释器”（interpreter）。程序本身只是一个数据结构，通常表示为语法树（abstract syntax tree）或者指令序列。这个数据结构本身其实没有意义，是解释器让它产生了意义。
+</p>
+
+<essay>
+对同一个程序，不同的解释器可以有不同的解释。
+</essay>
+
+<p>
+解释器接受一个“程序”（program），输出一个“值”（value）。这个所谓的“值”可以具有非常广泛的含义，它可能是一个整数、一个字符串，也有可能是更加奇妙的东西。
+</p>
+
+<p>
+其实解释器不止存在于计算机中，它是一个很广泛的概念。
+</p>
+
+<essay>
+对于固定输入，总会进行唯一的解释，给出固定输出。
+</essay>
+
+<p>
+所以“语义学”，基本上就是研究各种解释器。解释器的原理其实很很简单，但是结构非常微妙，如果你从复杂的语言入手，恐怕永远也学不会。最好的起步方式是写一个基本的 <code>lambda calculus</code> 的解释器，它只有三种元素，却可以表达所有程序语言的复杂结构。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org292d2fa" class="outline-2">
+<h2 id="org292d2fa"><span class="todo TODO">TODO</span> <a href="http://www.yinwang.org/blog-cn/2012/08/01/interpreter">怎样写一个解释器</a></h2>
+<div class="outline-text-2" id="text-org292d2fa">
+<p>
+写一个解释器，通常是设计和实现程序语言的第一步。
+</p>
+
+<p>
+实现语言容易犯一个错误，就是一开关就试图去实现很复杂的语言（比如 JavaScript 或者 Python）。这样你很快就会因为这些语言的复杂性，以及各种历史遗留的设计问题而受到挫折，最后不了了之。学习实现语言，最好是从最简单、最干净的语言开始，迅速写出一个可用的解释器。之后，再逐步往里面添加特性，同时保持正确，如此你才能有条不紊地构造出复杂的解释器。
+</p>
+</div>
+
+<div id="outline-container-org2ef6962" class="outline-3">
+<h3 id="org2ef6962">解释器是什么</h3>
+<div class="outline-text-3" id="text-org2ef6962">
+<p>
+说白了，解释器跟计算机差不多。 <b>解释器是一个函数</b> ，你输入一个“表达式”，它就输出一个“值”。比如，你输入表达式 <code>'(+ 1 2)</code> ，它就输出值，整数 <code>3</code> 。
+</p>
+
+<p>
+表达式是一种“表象”或者“符号”，而值更加接近“本质”或者“意义”。我们“解释”了符号，得到它的意义，这也许就是为什么它叫做“解释器”。
+</p>
+
+<p>
+需要注意的是，表达式是一个数据结构，而不是一个字符串。
+</p>
+
+<p>
+我们用一种叫“S 表达式”（S-expression）的结构来存储表达式。比如，表达式 <code>'(+ 1 2)</code> 其实是一个链表（list），它里面的内容是三个符号（symbol）： <code>+, 1</code> 和 <code>2</code> ，而不是字符串 <code>"(+ 1 2)"</code> 。
+</p>
+
+<p>
+从 S 表达式这样的“结构化数据”里提取信息，方便又可靠，而从字符串里提取则麻烦且容易出错。Scheme（Lisp）语言里面大量使用结构化数据，少用字符串，是 Lisp 系统比 Unix 系统先进的地方之一。
+</p>
+
+<p>
+从计算机理论的角度讲，每个程序都是一台机器的“描述”，而解释器就是在“模拟”这台机器的运行，也就是在进行“计算”。所以，从某种意义上讲， <b>解释器就是计算的本质</b> 。
+</p>
+
+<p>
+CPU 也是一个解释器，它专门解释执行机器语言。如果你深刻理解了解释器，就可以从本质上看出各种 CPU 的设计为什么是那个样子，它们有什么优缺点，而不只是被动的作为它们的使用者。
+</p>
+
+<essay>
+解释器是一个函数，是计算的本质。
+</essay>
+</div>
+</div>
+
+<div id="outline-container-org17f4891" class="outline-3">
+<h3 id="org17f4891">抽象语法树</h3>
+<div class="outline-text-3" id="text-org17f4891">
+<p>
+i.e. Abstract Syntax Tree（AST）
+</p>
+
+<p>
+用 S 表达式所表示的代码，本质上是一种叫做“树”（tree）的数据结构 &#x2013; 抽象语法树（AST），以下简称语法树。
+</p>
+
+<p>
+跟普通的树结构一样，语法树里的节点，要么是一个“叶节点”，要么是一颗“子树”。叶节点是不能再细分的“原子”，比如数字、字符串、操作符、变量名。而子树是可以再细分的“结构”，比如算术表达式、函数定义、函数调用等。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga37448a" class="outline-3">
+<h3 id="orga37448a">树遍历算法</h3>
+<div class="outline-text-3" id="text-orga37448a">
+<p>
+在基础的数据结构课程中，我们学过二叉树的遍历操作，也就是所谓的先序遍历、中序遍历和后序遍历。语法树和二叉树没有很大区别，所以你也可以在它上面进行遍历。
+</p>
+
+<p>
+解释器的算法，就是在语法树上的一种遍历操作。
+</p>
+
+<p>
+我们先来做一个遍历二叉树的练习，做好了之后，我们就可以把这段代码扩展成一个解释器。
+</p>
+
+<p>
+这个练习是这样：写出一个函数 <code>tree-sum</code> ，它对二叉树进行“求和”，把所有节点里的数加在一起，返回它们的和。举个例子， <code>(tree-sum '((1 2) (3 4)))</code> ，执行后应该返回 <code>10</code> 。
+</p>
+
+<p>
+*注意：这是一颗二叉树，所以不会含有长度超过 2 的子树，你不需要考虑像 <code>((1 2) (3 4 5))</code> 这类情况。
+</p>
+
+<p>
+我们的代码是这个样子：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-scheme"><span class="linenr"> 1: </span>#lang racket
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span><span style="color: #4078f2;">(</span><span style="color: #e45649;">define</span> <span style="color: #a626a4;">tree-sum</span>
+<span class="linenr"> 4: </span>  <span style="color: #a626a4;">(</span><span style="color: #e45649;">lambda</span> <span style="color: #50a14f;">(</span>exp<span style="color: #50a14f;">)</span>
+<span class="linenr"> 5: </span>    <span style="color: #50a14f;">(</span>match exp                         <span style="color: #9ca0a4;">; </span><span style="color: #9ca0a4;">&#23545;&#36755;&#20837;exp&#36827;&#34892;&#27169;&#24335;&#21305;&#37197;</span>
+<span class="linenr"> 6: </span>      <span style="color: #dd8844;">[</span><span style="color: #b751b6;">(</span>? number? x<span style="color: #b751b6;">)</span> x<span style="color: #dd8844;">]</span>                <span style="color: #9ca0a4;">; </span><span style="color: #9ca0a4;">exp&#26159;&#19968;&#20010;&#25968;x&#21527;&#65311;&#22914;&#26524;&#26159;&#65292;&#37027;&#20040;&#36820;&#22238;&#36825;&#20010;&#25968;x</span>
+<span class="linenr"> 7: </span>      <span style="color: #dd8844;">[</span>`<span style="color: #b751b6;">(</span>,e1 ,e2<span style="color: #b751b6;">)</span>                      <span style="color: #9ca0a4;">; </span><span style="color: #9ca0a4;">exp&#26159;&#19968;&#20010;&#21547;&#26377;&#20004;&#26869;&#23376;&#26641;&#30340;&#20013;&#38388;&#33410;&#28857;&#21527;&#65311;</span>
+<span class="linenr"> 8: </span>       <span style="color: #b751b6;">(</span><span style="color: #e45649;">let</span> <span style="color: #986801;">(</span><span style="color: #44b9b1;">[</span>v1 <span style="color: #80a880;">(</span>tree-sum e1<span style="color: #80a880;">)</span><span style="color: #44b9b1;">]</span>        <span style="color: #9ca0a4;">; </span><span style="color: #9ca0a4;">&#36882;&#24402;&#35843;&#29992;tree-sum&#33258;&#24049;&#65292;&#23545;&#24038;&#23376;&#26641;e1&#27714;&#20540;</span>
+<span class="linenr"> 9: </span>             <span style="color: #44b9b1;">[</span>v2 <span style="color: #80a880;">(</span>tree-sum e2<span style="color: #80a880;">)</span><span style="color: #44b9b1;">]</span><span style="color: #986801;">)</span>       <span style="color: #9ca0a4;">; </span><span style="color: #9ca0a4;">&#36882;&#24402;&#35843;&#29992;tree-sum&#33258;&#24049;&#65292;&#23545;&#21491;&#23376;&#26641;e2&#27714;&#20540;</span>
+<span class="linenr">10: </span>         <span style="color: #986801;">(</span>+ v1 v2<span style="color: #986801;">)</span><span style="color: #b751b6;">)</span><span style="color: #dd8844;">]</span><span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>                <span style="color: #9ca0a4;">; </span><span style="color: #9ca0a4;">&#36820;&#22238;&#24038;&#21491;&#23376;&#26641;&#32467;&#26524;v1&#21644;v2&#30340;&#21644;</span>
+</pre>
+</div>
+
+<p>
+更多内容，请直接参考 <a href="http://www.yinwang.org/blog-cn/2012/08/01/interpreter">http://www.yinwang.org/blog-cn/2012/08/01/interpreter</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7c354d5" class="outline-2">
+<h2 id="org7c354d5"><a href="http://www.yinwang.org/blog-cn/2012/09/18/texmacs">TeXmacs：一个真正“所见即所得”的排版系统</a></h2>
+<div class="outline-text-2" id="text-org7c354d5">
+<p>
+……
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8130ce8" class="outline-2">
+<h2 id="org8130ce8"><a href="http://www.yinwang.org/blog-cn/2013/03/04/braid">Braid - 一个发人深思的游戏</a></h2>
+<div class="outline-text-2" id="text-org8130ce8">
+<p>
+游戏确实挺有意思的，可惜我是个菜鸟……
+</p>
+
+<blockquote>
+<p>
+我曾经是一个游戏迷，可是进入了计算机专业的学习之后，我就开始失去对游戏的兴趣，基本上每玩一个都让我失望一次，不管别人把它吹的多么“经典”。不知道为什么，别人玩得津津有味的游戏，我玩一会儿就把它里面的“公式”都看透了。我清楚地知道这游戏的设计者是怎么在“耍我”，在如何想方设法浪费我的时间。
+</p>
+
+<p>
+同样的，别人看得津津有味的小说和电影，我经常一看开头就能猜到它要怎么发展，知道这编剧是怎么在胡编滥造，索然无味。所以我基本上不去影院看最新的电影，宁愿在网上看一些几十年前的老电影。我貌似只喜欢那些能让我“猜不透”的东西。
+</p>
+</blockquote>
+
+<p>
+糊涂是福啊，王垠……
+</p>
+</div>
+</div>
+
+<div id="outline-container-org19b23f2" class="outline-2">
+<h2 id="org19b23f2"><a href="http://www.yinwang.org/blog-cn/2013/03/07/design-patterns">解密“设计模式”</a></h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2021-02-02 Tue 11:10</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2021-02-03 Wed 11:37</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
