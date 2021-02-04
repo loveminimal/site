@@ -1,6 +1,0 @@
-#+SETUPFILE: ../theme-rose.setup
-#+DATE: <2021-02-03 Wed 12:07>
-#+TITLE: 当然我在扯淡
-
-** 前言
-
