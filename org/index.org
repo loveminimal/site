@@ -118,6 +118,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./read-wangyin-2.org][当然我在扯淡（二）]] |
 | [[./read-wangyin-3.org][当然我在扯淡（三）]] |
 | [[./read-wangyin-4.org][当然我在扯淡（四）]] |
+| [[./read-wangyin-5.org][当然我在扯淡（五）]] |
 
 #+BEGIN_EXPORT html
 <div class="me">
