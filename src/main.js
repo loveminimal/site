@@ -5,7 +5,7 @@ const {
     browserRedirect,
     isCurPageFn,
     isHomeFn,
-    isEncryptedPagesFn,
+    toEncryptedPages,
 } = require('./utils');
 const cursorClickAnimate = require('./modules/cursor-click-animate');
 
@@ -24,7 +24,7 @@ let topBtn = '';
 
 // Custom some special pages
 // Encrypt previate pages
-isEncryptedPagesFn(USERCONFIG.encryptedPages);
+toEncryptedPages(USERCONFIG.encryptedPages);
 
 // Diff PC and Mobile
 if (browserRedirect() == 'PC') {

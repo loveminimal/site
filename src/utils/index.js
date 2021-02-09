@@ -1,4 +1,8 @@
-// Diff device type
+/**
+ * 区分设备类型
+ * @returns {String} `MB` 移动设备
+ * @returns {String} `PC` 电脑
+ */
 function browserRedirect() {
     let sUserAgent = navigator.userAgent.toLowerCase();
     let bIsIpad = sUserAgent.match(/ipad/i) == 'ipad';
@@ -26,8 +30,11 @@ function browserRedirect() {
     }
 }
 
-// If `args` is current page
-// `args` - String or Array
+/**
+ * 判断是否为当前页面
+ * @param {String|Array} args 页面或页面组
+ * @returns {Boolean} `true` `false`
+ */
 function isCurPageFn(args) {
     if (typeof args === 'string') {
         if (
@@ -56,6 +63,10 @@ function isCurPageFn(args) {
         if (_res > 0) return true;
     }
 }
+/**
+ * 判断是否为主页
+ * @returns {Boolean} `true` `false`
+ */
 function isHomeFn() {
     if (
         [
@@ -73,7 +84,11 @@ function isHomeFn() {
     }
 }
 
-function isEncryptedPagesFn(args) {
+/**
+ * 加密指定页面或页面组
+ * @param {String|Array} args 页面或页面组
+ */
+function toEncryptedPages(args) {
     if (isCurPageFn(args)) {
         if (sessionStorage.getItem('pw')) {
             console.log('Welcome, Sir.');
@@ -89,4 +104,4 @@ function isEncryptedPagesFn(args) {
     }
 }
 
-module.exports = { browserRedirect, isCurPageFn, isHomeFn, isEncryptedPagesFn };
+module.exports = { browserRedirect, isCurPageFn, isHomeFn, toEncryptedPages };
