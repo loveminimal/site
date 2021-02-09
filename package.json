@@ -9,7 +9,7 @@
     "scripts": {
         "watch": "gulp watch",
         "serve": "gulp serve",
-        "build": "gulp build"
+        "build": "gulp build && bash scripts/copy.sh"
     },
     "devDependencies": {
         "@babel/core": "7.12.10",

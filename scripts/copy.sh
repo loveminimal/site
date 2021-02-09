@@ -1,22 +1,20 @@
 #!/bin/sh
-echo -e "---------\n- START -\n---------"
 
-if [ -d "public" ]
+if [ -d "../public" ]
 then
-    echo -e "Copying..."
-    
-    for i in 1 2 3 4 5
+    b=''
+    for ((i=0;$i<=100;i+=2))
     do 
-        sleep 0.1
-        echo -e "    |>>> +++ +++ +++ +++ +++ >>>|"
+        printf "statics copying:[%-50s]%d%%\r" $b $i
+        sleep 0.01s
+        b=#$b
     done  
 
     rm -rf "public/assets" && cp -r "assets" "public/"
-    rm -rf "public/dist" && cp -r "dist" "public/"
     rm -rf "public/images" && cp -r "images" "public/"
     rm -rf "public/user.config.js" && cp -r "user.config.js" "public/"
     rm -rf "public/webfonts" && cp -r "webfonts" "public/"
 
+    echo -e "\n---DONE---"
 
-echo -e "---------\n- DONE  -\n---------"
 fi
