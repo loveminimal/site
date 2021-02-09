@@ -1,5 +1,8 @@
 const $ = require('jquery');
 
+/**
+ * 激活鼠标点击水纹效果
+ */
 module.exports = function cursorClickAnimate() {
     $(document).click((e) => {
         let size = 120; // size of water block
