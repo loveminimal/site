@@ -123,10 +123,7 @@ $('essay').each(function () {
 $('.me .contact #weibo').attr('href', '//weibo.com/u/' + USERCONFIG.weibo);
 $('.me #wechat img').attr('src', '/images/' + USERCONFIG.wechat);
 $('.me .contact #email').attr('href', 'mailto:' + USERCONFIG.email);
-$('.me .contact #github').attr(
-    'href',
-    (USERCONFIG.gitee || '//github.com/') + USERCONFIG.github
-);
+$('.me .contact #github').attr('href', '//github.com/' + USERCONFIG.github);
 $('.me .contact #bilibili').attr(
     'href',
     '//space.bilibili.com/' + USERCONFIG.bilibili
