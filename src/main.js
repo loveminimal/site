@@ -2,7 +2,6 @@ const $ = require('jquery');
 const DarkReader = require('darkreader');
 const USERCONFIG = require('../user.config');
 const { browserRedirect, isCurPageFn, isHomeFn } = require('./utils');
-const { cardPages } = require('./config');
 
 // Init global variables
 let isHome = isHomeFn();
@@ -15,7 +14,7 @@ let cent = '';
 let topBtn = '';
 
 // Activate/Deactivate global card style
-// isCard = true; cardPages = [];
+// isCard = true; USERCONFIG.cardPages = [];
 
 // Custom some special pages
 if (isCurPageFn('joker')) {
@@ -248,7 +247,7 @@ $('img').each(function (idx, ele) {
 
 // Beautify item like `Idea`
 // ---------------------------------
-if (isCurPageFn(cardPages)) {
+if (isCurPageFn(USERCONFIG.cardPages)) {
     $('.outline-2').each(function () {
         $(this).addClass('js-outline-2');
     });
