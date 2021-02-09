@@ -5,7 +5,7 @@ then
     b=''
     for ((i=0;$i<=100;i+=2))
     do 
-        printf "statics copying:[%-50s]%d%%\r" $b $i
+        printf "COPY:[%-50s]%d%%\r" $b $i
         sleep 0.01s
         b=#$b
     done  
@@ -15,6 +15,5 @@ then
     rm -rf "public/user.config.js" && cp -r "user.config.js" "public/"
     rm -rf "public/webfonts" && cp -r "webfonts" "public/"
 
-    echo -e "\n---DONE---"
-
+    echo -e "\e[1;42mDONE\e[0m\n"
 fi
