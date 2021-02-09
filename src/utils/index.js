@@ -73,4 +73,20 @@ function isHomeFn() {
     }
 }
 
-module.exports = { browserRedirect, isCurPageFn, isHomeFn };
+function isEncryptedPagesFn(args) {
+    if (isCurPageFn(args)) {
+        if (sessionStorage.getItem('pw')) {
+            console.log('Welcome, Sir.');
+        } else {
+            let passwd = prompt('Sorry, you have no permissions！');
+            if (passwd === 'just go out') {
+                console.log('Welcome, Sir.');
+                sessionStorage.setItem('pw', true);
+            } else {
+                window.location.pathname = '/';
+            }
+        }
+    }
+}
+
+module.exports = { browserRedirect, isCurPageFn, isHomeFn, isEncryptedPagesFn };

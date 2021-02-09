@@ -1,7 +1,12 @@
 const $ = require('jquery');
 const DarkReader = require('darkreader');
 const USERCONFIG = require('../user.config');
-const { browserRedirect, isCurPageFn, isHomeFn } = require('./utils');
+const {
+    browserRedirect,
+    isCurPageFn,
+    isHomeFn,
+    isEncryptedPagesFn,
+} = require('./utils');
 const cursorClickAnimate = require('./modules/cursor-click-animate');
 
 // Init global variables
@@ -18,19 +23,8 @@ let topBtn = '';
 // isCard = true; USERCONFIG.cardPages = [];
 
 // Custom some special pages
-if (isCurPageFn('joker')) {
-    if (sessionStorage.getItem('pw')) {
-        console.log('Welcome, Sir.');
-    } else {
-        let passwd = prompt('Sorry, you have no permissions！');
-        if (passwd === 'just go out') {
-            console.log('Welcome, Sir.');
-            sessionStorage.setItem('pw', true);
-        } else {
-            window.location.pathname = '/';
-        }
-    }
-}
+// Encrypt previate pages
+isEncryptedPagesFn(USERCONFIG.encryptedPages);
 
 // Diff PC and Mobile
 if (browserRedirect() == 'PC') {
