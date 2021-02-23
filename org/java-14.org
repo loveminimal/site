@@ -1,4 +1,3 @@
-#+SETUPFILE: ../theme-rose.setup
 #+DATE: <2020-10-03 Sat 09:45>
 #+TITLE: 注解
 

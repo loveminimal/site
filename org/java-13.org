@@ -1,4 +1,3 @@
-#+SETUPFILE: ../theme-rose.setup
 #+DATE: <2020-10-02 Fri 15:09>
 #+TITLE: 输入/输出流
 

@@ -1,4 +1,3 @@
-#+SETUPFILE: ../theme-rose.setup
 #+DATE: <2020-09-15 Tue 07:30>
 #+TITLE: Java 程序设计基础
 

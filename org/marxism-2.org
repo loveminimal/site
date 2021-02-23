@@ -1,4 +1,3 @@
-#+SETUPFILE: ../theme-rose.setup
 #+DATE: <2020-09-03 Thu 17:50>
 #+TITLE: 第二卷 认识的本质及其发展规律
 

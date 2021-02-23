@@ -1,4 +1,3 @@
-#+SETUPFILE: ../theme-rose.setup
 #+DATE: <2020-12-02 Wed 09:53>
 #+TITLE: CSS 那些事儿
 

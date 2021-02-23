@@ -1,4 +1,3 @@
-#+SETUPFILE: ../theme-rose.setup
 #+DATE: <2020-01-28 Tue 14:02>
 #+TITLE: Wiki
 

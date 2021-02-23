@@ -1,4 +1,3 @@
-#+SETUPFILE: ../theme-rose.setup
 #+DATE: <2020-12-06 Sun 17:26>
 #+TITLE: 第 1 章 计算机系统漫游
 

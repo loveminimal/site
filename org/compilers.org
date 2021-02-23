@@ -1,4 +1,3 @@
-#+SETUPFILE: ../theme-rose.setup
 #+DATE: <2020-10-29 Thu 12:06>
 #+TITLE: Compilers
 
