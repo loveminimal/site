@@ -1,700 +1,624 @@
 <!DOCTYPE html>
 <html lang="zh">
-    <head>
-        <!-- 2021-02-23 Tue 15:28 -->
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>五笔那些事儿</title>
-        <meta name="generator" content="Org mode" />
-        <meta name="author" content="Jack Liu" />
-        <link
-            rel="shortcut icon"
-            href="/themes/assets/rose-red.png"
-            type="image/x-icon"
-        />
-        <link rel="stylesheet" href="/themes/style.css" type="text/css" />
-        <script type="module" src="/themes/main.js" defer></script>
-    </head>
-    <body>
-        <div id="content">
-            <h1 class="title">五笔那些事儿</h1>
-            <div id="table-of-contents">
-                <h2>Table of Contents</h2>
-                <div id="text-table-of-contents">
-                    <ul>
-                        <li><a href="#orgf799606">五笔是什么</a></li>
-                        <li><a href="#orgac6dced">键盘分区和区位号</a></li>
-                        <li>
-                            <a href="#orgd967c22">字根的输入</a>
-                            <ul>
-                                <li><a href="#org46817d4">键名字根</a></li>
-                                <li><a href="#org37e056f">字根歌</a></li>
-                                <li>
-                                    <a href="#orgad82053">字根间的结构关系</a>
-                                </li>
-                                <li><a href="#org2a59ffc">成字字根</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#org93148af">汉字的拆分</a></li>
-                        <li><a href="#org6e9ee9e">识别码</a></li>
-                        <li><a href="#orga2ee0ee">末笔约定</a></li>
-                        <li><a href="#org2305507">一级简码</a></li>
-                    </ul>
-                </div>
-            </div>
-            <p>
-                → 本文主要摘录自
-                <a href="http://www.wubizi.net/xuewubi/">问问学五笔</a
-                ><sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>
-            </p>
-
-            <img
-                src="images/wenwen.jpg"
-                width="300"
-                height=""
-                style="float: right; margin-left: 8px"
-                title=""
-            />
-
-            <div id="outline-container-orgf799606" class="outline-2">
-                <h2 id="orgf799606">五笔是什么</h2>
-                <div class="outline-text-2" id="text-orgf799606">
-                    <p>我们主要讲 86 版的五笔，它的通用性最好。</p>
-
-                    <p>
-                        <b>五笔的基本原理是什么呢？</b>
-                    </p>
-
-                    <p>
-                        汉字都是由笔划或部首组成的。为了输入汉字，我们把汉字折成一些最常用的基本单位
-                        &#x2013;
-                        <span class="underline">字根</span>
-                        ，字根可以是汉字的偏旁部首，可以是部首的一部分，甚至是笔划。
-                    </p>
-
-                    <p>
-                        取出这引起字根后，把它们按一定的规律分类，再把这些字根依据科学原理分配在键盘上，作为输入汉字的基本单位。
-                    </p>
-
-                    <p>
-                        当要输入汉字时，我们就按照汉字的书写顺序依次按键盘上与字根对应的键，组成一个代码，系统根据输入字根组成的代码，在五笔输入的字库中检索出所要的字。
-                    </p>
-
-                    <essay> 拆字 → 分配 → 组代 → 字库检索 </essay>
-
-                    <p>
-                        我们已经了解了五笔的基本原理，那么究竟应该如何学习五笔呢？
-                    </p>
-
-                    <p>三个方面，如下：</p>
-                    <ol class="org-ol">
-                        <li>知道键盘上的每个键位对应着哪些字根；</li>
-                        <li>学习如何把汉字拆分成五笔字根；</li>
-                        <li>输入字根对应的字母，必要时要键入识别码。</li>
-                    </ol>
-
-                    <essay>
-                        分三步：把冰箱门打开，把大象装进去，把冰箱门关上。
-                    </essay>
-                </div>
-            </div>
-
-            <div id="outline-container-orgac6dced" class="outline-2">
-                <h2 id="orgac6dced">键盘分区和区位号</h2>
-                <div class="outline-text-2" id="text-orgac6dced">
-                    <p>
-                        五笔基本字根有 130 种，加上一些基本字根的变型，共有 200
-                        个左右，这些字根分配在键盘上的 25 个键（除 Z
-                        外）上，每个键位都对应着几个甚至几十个字根。
-                    </p>
-
-                    <p>
-                        我们知道，汉字有五种基本笔划：
-                        <span class="underline"
-                            >横（提）、竖（竖勾）、撇、捺（点）、折</span
-                        >
-                        ，所有的字根都是由这五种笔划组成的。
-                    </p>
-
-                    <p>按照每个字根的起笔笔划，把这些字根分为五个区，如下：</p>
-
-                    <img
-                        src="images/wubi-1.jpg"
-                        width="400"
-                        height=""
-                        style=""
-                        title=""
-                    />
-
-                    <p>
-                        每个区有五个位，按一定的顺序编号，就叫
-                        <span class="underline">区位号</span>
-                        （都是从键盘中间开始，向外扩展进行编号），如下：
-                    </p>
-
-                    <img
-                        src="images/wubi-2.jpg"
-                        width="460"
-                        height=""
-                        style=""
-                        title=""
-                    />
-
-                    <blockquote>
-                        <p>如何输入这五个基本笔划？</p>
-
-                        <table>
-                            <colgroup>
-                                <col class="org-left" />
-
-                                <col class="org-left" />
-
-                                <col class="org-left" />
-
-                                <col class="org-left" />
-
-                                <col class="org-left" />
-
-                                <col class="org-left" />
-                            </colgroup>
-                            <tbody>
-                                <tr>
-                                    <td class="org-left">笔划</td>
-                                    <td class="org-left">一</td>
-                                    <td class="org-left">丨</td>
-                                    <td class="org-left">丿</td>
-                                    <td class="org-left">丶</td>
-                                    <td class="org-left">乙</td>
-                                </tr>
-
-                                <tr>
-                                    <td class="org-left">代码</td>
-                                    <td class="org-left"><code>ggll</code></td>
-                                    <td class="org-left"><code>hhll</code></td>
-                                    <td class="org-left"><code>ttll</code></td>
-                                    <td class="org-left"><code>yyll</code></td>
-                                    <td class="org-left"><code>nnll</code></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </blockquote>
-                </div>
-            </div>
-
-            <div id="outline-container-orgd967c22" class="outline-2">
-                <h2 id="orgd967c22">字根的输入</h2>
-                <div class="outline-text-2" id="text-orgd967c22">
-                    <p>
-                        → 更多详查
-                        <a href="http://www.wubizi.net/wubi/wbfjtu.html"
-                            >五笔字根分解图详解</a
-                        ><sup
-                            ><a id="fnr.2" class="footref" href="#fn.2"
-                                >2</a
-                            ></sup
-                        >
-                    </p>
-                </div>
-
-                <div id="outline-container-org46817d4" class="outline-3">
-                    <h3 id="org46817d4">键名字根</h3>
-                    <div class="outline-text-3" id="text-org46817d4">
-                        <p>
-                            让我们再来看看上面这张图中标红的字体，每个区位选取了一个最常用的字根作为键的名字，该字根称为
-                            <span class="underline">键名字根</span> 。
-                        </p>
-
-                        <essay>
-                            Hmm...
-                            怎么说呢，“被”这个字我经常使用，但每次都要输入“puhc”四个键...
-                        </essay>
-
-                        <p>如何输入键名字根呢？对应的键按四下就行了，如：</p>
-
-                        <table>
-                            <colgroup>
-                                <col class="org-left" />
-
-                                <col class="org-left" />
-
-                                <col class="org-left" />
-
-                                <col class="org-left" />
-
-                                <col class="org-left" />
-                            </colgroup>
-                            <tbody>
-                                <tr>
-                                    <td class="org-left">键名字根</td>
-                                    <td class="org-left">王</td>
-                                    <td class="org-left">土</td>
-                                    <td class="org-left">大</td>
-                                    <td class="org-left">&#x2026;</td>
-                                </tr>
-
-                                <tr>
-                                    <td class="org-left">代码</td>
-                                    <td class="org-left"><code>gggg</code></td>
-                                    <td class="org-left"><code>ffff</code></td>
-                                    <td class="org-left"><code>dddd</code></td>
-                                    <td class="org-left"><code>xxxx</code></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div id="outline-container-org37e056f" class="outline-3">
-                    <h3 id="org37e056f">字根歌</h3>
-                    <div class="outline-text-3" id="text-org37e056f">
-                        <table>
-                            <colgroup>
-                                <col class="org-right" />
-
-                                <col class="org-left" />
-
-                                <col class="org-left" />
-
-                                <col class="org-right" />
-
-                                <col class="org-left" />
-
-                                <col class="org-left" />
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="org-right">
-                                        &#xa0;
-                                    </th>
-                                    <th scope="col" class="org-left">&#xa0;</th>
-                                    <th scope="col" class="org-left">&#xa0;</th>
-                                    <th scope="col" class="org-right">
-                                        &#xa0;
-                                    </th>
-                                    <th scope="col" class="org-left">&#xa0;</th>
-                                    <th scope="col" class="org-left">&#xa0;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="org-right">31</td>
-                                    <td class="org-left">T</td>
-                                    <td class="org-left">
-                                        禾竹一撇双人立，反文条头共三一
-                                    </td>
-                                    <td class="org-right">41</td>
-                                    <td class="org-left">Y</td>
-                                    <td class="org-left">
-                                        言文方广在四一,高头一捺谁人去
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="org-right">32</td>
-                                    <td class="org-left">R</td>
-                                    <td class="org-left">白手看头三二斤</td>
-                                    <td class="org-right">42</td>
-                                    <td class="org-left">U</td>
-                                    <td class="org-left">立辛两点六门疒</td>
-                                </tr>
-
-                                <tr>
-                                    <td class="org-right">33</td>
-                                    <td class="org-left">E</td>
-                                    <td class="org-left">
-                                        月彡（衫）乃用家衣底（爱头豹脚舟字底）
-                                    </td>
-                                    <td class="org-right">43</td>
-                                    <td class="org-left">I</td>
-                                    <td class="org-left">水旁兴头小倒立</td>
-                                </tr>
-
-                                <tr>
-                                    <td class="org-right">34</td>
-                                    <td class="org-left">W</td>
-                                    <td class="org-left">人和八，登祭头</td>
-                                    <td class="org-right">44</td>
-                                    <td class="org-left">O</td>
-                                    <td class="org-left">火业头，四点米</td>
-                                </tr>
-
-                                <tr>
-                                    <td class="org-right">35</td>
-                                    <td class="org-left">Q</td>
-                                    <td class="org-left">
-                                        金勺缺点无尾鱼，犬旁留叉儿一点夕，氏无七
-                                    </td>
-                                    <td class="org-right">45</td>
-                                    <td class="org-left">P</td>
-                                    <td class="org-left">
-                                        之字军，摘礻（示）衤（衣）（之字军盖建道底）
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tbody>
-                                <tr>
-                                    <td class="org-right">11</td>
-                                    <td class="org-left">G</td>
-                                    <td class="org-left">
-                                        王旁青头戋（兼）五一（“兼”与“戋”同音）
-                                    </td>
-                                    <td class="org-right">21</td>
-                                    <td class="org-left">H</td>
-                                    <td class="org-left">
-                                        目具上止卜虎皮（“具上”指具字的上部）
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="org-right">12</td>
-                                    <td class="org-left">F</td>
-                                    <td class="org-left">
-                                        土士二干十寸雨（可别忘了革字底）
-                                    </td>
-                                    <td class="org-right">22</td>
-                                    <td class="org-left">J</td>
-                                    <td class="org-left">日早两竖与虫依</td>
-                                </tr>
-
-                                <tr>
-                                    <td class="org-right">13</td>
-                                    <td class="org-left">D</td>
-                                    <td class="org-left">
-                                        大犬三羊古石厂（羊底龙头套上套下)
-                                    </td>
-                                    <td class="org-right">23</td>
-                                    <td class="org-left">K</td>
-                                    <td class="org-left">口与川，字根稀</td>
-                                </tr>
-
-                                <tr>
-                                    <td class="org-right">14</td>
-                                    <td class="org-left">S</td>
-                                    <td class="org-left">木丁西</td>
-                                    <td class="org-right">24</td>
-                                    <td class="org-left">L</td>
-                                    <td class="org-left">
-                                        田甲方框四车力（“方框”即“口”）
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="org-right">15</td>
-                                    <td class="org-left">A</td>
-                                    <td class="org-left">
-                                        工戈草头右框七（“右框”即“匚”)
-                                    </td>
-                                    <td class="org-right">25</td>
-                                    <td class="org-left">M</td>
-                                    <td class="org-left">山由贝，下框几</td>
-                                </tr>
-                            </tbody>
-                            <tbody>
-                                <tr>
-                                    <td class="org-right">51</td>
-                                    <td class="org-left">C</td>
-                                    <td class="org-left">
-                                        又巴马，丢矢矣，（“矣”去“矢”为“厶”）
-                                    </td>
-                                    <td class="org-right">54</td>
-                                    <td class="org-left">N</td>
-                                    <td class="org-left">
-                                        已半巳满不出己，左框折尸心和羽
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="org-right">52</td>
-                                    <td class="org-left">X</td>
-                                    <td class="org-left">
-                                        慈母无心弓和匕，幼无力（“幼无力”即“幺”）
-                                    </td>
-                                    <td class="org-right">55</td>
-                                    <td class="org-left">B</td>
-                                    <td class="org-left">
-                                        子耳了也框向上。（“框向上”即“凵”）
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="org-right">53</td>
-                                    <td class="org-left">&#xa0;</td>
-                                    <td class="org-left">&#xa0;</td>
-                                    <td class="org-right">&#xa0;</td>
-                                    <td class="org-left">V</td>
-                                    <td class="org-left">
-                                        女刀九臼山朝西。（“山朝西”即“彐”）
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div id="outline-container-orgad82053" class="outline-3">
-                    <h3 id="orgad82053">字根间的结构关系</h3>
-                    <div class="outline-text-3" id="text-orgad82053">
-                        <p>
-                            <span class="underline">拆字</span>
-                            是学习五笔的一个重要环节，光背会了字根，有的汉字不知道拆成什么样的字根，也是无法输入的。
-                        </p>
-
-                        <p>
-                            我们是由浅入深地开始讲，先谈谈字根间的结构关系
-                            &#x2013;
-                            <span class="underline">单、散、连、交</span> 。
-                        </p>
-
-                        <p>单，就是指这个字根本身就是一个汉字，包括：</p>
-                        <ul class="org-ul">
-                            <li>五种基本笔划（一、丨、丿、丶、乙）；</li>
-                            <li>25 个键名字根；</li>
-                            <li>字根中的汉字。</li>
-                        </ul>
-
-                        <p>
-                            散，就是指构成汉字折字根不止一个，且汉字之间有一定的距离，比如“苗”、“汉”字等。
-                        </p>
-
-                        <p>
-                            连，是指一个字根与一个单笔划相连，比如“且”、“尺”字等。
-                        </p>
-
-                        <p>
-                            交，是指两个或多个字根交叉重叠构成的汉字，比如“本”、“申”字等。
-                        </p>
-
-                        <p>
-                            由两个以上字根组成的汉字，称为
-                            <span class="underline">合体字</span> 。
-                        </p>
-
-                        <p>
-                            其中，对于四个或四个以上的字根的合体字，它的输入方法是按照书写顺序，取第一、二、三、末四个字根的编码。
-                        </p>
-
-                        <img
-                            src="images/wubi-3.gif"
-                            width="150"
-                            height=""
-                            style=""
-                            title=""
-                        />
-
-                        <img
-                            src="images/wubi-4.gif"
-                            width="170"
-                            height=""
-                            style="margin-left: 32px"
-                            title=""
-                        />
-                    </div>
-                </div>
-
-                <div id="outline-container-org2a59ffc" class="outline-3">
-                    <h3 id="org2a59ffc">成字字根</h3>
-                    <div class="outline-text-3" id="text-org2a59ffc">
-                        <p>
-                            在字根总表中，除了键名字根外，本身就是汉字的字根，称为
-                            <span class="underline">成字字根</span>
-                            ，比如“马、手、刀”等。这样的成字字根一共有65个，但这些字经常要输入，所以需要掌握其输入方法。
-                        </p>
-
-                        <p>怎么输入呢？</p>
-
-                        <p>
-                            成字字根的输入方法是：先打一下该字根所在的键，再打该字根的第一、第二及最末一个单笔画。
-                        </p>
-
-                        <p>即： <b>键名+首笔代码+次笔代码+末笔代码。</b></p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="outline-container-org93148af" class="outline-2">
-                <h2 id="org93148af">汉字的拆分</h2>
-                <div class="outline-text-2" id="text-org93148af">
-                    <p>
-                        在拆分汉字的时，先要注意按书写顺序来拆分汉字，然后对里面的一些复杂字根，按照它的自然男人界限进行拆分，对界线不明显了，就要按拆分原则进行拆分。
-                    </p>
-
-                    <p>那么，书写顺序、拆分原则，指的都是什么呢？</p>
-
-                    <p>
-                        在书写汉字时，讲究“先左后右，先上后下，先横后竖，先撇后捺，先内后外，先中间后两边，先进门后关门”等。这些都是语文的基本知识，就不多说了。在拆字时，同样要注意书写顺序。
-                    </p>
-
-                    <img
-                        src="images/wubi-5.gif"
-                        width="150"
-                        height=""
-                        style=""
-                        title=""
-                    />
-
-                    <p>
-                        拆分原则，归纳起来有四点：“取在优先，兼顾直观，能散不连，能连不交。”
-                    </p>
-
-                    <p>
-                        有些汉字，它们所含的字根相同，但字根之间的相对位置不同，比如“旭”和“旮”等。我们把汉字各部分间的位置关系类型叫做
-                        <span class="underline">字型</span>
-                        ，在五笔中，把汉字分为三种字型：左右型、上下型、杂合型。
-                    </p>
-
-                    <img
-                        src="images/wubi-6.gif"
-                        width="120"
-                        height=""
-                        style=""
-                        title=""
-                    />
-                </div>
-            </div>
-
-            <div id="outline-container-org6e9ee9e" class="outline-2">
-                <h2 id="org6e9ee9e">识别码</h2>
-                <div class="outline-text-2" id="text-org6e9ee9e">
-                    <p>
-                        我们知道，一个合字体的取码规则是这个字的一、二、三、末字根，这只是针对四个字根以上的汉字。如果是这个字只有二个字根或三个字根构成，比如“叭”，这时怎么输入呢？
-                    </p>
-
-                    <p>
-                        们试试，在五笔状态下键入“叭”的两个字根的编码，KW，我们发现出现在第一条的是“只”字，原来“叭”与“只”都是由字根“口”和“八”组成的，其编码也是
-                        KW。
-                    </p>
-
-                    <p>
-                        <b>由于编码少，信息量不足，会造成重码。</b>
-                    </p>
-
-                    <p>如何消除重码呢？</p>
-
-                    <img
-                        src="images/wubi-7.gif"
-                        width="360"
-                        height=""
-                        style=""
-                        title=""
-                    />
-
-                    <p>
-                        汉字的笔画有 5 种，字型有 3 种，所以末笔字型交叉识别码共
-                        15 种，也就是每个区位的前三位是作为识别码来用的。
-                    </p>
-
-                    <img
-                        src="images/wubi-8.gif"
-                        width="500"
-                        height=""
-                        style="border-bottom: 2px solid #666"
-                        title=""
-                    />
-                </div>
-            </div>
-
-            <div id="outline-container-orga2ee0ee" class="outline-2">
-                <h2 id="orga2ee0ee">末笔约定</h2>
-                <div class="outline-text-2" id="text-orga2ee0ee">
-                    <p>
-                        我们在使用识别码输入汉字时，对汉字的末笔有一些约定，需要注意。
-                    </p>
-
-                    <p>
-                        首先，为了有足够多的区分能力，对“辶”、“廴”的字和全包围字，它们的“末笔”规定为被包围部分的末笔。为什么要这样约定呢？
-                    </p>
-
-                    <p>
-                        例如，如果“辶”为末笔的话，“边”、“连”的识别码都是
-                        V，就无法区分了，所以才这样约定。
-                    </p>
-
-                    <essay> 哈，约定末笔是为了便于打识别码。 </essay>
-
-                    <p>
-                        其次，对“九、刀、七、力、匕”等字根，当它们参加“识别”时一律用“折笔”作为末笔。
-                    </p>
-
-                    <p>
-                        然后，“我”、“贱”、“成”等字的“末笔”，遵循“从上到下”的原则，末笔应该是“丿”。
-                    </p>
-
-                    <p>
-                        最后，还有带单独点的字，比如“义”，“太”，“勺”等，我们把点当作末笔，并且认为“丶”与附近的字根是“连”的关系，所以为杂合型，识别码为
-                        43，也就是 I。
-                    </p>
-
-                    <p>
-                        我们在学习五笔输入法的过程中，识别码的判断是一个难点，虽然只有很少的字需要加识别码，但为了提高录入速度，还是要掌握这部分内容的。
-                    </p>
-                </div>
-            </div>
-
-            <div id="outline-container-org2305507" class="outline-2">
-                <h2 id="org2305507">一级简码</h2>
-                <div class="outline-text-2" id="text-org2305507">
-                    <img
-                        src="images/wubi-9.gif"
-                        width="460"
-                        height=""
-                        style=""
-                        title=""
-                    />
-
-                    <p>
-                        在五笔中，挑出了在汉语中使用频率最高的 25
-                        个汉字，把它们分布在键盘的 25 个字母上，并称之为
-                        <span class="underline">一级简码</span> 。
-                    </p>
-
-                    <p>
-                        输入一级简码的方法是：
-                        <b>按一下简码字所在的键，再按一下空格。</b>
-                    </p>
-                </div>
-            </div>
-            <div id="footnotes">
-                <h2 class="footnotes">Footnotes:</h2>
-                <div id="text-footnotes">
-                    <div class="footdef">
-                        <sup
-                            ><a id="fn.1" class="footnum" href="#fnr.1"
-                                >1</a
-                            ></sup
-                        >
-                        <div class="footpara">
-                            <p class="footpara">
-                                <a href="http://www.wubizi.net/xuewubi/"
-                                    >http://www.wubizi.net/xuewubi/</a
-                                >
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="footdef">
-                        <sup
-                            ><a id="fn.2" class="footnum" href="#fnr.2"
-                                >2</a
-                            ></sup
-                        >
-                        <div class="footpara">
-                            <p class="footpara">
-                                <a href="http://www.wubizi.net/wubi/wbfjtu.html"
-                                    >http://www.wubizi.net/wubi/wbfjtu.html</a
-                                >
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="postamble" class="status">
-            <p class="date">Date: 2020-11-02 Mon 16:43</p>
-            <p class="author">Author: Jack Liu</p>
-            <p class="date">Created: 2021-02-23 Tue 15:28</p>
-            <p class="validation">
-                <a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a>
-            </p>
-        </div>
-    </body>
+<head>
+<!-- 2021-02-23 Tue 17:32 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>五笔那些事儿</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="themes/assets/rose-red.png" type="image/x-icon" />
+           <link rel="stylesheet" href="themes/style.css" type="text/css"  />
+           <script type="module" src="themes/main.js" defer></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">五笔那些事儿</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgf799606">五笔是什么</a></li>
+<li><a href="#orgac6dced">键盘分区和区位号</a></li>
+<li><a href="#orgd967c22">字根的输入</a>
+<ul>
+<li><a href="#org46817d4">键名字根</a></li>
+<li><a href="#org37e056f">字根歌</a></li>
+<li><a href="#orgad82053">字根间的结构关系</a></li>
+<li><a href="#org2a59ffc">成字字根</a></li>
+</ul>
+</li>
+<li><a href="#org93148af">汉字的拆分</a></li>
+<li><a href="#org6e9ee9e">识别码</a></li>
+<li><a href="#orga2ee0ee">末笔约定</a></li>
+<li><a href="#org2305507">一级简码</a></li>
+</ul>
+</div>
+</div>
+<p>
+→ 本文主要摘录自 <a href="http://www.wubizi.net/xuewubi/">问问学五笔</a><sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>
+</p>
+
+<img
+src="images/wenwen.jpg"
+width="300"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
+
+<div id="outline-container-orgf799606" class="outline-2">
+<h2 id="orgf799606">五笔是什么</h2>
+<div class="outline-text-2" id="text-orgf799606">
+<p>
+我们主要讲 86 版的五笔，它的通用性最好。
+</p>
+
+<p>
+<b>五笔的基本原理是什么呢？</b>
+</p>
+
+<p>
+汉字都是由笔划或部首组成的。为了输入汉字，我们把汉字折成一些最常用的基本单位 &#x2013; <span class="underline">字根</span> ，字根可以是汉字的偏旁部首，可以是部首的一部分，甚至是笔划。
+</p>
+
+<p>
+取出这引起字根后，把它们按一定的规律分类，再把这些字根依据科学原理分配在键盘上，作为输入汉字的基本单位。
+</p>
+
+<p>
+当要输入汉字时，我们就按照汉字的书写顺序依次按键盘上与字根对应的键，组成一个代码，系统根据输入字根组成的代码，在五笔输入的字库中检索出所要的字。
+</p>
+
+<essay>
+拆字 → 分配 → 组代 → 字库检索
+</essay>
+
+<p>
+我们已经了解了五笔的基本原理，那么究竟应该如何学习五笔呢？
+</p>
+
+<p>
+三个方面，如下：
+</p>
+<ol class="org-ol">
+<li>知道键盘上的每个键位对应着哪些字根；</li>
+<li>学习如何把汉字拆分成五笔字根；</li>
+<li>输入字根对应的字母，必要时要键入识别码。</li>
+</ol>
+
+<essay>
+分三步：把冰箱门打开，把大象装进去，把冰箱门关上。
+</essay>
+</div>
+</div>
+
+<div id="outline-container-orgac6dced" class="outline-2">
+<h2 id="orgac6dced">键盘分区和区位号</h2>
+<div class="outline-text-2" id="text-orgac6dced">
+<p>
+五笔基本字根有 130 种，加上一些基本字根的变型，共有 200 个左右，这些字根分配在键盘上的 25 个键（除 Z 外）上，每个键位都对应着几个甚至几十个字根。
+</p>
+
+<p>
+我们知道，汉字有五种基本笔划： <span class="underline">横（提）、竖（竖勾）、撇、捺（点）、折</span> ，所有的字根都是由这五种笔划组成的。
+</p>
+
+<p>
+按照每个字根的起笔笔划，把这些字根分为五个区，如下：
+</p>
+
+<img
+src="images/wubi-1.jpg"
+width="400"
+height=""
+style=""
+title=""
+/>
+
+<p>
+每个区有五个位，按一定的顺序编号，就叫 <span class="underline">区位号</span> （都是从键盘中间开始，向外扩展进行编号），如下：
+</p>
+
+<img
+src="images/wubi-2.jpg"
+width="460"
+height=""
+style=""
+title=""
+/>
+
+<blockquote>
+<p>
+如何输入这五个基本笔划？
+</p>
+
+<table>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">笔划</td>
+<td class="org-left">一</td>
+<td class="org-left">丨</td>
+<td class="org-left">丿</td>
+<td class="org-left">丶</td>
+<td class="org-left">乙</td>
+</tr>
+
+<tr>
+<td class="org-left">代码</td>
+<td class="org-left"><code>ggll</code></td>
+<td class="org-left"><code>hhll</code></td>
+<td class="org-left"><code>ttll</code></td>
+<td class="org-left"><code>yyll</code></td>
+<td class="org-left"><code>nnll</code></td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgd967c22" class="outline-2">
+<h2 id="orgd967c22">字根的输入</h2>
+<div class="outline-text-2" id="text-orgd967c22">
+<p>
+→ 更多详查 <a href="http://www.wubizi.net/wubi/wbfjtu.html">五笔字根分解图详解</a><sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>
+</p>
+</div>
+
+<div id="outline-container-org46817d4" class="outline-3">
+<h3 id="org46817d4">键名字根</h3>
+<div class="outline-text-3" id="text-org46817d4">
+<p>
+让我们再来看看上面这张图中标红的字体，每个区位选取了一个最常用的字根作为键的名字，该字根称为 <span class="underline">键名字根</span> 。
+</p>
+
+<essay>
+Hmm... 怎么说呢，“被”这个字我经常使用，但每次都要输入“puhc”四个键...
+</essay>
+
+<p>
+如何输入键名字根呢？对应的键按四下就行了，如：
+</p>
+
+<table>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">键名字根</td>
+<td class="org-left">王</td>
+<td class="org-left">土</td>
+<td class="org-left">大</td>
+<td class="org-left">&#x2026;</td>
+</tr>
+
+<tr>
+<td class="org-left">代码</td>
+<td class="org-left"><code>gggg</code></td>
+<td class="org-left"><code>ffff</code></td>
+<td class="org-left"><code>dddd</code></td>
+<td class="org-left"><code>xxxx</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org37e056f" class="outline-3">
+<h3 id="org37e056f">字根歌</h3>
+<div class="outline-text-3" id="text-org37e056f">
+<table>
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-right">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">31</td>
+<td class="org-left">T</td>
+<td class="org-left">禾竹一撇双人立，反文条头共三一</td>
+<td class="org-right">41</td>
+<td class="org-left">Y</td>
+<td class="org-left">言文方广在四一,高头一捺谁人去</td>
+</tr>
+
+<tr>
+<td class="org-right">32</td>
+<td class="org-left">R</td>
+<td class="org-left">白手看头三二斤</td>
+<td class="org-right">42</td>
+<td class="org-left">U</td>
+<td class="org-left">立辛两点六门疒</td>
+</tr>
+
+<tr>
+<td class="org-right">33</td>
+<td class="org-left">E</td>
+<td class="org-left">月彡（衫）乃用家衣底（爱头豹脚舟字底）</td>
+<td class="org-right">43</td>
+<td class="org-left">I</td>
+<td class="org-left">水旁兴头小倒立</td>
+</tr>
+
+<tr>
+<td class="org-right">34</td>
+<td class="org-left">W</td>
+<td class="org-left">人和八，登祭头</td>
+<td class="org-right">44</td>
+<td class="org-left">O</td>
+<td class="org-left">火业头，四点米</td>
+</tr>
+
+<tr>
+<td class="org-right">35</td>
+<td class="org-left">Q</td>
+<td class="org-left">金勺缺点无尾鱼，犬旁留叉儿一点夕，氏无七</td>
+<td class="org-right">45</td>
+<td class="org-left">P</td>
+<td class="org-left">之字军，摘礻（示）衤（衣）（之字军盖建道底）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">11</td>
+<td class="org-left">G</td>
+<td class="org-left">王旁青头戋（兼）五一（“兼”与“戋”同音）</td>
+<td class="org-right">21</td>
+<td class="org-left">H</td>
+<td class="org-left">目具上止卜虎皮（“具上”指具字的上部）</td>
+</tr>
+
+<tr>
+<td class="org-right">12</td>
+<td class="org-left">F</td>
+<td class="org-left">土士二干十寸雨（可别忘了革字底）</td>
+<td class="org-right">22</td>
+<td class="org-left">J</td>
+<td class="org-left">日早两竖与虫依</td>
+</tr>
+
+<tr>
+<td class="org-right">13</td>
+<td class="org-left">D</td>
+<td class="org-left">大犬三羊古石厂（羊底龙头套上套下)</td>
+<td class="org-right">23</td>
+<td class="org-left">K</td>
+<td class="org-left">口与川，字根稀</td>
+</tr>
+
+<tr>
+<td class="org-right">14</td>
+<td class="org-left">S</td>
+<td class="org-left">木丁西</td>
+<td class="org-right">24</td>
+<td class="org-left">L</td>
+<td class="org-left">田甲方框四车力（“方框”即“口”）</td>
+</tr>
+
+<tr>
+<td class="org-right">15</td>
+<td class="org-left">A</td>
+<td class="org-left">工戈草头右框七（“右框”即“匚”)</td>
+<td class="org-right">25</td>
+<td class="org-left">M</td>
+<td class="org-left">山由贝，下框几</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">51</td>
+<td class="org-left">C</td>
+<td class="org-left">又巴马，丢矢矣，（“矣”去“矢”为“厶”）</td>
+<td class="org-right">54</td>
+<td class="org-left">N</td>
+<td class="org-left">已半巳满不出己，左框折尸心和羽</td>
+</tr>
+
+<tr>
+<td class="org-right">52</td>
+<td class="org-left">X</td>
+<td class="org-left">慈母无心弓和匕，幼无力（“幼无力”即“幺”）</td>
+<td class="org-right">55</td>
+<td class="org-left">B</td>
+<td class="org-left">子耳了也框向上。（“框向上”即“凵”）</td>
+</tr>
+
+<tr>
+<td class="org-right">53</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-left">V</td>
+<td class="org-left">女刀九臼山朝西。（“山朝西”即“彐”）</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgad82053" class="outline-3">
+<h3 id="orgad82053">字根间的结构关系</h3>
+<div class="outline-text-3" id="text-orgad82053">
+<p>
+<span class="underline">拆字</span> 是学习五笔的一个重要环节，光背会了字根，有的汉字不知道拆成什么样的字根，也是无法输入的。
+</p>
+
+<p>
+我们是由浅入深地开始讲，先谈谈字根间的结构关系 &#x2013; <span class="underline">单、散、连、交</span> 。
+</p>
+
+<p>
+单，就是指这个字根本身就是一个汉字，包括：
+</p>
+<ul class="org-ul">
+<li>五种基本笔划（一、丨、丿、丶、乙）；</li>
+<li>25 个键名字根；</li>
+<li>字根中的汉字。</li>
+</ul>
+
+<p>
+散，就是指构成汉字折字根不止一个，且汉字之间有一定的距离，比如“苗”、“汉”字等。
+</p>
+
+<p>
+连，是指一个字根与一个单笔划相连，比如“且”、“尺”字等。
+</p>
+
+<p>
+交，是指两个或多个字根交叉重叠构成的汉字，比如“本”、“申”字等。
+</p>
+
+<p>
+由两个以上字根组成的汉字，称为 <span class="underline">合体字</span> 。
+</p>
+
+<p>
+其中，对于四个或四个以上的字根的合体字，它的输入方法是按照书写顺序，取第一、二、三、末四个字根的编码。
+</p>
+
+<img
+src="images/wubi-3.gif"
+width="150"
+height=""
+style=""
+title=""
+/>
+
+<img
+src="images/wubi-4.gif"
+width="170"
+height=""
+style="margin-left: 32px;"
+title=""
+/>
+</div>
+</div>
+
+<div id="outline-container-org2a59ffc" class="outline-3">
+<h3 id="org2a59ffc">成字字根</h3>
+<div class="outline-text-3" id="text-org2a59ffc">
+<p>
+在字根总表中，除了键名字根外，本身就是汉字的字根，称为 <span class="underline">成字字根</span> ，比如“马、手、刀”等。这样的成字字根一共有65个，但这些字经常要输入，所以需要掌握其输入方法。
+</p>
+
+<p>
+怎么输入呢？
+</p>
+
+<p>
+成字字根的输入方法是：先打一下该字根所在的键，再打该字根的第一、第二及最末一个单笔画。
+</p>
+
+<p>
+即： <b>键名+首笔代码+次笔代码+末笔代码。</b>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org93148af" class="outline-2">
+<h2 id="org93148af">汉字的拆分</h2>
+<div class="outline-text-2" id="text-org93148af">
+<p>
+在拆分汉字的时，先要注意按书写顺序来拆分汉字，然后对里面的一些复杂字根，按照它的自然男人界限进行拆分，对界线不明显了，就要按拆分原则进行拆分。
+</p>
+
+<p>
+那么，书写顺序、拆分原则，指的都是什么呢？
+</p>
+
+<p>
+在书写汉字时，讲究“先左后右，先上后下，先横后竖，先撇后捺，先内后外，先中间后两边，先进门后关门”等。这些都是语文的基本知识，就不多说了。在拆字时，同样要注意书写顺序。
+</p>
+
+<img
+src="images/wubi-5.gif"
+width="150"
+height=""
+style=""
+title=""
+/>
+
+<p>
+拆分原则，归纳起来有四点：“取在优先，兼顾直观，能散不连，能连不交。”
+</p>
+
+<p>
+有些汉字，它们所含的字根相同，但字根之间的相对位置不同，比如“旭”和“旮”等。我们把汉字各部分间的位置关系类型叫做 <span class="underline">字型</span> ，在五笔中，把汉字分为三种字型：左右型、上下型、杂合型。
+</p>
+
+<img
+src="images/wubi-6.gif"
+width="120"
+height=""
+style=""
+title=""
+/>
+</div>
+</div>
+
+<div id="outline-container-org6e9ee9e" class="outline-2">
+<h2 id="org6e9ee9e">识别码</h2>
+<div class="outline-text-2" id="text-org6e9ee9e">
+<p>
+我们知道，一个合字体的取码规则是这个字的一、二、三、末字根，这只是针对四个字根以上的汉字。如果是这个字只有二个字根或三个字根构成，比如“叭”，这时怎么输入呢？
+</p>
+
+<p>
+们试试，在五笔状态下键入“叭”的两个字根的编码，KW，我们发现出现在第一条的是“只”字，原来“叭”与“只”都是由字根“口”和“八”组成的，其编码也是 KW。
+</p>
+
+<p>
+<b>由于编码少，信息量不足，会造成重码。</b>
+</p>
+
+<p>
+如何消除重码呢？
+</p>
+
+<img
+src="images/wubi-7.gif"
+width="360"
+height=""
+style=""
+title=""
+/>
+
+<p>
+汉字的笔画有 5 种，字型有 3 种，所以末笔字型交叉识别码共 15 种，也就是每个区位的前三位是作为识别码来用的。
+</p>
+
+<img
+src="images/wubi-8.gif"
+width="500"
+height=""
+style="border-bottom: 2px solid #666;"
+title=""
+/>
+</div>
+</div>
+
+<div id="outline-container-orga2ee0ee" class="outline-2">
+<h2 id="orga2ee0ee">末笔约定</h2>
+<div class="outline-text-2" id="text-orga2ee0ee">
+<p>
+我们在使用识别码输入汉字时，对汉字的末笔有一些约定，需要注意。
+</p>
+
+<p>
+首先，为了有足够多的区分能力，对“辶”、“廴”的字和全包围字，它们的“末笔”规定为被包围部分的末笔。为什么要这样约定呢？
+</p>
+
+<p>
+例如，如果“辶”为末笔的话，“边”、“连”的识别码都是 V，就无法区分了，所以才这样约定。
+</p>
+
+<essay>
+哈，约定末笔是为了便于打识别码。
+</essay>
+
+<p>
+其次，对“九、刀、七、力、匕”等字根，当它们参加“识别”时一律用“折笔”作为末笔。
+</p>
+
+<p>
+然后，“我”、“贱”、“成”等字的“末笔”，遵循“从上到下”的原则，末笔应该是“丿”。
+</p>
+
+<p>
+最后，还有带单独点的字，比如“义”，“太”，“勺”等，我们把点当作末笔，并且认为“丶”与附近的字根是“连”的关系，所以为杂合型，识别码为 43，也就是 I。
+</p>
+
+<p>
+我们在学习五笔输入法的过程中，识别码的判断是一个难点，虽然只有很少的字需要加识别码，但为了提高录入速度，还是要掌握这部分内容的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2305507" class="outline-2">
+<h2 id="org2305507">一级简码</h2>
+<div class="outline-text-2" id="text-org2305507">
+<img
+src="images/wubi-9.gif"
+width="460"
+height=""
+style=""
+title=""
+/>
+
+<p>
+在五笔中，挑出了在汉语中使用频率最高的 25 个汉字，把它们分布在键盘的 25 个字母上，并称之为 <span class="underline">一级简码</span> 。
+</p>
+
+<p>
+输入一级简码的方法是： <b>按一下简码字所在的键，再按一下空格。</b>
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<a href="http://www.wubizi.net/xuewubi/">http://www.wubizi.net/xuewubi/</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+<a href="http://www.wubizi.net/wubi/wbfjtu.html">http://www.wubizi.net/wubi/wbfjtu.html</a>
+</p></div></div>
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-11-02 Mon 16:43</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2021-02-23 Tue 17:32</p>
+<p class="validation"><a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a></p>
+</div>
+</body>
 </html>

@@ -1,88 +1,71 @@
 <!DOCTYPE html>
 <html lang="zh">
-    <head>
-        <!-- 2021-02-23 Tue 15:25 -->
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Compilers</title>
-        <meta name="generator" content="Org mode" />
-        <meta name="author" content="Jack Liu" />
-        <link
-            rel="shortcut icon"
-            href="/themes/assets/rose-red.png"
-            type="image/x-icon"
-        />
-        <link rel="stylesheet" href="/themes/style.css" type="text/css" />
-        <script type="module" src="/themes/main.js" defer></script>
-    </head>
-    <body>
-        <div id="content">
-            <h1 class="title">Compilers</h1>
-            <div id="table-of-contents">
-                <h2>Table of Contents</h2>
-                <div id="text-table-of-contents">
-                    <ul>
-                        <li>
-                            <a href="#org03b5d01">编译过程概述</a>
-                            <ul>
-                                <li><a href="#org36f8ebd">词法分析</a></li>
-                                <li><a href="#org7fb0384">语法分析</a></li>
-                                <li>
-                                    <a href="#org12e87cf"
-                                        >从语法树到中间代码再到目标代码</a
-                                    >
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#orge239c08">案例二</a>
-                            <ul>
-                                <li><a href="#org233fee1">1.词法分析</a></li>
-                                <li><a href="#org17eb13e">2.语法分析</a></li>
-                                <li><a href="#org6dca3a2">3.语义分析</a></li>
-                                <li>
-                                    <a href="#org3a0f5cb">4.中间代码生成</a>
-                                </li>
-                                <li><a href="#orgda1690e">5.代码优化</a></li>
-                                <li><a href="#org3076bb9">6.代码生成</a></li>
-                                <li>
-                                    <a href="#orgcf3e5d5">7.编译的总过程</a>
-                                </li>
-                                <li><a href="#orgdacf447">8.相关扩展</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#org2e38470">编译原理三大经典</a></li>
-                    </ul>
-                </div>
-            </div>
-            <essay> 谁能想到，有一天，百度百科上的资料，竟然也有料…… </essay>
+<head>
+<!-- 2021-02-23 Tue 17:30 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compilers</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="themes/assets/rose-red.png" type="image/x-icon" />
+           <link rel="stylesheet" href="themes/style.css" type="text/css"  />
+           <script type="module" src="themes/main.js" defer></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Compilers</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org03b5d01">编译过程概述</a>
+<ul>
+<li><a href="#org36f8ebd">词法分析</a></li>
+<li><a href="#org7fb0384">语法分析</a></li>
+<li><a href="#org12e87cf">从语法树到中间代码再到目标代码</a></li>
+</ul>
+</li>
+<li><a href="#orge239c08">案例二</a>
+<ul>
+<li><a href="#org233fee1">1.词法分析</a></li>
+<li><a href="#org17eb13e">2.语法分析</a></li>
+<li><a href="#org6dca3a2">3.语义分析</a></li>
+<li><a href="#org3a0f5cb">4.中间代码生成</a></li>
+<li><a href="#orgda1690e">5.代码优化</a></li>
+<li><a href="#org3076bb9">6.代码生成</a></li>
+<li><a href="#orgcf3e5d5">7.编译的总过程</a></li>
+<li><a href="#orgdacf447">8.相关扩展</a></li>
+</ul>
+</li>
+<li><a href="#org2e38470">编译原理三大经典</a></li>
+</ul>
+</div>
+</div>
+<essay>
+谁能想到，有一天，百度百科上的资料，竟然也有料……
+</essay>
 
-            <div id="outline-container-org03b5d01" class="outline-2">
-                <h2 id="org03b5d01">
-                    编译过程概述<sup
-                        ><a id="fnr.1" class="footref" href="#fn.1">1</a></sup
-                    >
-                </h2>
-                <div class="outline-text-2" id="text-org03b5d01">
-                    <p>
-                        源程序是给人看的，本质上就是文本文件，可以用文本编辑程序打开、编辑，但计算机无法直接执行源程序，需要通过一个专门的程序将源程序编译为计算机可执行程序，这个专门的程序就是
-                        <span class="underline">编译器</span> 。
-                    </p>
+<div id="outline-container-org03b5d01" class="outline-2">
+<h2 id="org03b5d01">编译过程概述<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-org03b5d01">
+<p>
+源程序是给人看的，本质上就是文本文件，可以用文本编辑程序打开、编辑，但计算机无法直接执行源程序，需要通过一个专门的程序将源程序编译为计算机可执行程序，这个专门的程序就是 <span class="underline">编译器</span> 。
+</p>
 
-                    <p>
-                        编译过程主要分为词法分析、语法分析、中间代码生成、目标代码生成等。
-                    </p>
-                </div>
+<p>
+编译过程主要分为词法分析、语法分析、中间代码生成、目标代码生成等。
+</p>
+</div>
 
-                <div id="outline-container-org36f8ebd" class="outline-3">
-                    <h3 id="org36f8ebd">词法分析</h3>
-                    <div class="outline-text-3" id="text-org36f8ebd">
-                        <p>我们眼中看到的源代码，如下：</p>
+<div id="outline-container-org36f8ebd" class="outline-3">
+<h3 id="org36f8ebd">词法分析</h3>
+<div class="outline-text-3" id="text-org36f8ebd">
+<p>
+我们眼中看到的源代码，如下：
+</p>
 
-                        <div class="org-src-container">
-                            <pre
-                                class="src src-c"
-                            ><span class="linenr"> 1: </span><span style="color: #986801;">int</span> <span style="color: #a626a4;">fun</span><span style="color: #4078f2;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #4078f2;">)</span>;
+<div class="org-src-container">
+<pre class="src src-c"><span class="linenr"> 1: </span><span style="color: #986801;">int</span> <span style="color: #a626a4;">fun</span><span style="color: #4078f2;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #4078f2;">)</span>;
 <span class="linenr"> 2: </span><span style="color: #986801;">int</span> <span style="color: #6a1868;">m</span>=10;
 <span class="linenr"> 3: </span><span style="color: #986801;">int</span> <span style="color: #a626a4;">main</span><span style="color: #4078f2;">()</span>
 <span class="linenr"> 4: </span><span style="color: #4078f2;">{</span>
@@ -98,570 +81,490 @@
 <span class="linenr">14: </span>  <span style="color: #e45649;">return</span> c;
 <span class="linenr">15: </span><span style="color: #4078f2;">}</span>
 </pre>
-                        </div>
-
-                        <p>而它在计算机中存储的形式（十六进制形式）如下：</p>
-
-                        <img
-                            src="images/compiler-1.jpg"
-                            width="460"
-                            height=""
-                            style=""
-                            title=""
-                        />
-
-                        <p>
-                            很显然，这里是看不出关键字、运算符、标识符，甚至看不出哪几个字符属于同一个符号。
-                        </p>
-
-                        <p>
-                            与人相比，现在计算机的智能还是相当低的，无法像人那样同时看多个字符，只能依据一个非常机械的“电子版”词法，一个字符一个字符地识别。
-                        </p>
-
-                        <note>
-                            “电子版”词法是将状态转换图的思路融汇在词法分析器的代码中得以体现的。
-                        </note>
-
-                        <p>
-                            词法分析器从源程序的字符串中识别出一个个符号（token），并按顺序保存。词法分析的结果如下：
-                        </p>
-
-                        <img
-                            src="images/compiler-2.jpg"
-                            width="460"
-                            height=""
-                            style=""
-                            title=""
-                        />
-
-                        <p>
-                            在词法分析阶段能够识别出一些符号的含义，它们包括关键字、数字、字符串、分隔符，这些符号的含义不需要其他符号的辅助就能确定本身的含义。比如，
-                            <code>int</code>
-                            一定代表整数类型，它不可能是一个变量名称，也不可能是一个运算符。
-                        </p>
-
-                        <p>
-                            而另外一些符号则需要通过前后的其他符号才能确定出准确的含义。比如
-                            <code>m</code>
-                            ，在词法阶段仅能判断这是一个标识符，但是如果不对所在的句做分析，就无法得知这个标识符代表一个变量还是一个函数。更多详细的信息需要对符号所在的句型做分析才能获得，这部分的工作由语法分析来完成。
-                        </p>
-                    </div>
-                </div>
-
-                <div id="outline-container-org7fb0384" class="outline-3">
-                    <h3 id="org7fb0384">语法分析</h3>
-                    <div class="outline-text-3" id="text-org7fb0384">
-                        <p>
-                            如果说词法分析的作用是从连续的字符中识别出标识符、关键字、数字、运算符并存储为
-                            <span class="underline">符号（token）流</span>
-                            ，语法分析的作用就是从词法分析识别出的符号流中识别出符合
-                            C 语言规范的语句。
-                        </p>
-
-                        <essay>
-                            语法分析的作用就是从符号（token）流中识别出符合相应编程语言（C、Java...）规范的语句。
-                        </essay>
-
-                        <p>
-                            因为计算机无法像人那样同时看多个标识符、关键字、数字、运算符，无法像人那样一眼看出这是一个函数声明，那是一个
-                            <code>if</code>
-                            语句，只能非常笨拙地一个符号一个符号去识别。
-                        </p>
-
-                        <p>
-                            与词法分析器有些类似，语法分析器也是依据用计算机表示的语法，一个符号一个符号地识别出符合
-                            C 语言语法的语句。
-                        </p>
-
-                        <p>
-                            语法的计算机表示就是
-                            <span class="underline">产生式</span>
-                            ，在语法分析器中把通过
-                            <span class="underline">产生式</span> 产生的 C
-                            语言语法映射成一套模板，并把这套模板融汇在语法分析器的程序中。语法分析器的作用就是将词法分析器识别出的符号（token）一个一个地与这套模板进行匹配，匹配上这套模板中的某个语法，就可以识别出一名完整的语句，并确定这条语句的语法。
-                        </p>
-
-                        <essay> Hmm... 有点抽象，所以需要具体的实践。 </essay>
-
-                        <p>
-                            我们以案例中
-                            <code>int fun(int a, int b);</code>
-                            这条函数语句为例描述这个过程，它与语句模板的匹配情况如下：
-                        </p>
-
-                        <img
-                            src="images/compiler-3.png"
-                            width="540"
-                            height=""
-                            style=""
-                            title=""
-                        />
-                        <p>
-                            <code
-                                >Figure：fun 函数声明语句与模板匹配的结果</code
-                            >
-                        </p>
-
-                        <p>
-                            这段 token
-                            流最终与函数声明模板相匹配，在匹配成功后，计算机就认为此语句为函数声明语句，并以
-                            <span class="underline">语法树</span>
-                            的形式在内存中记录下来，如下：
-                        </p>
-
-                        <img
-                            src="images/compiler-4.png"
-                            width="660"
-                            height=""
-                            style=""
-                            title=""
-                        />
-                        <p>
-                            <code>Figure：fun 函数声明语句生成的语法树</code>
-                        </p>
-
-                        <p>
-                            以树型结构来记录分析出的语句是一个非常巧妙、深谋远虑、通盘考虑的选择。一方面，树型结构能够“记住”源程序全部的“意思”，另一方面，树型结构更容易对应到运行时结构。
-                        </p>
-                    </div>
-                </div>
-
-                <div id="outline-container-org12e87cf" class="outline-3">
-                    <h3 id="org12e87cf">从语法树到中间代码再到目标代码</h3>
-                    <div class="outline-text-3" id="text-org12e87cf">
-                        <p>
-                            至此，语法树已经承载了源程序的全部信息，后续的转换工作就和源程序没关系了。
-                        </p>
-
-                        <blockquote>
-                            <p>
-                                如果希望一步到位，从语法树转换为目标代码，理论上和实际上都是可行的。但计算机存在多种
-                                CPU 硬件平台，考虑到程序在不同 CPU
-                                之间的可移植性，先转换成一个通用的、抽象的“CPU
-                                指令”，这就是中间代码最初的设计思想。然后根据具体选定的
-                                CPU ，将中间代码落实到具体 CPU 的目标代码。
-                            </p>
-                        </blockquote>
-
-                        <p>
-                            语法树是个二维结构，中间代码是准一维结构，语法树到中间代码的转换过程，本质上是将二维结构转换为准一维结构的过程。中间代码特别是
-                            RTL 已经可以和运行时结构一一对应了，如下图：
-                        </p>
-
-                        <img
-                            src="images/compiler-5.jpg"
-                            width="100%"
-                            height=""
-                            style=""
-                            title=""
-                        />
-                        <p>
-                            <code
-                                >Figure：中间代码与目标代码对应的情景示意</code
-                            >
-                        </p>
-
-                        <p>
-                            运行时结构也是一维的，上图左侧部分的转换结果将更贴近运行时结构。
-                        </p>
-
-                        <p>
-                            选定具体的
-                            CPU、操作系统后，中间代码就可以转换为目标代码
-                            &#x2013; 汇编代码（这里我们配置的是 AT&amp;T
-                            汇编），这时操作系统是影响还比较小。然后由汇编器依照选定操作系统的目标文件格式，将
-                            <code>.s</code> 文件转换为具体的目标文件，对于 Linux
-                            而言是 <code>.o</code> 文件，对于 Windows 而言是
-                            <code>.obj</code> 文件，目标文件中已经是选定的 CPU
-                            的机器指令了。
-                        </p>
-
-                        <p>
-                            最后，链接器把一个或多个目标文件（库文件本质上也是目标文件）链接成符合操作系统指定格式的可执行文件。
-                        </p>
-
-                        <p>
-                            通过操作系统，可执行程序就可以被载入内存执行，形成运行时结构。
-                        </p>
-
-                        <p>
-                            后续内容将详细讲解编译的主要过程：词法分析、语法分析、中间代码到目标代码，然后是汇编与链接，最后讲解预处理。
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="outline-container-orge239c08" class="outline-2">
-                <h2 id="orge239c08">
-                    案例二<sup
-                        ><a id="fnr.2" class="footref" href="#fn.2">2</a></sup
-                    >
-                </h2>
-                <div class="outline-text-2" id="text-orge239c08">
-                    <p>让我们再来看一个具体案例来深化一下对编译过程的认识。</p>
-
-                    <p>
-                        编辑器从逻辑上可以分为若干个阶段，每个阶段将源程序从一种表示变换成另一种表示（如下图），我们以将
-                        Pascal 语言的
-                        <code>position := initial + rate * 60</code>
-                        为例子介绍编译的各个阶段。
-                    </p>
-
-                    <img
-                        src="images/compiler-6.png"
-                        width=""
-                        height=""
-                        style=""
-                        title=""
-                    />
-                </div>
-
-                <div id="outline-container-org233fee1" class="outline-3">
-                    <h3 id="org233fee1">1.词法分析</h3>
-                    <div class="outline-text-3" id="text-org233fee1">
-                        <p>词法分析，又叫线性分析或者线性扫描。</p>
-
-                        <p>
-                            逐个读取源程序的字符，把它们组成词法记号（token）流，并且把词法单元填入称号表。在这个阶段会删除掉分隔记号的空格，如下：
-                        </p>
-
-                        <img
-                            src="images/compiler-7.png"
-                            width="560"
-                            height=""
-                            style=""
-                            title=""
-                        />
-                    </div>
-                </div>
-
-                <div id="outline-container-org17eb13e" class="outline-3">
-                    <h3 id="org17eb13e">2.语法分析</h3>
-                    <div class="outline-text-3" id="text-org17eb13e">
-                        <p>语法分析，又叫层次分析。</p>
-
-                        <p>
-                            将词法记号流按照语法结构进行层次分组，形成语法短语，语法短语常用分析树表示：
-                        </p>
-
-                        <img
-                            src="images/compiler-8.png"
-                            width="560"
-                            height=""
-                            style=""
-                            title=""
-                        />
-
-                        <p>层次结构遵循的规则：</p>
-                        <ul class="org-ul">
-                            <li>任何一个标识符都是表达式；</li>
-                            <li>任何一个数都是表达式；</li>
-                            <li>
-                                如果 <code>e1</code> 和
-                                <code>e2</code> 都是表达式，那么
-                                <code>e1 + e2</code> 、 <code>e1 * e2</code> 、
-                                <code>(e1)</code> 也都是表达式。
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div id="outline-container-org6dca3a2" class="outline-3">
-                    <h3 id="org6dca3a2">3.语义分析</h3>
-                    <div class="outline-text-3" id="text-org6dca3a2">
-                        <p>进行主义分析，生成语法树。其作用如下：</p>
-                        <ul class="org-ul">
-                            <li>
-                                进行主义检查（其中包括类型检查），保证各部分能有意义的集合在一起；
-                            </li>
-                            <li>搜集类型信息。</li>
-                        </ul>
-
-                        <img
-                            src="images/compiler-9.png"
-                            width="580"
-                            height=""
-                            style=""
-                            title=""
-                        />
-                    </div>
-                </div>
-
-                <div id="outline-container-org3a0f5cb" class="outline-3">
-                    <h3 id="org3a0f5cb">4.中间代码生成</h3>
-                    <div class="outline-text-3" id="text-org3a0f5cb">
-                        <img
-                            src="images/compiler-10.png"
-                            width="220"
-                            height=""
-                            style="float: right"
-                            title="中间代码生成"
-                        />
-
-                        <p>
-                            经过语法分析和语义分析之后，某些编译器生成源程序的显示中间表示（易于产生、翻译成目标程序）。其功能如下：
-                        </p>
-                        <ul class="org-ul">
-                            <li>需决定运算完成的次序；</li>
-                            <li>
-                                必须产生临时变量名（保留每个语句的计算结果）；
-                            </li>
-                            <li>必须处理控制流结构和过程调用。</li>
-                        </ul>
-
-                        <p>中间表示的常用形式：三地址代码，如下：</p>
-
-                        <p>
-                            *注：
-                            <span class="underline">三地址代码</span>
-                            由三地址语句序列组成，最多三个操作数。
-                        </p>
-                    </div>
-                </div>
-
-                <div id="outline-container-orgda1690e" class="outline-3">
-                    <h3 id="orgda1690e">5.代码优化</h3>
-                    <div class="outline-text-3" id="text-orgda1690e">
-                        <img
-                            src="images/compiler-11.png"
-                            width="220"
-                            height=""
-                            style="float: right"
-                            title="代码优化"
-                        />
-
-                        <p>试图改进代码，产生执行较快的机器代码。</p>
-                    </div>
-                </div>
-
-                <div id="outline-container-org3076bb9" class="outline-3">
-                    <h3 id="org3076bb9">6.代码生成</h3>
-                    <div class="outline-text-3" id="text-org3076bb9">
-                        <p>生成可重定位的机器代码或者汇编码，其功能如下：</p>
-                        <ul class="org-ul">
-                            <li>
-                                为源程序所用的每个变量选择存储单元（寄存器分配）；
-                            </li>
-                            <li>将中间代码生成等价的机器指令序列。</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div id="outline-container-orgcf3e5d5" class="outline-3">
-                    <h3 id="orgcf3e5d5">7.编译的总过程</h3>
-                    <div class="outline-text-3" id="text-orgcf3e5d5">
-                        <img
-                            src="images/compiler-12.png"
-                            width="460"
-                            height=""
-                            style=""
-                            title=""
-                        />
-                    </div>
-                </div>
-
-                <div id="outline-container-orgdacf447" class="outline-3">
-                    <h3 id="orgdacf447">8.相关扩展</h3>
-                    <div class="outline-text-3" id="text-orgdacf447">
-                        <p>
-                            <span class="underline">8.1 符号表管理</span>
-                        </p>
-
-                        <p>
-                            符号表：为每一个标识符保存一个记录的数据结构，记录的域是标识符的属性（标识符的存储分配、类型和作用域信息）。
-                        </p>
-
-                        <p>
-                            <span class="underline">8.2 错误诊断与报告</span>
-                        </p>
-
-                        <p>
-                            每个阶段都有可能发现源程序的错误，在发现错误之后，该阶段必须处理此错误，使得编译可以继续进行，以便进一步发现源程序的其他错误。具体：
-                        </p>
-                        <ul class="org-ul">
-                            <li>
-                                词法分析阶段：诊断当前被扫描的字符串不能形成语言的词法记号；
-                            </li>
-                            <li>语法分析阶段：诊断记号流违反的语法规则；</li>
-                            <li>语义分析阶段：找到对所含操作无意义的结构。</li>
-                        </ul>
-
-                        <p>
-                            <span class="underline"
-                                >8.3 阶段分组（前端和后端）</span
-                            >
-                        </p>
-
-                        <p>
-                            在实际编译中，若干阶段可以组合在一起，各阶段之间的中间表示也无需显示构成。通常所有阶段分为前端和后端：
-                        </p>
-
-                        <p>（1）编译前端</p>
-
-                        <p>
-                            只依赖于源程序，由几乎独立于目标机器的阶段或者阶段的一部分组成，包括：词法分析、语法分析、符号表建立、语义分析、中间码生成、部分代码优化以及与这些阶段同时完成的错误处理。
-                        </p>
-
-                        <p>（2）编译后端</p>
-
-                        <p>
-                            依赖于目标机器，一般独立于程序，而与中间代码有关。包括：代码优化、代码生成以及伴随着这些阶段的符号操作和错误处理。
-                        </p>
-
-                        <p>
-                            <span class="underline">8.4 一遍扫描</span>
-                        </p>
-
-                        <p>
-                            编译的几个阶段常用一遍扫描来实现，一遍扫描包括读一个输入文件和写一个输出文件。
-                        </p>
-
-                        <p>
-                            把几个阶段组成一遍，并且这些阶段的活动可以在该遍扫描中交错进行。例如，可以把语法分析看成主导，当它需要记号时，调用词法分析器去下一个记号。如果已经看出一个语法结构，语法分析器则激活中间代码生成器，以完成语义分析和生成中间代码。
-                        </p>
-
-                        <p>
-                            <span class="underline">8.5 相关工具</span>
-                        </p>
-
-                        <p>
-                            <span class="underline">翻译器</span>
-                            是一种能够将一种语言（源语言）变换成另一种语言（目标语言）的软件。
-                        </p>
-
-                        <p>
-                            <span class="underline">编译器</span>
-                            是一种翻译器，将高级语言变换成一种低级语言的软件，特点在于目标语言比源语言低级。
-                        </p>
-
-                        <p>
-                            <span class="underline">解释器</span>
-                            也需要对源程序进行词法、语法和语义分析，中间代码生成。但是不生成目标代码，而是直接执行源程序所指定的运算。
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="outline-container-org2e38470" class="outline-2">
-                <h2 id="org2e38470">编译原理三大经典</h2>
-                <div class="outline-text-2" id="text-org2e38470">
-                    <table>
-                        <colgroup>
-                            <col class="org-left" />
-
-                            <col class="org-left" />
-
-                            <col class="org-left" />
-
-                            <col class="org-left" />
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th scope="col" class="org-left">代号</th>
-                                <th scope="col" class="org-left">书名</th>
-                                <th scope="col" class="org-left">译名</th>
-                                <th scope="col" class="org-left">作者</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="org-left">龙书 Dragon</td>
-                                <td class="org-left">
-                                    《Compilers: Principles, Techniques, and
-                                    Tools》
-                                </td>
-                                <td class="org-left">《编译原理技术和工具》</td>
-                                <td class="org-left">
-                                    Alfred V.Aho, Ravi Sethi, Jeffrey D.Ullman
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="org-left">虎书 Tiger</td>
-                                <td class="org-left">
-                                    《Modern Compiler Implementation in C》
-                                </td>
-                                <td class="org-left">
-                                    《现代编译原理 - C 语言描述》
-                                </td>
-                                <td class="org-left">
-                                    Andrew W.Appel, Jens Palsberg
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="org-left">鲸书 Whale</td>
-                                <td class="org-left">
-                                    《Advanced Compiler Design and
-                                    Implementation》
-                                </td>
-                                <td class="org-left">
-                                    《高级编译器设计与实现 》
-                                </td>
-                                <td class="org-left">Steven S.Muchnick</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <p>
-                        龙书是 Alfred V.Aho 等人于 1986
-                        年出版的，由于出版年代较早，其中包含部分过时的技术并且没有反映一些新的编译技术。新编的《编译原理》抛弃诸如算符优先分析等过时技术，增加面向对象编译、类型检查等新技术。
-                    </p>
-
-                    <p>
-                        虎书出版比较晚，与《编译原理》的知识点差不多，但增加了数据流分析、循环优化、内存管理等内容。与虎书比，《编译原理》更适合国内的编译原理课程教学，有
-                        C 版、Java 版和 ML 版。
-                    </p>
-
-                    <p>
-                        鲸书侧重在对编译器后端优化的处理。在本科阶段的编译教学中旨在让学生对程序设计语言的编译全过程有系统的理解，因此会介绍编译器后端的处理技术，但不注重优化技术。鲸书更适合作为研究生的教材或参考书。
-                    </p>
-                </div>
-            </div>
-            <div id="footnotes">
-                <h2 class="footnotes">Footnotes:</h2>
-                <div id="text-footnotes">
-                    <div class="footdef">
-                        <sup
-                            ><a id="fn.1" class="footnum" href="#fnr.1"
-                                >1</a
-                            ></sup
-                        >
-                        <div class="footpara">
-                            <p class="footpara">
-                                <a
-                                    href="https://baike.baidu.com/item/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/4194?fr=aladdin#6"
-                                    >https://baike.baidu.com/item/编译原理/4194?fr=aladdin#6</a
-                                >
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="footdef">
-                        <sup
-                            ><a id="fn.2" class="footnum" href="#fnr.2"
-                                >2</a
-                            ></sup
-                        >
-                        <div class="footpara">
-                            <p class="footpara">
-                                <a
-                                    href="https://segmentfault.com/a/1190000016430222"
-                                    >https://segmentfault.com/a/1190000016430222</a
-                                >
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="postamble" class="status">
-            <p class="date">Date: 2020-10-29 Thu 12:06</p>
-            <p class="author">Author: Jack Liu</p>
-            <p class="date">Created: 2021-02-23 Tue 15:25</p>
-            <p class="validation">
-                <a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a>
-            </p>
-        </div>
-    </body>
+</div>
+
+<p>
+而它在计算机中存储的形式（十六进制形式）如下：
+</p>
+
+<img
+src="images/compiler-1.jpg"
+width="460"
+height=""
+style=""
+title=""
+/>
+
+<p>
+很显然，这里是看不出关键字、运算符、标识符，甚至看不出哪几个字符属于同一个符号。
+</p>
+
+<p>
+与人相比，现在计算机的智能还是相当低的，无法像人那样同时看多个字符，只能依据一个非常机械的“电子版”词法，一个字符一个字符地识别。
+</p>
+
+<note>
+“电子版”词法是将状态转换图的思路融汇在词法分析器的代码中得以体现的。
+</note>
+
+<p>
+词法分析器从源程序的字符串中识别出一个个符号（token），并按顺序保存。词法分析的结果如下：
+</p>
+
+<img
+src="images/compiler-2.jpg"
+width="460"
+height=""
+style=""
+title=""
+/>
+
+<p>
+在词法分析阶段能够识别出一些符号的含义，它们包括关键字、数字、字符串、分隔符，这些符号的含义不需要其他符号的辅助就能确定本身的含义。比如， <code>int</code> 一定代表整数类型，它不可能是一个变量名称，也不可能是一个运算符。
+</p>
+
+<p>
+而另外一些符号则需要通过前后的其他符号才能确定出准确的含义。比如 <code>m</code> ，在词法阶段仅能判断这是一个标识符，但是如果不对所在的句做分析，就无法得知这个标识符代表一个变量还是一个函数。更多详细的信息需要对符号所在的句型做分析才能获得，这部分的工作由语法分析来完成。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7fb0384" class="outline-3">
+<h3 id="org7fb0384">语法分析</h3>
+<div class="outline-text-3" id="text-org7fb0384">
+<p>
+如果说词法分析的作用是从连续的字符中识别出标识符、关键字、数字、运算符并存储为 <span class="underline">符号（token）流</span> ，语法分析的作用就是从词法分析识别出的符号流中识别出符合 C 语言规范的语句。
+</p>
+
+<essay>
+语法分析的作用就是从符号（token）流中识别出符合相应编程语言（C、Java...）规范的语句。
+</essay>
+
+<p>
+因为计算机无法像人那样同时看多个标识符、关键字、数字、运算符，无法像人那样一眼看出这是一个函数声明，那是一个 <code>if</code> 语句，只能非常笨拙地一个符号一个符号去识别。
+</p>
+
+<p>
+与词法分析器有些类似，语法分析器也是依据用计算机表示的语法，一个符号一个符号地识别出符合 C 语言语法的语句。
+</p>
+
+<p>
+语法的计算机表示就是 <span class="underline">产生式</span> ，在语法分析器中把通过 <span class="underline">产生式</span> 产生的 C 语言语法映射成一套模板，并把这套模板融汇在语法分析器的程序中。语法分析器的作用就是将词法分析器识别出的符号（token）一个一个地与这套模板进行匹配，匹配上这套模板中的某个语法，就可以识别出一名完整的语句，并确定这条语句的语法。
+</p>
+
+<essay>
+Hmm... 有点抽象，所以需要具体的实践。
+</essay>
+
+<p>
+我们以案例中 <code>int fun(int a, int b);</code> 这条函数语句为例描述这个过程，它与语句模板的匹配情况如下：
+</p>
+
+<img
+src="images/compiler-3.png"
+width="540"
+height=""
+style=""
+title=""
+/>
+<p>
+<code>Figure：fun 函数声明语句与模板匹配的结果</code>
+</p>
+
+<p>
+这段 token 流最终与函数声明模板相匹配，在匹配成功后，计算机就认为此语句为函数声明语句，并以 <span class="underline">语法树</span> 的形式在内存中记录下来，如下：
+</p>
+
+<img
+src="images/compiler-4.png"
+width="660"
+height=""
+style=""
+title=""
+/>
+<p>
+<code>Figure：fun 函数声明语句生成的语法树</code>
+</p>
+
+<p>
+以树型结构来记录分析出的语句是一个非常巧妙、深谋远虑、通盘考虑的选择。一方面，树型结构能够“记住”源程序全部的“意思”，另一方面，树型结构更容易对应到运行时结构。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org12e87cf" class="outline-3">
+<h3 id="org12e87cf">从语法树到中间代码再到目标代码</h3>
+<div class="outline-text-3" id="text-org12e87cf">
+<p>
+至此，语法树已经承载了源程序的全部信息，后续的转换工作就和源程序没关系了。
+</p>
+
+<blockquote>
+<p>
+如果希望一步到位，从语法树转换为目标代码，理论上和实际上都是可行的。但计算机存在多种 CPU 硬件平台，考虑到程序在不同 CPU 之间的可移植性，先转换成一个通用的、抽象的“CPU 指令”，这就是中间代码最初的设计思想。然后根据具体选定的 CPU ，将中间代码落实到具体 CPU 的目标代码。
+</p>
+</blockquote>
+
+<p>
+语法树是个二维结构，中间代码是准一维结构，语法树到中间代码的转换过程，本质上是将二维结构转换为准一维结构的过程。中间代码特别是 RTL 已经可以和运行时结构一一对应了，如下图：
+</p>
+
+<img
+src="images/compiler-5.jpg"
+width="100%"
+height=""
+style=""
+title=""
+/>
+<p>
+<code>Figure：中间代码与目标代码对应的情景示意</code>
+</p>
+
+<p>
+运行时结构也是一维的，上图左侧部分的转换结果将更贴近运行时结构。
+</p>
+
+<p>
+选定具体的 CPU、操作系统后，中间代码就可以转换为目标代码 &#x2013; 汇编代码（这里我们配置的是 AT&amp;T 汇编），这时操作系统是影响还比较小。然后由汇编器依照选定操作系统的目标文件格式，将 <code>.s</code> 文件转换为具体的目标文件，对于 Linux 而言是 <code>.o</code> 文件，对于 Windows 而言是 <code>.obj</code> 文件，目标文件中已经是选定的 CPU 的机器指令了。
+</p>
+
+<p>
+最后，链接器把一个或多个目标文件（库文件本质上也是目标文件）链接成符合操作系统指定格式的可执行文件。
+</p>
+
+<p>
+通过操作系统，可执行程序就可以被载入内存执行，形成运行时结构。
+</p>
+
+<p>
+后续内容将详细讲解编译的主要过程：词法分析、语法分析、中间代码到目标代码，然后是汇编与链接，最后讲解预处理。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge239c08" class="outline-2">
+<h2 id="orge239c08">案例二<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h2>
+<div class="outline-text-2" id="text-orge239c08">
+<p>
+让我们再来看一个具体案例来深化一下对编译过程的认识。
+</p>
+
+<p>
+编辑器从逻辑上可以分为若干个阶段，每个阶段将源程序从一种表示变换成另一种表示（如下图），我们以将 Pascal 语言的 <code>position := initial + rate * 60</code> 为例子介绍编译的各个阶段。
+</p>
+
+<img
+src="images/compiler-6.png"
+width=""
+height=""
+style=""
+title=""
+/>
+</div>
+
+<div id="outline-container-org233fee1" class="outline-3">
+<h3 id="org233fee1">1.词法分析</h3>
+<div class="outline-text-3" id="text-org233fee1">
+<p>
+词法分析，又叫线性分析或者线性扫描。
+</p>
+
+<p>
+逐个读取源程序的字符，把它们组成词法记号（token）流，并且把词法单元填入称号表。在这个阶段会删除掉分隔记号的空格，如下：
+</p>
+
+<img
+src="images/compiler-7.png"
+width="560"
+height=""
+style=""
+title=""
+/>
+</div>
+</div>
+
+<div id="outline-container-org17eb13e" class="outline-3">
+<h3 id="org17eb13e">2.语法分析</h3>
+<div class="outline-text-3" id="text-org17eb13e">
+<p>
+语法分析，又叫层次分析。
+</p>
+
+<p>
+将词法记号流按照语法结构进行层次分组，形成语法短语，语法短语常用分析树表示：
+</p>
+
+<img
+src="images/compiler-8.png"
+width="560"
+height=""
+style=""
+title=""
+/>
+
+<p>
+层次结构遵循的规则：
+</p>
+<ul class="org-ul">
+<li>任何一个标识符都是表达式；</li>
+<li>任何一个数都是表达式；</li>
+<li>如果 <code>e1</code> 和 <code>e2</code> 都是表达式，那么 <code>e1 + e2</code> 、 <code>e1 * e2</code> 、 <code>(e1)</code> 也都是表达式。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6dca3a2" class="outline-3">
+<h3 id="org6dca3a2">3.语义分析</h3>
+<div class="outline-text-3" id="text-org6dca3a2">
+<p>
+进行主义分析，生成语法树。其作用如下：
+</p>
+<ul class="org-ul">
+<li>进行主义检查（其中包括类型检查），保证各部分能有意义的集合在一起；</li>
+<li>搜集类型信息。</li>
+</ul>
+
+<img
+src="images/compiler-9.png"
+width="580"
+height=""
+style=""
+title=""
+/>
+</div>
+</div>
+
+<div id="outline-container-org3a0f5cb" class="outline-3">
+<h3 id="org3a0f5cb">4.中间代码生成</h3>
+<div class="outline-text-3" id="text-org3a0f5cb">
+<img
+src="images/compiler-10.png"
+width="220"
+height=""
+style="float: right;"
+title="中间代码生成"
+/>
+
+<p>
+经过语法分析和语义分析之后，某些编译器生成源程序的显示中间表示（易于产生、翻译成目标程序）。其功能如下：
+</p>
+<ul class="org-ul">
+<li>需决定运算完成的次序；</li>
+<li>必须产生临时变量名（保留每个语句的计算结果）；</li>
+<li>必须处理控制流结构和过程调用。</li>
+</ul>
+
+<p>
+中间表示的常用形式：三地址代码，如下：
+</p>
+
+<p>
+*注： <span class="underline">三地址代码</span> 由三地址语句序列组成，最多三个操作数。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgda1690e" class="outline-3">
+<h3 id="orgda1690e">5.代码优化</h3>
+<div class="outline-text-3" id="text-orgda1690e">
+<img
+src="images/compiler-11.png"
+width="220"
+height=""
+style="float: right;"
+title="代码优化"
+/>
+
+<p>
+试图改进代码，产生执行较快的机器代码。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3076bb9" class="outline-3">
+<h3 id="org3076bb9">6.代码生成</h3>
+<div class="outline-text-3" id="text-org3076bb9">
+<p>
+生成可重定位的机器代码或者汇编码，其功能如下：
+</p>
+<ul class="org-ul">
+<li>为源程序所用的每个变量选择存储单元（寄存器分配）；</li>
+<li>将中间代码生成等价的机器指令序列。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgcf3e5d5" class="outline-3">
+<h3 id="orgcf3e5d5">7.编译的总过程</h3>
+<div class="outline-text-3" id="text-orgcf3e5d5">
+<img
+src="images/compiler-12.png"
+width="460"
+height=""
+style=""
+title=""
+/>
+</div>
+</div>
+
+<div id="outline-container-orgdacf447" class="outline-3">
+<h3 id="orgdacf447">8.相关扩展</h3>
+<div class="outline-text-3" id="text-orgdacf447">
+<p>
+<span class="underline">8.1 符号表管理</span>
+</p>
+
+<p>
+符号表：为每一个标识符保存一个记录的数据结构，记录的域是标识符的属性（标识符的存储分配、类型和作用域信息）。
+</p>
+
+<p>
+<span class="underline">8.2 错误诊断与报告</span>
+</p>
+
+<p>
+每个阶段都有可能发现源程序的错误，在发现错误之后，该阶段必须处理此错误，使得编译可以继续进行，以便进一步发现源程序的其他错误。具体：
+</p>
+<ul class="org-ul">
+<li>词法分析阶段：诊断当前被扫描的字符串不能形成语言的词法记号；</li>
+<li>语法分析阶段：诊断记号流违反的语法规则；</li>
+<li>语义分析阶段：找到对所含操作无意义的结构。</li>
+</ul>
+
+<p>
+<span class="underline">8.3 阶段分组（前端和后端）</span>
+</p>
+
+<p>
+在实际编译中，若干阶段可以组合在一起，各阶段之间的中间表示也无需显示构成。通常所有阶段分为前端和后端：
+</p>
+
+<p>
+（1）编译前端
+</p>
+
+<p>
+只依赖于源程序，由几乎独立于目标机器的阶段或者阶段的一部分组成，包括：词法分析、语法分析、符号表建立、语义分析、中间码生成、部分代码优化以及与这些阶段同时完成的错误处理。
+</p>
+
+<p>
+（2）编译后端
+</p>
+
+<p>
+依赖于目标机器，一般独立于程序，而与中间代码有关。包括：代码优化、代码生成以及伴随着这些阶段的符号操作和错误处理。
+</p>
+
+<p>
+<span class="underline">8.4 一遍扫描</span>
+</p>
+
+<p>
+编译的几个阶段常用一遍扫描来实现，一遍扫描包括读一个输入文件和写一个输出文件。
+</p>
+
+<p>
+把几个阶段组成一遍，并且这些阶段的活动可以在该遍扫描中交错进行。例如，可以把语法分析看成主导，当它需要记号时，调用词法分析器去下一个记号。如果已经看出一个语法结构，语法分析器则激活中间代码生成器，以完成语义分析和生成中间代码。
+</p>
+
+<p>
+<span class="underline">8.5 相关工具</span>
+</p>
+
+<p>
+<span class="underline">翻译器</span> 是一种能够将一种语言（源语言）变换成另一种语言（目标语言）的软件。
+</p>
+
+<p>
+<span class="underline">编译器</span> 是一种翻译器，将高级语言变换成一种低级语言的软件，特点在于目标语言比源语言低级。
+</p>
+
+<p>
+<span class="underline">解释器</span> 也需要对源程序进行词法、语法和语义分析，中间代码生成。但是不生成目标代码，而是直接执行源程序所指定的运算。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2e38470" class="outline-2">
+<h2 id="org2e38470">编译原理三大经典</h2>
+<div class="outline-text-2" id="text-org2e38470">
+<table>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">代号</th>
+<th scope="col" class="org-left">书名</th>
+<th scope="col" class="org-left">译名</th>
+<th scope="col" class="org-left">作者</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">龙书 Dragon</td>
+<td class="org-left">《Compilers: Principles, Techniques, and Tools》</td>
+<td class="org-left">《编译原理技术和工具》</td>
+<td class="org-left">Alfred V.Aho, Ravi Sethi, Jeffrey D.Ullman</td>
+</tr>
+
+<tr>
+<td class="org-left">虎书 Tiger</td>
+<td class="org-left">《Modern Compiler Implementation in C》</td>
+<td class="org-left">《现代编译原理 - C 语言描述》</td>
+<td class="org-left">Andrew W.Appel, Jens Palsberg</td>
+</tr>
+
+<tr>
+<td class="org-left">鲸书 Whale</td>
+<td class="org-left">《Advanced Compiler Design and Implementation》</td>
+<td class="org-left">《高级编译器设计与实现 》</td>
+<td class="org-left">Steven S.Muchnick</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+龙书是 Alfred V.Aho 等人于 1986 年出版的，由于出版年代较早，其中包含部分过时的技术并且没有反映一些新的编译技术。新编的《编译原理》抛弃诸如算符优先分析等过时技术，增加面向对象编译、类型检查等新技术。
+</p>
+
+<p>
+虎书出版比较晚，与《编译原理》的知识点差不多，但增加了数据流分析、循环优化、内存管理等内容。与虎书比，《编译原理》更适合国内的编译原理课程教学，有 C 版、Java 版和 ML 版。
+</p>
+
+<p>
+鲸书侧重在对编译器后端优化的处理。在本科阶段的编译教学中旨在让学生对程序设计语言的编译全过程有系统的理解，因此会介绍编译器后端的处理技术，但不注重优化技术。鲸书更适合作为研究生的教材或参考书。
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://baike.baidu.com/item/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/4194?fr=aladdin#6">https://baike.baidu.com/item/编译原理/4194?fr=aladdin#6</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://segmentfault.com/a/1190000016430222">https://segmentfault.com/a/1190000016430222</a>
+</p></div></div>
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-10-29 Thu 12:06</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2021-02-23 Tue 17:30</p>
+<p class="validation"><a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a></p>
+</div>
+</body>
 </html>
