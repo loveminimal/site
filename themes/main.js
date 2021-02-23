@@ -1,5 +1,6 @@
 'use strict';
 import './assets/jquery.min.js';
+// import './assets/darkreader.js';
 import userconfig from '../user.config.js';
 
 // Init global variables
