@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<!-- 2021-02-23 Tue 17:43 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java 程序设计基础</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="themes/assets/rose-red.png" type="image/x-icon" />
+           <link rel="stylesheet" href="themes/style.css" type="text/css"  />
+           <script type="module" src="themes/main.js" defer></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Java 程序设计基础</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org18950b2">标识符和关键字</a>
+<ul>
+<li><a href="#org464d5a0">标识符</a></li>
+<li><a href="#org0b2efe7">关键字</a></li>
+</ul>
+</li>
+<li><a href="#org66d5a37">注释</a></li>
+<li><a href="#orge9e4a43"><span class="todo TODO">TODO</span> Javadoc 文档注释</a></li>
+<li><a href="#org5396e9f">常量</a>
+<ul>
+<li><a href="#org8191a95">常量值</a></li>
+<li><a href="#org8833e38">定义常量</a></li>
+</ul>
+</li>
+<li><a href="#org2b9e0e8">变量</a>
+<ul>
+<li><a href="#org1c903e2">声明变量</a></li>
+<li><a href="#org2253a6c">变量赋值</a></li>
+<li><a href="#orgf040dc6">变量作用域</a></li>
+</ul>
+</li>
+<li><a href="#orgd47831c">数据类型</a>
+<ul>
+<li><a href="#orgda96380">基本数据类型</a></li>
+<li><a href="#org6c768c1">引用数据类型</a></li>
+<li><a href="#orgd850ece">数据类型转换</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+一个 Java 程序通常由 <b>数据类型、变量、运算符和控制流程语句</b> 4 部分组成，其中数据类型和运算符不仅定义了语言的规范，还决定了可以执行什么样的操作；变量是用来存储指定类型的数据，其值在程序运行期间是可变的；与变量对应的是常量，其值是固定的。
+</p>
+
+<essay>
+数据类型肯定是要有的，它关系到数据在内存中的存储。
+</essay>
+
+<div id="outline-container-org18950b2" class="outline-2">
+<h2 id="org18950b2">标识符和关键字</h2>
+<div class="outline-text-2" id="text-org18950b2">
+<p>
+任何一种计算机语言都离不开标识符和关键字。
+</p>
+
+<essay>
+Hmm，机器语言就不需要……
+<p>
+需要经过“翻译”才能转换为机器语言的编程语言都离不开标识符和关键字，因为编译器或解释器在“翻译”代码的过程中，语法、语义分析都依赖它们。
+</p>
+</essay>
+</div>
+
+<div id="outline-container-org464d5a0" class="outline-3">
+<h3 id="org464d5a0">标识符</h3>
+<div class="outline-text-3" id="text-org464d5a0">
+<p>
+Java 中标识符是为方法、变量或其他用户定义项所定义的名称，标识符可以有一个或多个字符。
+</p>
+
+<essay>
+标识符的规则，各种编程语言都大同小异。日常使用过程中，优先使用字母，区分大小写就 Okay 了。
+</essay>
+
+<p>
+在 Java 语言中，标识符的构成规则如下：
+</p>
+<ul class="org-ul">
+<li>标识符由数字（ <code>0~9</code> ）和字母（ <code>A~Z a~z</code> ）、美元符号 <code>$</code> 、下划线（ <code>_</code> ）以及 Unicode 字符集中符号大于 <code>0xC0</code> 的所有符号组合构成（各符号之间没有空格）；</li>
+<li>标识符的第一个符号为字母、下划线和美元符号，后面可以是任何字母、数字、美元符号或下划线；</li>
+<li>区分大小写。</li>
+</ul>
+
+<blockquote>
+<p>
+*注：标识符命名时，切记不能以数字开头，也不能使用任何 Java 关键字作为标识符，而且不能赋予标识符任何标准的方法名。
+</p>
+</blockquote>
+
+<p>
+标识符分为两类，分别为关键字和用户自定义标识符：
+</p>
+<ul class="org-ul">
+<li>关键字是有特殊含义的标识符，如 <code>true、false</code> 表示逻辑的真假；</li>
+<li>用户自定义标识符是由用户标识符构成规则生成的非保留字的标识符。</li>
+</ul>
+
+<p>
+*注：标识符不能与关键字重名。
+</p>
+
+<essay>
+`用户自定义标识符` 就是变量名、方法名之类的喽。
+</essay>
+
+<p>
+标识符用来命名常量、变量、类和类的对象等，因此，一个良好的编程习惯要求命名标识符时，应赋予它一个意义或有用途的名字。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0b2efe7" class="outline-3">
+<h3 id="org0b2efe7">关键字</h3>
+<div class="outline-text-3" id="text-org0b2efe7">
+<p>
+关键字（或者保留字）是 <b>对编译器有特殊意义</b> 的固定单词，不能在程序中做其他目的使用。它们用来表示一种数据类型，或者表示程序的结构等。
+</p>
+
+<blockquote>
+<p>
+保留字是为 Java 预留的关键字，它们虽然现在没有作为关键字，在以后的升级版本中可能作为关键字。
+</p>
+</blockquote>
+
+<p>
+Java 语言目前定义了 51 个关键字，这些关键字不能作为变量名、类名和方法名来使用，以下对这些关键字进行了分类：
+</p>
+<table>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">数据类型</td>
+<td class="org-left"><code>boolean、int、long、short、byte、float、double、char、class、interface</code></td>
+</tr>
+
+<tr>
+<td class="org-left">流程控制</td>
+<td class="org-left"><code>if、else、do、while、for、switch、case、default、break、continue、return、try、catch、finally</code></td>
+</tr>
+
+<tr>
+<td class="org-left">修饰符</td>
+<td class="org-left"><code>public、protected、private、final、void、static、strict、abstract、transient、synchronized、volatile、native</code></td>
+</tr>
+
+<tr>
+<td class="org-left">动作</td>
+<td class="org-left"><code>package、import、throw、throws、extends、implements、this、super、instanceof、new</code></td>
+</tr>
+
+<tr>
+<td class="org-left">保留字</td>
+<td class="org-left"><code>true、false、null、goto、const</code></td>
+</tr>
+</tbody>
+</table>
+<essay>
+再次强调，不用刻意记，用的多了，就记住了。
+</essay>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org66d5a37" class="outline-2">
+<h2 id="org66d5a37">注释</h2>
+<div class="outline-text-2" id="text-org66d5a37">
+<p>
+注释是对程序语言的说明，有助于开发者和用户之间的交流，方便理解程序。注释不是编程语句，因此 <b>被编译器忽略</b> 。
+</p>
+
+<p>
+<span class="underline">单行注释</span> ，以双斜杠 <code>//</code> 标识，只能注释一行内容，用在注释信息内容少的地方。
+</p>
+
+<p>
+<span class="underline">多行注释</span> ，包含在 <code>/*</code> 和 <code>*/</code> 之间，能注释很多行的内容。注意：多行注释可以嵌套单行注释，但是不能嵌套多行注释和文档注释。
+</p>
+
+<p>
+<span class="underline">文档注释</span> ，包含在 <code>/**</code> 和 <code>*/</code> 之间，也能注释多行内容，一般用在类、方法和变量上面，用来描述其作用。注释后，鼠标放在类和变量上面会自动显示出我们注释的内容。
+</p>
+
+<p>
+文档注释可以通过 <code>javadoc</code> 命令把文档注释中的内容生成文档，并输出到 HTML 文件中，方便记录程序信息。还可以包含一个或多个 <code>@</code> 标签，每个 <code>@</code> 标签都 <b>在新的一行开始</b> 。
+</p>
+
+<p>
+在 Java 中，一行注释以双斜杠 <code>//</code> 标识；多行注释包含在 <code>/*</code> 和 <code>*/</code> 之间；文档注释包含在 <code>/**</code> 和 <code>*/</code> 之间。
+</p>
+
+<p>
+当编译器执行到 <code>//</code> 时，就会忽略该行 <code>//</code> 之后的所有文本；当执行到 <code>/*</code> 时，会扫描下一个 <code>*/</code> 并忽略 <code>/*</code> 和 <code>*/</code> 之间的任何文本；当执行到 <code>/**</code> 时，也会扫描下一个 <code>*/</code> 并忽略 <code>/**</code> 和 <code>*/</code> 之间的任何文本内容。
+</p>
+
+<essay>
+注释在编译的过程中就会被编译器忽略，因为注释是给开发者看的，编译器看不懂，也没有必要懂。
+</essay>
+</div>
+</div>
+
+<div id="outline-container-orge9e4a43" class="outline-2">
+<h2 id="orge9e4a43"><span class="todo TODO">TODO</span> Javadoc 文档注释</h2>
+<div class="outline-text-2" id="text-orge9e4a43">
+<p>
+&#x2026;
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5396e9f" class="outline-2">
+<h2 id="org5396e9f">常量</h2>
+<div class="outline-text-2" id="text-org5396e9f">
+<p>
+常量是指在程序的整个运行过程中值保持不变的量。
+</p>
+
+<essay>
+常量（constant）是程序中使用的一个确定数值，在汇编阶段就可以确定，直接编码于指令代码中，不是保存在存储器中可变的变量，因为是编码在指令中的量，和指令一起存储了，所以不用单独开辟主存空间，所以也就没法动态改变它了，这也正是高级语言常量无法修改的原因。
+</essay>
+
+<blockquote>
+<p>
+*注意：常量和常量值是不同的概念，常量值是常量的具体和直观的表现形式，常量是形式化的表现。常在程序中既可以直接使用常量值，也可以使用常量。
+</p>
+</blockquote>
+
+<essay>
+说得很绕，其实没什么用……
+</essay>
+</div>
+
+<div id="outline-container-org8191a95" class="outline-3">
+<h3 id="org8191a95">常量值</h3>
+<div class="outline-text-3" id="text-org8191a95">
+<p>
+常量值又称为字面常量，它是通过数据直接表示，如整型、字符串等。
+</p>
+
+<p>
+<span class="underline">1. 整型常量值</span>
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 1:</span> Java 的整型常量值主要形式</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">十进制数形式</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>54、-67、0</code></td>
+</tr>
+
+<tr>
+<td class="org-left">八进制数形式</td>
+<td class="org-left">以 <code>0</code> 开头</td>
+<td class="org-left"><code>0125、-013</code></td>
+</tr>
+
+<tr>
+<td class="org-left">十六进制数形式</td>
+<td class="org-left">以 <code>0x</code> 或 <code>0X</code> 开头</td>
+<td class="org-left"><code>0x100、-0x16</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+整型（ <code>int</code> ）常量默认在内存中占 32 位，是具有整数类型的值，当运算过程中所需值超过 32 位长度时，可以把它表示为长整型（ <code>long</code> ）数值，通过在数字后面加 <code>L、l</code> 表示，如 <code>697L</code> ，它在内存中占 64 位。
+</p>
+
+<p>
+<span class="underline">2. 实型常量值</span>
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 2:</span> Java 的实型常量值主要形式</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">十进制数形式</td>
+<td class="org-left">由数字和小数点组成，且必须有小数点</td>
+<td class="org-left"><code>12.34、-98.0</code></td>
+</tr>
+
+<tr>
+<td class="org-left">科学计数法形式</td>
+<td class="org-left">其中 <code>e、E</code> 之前必须有数字，且之后的数字必须为整数</td>
+<td class="org-left"><code>1.75e5、32&amp;E3</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Java 实型常量默认在内存中占 64 位，是具有双精度型（ <code>double</code> ）的值。
+</p>
+
+<p>
+如果考虑到需要节省运行时的系统资源，而运行时的数据值取值范围并不大且运算精度要求不太高的情况，可以把它表示为单精度型（ <code>float</code> ）的数值。
+</p>
+
+<p>
+单精度型数值一般要在该常数后面加 <code>F、f</code> ，如 <code>67.9f</code> ，表示一个 <code>float</code> 型实数，它在内存中占 32 位（取决于系统的版本高低）。
+</p>
+
+<essay>
+请注意，计算机无法精确地表示一个小数。
+</essay>
+
+<p>
+<span class="underline">3. 布尔型常量值</span>;
+</p>
+
+<p>
+Java 的布尔型常量只有两个值，即 <code>false</code> （假）和 <code>true</code> （真）。
+</p>
+
+<p>
+<span class="underline">4. 字符型和字符串常量值</span>
+</p>
+
+<p>
+Java 的字符型常量值是用 <b>单引号</b> 引起来的一个字符，如 <code>'e'、'E'</code> 。
+</p>
+
+<blockquote>
+<p>
+\*注意： <b>Java 字符串常量值中的单引号和双引号不可混用</b> ，双引号用来表示字符串，像 <code>"11"、"d"</code> 等都是表示单个字符的字符串。
+</p>
+</blockquote>
+
+<p>
+除了以上所述形式的字符常量值之外，Java 还允许使用一种特殊形式的字符常量值来表示一些难以用一般字符表示的字符，这种特殊形式的字符是经开头的字符序列，称为 <span class="underline">转义字符</span> 。
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 3:</span> Java 中常用的转义字符</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">转义字符</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>\ddd</code></td>
+<td class="org-left">1~3 位八进制数所表示的字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\uxxxx</code></td>
+<td class="org-left">1~4 位十六进制数所表示的字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\'</code></td>
+<td class="org-left">单引号字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\"</code></td>
+<td class="org-left">双引号字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\\</code></td>
+<td class="org-left">双斜杠字符</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\r</code></td>
+<td class="org-left">回车</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\n</code></td>
+<td class="org-left">换行</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\b</code></td>
+<td class="org-left">退格</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>\t</code></td>
+<td class="org-left">横向跳格</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org8833e38" class="outline-3">
+<h3 id="org8833e38">定义常量</h3>
+<div class="outline-text-3" id="text-org8833e38">
+<p>
+常量不同于常量值，它可以在程序中用符号来代替常量值使用，因此在使用前必须先定义。在声明常量的同时要赋予一个初始值，常量一旦初始化就不可以被修改。
+</p>
+
+<essay>
+常量，指向常量值，必须“定义，且初始化”后才可使用。
+</essay>
+
+<p>
+<b>Java 语言中使用 <code>final</code> 关键字来定义一个常量</b> ，其语法如下所示：
+</p>
+
+<pre class="example">
+final dataType variableName = value
+</pre>
+
+<p>
+其中， <code>final</code> 是定义常量的关键字， <code>dataType</code> 指明常量的数据类型， <code>variableName</code> 是变量的名称， <code>value</code> 是初始值。
+</p>
+
+<p>
+<code>final</code> 关键字表示是最终的，它可以修改很多元素，修饰变量就变成了常量。常量有三种类型：静态常量、成员常量和局部常量。来看个例子吧：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">HelloWorld</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#38745;&#24577;&#24120;&#37327;</span>
+<span class="linenr"> 3: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #e45649;">final</span> <span style="color: #986801;">double</span> <span style="color: #6a1868;">PI</span> = 3.14;
+<span class="linenr"> 4: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#22768;&#26126;&#25104;&#21592;&#24120;&#37327;</span>
+<span class="linenr"> 5: </span>    <span style="color: #e45649;">final</span> <span style="color: #986801;">int</span> <span style="color: #6a1868;">y</span> = 10;
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 8: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#22768;&#26126;&#23616;&#37096;&#24120;&#37327;</span>
+<span class="linenr"> 9: </span>        <span style="color: #e45649;">final</span> <span style="color: #986801;">double</span> <span style="color: #6a1868;">x</span> = 3.3;
+<span class="linenr">10: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">11: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+我们来稍微分析一下上面这段代码吧。
+</p>
+
+<p>
+代码第 3 行的是声明静态常量，使用在 <code>final</code> 之前用 <code>public static</code> 修饰。 <code>public static</code> 修饰的常量作用域是全局的，不需要创建对象就可以访问它，在类外部访问形式为 <code>HelloWorld.PI</code> ；代码第 5 行声明成员常量，作用域类似于成员变量，但不能修改；代码第 9 行声明局部常量，作用域类似于局部变量，但不能修改。
+</p>
+
+<p>
+在定义常量时，需要注意如下内容：
+</p>
+<ul class="org-ul">
+<li>在定义常量时就需要对该常量进行初始化；</li>
+<li><code>final</code> 关键字不仅可以用来修饰基本数据类型的常量，还可以用来修饰对象的引用或者方法；</li>
+<li>为了与变量区别，常量取名一般都用大写字符。</li>
+</ul>
+
+<p>
+当常量被设定后，一般情况下不允许再进行更改，如果更改其值将提示错误。
+</p>
+
+<essay>
+常量（constant）是程序中使用的一个确定数值，在汇编阶段就可以确定，直接编码于指令代码中，不是保存在存储器中可变的变量，因为是编码在指令中的量，和指令一起存储了，所以不用单独开辟主存空间，所以也就没法动态改变它了，这也正是高级语言常量无法修改的原因。
+</essay>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2b9e0e8" class="outline-2">
+<h2 id="org2b9e0e8">变量</h2>
+<div class="outline-text-2" id="text-org2b9e0e8">
+<p>
+Java 语言是强类型（Strongly Typed）语言，强类型包含以下两方面的含义：
+</p>
+<ul class="org-ul">
+<li>所有的变量必须先声明、后使用；</li>
+<li>指定类型的变量只能接受类型与之匹配的值。</li>
+</ul>
+
+<p>
+这意味着 <b>每个变量和每个表达式都有一个在编译时就确定的类型</b> ，类型限制了一个变量能被赋的值，限制了一个表达式可以产生的值，限制了在这些值上可以进行的操作，并确定了这些操作的含义。
+</p>
+
+<p>
+常量和变量是 Java 程序中最基础的两个元素，常量的值是不能被修改的，而变量的值在程序运行期间可以被修改。
+</p>
+</div>
+
+<div id="outline-container-org1c903e2" class="outline-3">
+<h3 id="org1c903e2">声明变量</h3>
+<div class="outline-text-3" id="text-org1c903e2">
+<p>
+对开发人员来说，变量是用来描述一条信息的别名，可以在程序代码中使用一个或多个变量。其基本语法如下：
+</p>
+
+<pre class="example">
+// 声明变量
+DataType identifier;
+// 声明变量并赋值
+DataType identifier = value;
+</pre>
+
+<p>
+其中：
+</p>
+<ul class="org-ul">
+<li><code>DataType</code> ：变量类型，如 <code>int、string、char、double</code> 等；</li>
+<li><code>identifier</code> ：标识符，也叫变量名称；</li>
+<li><code>value</code> ：声明变量时的值。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2253a6c" class="outline-3">
+<h3 id="org2253a6c">变量赋值</h3>
+<div class="outline-text-3" id="text-org2253a6c">
+<p>
+初始化变量，是为变量指定一个明确的初始值。
+</p>
+
+<p>
+初始化变量有两种方式：一种是声明时直接赋值，另一种是先声明、后赋值。另外，多个类型的变量可以同时定义或者初始化，但是多个变量中间要使用逗号分隔，声明结束时用分号分隔。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#22768;&#26126;&#24182;&#36171;&#20540;</span>
+<span class="linenr"> 2: </span><span style="color: #986801;">char</span> <span style="color: #6a1868;">usersex</span> = <span style="color: #50a14f;">'&#22899;'</span>;
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20808;&#22768;&#26126;&#65292;&#21518;&#36171;&#20540;</span>
+<span class="linenr"> 5: </span><span style="color: #986801;">String</span> <span style="color: #6a1868;">username</span>;
+<span class="linenr"> 6: </span>username = <span style="color: #50a14f;">"&#23567;&#26126;"</span>;
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#22768;&#26126;&#22810;&#20010;&#21464;&#37327;</span>
+<span class="linenr"> 9: </span><span style="color: #986801;">String</span> <span style="color: #6a1868;">username</span>, <span style="color: #6a1868;">address</span>, <span style="color: #6a1868;">phone</span>, <span style="color: #6a1868;">tel</span>;
+<span class="linenr">10: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#22768;&#26126;&#24182;&#21021;&#22987;&#21270;&#22810;&#20010;&#21464;&#37327;</span>
+<span class="linenr">11: </span><span style="color: #986801;">int</span> <span style="color: #6a1868;">num1</span> = 12, <span style="color: #6a1868;">num2</span> = 23, <span style="color: #6a1868;">result</span> = 35;
+</pre>
+</div>
+
+<p>
+Java 中初始化变量时需要注意以下事项：
+</p>
+<ul class="org-ul">
+<li>如果变量是类或者结构中的字段，如果没有显示地初始化，默认状态下创建变量并默认初始值为 0 ；</li>
+<li>方法中的变量必须显式地初始化，否则在使用该变量时就会出错。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf040dc6" class="outline-3">
+<h3 id="orgf040dc6">变量作用域</h3>
+<div class="outline-text-3" id="text-orgf040dc6">
+<p>
+变量的作用域规定了变量所能使用的范围，只有在作用域内变量才能被使用。根据变量声明地点的不同，变量的作用域也不同。
+</p>
+
+<p>
+<b>根据作用域的不同，一般将变量分为不同的类型：成员变量和局部变量。</b>
+o
+</p>
+
+<p>
+<span class="underline">1. 成员变量</span>
+</p>
+
+<essay>
+成员，就是类的成员喽。
+</essay>
+
+<p>
+Java 的成员变量有两种，分别是 <span class="underline">全局变量和静态变量</span> （类变量）。 <b>定义在方法体和语句块之外</b> ，不属于任何一个方法，作用域是整个类。
+</p>
+
+<table>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">名称</th>
+<th scope="col" class="org-left">修饰</th>
+<th scope="col" class="org-left">访问</th>
+<th scope="col" class="org-left">生命周期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">全局变量（实例变量）</td>
+<td class="org-left">无 <code>static</code> 修饰</td>
+<td class="org-left"><code>对象名.变量名</code></td>
+<td class="org-left">只要对象被当作引用，实例变量就将存在</td>
+</tr>
+
+<tr>
+<td class="org-left">静态变量（类变量）</td>
+<td class="org-left">用 <code>static</code> 修饰</td>
+<td class="org-left"><code>类名.变量名</code> 或 <code>对象名.变量名</code></td>
+<td class="org-left">其生命周期取决于类的生命周期，类被垃圾回收机制彻底回收时才会被销毁</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<span class="underline">2. 局部变量</span>
+</p>
+
+<p>
+<span class="underline">局部变量</span> 是指在方法或者方法代码块中定义的变量，其作用域是其所在的代码块。可分为以下三种：
+</p>
+<ul class="org-ul">
+<li>方法参数变量（形参）：在整个方法内有效；</li>
+<li>方法局部变量（方法内定义）：从定义这个变量开始到方法结束这一段时间内有效；</li>
+<li>代码块局部变量（代码块内定义）：从定义这个变量开始到代码块结束这一段时间内有效。</li>
+</ul>
+
+<essay>
+形参、方法内部、代码块内部。
+</essay>
+
+<p>
+<b>局部变量在使用前必须被程序员主动初始化值。</b>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd47831c" class="outline-2">
+<h2 id="orgd47831c">数据类型</h2>
+<div class="outline-text-2" id="text-orgd47831c">
+<p>
+Java 语言支持的数据类型分为两种：基本数据类型（Primitive Type）和引用数据类型（Reference Type）。
+</p>
+</div>
+
+<div id="outline-container-orgda96380" class="outline-3">
+<h3 id="orgda96380">基本数据类型</h3>
+<div class="outline-text-3" id="text-orgda96380">
+<table>
+<caption class="t-above"><span class="table-number">Table 4:</span> Java 的基本数据类型</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-center">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">类型名称</th>
+<th scope="col" class="org-left">关键字</th>
+<th scope="col" class="org-center">占用内存（字节）</th>
+<th scope="col" class="org-left">取值范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>字节型</b></td>
+<td class="org-left"><code>byte</code></td>
+<td class="org-center">1</td>
+<td class="org-left">-128~127</td>
+</tr>
+
+<tr>
+<td class="org-left">短整型</td>
+<td class="org-left"><code>short</code></td>
+<td class="org-center">2</td>
+<td class="org-left">-32768~32767</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>整型</b></td>
+<td class="org-left"><code>int</code></td>
+<td class="org-center">4</td>
+<td class="org-left">-2147483648~2147483647</td>
+</tr>
+
+<tr>
+<td class="org-left">长整型</td>
+<td class="org-left"><code>long</code></td>
+<td class="org-center">8</td>
+<td class="org-left">-9223372036854775808L~9223372036854775807L</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">单精度浮点型</td>
+<td class="org-left"><code>float</code></td>
+<td class="org-center">4</td>
+<td class="org-left">+/-3.4E+38F（6~7 个有效位）</td>
+</tr>
+
+<tr>
+<td class="org-left">双精度浮点型</td>
+<td class="org-left"><code>double</code></td>
+<td class="org-center">8</td>
+<td class="org-left">+/-1.8E+308 (15 个有效位）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">字符型</td>
+<td class="org-left"><code>char</code></td>
+<td class="org-center">2</td>
+<td class="org-left">ISO 单一字符集</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">布尔型</td>
+<td class="org-left"><code>boolean</code></td>
+<td class="org-center">1</td>
+<td class="org-left">true 或 false</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>*提示： <code>char</code> 代表字符型，实际上字符型也是一种整数类型，相当于无符号整数的类型。</b>
+</p>
+
+<blockquote>
+<p>
+所有的基本数据类型的大小（所占用的字节数）都已明确规定，在各种不同的平台上保持不变，这特性有助于提高 Java 程序的可移植性。
+</p>
+</blockquote>
+
+<p>
+<b>Java 是一种强类型的语言</b> ，所有的变量都必须先明确定义其数据类型，然后才能使用。
+</p>
+
+<p>
+基本数据类型又可分为 4 大类（如上表）:
+</p>
+<ul class="org-ul">
+<li>整数类型（byte、short、int、long）；</li>
+<li>浮点类型（floa、double）；</li>
+<li>布尔类型（boolean）；</li>
+<li>字符类型（char）。</li>
+</ul>
+
+<p>
+<span class="underline">1. 整数类型</span>
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 5:</span> Java 整数类型变量说明</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">名称</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">字节型（byte）</td>
+<td class="org-left">byte 类型是最小的整数类型。当用户从网络或文件中处理数据流时，或者处理可能 <b>与 Java 的其他内置类型不直接兼容的未加工的二进制数据</b> 时，该类型非常有用</td>
+</tr>
+
+<tr>
+<td class="org-left">短整型（short）</td>
+<td class="org-left">short 类型限制数据的存储为先高字节，后低字节，这样在某些机器中会出错，因此该类型很少被使用</td>
+</tr>
+
+<tr>
+<td class="org-left">整型（int）</td>
+<td class="org-left">int 类型是 <b>最常用</b> 的一种整数类型</td>
+</tr>
+
+<tr>
+<td class="org-left">长整型（long）</td>
+<td class="org-left">对于大型程序常会遇到很大的整数，当超出 int 类型所表示的范围时就要使用 long 类型</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<span class="underline">2. 浮点类型</span>
+</p>
+
+<p>
+浮点类型是带有小数部分的数据类型，也叫 <span class="underline">实型</span> 。
+</p>
+
+<p>
+浮点类型包括单精度浮点型（float）和双精度浮点型（double），代表有小数精度的数字。它们的区别主要是所占用的内存大小不同，float 类型占用 4 字节的内存空间，double 类型占用 8 字节的内存空间。
+</p>
+
+<p>
+<b>Java 默认的浮点型为 double</b> ，例如 11.11 和 1.233 都是 double 类型。如果要说明一个 float 类型数值，就 <b>必须</b> 在其后追加字母 <code>f、F</code> ，如 11.11f 。
+</p>
+
+<p>
+<span class="underline">3. 布尔类型</span>
+</p>
+
+<p>
+布尔类型（boolean）用于对两个数值通过逻辑运算，判断结果是“真”还是“假”。Java 中用保留字 <code>true</code> 和 <code>false</code> 来代表逻辑运算中的“真”和“假”。因此，一个 boolean 类型的变量或表达式只能是取 <code>true</code> 和 <code>false</code> 这两个值中的一个。
+</p>
+
+<blockquote>
+<p>
+在 Java 语言中，布尔类型的值不能转换成任何数据类型， <code>true</code> 常量不等于 1，而 <code>false</code> 常量也不等于 0。这两个值只能赋给 boolean 类型的变量，或者用于布尔表达式中。
+</p>
+</blockquote>
+
+<p>
+<span class="underline">4. 字符类型</span>
+</p>
+
+<p>
+Java 语言中的字符类型（char）使用两个字节的 Unicode 编码表示，它支持世界上所有语言，可以使用单引号字符对 char 型赋值。
+</p>
+
+<p>
+一般计算机语言使用 ASCII 编码，用一个字节表示一个字符。ASCII 码是 Unicode 码的一个子集，用 Unicode 表示 ASCII 码时，其高字节为 0 ，它是前 255 个字符。
+</p>
+
+<p>
+Unicode 字符通常用十六进制表示，范围从 <code>"\u0000" ~ "\uffff"</code> ，即从 <code>0~65535</code> 。例如 <code>"\u0000" ~ "\u00ff"</code> 表示 ASCII 码集。 <code>"\u"</code> 表示转义字符，它用来表示其后 4 个十六进制数字是 Unicode 码。
+</p>
+
+<p>
+来看一段示例代码吧。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #4078f2;">(</span><span style="color: #986801;">String</span><span style="color: #a626a4;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">2: </span>    <span style="color: #986801;">char</span> <span style="color: #6a1868;">a</span> = <span style="color: #50a14f;">'A'</span>;    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21521; char &#31867;&#22411;&#30340; a &#21464;&#37327;&#36171;&#20540;&#20026; A&#65292;&#25152;&#23545;&#24212;&#30340; ASCII &#20540;&#20026; 65</span>
+<span class="linenr">3: </span>    <span style="color: #986801;">char</span> <span style="color: #6a1868;">b</span> = <span style="color: #50a14f;">'B'</span>;    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21521; char &#31867;&#22411;&#30340; b &#21464;&#37327;&#36171;&#20540;&#20026; B&#65292;&#25152;&#23545;&#24212;&#30340; ASCII &#20540;&#20026; 66</span>
+<span class="linenr">4: </span>    System.out.println<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"A &#30340; ASCII &#20540;&#19982; B &#30340; ASCII &#20540;&#30456;&#21152;&#32467;&#26524;&#20026;&#65306;"</span>+<span style="color: #50a14f;">(</span>a+b<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>;
+<span class="linenr">5: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6c768c1" class="outline-3">
+<h3 id="org6c768c1">引用数据类型</h3>
+<div class="outline-text-3" id="text-org6c768c1">
+<p>
+引用数据类型建立在基本数据类型的基础上，包括数组、类和接口。引用数据类型是由用户自定义， <b>用来限制其他数据的类型</b> 。另外，Java 语言中不支持 C++ 中的指针类型、结构类型、联合类型和枚举类型。
+</p>
+
+<p>
+引用类型还有一种特殊的 <code>null</code> 类型。所谓 <b>引用数据类型就是对一个对象的引用</b> ，对象包括实例和数两种。
+</p>
+
+<blockquote>
+<p>
+实际上， <b>引用类型变量就是一个指针</b> ，只是 Java 语言里不再使用指针这个说法。
+</p>
+</blockquote>
+
+<p>
+空类型（null type）就是 <code>null</code> 值的类型，这种类型没有名称，所以也就不可能声明一个 null 类型的变量或者转换到 null 类型。
+</p>
+
+<p>
+空引用（ <code>null</code> ）是 null 类型变量唯一的值，它可以转换为任何引用类型。
+</p>
+
+<p>
+在实际开发中，程序员可以忽略 null 类型，假定 null 只是引用类型的一个特殊直接量。
+</p>
+
+<p>
+\*注：空引用（ <code>null</code> ） <b>只能</b> 被转换成引用类型， <b>不能</b> 转换成基本类型，因此不要把一个 <code>null</code> 值赋给基本数据类型的变量。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd850ece" class="outline-3">
+<h3 id="orgd850ece">数据类型转换</h3>
+<div class="outline-text-3" id="text-orgd850ece">
+<p>
+数据类型的转换是在所赋值的数值和被变量接收的数据类型不一致时发生的，它需要从一种数据类型转换成另一种数据类型。数据类型的转换可以分为隐式转换（自动类型转换）和显示转换（强制类型转换）两种。
+</p>
+
+<p>
+<span class="underline">1. 隐式转换（自动类型转换）</span>
+</p>
+
+<p>
+如要以下 2 个条件满足，那么将一种类型的数据赋给另外一种类型变量时，将执行自动类型转换（automatic type conversion）：
+</p>
+<ul class="org-ul">
+<li>两种数据类型彼此兼容；</li>
+<li>目标类型的取值范围大于源数据类型（低级类型数据转换成高级类型数据）。</li>
+</ul>
+
+<p>
+当以上 2 个条件都满足时，拓宽转换（widening conversion）发生。例如，byte 类型向 short 类型转换时，由于 short 类型转换时，由于 short 类型取值范围较大，会自动将 byte 转换为 short 类型。
+</p>
+
+<p>
+在运算过程中，由于不同的数据类型会转换成同一种数据类型，所以整型、浮点型以及字符型都可以参与混合运算。自动转换的规则是从低级类型数据转换成高级类型数据。转换规则如下：
+</p>
+<ul class="org-ul">
+<li>数值型数据的转换：byte → short → int → long → float → double ;</li>
+<li>字符型转换为整型：char → int 。</li>
+</ul>
+
+<blockquote>
+<p>
+*注：char 类型比较特殊，char 自动转换成 int、long、float、double ，但 byte 和 short 不能自动转换为 char ，而且 char 也不能自动转换为 byte 或 short 。
+</p>
+</blockquote>
+
+<p>
+比如说，float 、int 和 double 三种数据类型都参与了一个运算，最后输出结果就是 double 类型的，这种转换一般称为“表达式中类型的自动提升”。
+</p>
+
+<p>
+自动类型提升有好处，但它也会引起令人疑惑的编译错误。例如，下面这段看起来正确的程序却会引起问题：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">byte</span> <span style="color: #6a1868;">b</span> = 50;
+<span class="linenr">2: </span>b = b * 2;                      <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">Type mismatch: cannont convert from int to byte</span>
+</pre>
+</div>
+
+<p>
+为什么第二行会报“类型不匹配：无法从 int 转换为 byte”的错误呢？
+</p>
+
+<p>
+该程序试图将一个完全合法的 byte 类型的值 <code>50*2</code> 再存储给一个 byte 类型的变量，但是当表达式求值的时候，操作数被自动的提升为 int 型，计算结果也被提升为 int 型。如此以来，这样表达式的结果现在就是 int 型了，不强制转换它自然就不能被赋为 byte 型。所以，在这个特别的情况下，应该使用一个显示的强制类型转换，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">byte</span> <span style="color: #6a1868;">b</span> = 50;
+<span class="linenr">2: </span>b = <span style="color: #4078f2;">(</span><span style="color: #986801;">byte</span><span style="color: #4078f2;">)(</span>b * &#65298;<span style="color: #4078f2;">)</span>;
+</pre>
+</div>
+
+<p>
+这样就能产生正确的值 100 了。
+</p>
+
+<p>
+<span class="underline">2. 显示转换（强制类型转换）</span>
+</p>
+
+<p>
+当两种数据类型不兼容，或目标类型的取值范围小于源类型时，自动转换将无法时行，这时就需要进行强制类型转换。其语法格式如下：
+</p>
+<pre class="example">
+(type)variableName
+</pre>
+
+<p>
+其中，type 为 variableName 要转换成的数据类型，而 variableName 是指要进行类型转换的变量名称。
+</p>
+
+<p>
+在强制类型转换中，如果是将浮点型的值转换为整数，直接去掉小数点后边的所有数字；而如果是整数类型强制转换为浮点类型时，将在小数点后面补零。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-09-15 Tue 07:30</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2021-02-23 Tue 17:43</p>
+<p class="validation"><a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a></p>
+</div>
+</body>
+</html>
