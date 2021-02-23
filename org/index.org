@@ -23,6 +23,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./wubi.org][WuBi]]                |
 | [[./git.org][Git]]                 |
 | [[./sdk.org][SDK]]                 |
+| [[./obs.org][OBS]]                 |
 
 | GTD             |
 |-----------------|
@@ -130,7 +131,9 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 
 [[http://182.61.145.178:4000/][_Hurricane_]] [[https://www.thethingsengine.org/][_Tengine_]]
 
-#+BEGIN_EXPORT html
-<span id="jinrishici-sentence">虚怀乃若谷，水深则流缓</span>
-<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-#+END_EXPORT
+虚怀乃若谷，水深则流缓
+
+# #+BEGIN_EXPORT html
+# <span id="jinrishici-sentence">虚怀乃若谷，水深则流缓</span>
+# <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+# #+END_EXPORT

@@ -3,12 +3,13 @@
 
 | C/N  | A          | B            | C              | D              | E              |
 |------+------------+--------------+----------------+----------------+----------------|
-| 我的 | [[./index.org][Virgo]]      | [[https://www.bilibili.com/][Bilibili]]     | [[https://emacs-china.org/][Emacs China]]    | [[https://github.com/loveminimal][Github]]         | [[https://www.zhihu.com/][知乎]]           |
+| 我的 | [[./index.org][Virgo]]      | [[https://www.dida365.com/webapp/#p/inbox/tasks][GTD]]          | [[https://emacs-china.org/][Emacs China]]    | [[https://github.com/loveminimal][Github]]         | [[https://www.zhihu.com/][知乎]]           |
 |      | [[https://cloud.huawei.com/home#/notepad/task/2f0739e3$ee3c$4049$8422$461c7e46d116/none][华为云]]     | [[https://cloud.tencent.com/developer/labs][腾讯云]]       | [[https://www.youtube.com/][YouTube]]        | [[https://www.icourse163.org/][MOOC]]           | [[https://www.daodejing.org/][道德经]]         |
-|      | [[https://twitter.com/home][Twitter]]    | [[https://gitee.com/loveminimal][Gitee]]        | [[https://www.quora.com/][Quora]]          | [[http://www.people.com.cn/][人民网]]         |                |
+|      | [[https://twitter.com/home][Twitter]]    | [[https://gitee.com/loveminimal][Gitee]]        | [[https://www.quora.com/][Quora]]          | [[http://www.people.com.cn/][人民网]]         | [[https://www.jianshu.com/u/eebcc2974936][简书]]           |
+|      |            | [[https://www.bilibili.com/][Bilibili]]     |                |                |                |
 |------+------------+--------------+----------------+----------------+----------------|
-| 工具 | [[http://fanyi.youdao.com/][有道翻译]]   | [[http://www.fhdq.net/][符号大全]]     | [[https://www.bejson.com/ui/compress_img/][图压缩]]         | [[https://man.linuxde.net/][Linux 命令大全]] | [[https://www.bootcss.com/][BootNav]]        |
-|      | [[http://tool.c7sky.com/webcolor/][Web Color]]  | [[https://pixabay.com/zh/][Pixabay]]      | [[http://www.fonts.net.cn/][字体之家]]       | [[http://tools.jb51.net/][脚本之家]]       |                |
+| 工具 | [[http://fanyi.youdao.com/][有道翻译]]   | [[http://www.fhdq.net/emoji.html][符号大全]]     | [[https://www.bejson.com/ui/compress_img/][图压缩]]         | [[https://man.linuxde.net/][Linux 命令大全]] | [[https://www.bootcss.com/][BootNav]]        |
+|      | [[http://tool.c7sky.com/webcolor/][Web Color]]  | [[https://pixabay.com/zh/][Pixabay]]      | [[http://www.fonts.net.cn/][字体之家]]       | [[http://tools.jb51.net/][脚本之家]]       | [[https://www.sojson.com][SoJSON]]         |
 |------+------------+--------------+----------------+----------------+----------------|
 | 娱乐 | [[http://www.etymon.cn/index.html][英语字根]]   | [[https://www.hanjutv.com/][韩剧]]         |                | [[https://www.meijutt.tv/][天天美剧]]       | [[https://www.gushiwen.org/][古诗文网]]       |
 |------+------------+--------------+----------------+----------------+----------------|
@@ -16,6 +17,7 @@
 |------+------------+--------------+----------------+----------------+----------------|
 | 教程 | [[http://www.runoob.com/][菜鸟教程]]   | [[http://es6.ruanyifeng.com/][ES6]]          | [[https://www.liaoxuefeng.com/][廖雪峰]]         | [[http://www.softwhy.com/][蚂蚁部落]]       | [[https://www.interviewcake.com/data-structures-reference][Interview Cake]] |
 |      | [[http://www.nginx.cn/doc/][Nginx Doc]]  | [[http://c.biancheng.net/][C 语言中文网]] | [[https://www.lmonkey.com/][学习猿地]]       | [[https://cloud.tencent.com/developer/devdocs][腾讯云开发手册]] | [[https://help.aliyun.com/?spm=a2c4g.750001.J_8058803260.1296.30757b132G3d1w][阿里云文档]]     |
+|      | [[https://developer.huawei.com/consumer/cn/forum/][鸿蒙论坛]]   |              |                |                |                |
 |------+------------+--------------+----------------+----------------+----------------|
 | 博客 | [[https://bitsofco.de/][Bitsofco]]   | [[http://www.ruanyifeng.com/blog/developer/][阮一峰]]       | [[http://xahlee.org/][李杀网]]         | [[https://coolshell.cn/][酷壳]]           | [[https://www.zhangxinxu.com/][张鑫旭]]         |
 |      | [[http://www.tripod.fun/][阿汤]]       | [[https://www.ituring.com.cn/][图灵社区]]     | [[https://manateelazycat.github.io/index.html][ManateeLazyCat]] |                |                |
@@ -51,10 +53,31 @@
 - yarn VS npm https://zhuanlan.zhihu.com/p/23493436
 - SDK https://zhuanlan.zhihu.com/p/2
 - ESLint and Prettier https://vsnail.cn/static/doc/blog/eslintPrettier.html
+- - https://blog.csdn.net/weixin_42826294/article/details/107374982
 - JS bind() https://www.smashingmagazine.com/2014/01/understanding-javascript-function-prototype-bind/#top
-- call、apply、bind https://www.cnblogs.com/moqiutao/p/7371988.html  https://blog.csdn.net/u010176097/article/details/80348447
+- call、apply、bind https://www.cnblogs.com/moqiutao/p/7371988.html
+- - https://blog.csdn.net/u010176097/article/details/80348447
 - JS this https://www.ibm.com/developerworks/cn/web/1207_wangqf_jsthis/index.html
 - 函数柯里化 https://www.jianshu.com/p/2975c25e4d71
 - JS Doc https://www.html.cn/doc/jsdoc/about-namepaths.html
 - Package.json https://www.cnblogs.com/tzyy/p/5193811.html
 - .sync https://blog.csdn.net/fabulous1111/article/details/79399696
+- async/await 封装 axios https://www.cnblogs.com/lhy-555/p/10905419.html
+- - https://www.jianshu.com/p/4168efdc172b
+- 防抖和节流 https://juejin.cn/post/6844903669389885453
+- - https://zhuanlan.zhihu.com/p/38313717
+- - https://segmentfault.com/a/1190000018428170
+- - https://segmentfault.com/a/1190000012066399
+- - https://www.cnblogs.com/youma/p/10559331.html
+- - https://www.cnblogs.com/momo798/p/9177767.html
+- 函数组件和类组件的区别 https://blog.csdn.net/wu_xianqiang/article/details/91320529
+- Fetch https://www.cnblogs.com/libin-1/p/6853677.html
+- 解决vue-cli3配置babel-polyfill的问题
+- - https://segmentfault.com/a/1190000021940616
+- - https://www.jianshu.com/p/f2082ed8e285
+- Iframe https://www.cnblogs.com/bester-ace/articles/9292779.html
+- - https://www.cnblogs.com/hq233/p/9849939.html
+- Emacs 绘制 https://blog.csdn.net/lishuo_os_ds/article/details/8069125
+- Rollup 深入 https://www.cnblogs.com/tugenhua0707/p/8179686.html
+- JS source map http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html
+- [[https://blog.csdn.net/a772304419/article/details/104741395][Linux echo命令：给文本着色/背景色/文本]]

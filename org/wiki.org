@@ -11,6 +11,49 @@
 # />
 # #+END_EXPORT
 
+** GitHub 图片不加载问题
+ [2021-01-25 Mon 14:20]
+
+修改 =C:\Windows\System32\drivers\etc\hosts= 文件，尾部添加如下内容：
+
+#+BEGIN_EXAMPLE
+# GitHub Start
+192.30.253.112    Build software better, together
+192.30.253.119    gist.github.com
+151.101.184.133    assets-cdn.github.com
+151.101.184.133    raw.githubusercontent.com
+151.101.184.133    gist.githubusercontent.com
+151.101.184.133    cloud.githubusercontent.com
+151.101.184.133    camo.githubusercontent.com
+151.101.184.133	   avatars.githubusercontent.com
+# GitHub End
+#+END_EXAMPLE
+
+** vue/cli 3 切换为 dart-sass
+ [2021-01-06 Wed 17:55]
+
+首先，安装包 ：
+#+BEGIN_SRC sh -n
+  npm i sass sass-loader -D
+  # or
+  yarn add sass sass-loader -DE
+#+END_SRC
+
+然后，修改 =vue.config.js= ，增加如下配置：
+
+#+BEGIN_SRC js -n
+  module.exports = {
+    css: {
+      loaderOptions: {
+        sass: {
+          implementation: require('sass'), // This line must in sass option
+        },
+      },
+    }
+  //...
+  };
+#+END_SRC
+
 ** glob
  [2020-12-22 Tue 17:49]
 
