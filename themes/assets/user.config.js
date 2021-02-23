@@ -1,6 +1,5 @@
 // Config your info here
-
-const USERCONFIG = {
+export default {
     author: 'Jack Liu',
     weibo: '6867589681',
     wechat: 'bg/wechat.jpg',            // images/xxx
