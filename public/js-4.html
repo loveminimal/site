@@ -1,154 +1,154 @@
 <!DOCTYPE html>
 <html lang="zh">
-  <head>
-    <!-- 2021-02-23 Tue 11:11 -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>第四章 变量、作用域与内存</title>
-    <meta name="generator" content="Org mode">
-    <meta name="author" content="Jack Liu">
-    <link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
-    <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
-    <script type="module" src="/themes/main.js" defer></script>
-  </head>
-  <body>
-    <div id="content">
-      <h1 class="title">第四章 变量、作用域与内存</h1>
-      <div id="table-of-contents">
-        <h2>Table of Contents</h2>
-        <div id="text-table-of-contents">
-          <ul>
-            <li><a href="#org791096b">原始值与引用值</a>
-              <ul>
-                <li><a href="#orgf19c397">动态属性</a></li>
-                <li><a href="#orgacb7dfa">复制值</a></li>
-                <li><a href="#org875b97a">传递参数</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <blockquote>
-        <p>
-          本章内容：
-        </p>
-        <ul class="org-ul">
-          <li class="off">&#x2610; 通过变量使用原始值与引用值</li>
-          <li class="off">&#x2610; 理解执行上下文</li>
-          <li class="off">&#x2610; 理解垃圾回收</li>
-        </ul>
-      </blockquote>
+<head>
+<!-- 2021-02-23 Tue 14:31 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第四章 变量、作用域与内存</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
+           <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
+           <script type="module" src="/themes/main.js" defer></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">第四章 变量、作用域与内存</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org791096b">原始值与引用值</a>
+<ul>
+<li><a href="#orgf19c397">动态属性</a></li>
+<li><a href="#orgacb7dfa">复制值</a></li>
+<li><a href="#org875b97a">传递参数</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<blockquote>
+<p>
+本章内容：
+</p>
+<ul class="org-ul">
+<li class="off">&#x2610; 通过变量使用原始值与引用值</li>
+<li class="off">&#x2610; 理解执行上下文</li>
+<li class="off">&#x2610; 理解垃圾回收</li>
+</ul>
+</blockquote>
 
-      <p>
-        JavaScript 变量是松散类型的，而且变量不过就是特定时间点一个特定值的名称而已。由于没有规则定义变量必须包含什么数据类型，变量的值和数据类型在脚本生命期内可以改变。
-      </p>
+<p>
+JavaScript 变量是松散类型的，而且变量不过就是特定时间点一个特定值的名称而已。由于没有规则定义变量必须包含什么数据类型，变量的值和数据类型在脚本生命期内可以改变。
+</p>
 
-      <essay>
-        这样的变量很有意思，很强大，当然也有不少问题。
-      </essay>
+<essay>
+这样的变量很有意思，很强大，当然也有不少问题。
+</essay>
 
-      <div id="outline-container-org791096b" class="outline-2">
-        <h2 id="org791096b">原始值与引用值</h2>
-        <div class="outline-text-2" id="text-org791096b">
-          <p>
-            ES 变量可以包含两种不同类型的数据：原始值（primitive value）和引用值（reference value）。在把一个值赋给变量时，JavaScript 引擎必须确定这个值是原始值还是引用值。
-          </p>
+<div id="outline-container-org791096b" class="outline-2">
+<h2 id="org791096b">原始值与引用值</h2>
+<div class="outline-text-2" id="text-org791096b">
+<p>
+ES 变量可以包含两种不同类型的数据：原始值（primitive value）和引用值（reference value）。在把一个值赋给变量时，JavaScript 引擎必须确定这个值是原始值还是引用值。
+</p>
 
-          <p>
-            <span class="underline">原始值</span> ，就是最简单的数据，包括： <code>Undefined、Null、Boolean、Number、String</code> 和 <code>Symbol</code> 。保存原始值的变量是按值（by value）访问的，因为我们操作的就是存储在变量中的实际值。
-          </p>
+<p>
+<span class="underline">原始值</span> ，就是最简单的数据，包括： <code>Undefined、Null、Boolean、Number、String</code> 和 <code>Symbol</code> 。保存原始值的变量是按值（by value）访问的，因为我们操作的就是存储在变量中的实际值。
+</p>
 
-          <p>
-            <span class="underline">引用值</span> ，则是由多个值构成的对象，是保存在内存中对象。与其他语言不同，JavaScript 不允许直接访问内存位置，因此也就不能直接操作对象所在的内存空间。在操作对象时，实际操作的是对该对象的引用（reference）而非实际的对象本身。为此，保存引用值的变量是按引用（by reference）访问的。
-          </p>
+<p>
+<span class="underline">引用值</span> ，则是由多个值构成的对象，是保存在内存中对象。与其他语言不同，JavaScript 不允许直接访问内存位置，因此也就不能直接操作对象所在的内存空间。在操作对象时，实际操作的是对该对象的引用（reference）而非实际的对象本身。为此，保存引用值的变量是按引用（by reference）访问的。
+</p>
 
-          <p>
-            *注：在很多语言中，字符串是使用对象表示的，因此被认为是引用类型。ES 打破了这个惯例。
-          </p>
-        </div>
+<p>
+*注：在很多语言中，字符串是使用对象表示的，因此被认为是引用类型。ES 打破了这个惯例。
+</p>
+</div>
 
-        <div id="outline-container-orgf19c397" class="outline-3">
-          <h3 id="orgf19c397">动态属性</h3>
-          <div class="outline-text-3" id="text-orgf19c397">
-            <p>
-              原始值和引用值的定义方式很类似，都是创建一个变量，然后给它赋一个值。不过，在变量保存了这个值之后，可以对这个值做什么，则大有不同。对于引用值而言，可以随时添加、修改和删除其属性和方法。而原始值不能有属性，尽管尝试给原始值添加属性不会报错。
-            </p>
+<div id="outline-container-orgf19c397" class="outline-3">
+<h3 id="orgf19c397">动态属性</h3>
+<div class="outline-text-3" id="text-orgf19c397">
+<p>
+原始值和引用值的定义方式很类似，都是创建一个变量，然后给它赋一个值。不过，在变量保存了这个值之后，可以对这个值做什么，则大有不同。对于引用值而言，可以随时添加、修改和删除其属性和方法。而原始值不能有属性，尽管尝试给原始值添加属性不会报错。
+</p>
 
-            <p>
-              <b>*注：只有引用值可以动态添加后面可以使用的属性。</b>
-            </p>
-          </div>
-        </div>
+<p>
+<b>*注：只有引用值可以动态添加后面可以使用的属性。</b>
+</p>
+</div>
+</div>
 
-        <div id="outline-container-orgacb7dfa" class="outline-3">
-          <h3 id="orgacb7dfa">复制值</h3>
-          <div class="outline-text-3" id="text-orgacb7dfa">
-            <p>
-              除了存储方式不同，原始值和引用值在通过变量复制时也有不同。
-            </p>
+<div id="outline-container-orgacb7dfa" class="outline-3">
+<h3 id="orgacb7dfa">复制值</h3>
+<div class="outline-text-3" id="text-orgacb7dfa">
+<p>
+除了存储方式不同，原始值和引用值在通过变量复制时也有不同。
+</p>
 
-            <p>
-              在通过变量把一个原始值赋值到另一个变量时，原始值会被复制到新变量的位置。这两个变量可以独立使用，互不干扰。
-            </p>
+<p>
+在通过变量把一个原始值赋值到另一个变量时，原始值会被复制到新变量的位置。这两个变量可以独立使用，互不干扰。
+</p>
 
-            <img
-              src="/images/js-1.jpg"
-              width="200"
-              height=""
-              style=""
-              title=""
-              />
+<img
+src="/images/js-1.jpg"
+width="200"
+height=""
+style=""
+title=""
+/>
 
-            <img
-              src="/images/js-2.jpg"
-              width="540"
-              height=""
-              style="float: right; margin-left: 8px;"
-              title=""
-              />
+<img
+src="/images/js-2.jpg"
+width="540"
+height=""
+style="float: right; margin-left: 8px;"
+title=""
+/>
 
-            <p>
-              在把引用值从一个变量赋值给另一个变量时，存储在变量中的值也会被复制到新变量所在的位置。区别在于，这里复制的值实际上是一个指针，它指向存储在堆内存中的对象。操作完成后，两个变量实际上指向的同一个对象，因此一个对象上面的变化会在另一个对象上反映出来。
-            </p>
-          </div>
-        </div>
+<p>
+在把引用值从一个变量赋值给另一个变量时，存储在变量中的值也会被复制到新变量所在的位置。区别在于，这里复制的值实际上是一个指针，它指向存储在堆内存中的对象。操作完成后，两个变量实际上指向的同一个对象，因此一个对象上面的变化会在另一个对象上反映出来。
+</p>
+</div>
+</div>
 
-        <div id="outline-container-org875b97a" class="outline-3">
-          <h3 id="org875b97a">传递参数</h3>
-          <div class="outline-text-3" id="text-org875b97a">
-            <p>
-              <b>ES 中所有函数的参数都是按值传递的。</b>
-            </p>
+<div id="outline-container-org875b97a" class="outline-3">
+<h3 id="org875b97a">传递参数</h3>
+<div class="outline-text-3" id="text-org875b97a">
+<p>
+<b>ES 中所有函数的参数都是按值传递的。</b>
+</p>
 
-            <p>
-              这意味着函数外的值会复制到函数内部的参数中，就像从一个变量复制到另一个变量一样。如果是原始值，那么就跟原始值变量的复制一样，如果是引用值，那么就跟引用值变量的复制一样。
-            </p>
+<p>
+这意味着函数外的值会复制到函数内部的参数中，就像从一个变量复制到另一个变量一样。如果是原始值，那么就跟原始值变量的复制一样，如果是引用值，那么就跟引用值变量的复制一样。
+</p>
 
-            <p>
-              在按值传递参数时，值会被复制到一个局部变量（即一个命名参数，就是 <code>arguments</code> 对象的中的一个槽位）。在按引用传递参数时，值在内存中的置会被保存在一个局部变量，这意味着对本地变量的修改会反映到函数外部。
-            </p>
+<p>
+在按值传递参数时，值会被复制到一个局部变量（即一个命名参数，就是 <code>arguments</code> 对象的中的一个槽位）。在按引用传递参数时，值在内存中的置会被保存在一个局部变量，这意味着对本地变量的修改会反映到函数外部。
+</p>
 
-            <div class="org-src-container">
-              <pre class="src src-js"><span class="linenr">1: </span><span style="color: #e45649;">function</span> <span style="color: #a626a4;">addTen</span><span style="color: #4078f2;">(</span><span style="color: #6a1868;">num</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr">2: </span>    num += 10
-                <span class="linenr">3: </span>    <span style="color: #e45649;">return</span> num
-                <span class="linenr">4: </span><span style="color: #4078f2;">}</span>
-                <span class="linenr">5: </span>
-                <span class="linenr">6: </span><span style="color: #e45649;">let</span> <span style="color: #6a1868;">count</span> = 20
-                <span class="linenr">7: </span><span style="color: #e45649;">let</span> <span style="color: #6a1868;">result</span> = addTen<span style="color: #4078f2;">(</span>count<span style="color: #4078f2;">)</span>
-                <span class="linenr">8: </span>console.log<span style="color: #4078f2;">(</span>count<span style="color: #4078f2;">)</span>              <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 20 &#27809;&#26377;&#21464;&#21270;</span>
-                <span class="linenr">9: </span>console.log<span style="color: #4078f2;">(</span>result<span style="color: #4078f2;">)</span>             <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 30</span>
-              </pre>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="postamble" class="status">
-      <p class="date">Date: 2020-12-17 Thu 17:54</p>
-      <p class="author">Author: Jack Liu</p>
-      <p class="date">Created: 2021-02-23 Tue 11:11</p>
-      <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
-    </div>
-  </body>
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr">1: </span><span style="color: #e45649;">function</span> <span style="color: #a626a4;">addTen</span><span style="color: #4078f2;">(</span><span style="color: #6a1868;">num</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">2: </span>    num += 10
+<span class="linenr">3: </span>    <span style="color: #e45649;">return</span> num
+<span class="linenr">4: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">5: </span>
+<span class="linenr">6: </span><span style="color: #e45649;">let</span> <span style="color: #6a1868;">count</span> = 20
+<span class="linenr">7: </span><span style="color: #e45649;">let</span> <span style="color: #6a1868;">result</span> = addTen<span style="color: #4078f2;">(</span>count<span style="color: #4078f2;">)</span>
+<span class="linenr">8: </span>console.log<span style="color: #4078f2;">(</span>count<span style="color: #4078f2;">)</span>              <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 20 &#27809;&#26377;&#21464;&#21270;</span>
+<span class="linenr">9: </span>console.log<span style="color: #4078f2;">(</span>result<span style="color: #4078f2;">)</span>             <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 30</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-12-17 Thu 17:54</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2021-02-23 Tue 14:31</p>
+<p class="validation"><a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a></p>
+</div>
+</body>
 </html>

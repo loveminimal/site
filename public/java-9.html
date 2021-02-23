@@ -1,1309 +1,1309 @@
 <!DOCTYPE html>
 <html lang="zh">
-  <head>
-    <!-- 2021-02-23 Tue 11:11 -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>继承和多态</title>
-    <meta name="generator" content="Org mode">
-    <meta name="author" content="Jack Liu">
-    <link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
-    <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
-    <script type="module" src="/themes/main.js" defer></script>
-  </head>
-  <body>
-    <div id="content">
-      <h1 class="title">继承和多态</h1>
-      <div id="table-of-contents">
-        <h2>Table of Contents</h2>
-        <div id="text-table-of-contents">
-          <ul>
-            <li><a href="#orgeb24163">封装</a></li>
-            <li><a href="#orgd64e3eb">继承</a>
-              <ul>
-                <li><a href="#org9fc532e">单继承</a></li>
-                <li><a href="#orgb8215bf">super</a></li>
-                <li><a href="#orgde9684a">对象类型转型</a></li>
-                <li><a href="#org982bfb4">方法重载</a></li>
-                <li><a href="#org05d6fcd">方法重写</a></li>
-              </ul>
-            </li>
-            <li><a href="#org813ecc5">多态</a></li>
-            <li><a href="#orgb079907">抽象类</a></li>
-            <li><a href="#org9b3bd5b">接口</a>
-              <ul>
-                <li><a href="#org4d2e2b5">定义接口</a></li>
-                <li><a href="#orgae6e33d">实现接口</a></li>
-              </ul>
-            </li>
-            <li><a href="#org512867b"><span class="todo TODO">TODO</span> 内部类</a></li>
-            <li><a href="#org5011d08"><span class="todo TODO">TODO</span> 匿名类</a></li>
-            <li><a href="#org6b7c8d9">Lambda 表达式</a></li>
-          </ul>
-        </div>
-      </div>
-      <p>
-        继承机制的使用可以复用一些定义好的类，减少重复代码的编写。多态机制可以动态调整对象的调用，降低对象之间的依存关系。
-      </p>
-
-      <div id="outline-container-orgeb24163" class="outline-2">
-        <h2 id="orgeb24163">封装</h2>
-        <div class="outline-text-2" id="text-orgeb24163">
-          <p>
-            封装将类的某个信息隐藏在类内部，不允许外部程序直接访问，只能通过该类提供的方法来实现对隐藏信息的操作和访问。
-          </p>
-
-          <blockquote>
-            <p>
-              例如：一台计算机内部极其复杂，有主板、CPU、硬盘和内存，而一般用户不需要了解它的内部细节，不需要知道主板的型号、CPU 主频、硬盘和内存的大小，于是计算机制造商将用机箱把计算机封装起来，对外提供了一些接口，如鼠标、键盘和显示器等，方便用户使用计算机。
-            </p>
-          </blockquote>
-
-          <p>
-            封装的特点：
-          </p>
-          <ul class="org-ul">
-            <li>只能通过规定的方法访问数据；</li>
-            <li>隐藏类的实例细节，方便修改和实现。</li>
-          </ul>
-
-          <p>
-            实现封装的具体步骤如下：
-          </p>
-          <ol class="org-ol">
-            <li>修改属性的可见性来限制对属性的访问，一般设为 <code>private</code> ；</li>
-            <li>为每个属性创建一对赋值（ <code>setter</code> ）方法和取值（ <code>getter</code> ）方法，一般设为 <code>public</code> ，用于属性的读写；</li>
-            <li>在赋值和取值方法中，加入属性控制语句（对属性值的合法性进行判断）。</li>
-          </ol>
-
-          <p>
-            下面我们来看一个完整的例子，要求编写表示图书的 <code>Book</code> 类，实现以下需求：
-          </p>
-          <ul class="org-ul">
-            <li>基本信息包括图书名称（ <code>bookName</code> ）、总页数（ <code>bookTotalNum</code> ），其中页数不能少于 200 页，否则输出错误信息，并赋予默认值 200 ；</li>
-            <li>为各个属性设置赋值和取值方法；</li>
-            <li>具有 <code>details()</code> 方法，该方法在控制台输出每本图书的名称和总页数。</li>
-          </ul>
-
-          <p>
-            编写 <code>BookTest</code> 测试类，为 <code>Book</code> 对象的属性赋予初始值，并调用 <code>details()</code> 方法输出详细信息。
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Book</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr"> 2: </span>    <span style="color: #e45649;">private</span> <span style="color: #986801;">String</span> <span style="color: #6a1868;">bookName</span>;
-              <span class="linenr"> 3: </span>    <span style="color: #e45649;">private</span> <span style="color: #986801;">int</span> <span style="color: #6a1868;">bookTotalNum</span>;
-              <span class="linenr"> 4: </span>
-              <span class="linenr"> 5: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">String</span> <span style="color: #a626a4;">getBookName</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr"> 6: </span>        <span style="color: #e45649;">return</span> bookName;
-              <span class="linenr"> 7: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr"> 8: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">setBookName</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span> <span style="color: #6a1868;">bookName</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr"> 9: </span>        <span style="color: #e45649;">this</span>.bookName = bookName;
-              <span class="linenr">10: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr">11: </span>
-              <span class="linenr">12: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #a626a4;">getBookTotalNum</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr">13: </span>        <span style="color: #e45649;">return</span> bookTotalNum
-              <span class="linenr">14: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr">15: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">setBookTotalNum</span><span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">bookTotalNum</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr">16: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>bookTotalNum &lt; 200<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
-              <span class="linenr">17: </span>            System.out.println<span style="color: #da8548;">(</span><span style="color: #e45649;">this</span>.bookName + <span style="color: #50a14f;">"&#36825;&#26412;&#20070;&#30340;&#39029;&#25968;&#19981;&#33021;&#23569;&#20110; 200 &#39029;"</span><span style="color: #da8548;">)</span>;
-              <span class="linenr">18: </span>            <span style="color: #e45649;">this</span>.bookTotalNum = 200;
-              <span class="linenr">19: </span>        <span style="color: #50a14f;">}</span> <span style="color: #e45649;">else</span> <span style="color: #50a14f;">{</span>
-              <span class="linenr">20: </span>            <span style="color: #e45649;">this</span>.bookTotalNum = bookTotalNum;
-              <span class="linenr">21: </span>        <span style="color: #50a14f;">}</span>
-              <span class="linenr">22: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr">23: </span>
-              <span class="linenr">24: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">details</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr">25: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #e45649;">this</span>.bookName + <span style="color: #50a14f;">"&#36825;&#26412;&#20070;&#30340;&#24635;&#39029;&#25968;&#26159;&#65306;"</span> + <span style="color: #e45649;">this</span>.bookTotalNum<span style="color: #50a14f;">)</span>;
-              <span class="linenr">26: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr">27: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
-
-          <p>
-            测试类如下：
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">BookTest</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr"> 3: </span>        <span style="color: #986801;">Book</span> <span style="color: #6a1868;">book1</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Book</span><span style="color: #50a14f;">()</span>;
-              <span class="linenr"> 4: </span>        book1.setBookName<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#12298;&#32418;&#19982;&#40657;&#12299;"</span><span style="color: #50a14f;">)</span>;
-              <span class="linenr"> 5: </span>        book1.setBookTotalNum<span style="color: #50a14f;">(</span>190<span style="color: #50a14f;">)</span>;
-              <span class="linenr"> 6: </span>        book1.details<span style="color: #50a14f;">()</span>;
-              <span class="linenr"> 7: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"**********************"</span><span style="color: #50a14f;">)</span>;
-              <span class="linenr"> 8: </span>        <span style="color: #986801;">Book</span> <span style="color: #6a1868;">book2</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Book</span><span style="color: #50a14f;">()</span>;
-              <span class="linenr"> 9: </span>        book2.setBookName<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#12298;&#26684;&#26519;&#31461;&#35805;&#12299;"</span><span style="color: #50a14f;">)</span>;
-              <span class="linenr">10: </span>        book2.setBookTotalNum<span style="color: #50a14f;">(</span>520<span style="color: #50a14f;">)</span>;
-              <span class="linenr">11: </span>        book2.details<span style="color: #50a14f;">()</span>;
-              <span class="linenr">12: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr">13: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
-
-          <p>
-            代码执行结果如下：
-          </p>
-
-          <pre class="example">
-            《红与黑》这本书的页数不能少于 200 页
-            《红与黑》这本书的总页数是：200
-            ************************************
-            《格林童话》这本书的总页数是：520
-          </pre>
-        </div>
-      </div>
-
-      <div id="outline-container-orgd64e3eb" class="outline-2">
-        <h2 id="orgd64e3eb">继承</h2>
-        <div class="outline-text-2" id="text-orgd64e3eb">
-          <p>
-            Java 中的继承就是在已经存在类的基础上进行扩展，从而产生新的类。已经存在的类称为 <span class="underline">父类、基类或超类</span> ，而新产生的类称为 <span class="underline">子类或派生类</span> 。在子类中，不仅包含父类的属性和方法，还可以增加新的属性和方法。
-          </p>
-
-          <p>
-            Java 中子类继承父类的语法格式如下：
-          </p>
-
-          <pre class="example">
-            修饰符 class class_name extends extend_class {
-            //  类的主体
-            }
-          </pre>
-
-          <p>
-            其中， <code>class_name</code> 表示子类（派生类）的名称； <code>extend_class</code> 表示父类（基类）的名称； <code>extends</code> 关键字直接跟在子类名之后，其后面是该类要继承的父类的名称。
-          </p>
-
-          <blockquote>
-            <p>
-              Java 与 C++ 定义继承类的方式十分相似。Java 用关键字 <code>extends</code> 代替了 C++ 中的冒号（ <code>：</code> ）。在 Java 中，所有的继承都是公有继承， 而没有 C++ 中的私有继承和保护继承。
-            </p>
-          </blockquote>
-
-          <p>
-            类的继承不改变类成员的访问权限，也就是说，如果父类的成员是公有的、被保护的或默认的，它的子类仍具有相应的这些特性，并且子类不能获得父类的构造方法。
-          </p>
-
-          <p>
-            <b>*注：如果父类中存在有参的构造方法而并没有重载无参的构造方法，那么在子类中必须含有有参的构造方法。因为如果在子类中不含有构造方法，默认会调用父类中无参的构造方法，而在父类中并没有无参的构造方法，因此会出错。</b>
-          </p>
-        </div>
-
-        <div id="outline-container-org9fc532e" class="outline-3">
-          <h3 id="org9fc532e">单继承</h3>
-          <div class="outline-text-3" id="text-org9fc532e">
-            <p>
-              Java 语言摒弃了 C++ 中难以理解的多继承特征，即 Java 不支持多继承，只允许一个类直接继承另一个类，即子类只能有一个直接父类， <code>extends</code> 关键字后面只能有一个类名。
-            </p>
-
-            <p>
-              如果定义一个 Java 类时并未显示指定这个类的直接父类，则这个类默认继承 <code>java.lang.Object</code> 类。
-            </p>
-
-            <p>
-              使用继承的注意点：
-            </p>
-            <ul class="org-ul">
-              <li>子类一般比父类包含更多的属性和方法；</li>
-              <li>父类中的 <code>private</code> 成员在子类中是不可见的，因此在子类中不能直接使用它们；</li>
-              <li>父类和其子类间必须存在“是一个”即 <code>is-a</code> 的关系，否则不能用继承；</li>
-              <li>Java 只允许单一继承。</li>
-            </ul>
-
-            <p>
-              在面向对象语言中，继承是必不可少的、非常优秀的语言机制，它有如下优点：
-            </p>
-            <ul class="org-ul">
-              <li>实现代码共享，减少创建类的工作量，使子类可以拥有父类的方法和属性；</li>
-              <li>提高代码维护性和可重用性；</li>
-              <li>提高代码的可扩展性，更好的实现父类的方法。</li>
-            </ul>
-
-            <p>
-              所有事物有其好的一面，也有其不好的一面，继承的缺点如下：
-            </p>
-            <ul class="org-ul">
-              <li>继承是侵入性的，只要继承，就必须拥有父类的属性和方法；</li>
-              <li>降低代码灵活性，子类拥有父类的属性和方法后多了些约束；</li>
-              <li>增强代码耦合性（ <b>开发项目的原则为高内聚低耦合</b> ），当父类的常量、变量和方法被修改时，需要考虑子类的修改，有可能导致大段的代码重构。</li>
-            </ul>
-          </div>
-        </div>
-
-        <div id="outline-container-orgb8215bf" class="outline-3">
-          <h3 id="orgb8215bf">super</h3>
-          <div class="outline-text-3" id="text-orgb8215bf">
-            <p>
-              由于子类不能继承父类的构造方法，因此，如果要调用父类的构造方法，可以使用 <code>super</code> 关键字。 <code>super</code> 可以用来访问父类的构造方法、普通方法和属性。
-            </p>
-
-            <p>
-              <code>super</code> 关键字的功能：
-            </p>
-            <ul class="org-ul">
-              <li>在子类的构造方法中显示的调用父类构造方法；</li>
-              <li>访问父类的成员方法和变量。</li>
-            </ul>
-
-            <p>
-              <span class="underline">1. super 调用父类构造方法</span>
-            </p>
-
-            <p>
-              <code>super</code> 关键字可以在子类的构造方法中显式地调用父类的构造方法，基本格式如下：
-            </p>
-
-            <pre class="example">
-              super(parameter-list);
-            </pre>
-
-            <p>
-              其中， <code>parameter-list</code> 指定了父类构造方法中的所有参数。 <b><code>super()</code> 必须在子类构造方法的方法体的第一行。</b>
-            </p>
-
-            <p>
-              我们来看一段代码，声明父类 Person 和子类 Student ，在 Person 类中定义一个带有参数的构造方法，如下：
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Person</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr">2: </span>    <span style="color: #e45649;">public</span> <span style="color: #a626a4;">Person</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span> <span style="color: #6a1868;">name</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr">3: </span>
-                <span class="linenr">4: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">5: </span><span style="color: #4078f2;">}</span>
-                <span class="linenr">6: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Student</span> <span style="color: #e45649;">extends</span> <span style="color: #986801;">Person</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr">7: </span>
-                <span class="linenr">8: </span><span style="color: #4078f2;">}</span>
-              </pre>
-            </div>
-
-            <p>
-              上述代码会出现 <code>Student</code> 类的编译错误，提示必须显式定义构造方法，错误信息如下：
-            </p>
-
-            <pre class="example">
-              Implicit super constructor Person() is undefined for default constructor. Must define an explicit constructor.
-            </pre>
-
-            <p>
-              为什么会出现这个错误呢？
-            </p>
-
-            <p>
-              本例中，JVM 默认给 <code>Student</code> 类加了一个无参构造方法，而在这个方法中默认调用了 <code>super()</code> ，但是 Person 类中并不存在该构造方法，所以会编译错误。
-            </p>
-
-            <blockquote>
-              <p>
-                *小结一下：<br>
-                如果一个类中没有写任何的构造方法，JVM 会生成一个默认的无参构造方法。在继承关系中，由于在子类的构造方法中，第一条语句默认为调用父类的无参构造方法（即默认为 <code>super()</code> ，一般这行代码省略了）。所以当在父类中定义了有参构造方法，但是没有定义无参构造方法时，编译器会强制要求我们定义一个相同参数类型的构造方法。
-              </p>
-            </blockquote>
-
-            <p>
-              <span class="underline">2. super 访问父类成员</span>
-            </p>
-
-            <p>
-              当子类的成员变量或方法与父类同名时，可以使用 <code>super</code> 关键字来访问。
-            </p>
-
-            <p>
-              如果子类重写了父类的某一个方法，即子类和父类有相同的方法定义，但是有不同的方法体，此时，我们可能通过 <code>super</code> 来调用父类里面的这个方法。
-            </p>
-
-            <p>
-              <b>使用 super 访问父类中的成员与 this 关键字的使用类似，只不过它引用的是子类的父类</b> ，语法格式如下：
-            </p>
-
-            <pre class="example">
-              super.member
-            </pre>
-
-            <p>
-              <span class="underline">3. super 和 this 的区别</span>
-            </p>
-
-            <p>
-              <code>this</code> 指的是当前对象的引用， <code>super</code> 是当前对象的父对象的引用。如果构造方法的第一行代码不是 <code>this()</code> 和 <code>super()</code> ，则系统会默认添加 <code>super()</code> 。
-            </p>
-
-            <p>
-              关于 Java 中 <code>super</code> 和 <code>this</code> 关键字的异同，可简单总结为以下几条：
-            </p>
-
-            <p>
-              （1）子类和父类中变量或方法名称相同时，用 <code>super</code> 关键字来访问。可以理解为 <code>super</code> 是指向自己父类对象的一个指针，在子类中调用父类的构造方法。
-            </p>
-
-            <p>
-              （2） <code>this</code> 是自身的一个对象，代表对象本身，可以理解为 <code>this</code> 是指向对象本身的一个指针，在同一个类中调用其它方法。
-            </p>
-
-            <p>
-              （3） <code>this</code> 和 <code>super</code> 不能同时出现在一个构造方法里面，因为 <code>this</code> 必然会调用其它的构造方法，其它构造方法中肯定会有 <code>super</code> 语句存在，所以在同一个构造方法里面有相同的语句，就失去了语句的意义，编译器也不会通过。
-            </p>
-
-            <p>
-              （4） <code>this()</code> 和 <code>super()</code> 都指的是对象，所以，均不可以在 <code>static</code> 环境中使用，包括 <code>static</code> 变量、 <code>static</code> 方法和 <code>static</code> 语句块。
-            </p>
-
-            <p>
-              （5）从本质上讲， <code>this</code> 是一个指向对象本身的指针，然而 <code>super</code> 是一个 Java 关键字。
-            </p>
-          </div>
-        </div>
-
-        <div id="outline-container-orgde9684a" class="outline-3">
-          <h3 id="orgde9684a">对象类型转型</h3>
-          <div class="outline-text-3" id="text-orgde9684a">
-            <p>
-              将一个类型强制转换成另一个类型的过程被称为 <span class="underline">类型转型</span> ，这里所说的 <span class="underline">对象类型转型</span> ，是指 <b>存在继承关系</b> 的对象，不是任意类型的对象。当对不存在继承关系的对象进行强制类型转换时，会抛出 Java 强制类型转换（ <code>java.lang.ClassCastException</code> ）异常。
-            </p>
-
-            <p>
-              Java 语言允许某个类型的引用变量引用子类的实例，而且可以对这个变量进行转换。
-            </p>
-
-            <p>
-              Java 中引用类型之间的类型转换（前提是两个类是父子关系）主要有两种，分别的向上转型（upcasting）和向下转型（downcasting）。
-            </p>
-
-            <p>
-              （1）向上转型
-            </p>
-
-            <p>
-              父类引用指向子类对象为向上转型，语法格式如下：
-            </p>
-
-            <pre class="example">
-              fatherClass obj = new sonClass();
-            </pre>
-
-            <p>
-              其中， <code>fahterClass</code> 是父类名称或接口名称， <code>obj</code> 是创建的对象， <code>sonClass</code> 是子类名称。
-            </p>
-
-            <p>
-              向上转型就是把子类对象赋给父类引用，不用强制转换。使用向上转型可以调用父类类型中的所有成员， <b>不能调用子类类型中特有成员</b> ，最终运行效果看子类的具体实现。
-            </p>
-
-            <p>
-              （2）向下转型
-            </p>
-
-            <p>
-              与向上转型相反，子类对象指向父类引用向下转型，语法格式如下：
-            </p>
-
-            <pre class="example">
-              sonClass obj = (sonClass) fahterClass;
-            </pre>
-
-            <p>
-              向下转型可以调用子类类型中所有成员，不过需要注意的是：
-            </p>
-
-            <p>
-              如果父类引用对象指向的是子类对象，那么在向下转型的过程中是安全的，也就是编译是不会出错误。
-            </p>
-
-            <p>
-              但是如果父类引用对象是父类本身，那么在向下转型的过程中是不安全的，编译不会出错，但是运行时会出现我们开始提到的 Java 强制类型转换异常，一般使用 <code>instanceof</code> 运算符来避免出此类错误。
-            </p>
-
-            <p>
-              例如，Animal 类表示动物类，该类对应的子类有 Dog 类，使用对象类型表示如下：
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">Animal</span> <span style="color: #6a1868;">animal</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Dog</span><span style="color: #4078f2;">()</span>;      <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21521;&#19978;&#36716;&#22411;&#65292;&#25226; Dog &#31867;&#22411;&#36716;&#25442;&#20026; Animal &#31867;&#22411;</span>
-                <span class="linenr">2: </span><span style="color: #986801;">Dog</span> <span style="color: #6a1868;">dog</span> = <span style="color: #4078f2;">(</span><span style="color: #986801;">Dog</span><span style="color: #4078f2;">)</span> animal;         <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21521;&#19979;&#36716;&#22411;&#65292;&#25226; Animal &#31867;&#22411;&#36716;&#25442;&#20026; Dog &#31867;&#22411;</span>
-              </pre>
-            </div>
-
-            <p>
-              我们来看一个具体的示例演示对象类型的转换。例如，父类 Animal 和子类 Cat 中都定义了实例变量 <code>name</code> 、静态变量 <code>staicName</code> 、实例方法 <code>eat()</code> 和静态方法 <code>staticEat()</code> 。此外，子类 Cat 中还定义了实例变量 <code>str</code> 和实例方法 <code>eatMethod()</code> 。
-            </p>
-
-            <p>
-              父类 Animal 的代码如下：
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Animal</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">string</span> <span style="color: #6a1868;">name</span> = <span style="color: #50a14f;">"Animal: &#21160;&#29289;"</span>;
-                <span class="linenr"> 3: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">String</span> <span style="color: #6a1868;">staticName</span> = <span style="color: #50a14f;">"Animal: &#21487;&#29233;&#30340;&#21160;&#29289;"</span>;
-                <span class="linenr"> 4: </span>
-                <span class="linenr"> 5: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">eat</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr"> 6: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"Animal: &#21507;&#39277;"</span><span style="color: #50a14f;">)</span>;
-                <span class="linenr"> 7: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr"> 8: </span>
-                <span class="linenr"> 9: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">staticEat</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr">10: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"Animal: &#21160;&#29289;&#22312;&#21507;&#39277;"</span><span style="color: #50a14f;">)</span>;
-                <span class="linenr">11: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">12: </span><span style="color: #4078f2;">}</span>
-              </pre>
-            </div>
-
-            <p>
-              子类 Cat 的代码如下：
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Cat</span> <span style="color: #e45649;">extends</span> <span style="color: #986801;">Animal</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">String</span> <span style="color: #6a1868;">name</span> = <span style="color: #50a14f;">"Cat: &#29483;"</span>;
-                <span class="linenr"> 3: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">String</span> <span style="color: #6a1868;">str</span> = <span style="color: #50a14f;">"Cat: &#21487;&#29233;&#30340;&#23567;&#29483;"</span>;
-                <span class="linenr"> 4: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">String</span> <span style="color: #6a1868;">staticName</span> = <span style="color: #50a14f;">"Dog: &#25105;&#26159;&#21941;&#26143;&#20154;"</span>;
-                <span class="linenr"> 5: </span>
-                <span class="linenr"> 6: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">eat</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr"> 7: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"Cat: &#21507;&#39277;"</span><span style="color: #50a14f;">)</span>;
-                <span class="linenr"> 8: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr"> 9: </span>
-                <span class="linenr">10: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">staticEat</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr">11: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"Cat: &#29483;&#22312;&#21507;&#39277;"</span><span style="color: #50a14f;">)</span>;
-                <span class="linenr">12: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">13: </span>
-                <span class="linenr">14: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">eatMethod</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr">15: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"Cat: &#29483;&#21916;&#27426;&#21507;&#40060;"</span><span style="color: #50a14f;">)</span>;
-                <span class="linenr">16: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">17: </span>
-                <span class="linenr">18: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr">19: </span>        <span style="color: #986801;">Animal</span> <span style="color: #6a1868;">animal</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Cat</span><span style="color: #50a14f;">()</span>;
-                <span class="linenr">20: </span>        <span style="color: #986801;">Cat</span> <span style="color: #6a1868;">cat</span> = <span style="color: #50a14f;">(</span><span style="color: #986801;">Cat</span><span style="color: #50a14f;">)</span> animal;                <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21521;&#19979;&#36716;&#22411;</span>
-                <span class="linenr">21: </span>
-                <span class="linenr">22: </span>        System.out.println<span style="color: #50a14f;">(</span>animal.name<span style="color: #50a14f;">)</span>;       <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#36755;&#20986; Animal &#31867;&#30340; name &#21464;&#37327; &#8594; Animal: &#21160;&#29289;</span>
-                <span class="linenr">23: </span>        System.out.println<span style="color: #50a14f;">(</span>animal.staticName<span style="color: #50a14f;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#36755;&#20986; Animal &#31867;&#30340; staticName &#21464;&#37327; &#8594; Animal: &#21487;&#29233;&#30340;&#21160;&#29289;</span>
-                <span class="linenr">24: </span>
-                <span class="linenr">25: </span>        animal.eat<span style="color: #50a14f;">()</span>;                          <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#36755;&#20986; Cat &#31867;&#30340; eat() &#26041;&#27861; &#8594; Cat: &#21507;&#39277;</span>
-                <span class="linenr">26: </span>        animal.staticEat<span style="color: #50a14f;">()</span>;                    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#36755;&#20986; Animal &#31867;&#30340; staticEat() &#26041;&#27861; &#8594; Cat: &#21160;&#29289;&#22312;&#21507;&#39277;</span>
-                <span class="linenr">27: </span>
-                <span class="linenr">28: </span>        System.out.println<span style="color: #50a14f;">(</span>cat.str<span style="color: #50a14f;">)</span>;           <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; &#35843;&#29992; Cat &#31867;&#30340; str &#21464;&#37327; &#8594; Cat: &#21487;&#29233;&#30340;&#23567;&#29483;</span>
-                <span class="linenr">29: </span>        cat.eatMethod<span style="color: #50a14f;">()</span>;                       <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; &#35843;&#29992; Cat &#31867;&#30340; eatMethod &#21464;&#37327; &#8594; Cat: &#29483;&#21916;&#27426;&#21507;&#40060;</span>
-                <span class="linenr">30: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">31: </span><span style="color: #4078f2;">}</span>
-              </pre>
-            </div>
-
-            <p>
-              通过引用类型变量来访问所引用的属性和方法时，Java 虚拟机将采用以下绑定规则：
-            </p>
-            <ul class="org-ul">
-              <li>实例方法与引用变量实际引用的对象的方法进行绑定，这种绑定属于 <b>动态绑定</b> ，因为是在 <b>运行时</b> 由 Java 虚拟机动态决定的。例如， <code>animal.eat()</code> 是将 <code>eat()</code> 方法与 Cat 类相绑定；</li>
-              <li>静态方法与引用变量所声明的类型的方法绑定，这种绑定属于静态绑定，因为是在 <b>编译阶段</b> 已经做了绑定。例如， <code>animal.staticEat()</code> 是将 <code>staticEat()</code> 方法与 Animal 类进行绑定；</li>
-              <li>成员变量（包括静态变量和实例变量）与引用变量所声明的成员变量绑定，这种绑定属于静态绑定，因为在编译阶段已经做了绑定。例如， <code>animal.name</code> 和 <code>animal.staticName</code> 都是与 Animal 类进行绑定。</li>
-            </ul>
-          </div>
-        </div>
-
-        <div id="outline-container-org982bfb4" class="outline-3">
-          <h3 id="org982bfb4">方法重载</h3>
-          <div class="outline-text-3" id="text-org982bfb4">
-            <p>
-              Java 允许同一个类中定义多个同名方法，只要它们的形参列表不同即可。
-            </p>
-
-            <p>
-              <b>如果同一个类中包含了两个或两个以上方法名相同，但形参列表不同的方法，这种情况称为 <span class="underline">方法重载</span> （overload）。</b>
-            </p>
-
-            <p>
-              如：在 JDK 的 <code>java.io.PrintStream</code> 中定义了十多个同名的 <code>println()</code> 方法。
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">println</span><span style="color: #4078f2;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">i</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span> ... <span style="color: #4078f2;">}</span>
-                <span class="linenr">2: </span><span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">println</span><span style="color: #4078f2;">(</span><span style="color: #986801;">double</span> <span style="color: #6a1868;">d</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span> ... <span style="color: #4078f2;">}</span>
-                <span class="linenr">3: </span><span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">println</span><span style="color: #4078f2;">(</span><span style="color: #986801;">String</span> <span style="color: #6a1868;">s</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span> ... <span style="color: #4078f2;">}</span>
-              </pre>
-            </div>
-
-            <p>
-              这些方法完成的功能类似，都是格式化输出。根据参数的不同来区分它们，以进行不同的格式化处理和输出。它们之间就构成了方法的重载。实际调用时，根据实参的类型来决定调用哪一个方法。
-            </p>
-
-            <p>
-              *注：方法重载的要求是两同一不同：同一个类中方法名相同，参数列表不同。至于方法的其他部分，如方法返回值、修饰符等，与方法重载没有任何关系。
-            </p>
-
-            <blockquote>
-              <p>
-                使用方法重载其实就是避免出现繁多的方法名，有些方法的功能是相似的，如果重新建立一个方法，重新取个方法名称，会降低程序可读性。
-              </p>
-            </blockquote>
-
-            <essay>
-              方法重载，其实就是同类同名不同参啦，别的木有什么要求。
-            </essay>
-          </div>
-        </div>
-
-        <div id="outline-container-org05d6fcd" class="outline-3">
-          <h3 id="org05d6fcd">方法重写</h3>
-          <div class="outline-text-3" id="text-org05d6fcd">
-            <p>
-              在子类中如果创建一个与父类中相同名称、相同返回值类型、相同参数列表的方法，只是方法体中的实现不同，以实现不同于父类的功能，这种方式被称为 <span class="underline">方法重写</span> （override），又称为方法覆盖。
-            </p>
-
-            <p>
-              当父类中的方法无法满足子类需求或子类具有特有功能的时候，就需要方法重写。子类可以根据需要，定义特定于自己的行为。既沿袭了父类的功能名称，又根据子类的需要重新实现父类方法，从而进行扩展增强。
-            </p>
-
-            <p>
-              在重写方法时，需要遵循下面的规则：
-            </p>
-            <ul class="org-ul">
-              <li>参数列表必须完全与被重写的方法参数列表相同；</li>
-              <li>返回的类型必须与重写的方法的返回类型相同（Java 1.5 之后放宽了限制，返回值类型必须小于或等于父类方法的返回值类型）；</li>
-              <li>访问权限不能比父类中被重写方法的访问权限更低（public &gt; protected &gt; default &gt; private）；</li>
-              <li>重写方法一定不能抛出新的检查异常或者比被重写方法声明更加宽泛的检查型异常。例如，父类的一个方法声明了一个检查异常 <code>IOException</code> ，在重写这个方法时就不能抛出 <code>Exception</code> ，只能抛出 <code>IOExeption</code> 的子类异常，可以抛出非检查异常。</li>
-            </ul>
-
-            <p>
-              另外还要注意以下几条：
-            </p>
-            <ul class="org-ul">
-              <li>重写的方法可以使用 <code>@Override</code> 注解来标识；</li>
-              <li>父类的成员方法只能被它的子类重写；</li>
-              <li>声明为 <code>final</code> 的方法不能被重写；</li>
-              <li>声明为 <code>static</code> 的方法不能被重写，但是能够再再次声明；</li>
-              <li>构造方法不能被重写；</li>
-              <li>子类和父类在同一个包中时，子类可以重写父类的所有方法，除了声明为 <code>private</code> 和 <code>final</code> 的方法；</li>
-              <li>子类和父类不在同一个包中时，子类只能重写父类的声明为 <code>public</code> 和 <code>protected</code> 的非 <code>final</code> 方法；</li>
-              <li>如果不能继承一个方法，则不能重写这个方法。</li>
-            </ul>
-
-            <p>
-              如果子类中创建了一个成员变量，而该变量的类型和名称都与父类中的同名成员变量相同，我们则称作变量隐藏。
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div id="outline-container-org813ecc5" class="outline-2">
-        <h2 id="org813ecc5">多态</h2>
-        <div class="outline-text-2" id="text-org813ecc5">
-          <p>
-            多态性是面向对象编程的又一个重要特征，它是指在父类中定义的属性和方法被子类继承之后，可以具有不同的数据类型或表现出不同的行为，这使得同一个属性或方法在父类及其各个子类中具有不同的含义。
-          </p>
-
-          <p>
-            <b>对面向对象来说，多态分为编译时多态和运行时多态。</b>
-          </p>
-
-          <p>
-            其中：
-          </p>
-          <ul class="org-ul">
-            <li>编译时多态是静态的，主要是指方法的重载，它是根据参数列表的不同来区分不同的方法。通过编译之后会变成两个不同的方法，在运行时谈不上多态；</li>
-            <li>运行时多态是动态的，它是通过动态绑定来实现的，也就是大家通常所说的多态性。</li>
-          </ul>
-
-          <p>
-            <b>Java 实现多态有 3 个必要的条件：继承、重写和向上转型。</b>
-          </p>
-          <ul class="org-ul">
-            <li>继承：在多态中必须存在有继承关系的子类和父类；</li>
-            <li>重写：子类对父类中某些方法进行重新定义，在调用这些方法时变会调用子类的方法；</li>
-            <li>向上转型：在多态中需要将子类的引用赋给父类对象，只有这们该引用才既能可以调用父类的方法，又能调用子类的方法。</li>
-          </ul>
-
-          <p>
-            只有满足这 3 个条件，开发人员才能够在同一个继承结构中使用统一的逻辑实现代码处理不同的对象，从而执行不同的行为。
-          </p>
-
-          <p>
-            <span class="underline">#. intanceof 关键字</span>
-          </p>
-
-          <p>
-            在 Java 中可以用 <code>instanceof</code> 关键字判断一个对象是否为一个类（或接口、抽象类、父类）的实例，语法格式如下：
-          </p>
-
-          <pre class="example">
-            boolean result = obj instanceof Class
-          </pre>
-
-          <p>
-            其中， <code>obj</code> 是一个对象， <code>Class</code> 表示一个类或接口， <code>obj</code> 是 class 类（或接口）的实例或者子类实例时，结果 <code>result</code> 返回 <code>true</code> ，否则返回 <code>false</code> 。
-          </p>
-
-          <p>
-            下面介绍 Java <code>instanceof</code> 关键字的几种用法。
-          </p>
-
-          <p>
-            （1）声明一个 class 类的对象，判断 <code>obj</code> 是否为 class 类的实例对象（很普遍的一种用法），如下：
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">Integer</span> <span style="color: #6a1868;">integer</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Integer</span><span style="color: #4078f2;">(</span>1<span style="color: #4078f2;">)</span>;
-              <span class="linenr">2: </span>System.out.println<span style="color: #4078f2;">(</span>integer <span style="color: #e45649;">instanceof</span> Integer<span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">true</span>
-            </pre>
-          </div>
-
-          <p>
-            （2）声明一个 class 接口实现类的对象 <code>obj</code> ，判断 <code>obj</code> 是否为 class 接口实现类的实例对象，如下：
-          </p>
-
-          <p>
-            Java 集合中的 List 接口有个典型实现类 <code>ArrayList</code> 。
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">ArrayList</span><span style="color: #4078f2;">&lt;</span><span style="color: #986801;">E</span><span style="color: #4078f2;">&gt;</span> <span style="color: #e45649;">extends</span> <span style="color: #986801;">AbstractList</span><span style="color: #4078f2;">&lt;</span><span style="color: #986801;">E</span><span style="color: #4078f2;">&gt;</span>
-              <span class="linenr">2: </span>    <span style="color: #e45649;">implements</span> <span style="color: #986801;">List</span><span style="color: #4078f2;">&lt;</span><span style="color: #986801;">E</span><span style="color: #4078f2;">&gt;</span>, <span style="color: #986801;">RandomAccess</span>, <span style="color: #986801;">Cloneable</span>, <span style="color: #b751b6;">java</span>.<span style="color: #b751b6;">io</span>.<span style="color: #986801;">Serializable</span>
-            </pre>
-          </div>
-
-          <p>
-            所以我们可以用 <code>instanceof</code> 运算符判断 <code>ArrayList</code> 类的对象是否属于 <code>List</code> 接口的实例，如果是返回 <code>true</code> ，否则返回 <code>false</code> 。
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">ArrayList</span> <span style="color: #6a1868;">arrayList</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">ArrayList</span><span style="color: #4078f2;">()</span>;
-              <span class="linenr">2: </span>System.out.println<span style="color: #4078f2;">(</span>arrayList <span style="color: #e45649;">instanceof</span> List<span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">true</span>
-              <span class="linenr">3: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21453;&#36807;&#26469;&#20063;&#26159; true</span>
-              <span class="linenr">4: </span><span style="color: #986801;">List</span> <span style="color: #6a1868;">list</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">ArrayList</span><span style="color: #4078f2;">()</span>;
-              <span class="linenr">5: </span>System.out.println<span style="color: #4078f2;">(</span>list <span style="color: #e45649;">instanceof</span> ArrayList<span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">true</span>
-            </pre>
-          </div>
-
-          <p>
-            （3）obj 是 class 类的直接或间接子类
-          </p>
-
-          <p>
-            假设 Man 类是 Person 类的子类，代码如下：
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">Person</span> <span style="color: #6a1868;">p1</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Person</span><span style="color: #4078f2;">()</span>;
-              <span class="linenr">2: </span><span style="color: #986801;">Person</span> <span style="color: #6a1868;">p2</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Man</span><span style="color: #4078f2;">()</span>;
-              <span class="linenr">3: </span><span style="color: #986801;">Man</span> <span style="color: #6a1868;">m1</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Man</span><span style="color: #4078f2;">()</span>;
-              <span class="linenr">4: </span>System.out.println<span style="color: #4078f2;">(</span>p1 <span style="color: #e45649;">instanceof</span> Man<span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; false</span>
-              <span class="linenr">5: </span>System.out.println<span style="color: #4078f2;">(</span>p2 <span style="color: #e45649;">instanceof</span> Man<span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; true</span>
-              <span class="linenr">6: </span>System.out.println<span style="color: #4078f2;">(</span>m1 <span style="color: #e45649;">instanceof</span> Man<span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; true</span>
-            </pre>
-          </div>
-
-          <p>
-            其中第 4 行，Man 是 Person 的子类，Person 不是 Man 的子类，所以返回结果为 <code>false</code> 。
-          </p>
-
-          <p>
-            <b>*注： obj 必须为引用类型，不能是基本类型。</b>
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">int</span> <span style="color: #6a1868;">i</span> = 0;
-              <span class="linenr">2: </span>System.out.println<span style="color: #4078f2;">(</span>i <span style="color: #e45649;">instanceof</span> Integer<span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#32534;&#35793;&#19981;&#36890;&#36807;</span>
-              <span class="linenr">3: </span>System.out.println<span style="color: #4078f2;">(</span>i <span style="color: #e45649;">instanceof</span> Object<span style="color: #4078f2;">)</span>;  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#32534;&#35793;&#19981;&#36890;&#36807;</span>
-            </pre>
-          </div>
-
-          <p>
-            所以， <code>instanceof</code> 运算符只能用作对象的判断。
-          </p>
-
-          <p>
-            当 <code>obj</code> 为 <code>null</code> 时，直接返回 <code>false</code> ，因为 <code>null</code> 没有引用任何对象，所以 <code>obj</code> 的类型必须是引用类型或空类型，否则会编译错误。
-          </p>
-
-          <p>
-            另外，当 <code>class</code> 为 <code>null</code> 时，会发生编译错误，如下：
-          </p>
-
-          <pre class="example">
-            Syntax error on token "null", invalid ReferenceType
-          </pre>
-
-          <p>
-            所以， <code>class</code> 只能是类或者接口。
-          </p>
-
-          <p>
-            编译器会检查 <code>obj</code> 能否转换成右边的 class 类型，如果不能转换则直接报错，如果不能确定类型，则通过编译。来看个例子：
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">Person</span> <span style="color: #6a1868;">p1</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Person</span><span style="color: #4078f2;">()</span>;
-              <span class="linenr">2: </span>System.out.println<span style="color: #4078f2;">(</span>p1 <span style="color: #e45649;">instanceof</span> String<span style="color: #4078f2;">)</span>;       <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#32534;&#35793;&#25253;&#38169;</span>
-              <span class="linenr">3: </span>System.out.println<span style="color: #4078f2;">(</span>p1 <span style="color: #e45649;">instanceof</span> List<span style="color: #4078f2;">)</span>;         <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">false</span>
-              <span class="linenr">4: </span>System.out.println<span style="color: #4078f2;">(</span>p1 <span style="color: #e45649;">instanceof</span> <span style="color: #986801;">List</span><span style="color: #a626a4;">&lt;</span>?<span style="color: #a626a4;">&gt;</span><span style="color: #4078f2;">)</span>;      <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">false</span>
-              <span class="linenr">5: </span>System.out.println<span style="color: #4078f2;">(</span>p1 <span style="color: #e45649;">instanceof</span> <span style="color: #986801;">List</span><span style="color: #a626a4;">&lt;</span><span style="color: #986801;">Person</span><span style="color: #a626a4;">&gt;</span><span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#32534;&#35793;&#38169;&#35823;</span>
-            </pre>
-          </div>
-
-          <p>
-            上述代码中， <code>Person</code> 的对象 <code>p1</code> 很明显不能转换为 <code>String</code> 对象，那么 <code>p1 instanceof String</code> 不能通过编译，但 <code>p1 instanceof List</code> 却能通过编译，而 <code>instanceof List&lt;Person&gt;</code> 又不能通过编译了。
-          </p>
-
-          <p>
-            为什么呢？
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #986801;">boolean</span> <span style="color: #6a1868;">result</span>;
-              <span class="linenr"> 2: </span><span style="color: #e45649;">if</span> <span style="color: #4078f2;">(</span>obj == <span style="color: #b751b6;">null</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr"> 3: </span>    result = <span style="color: #b751b6;">false</span>;             <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#24403; obj &#20026; null &#26102;&#65292;&#30452;&#25509;&#36820;&#22238; false</span>
-              <span class="linenr"> 4: </span><span style="color: #4078f2;">}</span> <span style="color: #e45649;">else</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr"> 5: </span>    <span style="color: #e45649;">try</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr"> 6: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21028;&#26029; obj &#26159;&#21542;&#21487;&#20197;&#24378;&#21046;&#36716;&#25442;&#20026; T</span>
-              <span class="linenr"> 7: </span>        <span style="color: #986801;">T</span> <span style="color: #6a1868;">temp</span> = <span style="color: #50a14f;">(</span><span style="color: #986801;">T</span><span style="color: #50a14f;">)</span> obj;
-              <span class="linenr"> 8: </span>        result = <span style="color: #b751b6;">true</span>;
-              <span class="linenr"> 9: </span>    <span style="color: #a626a4;">}</span> <span style="color: #e45649;">catch</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">ClassCastException</span> <span style="color: #6a1868;">e</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr">10: </span>        result = <span style="color: #b751b6;">false</span>;
-              <span class="linenr">11: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr">12: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
-
-          <p>
-            可见，在 <code>T</code> 不为 <code>null</code> 和 <code>obj</code> 不为 <code>null</code> 时，如果 <code>obj</code> 可以转换为 <code>T</code> 而不引发异常（ <code>ClassCastException</code> ），则该表达式的结果为 <code>true</code> ，否则值为 <code>false</code> 。
-          </p>
-
-          <p>
-            由此，可见， <code>p1 instanceof String</code> 会报编译错误，就是因为 <code>(String) p1</code> 是不能通过编译的，而 <code>(List) p1</code>   可以通过编译。
-          </p>
-        </div>
-      </div>
-
-      <div id="outline-container-orgb079907" class="outline-2">
-        <h2 id="orgb079907">抽象类</h2>
-        <div class="outline-text-2" id="text-orgb079907">
-          <p>
-            Java 语言提供了两种类，分别为具体类和抽象类。
-          </p>
-
-          <p>
-            在面向对象的概念中，所有的对象都是通过类来描绘的，但是反过来， <b>并不是所有的类都是用来描绘对象的</b> ，如果一个类中没有包含足够的信息来描绘一个具体的对象，那么这样的类称为 <span class="underline">抽象类</span> 。
-          </p>
-
-          <p>
-            在 Java 中抽象类的语法格式如下：
-          </p>
-
-          <pre class="example">
-            &lt;abstract&gt; class &lt;class_name&gt; {
-            &lt;abstract&gt; &lt;type&gt; &lt;method_name&gt; (parameter-list);
-            }
-          </pre>
-
-          <p>
-            如果一个方法使用 <code>abstract</code> 来修饰，则说明该方法是 <span class="underline">抽象方法</span> ，抽象方法只有声明没有实现。
-          </p>
-
-          <p>
-            *注：需要注意的是 <code>abstract</code> 关键字只能用于普通方法，不能用于 <code>static</code> 方法或者构造方法中。
-          </p>
-
-          <essay>
-            因为，静态方法和构造方法都是要用来使用和实现的，抽象方法只有声明没有实现，肯定是不行的啊。
-          </essay>
-
-          <p>
-            抽象方法的 3 个特征如下：
-          </p>
-          <ol class="org-ol">
-            <li>抽象方法没有方法体；</li>
-            <li>抽象方法必须存在于抽象类中；</li>
-            <li>子类重写父类时，必须重写父类的所有的抽象方法。</li>
-          </ol>
-
-          <p>
-            *注：在使用 <code>abstract</code> 关键字修饰抽象方法时不能使用 <code>private</code> 修饰，因为抽象方法必须被子类重写。
-          </p>
-
-          <p>
-            抽象类的定义和使用规则如下：
-          </p>
-          <ul class="org-ul">
-            <li>抽象类和抽象方法都要使用 <code>abstract</code> 关键字声明；</li>
-            <li>如果一个方法被声明为抽象的，那么这个类也必须声明为抽象的，而一个抽象类中，也可以包含具体方法；</li>
-            <li>抽象类不能被实例化，也就是不能使用 <code>new</code> 关键字创建对象。</li>
-          </ul>
-
-          <p>
-            来看一个具体的例子吧。
-          </p>
-
-          <p>
-            不同几何图形的面积计算公式是不同的，但是它们具有的特性是相同的，都具有长和宽这两个属性，也都具有面积计算的方法。那么可以定义一个抽象类，在该抽象类中含有两个属性（ <code>width</code> 和 <code>height</code> ）和一个抽象方法 <code>area()</code> ，具体步骤如下：
-          </p>
-
-          <p>
-            （1）首先创建一个表示图形的抽象类 Shape ，代码如下：
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">abstract</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Shape</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #6a1868;">width</span>;             <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23485;</span>
-              <span class="linenr"> 3: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #6a1868;">height</span>;            <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#39640;</span>
-              <span class="linenr"> 4: </span>
-              <span class="linenr"> 5: </span>    <span style="color: #e45649;">public</span> <span style="color: #a626a4;">Shape</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">width</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">height</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr"> 6: </span>        <span style="color: #e45649;">this</span>.width = width;
-              <span class="linenr"> 7: </span>        <span style="color: #e45649;">this</span>.height = height;
-              <span class="linenr"> 8: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr"> 9: </span>
-              <span class="linenr">10: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">abstract</span> <span style="color: #986801;">double</span> <span style="color: #a626a4;">area</span><span style="color: #a626a4;">()</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23450;&#20041;&#25277;&#35937;&#26041;&#27861;&#65292;&#35745;&#31639;&#38754;&#31215;</span>
-              <span class="linenr">11: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
-
-          <p>
-            （2）定义一个正方形类，该类继承自形状类 Shape ，并重写了 <code>area()</code> 抽象方法，代码如下：
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Square</span> <span style="color: #e45649;">extends</span> <span style="color: #986801;">Shape</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #a626a4;">Square</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">width</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">height</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr"> 3: </span>        <span style="color: #e45649;">super</span><span style="color: #50a14f;">(</span>width, height<span style="color: #50a14f;">)</span>;
-              <span class="linenr"> 4: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr"> 5: </span>
-              <span class="linenr"> 6: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#37325;&#20889;&#29238;&#31867;&#20013;&#30340;&#25277;&#35937;&#26041;&#27861;&#65292;&#23454;&#29616;&#35745;&#31639;&#27491;&#26041;&#24418;&#38754;&#31215;&#30340;&#21151;&#33021;</span>
-              <span class="linenr"> 7: </span>    <span style="color: #b751b6;">@Override</span>
-              <span class="linenr"> 8: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">double</span> <span style="color: #a626a4;">area</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr"> 9: </span>        <span style="color: #e45649;">return</span> width * height;
-              <span class="linenr">10: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr">11: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
-
-          <p>
-            （3）定义一个三角形，也继承自形状类 Shape ，并重写父类中的抽象方法 <code>area()</code> ，代码如下：
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Triangle</span> <span style="color: #e45649;">extends</span> <span style="color: #986801;">Shape</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #a626a4;">Triangle</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">width</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">height</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr"> 3: </span>        <span style="color: #e45649;">super</span><span style="color: #50a14f;">(</span>width, height<span style="color: #50a14f;">)</span>;
-              <span class="linenr"> 4: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr"> 5: </span>
-              <span class="linenr"> 6: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#37325;&#20889;&#29238;&#31867;&#20013;&#30340;&#25277;&#35937;&#26041;&#27861;&#65292;&#23454;&#29616;&#35745;&#31639;&#19977;&#35282;&#24418;&#38754;&#31215;&#30340;&#21151;&#33021;</span>
-              <span class="linenr"> 7: </span>    <span style="color: #b751b6;">@Override</span>
-              <span class="linenr"> 8: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">double</span> <span style="color: #a626a4;">area</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr"> 9: </span>        <span style="color: #e45649;">return</span> 0.5 * width * height;
-              <span class="linenr">10: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr">11: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
-
-          <p>
-            （4）最后创建一个测试类，分别创建正方形类和三角形类的对象，并调用各类中的 <code>area()</code> 方法，打印出不同形状的几何图形的面积，代码如下：
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">ShapeTest</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr">2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr">3: </span>        <span style="color: #986801;">Square</span> <span style="color: #6a1868;">square</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Square</span><span style="color: #50a14f;">(</span>5, 4<span style="color: #50a14f;">)</span>;
-              <span class="linenr">4: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#27491;&#26041;&#24418;&#30340;&#38754;&#31215;&#20026;&#65306;"</span> + square.area<span style="color: #da8548;">()</span><span style="color: #50a14f;">)</span>;   <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 20.0</span>
-              <span class="linenr">5: </span>        <span style="color: #986801;">Triangle</span> <span style="color: #6a1868;">triangle</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Triangle</span><span style="color: #50a14f;">(</span>2, 5<span style="color: #50a14f;">)</span>;
-              <span class="linenr">6: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#19977;&#35282;&#24418;&#30340;&#38754;&#31215;&#20026;&#65306;"</span> + triangle.area<span style="color: #da8548;">()</span><span style="color: #50a14f;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 5.0</span>
-              <span class="linenr">7: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr">8: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
-
-          <p>
-            在 Shape 类的最后定义了一个抽象方法 <code>area()</code> ，用来计算图形的面积。在这里，Shape 类只是定义了计算图形面积的方法，而对于如何计算并没有任何限制。也可以这样理解，抽象类 Shape 仅定义了子类的一般形式。
-          </p>
-        </div>
-      </div>
-
-      <div id="outline-container-org9b3bd5b" class="outline-2">
-        <h2 id="org9b3bd5b">接口</h2>
-        <div class="outline-text-2" id="text-org9b3bd5b">
-          <p>
-            抽象类是从多个类中抽象出来的模板，如果将这种抽象进行的更彻底，则可以提炼出一种更加特殊的“抽象类” &#x2013; <span class="underline">接口</span> （Interface）。
-          </p>
-
-          <p>
-            接口是 Java 中最重要的概念之一，它可以被理解为一种特殊的类，不同的是接口没有执行体，是由全局常量和公共抽象方法所组成。
-          </p>
-        </div>
-
-        <div id="outline-container-org4d2e2b5" class="outline-3">
-          <h3 id="org4d2e2b5">定义接口</h3>
-          <div class="outline-text-3" id="text-org4d2e2b5">
-            <p>
-              Java 接口的定义方式与类基本相同，不过接口定义的关键字是 <code>interface</code> ，接口定义的语法格式如下：
-            </p>
-
-            <pre class="example">
-              [public] interface interface_name [extends interface1_name[, interface2_name,...]] {
-              // 接口体，其中可以包含定义常量和声明方法
-              [public] [static] [final] type constant_name = value;        //定义常量
-              [public] [abstract] returnType method_name (parameter_list); //声明方法
-              }
-            </pre>
-
-            <p>
-              下面对以上语法做一些说明：
-            </p>
-            <ul class="org-ul">
-              <li><code>public</code> 表示接口的修饰符，当没有修饰符时，则使用默认的修饰符，此时该接口的访问权限仅局限于所属的包；</li>
-              <li><code>interface_name</code> 表示接口的名称；</li>
-              <li><code>extents</code> 表示接口的继承关系；</li>
-              <li><code>interface1_name</code> 表示要继承的接口名称；</li>
-              <li><code>constant_name</code> 表示变量名称，一般是 <code>static</code> 和 <code>final</code> 型的；</li>
-              <li><code>return_type</code> 表示方法返回值的类型；</li>
-              <li><code>parameter_list</code> 表示参数列表，在接口中的方法是没有方法体的。</li>
-            </ul>
-
-            <p>
-              *注：一个接口可以有多个直接父接口，但接口只能继承接口，不能继承类。
-            </p>
-
-            <p>
-              接口对于其声明、变量和方法都做了许多限制，这些限制作为 <span class="underline">接口的特征</span> 如下：
-            </p>
-            <ul class="org-ul">
-              <li>具有 <code>public</code> 访问控制符的接口，允许任何类使用，否则其访问权限局限 于所属的包；</li>
-              <li>方法的声明不需要其他修饰符，在接口中声明的方法，将隐式地声明为公有的（ <code>public</code> ）和抽象的（ <code>abstract</code> ）；</li>
-              <li>在 Java 接口中声明的变量其实都是常量，接口中的变量声明，将隐式地声明为 <code>public、static</code> 和 <code>final</code> ，即常量，所以接口中定义的变量 <b>必须初始化</b> ；</li>
-              <li>接口没有构造方法，不能被实例化。</li>
-            </ul>
-
-            <p>
-              *注：一个接口不能够实现另一个接口，只可以继承接口，子接口可以对父接口的方法和常量进行重写。
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #986801;">interfact</span> <span style="color: #6a1868;">StudentInterface</span> <span style="color: #e45649;">extends</span> <span style="color: #986801;">PeopleInterface</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr">2: </span>    <span style="color: #986801;">int</span> <span style="color: #6a1868;">age</span> = 25;               <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#24120;&#37327; age &#37325;&#20889;&#29238;&#31867;&#25509;&#21475;&#20013;&#30340; age &#24120;&#37327;</span>
-                <span class="linenr">3: </span>    <span style="color: #986801;">void</span> <span style="color: #a626a4;">getInfo</span><span style="color: #a626a4;">()</span>;             <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26041;&#27861; getInfo() &#37325;&#20889;&#29238;&#25509;&#21475;&#20013;&#30340; getInfo() &#26041;&#27861;</span>
-                <span class="linenr">4: </span><span style="color: #4078f2;">}</span>
-              </pre>
-            </div>
-          </div>
-        </div>
-
-        <div id="outline-container-orgae6e33d" class="outline-3">
-          <h3 id="orgae6e33d">实现接口</h3>
-          <div class="outline-text-3" id="text-orgae6e33d">
-            <p>
-              <b>接口的主要用途就是被实现类实现</b> ，一个类可以实现一个或多个接口，继承使用 <code>extends</code> 关键字，实现则使用 <code>implements</code> 关键字。一个类可以实现多个接口，类实现接口的语法格式如下：
-            </p>
-
-            <pre class="example">
-              &lt;public&gt; class &lt;class_name&gt; [extends superclass_name] [implements interface1_name[, interface2_name...]] {
-              // 主体
-              }
-            </pre>
-
-            <p>
-              实现接口需要注意以下几点：
-            </p>
-            <ul class="org-ul">
-              <li>实现接口与继承父类相似，一样可以获得所实现接口里定义的常量和方法。如果一个类需要实现多个接口，则多个接口之间可以逗号分隔；</li>
-              <li>一个类可以继承一个父类，并同时实现多个接口， <code>implements</code> 部分必须放在 <code>extends</code> 部分之后；</li>
-              <li>一个类实现了一个或多个接口之后，这个类 <b>必须完全实现这些接口里所定义的全部抽象方法</b> （也就是重写这些抽象方法）；否则，该类将保留从父接口那里继承到的抽象方法，该类也必须定义成抽象类。</li>
-            </ul>
-
-            <p>
-              来看一个具体的例子吧。
-            </p>
-
-            <p>
-              在程序的开发中，需要完成两个数的求和运算和比较运算功能的类非常多，所以可以定义一个接口来将类似的功能组织在一起。
-            </p>
-
-            <p>
-              （1）创建一个名称为 IMath 的接口：
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">interface</span> <span style="color: #986801;">IMath</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr">2: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #a626a4;">sum</span><span style="color: #a626a4;">()</span>;                <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23436;&#25104;&#20004;&#20010;&#25968;&#30340;&#30456;&#21152;</span>
-                <span class="linenr">3: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #a626a4;">maxNum</span><span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #a626a4;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#33719;&#21462;&#36739;&#22823;&#30340;&#25968;</span>
-                <span class="linenr">4: </span><span style="color: #4078f2;">}</span>
-              </pre>
-            </div>
-
-            <p>
-              （2）定义一个 MathClass 类并实现 IMath 接口：
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">MathClass</span> <span style="color: #e45649;">implements</span> <span style="color: #986801;">IMath</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr"> 2: </span>    <span style="color: #e45649;">private</span> <span style="color: #986801;">int</span> <span style="color: #6a1868;">num1</span>;
-                <span class="linenr"> 3: </span>    <span style="color: #e45649;">private</span> <span style="color: #986801;">int</span> <span style="color: #6a1868;">num2</span>;
-                <span class="linenr"> 4: </span>    <span style="color: #e45649;">public</span> <span style="color: #a626a4;">MathClass</span><span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">num1</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">num2</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr"> 5: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26500;&#36896;&#26041;&#27861;</span>
-                <span class="linenr"> 6: </span>        <span style="color: #e45649;">this</span>.num1 = num1;
-                <span class="linenr"> 7: </span>        <span style="color: #e45649;">this</span>.num2 = num2;
-                <span class="linenr"> 8: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr"> 9: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616;&#25509;&#21475;&#20013;&#30340;&#27714;&#21644;&#26041;&#27861;</span>
-                <span class="linenr">10: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #a626a4;">sum</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr">11: </span>        <span style="color: #e45649;">return</span> num1 + num2;
-                <span class="linenr">12: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">13: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616;&#25509;&#21475;&#20013;&#30340;&#33719;&#21462;&#36739;&#22823;&#25968;&#30340;&#26041;&#27861;</span>
-                <span class="linenr">14: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #a626a4;">maxNum</span><span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">intb</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr">15: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>a &gt;= b<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
-                <span class="linenr">16: </span>            <span style="color: #e45649;">return</span> a;
-                <span class="linenr">17: </span>        <span style="color: #50a14f;">}</span> <span style="color: #e45649;">else</span> <span style="color: #50a14f;">{</span>
-                <span class="linenr">18: </span>            <span style="color: #e45649;">return</span> b;
-                <span class="linenr">19: </span>        <span style="color: #50a14f;">}</span>
-                <span class="linenr">20: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">21: </span><span style="color: #4078f2;">}</span>
-              </pre>
-            </div>
-
-            <p>
-              在实现类中，所有的方法都使用了 <code>public</code> 访问修饰符声明。无论何时实现一个由接口定义的方法，它都必须实现为 <code>public</code> ，因为接口中的所有成员都显示声明为 <code>public</code> 。
-            </p>
-
-            <p>
-              （3）最后创建一个测试类 NumTest ，实例化接口的实现类 MathClass ，调用该类中的方法并输出结果：
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">NumTest</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr">2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr">3: </span>        <span style="color: #986801;">MathClass</span> <span style="color: #6a1868;">calc</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">MathClass</span><span style="color: #50a14f;">(</span>100, 300<span style="color: #50a14f;">)</span>;
-                <span class="linenr">4: </span>        System.out.println<span style="color: #50a14f;">(</span>calc.sum<span style="color: #da8548;">()</span><span style="color: #50a14f;">)</span>;            <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 400</span>
-                <span class="linenr">5: </span>        System.out.println<span style="color: #50a14f;">(</span>calc.maxNum<span style="color: #da8548;">(</span>100, 300<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 300</span>
-                <span class="linenr">6: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">7: </span><span style="color: #4078f2;">}</span>
-              </pre>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="outline-container-org512867b" class="outline-2">
-        <h2 id="org512867b"><span class="todo TODO">TODO</span> 内部类</h2>
-      </div>
-
-      <div id="outline-container-org5011d08" class="outline-2">
-        <h2 id="org5011d08"><span class="todo TODO">TODO</span> 匿名类</h2>
-        <div class="outline-text-2" id="text-org5011d08">
-          <p>
-            匿名类是指没有类名的内部类，必须在创建时使用 <code>new</code> 语句来声明类，语法形式如下：
-          </p>
-
-          <pre class="example">
-            new &lt;类或接口&gt; () {
-            // 类的主体
-            }
-          </pre>
-        </div>
-      </div>
-
-      <div id="outline-container-org6b7c8d9" class="outline-2">
-        <h2 id="org6b7c8d9">Lambda 表达式</h2>
-        <div class="outline-text-2" id="text-org6b7c8d9">
-          <p>
-            （Java 8 新特性）Lambda 表达式是一个匿名函数，它允许把函数作为一个方法的参数。
-          </p>
-
-          <p>
-            来看一个具体的应用例子：
-          </p>
-
-          <p>
-            先定义一个计算数值的接口，代码如下：
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr">1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21487;&#35745;&#31639;&#25509;&#21475;</span>
-              <span class="linenr">2: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">interface</span> <span style="color: #986801;">Calculable</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr">3: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#35745;&#31639;&#20004;&#20010; int &#25968;&#20540;</span>
-              <span class="linenr">4: </span>    <span style="color: #986801;">int</span> <span style="color: #a626a4;">calculateInt</span><span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #a626a4;">)</span>;
-              <span class="linenr">5: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
-
-          <p>
-            实现方法代码如下：
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr"> 2: </span>    <span style="color: #84888b; font-style: italic;">/**</span>
-              <span class="linenr"> 3: </span><span style="color: #84888b; font-style: italic;">       &#36890;&#36807;&#25805;&#20316;&#31526;&#65292;&#36827;&#34892;&#35745;&#31639;</span>
-              <span class="linenr"> 4: </span>
-              <span class="linenr"> 5: </span><span style="color: #84888b; font-style: italic;">       </span><span style="color: #b751b6; font-style: italic;">@param</span><span style="color: #84888b; font-style: italic;"> opr &#25805;&#20316;&#31526;</span>
-              <span class="linenr"> 6: </span><span style="color: #84888b; font-style: italic;">       </span><span style="color: #b751b6; font-style: italic;">@return</span><span style="color: #84888b; font-style: italic;"> &#23454;&#29616; Calculable &#25509;&#21475;&#23545;&#35937;</span>
-              <span class="linenr"> 7: </span><span style="color: #84888b; font-style: italic;">     */</span>
-              <span class="linenr"> 8: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">Calculable</span> <span style="color: #a626a4;">calculate</span><span style="color: #a626a4;">(</span><span style="color: #986801;">char</span> <span style="color: #6a1868;">opr</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr"> 9: </span>        <span style="color: #986801;">Calculable</span> <span style="color: #6a1868;">result</span>;
-              <span class="linenr">10: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>opr == <span style="color: #50a14f;">'+'</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
-              <span class="linenr">11: </span>            <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21311;&#21517;&#20869;&#37096;&#31867;&#23454;&#29616; Calculable &#25509;&#21475;</span>
-              <span class="linenr">12: </span>            result = <span style="color: #e45649;">new</span> <span style="color: #986801;">Calculable</span><span style="color: #da8548;">()</span> <span style="color: #da8548;">{</span>
-              <span class="linenr">13: </span>                <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616;&#21152;&#27861;&#36816;&#31639;</span>
-              <span class="linenr">14: </span>                <span style="color: #b751b6;">@Override</span>
-              <span class="linenr">15: </span>                <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> calculateInt<span style="color: #b751b6;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #b751b6;">)</span> <span style="color: #b751b6;">{</span>
-              <span class="linenr">16: </span>                    <span style="color: #e45649;">return</span> a + b;
-              <span class="linenr">17: </span>                <span style="color: #b751b6;">}</span>
-              <span class="linenr">18: </span>            <span style="color: #da8548;">}</span>;
-              <span class="linenr">19: </span>        <span style="color: #50a14f;">}</span> <span style="color: #e45649;">else</span> <span style="color: #50a14f;">{</span>
-              <span class="linenr">20: </span>            <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21311;&#21517;&#20869;&#37096;&#31867;&#23454;&#29616; Calculable &#25509;&#21475;</span>
-              <span class="linenr">21: </span>            result = <span style="color: #e45649;">new</span> <span style="color: #986801;">Calculable</span><span style="color: #da8548;">()</span> <span style="color: #da8548;">{</span>
-              <span class="linenr">22: </span>                <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616;&#20943;&#27861;&#36816;&#31639;</span>
-              <span class="linenr">23: </span>                <span style="color: #b751b6;">@Override</span>
-              <span class="linenr">24: </span>                <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> calculateInt<span style="color: #b751b6;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #b751b6;">)</span> <span style="color: #b751b6;">{</span>
-              <span class="linenr">25: </span>                    <span style="color: #e45649;">return</span> a - b;
-              <span class="linenr">26: </span>                <span style="color: #b751b6;">}</span>
-              <span class="linenr">27: </span>            <span style="color: #da8548;">}</span>
-              <span class="linenr">28: </span>        <span style="color: #50a14f;">}</span>
-              <span class="linenr">29: </span>        <span style="color: #e45649;">return</span> result;
-              <span class="linenr">30: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr">31: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
-
-          <p>
-            方法 <code>calculate</code> 中 <code>opr</code> 参数是运算符，返回值是实现 <code>Calculable</code> 接口对象。
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #4078f2;">(</span><span style="color: #986801;">String</span><span style="color: #a626a4;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr"> 2: </span>    <span style="color: #986801;">int</span> <span style="color: #6a1868;">n1</span> = 10;
-              <span class="linenr"> 3: </span>    <span style="color: #986801;">int</span> <span style="color: #6a1868;">n2</span> = 5;
-              <span class="linenr"> 4: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616;&#21152;&#27861;&#35745;&#31639; Calculable &#23545;&#35937;</span>
-              <span class="linenr"> 5: </span>    <span style="color: #986801;">Calculable</span> <span style="color: #6a1868;">f1</span> = calculate<span style="color: #a626a4;">(</span><span style="color: #50a14f;">'+'</span><span style="color: #a626a4;">)</span>;
-              <span class="linenr"> 6: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616;&#21152;&#27861;&#35745;&#31639; Calculable &#23545;&#35937;</span>
-              <span class="linenr"> 7: </span>    <span style="color: #986801;">Calculable</span> <span style="color: #6a1868;">f2</span> = calculate<span style="color: #a626a4;">(</span><span style="color: #50a14f;">'-'</span><span style="color: #a626a4;">)</span>;
-              <span class="linenr"> 8: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#35843;&#29992; calculateInt &#26041;&#27861;&#36827;&#34892;&#21152;&#27861;&#35745;&#31639;</span>
-              <span class="linenr"> 9: </span>    System.out.println<span style="color: #a626a4;">(</span>f1.calculateInt<span style="color: #50a14f;">(</span>n1, n2<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 15</span>
-              <span class="linenr">10: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#35843;&#29992; calculateInt &#26041;&#27861;&#36827;&#34892;&#20943;&#27861;&#36816;&#31639;</span>
-              <span class="linenr">11: </span>    System.out.println<span style="color: #a626a4;">(</span>f2.calculateInt<span style="color: #50a14f;">(</span>n1, n2<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 5</span>
-              <span class="linenr">12: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
-
-          <p>
-            <b>不难看出，使用匿名内部类的方法 <code>calculate</code> 代码很臃肿</b> ，Java 8 采用 Lambda 表达式可以替代匿名内部类，修改之后的通用方法 <code>calculate</code> 代码如下：
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #84888b; font-style: italic;">/**</span>
-              <span class="linenr"> 2: </span><span style="color: #84888b; font-style: italic;">   &#36890;&#36807;&#25805;&#20316;&#31526;&#65292;&#36827;&#34892;&#35745;&#31639;</span>
-              <span class="linenr"> 3: </span><span style="color: #84888b; font-style: italic;">   </span><span style="color: #b751b6; font-style: italic;">@param</span><span style="color: #84888b; font-style: italic;"> opr &#25805;&#20316;&#31526;</span>
-              <span class="linenr"> 4: </span><span style="color: #84888b; font-style: italic;">   </span><span style="color: #b751b6; font-style: italic;">@return</span><span style="color: #84888b; font-style: italic;"> &#23454;&#29616; Calculable &#25509;&#21475;&#23545;&#35937;</span>
-              <span class="linenr"> 5: </span><span style="color: #84888b; font-style: italic;"> */</span>
-              <span class="linenr"> 6: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">Calculable</span> <span style="color: #a626a4;">calculate</span><span style="color: #4078f2;">(</span><span style="color: #986801;">char</span> <span style="color: #6a1868;">opr</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr"> 7: </span>    <span style="color: #986801;">Calculable</span> <span style="color: #6a1868;">result</span>;
-              <span class="linenr"> 8: </span>    <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span>opr == <span style="color: #50a14f;">'+'</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr"> 9: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">Lambda &#34920;&#36798;&#24335;&#23454;&#29616; Calculable &#25509;&#21475;</span>
-              <span class="linenr">10: </span>        result = <span style="color: #50a14f;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #50a14f;">)</span> -&gt; <span style="color: #50a14f;">{</span>
-              <span class="linenr">11: </span>            <span style="color: #e45649;">return</span> a + b;
-              <span class="linenr">12: </span>        <span style="color: #50a14f;">}</span>
-              <span class="linenr">13: </span>    <span style="color: #a626a4;">}</span> <span style="color: #e45649;">else</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr">14: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">Lambda &#34920;&#36798;&#24335;&#23454;&#29616; Calculable &#25509;&#21475;</span>
-              <span class="linenr">15: </span>        result = <span style="color: #50a14f;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #50a14f;">)</span> -&gt; <span style="color: #50a14f;">{</span>
-              <span class="linenr">16: </span>            <span style="color: #e45649;">return</span> a - b;
-              <span class="linenr">17: </span>        <span style="color: #50a14f;">}</span>
-              <span class="linenr">18: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr">19: </span>    <span style="color: #e45649;">return</span> result;
-              <span class="linenr">20: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
-
-          <p>
-            第 10 行和第 15 行用 Lambda 表达式替代匿名内部类，代码变得简洁多了。
-          </p>
-
-          <p>
-            通过以上示例我们发现，Lambda 表达式是一个匿名函数（方法）代码块，可以作为表达式、方法参数和方法返回值类型。
-          </p>
-
-          <p>
-            Lambda 表达式标准语法形式如下：
-          </p>
-
-          <pre class="example">
-            (参数列表) -&gt; {
-            // Lambda 表达式
-            }
-          </pre>
-
-          <p>
-            Java Lambda 表达式的优点：
-          </p>
-          <ul class="org-ul">
-            <li>代码简洁，开发迅速；</li>
-            <li>方便函数式编程；</li>
-            <li>非常容易进行并行计算；</li>
-            <li>Java 引入 Lambda ，改善了八集合操作（引入 Stream API）。</li>
-          </ul>
-
-          <p>
-            当然也有缺点：
-          </p>
-          <ul class="org-ul">
-            <li>代码可读性变差；</li>
-            <li>在非并行计算中，很多计算未必有传统的 for 性能要高；</li>
-            <li>不容易进行调试。</li>
-          </ul>
-
-          <p>
-            <span class="underline">1. 函数式接口</span>
-          </p>
-
-          <p>
-            Lambda 表达式实现的接口不是普通的接口，而是函数式接口。
-          </p>
-
-          <p>
-            如果一个接口中，有且只有一个抽象的方法（Oject 类中的方法不包括在内），那这个接口就可以被看做是 <span class="underline">函数式接口</span> 。这种接口只能有一个方法，如果接口中声明多个抽象方法，那么 Lambda 表达式会发生编译错误。
-          </p>
-
-          <pre class="example">
-            The target type of this expression must be a functional interface
-          </pre>
-
-          <p>
-            说明该接口不是函数式接口，为了防止在函数式接口中声明多个抽象方法，Java 8 提供了一个声明函数式接口注解 <code>@FunctionalInterface</code> ，示例代码如下：
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr">1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21487;&#35745;&#31639;&#25509;&#21475;</span>
-              <span class="linenr">2: </span><span style="color: #b751b6;">@FunctionalInterface</span>
-              <span class="linenr">3: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">interface</span> <span style="color: #986801;">Calculable</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr">4: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#35745;&#31639;&#20004;&#20010; int &#25968;&#20540;</span>
-              <span class="linenr">5: </span>    <span style="color: #986801;">int</span> <span style="color: #a626a4;">calculateInt</span><span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #a626a4;">)</span>;
-              <span class="linenr">6: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
-
-          <p>
-            在接口之前使用 <code>@FunctionalInterface</code> 注解修饰，那么试图增加一个抽象方法时会发生编译错误，但可以添加默认方法和静态方法。
-          </p>
-
-          <blockquote>
-            <p>
-              <code>@FunctionalInterface</code> 注解与 <code>@Override</code> 注解的作用类似。Java 8 中专门为函数式接口引入了一个新的注解 <code>@FunctionalInterface</code> 。该注解可用于一个接口的定义上，一旦使用该注解来定义接口，编译器将会强制检查接口是否确实有且仅有一个抽象方法，否则将会报错。
-            </p>
-          </blockquote>
-
-          <p>
-            *注：即使不使用该注解，只要满足函数式接口的定义，这仍然是一个函数式接口，使用起来都一样。
-          </p>
-
-          <p>
-            提示：Lambda 表达式是一个匿名方法代码，Java 中的方法必须声明在类或接口中，那么 Lambda 表达式所实现的匿名方法是在函数式接口中声明的。
-          </p>
-
-          <p>
-            <span class="underline">2. Lambda 表达式的使用</span>
-          </p>
-
-          <p>
-            TODO&#x2026;
-          </p>
-        </div>
-      </div>
-    </div>
-    <div id="postamble" class="status">
-      <p class="date">Date: 2020-09-26 Sat 11:27</p>
-      <p class="author">Author: Jack Liu</p>
-      <p class="date">Created: 2021-02-23 Tue 11:11</p>
-      <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
-    </div>
-  </body>
+<head>
+<!-- 2021-02-23 Tue 14:31 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>继承和多态</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
+           <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
+           <script type="module" src="/themes/main.js" defer></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">继承和多态</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgeb24163">封装</a></li>
+<li><a href="#orgd64e3eb">继承</a>
+<ul>
+<li><a href="#org9fc532e">单继承</a></li>
+<li><a href="#orgb8215bf">super</a></li>
+<li><a href="#orgde9684a">对象类型转型</a></li>
+<li><a href="#org982bfb4">方法重载</a></li>
+<li><a href="#org05d6fcd">方法重写</a></li>
+</ul>
+</li>
+<li><a href="#org813ecc5">多态</a></li>
+<li><a href="#orgb079907">抽象类</a></li>
+<li><a href="#org9b3bd5b">接口</a>
+<ul>
+<li><a href="#org4d2e2b5">定义接口</a></li>
+<li><a href="#orgae6e33d">实现接口</a></li>
+</ul>
+</li>
+<li><a href="#org512867b"><span class="todo TODO">TODO</span> 内部类</a></li>
+<li><a href="#org5011d08"><span class="todo TODO">TODO</span> 匿名类</a></li>
+<li><a href="#org6b7c8d9">Lambda 表达式</a></li>
+</ul>
+</div>
+</div>
+<p>
+继承机制的使用可以复用一些定义好的类，减少重复代码的编写。多态机制可以动态调整对象的调用，降低对象之间的依存关系。
+</p>
+
+<div id="outline-container-orgeb24163" class="outline-2">
+<h2 id="orgeb24163">封装</h2>
+<div class="outline-text-2" id="text-orgeb24163">
+<p>
+封装将类的某个信息隐藏在类内部，不允许外部程序直接访问，只能通过该类提供的方法来实现对隐藏信息的操作和访问。
+</p>
+
+<blockquote>
+<p>
+例如：一台计算机内部极其复杂，有主板、CPU、硬盘和内存，而一般用户不需要了解它的内部细节，不需要知道主板的型号、CPU 主频、硬盘和内存的大小，于是计算机制造商将用机箱把计算机封装起来，对外提供了一些接口，如鼠标、键盘和显示器等，方便用户使用计算机。
+</p>
+</blockquote>
+
+<p>
+封装的特点：
+</p>
+<ul class="org-ul">
+<li>只能通过规定的方法访问数据；</li>
+<li>隐藏类的实例细节，方便修改和实现。</li>
+</ul>
+
+<p>
+实现封装的具体步骤如下：
+</p>
+<ol class="org-ol">
+<li>修改属性的可见性来限制对属性的访问，一般设为 <code>private</code> ；</li>
+<li>为每个属性创建一对赋值（ <code>setter</code> ）方法和取值（ <code>getter</code> ）方法，一般设为 <code>public</code> ，用于属性的读写；</li>
+<li>在赋值和取值方法中，加入属性控制语句（对属性值的合法性进行判断）。</li>
+</ol>
+
+<p>
+下面我们来看一个完整的例子，要求编写表示图书的 <code>Book</code> 类，实现以下需求：
+</p>
+<ul class="org-ul">
+<li>基本信息包括图书名称（ <code>bookName</code> ）、总页数（ <code>bookTotalNum</code> ），其中页数不能少于 200 页，否则输出错误信息，并赋予默认值 200 ；</li>
+<li>为各个属性设置赋值和取值方法；</li>
+<li>具有 <code>details()</code> 方法，该方法在控制台输出每本图书的名称和总页数。</li>
+</ul>
+
+<p>
+编写 <code>BookTest</code> 测试类，为 <code>Book</code> 对象的属性赋予初始值，并调用 <code>details()</code> 方法输出详细信息。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Book</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #e45649;">private</span> <span style="color: #986801;">String</span> <span style="color: #6a1868;">bookName</span>;
+<span class="linenr"> 3: </span>    <span style="color: #e45649;">private</span> <span style="color: #986801;">int</span> <span style="color: #6a1868;">bookTotalNum</span>;
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">String</span> <span style="color: #a626a4;">getBookName</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 6: </span>        <span style="color: #e45649;">return</span> bookName;
+<span class="linenr"> 7: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr"> 8: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">setBookName</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span> <span style="color: #6a1868;">bookName</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 9: </span>        <span style="color: #e45649;">this</span>.bookName = bookName;
+<span class="linenr">10: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #a626a4;">getBookTotalNum</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">13: </span>        <span style="color: #e45649;">return</span> bookTotalNum
+<span class="linenr">14: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">15: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">setBookTotalNum</span><span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">bookTotalNum</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">16: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>bookTotalNum &lt; 200<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+<span class="linenr">17: </span>            System.out.println<span style="color: #da8548;">(</span><span style="color: #e45649;">this</span>.bookName + <span style="color: #50a14f;">"&#36825;&#26412;&#20070;&#30340;&#39029;&#25968;&#19981;&#33021;&#23569;&#20110; 200 &#39029;"</span><span style="color: #da8548;">)</span>;
+<span class="linenr">18: </span>            <span style="color: #e45649;">this</span>.bookTotalNum = 200;
+<span class="linenr">19: </span>        <span style="color: #50a14f;">}</span> <span style="color: #e45649;">else</span> <span style="color: #50a14f;">{</span>
+<span class="linenr">20: </span>            <span style="color: #e45649;">this</span>.bookTotalNum = bookTotalNum;
+<span class="linenr">21: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">22: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">23: </span>
+<span class="linenr">24: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">details</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">25: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #e45649;">this</span>.bookName + <span style="color: #50a14f;">"&#36825;&#26412;&#20070;&#30340;&#24635;&#39029;&#25968;&#26159;&#65306;"</span> + <span style="color: #e45649;">this</span>.bookTotalNum<span style="color: #50a14f;">)</span>;
+<span class="linenr">26: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">27: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+测试类如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">BookTest</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #986801;">Book</span> <span style="color: #6a1868;">book1</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Book</span><span style="color: #50a14f;">()</span>;
+<span class="linenr"> 4: </span>        book1.setBookName<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#12298;&#32418;&#19982;&#40657;&#12299;"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr"> 5: </span>        book1.setBookTotalNum<span style="color: #50a14f;">(</span>190<span style="color: #50a14f;">)</span>;
+<span class="linenr"> 6: </span>        book1.details<span style="color: #50a14f;">()</span>;
+<span class="linenr"> 7: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"**********************"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr"> 8: </span>        <span style="color: #986801;">Book</span> <span style="color: #6a1868;">book2</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Book</span><span style="color: #50a14f;">()</span>;
+<span class="linenr"> 9: </span>        book2.setBookName<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#12298;&#26684;&#26519;&#31461;&#35805;&#12299;"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr">10: </span>        book2.setBookTotalNum<span style="color: #50a14f;">(</span>520<span style="color: #50a14f;">)</span>;
+<span class="linenr">11: </span>        book2.details<span style="color: #50a14f;">()</span>;
+<span class="linenr">12: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">13: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+代码执行结果如下：
+</p>
+
+<pre class="example">
+《红与黑》这本书的页数不能少于 200 页
+《红与黑》这本书的总页数是：200
+************************************
+《格林童话》这本书的总页数是：520
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgd64e3eb" class="outline-2">
+<h2 id="orgd64e3eb">继承</h2>
+<div class="outline-text-2" id="text-orgd64e3eb">
+<p>
+Java 中的继承就是在已经存在类的基础上进行扩展，从而产生新的类。已经存在的类称为 <span class="underline">父类、基类或超类</span> ，而新产生的类称为 <span class="underline">子类或派生类</span> 。在子类中，不仅包含父类的属性和方法，还可以增加新的属性和方法。
+</p>
+
+<p>
+Java 中子类继承父类的语法格式如下：
+</p>
+
+<pre class="example">
+修饰符 class class_name extends extend_class {
+       //  类的主体
+}
+</pre>
+
+<p>
+其中， <code>class_name</code> 表示子类（派生类）的名称； <code>extend_class</code> 表示父类（基类）的名称； <code>extends</code> 关键字直接跟在子类名之后，其后面是该类要继承的父类的名称。
+</p>
+
+<blockquote>
+<p>
+Java 与 C++ 定义继承类的方式十分相似。Java 用关键字 <code>extends</code> 代替了 C++ 中的冒号（ <code>：</code> ）。在 Java 中，所有的继承都是公有继承， 而没有 C++ 中的私有继承和保护继承。
+</p>
+</blockquote>
+
+<p>
+类的继承不改变类成员的访问权限，也就是说，如果父类的成员是公有的、被保护的或默认的，它的子类仍具有相应的这些特性，并且子类不能获得父类的构造方法。
+</p>
+
+<p>
+<b>*注：如果父类中存在有参的构造方法而并没有重载无参的构造方法，那么在子类中必须含有有参的构造方法。因为如果在子类中不含有构造方法，默认会调用父类中无参的构造方法，而在父类中并没有无参的构造方法，因此会出错。</b>
+</p>
+</div>
+
+<div id="outline-container-org9fc532e" class="outline-3">
+<h3 id="org9fc532e">单继承</h3>
+<div class="outline-text-3" id="text-org9fc532e">
+<p>
+Java 语言摒弃了 C++ 中难以理解的多继承特征，即 Java 不支持多继承，只允许一个类直接继承另一个类，即子类只能有一个直接父类， <code>extends</code> 关键字后面只能有一个类名。
+</p>
+
+<p>
+如果定义一个 Java 类时并未显示指定这个类的直接父类，则这个类默认继承 <code>java.lang.Object</code> 类。
+</p>
+
+<p>
+使用继承的注意点：
+</p>
+<ul class="org-ul">
+<li>子类一般比父类包含更多的属性和方法；</li>
+<li>父类中的 <code>private</code> 成员在子类中是不可见的，因此在子类中不能直接使用它们；</li>
+<li>父类和其子类间必须存在“是一个”即 <code>is-a</code> 的关系，否则不能用继承；</li>
+<li>Java 只允许单一继承。</li>
+</ul>
+
+<p>
+在面向对象语言中，继承是必不可少的、非常优秀的语言机制，它有如下优点：
+</p>
+<ul class="org-ul">
+<li>实现代码共享，减少创建类的工作量，使子类可以拥有父类的方法和属性；</li>
+<li>提高代码维护性和可重用性；</li>
+<li>提高代码的可扩展性，更好的实现父类的方法。</li>
+</ul>
+
+<p>
+所有事物有其好的一面，也有其不好的一面，继承的缺点如下：
+</p>
+<ul class="org-ul">
+<li>继承是侵入性的，只要继承，就必须拥有父类的属性和方法；</li>
+<li>降低代码灵活性，子类拥有父类的属性和方法后多了些约束；</li>
+<li>增强代码耦合性（ <b>开发项目的原则为高内聚低耦合</b> ），当父类的常量、变量和方法被修改时，需要考虑子类的修改，有可能导致大段的代码重构。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb8215bf" class="outline-3">
+<h3 id="orgb8215bf">super</h3>
+<div class="outline-text-3" id="text-orgb8215bf">
+<p>
+由于子类不能继承父类的构造方法，因此，如果要调用父类的构造方法，可以使用 <code>super</code> 关键字。 <code>super</code> 可以用来访问父类的构造方法、普通方法和属性。
+</p>
+
+<p>
+<code>super</code> 关键字的功能：
+</p>
+<ul class="org-ul">
+<li>在子类的构造方法中显示的调用父类构造方法；</li>
+<li>访问父类的成员方法和变量。</li>
+</ul>
+
+<p>
+<span class="underline">1. super 调用父类构造方法</span>
+</p>
+
+<p>
+<code>super</code> 关键字可以在子类的构造方法中显式地调用父类的构造方法，基本格式如下：
+</p>
+
+<pre class="example">
+super(parameter-list);
+</pre>
+
+<p>
+其中， <code>parameter-list</code> 指定了父类构造方法中的所有参数。 <b><code>super()</code> 必须在子类构造方法的方法体的第一行。</b>
+</p>
+
+<p>
+我们来看一段代码，声明父类 Person 和子类 Student ，在 Person 类中定义一个带有参数的构造方法，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Person</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">2: </span>    <span style="color: #e45649;">public</span> <span style="color: #a626a4;">Person</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span> <span style="color: #6a1868;">name</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">3: </span>
+<span class="linenr">4: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">5: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">6: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Student</span> <span style="color: #e45649;">extends</span> <span style="color: #986801;">Person</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">7: </span>
+<span class="linenr">8: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+上述代码会出现 <code>Student</code> 类的编译错误，提示必须显式定义构造方法，错误信息如下：
+</p>
+
+<pre class="example">
+Implicit super constructor Person() is undefined for default constructor. Must define an explicit constructor.
+</pre>
+
+<p>
+为什么会出现这个错误呢？
+</p>
+
+<p>
+本例中，JVM 默认给 <code>Student</code> 类加了一个无参构造方法，而在这个方法中默认调用了 <code>super()</code> ，但是 Person 类中并不存在该构造方法，所以会编译错误。
+</p>
+
+<blockquote>
+<p>
+*小结一下：<br>
+如果一个类中没有写任何的构造方法，JVM 会生成一个默认的无参构造方法。在继承关系中，由于在子类的构造方法中，第一条语句默认为调用父类的无参构造方法（即默认为 <code>super()</code> ，一般这行代码省略了）。所以当在父类中定义了有参构造方法，但是没有定义无参构造方法时，编译器会强制要求我们定义一个相同参数类型的构造方法。
+</p>
+</blockquote>
+
+<p>
+<span class="underline">2. super 访问父类成员</span>
+</p>
+
+<p>
+当子类的成员变量或方法与父类同名时，可以使用 <code>super</code> 关键字来访问。
+</p>
+
+<p>
+如果子类重写了父类的某一个方法，即子类和父类有相同的方法定义，但是有不同的方法体，此时，我们可能通过 <code>super</code> 来调用父类里面的这个方法。
+</p>
+
+<p>
+<b>使用 super 访问父类中的成员与 this 关键字的使用类似，只不过它引用的是子类的父类</b> ，语法格式如下：
+</p>
+
+<pre class="example">
+super.member
+</pre>
+
+<p>
+<span class="underline">3. super 和 this 的区别</span>
+</p>
+
+<p>
+<code>this</code> 指的是当前对象的引用， <code>super</code> 是当前对象的父对象的引用。如果构造方法的第一行代码不是 <code>this()</code> 和 <code>super()</code> ，则系统会默认添加 <code>super()</code> 。
+</p>
+
+<p>
+关于 Java 中 <code>super</code> 和 <code>this</code> 关键字的异同，可简单总结为以下几条：
+</p>
+
+<p>
+（1）子类和父类中变量或方法名称相同时，用 <code>super</code> 关键字来访问。可以理解为 <code>super</code> 是指向自己父类对象的一个指针，在子类中调用父类的构造方法。
+</p>
+
+<p>
+（2） <code>this</code> 是自身的一个对象，代表对象本身，可以理解为 <code>this</code> 是指向对象本身的一个指针，在同一个类中调用其它方法。
+</p>
+
+<p>
+（3） <code>this</code> 和 <code>super</code> 不能同时出现在一个构造方法里面，因为 <code>this</code> 必然会调用其它的构造方法，其它构造方法中肯定会有 <code>super</code> 语句存在，所以在同一个构造方法里面有相同的语句，就失去了语句的意义，编译器也不会通过。
+</p>
+
+<p>
+（4） <code>this()</code> 和 <code>super()</code> 都指的是对象，所以，均不可以在 <code>static</code> 环境中使用，包括 <code>static</code> 变量、 <code>static</code> 方法和 <code>static</code> 语句块。
+</p>
+
+<p>
+（5）从本质上讲， <code>this</code> 是一个指向对象本身的指针，然而 <code>super</code> 是一个 Java 关键字。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgde9684a" class="outline-3">
+<h3 id="orgde9684a">对象类型转型</h3>
+<div class="outline-text-3" id="text-orgde9684a">
+<p>
+将一个类型强制转换成另一个类型的过程被称为 <span class="underline">类型转型</span> ，这里所说的 <span class="underline">对象类型转型</span> ，是指 <b>存在继承关系</b> 的对象，不是任意类型的对象。当对不存在继承关系的对象进行强制类型转换时，会抛出 Java 强制类型转换（ <code>java.lang.ClassCastException</code> ）异常。
+</p>
+
+<p>
+Java 语言允许某个类型的引用变量引用子类的实例，而且可以对这个变量进行转换。
+</p>
+
+<p>
+Java 中引用类型之间的类型转换（前提是两个类是父子关系）主要有两种，分别的向上转型（upcasting）和向下转型（downcasting）。
+</p>
+
+<p>
+（1）向上转型
+</p>
+
+<p>
+父类引用指向子类对象为向上转型，语法格式如下：
+</p>
+
+<pre class="example">
+fatherClass obj = new sonClass();
+</pre>
+
+<p>
+其中， <code>fahterClass</code> 是父类名称或接口名称， <code>obj</code> 是创建的对象， <code>sonClass</code> 是子类名称。
+</p>
+
+<p>
+向上转型就是把子类对象赋给父类引用，不用强制转换。使用向上转型可以调用父类类型中的所有成员， <b>不能调用子类类型中特有成员</b> ，最终运行效果看子类的具体实现。
+</p>
+
+<p>
+（2）向下转型
+</p>
+
+<p>
+与向上转型相反，子类对象指向父类引用向下转型，语法格式如下：
+</p>
+
+<pre class="example">
+sonClass obj = (sonClass) fahterClass;
+</pre>
+
+<p>
+向下转型可以调用子类类型中所有成员，不过需要注意的是：
+</p>
+
+<p>
+如果父类引用对象指向的是子类对象，那么在向下转型的过程中是安全的，也就是编译是不会出错误。
+</p>
+
+<p>
+但是如果父类引用对象是父类本身，那么在向下转型的过程中是不安全的，编译不会出错，但是运行时会出现我们开始提到的 Java 强制类型转换异常，一般使用 <code>instanceof</code> 运算符来避免出此类错误。
+</p>
+
+<p>
+例如，Animal 类表示动物类，该类对应的子类有 Dog 类，使用对象类型表示如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">Animal</span> <span style="color: #6a1868;">animal</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Dog</span><span style="color: #4078f2;">()</span>;      <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21521;&#19978;&#36716;&#22411;&#65292;&#25226; Dog &#31867;&#22411;&#36716;&#25442;&#20026; Animal &#31867;&#22411;</span>
+<span class="linenr">2: </span><span style="color: #986801;">Dog</span> <span style="color: #6a1868;">dog</span> = <span style="color: #4078f2;">(</span><span style="color: #986801;">Dog</span><span style="color: #4078f2;">)</span> animal;         <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21521;&#19979;&#36716;&#22411;&#65292;&#25226; Animal &#31867;&#22411;&#36716;&#25442;&#20026; Dog &#31867;&#22411;</span>
+</pre>
+</div>
+
+<p>
+我们来看一个具体的示例演示对象类型的转换。例如，父类 Animal 和子类 Cat 中都定义了实例变量 <code>name</code> 、静态变量 <code>staicName</code> 、实例方法 <code>eat()</code> 和静态方法 <code>staticEat()</code> 。此外，子类 Cat 中还定义了实例变量 <code>str</code> 和实例方法 <code>eatMethod()</code> 。
+</p>
+
+<p>
+父类 Animal 的代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Animal</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">string</span> <span style="color: #6a1868;">name</span> = <span style="color: #50a14f;">"Animal: &#21160;&#29289;"</span>;
+<span class="linenr"> 3: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">String</span> <span style="color: #6a1868;">staticName</span> = <span style="color: #50a14f;">"Animal: &#21487;&#29233;&#30340;&#21160;&#29289;"</span>;
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">eat</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 6: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"Animal: &#21507;&#39277;"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr"> 7: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">staticEat</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">10: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"Animal: &#21160;&#29289;&#22312;&#21507;&#39277;"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr">11: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">12: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+子类 Cat 的代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Cat</span> <span style="color: #e45649;">extends</span> <span style="color: #986801;">Animal</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">String</span> <span style="color: #6a1868;">name</span> = <span style="color: #50a14f;">"Cat: &#29483;"</span>;
+<span class="linenr"> 3: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">String</span> <span style="color: #6a1868;">str</span> = <span style="color: #50a14f;">"Cat: &#21487;&#29233;&#30340;&#23567;&#29483;"</span>;
+<span class="linenr"> 4: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">String</span> <span style="color: #6a1868;">staticName</span> = <span style="color: #50a14f;">"Dog: &#25105;&#26159;&#21941;&#26143;&#20154;"</span>;
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">eat</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 7: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"Cat: &#21507;&#39277;"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr"> 8: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">staticEat</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">11: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"Cat: &#29483;&#22312;&#21507;&#39277;"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr">12: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">eatMethod</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">15: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"Cat: &#29483;&#21916;&#27426;&#21507;&#40060;"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr">16: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">17: </span>
+<span class="linenr">18: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">19: </span>        <span style="color: #986801;">Animal</span> <span style="color: #6a1868;">animal</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Cat</span><span style="color: #50a14f;">()</span>;
+<span class="linenr">20: </span>        <span style="color: #986801;">Cat</span> <span style="color: #6a1868;">cat</span> = <span style="color: #50a14f;">(</span><span style="color: #986801;">Cat</span><span style="color: #50a14f;">)</span> animal;                <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21521;&#19979;&#36716;&#22411;</span>
+<span class="linenr">21: </span>
+<span class="linenr">22: </span>        System.out.println<span style="color: #50a14f;">(</span>animal.name<span style="color: #50a14f;">)</span>;       <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#36755;&#20986; Animal &#31867;&#30340; name &#21464;&#37327; &#8594; Animal: &#21160;&#29289;</span>
+<span class="linenr">23: </span>        System.out.println<span style="color: #50a14f;">(</span>animal.staticName<span style="color: #50a14f;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#36755;&#20986; Animal &#31867;&#30340; staticName &#21464;&#37327; &#8594; Animal: &#21487;&#29233;&#30340;&#21160;&#29289;</span>
+<span class="linenr">24: </span>
+<span class="linenr">25: </span>        animal.eat<span style="color: #50a14f;">()</span>;                          <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#36755;&#20986; Cat &#31867;&#30340; eat() &#26041;&#27861; &#8594; Cat: &#21507;&#39277;</span>
+<span class="linenr">26: </span>        animal.staticEat<span style="color: #50a14f;">()</span>;                    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#36755;&#20986; Animal &#31867;&#30340; staticEat() &#26041;&#27861; &#8594; Cat: &#21160;&#29289;&#22312;&#21507;&#39277;</span>
+<span class="linenr">27: </span>
+<span class="linenr">28: </span>        System.out.println<span style="color: #50a14f;">(</span>cat.str<span style="color: #50a14f;">)</span>;           <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; &#35843;&#29992; Cat &#31867;&#30340; str &#21464;&#37327; &#8594; Cat: &#21487;&#29233;&#30340;&#23567;&#29483;</span>
+<span class="linenr">29: </span>        cat.eatMethod<span style="color: #50a14f;">()</span>;                       <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; &#35843;&#29992; Cat &#31867;&#30340; eatMethod &#21464;&#37327; &#8594; Cat: &#29483;&#21916;&#27426;&#21507;&#40060;</span>
+<span class="linenr">30: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">31: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+通过引用类型变量来访问所引用的属性和方法时，Java 虚拟机将采用以下绑定规则：
+</p>
+<ul class="org-ul">
+<li>实例方法与引用变量实际引用的对象的方法进行绑定，这种绑定属于 <b>动态绑定</b> ，因为是在 <b>运行时</b> 由 Java 虚拟机动态决定的。例如， <code>animal.eat()</code> 是将 <code>eat()</code> 方法与 Cat 类相绑定；</li>
+<li>静态方法与引用变量所声明的类型的方法绑定，这种绑定属于静态绑定，因为是在 <b>编译阶段</b> 已经做了绑定。例如， <code>animal.staticEat()</code> 是将 <code>staticEat()</code> 方法与 Animal 类进行绑定；</li>
+<li>成员变量（包括静态变量和实例变量）与引用变量所声明的成员变量绑定，这种绑定属于静态绑定，因为在编译阶段已经做了绑定。例如， <code>animal.name</code> 和 <code>animal.staticName</code> 都是与 Animal 类进行绑定。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org982bfb4" class="outline-3">
+<h3 id="org982bfb4">方法重载</h3>
+<div class="outline-text-3" id="text-org982bfb4">
+<p>
+Java 允许同一个类中定义多个同名方法，只要它们的形参列表不同即可。
+</p>
+
+<p>
+<b>如果同一个类中包含了两个或两个以上方法名相同，但形参列表不同的方法，这种情况称为 <span class="underline">方法重载</span> （overload）。</b>
+</p>
+
+<p>
+如：在 JDK 的 <code>java.io.PrintStream</code> 中定义了十多个同名的 <code>println()</code> 方法。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">println</span><span style="color: #4078f2;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">i</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span> ... <span style="color: #4078f2;">}</span>
+<span class="linenr">2: </span><span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">println</span><span style="color: #4078f2;">(</span><span style="color: #986801;">double</span> <span style="color: #6a1868;">d</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span> ... <span style="color: #4078f2;">}</span>
+<span class="linenr">3: </span><span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">println</span><span style="color: #4078f2;">(</span><span style="color: #986801;">String</span> <span style="color: #6a1868;">s</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span> ... <span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+这些方法完成的功能类似，都是格式化输出。根据参数的不同来区分它们，以进行不同的格式化处理和输出。它们之间就构成了方法的重载。实际调用时，根据实参的类型来决定调用哪一个方法。
+</p>
+
+<p>
+*注：方法重载的要求是两同一不同：同一个类中方法名相同，参数列表不同。至于方法的其他部分，如方法返回值、修饰符等，与方法重载没有任何关系。
+</p>
+
+<blockquote>
+<p>
+使用方法重载其实就是避免出现繁多的方法名，有些方法的功能是相似的，如果重新建立一个方法，重新取个方法名称，会降低程序可读性。
+</p>
+</blockquote>
+
+<essay>
+方法重载，其实就是同类同名不同参啦，别的木有什么要求。
+</essay>
+</div>
+</div>
+
+<div id="outline-container-org05d6fcd" class="outline-3">
+<h3 id="org05d6fcd">方法重写</h3>
+<div class="outline-text-3" id="text-org05d6fcd">
+<p>
+在子类中如果创建一个与父类中相同名称、相同返回值类型、相同参数列表的方法，只是方法体中的实现不同，以实现不同于父类的功能，这种方式被称为 <span class="underline">方法重写</span> （override），又称为方法覆盖。
+</p>
+
+<p>
+当父类中的方法无法满足子类需求或子类具有特有功能的时候，就需要方法重写。子类可以根据需要，定义特定于自己的行为。既沿袭了父类的功能名称，又根据子类的需要重新实现父类方法，从而进行扩展增强。
+</p>
+
+<p>
+在重写方法时，需要遵循下面的规则：
+</p>
+<ul class="org-ul">
+<li>参数列表必须完全与被重写的方法参数列表相同；</li>
+<li>返回的类型必须与重写的方法的返回类型相同（Java 1.5 之后放宽了限制，返回值类型必须小于或等于父类方法的返回值类型）；</li>
+<li>访问权限不能比父类中被重写方法的访问权限更低（public &gt; protected &gt; default &gt; private）；</li>
+<li>重写方法一定不能抛出新的检查异常或者比被重写方法声明更加宽泛的检查型异常。例如，父类的一个方法声明了一个检查异常 <code>IOException</code> ，在重写这个方法时就不能抛出 <code>Exception</code> ，只能抛出 <code>IOExeption</code> 的子类异常，可以抛出非检查异常。</li>
+</ul>
+
+<p>
+另外还要注意以下几条：
+</p>
+<ul class="org-ul">
+<li>重写的方法可以使用 <code>@Override</code> 注解来标识；</li>
+<li>父类的成员方法只能被它的子类重写；</li>
+<li>声明为 <code>final</code> 的方法不能被重写；</li>
+<li>声明为 <code>static</code> 的方法不能被重写，但是能够再再次声明；</li>
+<li>构造方法不能被重写；</li>
+<li>子类和父类在同一个包中时，子类可以重写父类的所有方法，除了声明为 <code>private</code> 和 <code>final</code> 的方法；</li>
+<li>子类和父类不在同一个包中时，子类只能重写父类的声明为 <code>public</code> 和 <code>protected</code> 的非 <code>final</code> 方法；</li>
+<li>如果不能继承一个方法，则不能重写这个方法。</li>
+</ul>
+
+<p>
+如果子类中创建了一个成员变量，而该变量的类型和名称都与父类中的同名成员变量相同，我们则称作变量隐藏。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org813ecc5" class="outline-2">
+<h2 id="org813ecc5">多态</h2>
+<div class="outline-text-2" id="text-org813ecc5">
+<p>
+多态性是面向对象编程的又一个重要特征，它是指在父类中定义的属性和方法被子类继承之后，可以具有不同的数据类型或表现出不同的行为，这使得同一个属性或方法在父类及其各个子类中具有不同的含义。
+</p>
+
+<p>
+<b>对面向对象来说，多态分为编译时多态和运行时多态。</b>
+</p>
+
+<p>
+其中：
+</p>
+<ul class="org-ul">
+<li>编译时多态是静态的，主要是指方法的重载，它是根据参数列表的不同来区分不同的方法。通过编译之后会变成两个不同的方法，在运行时谈不上多态；</li>
+<li>运行时多态是动态的，它是通过动态绑定来实现的，也就是大家通常所说的多态性。</li>
+</ul>
+
+<p>
+<b>Java 实现多态有 3 个必要的条件：继承、重写和向上转型。</b>
+</p>
+<ul class="org-ul">
+<li>继承：在多态中必须存在有继承关系的子类和父类；</li>
+<li>重写：子类对父类中某些方法进行重新定义，在调用这些方法时变会调用子类的方法；</li>
+<li>向上转型：在多态中需要将子类的引用赋给父类对象，只有这们该引用才既能可以调用父类的方法，又能调用子类的方法。</li>
+</ul>
+
+<p>
+只有满足这 3 个条件，开发人员才能够在同一个继承结构中使用统一的逻辑实现代码处理不同的对象，从而执行不同的行为。
+</p>
+
+<p>
+<span class="underline">#. intanceof 关键字</span>
+</p>
+
+<p>
+在 Java 中可以用 <code>instanceof</code> 关键字判断一个对象是否为一个类（或接口、抽象类、父类）的实例，语法格式如下：
+</p>
+
+<pre class="example">
+boolean result = obj instanceof Class
+</pre>
+
+<p>
+其中， <code>obj</code> 是一个对象， <code>Class</code> 表示一个类或接口， <code>obj</code> 是 class 类（或接口）的实例或者子类实例时，结果 <code>result</code> 返回 <code>true</code> ，否则返回 <code>false</code> 。
+</p>
+
+<p>
+下面介绍 Java <code>instanceof</code> 关键字的几种用法。
+</p>
+
+<p>
+（1）声明一个 class 类的对象，判断 <code>obj</code> 是否为 class 类的实例对象（很普遍的一种用法），如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">Integer</span> <span style="color: #6a1868;">integer</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Integer</span><span style="color: #4078f2;">(</span>1<span style="color: #4078f2;">)</span>;
+<span class="linenr">2: </span>System.out.println<span style="color: #4078f2;">(</span>integer <span style="color: #e45649;">instanceof</span> Integer<span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">true</span>
+</pre>
+</div>
+
+<p>
+（2）声明一个 class 接口实现类的对象 <code>obj</code> ，判断 <code>obj</code> 是否为 class 接口实现类的实例对象，如下：
+</p>
+
+<p>
+Java 集合中的 List 接口有个典型实现类 <code>ArrayList</code> 。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">ArrayList</span><span style="color: #4078f2;">&lt;</span><span style="color: #986801;">E</span><span style="color: #4078f2;">&gt;</span> <span style="color: #e45649;">extends</span> <span style="color: #986801;">AbstractList</span><span style="color: #4078f2;">&lt;</span><span style="color: #986801;">E</span><span style="color: #4078f2;">&gt;</span>
+<span class="linenr">2: </span>    <span style="color: #e45649;">implements</span> <span style="color: #986801;">List</span><span style="color: #4078f2;">&lt;</span><span style="color: #986801;">E</span><span style="color: #4078f2;">&gt;</span>, <span style="color: #986801;">RandomAccess</span>, <span style="color: #986801;">Cloneable</span>, <span style="color: #b751b6;">java</span>.<span style="color: #b751b6;">io</span>.<span style="color: #986801;">Serializable</span>
+</pre>
+</div>
+
+<p>
+所以我们可以用 <code>instanceof</code> 运算符判断 <code>ArrayList</code> 类的对象是否属于 <code>List</code> 接口的实例，如果是返回 <code>true</code> ，否则返回 <code>false</code> 。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">ArrayList</span> <span style="color: #6a1868;">arrayList</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">ArrayList</span><span style="color: #4078f2;">()</span>;
+<span class="linenr">2: </span>System.out.println<span style="color: #4078f2;">(</span>arrayList <span style="color: #e45649;">instanceof</span> List<span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">true</span>
+<span class="linenr">3: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21453;&#36807;&#26469;&#20063;&#26159; true</span>
+<span class="linenr">4: </span><span style="color: #986801;">List</span> <span style="color: #6a1868;">list</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">ArrayList</span><span style="color: #4078f2;">()</span>;
+<span class="linenr">5: </span>System.out.println<span style="color: #4078f2;">(</span>list <span style="color: #e45649;">instanceof</span> ArrayList<span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">true</span>
+</pre>
+</div>
+
+<p>
+（3）obj 是 class 类的直接或间接子类
+</p>
+
+<p>
+假设 Man 类是 Person 类的子类，代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">Person</span> <span style="color: #6a1868;">p1</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Person</span><span style="color: #4078f2;">()</span>;
+<span class="linenr">2: </span><span style="color: #986801;">Person</span> <span style="color: #6a1868;">p2</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Man</span><span style="color: #4078f2;">()</span>;
+<span class="linenr">3: </span><span style="color: #986801;">Man</span> <span style="color: #6a1868;">m1</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Man</span><span style="color: #4078f2;">()</span>;
+<span class="linenr">4: </span>System.out.println<span style="color: #4078f2;">(</span>p1 <span style="color: #e45649;">instanceof</span> Man<span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; false</span>
+<span class="linenr">5: </span>System.out.println<span style="color: #4078f2;">(</span>p2 <span style="color: #e45649;">instanceof</span> Man<span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; true</span>
+<span class="linenr">6: </span>System.out.println<span style="color: #4078f2;">(</span>m1 <span style="color: #e45649;">instanceof</span> Man<span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; true</span>
+</pre>
+</div>
+
+<p>
+其中第 4 行，Man 是 Person 的子类，Person 不是 Man 的子类，所以返回结果为 <code>false</code> 。
+</p>
+
+<p>
+<b>*注： obj 必须为引用类型，不能是基本类型。</b>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">int</span> <span style="color: #6a1868;">i</span> = 0;
+<span class="linenr">2: </span>System.out.println<span style="color: #4078f2;">(</span>i <span style="color: #e45649;">instanceof</span> Integer<span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#32534;&#35793;&#19981;&#36890;&#36807;</span>
+<span class="linenr">3: </span>System.out.println<span style="color: #4078f2;">(</span>i <span style="color: #e45649;">instanceof</span> Object<span style="color: #4078f2;">)</span>;  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#32534;&#35793;&#19981;&#36890;&#36807;</span>
+</pre>
+</div>
+
+<p>
+所以， <code>instanceof</code> 运算符只能用作对象的判断。
+</p>
+
+<p>
+当 <code>obj</code> 为 <code>null</code> 时，直接返回 <code>false</code> ，因为 <code>null</code> 没有引用任何对象，所以 <code>obj</code> 的类型必须是引用类型或空类型，否则会编译错误。
+</p>
+
+<p>
+另外，当 <code>class</code> 为 <code>null</code> 时，会发生编译错误，如下：
+</p>
+
+<pre class="example">
+Syntax error on token "null", invalid ReferenceType
+</pre>
+
+<p>
+所以， <code>class</code> 只能是类或者接口。
+</p>
+
+<p>
+编译器会检查 <code>obj</code> 能否转换成右边的 class 类型，如果不能转换则直接报错，如果不能确定类型，则通过编译。来看个例子：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">Person</span> <span style="color: #6a1868;">p1</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Person</span><span style="color: #4078f2;">()</span>;
+<span class="linenr">2: </span>System.out.println<span style="color: #4078f2;">(</span>p1 <span style="color: #e45649;">instanceof</span> String<span style="color: #4078f2;">)</span>;       <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#32534;&#35793;&#25253;&#38169;</span>
+<span class="linenr">3: </span>System.out.println<span style="color: #4078f2;">(</span>p1 <span style="color: #e45649;">instanceof</span> List<span style="color: #4078f2;">)</span>;         <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">false</span>
+<span class="linenr">4: </span>System.out.println<span style="color: #4078f2;">(</span>p1 <span style="color: #e45649;">instanceof</span> <span style="color: #986801;">List</span><span style="color: #a626a4;">&lt;</span>?<span style="color: #a626a4;">&gt;</span><span style="color: #4078f2;">)</span>;      <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">false</span>
+<span class="linenr">5: </span>System.out.println<span style="color: #4078f2;">(</span>p1 <span style="color: #e45649;">instanceof</span> <span style="color: #986801;">List</span><span style="color: #a626a4;">&lt;</span><span style="color: #986801;">Person</span><span style="color: #a626a4;">&gt;</span><span style="color: #4078f2;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#32534;&#35793;&#38169;&#35823;</span>
+</pre>
+</div>
+
+<p>
+上述代码中， <code>Person</code> 的对象 <code>p1</code> 很明显不能转换为 <code>String</code> 对象，那么 <code>p1 instanceof String</code> 不能通过编译，但 <code>p1 instanceof List</code> 却能通过编译，而 <code>instanceof List&lt;Person&gt;</code> 又不能通过编译了。
+</p>
+
+<p>
+为什么呢？
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #986801;">boolean</span> <span style="color: #6a1868;">result</span>;
+<span class="linenr"> 2: </span><span style="color: #e45649;">if</span> <span style="color: #4078f2;">(</span>obj == <span style="color: #b751b6;">null</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 3: </span>    result = <span style="color: #b751b6;">false</span>;             <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#24403; obj &#20026; null &#26102;&#65292;&#30452;&#25509;&#36820;&#22238; false</span>
+<span class="linenr"> 4: </span><span style="color: #4078f2;">}</span> <span style="color: #e45649;">else</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 5: </span>    <span style="color: #e45649;">try</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 6: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21028;&#26029; obj &#26159;&#21542;&#21487;&#20197;&#24378;&#21046;&#36716;&#25442;&#20026; T</span>
+<span class="linenr"> 7: </span>        <span style="color: #986801;">T</span> <span style="color: #6a1868;">temp</span> = <span style="color: #50a14f;">(</span><span style="color: #986801;">T</span><span style="color: #50a14f;">)</span> obj;
+<span class="linenr"> 8: </span>        result = <span style="color: #b751b6;">true</span>;
+<span class="linenr"> 9: </span>    <span style="color: #a626a4;">}</span> <span style="color: #e45649;">catch</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">ClassCastException</span> <span style="color: #6a1868;">e</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">10: </span>        result = <span style="color: #b751b6;">false</span>;
+<span class="linenr">11: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">12: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+可见，在 <code>T</code> 不为 <code>null</code> 和 <code>obj</code> 不为 <code>null</code> 时，如果 <code>obj</code> 可以转换为 <code>T</code> 而不引发异常（ <code>ClassCastException</code> ），则该表达式的结果为 <code>true</code> ，否则值为 <code>false</code> 。
+</p>
+
+<p>
+由此，可见， <code>p1 instanceof String</code> 会报编译错误，就是因为 <code>(String) p1</code> 是不能通过编译的，而 <code>(List) p1</code>   可以通过编译。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb079907" class="outline-2">
+<h2 id="orgb079907">抽象类</h2>
+<div class="outline-text-2" id="text-orgb079907">
+<p>
+Java 语言提供了两种类，分别为具体类和抽象类。
+</p>
+
+<p>
+在面向对象的概念中，所有的对象都是通过类来描绘的，但是反过来， <b>并不是所有的类都是用来描绘对象的</b> ，如果一个类中没有包含足够的信息来描绘一个具体的对象，那么这样的类称为 <span class="underline">抽象类</span> 。
+</p>
+
+<p>
+在 Java 中抽象类的语法格式如下：
+</p>
+
+<pre class="example">
+&lt;abstract&gt; class &lt;class_name&gt; {
+    &lt;abstract&gt; &lt;type&gt; &lt;method_name&gt; (parameter-list);
+}
+</pre>
+
+<p>
+如果一个方法使用 <code>abstract</code> 来修饰，则说明该方法是 <span class="underline">抽象方法</span> ，抽象方法只有声明没有实现。
+</p>
+
+<p>
+*注：需要注意的是 <code>abstract</code> 关键字只能用于普通方法，不能用于 <code>static</code> 方法或者构造方法中。
+</p>
+
+<essay>
+因为，静态方法和构造方法都是要用来使用和实现的，抽象方法只有声明没有实现，肯定是不行的啊。
+</essay>
+
+<p>
+抽象方法的 3 个特征如下：
+</p>
+<ol class="org-ol">
+<li>抽象方法没有方法体；</li>
+<li>抽象方法必须存在于抽象类中；</li>
+<li>子类重写父类时，必须重写父类的所有的抽象方法。</li>
+</ol>
+
+<p>
+*注：在使用 <code>abstract</code> 关键字修饰抽象方法时不能使用 <code>private</code> 修饰，因为抽象方法必须被子类重写。
+</p>
+
+<p>
+抽象类的定义和使用规则如下：
+</p>
+<ul class="org-ul">
+<li>抽象类和抽象方法都要使用 <code>abstract</code> 关键字声明；</li>
+<li>如果一个方法被声明为抽象的，那么这个类也必须声明为抽象的，而一个抽象类中，也可以包含具体方法；</li>
+<li>抽象类不能被实例化，也就是不能使用 <code>new</code> 关键字创建对象。</li>
+</ul>
+
+<p>
+来看一个具体的例子吧。
+</p>
+
+<p>
+不同几何图形的面积计算公式是不同的，但是它们具有的特性是相同的，都具有长和宽这两个属性，也都具有面积计算的方法。那么可以定义一个抽象类，在该抽象类中含有两个属性（ <code>width</code> 和 <code>height</code> ）和一个抽象方法 <code>area()</code> ，具体步骤如下：
+</p>
+
+<p>
+（1）首先创建一个表示图形的抽象类 Shape ，代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">abstract</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Shape</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #6a1868;">width</span>;             <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23485;</span>
+<span class="linenr"> 3: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #6a1868;">height</span>;            <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#39640;</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>    <span style="color: #e45649;">public</span> <span style="color: #a626a4;">Shape</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">width</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">height</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 6: </span>        <span style="color: #e45649;">this</span>.width = width;
+<span class="linenr"> 7: </span>        <span style="color: #e45649;">this</span>.height = height;
+<span class="linenr"> 8: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">abstract</span> <span style="color: #986801;">double</span> <span style="color: #a626a4;">area</span><span style="color: #a626a4;">()</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23450;&#20041;&#25277;&#35937;&#26041;&#27861;&#65292;&#35745;&#31639;&#38754;&#31215;</span>
+<span class="linenr">11: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+（2）定义一个正方形类，该类继承自形状类 Shape ，并重写了 <code>area()</code> 抽象方法，代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Square</span> <span style="color: #e45649;">extends</span> <span style="color: #986801;">Shape</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #a626a4;">Square</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">width</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">height</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #e45649;">super</span><span style="color: #50a14f;">(</span>width, height<span style="color: #50a14f;">)</span>;
+<span class="linenr"> 4: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#37325;&#20889;&#29238;&#31867;&#20013;&#30340;&#25277;&#35937;&#26041;&#27861;&#65292;&#23454;&#29616;&#35745;&#31639;&#27491;&#26041;&#24418;&#38754;&#31215;&#30340;&#21151;&#33021;</span>
+<span class="linenr"> 7: </span>    <span style="color: #b751b6;">@Override</span>
+<span class="linenr"> 8: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">double</span> <span style="color: #a626a4;">area</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 9: </span>        <span style="color: #e45649;">return</span> width * height;
+<span class="linenr">10: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">11: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+（3）定义一个三角形，也继承自形状类 Shape ，并重写父类中的抽象方法 <code>area()</code> ，代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Triangle</span> <span style="color: #e45649;">extends</span> <span style="color: #986801;">Shape</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #a626a4;">Triangle</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">width</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">height</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #e45649;">super</span><span style="color: #50a14f;">(</span>width, height<span style="color: #50a14f;">)</span>;
+<span class="linenr"> 4: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#37325;&#20889;&#29238;&#31867;&#20013;&#30340;&#25277;&#35937;&#26041;&#27861;&#65292;&#23454;&#29616;&#35745;&#31639;&#19977;&#35282;&#24418;&#38754;&#31215;&#30340;&#21151;&#33021;</span>
+<span class="linenr"> 7: </span>    <span style="color: #b751b6;">@Override</span>
+<span class="linenr"> 8: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">double</span> <span style="color: #a626a4;">area</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 9: </span>        <span style="color: #e45649;">return</span> 0.5 * width * height;
+<span class="linenr">10: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">11: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+（4）最后创建一个测试类，分别创建正方形类和三角形类的对象，并调用各类中的 <code>area()</code> 方法，打印出不同形状的几何图形的面积，代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">ShapeTest</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">3: </span>        <span style="color: #986801;">Square</span> <span style="color: #6a1868;">square</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Square</span><span style="color: #50a14f;">(</span>5, 4<span style="color: #50a14f;">)</span>;
+<span class="linenr">4: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#27491;&#26041;&#24418;&#30340;&#38754;&#31215;&#20026;&#65306;"</span> + square.area<span style="color: #da8548;">()</span><span style="color: #50a14f;">)</span>;   <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 20.0</span>
+<span class="linenr">5: </span>        <span style="color: #986801;">Triangle</span> <span style="color: #6a1868;">triangle</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Triangle</span><span style="color: #50a14f;">(</span>2, 5<span style="color: #50a14f;">)</span>;
+<span class="linenr">6: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#19977;&#35282;&#24418;&#30340;&#38754;&#31215;&#20026;&#65306;"</span> + triangle.area<span style="color: #da8548;">()</span><span style="color: #50a14f;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 5.0</span>
+<span class="linenr">7: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">8: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+在 Shape 类的最后定义了一个抽象方法 <code>area()</code> ，用来计算图形的面积。在这里，Shape 类只是定义了计算图形面积的方法，而对于如何计算并没有任何限制。也可以这样理解，抽象类 Shape 仅定义了子类的一般形式。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9b3bd5b" class="outline-2">
+<h2 id="org9b3bd5b">接口</h2>
+<div class="outline-text-2" id="text-org9b3bd5b">
+<p>
+抽象类是从多个类中抽象出来的模板，如果将这种抽象进行的更彻底，则可以提炼出一种更加特殊的“抽象类” &#x2013; <span class="underline">接口</span> （Interface）。
+</p>
+
+<p>
+接口是 Java 中最重要的概念之一，它可以被理解为一种特殊的类，不同的是接口没有执行体，是由全局常量和公共抽象方法所组成。
+</p>
+</div>
+
+<div id="outline-container-org4d2e2b5" class="outline-3">
+<h3 id="org4d2e2b5">定义接口</h3>
+<div class="outline-text-3" id="text-org4d2e2b5">
+<p>
+Java 接口的定义方式与类基本相同，不过接口定义的关键字是 <code>interface</code> ，接口定义的语法格式如下：
+</p>
+
+<pre class="example">
+[public] interface interface_name [extends interface1_name[, interface2_name,...]] {
+    // 接口体，其中可以包含定义常量和声明方法
+    [public] [static] [final] type constant_name = value;        //定义常量
+    [public] [abstract] returnType method_name (parameter_list); //声明方法
+}
+</pre>
+
+<p>
+下面对以上语法做一些说明：
+</p>
+<ul class="org-ul">
+<li><code>public</code> 表示接口的修饰符，当没有修饰符时，则使用默认的修饰符，此时该接口的访问权限仅局限于所属的包；</li>
+<li><code>interface_name</code> 表示接口的名称；</li>
+<li><code>extents</code> 表示接口的继承关系；</li>
+<li><code>interface1_name</code> 表示要继承的接口名称；</li>
+<li><code>constant_name</code> 表示变量名称，一般是 <code>static</code> 和 <code>final</code> 型的；</li>
+<li><code>return_type</code> 表示方法返回值的类型；</li>
+<li><code>parameter_list</code> 表示参数列表，在接口中的方法是没有方法体的。</li>
+</ul>
+
+<p>
+*注：一个接口可以有多个直接父接口，但接口只能继承接口，不能继承类。
+</p>
+
+<p>
+接口对于其声明、变量和方法都做了许多限制，这些限制作为 <span class="underline">接口的特征</span> 如下：
+</p>
+<ul class="org-ul">
+<li>具有 <code>public</code> 访问控制符的接口，允许任何类使用，否则其访问权限局限 于所属的包；</li>
+<li>方法的声明不需要其他修饰符，在接口中声明的方法，将隐式地声明为公有的（ <code>public</code> ）和抽象的（ <code>abstract</code> ）；</li>
+<li>在 Java 接口中声明的变量其实都是常量，接口中的变量声明，将隐式地声明为 <code>public、static</code> 和 <code>final</code> ，即常量，所以接口中定义的变量 <b>必须初始化</b> ；</li>
+<li>接口没有构造方法，不能被实例化。</li>
+</ul>
+
+<p>
+*注：一个接口不能够实现另一个接口，只可以继承接口，子接口可以对父接口的方法和常量进行重写。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #986801;">interfact</span> <span style="color: #6a1868;">StudentInterface</span> <span style="color: #e45649;">extends</span> <span style="color: #986801;">PeopleInterface</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">2: </span>    <span style="color: #986801;">int</span> <span style="color: #6a1868;">age</span> = 25;               <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#24120;&#37327; age &#37325;&#20889;&#29238;&#31867;&#25509;&#21475;&#20013;&#30340; age &#24120;&#37327;</span>
+<span class="linenr">3: </span>    <span style="color: #986801;">void</span> <span style="color: #a626a4;">getInfo</span><span style="color: #a626a4;">()</span>;             <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26041;&#27861; getInfo() &#37325;&#20889;&#29238;&#25509;&#21475;&#20013;&#30340; getInfo() &#26041;&#27861;</span>
+<span class="linenr">4: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgae6e33d" class="outline-3">
+<h3 id="orgae6e33d">实现接口</h3>
+<div class="outline-text-3" id="text-orgae6e33d">
+<p>
+<b>接口的主要用途就是被实现类实现</b> ，一个类可以实现一个或多个接口，继承使用 <code>extends</code> 关键字，实现则使用 <code>implements</code> 关键字。一个类可以实现多个接口，类实现接口的语法格式如下：
+</p>
+
+<pre class="example">
+&lt;public&gt; class &lt;class_name&gt; [extends superclass_name] [implements interface1_name[, interface2_name...]] {
+    // 主体
+}
+</pre>
+
+<p>
+实现接口需要注意以下几点：
+</p>
+<ul class="org-ul">
+<li>实现接口与继承父类相似，一样可以获得所实现接口里定义的常量和方法。如果一个类需要实现多个接口，则多个接口之间可以逗号分隔；</li>
+<li>一个类可以继承一个父类，并同时实现多个接口， <code>implements</code> 部分必须放在 <code>extends</code> 部分之后；</li>
+<li>一个类实现了一个或多个接口之后，这个类 <b>必须完全实现这些接口里所定义的全部抽象方法</b> （也就是重写这些抽象方法）；否则，该类将保留从父接口那里继承到的抽象方法，该类也必须定义成抽象类。</li>
+</ul>
+
+<p>
+来看一个具体的例子吧。
+</p>
+
+<p>
+在程序的开发中，需要完成两个数的求和运算和比较运算功能的类非常多，所以可以定义一个接口来将类似的功能组织在一起。
+</p>
+
+<p>
+（1）创建一个名称为 IMath 的接口：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">interface</span> <span style="color: #986801;">IMath</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">2: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #a626a4;">sum</span><span style="color: #a626a4;">()</span>;                <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23436;&#25104;&#20004;&#20010;&#25968;&#30340;&#30456;&#21152;</span>
+<span class="linenr">3: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #a626a4;">maxNum</span><span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #a626a4;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#33719;&#21462;&#36739;&#22823;&#30340;&#25968;</span>
+<span class="linenr">4: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+（2）定义一个 MathClass 类并实现 IMath 接口：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">MathClass</span> <span style="color: #e45649;">implements</span> <span style="color: #986801;">IMath</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #e45649;">private</span> <span style="color: #986801;">int</span> <span style="color: #6a1868;">num1</span>;
+<span class="linenr"> 3: </span>    <span style="color: #e45649;">private</span> <span style="color: #986801;">int</span> <span style="color: #6a1868;">num2</span>;
+<span class="linenr"> 4: </span>    <span style="color: #e45649;">public</span> <span style="color: #a626a4;">MathClass</span><span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">num1</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">num2</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 5: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#26500;&#36896;&#26041;&#27861;</span>
+<span class="linenr"> 6: </span>        <span style="color: #e45649;">this</span>.num1 = num1;
+<span class="linenr"> 7: </span>        <span style="color: #e45649;">this</span>.num2 = num2;
+<span class="linenr"> 8: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr"> 9: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616;&#25509;&#21475;&#20013;&#30340;&#27714;&#21644;&#26041;&#27861;</span>
+<span class="linenr">10: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #a626a4;">sum</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">11: </span>        <span style="color: #e45649;">return</span> num1 + num2;
+<span class="linenr">12: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">13: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616;&#25509;&#21475;&#20013;&#30340;&#33719;&#21462;&#36739;&#22823;&#25968;&#30340;&#26041;&#27861;</span>
+<span class="linenr">14: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #a626a4;">maxNum</span><span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">intb</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">15: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>a &gt;= b<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+<span class="linenr">16: </span>            <span style="color: #e45649;">return</span> a;
+<span class="linenr">17: </span>        <span style="color: #50a14f;">}</span> <span style="color: #e45649;">else</span> <span style="color: #50a14f;">{</span>
+<span class="linenr">18: </span>            <span style="color: #e45649;">return</span> b;
+<span class="linenr">19: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">20: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">21: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+在实现类中，所有的方法都使用了 <code>public</code> 访问修饰符声明。无论何时实现一个由接口定义的方法，它都必须实现为 <code>public</code> ，因为接口中的所有成员都显示声明为 <code>public</code> 。
+</p>
+
+<p>
+（3）最后创建一个测试类 NumTest ，实例化接口的实现类 MathClass ，调用该类中的方法并输出结果：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">NumTest</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">3: </span>        <span style="color: #986801;">MathClass</span> <span style="color: #6a1868;">calc</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">MathClass</span><span style="color: #50a14f;">(</span>100, 300<span style="color: #50a14f;">)</span>;
+<span class="linenr">4: </span>        System.out.println<span style="color: #50a14f;">(</span>calc.sum<span style="color: #da8548;">()</span><span style="color: #50a14f;">)</span>;            <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 400</span>
+<span class="linenr">5: </span>        System.out.println<span style="color: #50a14f;">(</span>calc.maxNum<span style="color: #da8548;">(</span>100, 300<span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 300</span>
+<span class="linenr">6: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">7: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org512867b" class="outline-2">
+<h2 id="org512867b"><span class="todo TODO">TODO</span> 内部类</h2>
+</div>
+
+<div id="outline-container-org5011d08" class="outline-2">
+<h2 id="org5011d08"><span class="todo TODO">TODO</span> 匿名类</h2>
+<div class="outline-text-2" id="text-org5011d08">
+<p>
+匿名类是指没有类名的内部类，必须在创建时使用 <code>new</code> 语句来声明类，语法形式如下：
+</p>
+
+<pre class="example">
+new &lt;类或接口&gt; () {
+    // 类的主体
+}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org6b7c8d9" class="outline-2">
+<h2 id="org6b7c8d9">Lambda 表达式</h2>
+<div class="outline-text-2" id="text-org6b7c8d9">
+<p>
+（Java 8 新特性）Lambda 表达式是一个匿名函数，它允许把函数作为一个方法的参数。
+</p>
+
+<p>
+来看一个具体的应用例子：
+</p>
+
+<p>
+先定义一个计算数值的接口，代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21487;&#35745;&#31639;&#25509;&#21475;</span>
+<span class="linenr">2: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">interface</span> <span style="color: #986801;">Calculable</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">3: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#35745;&#31639;&#20004;&#20010; int &#25968;&#20540;</span>
+<span class="linenr">4: </span>    <span style="color: #986801;">int</span> <span style="color: #a626a4;">calculateInt</span><span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #a626a4;">)</span>;
+<span class="linenr">5: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+实现方法代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #84888b; font-style: italic;">/**</span>
+<span class="linenr"> 3: </span><span style="color: #84888b; font-style: italic;">       &#36890;&#36807;&#25805;&#20316;&#31526;&#65292;&#36827;&#34892;&#35745;&#31639;</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span style="color: #84888b; font-style: italic;">       </span><span style="color: #b751b6; font-style: italic;">@param</span><span style="color: #84888b; font-style: italic;"> opr &#25805;&#20316;&#31526;</span>
+<span class="linenr"> 6: </span><span style="color: #84888b; font-style: italic;">       </span><span style="color: #b751b6; font-style: italic;">@return</span><span style="color: #84888b; font-style: italic;"> &#23454;&#29616; Calculable &#25509;&#21475;&#23545;&#35937;</span>
+<span class="linenr"> 7: </span><span style="color: #84888b; font-style: italic;">     */</span>
+<span class="linenr"> 8: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">Calculable</span> <span style="color: #a626a4;">calculate</span><span style="color: #a626a4;">(</span><span style="color: #986801;">char</span> <span style="color: #6a1868;">opr</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 9: </span>        <span style="color: #986801;">Calculable</span> <span style="color: #6a1868;">result</span>;
+<span class="linenr">10: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>opr == <span style="color: #50a14f;">'+'</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+<span class="linenr">11: </span>            <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21311;&#21517;&#20869;&#37096;&#31867;&#23454;&#29616; Calculable &#25509;&#21475;</span>
+<span class="linenr">12: </span>            result = <span style="color: #e45649;">new</span> <span style="color: #986801;">Calculable</span><span style="color: #da8548;">()</span> <span style="color: #da8548;">{</span>
+<span class="linenr">13: </span>                <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616;&#21152;&#27861;&#36816;&#31639;</span>
+<span class="linenr">14: </span>                <span style="color: #b751b6;">@Override</span>
+<span class="linenr">15: </span>                <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> calculateInt<span style="color: #b751b6;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #b751b6;">)</span> <span style="color: #b751b6;">{</span>
+<span class="linenr">16: </span>                    <span style="color: #e45649;">return</span> a + b;
+<span class="linenr">17: </span>                <span style="color: #b751b6;">}</span>
+<span class="linenr">18: </span>            <span style="color: #da8548;">}</span>;
+<span class="linenr">19: </span>        <span style="color: #50a14f;">}</span> <span style="color: #e45649;">else</span> <span style="color: #50a14f;">{</span>
+<span class="linenr">20: </span>            <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21311;&#21517;&#20869;&#37096;&#31867;&#23454;&#29616; Calculable &#25509;&#21475;</span>
+<span class="linenr">21: </span>            result = <span style="color: #e45649;">new</span> <span style="color: #986801;">Calculable</span><span style="color: #da8548;">()</span> <span style="color: #da8548;">{</span>
+<span class="linenr">22: </span>                <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616;&#20943;&#27861;&#36816;&#31639;</span>
+<span class="linenr">23: </span>                <span style="color: #b751b6;">@Override</span>
+<span class="linenr">24: </span>                <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> calculateInt<span style="color: #b751b6;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #b751b6;">)</span> <span style="color: #b751b6;">{</span>
+<span class="linenr">25: </span>                    <span style="color: #e45649;">return</span> a - b;
+<span class="linenr">26: </span>                <span style="color: #b751b6;">}</span>
+<span class="linenr">27: </span>            <span style="color: #da8548;">}</span>
+<span class="linenr">28: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">29: </span>        <span style="color: #e45649;">return</span> result;
+<span class="linenr">30: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">31: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+方法 <code>calculate</code> 中 <code>opr</code> 参数是运算符，返回值是实现 <code>Calculable</code> 接口对象。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #4078f2;">(</span><span style="color: #986801;">String</span><span style="color: #a626a4;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #986801;">int</span> <span style="color: #6a1868;">n1</span> = 10;
+<span class="linenr"> 3: </span>    <span style="color: #986801;">int</span> <span style="color: #6a1868;">n2</span> = 5;
+<span class="linenr"> 4: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616;&#21152;&#27861;&#35745;&#31639; Calculable &#23545;&#35937;</span>
+<span class="linenr"> 5: </span>    <span style="color: #986801;">Calculable</span> <span style="color: #6a1868;">f1</span> = calculate<span style="color: #a626a4;">(</span><span style="color: #50a14f;">'+'</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 6: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616;&#21152;&#27861;&#35745;&#31639; Calculable &#23545;&#35937;</span>
+<span class="linenr"> 7: </span>    <span style="color: #986801;">Calculable</span> <span style="color: #6a1868;">f2</span> = calculate<span style="color: #a626a4;">(</span><span style="color: #50a14f;">'-'</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 8: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#35843;&#29992; calculateInt &#26041;&#27861;&#36827;&#34892;&#21152;&#27861;&#35745;&#31639;</span>
+<span class="linenr"> 9: </span>    System.out.println<span style="color: #a626a4;">(</span>f1.calculateInt<span style="color: #50a14f;">(</span>n1, n2<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 15</span>
+<span class="linenr">10: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#35843;&#29992; calculateInt &#26041;&#27861;&#36827;&#34892;&#20943;&#27861;&#36816;&#31639;</span>
+<span class="linenr">11: </span>    System.out.println<span style="color: #a626a4;">(</span>f2.calculateInt<span style="color: #50a14f;">(</span>n1, n2<span style="color: #50a14f;">)</span><span style="color: #a626a4;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 5</span>
+<span class="linenr">12: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+<b>不难看出，使用匿名内部类的方法 <code>calculate</code> 代码很臃肿</b> ，Java 8 采用 Lambda 表达式可以替代匿名内部类，修改之后的通用方法 <code>calculate</code> 代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #84888b; font-style: italic;">/**</span>
+<span class="linenr"> 2: </span><span style="color: #84888b; font-style: italic;">   &#36890;&#36807;&#25805;&#20316;&#31526;&#65292;&#36827;&#34892;&#35745;&#31639;</span>
+<span class="linenr"> 3: </span><span style="color: #84888b; font-style: italic;">   </span><span style="color: #b751b6; font-style: italic;">@param</span><span style="color: #84888b; font-style: italic;"> opr &#25805;&#20316;&#31526;</span>
+<span class="linenr"> 4: </span><span style="color: #84888b; font-style: italic;">   </span><span style="color: #b751b6; font-style: italic;">@return</span><span style="color: #84888b; font-style: italic;"> &#23454;&#29616; Calculable &#25509;&#21475;&#23545;&#35937;</span>
+<span class="linenr"> 5: </span><span style="color: #84888b; font-style: italic;"> */</span>
+<span class="linenr"> 6: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">Calculable</span> <span style="color: #a626a4;">calculate</span><span style="color: #4078f2;">(</span><span style="color: #986801;">char</span> <span style="color: #6a1868;">opr</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 7: </span>    <span style="color: #986801;">Calculable</span> <span style="color: #6a1868;">result</span>;
+<span class="linenr"> 8: </span>    <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span>opr == <span style="color: #50a14f;">'+'</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 9: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">Lambda &#34920;&#36798;&#24335;&#23454;&#29616; Calculable &#25509;&#21475;</span>
+<span class="linenr">10: </span>        result = <span style="color: #50a14f;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #50a14f;">)</span> -&gt; <span style="color: #50a14f;">{</span>
+<span class="linenr">11: </span>            <span style="color: #e45649;">return</span> a + b;
+<span class="linenr">12: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">13: </span>    <span style="color: #a626a4;">}</span> <span style="color: #e45649;">else</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">14: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">Lambda &#34920;&#36798;&#24335;&#23454;&#29616; Calculable &#25509;&#21475;</span>
+<span class="linenr">15: </span>        result = <span style="color: #50a14f;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #50a14f;">)</span> -&gt; <span style="color: #50a14f;">{</span>
+<span class="linenr">16: </span>            <span style="color: #e45649;">return</span> a - b;
+<span class="linenr">17: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">18: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">19: </span>    <span style="color: #e45649;">return</span> result;
+<span class="linenr">20: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+第 10 行和第 15 行用 Lambda 表达式替代匿名内部类，代码变得简洁多了。
+</p>
+
+<p>
+通过以上示例我们发现，Lambda 表达式是一个匿名函数（方法）代码块，可以作为表达式、方法参数和方法返回值类型。
+</p>
+
+<p>
+Lambda 表达式标准语法形式如下：
+</p>
+
+<pre class="example">
+(参数列表) -&gt; {
+    // Lambda 表达式
+}
+</pre>
+
+<p>
+Java Lambda 表达式的优点：
+</p>
+<ul class="org-ul">
+<li>代码简洁，开发迅速；</li>
+<li>方便函数式编程；</li>
+<li>非常容易进行并行计算；</li>
+<li>Java 引入 Lambda ，改善了八集合操作（引入 Stream API）。</li>
+</ul>
+
+<p>
+当然也有缺点：
+</p>
+<ul class="org-ul">
+<li>代码可读性变差；</li>
+<li>在非并行计算中，很多计算未必有传统的 for 性能要高；</li>
+<li>不容易进行调试。</li>
+</ul>
+
+<p>
+<span class="underline">1. 函数式接口</span>
+</p>
+
+<p>
+Lambda 表达式实现的接口不是普通的接口，而是函数式接口。
+</p>
+
+<p>
+如果一个接口中，有且只有一个抽象的方法（Oject 类中的方法不包括在内），那这个接口就可以被看做是 <span class="underline">函数式接口</span> 。这种接口只能有一个方法，如果接口中声明多个抽象方法，那么 Lambda 表达式会发生编译错误。
+</p>
+
+<pre class="example">
+The target type of this expression must be a functional interface
+</pre>
+
+<p>
+说明该接口不是函数式接口，为了防止在函数式接口中声明多个抽象方法，Java 8 提供了一个声明函数式接口注解 <code>@FunctionalInterface</code> ，示例代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21487;&#35745;&#31639;&#25509;&#21475;</span>
+<span class="linenr">2: </span><span style="color: #b751b6;">@FunctionalInterface</span>
+<span class="linenr">3: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">interface</span> <span style="color: #986801;">Calculable</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">4: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#35745;&#31639;&#20004;&#20010; int &#25968;&#20540;</span>
+<span class="linenr">5: </span>    <span style="color: #986801;">int</span> <span style="color: #a626a4;">calculateInt</span><span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">a</span>, <span style="color: #986801;">int</span> <span style="color: #6a1868;">b</span><span style="color: #a626a4;">)</span>;
+<span class="linenr">6: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+在接口之前使用 <code>@FunctionalInterface</code> 注解修饰，那么试图增加一个抽象方法时会发生编译错误，但可以添加默认方法和静态方法。
+</p>
+
+<blockquote>
+<p>
+<code>@FunctionalInterface</code> 注解与 <code>@Override</code> 注解的作用类似。Java 8 中专门为函数式接口引入了一个新的注解 <code>@FunctionalInterface</code> 。该注解可用于一个接口的定义上，一旦使用该注解来定义接口，编译器将会强制检查接口是否确实有且仅有一个抽象方法，否则将会报错。
+</p>
+</blockquote>
+
+<p>
+*注：即使不使用该注解，只要满足函数式接口的定义，这仍然是一个函数式接口，使用起来都一样。
+</p>
+
+<p>
+提示：Lambda 表达式是一个匿名方法代码，Java 中的方法必须声明在类或接口中，那么 Lambda 表达式所实现的匿名方法是在函数式接口中声明的。
+</p>
+
+<p>
+<span class="underline">2. Lambda 表达式的使用</span>
+</p>
+
+<p>
+TODO&#x2026;
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-09-26 Sat 11:27</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2021-02-23 Tue 14:31</p>
+<p class="validation"><a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a></p>
+</div>
+</body>
 </html>

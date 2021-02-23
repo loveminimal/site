@@ -1,342 +1,342 @@
 <!DOCTYPE html>
 <html lang="zh">
-  <head>
-    <!-- 2021-02-23 Tue 11:10 -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CSS 中的动效</title>
-    <meta name="generator" content="Org mode">
-    <meta name="author" content="Jack Liu">
-    <link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
-    <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
-    <script type="module" src="/themes/main.js" defer></script>
-  </head>
-  <body>
-    <div id="content">
-      <h1 class="title">CSS 中的动效</h1>
-      <div id="table-of-contents">
-        <h2>Table of Contents</h2>
-        <div id="text-table-of-contents">
-          <ul>
-            <li><a href="#org1f62aa4">简介</a></li>
-            <li><a href="#org762725b">Transform 变换</a></li>
-            <li><a href="#org6065124">Transition 过渡</a></li>
-            <li><a href="#org858cdc0">Animation 动画 </a></li>
-          </ul>
-        </div>
-      </div>
-      <p>
-        CSS 中的 <code>transform、transition</code> 和 <code>animation</code> ，简称 TTA。
-      </p>
+<head>
+<!-- 2021-02-23 Tue 14:30 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS 中的动效</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
+           <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
+           <script type="module" src="/themes/main.js" defer></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">CSS 中的动效</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org1f62aa4">简介</a></li>
+<li><a href="#org762725b">Transform 变换</a></li>
+<li><a href="#org6065124">Transition 过渡</a></li>
+<li><a href="#org858cdc0">Animation 动画 </a></li>
+</ul>
+</div>
+</div>
+<p>
+CSS 中的 <code>transform、transition</code> 和 <code>animation</code> ，简称 TTA。
+</p>
 
-      <essay>
-        CSS 什么的这种逻辑性略弱、规则性很强的领域，边用边深入就好，不常用的记了也会忘。
-      </essay>
+<essay>
+CSS 什么的这种逻辑性略弱、规则性很强的领域，边用边深入就好，不常用的记了也会忘。
+</essay>
 
-      <div id="outline-container-org1f62aa4" class="outline-2">
-        <h2 id="org1f62aa4">简介</h2>
-        <div class="outline-text-2" id="text-org1f62aa4">
-          <p>
-            <code>transform</code> 其实是描述元素的静态属性，一旦写到 style 里面，将会直接显示作用，本身不会呈现任何动画效果。
-          </p>
+<div id="outline-container-org1f62aa4" class="outline-2">
+<h2 id="org1f62aa4">简介</h2>
+<div class="outline-text-2" id="text-org1f62aa4">
+<p>
+<code>transform</code> 其实是描述元素的静态属性，一旦写到 style 里面，将会直接显示作用，本身不会呈现任何动画效果。
+</p>
 
-          <p>
-            <code>transition</code> 和 <code>animation</code> 两者都能实现动画效果， <code>transfrom</code> 通常是配合这两者使用的。
-          </p>
+<p>
+<code>transition</code> 和 <code>animation</code> 两者都能实现动画效果， <code>transfrom</code> 通常是配合这两者使用的。
+</p>
 
-          <p>
-            那么， <code>transition</code> 和 <code>animation</code> 又有什么不同呢？
-          </p>
+<p>
+那么， <code>transition</code> 和 <code>animation</code> 又有什么不同呢？
+</p>
 
-          <p>
-            其主要区别在于：
-          </p>
-          <ol class="org-ol">
-            <li>动画不需要事件触发，过渡需要；</li>
-            <li>过渡只有一组（两个：开始-结束） 关键帧，动画可以设置多个。</li>
-          </ol>
-        </div>
-      </div>
+<p>
+其主要区别在于：
+</p>
+<ol class="org-ol">
+<li>动画不需要事件触发，过渡需要；</li>
+<li>过渡只有一组（两个：开始-结束） 关键帧，动画可以设置多个。</li>
+</ol>
+</div>
+</div>
 
-      <div id="outline-container-org762725b" class="outline-2">
-        <h2 id="org762725b">Transform 变换</h2>
-        <div class="outline-text-2" id="text-org762725b">
-          <p>
-            <code>transform</code> 属性应用于元素的 2D 或 3D 转换，这个属性允许你将元素旋转，缩放，平移，倾斜（拉伸）等。
-          </p>
+<div id="outline-container-org762725b" class="outline-2">
+<h2 id="org762725b">Transform 变换</h2>
+<div class="outline-text-2" id="text-org762725b">
+<p>
+<code>transform</code> 属性应用于元素的 2D 或 3D 转换，这个属性允许你将元素旋转，缩放，平移，倾斜（拉伸）等。
+</p>
 
-          <pre class="example">
-            transform: none|transform-functions;
-          </pre>
+<pre class="example">
+transform: none|transform-functions;
+</pre>
 
-          <p>
-            <code>transform-functions</code> 是什么呢？如下表：
-          </p>
+<p>
+<code>transform-functions</code> 是什么呢？如下表：
+</p>
 
-          <table>
-            <caption class="t-above"><span class="table-number">Table 1:</span> 常用的变换函数值</caption>
+<table>
+<caption class="t-above"><span class="table-number">Table 1:</span> 常用的变换函数值</caption>
 
-            <colgroup>
-              <col  class="org-left">
+<colgroup>
+<col  class="org-left">
 
-              <col  class="org-left">
-            </colgroup>
-            <thead>
-              <tr>
-                <th scope="col" class="org-left">值</th>
-                <th scope="col" class="org-left">描述</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="org-left">&#x2026;</td>
-                <td class="org-left">&#xa0;</td>
-              </tr>
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">值</th>
+<th scope="col" class="org-left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&#x2026;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
 
-              <tr>
-                <td class="org-left"><code>matrix(n,n,n,n,n,n)</code></td>
-                <td class="org-left">定义 2D 转换，使用六个值的矩阵</td>
-              </tr>
+<tr>
+<td class="org-left"><code>matrix(n,n,n,n,n,n)</code></td>
+<td class="org-left">定义 2D 转换，使用六个值的矩阵</td>
+</tr>
 
-              <tr>
-                <td class="org-left"><code>translate(x,y)</code></td>
-                <td class="org-left">定义 2D 转换</td>
-              </tr>
+<tr>
+<td class="org-left"><code>translate(x,y)</code></td>
+<td class="org-left">定义 2D 转换</td>
+</tr>
 
-              <tr>
-                <td class="org-left"><code>scale(x[,y])</code></td>
-                <td class="org-left">定义 2D 缩放转换</td>
-              </tr>
+<tr>
+<td class="org-left"><code>scale(x[,y])</code></td>
+<td class="org-left">定义 2D 缩放转换</td>
+</tr>
 
-              <tr>
-                <td class="org-left"><code>rotate(angle)</code></td>
-                <td class="org-left">定义 2D 旋转，在参数中规定角度</td>
-              </tr>
+<tr>
+<td class="org-left"><code>rotate(angle)</code></td>
+<td class="org-left">定义 2D 旋转，在参数中规定角度</td>
+</tr>
 
-              <tr>
-                <td class="org-left"><code>skew(x-angle,y-angle)</code></td>
-                <td class="org-left">定义沿着 X 和 Y 轴的 2D 倾斜转换</td>
-              </tr>
+<tr>
+<td class="org-left"><code>skew(x-angle,y-angle)</code></td>
+<td class="org-left">定义沿着 X 和 Y 轴的 2D 倾斜转换</td>
+</tr>
 
-              <tr>
-                <td class="org-left">&#x2026;</td>
-                <td class="org-left">&#xa0;</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+<tr>
+<td class="org-left">&#x2026;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 
-      <div id="outline-container-org6065124" class="outline-2">
-        <h2 id="org6065124">Transition 过渡</h2>
-        <div class="outline-text-2" id="text-org6065124">
-          <p>
-            <code>transition</code> 属性设置元素当过渡效果。
-          </p>
+<div id="outline-container-org6065124" class="outline-2">
+<h2 id="org6065124">Transition 过渡</h2>
+<div class="outline-text-2" id="text-org6065124">
+<p>
+<code>transition</code> 属性设置元素当过渡效果。
+</p>
 
-          <pre class="example">
-            transition: property duration timing-function delay;
-          </pre>
+<pre class="example">
+transition: property duration timing-function delay;
+</pre>
 
-          <table>
-            <caption class="t-above"><span class="table-number">Table 2:</span> 过渡效果属性值</caption>
+<table>
+<caption class="t-above"><span class="table-number">Table 2:</span> 过渡效果属性值</caption>
 
-            <colgroup>
-              <col  class="org-left">
+<colgroup>
+<col  class="org-left">
 
-              <col  class="org-left">
-            </colgroup>
-            <thead>
-              <tr>
-                <th scope="col" class="org-left">值</th>
-                <th scope="col" class="org-left">描述</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="org-left"><code>transition-property</code></td>
-                <td class="org-left">指定 CSS 属性的名称</td>
-              </tr>
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">值</th>
+<th scope="col" class="org-left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>transition-property</code></td>
+<td class="org-left">指定 CSS 属性的名称</td>
+</tr>
 
-              <tr>
-                <td class="org-left"><code>transition-duration</code></td>
-                <td class="org-left">指定过渡持续时间</td>
-              </tr>
+<tr>
+<td class="org-left"><code>transition-duration</code></td>
+<td class="org-left">指定过渡持续时间</td>
+</tr>
 
-              <tr>
-                <td class="org-left"><code>transition-timing-function</code></td>
-                <td class="org-left">指定过渡函数</td>
-              </tr>
+<tr>
+<td class="org-left"><code>transition-timing-function</code></td>
+<td class="org-left">指定过渡函数</td>
+</tr>
 
-              <tr>
-                <td class="org-left"><code>transition-delay</code></td>
-                <td class="org-left">指定过渡延迟时间</td>
-              </tr>
-            </tbody>
-          </table>
+<tr>
+<td class="org-left"><code>transition-delay</code></td>
+<td class="org-left">指定过渡延迟时间</td>
+</tr>
+</tbody>
+</table>
 
-          <p>
-            *注：应始终指定 <code>transition-duration</code> 属性，否则持续时间为 0 ， <code>transition</code> 不会有任何效果。
-          </p>
+<p>
+*注：应始终指定 <code>transition-duration</code> 属性，否则持续时间为 0 ， <code>transition</code> 不会有任何效果。
+</p>
 
-          <div class="org-src-container">
-            <pre class="src src-css"><span class="linenr"> 1: </span><span style="color: #4078f2;">.select </span><span style="color: #4078f2;">{</span>
-              <span class="linenr"> 2: </span>    ...
-              <span class="linenr"> 3: </span>    <span style="color: #50a14f;">width</span>: 100px;
-              <span class="linenr"> 4: </span>    <span style="color: #50a14f;">transition</span>: width 2s;
-              <span class="linenr"> 5: </span>    ...
-              <span class="linenr"> 6: </span><span style="color: #4078f2;">}</span>
-              <span class="linenr"> 7: </span>
-              <span class="linenr"> 8: </span><span style="color: #4078f2;">.select:hover </span><span style="color: #4078f2;">{</span>
-              <span class="linenr"> 9: </span>    <span style="color: #50a14f;">width</span>: 200px;
-              <span class="linenr">10: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
+<div class="org-src-container">
+<pre class="src src-css"><span class="linenr"> 1: </span><span style="color: #4078f2;">.select </span><span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    ...
+<span class="linenr"> 3: </span>    <span style="color: #50a14f;">width</span>: 100px;
+<span class="linenr"> 4: </span>    <span style="color: #50a14f;">transition</span>: width 2s;
+<span class="linenr"> 5: </span>    ...
+<span class="linenr"> 6: </span><span style="color: #4078f2;">}</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span><span style="color: #4078f2;">.select:hover </span><span style="color: #4078f2;">{</span>
+<span class="linenr"> 9: </span>    <span style="color: #50a14f;">width</span>: 200px;
+<span class="linenr">10: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
 
-          <p>
-            <code>transition</code> 的优点在于简单易用，但是它有几个在的局限：
-          </p>
-          <ul class="org-ul">
-            <li>需要事件触发，所以没法在网页加载时自动发生；</li>
-            <li>是一次性的，不能重复发生，除非一再触发；</li>
-            <li>只能定义开始状态和结束状态，不能定义中间状态；</li>
-            <li>一条规则只能定义一个属性的变化，不能涉及多个属性。</li>
-          </ul>
+<p>
+<code>transition</code> 的优点在于简单易用，但是它有几个在的局限：
+</p>
+<ul class="org-ul">
+<li>需要事件触发，所以没法在网页加载时自动发生；</li>
+<li>是一次性的，不能重复发生，除非一再触发；</li>
+<li>只能定义开始状态和结束状态，不能定义中间状态；</li>
+<li>一条规则只能定义一个属性的变化，不能涉及多个属性。</li>
+</ul>
 
-          <essay>
-            自古有矛必有盾！
-          </essay>
+<essay>
+自古有矛必有盾！
+</essay>
 
-          <p>
-            CSS Animation就是为了解决这些问题而提出的。
-          </p>
-        </div>
-      </div>
+<p>
+CSS Animation就是为了解决这些问题而提出的。
+</p>
+</div>
+</div>
 
-      <div id="outline-container-org858cdc0" class="outline-2">
-        <h2 id="org858cdc0">Animation 动画 <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-        <div class="outline-text-2" id="text-org858cdc0">
-          <p>
-            CSS3 可以创建动画，它可以取代许多网页动画图像、Flash 动画和 JavaScript 实现效果。
-          </p>
+<div id="outline-container-org858cdc0" class="outline-2">
+<h2 id="org858cdc0">Animation 动画 <sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
+<div class="outline-text-2" id="text-org858cdc0">
+<p>
+CSS3 可以创建动画，它可以取代许多网页动画图像、Flash 动画和 JavaScript 实现效果。
+</p>
 
-          <p>
-            那么，CSS3 动画是什么呢？
-          </p>
+<p>
+那么，CSS3 动画是什么呢？
+</p>
 
-          <p>
-            动画是使元素从一种样式逐渐变化为另一种样式的效果，你可以改变任意多的样式次数，且应该用百分比来规定变化发生的时间，或用关键词 <code>from</code> （0%）和 <code>to</code> （100%）。
-          </p>
+<p>
+动画是使元素从一种样式逐渐变化为另一种样式的效果，你可以改变任意多的样式次数，且应该用百分比来规定变化发生的时间，或用关键词 <code>from</code> （0%）和 <code>to</code> （100%）。
+</p>
 
-          <pre class="example">
-            animation: name duration timing-function delay iteration-count direction fill-mode play-state;
-          </pre>
+<pre class="example">
+animation: name duration timing-function delay iteration-count direction fill-mode play-state;
+</pre>
 
-          <table>
-            <caption class="t-above"><span class="table-number">Table 3:</span> 动画属性表</caption>
+<table>
+<caption class="t-above"><span class="table-number">Table 3:</span> 动画属性表</caption>
 
-            <colgroup>
-              <col  class="org-left">
+<colgroup>
+<col  class="org-left">
 
-              <col  class="org-left">
-            </colgroup>
-            <thead>
-              <tr>
-                <th scope="col" class="org-left">值</th>
-                <th scope="col" class="org-left">描述</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="org-left"><code>animation-name</code></td>
-                <td class="org-left">指定关键帧动画的名称</td>
-              </tr>
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">值</th>
+<th scope="col" class="org-left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>animation-name</code></td>
+<td class="org-left">指定关键帧动画的名称</td>
+</tr>
 
-              <tr>
-                <td class="org-left"><code>animation-duration</code></td>
-                <td class="org-left">指定动画播放所需时间</td>
-              </tr>
+<tr>
+<td class="org-left"><code>animation-duration</code></td>
+<td class="org-left">指定动画播放所需时间</td>
+</tr>
 
-              <tr>
-                <td class="org-left"><code>animation-timing-function</code></td>
-                <td class="org-left">指定动画播放方式</td>
-              </tr>
+<tr>
+<td class="org-left"><code>animation-timing-function</code></td>
+<td class="org-left">指定动画播放方式</td>
+</tr>
 
-              <tr>
-                <td class="org-left"><code>animation delay</code></td>
-                <td class="org-left">指定动画开始时间</td>
-              </tr>
+<tr>
+<td class="org-left"><code>animation delay</code></td>
+<td class="org-left">指定动画开始时间</td>
+</tr>
 
-              <tr>
-                <td class="org-left"><code>animation-iteration-count</code></td>
-                <td class="org-left">指定动画的播放次数，默认为 <code>1</code> ，若为 <code>infinite</code> ，则无限次循环播放</td>
-              </tr>
+<tr>
+<td class="org-left"><code>animation-iteration-count</code></td>
+<td class="org-left">指定动画的播放次数，默认为 <code>1</code> ，若为 <code>infinite</code> ，则无限次循环播放</td>
+</tr>
 
-              <tr>
-                <td class="org-left"><code>animation-direction</code></td>
-                <td class="org-left">指定动画的播放方向，默认为 <code>normal</code> ，若为 <code>alternate</code> ，则轮流反射播放</td>
-              </tr>
+<tr>
+<td class="org-left"><code>animation-direction</code></td>
+<td class="org-left">指定动画的播放方向，默认为 <code>normal</code> ，若为 <code>alternate</code> ，则轮流反射播放</td>
+</tr>
 
-              <tr>
-                <td class="org-left"><code>animation-fill-mode</code></td>
-                <td class="org-left">规定当动画不播放时（完成或有延迟未开始播放时），要应用到元素的样式</td>
-              </tr>
+<tr>
+<td class="org-left"><code>animation-fill-mode</code></td>
+<td class="org-left">规定当动画不播放时（完成或有延迟未开始播放时），要应用到元素的样式</td>
+</tr>
 
-              <tr>
-                <td class="org-left">&#x2026;</td>
-                <td class="org-left">&#xa0;</td>
-              </tr>
-            </tbody>
-          </table>
+<tr>
+<td class="org-left">&#x2026;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
 
-          <essay>
-            Hmm... 其实这种属性表是令人讨厌的，还是具体的例子看起来更加明了，另外，大多数情况下，你并不需要了解这么多属性。
-          </essay>
+<essay>
+Hmm... 其实这种属性表是令人讨厌的，还是具体的例子看起来更加明了，另外，大多数情况下，你并不需要了解这么多属性。
+</essay>
 
-          <p>
-            *注：必须定义动画的名称和动画的持续时间，如果省略持续时间，动画将无法运行。
-          </p>
+<p>
+*注：必须定义动画的名称和动画的持续时间，如果省略持续时间，动画将无法运行。
+</p>
 
-          <p>
-            还是来看个例子吧。
-          </p>
+<p>
+还是来看个例子吧。
+</p>
 
-          <div class="org-src-container">
-            <pre class="src src-css"><span class="linenr"> 1: </span><span style="color: #4078f2;">.select </span><span style="color: #4078f2;">{</span>
-              <span class="linenr"> 2: </span>    ...
-              <span class="linenr"> 3: </span>    <span style="color: #50a14f;">animation</span>: myanimation 5s;
-              <span class="linenr"> 4: </span>    ...
-              <span class="linenr"> 5: </span><span style="color: #4078f2;">}</span>
-              <span class="linenr"> 6: </span>
-              <span class="linenr"> 7: </span><span style="color: #a626a4;">@keyframes</span> myanimation <span style="color: #4078f2;">{</span>
-              <span class="linenr"> 8: </span>    <span style="color: #4078f2;">0%   </span><span style="color: #a626a4;">{</span><span style="color: #50a14f;">background</span>: <span style="color: #ffffff; background-color: #ff0000;">red</span>;<span style="color: #a626a4;">}</span>
-              <span class="linenr"> 9: </span>    <span style="color: #4078f2;">25%  </span><span style="color: #a626a4;">{</span><span style="color: #50a14f;">background</span>: <span style="color: #000000; background-color: #ffff00;">yellow</span>;<span style="color: #a626a4;">}</span>
-              <span class="linenr">10: </span>    <span style="color: #4078f2;">50%  </span><span style="color: #a626a4;">{</span><span style="color: #50a14f;">background</span>: <span style="color: #ffffff; background-color: #0000ff;">blue</span>;<span style="color: #a626a4;">}</span>
-              <span class="linenr">11: </span>    <span style="color: #4078f2;">100% </span><span style="color: #a626a4;">{</span><span style="color: #50a14f;">background</span>: <span style="color: #ffffff; background-color: #008000;">green</span>;<span style="color: #a626a4;">}</span>
-              <span class="linenr">12: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
+<div class="org-src-container">
+<pre class="src src-css"><span class="linenr"> 1: </span><span style="color: #4078f2;">.select </span><span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    ...
+<span class="linenr"> 3: </span>    <span style="color: #50a14f;">animation</span>: myanimation 5s;
+<span class="linenr"> 4: </span>    ...
+<span class="linenr"> 5: </span><span style="color: #4078f2;">}</span>
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span><span style="color: #a626a4;">@keyframes</span> myanimation <span style="color: #4078f2;">{</span>
+<span class="linenr"> 8: </span>    <span style="color: #4078f2;">0%   </span><span style="color: #a626a4;">{</span><span style="color: #50a14f;">background</span>: <span style="color: #ffffff; background-color: #ff0000;">red</span>;<span style="color: #a626a4;">}</span>
+<span class="linenr"> 9: </span>    <span style="color: #4078f2;">25%  </span><span style="color: #a626a4;">{</span><span style="color: #50a14f;">background</span>: <span style="color: #000000; background-color: #ffff00;">yellow</span>;<span style="color: #a626a4;">}</span>
+<span class="linenr">10: </span>    <span style="color: #4078f2;">50%  </span><span style="color: #a626a4;">{</span><span style="color: #50a14f;">background</span>: <span style="color: #ffffff; background-color: #0000ff;">blue</span>;<span style="color: #a626a4;">}</span>
+<span class="linenr">11: </span>    <span style="color: #4078f2;">100% </span><span style="color: #a626a4;">{</span><span style="color: #50a14f;">background</span>: <span style="color: #ffffff; background-color: #008000;">green</span>;<span style="color: #a626a4;">}</span>
+<span class="linenr">12: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
 
-          <p>
-            <b>看！关键在于 <code>@keyframes</code> 可以让你定义指定的帧！</b> 你只需要定义的个动画名称和持续时间，然后用 <code>@keyframes</code> 去按百分比指定帧效果就可以了。
-          </p>
-        </div>
-      </div>
-      <div id="footnotes">
-        <h2 class="footnotes">Footnotes: </h2>
-        <div id="text-footnotes">
+<p>
+<b>看！关键在于 <code>@keyframes</code> 可以让你定义指定的帧！</b> 你只需要定义的个动画名称和持续时间，然后用 <code>@keyframes</code> 去按百分比指定帧效果就可以了。
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
 
-          <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-                <a href="https://www.lmonkey.com/t/RwykQXzBX">https://www.lmonkey.com/t/RwykQXzBX</a>
-          </p></div></div>
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://www.lmonkey.com/t/RwykQXzBX">https://www.lmonkey.com/t/RwykQXzBX</a>
+</p></div></div>
 
-        </div>
-    </div></div>
-    <div id="postamble" class="status">
-      <p class="date">Date: 2020-10-19 Mon 11:58</p>
-      <p class="author">Author: Jack Liu</p>
-      <p class="date">Created: 2021-02-23 Tue 11:10</p>
-      <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
-    </div>
-  </body>
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-10-19 Mon 11:58</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2021-02-23 Tue 14:30</p>
+<p class="validation"><a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a></p>
+</div>
+</body>
 </html>

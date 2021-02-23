@@ -1,722 +1,722 @@
 <!DOCTYPE html>
 <html lang="zh">
-  <head>
-    <!-- 2021-02-23 Tue 11:11 -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>数组处理</title>
-    <meta name="generator" content="Org mode">
-    <meta name="author" content="Jack Liu">
-    <link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
-    <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
-    <script type="module" src="/themes/main.js" defer></script>
-  </head>
-  <body>
-    <div id="content">
-      <h1 class="title">数组处理</h1>
-      <div id="table-of-contents">
-        <h2>Table of Contents</h2>
-        <div id="text-table-of-contents">
-          <ul>
-            <li><a href="#org89f4028">数组是什么</a></li>
-            <li><a href="#org03fcaba">数组也是一种数据类型</a></li>
-            <li><a href="#org3d62b89"><span class="todo TODO">TODO</span> Arrays 工具类</a>
-              <ul>
-                <li><a href="#org0d48f59">数组比较</a></li>
-                <li><a href="#org5fa5fcf">数组填充</a></li>
-                <li><a href="#orgfe01000">数组查找</a></li>
-                <li><a href="#org48e82b7">数组复制</a></li>
-                <li><a href="#orgfb174cb">数组排序</a></li>
-                <li><a href="#org2ed83ef">冒泡排序</a></li>
-                <li><a href="#org4c7dee0"><span class="todo TODO">TODO</span> 快速排序</a></li>
-                <li><a href="#org872b538"><span class="todo TODO">TODO</span> 选择排序</a></li>
-                <li><a href="#org95f5fe2"><span class="todo TODO">TODO</span> 插入排序</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <p>
-        在某些情况下，虽然可以使用单个变量来存储信息，但是如果需要存储的信息较多（例如存储 50 名学生的成绩），这时再依次创建变量声明并赋值显得非常麻烦。
-      </p>
-
-      <p>
-        随着处理的信息量越来越大，工作也就越来越烦琐，这时可以使用数组或集合来存储信息。通过使用数组，可以在很大程度上缩短和简化程序代码，从而提高应用程序的效率。
-      </p>
-
-      <div id="outline-container-org89f4028" class="outline-2">
-        <h2 id="org89f4028">数组是什么</h2>
-        <div class="outline-text-2" id="text-org89f4028">
-          <p>
-            <span class="underline">数组</span> （array）是一种最简单的复合数据类型，它是有序数据的集合，数组中的每个元素具有相同的数据类型，可以用一个统一的数组名和不同的下标来确定数组中唯一的元素。根据数组的维度，可以将其分为一维数组、二维数组和多维数组等。
-          </p>
-
-          <p>
-            数组是非常重要的集合类型，具有如下三个基本特性：
-          </p>
-          <ul class="org-ul">
-            <li>一致性：数组只能保存相同数据类型元素（数据类型可以是任何相同的数据类型）；</li>
-            <li>有序性：数组中的元素是有序的，通过下标访问；</li>
-            <li>不可变性：数组一旦初始化，则长度（数组中元素的个数）不可变。</li>
-          </ul>
-
-          <essay>
-            其实，以上种种的限制都是由数组在内存中的存储方式所决定的。
-          </essay>
-
-          <p>
-            *注：数值数组元素的默认值为 <code>0</code> ，而引用元素的默认值为 <code>null</code> 。
-          </p>
-
-          <p>
-            <b>数组是引用数据类型，引用数据类型在使用之前一定要做两件事情：声明和初始化。</b>
-          </p>
-
-          <p>
-            <span class="underline">1. 一维数组</span>
-          </p>
-
-          <p>
-            当数组中每个元素都只带有一个下标时，这种数组就是“一维数组”，实质上是一组相同类型数据的线性集合，是数组中最简单的一种数组。
-          </p>
-
-          <p>
-            <span class="underline">1.1 创建数组</span>
-          </p>
-
-          <p>
-            为了在程序中使用一个数组，必须声明一个引用该数组的变量，并指明整个变量可以引用的数组类型。语法格式如下：
-          </p>
-
-          <pre class="example">
-            type[] arrayName;               // 数据类型[] 数组名;
-            // OR
-            type arrayName[];               // （不推荐）
-          </pre>
-
-          <p>
-            *注： <code>type[]</code> 确实是一种新类型，与 <code>type</code> 类型不同（如 <code>int</code> 类型是基本类型，但 <code>int[]</code> 是引用类型）。
-          </p>
-
-          <p>
-            <span class="underline">1.2 分配空间</span>
-          </p>
-
-          <p>
-            <b>声明了数组，只是得到了一个存放数组的变量，并没有为数组元素分配内存空间，不能使用。</b> 因此，要为数组分配内存空间，数组的每一个元素才有一个空间进行存储。
-          </p>
-
-          <blockquote>
-            <p>
-              *注：分配空间就是要告诉计算机在内存中为它分配几个连续的位置来存储数据。
-            </p>
-          </blockquote>
-
-          <p>
-            在 Java 中可以使用 <code>new</code> 关键字来分配空间，语法格式如下：
-          </p>
-
-          <pre class="example">
-            arrayName = new type[size];     // 数组名 = new 数据类型[数组长度];
-          </pre>
-
-          <p>
-            其中， <code>arrayName</code> 是已经声明过的 <code>int[]</code> 类型的变量，当然也可以在声明数组时就给它分配空间，语法格式如下：
-          </p>
-
-          <pre class="example">
-            type[] arrayName = new type[size]; // 数据类型[] 数组名 = new 数据类型[数组长度];
-          </pre>
-
-          <p>
-            <b>*注：一旦声明了数组的大小，就不能再修改。这里的数组长度也是必需的，不能少。</b>
-          </p>
-
-          <p>
-            <span class="underline">1.3 初始化一维数组</span>
-          </p>
-
-          <p>
-            Java 语言中数组必须先初始化，然后才可以使用。所谓初始化，就是为数组的数组元素分配内存空间，并为每个数组元素初始值。
-          </p>
-
-          <p>
-            能不能只分配内存空间，不赋初始值呢？
-          </p>
-
-          <p>
-            不行，一旦为数组的每个元素分配了内存空间，每个内存空间里存储的内容就是该数组元素的值，即使这个内存空间存储的内容为空，这个空也是一个值（ <code>null</code> ）。
-          </p>
-
-          <p>
-            不管以哪种方式来初始化数组，只要为数组元素分配了内存空间，数组元素就具有了初始值。初始值的获得有两种形式，一种由系统自动分配，另一种由程序员指定。
-          </p>
-
-          <p>
-            <b>数组在初始化的同时，可以指定数组的大小，也可以分别初始化数组中的每一个元素。</b> 在 Java 语言中，初始化数组有以下 3 种方式。
-          </p>
-
-          <p>
-            <span class="underline">1.3.1 使用 new 指定数组大小后进行初始化</span>
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr">1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">type[] arrayName = new int[size]</span>
-              <span class="linenr">2: </span><span style="color: #986801;">int</span><span style="color: #4078f2;">[]</span> <span style="color: #6a1868;">number</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[</span>5<span style="color: #4078f2;">]</span>;
-              <span class="linenr">3: </span>number<span style="color: #4078f2;">[</span>0<span style="color: #4078f2;">]</span> = 1;
-              <span class="linenr">4: </span>number<span style="color: #4078f2;">[</span>1<span style="color: #4078f2;">]</span> = 2;
-              <span class="linenr">5: </span>number<span style="color: #4078f2;">[</span>2<span style="color: #4078f2;">]</span> = 3;
-              <span class="linenr">6: </span>number<span style="color: #4078f2;">[</span>3<span style="color: #4078f2;">]</span> = 5;
-              <span class="linenr">7: </span>number<span style="color: #4078f2;">[</span>4<span style="color: #4078f2;">]</span> = 8;
-            </pre>
-          </div>
-
-          <p>
-            如果程序员只指定了数组和长度，那么系统将负责为这些数组元素分配初始值。指定初始值时，系统按如下规则分配初始值。
-          </p>
-          <table>
-
-            <colgroup>
-              <col  class="org-left">
-
-              <col  class="org-left">
-
-              <col  class="org-left">
-            </colgroup>
-            <thead>
-              <tr>
-                <th scope="col" class="org-left">数组元素的类型</th>
-                <th scope="col" class="org-left">类型</th>
-                <th scope="col" class="org-left">自动分配初始值</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="org-left">整数类型</td>
-                <td class="org-left">byte、short、int、long</td>
-                <td class="org-left"><code>0</code></td>
-              </tr>
-
-              <tr>
-                <td class="org-left">浮点类型</td>
-                <td class="org-left">float、double</td>
-                <td class="org-left"><code>0.0</code></td>
-              </tr>
-
-              <tr>
-                <td class="org-left">字符类型</td>
-                <td class="org-left">char</td>
-                <td class="org-left"><code>'\u0000'</code></td>
-              </tr>
-
-              <tr>
-                <td class="org-left">引用类型</td>
-                <td class="org-left">类、接口、数组</td>
-                <td class="org-left"><code>null</code></td>
-              </tr>
-            </tbody>
-          </table>
-
-          <p>
-            <span class="underline">1.3.2 使用 new 指定数组元素的值</span>
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr">1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">type[] arrayName = new type[]{val1, val2, val3, ..., vlaN};</span>
-              <span class="linenr">2: </span><span style="color: #986801;">int</span><span style="color: #4078f2;">[]</span> <span style="color: #6a1868;">number</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[]{</span>1, 2, 3, 5, 8<span style="color: #4078f2;">}</span>;
-            </pre>
-          </div>
-
-          <p>
-            *注：不要在进行数组初始化时，既指定数组的长度，也为每个数组元素分配初始值，这样会造成代码错误。
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">int</span><span style="color: #4078f2;">[]</span> <span style="color: #6a1868;">number</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[</span>5<span style="color: #4078f2;">]{</span>1, 2, 3, 4, 5<span style="color: #4078f2;">}</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#10008;</span>
-            </pre>
-          </div>
-
-          <p>
-            <span class="underline">1.3.3 直接指定数组元素的值</span>
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr">1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">type[] arrayName = {val1, val2, val3, ..., valN};</span>
-              <span class="linenr">2: </span><span style="color: #986801;">int</span><span style="color: #4078f2;">[]</span> <span style="color: #6a1868;">number</span> = <span style="color: #4078f2;">{</span>1, 2, 3, 5, 8<span style="color: #4078f2;">}</span>;
-              <span class="linenr">3: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">OR</span>
-              <span class="linenr">4: </span><span style="color: #986801;">int</span><span style="color: #4078f2;">[]</span> <span style="color: #6a1868;">number</span>;
-              <span class="linenr">5: </span>number = <span style="color: #4078f2;">{</span>1, 2, 3, 5, 8<span style="color: #4078f2;">}</span>;
-            </pre>
-          </div>
-
-          <p>
-            <span class="underline">1.4 获取数组元素</span>
-          </p>
-
-          <p>
-            获取单个元素的方法非常简单，指定元素所在数组的下标即可。语法如下：
-          </p>
-
-          <pre class="example">
-            arrayName[index];
-          </pre>
-
-          <p>
-            *注：当指定的下标值超出数组的总长度时，会抛出 <code>ArrayIndexOutOfBoundsException</code> 异常。
-          </p>
-
-          <p>
-            如果数组中的元素过多，再使用单个下标则显得烦琐，此时使用一种简单的方法可以获取全部元素——使用循环语句。
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #986801;">int</span><span style="color: #4078f2;">[]</span> <span style="color: #6a1868;">number</span> = <span style="color: #4078f2;">{</span>1, 2, 3, 5 ,8<span style="color: #4078f2;">}</span>;
-              <span class="linenr"> 2: </span>
-              <span class="linenr"> 3: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">1. for</span>
-              <span class="linenr"> 4: </span><span style="color: #e45649;">for</span> <span style="color: #4078f2;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">i</span> = 0; i &lt; number.<span style="color: #986801;">length</span>; i++<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr"> 5: </span>    System.out.println<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"&#31532;"</span> + <span style="color: #50a14f;">(</span>i + 1<span style="color: #50a14f;">)</span> + <span style="color: #50a14f;">"&#20803;&#32032;&#30340;&#20540;&#26159;&#65306;"</span> + number<span style="color: #50a14f;">[</span>i<span style="color: #50a14f;">]</span><span style="color: #a626a4;">)</span>;
-              <span class="linenr"> 6: </span><span style="color: #4078f2;">}</span>
-              <span class="linenr"> 7: </span>
-              <span class="linenr"> 8: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">2. foreach</span>
-              <span class="linenr"> 9: </span><span style="color: #e45649;">for</span> <span style="color: #4078f2;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">val</span>:number<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr">10: </span>    System.out.print<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"&#20803;&#32032;&#30340;&#20540;&#20381;&#27425;&#26159;&#65306;"</span>+val+<span style="color: #50a14f;">"\t"</span><span style="color: #a626a4;">)</span>;
-              <span class="linenr">11: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
-
-          <p>
-            <span class="underline">2. 二维数组</span>
-          </p>
-
-          <p>
-            在 Java 中二维数组被看作数组的数组，即二维数组为一个特殊的一维数组，其每个元素又是一个一维数组。
-          </p>
-
-          <p>
-            除了一维数组和二维数组外，Java 中还支持更多维的数组，如三维数组、四维数组和五维数组等，它们都属于多维数组。
-          </p>
-
-          <p>
-            <span class="underline">3. 不规则数组</span>
-          </p>
-
-          <p>
-            Java 实际上没有多维数组，只有一维数组。多维数组被解释为是数组的数组，所以因此会衍生出一种不规则数组。
-          </p>
-
-          <p>
-            规则的 4×3 二维数组有 12 个元素，而不规则数组就不一定了。如下代码静态初始化了一个不规则数组。
-          </p>
-
-          <pre class="example">
-            int intArray[][] = {{1,2}, {11}, {21,22,23}, {31,32,33}};
-          </pre>
-
-          <p>
-            动态初始化不规则数组比较麻烦，不能使用 <code>new int[4][3]</code> 语句，而是先初始化高维数组，然后再分别逐个初始化低维数组。代码如下：
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr">1: </span><span style="color: #9ca0a4;">//</span><span style="color: #9ca0a4;">&#20808;&#21021;&#22987;&#21270;&#39640;&#32500;&#25968;&#32452;&#20026;4</span>
-              <span class="linenr">2: </span><span style="color: #986801;">int</span> <span style="color: #6a1868;">intArray</span><span style="color: #4078f2;">[][]</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[</span>4<span style="color: #4078f2;">][]</span>;
-              <span class="linenr">3: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#36880;&#19968;&#21021;&#22987;&#21270;&#20302;&#32500;&#25968;&#32452;</span>
-              <span class="linenr">4: </span>intArray<span style="color: #4078f2;">[</span>0<span style="color: #4078f2;">]</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[</span>2<span style="color: #4078f2;">]</span>;
-              <span class="linenr">5: </span>intArray<span style="color: #4078f2;">[</span>1<span style="color: #4078f2;">]</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[</span>1<span style="color: #4078f2;">]</span>;
-              <span class="linenr">6: </span>intArray<span style="color: #4078f2;">[</span>2<span style="color: #4078f2;">]</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[</span>3<span style="color: #4078f2;">]</span>;
-              <span class="linenr">7: </span>intArray<span style="color: #4078f2;">[</span>3<span style="color: #4078f2;">]</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[</span>3<span style="color: #4078f2;">]</span>;
-            </pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="outline-container-org03fcaba" class="outline-2">
-        <h2 id="org03fcaba">数组也是一种数据类型</h2>
-        <div class="outline-text-2" id="text-org03fcaba">
-          <p>
-            Java 的数组要求所有的数组元素具有相同的数据类型。
-          </p>
-
-          <p>
-            因此，在一个数组中，数组元素的类型是唯一的，即一个数组里只能存储一种数据类型的数据，而不能存储多种数据类型的数据。
-          </p>
-
-          <p>
-            一旦数组的初始化完成，数组在内存中所占的空间将被固定下来，因此数组的长度将不可改变。即使把某个数组元素的数据清空，但它所占的空间依然被保留，依然属于该数组，数组的长度依然不变。
-          </p>
-
-          <p>
-            Java 的数组既可以存储基本类型的数据，也可以存储引用类型的数据，只要所有的数组元素具有相同的类型即可。
-          </p>
-
-          <p>
-            值得指出的是，数组也是一种数据类型，它本身是一种引用类型。例如 <code>int</code> 是一个基本类型，但 <code>int[]</code> （这是定义数组的一种方式）就是一种引用类型了。
-          </p>
-
-          <p>
-            <code>int[]</code> 是一种类型吗？怎么使用这种类型呢？
-          </p>
-
-          <p>
-            没错， <code>int[]</code> 就是一种数据类型，与 int 类型、String 类型相似，一样可以使用该类型来定义变量，也可以使用该类型进行类型转换等。 <code>int[]</code> 类型是一种引用类型，创建 <code>int[]</code> 类型的对象也就是创建数组，需要使用创建数组的语法。
-          </p>
-        </div>
-      </div>
-
-      <div id="outline-container-org3d62b89" class="outline-2">
-        <h2 id="org3d62b89"><span class="todo TODO">TODO</span> Arrays 工具类</h2>
-        <div class="outline-text-2" id="text-org3d62b89">
-          <p>
-            Arrays 类是一个工具类，其中包含了数组操作的很多方法。这个 Arrays 类里均为 <code>static</code> 修饰的方法（ <code>static</code> 修饰的方法可以直接通过类名调用），可以直接通过 <code>Arrays.xxx(xxx)</code> 的形式调用方法。
-          </p>
-        </div>
-
-        <div id="outline-container-org0d48f59" class="outline-3">
-          <h3 id="org0d48f59">数组比较</h3>
-          <div class="outline-text-3" id="text-org0d48f59">
-            <p>
-              数组相等的条件下不仅要求数组元素的个数必须相等，而且要求对应位置的元素也相等，Arrays 类提供了 <code>equals()</code> 方法比较整个数组。
-            </p>
-
-            <pre class="example">
-              Arrays.equals(arrayA, arrayB);
-            </pre>
-          </div>
-        </div>
-
-        <div id="outline-container-org5fa5fcf" class="outline-3">
-          <h3 id="org5fa5fcf">数组填充</h3>
-          <div class="outline-text-3" id="text-org5fa5fcf">
-            <p>
-              Arrays 类提供了一个 <code>fill()</code> 方法，可以在指定位置进行数值填充。 <code>fill()</code> 方法虽然可以填充数组，但是它的功能有限制，只能使用同一个数值进行填充。
-            </p>
-
-            <pre class="example">
-              Arrays.fill(array, value);
-            </pre>
-
-            <p>
-              其中， <code>array</code> 表示数组， <code>value</code> 表示填充的值。
-            </p>
-          </div>
-        </div>
-
-        <div id="outline-container-orgfe01000" class="outline-3">
-          <h3 id="orgfe01000">数组查找</h3>
-          <div class="outline-text-3" id="text-orgfe01000">
-            <p>
-              查找数组是指从数组中查询指定位置的元素，或者查询某元素在指定数组中的位置。
-            </p>
-
-            <p>
-              使用 Arrays 类的 <code>binarySearch()</code> 方法可以实现数组的查找，该方法可使用二分搜索法指定数组，以获得指定对象，该方法返回要搜索元素的索引值。
-            </p>
-
-            <p>
-              <code>binarySearch()</code> 方法有多种重载形式来满足不同类型数组的查找需要，常用的重载形式有两种。
-            </p>
-
-            <pre class="example">
-              binarySearch(Object[] arr, Object key);
-              // OR
-              binarySearch(Object[] arr, int fromIndex, int toIndex, Object key);
-            </pre>
-
-            <p>
-              如果 <code>key</code> 包含在数组中，则返回搜索值的索引；否则返回 <code>-1</code> 或 <code>-插入点</code> 。插入点指搜索键将要插入数组的位置，即第一个大于此键的元素索引。
-            </p>
-
-            <p>
-              *注：在进行数组查询之前，必须对数组进行排序（可以使用 <code>sort()</code> 方法）。如果没有对数组进行排序，则结果是不确定的。如果数组包含多个带有指定值的元素，则无法确认找到的是哪一个。
-            </p>
-          </div>
-        </div>
-
-        <div id="outline-container-org48e82b7" class="outline-3">
-          <h3 id="org48e82b7">数组复制</h3>
-          <div class="outline-text-3" id="text-org48e82b7">
-            <p>
-              所谓复制数组，是指将一个数组中的元素在另一个数组中进行复制。
-            </p>
-
-            <p>
-              在 Java 中实现数组复制分别有以下 4 种方法：
-            </p>
-            <ul class="org-ul">
-              <li>Arrays 类的 <code>copyOf()</code> 方法；</li>
-              <li>Arrays 类的 <code>copyOfRange()</code> 方法；</li>
-              <li>System 类的 <code>arraycopy()</code> 方法；</li>
-              <li>Object 类的 <code>clone()</code> 方法。</li>
-            </ul>
-
-            <p>
-              <span class="underline">1. 使用 copyOf() 方法和 copyOfRange() 方法</span>
-            </p>
-
-            <p>
-              <code>copyOf()</code> 方法是复制数组至指定长度， <code>copyOfRange()</code> 方法则将指定数组的指定长度复制到一个新数组中。
-            </p>
-
-            <pre class="example">
-              Arrays.copyOf(dataType[] srcArray, int length);
-            </pre>
-
-            <p>
-              其中， <code>srcArray</code>  表示要进行复制的数组， <code>length</code> 表示复制后的新数组的长度。
-            </p>
-
-            <p>
-              使用这种方法复制数组时，默认从原数组的第一个元素（索引值为 0 ）开始复制，目标数组的长度为 length 。如果 length 大于 <code>srcArray.length</code> ，则目标数组中采用默认值填充；如果 length 小于 <code>srcArray.length</code> ，则复制到第 <code>length</code> 个元素（索引值为 <code>length - 1</code> ）即止。
-            </p>
-
-            <p>
-              *注意：目标数组如果已经存在，将会被重构。
-            </p>
-
-            <pre class="example">
-              Arrays.copyOfRange(dataType[] srcArray, int startIndex, int endIndex)
-            </pre>
-
-            <p>
-              其中：
-            </p>
-            <ul class="org-ul">
-              <li><code>srcArray</code> 表示原数组；</li>
-              <li><code>startIndex</code> 表示开始复制的起始索引，目标数组中将包含起始索引对应的元素，另外， <code>startIndex</code> 必须在 <code>0</code> 到 <code>srcArray.length</code> 之间；</li>
-              <li><code>endIndex</code> 表示终止索引，目标数组中将不包含终止索引对应的元素， <code>endIndex</code> 必须大于等于 <code>startIndex</code> ，可以大于 <code>srcArray.length</code> ，如果大于 <code>srcArray.length</code> ，则目标数组中使用默认值填充。</li>
-            </ul>
-
-            <p>
-              <span class="underline">2. 使用 arraycopy() 方法</span>
-            </p>
-
-            <p>
-              <code>arraycopy()</code> 方法位于 <code>java.lang.System</code> 类中，其语法形式如下：
-            </p>
-
-            <pre class="example">
-              System.arraycopy(dataType[] arcArray, int srcIndex, int destArray, int destIndex, int length)
-            </pre>
-
-            <p>
-              其中：
-            </p>
-            <ul class="org-ul">
-              <li><code>srcArray</code> 表示原始数组；</li>
-              <li><code>srcIndex</code> 表示开始复制的起始索引；</li>
-              <li><code>destArray</code> 表示目标数组；</li>
-              <li><code>destIndex</code> 表示目标数组中的起始索引；</li>
-              <li><code>length</code> 表示要复制的数组的长度。</li>
-            </ul>
-
-            <p>
-              使用此方法复制数组时， <code>length+srcIndex</code> 必须小于等于 <code>srcArray.length</code> ，同时 <code>length+destIndex</code> 必须小于等于 <code>destArray.length</code> 。
-            </p>
-
-            <p>
-              *注：目标数组必须已经存在，且不会被重构，相当于替换目标数组中的部分元素。
-            </p>
-
-            <p>
-              <span class="underline">3. 使用 clone() 方法</span>
-            </p>
-
-            <p>
-              <code>clone()</code> 方法也可以实现复制数组，该方法是类 Object 中的方法，可以创建一个有单独内存空间的对象。
-            </p>
-
-            <p>
-              <code>clone()</code> 方法的返回值是 Object 类型，要使用强制类型转换为适当的类型。示例语句如下：
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">int</span><span style="color: #4078f2;">[]</span> <span style="color: #6a1868;">targetArray</span> = <span style="color: #4078f2;">(</span><span style="color: #986801;">int</span><span style="color: #a626a4;">[]</span><span style="color: #4078f2;">)</span>sourceArray.clone<span style="color: #4078f2;">()</span>;
-              </pre>
-            </div>
-
-            <p>
-              *注：目标数组如果已经存在，将会被重构。
-            </p>
-
-            <blockquote>
-              <p>
-                *注：以上几种方法都是浅拷贝。浅拷贝只是复制了对象的引用地址，两个对象指向同一个内存地址，修改其中任意的值，另一个值都会随之变化；深拷贝是将对象及值复制过来，两个对象修改其中任意的值，另一个值不会改变。
-              </p>
-            </blockquote>
-          </div>
-        </div>
-
-        <div id="outline-container-orgfb174cb" class="outline-3">
-          <h3 id="orgfb174cb">数组排序</h3>
-          <div class="outline-text-3" id="text-orgfb174cb">
-            <p>
-              Java 语言中使用 Arrays 类提供的 <code>sort()</code> 方法来对数组进行排序。
-            </p>
-
-            <p>
-              <span class="underline">1. 升序</span>
-            </p>
-
-            <p>
-              使用 <code>java.util.Arrays</code> 类中的 <code>sort()</code> 方法对数组进行升序：
-            </p>
-            <ol class="org-ol">
-              <li>导入 <code>java.util.Arrays</code> 包；</li>
-              <li>使用 <code>Arrays.sort(数组名)</code> 语法对数组进行排序，排序规则是从小到大，即升序。</li>
-            </ol>
-
-            <p>
-              <span class="underline">2. 降序</span>
-            </p>
-
-            <p>
-              在 Java 语言中使用 <code>sort()</code> 实现降序两种方法。
-            </p>
-
-            <p>
-              <span class="underline">2.1 利用 <code>Collections.reverseOrder()</code> 方法（Collections 是一个包装类）</span>
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #4078f2;">(</span><span style="color: #986801;">String</span><span style="color: #a626a4;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr">2: </span>    <span style="color: #986801;">Integer</span><span style="color: #a626a4;">[]</span> <span style="color: #6a1868;">arr</span> = <span style="color: #a626a4;">{</span>9, 8, 7, 2, 3, 4, 1, 0, 6, 5<span style="color: #a626a4;">}</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#25968;&#32452;&#31867;&#22411;&#20026; Integer</span>
-                <span class="linenr">3: </span>    Arrays.sort<span style="color: #a626a4;">(</span>arr, Collections.reverseOrder<span style="color: #50a14f;">()</span><span style="color: #a626a4;">)</span>;
-                <span class="linenr">4: </span>
-                <span class="linenr">5: </span>    <span style="color: #e45649;">for</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">item</span> : arr<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr">6: </span>        System.out.print<span style="color: #50a14f;">(</span>item + <span style="color: #50a14f;">" "</span><span style="color: #50a14f;">)</span>;
-                <span class="linenr">7: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">8: </span><span style="color: #4078f2;">}</span>
-                <span class="linenr">9: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 9 8 7 6 5 4 3 2 1 0</span>
-              </pre>
-            </div>
-
-            <p>
-              <span class="underline">2.2 实现 <code>Comparator</code> 接口的复写 <code>compare()</code> 方法</span>
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr"> 3: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#27880;&#24847;&#65292;&#35201;&#24819;&#25913;&#21464;&#40664;&#35748;&#30340;&#25490;&#21015;&#39034;&#24207;&#65292;&#19981;&#33021;&#20351;&#29992;&#22522;&#26412;&#31867;&#22411;&#65288;int, double, char&#65289;&#32780;&#35201;&#20351;&#29992;&#23427;&#20204;&#23545;&#23601;&#30340;&#31867;</span>
-                <span class="linenr"> 4: </span>        <span style="color: #986801;">Integer</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">arr</span> = <span style="color: #50a14f;">{</span>9, 8, 7, 2, 3, 4, 1, 0, 6, 5<span style="color: #50a14f;">}</span>;
-                <span class="linenr"> 5: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23450;&#20041;&#19968;&#20010;&#33258;&#23450;&#20041;&#31867; MyComparator &#30340;&#23545;&#35937;</span>
-                <span class="linenr"> 6: </span>        <span style="color: #986801;">Comparator</span> <span style="color: #6a1868;">cmp</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">MyComparator</span><span style="color: #50a14f;">()</span>;
-                <span class="linenr"> 7: </span>
-                <span class="linenr"> 8: </span>        Array.sort<span style="color: #50a14f;">(</span>arr, cmp<span style="color: #50a14f;">)</span>;
-                <span class="linenr"> 9: </span>        <span style="color: #e45649;">for</span> <span style="color: #50a14f;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">item</span> : arr<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
-                <span class="linenr">10: </span>            System.out.print<span style="color: #da8548;">(</span>item + <span style="color: #50a14f;">" "</span><span style="color: #da8548;">)</span>;
-                <span class="linenr">11: </span>        <span style="color: #50a14f;">}</span>
-                <span class="linenr">12: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">13: </span><span style="color: #4078f2;">}</span>
-                <span class="linenr">14: </span>
-                <span class="linenr">15: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616; Comparator &#25509;&#21475;</span>
-                <span class="linenr">16: </span><span style="color: #e45649;">class</span> <span style="color: #986801;">MyComparator</span> <span style="color: #e45649;">implements</span> <span style="color: #986801;">Comparator</span><span style="color: #4078f2;">&lt;</span><span style="color: #986801;">Integer</span><span style="color: #4078f2;">&gt;</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr">17: </span>    <span style="color: #b751b6;">@Override</span>
-                <span class="linenr">18: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #a626a4;">compare</span><span style="color: #a626a4;">(</span><span style="color: #986801;">Integer</span> <span style="color: #6a1868;">o1</span>, <span style="color: #986801;">Integer</span> <span style="color: #6a1868;">o2</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr">19: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#22914;&#26524; o1 &#23567;&#20110; o2 &#65292;&#23601;&#36820;&#22238;&#27491;&#20540;&#65307;</span>
-                <span class="linenr">20: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#22914;&#26524; o1 &#22823;&#20110; o2 &#65292;&#23601;&#36820;&#22238;&#36127;&#20540;&#65307;</span>
-                <span class="linenr">21: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#22914;&#27492;&#65292;&#39072;&#20498;&#19968;&#19979;&#65292;&#23601;&#21487;&#20197;&#23454;&#29616;&#38477;&#24207;&#25490;&#24207;&#20102;&#65292;&#21453;&#20043;&#21363;&#21487;&#33258;&#23450;&#20041;&#21319;&#24207;&#25490;&#24207;&#20102;</span>
-                <span class="linenr">22: </span>        <span style="color: #e45649;">return</span> o2 - o1;
-                <span class="linenr">23: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">24: </span><span style="color: #4078f2;">}</span>
-                <span class="linenr">25: </span>
-                <span class="linenr">26: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 9 8 7 6 5 4 3 2 1 0</span>
-              </pre>
-            </div>
-
-            <p>
-              <b>*注：使用以上两种方法时，数组必须是包装类型，否则编译不通过。</b>
-            </p>
-          </div>
-        </div>
-
-        <div id="outline-container-org2ed83ef" class="outline-3">
-          <h3 id="org2ed83ef">冒泡排序</h3>
-          <div class="outline-text-3" id="text-org2ed83ef">
-            <p>
-              i.e. Bubble Sort
-            </p>
-
-            <p>
-              冒泡排序的 <span class="underline">基本思想</span> 是：对比相邻的元素值，如果满足条件就交换元素值，把较小的元素值移到数组前面，把大的元素值移动到数组后面（也就是交换两个元素的位置），这样数组就像气泡一样从底部上升到顶部。
-            </p>
-
-            <p>
-              冒泡排序的算法比较简单，排序的结果稳定，但时间效率不太高。
-            </p>
-
-            <p>
-              Java 中的冒泡排序在双层循环中实现，其中外层循环控制排序轮数，总循环次数为要排序数组的长度减 1 ；而内层循环主要用于对比相邻元素的大小，以确定是否交换位置，对比和交换次数依排序轮数而减少。
-            </p>
-
-            <p>
-              来看个例子吧。
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #4078f2;">(</span><span style="color: #986801;">String</span><span style="color: #a626a4;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr"> 2: </span>    <span style="color: #986801;">double</span><span style="color: #a626a4;">[]</span> <span style="color: #6a1868;">score</span> = <span style="color: #a626a4;">{</span>80, 78, 92, 65, 59, 100<span style="color: #a626a4;">}</span>;
-                <span class="linenr"> 3: </span>
-                <span class="linenr"> 4: </span>    <span style="color: #e45649;">for</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">i</span> = 0; i &lt; score.<span style="color: #986801;">length</span> - 1; i++<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr"> 5: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#27604;&#36739;&#30456;&#20449;&#20004;&#20010;&#20803;&#32032;&#65292;&#36739;&#22823;&#30340;&#25968;&#24448;&#21518;&#20882;&#27873;</span>
-                <span class="linenr"> 6: </span>        <span style="color: #e45649;">for</span> <span style="color: #50a14f;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">j</span> = 0; j &lt; score.<span style="color: #986801;">length</span> - 1 - i; j++<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
-                <span class="linenr"> 7: </span>            <span style="color: #e45649;">if</span> <span style="color: #da8548;">(</span>score<span style="color: #b751b6;">[</span>j<span style="color: #b751b6;">]</span> &gt; score<span style="color: #b751b6;">[</span>j + 1<span style="color: #b751b6;">]</span><span style="color: #da8548;">)</span> <span style="color: #da8548;">{</span>
-                <span class="linenr"> 8: </span>                <span style="color: #986801;">double</span> <span style="color: #6a1868;">temp</span> = score<span style="color: #b751b6;">[</span>j + 1<span style="color: #b751b6;">]</span>;
-                <span class="linenr"> 9: </span>                score<span style="color: #b751b6;">[</span>j + 1<span style="color: #b751b6;">]</span> = score<span style="color: #b751b6;">[</span>j<span style="color: #b751b6;">]</span>;
-                <span class="linenr">10: </span>                score<span style="color: #b751b6;">[</span>j<span style="color: #b751b6;">]</span> = temp;
-                <span class="linenr">11: </span>            <span style="color: #da8548;">}</span>
-                <span class="linenr">12: </span>        <span style="color: #50a14f;">}</span>
-                <span class="linenr">13: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">14: </span>
-                <span class="linenr">15: </span>    <span style="color: #e45649;">for</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">s</span> : score<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr">16: </span>        System.out.println<span style="color: #50a14f;">(</span>s<span style="color: #50a14f;">)</span>;
-                <span class="linenr">17: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">18: </span><span style="color: #4078f2;">}</span>
-                <span class="linenr">19: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 59 65 78 80 92 100</span>
-              </pre>
-            </div>
-          </div>
-        </div>
-
-        <div id="outline-container-org4c7dee0" class="outline-3">
-          <h3 id="org4c7dee0"><span class="todo TODO">TODO</span> 快速排序</h3>
-          <div class="outline-text-3" id="text-org4c7dee0">
-            <p>
-              i.e. Quick Sort
-            </p>
-
-            <p>
-              快速排序是对冒泡排序的一种改进，是一种排序执行效率很高的排序算法。
-            </p>
-
-            <p>
-              快速排序的 <span class="underline">基本思想</span> ：通过一趟排序，将要排序的数据分隔成独立的两部分，其中一部分的所有数据比另外一部分的所有数据都要小，然后按照此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此使整个数据变成有序序列。
-            </p>
-
-            <p>
-              具体做法：假设要对某个数组进行排序，首先需要任意选取一个数据（通常选用第一个数据）作为关键数据，然后将所有比它小的数都放到它的前面，所有比它大的数都放到它的后面。这个过程称为一趟快速排序；递归调用此过程，即可实现数据的快速排序。
-            </p>
-          </div>
-        </div>
-
-        <div id="outline-container-org872b538" class="outline-3">
-          <h3 id="org872b538"><span class="todo TODO">TODO</span> 选择排序</h3>
-          <div class="outline-text-3" id="text-org872b538">
-            <p>
-              选择排序是指每一趟从待排序的数据中选出最大（或最小）的一个元素，顺序放在已排好序的数列的最后，直到全部待排序的数据元素排完。
-            </p>
-          </div>
-        </div>
-
-        <div id="outline-container-org95f5fe2" class="outline-3">
-          <h3 id="org95f5fe2"><span class="todo TODO">TODO</span> 插入排序</h3>
-        </div>
-      </div>
-    </div>
-    <div id="postamble" class="status">
-      <p class="date">Date: 2020-09-18 Fri 19:37</p>
-      <p class="author">Author: Jack Liu</p>
-      <p class="date">Created: 2021-02-23 Tue 11:11</p>
-      <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
-    </div>
-  </body>
+<head>
+<!-- 2021-02-23 Tue 14:31 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>数组处理</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
+           <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
+           <script type="module" src="/themes/main.js" defer></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">数组处理</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org89f4028">数组是什么</a></li>
+<li><a href="#org03fcaba">数组也是一种数据类型</a></li>
+<li><a href="#org3d62b89"><span class="todo TODO">TODO</span> Arrays 工具类</a>
+<ul>
+<li><a href="#org0d48f59">数组比较</a></li>
+<li><a href="#org5fa5fcf">数组填充</a></li>
+<li><a href="#orgfe01000">数组查找</a></li>
+<li><a href="#org48e82b7">数组复制</a></li>
+<li><a href="#orgfb174cb">数组排序</a></li>
+<li><a href="#org2ed83ef">冒泡排序</a></li>
+<li><a href="#org4c7dee0"><span class="todo TODO">TODO</span> 快速排序</a></li>
+<li><a href="#org872b538"><span class="todo TODO">TODO</span> 选择排序</a></li>
+<li><a href="#org95f5fe2"><span class="todo TODO">TODO</span> 插入排序</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+在某些情况下，虽然可以使用单个变量来存储信息，但是如果需要存储的信息较多（例如存储 50 名学生的成绩），这时再依次创建变量声明并赋值显得非常麻烦。
+</p>
+
+<p>
+随着处理的信息量越来越大，工作也就越来越烦琐，这时可以使用数组或集合来存储信息。通过使用数组，可以在很大程度上缩短和简化程序代码，从而提高应用程序的效率。
+</p>
+
+<div id="outline-container-org89f4028" class="outline-2">
+<h2 id="org89f4028">数组是什么</h2>
+<div class="outline-text-2" id="text-org89f4028">
+<p>
+<span class="underline">数组</span> （array）是一种最简单的复合数据类型，它是有序数据的集合，数组中的每个元素具有相同的数据类型，可以用一个统一的数组名和不同的下标来确定数组中唯一的元素。根据数组的维度，可以将其分为一维数组、二维数组和多维数组等。
+</p>
+
+<p>
+数组是非常重要的集合类型，具有如下三个基本特性：
+</p>
+<ul class="org-ul">
+<li>一致性：数组只能保存相同数据类型元素（数据类型可以是任何相同的数据类型）；</li>
+<li>有序性：数组中的元素是有序的，通过下标访问；</li>
+<li>不可变性：数组一旦初始化，则长度（数组中元素的个数）不可变。</li>
+</ul>
+
+<essay>
+其实，以上种种的限制都是由数组在内存中的存储方式所决定的。
+</essay>
+
+<p>
+*注：数值数组元素的默认值为 <code>0</code> ，而引用元素的默认值为 <code>null</code> 。
+</p>
+
+<p>
+<b>数组是引用数据类型，引用数据类型在使用之前一定要做两件事情：声明和初始化。</b>
+</p>
+
+<p>
+<span class="underline">1. 一维数组</span>
+</p>
+
+<p>
+当数组中每个元素都只带有一个下标时，这种数组就是“一维数组”，实质上是一组相同类型数据的线性集合，是数组中最简单的一种数组。
+</p>
+
+<p>
+<span class="underline">1.1 创建数组</span>
+</p>
+
+<p>
+为了在程序中使用一个数组，必须声明一个引用该数组的变量，并指明整个变量可以引用的数组类型。语法格式如下：
+</p>
+
+<pre class="example">
+type[] arrayName;               // 数据类型[] 数组名;
+// OR
+type arrayName[];               // （不推荐）
+</pre>
+
+<p>
+*注： <code>type[]</code> 确实是一种新类型，与 <code>type</code> 类型不同（如 <code>int</code> 类型是基本类型，但 <code>int[]</code> 是引用类型）。
+</p>
+
+<p>
+<span class="underline">1.2 分配空间</span>
+</p>
+
+<p>
+<b>声明了数组，只是得到了一个存放数组的变量，并没有为数组元素分配内存空间，不能使用。</b> 因此，要为数组分配内存空间，数组的每一个元素才有一个空间进行存储。
+</p>
+
+<blockquote>
+<p>
+*注：分配空间就是要告诉计算机在内存中为它分配几个连续的位置来存储数据。
+</p>
+</blockquote>
+
+<p>
+在 Java 中可以使用 <code>new</code> 关键字来分配空间，语法格式如下：
+</p>
+
+<pre class="example">
+arrayName = new type[size];     // 数组名 = new 数据类型[数组长度];
+</pre>
+
+<p>
+其中， <code>arrayName</code> 是已经声明过的 <code>int[]</code> 类型的变量，当然也可以在声明数组时就给它分配空间，语法格式如下：
+</p>
+
+<pre class="example">
+type[] arrayName = new type[size]; // 数据类型[] 数组名 = new 数据类型[数组长度];
+</pre>
+
+<p>
+<b>*注：一旦声明了数组的大小，就不能再修改。这里的数组长度也是必需的，不能少。</b>
+</p>
+
+<p>
+<span class="underline">1.3 初始化一维数组</span>
+</p>
+
+<p>
+Java 语言中数组必须先初始化，然后才可以使用。所谓初始化，就是为数组的数组元素分配内存空间，并为每个数组元素初始值。
+</p>
+
+<p>
+能不能只分配内存空间，不赋初始值呢？
+</p>
+
+<p>
+不行，一旦为数组的每个元素分配了内存空间，每个内存空间里存储的内容就是该数组元素的值，即使这个内存空间存储的内容为空，这个空也是一个值（ <code>null</code> ）。
+</p>
+
+<p>
+不管以哪种方式来初始化数组，只要为数组元素分配了内存空间，数组元素就具有了初始值。初始值的获得有两种形式，一种由系统自动分配，另一种由程序员指定。
+</p>
+
+<p>
+<b>数组在初始化的同时，可以指定数组的大小，也可以分别初始化数组中的每一个元素。</b> 在 Java 语言中，初始化数组有以下 3 种方式。
+</p>
+
+<p>
+<span class="underline">1.3.1 使用 new 指定数组大小后进行初始化</span>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">type[] arrayName = new int[size]</span>
+<span class="linenr">2: </span><span style="color: #986801;">int</span><span style="color: #4078f2;">[]</span> <span style="color: #6a1868;">number</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[</span>5<span style="color: #4078f2;">]</span>;
+<span class="linenr">3: </span>number<span style="color: #4078f2;">[</span>0<span style="color: #4078f2;">]</span> = 1;
+<span class="linenr">4: </span>number<span style="color: #4078f2;">[</span>1<span style="color: #4078f2;">]</span> = 2;
+<span class="linenr">5: </span>number<span style="color: #4078f2;">[</span>2<span style="color: #4078f2;">]</span> = 3;
+<span class="linenr">6: </span>number<span style="color: #4078f2;">[</span>3<span style="color: #4078f2;">]</span> = 5;
+<span class="linenr">7: </span>number<span style="color: #4078f2;">[</span>4<span style="color: #4078f2;">]</span> = 8;
+</pre>
+</div>
+
+<p>
+如果程序员只指定了数组和长度，那么系统将负责为这些数组元素分配初始值。指定初始值时，系统按如下规则分配初始值。
+</p>
+<table>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">数组元素的类型</th>
+<th scope="col" class="org-left">类型</th>
+<th scope="col" class="org-left">自动分配初始值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">整数类型</td>
+<td class="org-left">byte、short、int、long</td>
+<td class="org-left"><code>0</code></td>
+</tr>
+
+<tr>
+<td class="org-left">浮点类型</td>
+<td class="org-left">float、double</td>
+<td class="org-left"><code>0.0</code></td>
+</tr>
+
+<tr>
+<td class="org-left">字符类型</td>
+<td class="org-left">char</td>
+<td class="org-left"><code>'\u0000'</code></td>
+</tr>
+
+<tr>
+<td class="org-left">引用类型</td>
+<td class="org-left">类、接口、数组</td>
+<td class="org-left"><code>null</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<span class="underline">1.3.2 使用 new 指定数组元素的值</span>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">type[] arrayName = new type[]{val1, val2, val3, ..., vlaN};</span>
+<span class="linenr">2: </span><span style="color: #986801;">int</span><span style="color: #4078f2;">[]</span> <span style="color: #6a1868;">number</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[]{</span>1, 2, 3, 5, 8<span style="color: #4078f2;">}</span>;
+</pre>
+</div>
+
+<p>
+*注：不要在进行数组初始化时，既指定数组的长度，也为每个数组元素分配初始值，这样会造成代码错误。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">int</span><span style="color: #4078f2;">[]</span> <span style="color: #6a1868;">number</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[</span>5<span style="color: #4078f2;">]{</span>1, 2, 3, 4, 5<span style="color: #4078f2;">}</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#10008;</span>
+</pre>
+</div>
+
+<p>
+<span class="underline">1.3.3 直接指定数组元素的值</span>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">type[] arrayName = {val1, val2, val3, ..., valN};</span>
+<span class="linenr">2: </span><span style="color: #986801;">int</span><span style="color: #4078f2;">[]</span> <span style="color: #6a1868;">number</span> = <span style="color: #4078f2;">{</span>1, 2, 3, 5, 8<span style="color: #4078f2;">}</span>;
+<span class="linenr">3: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">OR</span>
+<span class="linenr">4: </span><span style="color: #986801;">int</span><span style="color: #4078f2;">[]</span> <span style="color: #6a1868;">number</span>;
+<span class="linenr">5: </span>number = <span style="color: #4078f2;">{</span>1, 2, 3, 5, 8<span style="color: #4078f2;">}</span>;
+</pre>
+</div>
+
+<p>
+<span class="underline">1.4 获取数组元素</span>
+</p>
+
+<p>
+获取单个元素的方法非常简单，指定元素所在数组的下标即可。语法如下：
+</p>
+
+<pre class="example">
+arrayName[index];
+</pre>
+
+<p>
+*注：当指定的下标值超出数组的总长度时，会抛出 <code>ArrayIndexOutOfBoundsException</code> 异常。
+</p>
+
+<p>
+如果数组中的元素过多，再使用单个下标则显得烦琐，此时使用一种简单的方法可以获取全部元素——使用循环语句。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #986801;">int</span><span style="color: #4078f2;">[]</span> <span style="color: #6a1868;">number</span> = <span style="color: #4078f2;">{</span>1, 2, 3, 5 ,8<span style="color: #4078f2;">}</span>;
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">1. for</span>
+<span class="linenr"> 4: </span><span style="color: #e45649;">for</span> <span style="color: #4078f2;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">i</span> = 0; i &lt; number.<span style="color: #986801;">length</span>; i++<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 5: </span>    System.out.println<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"&#31532;"</span> + <span style="color: #50a14f;">(</span>i + 1<span style="color: #50a14f;">)</span> + <span style="color: #50a14f;">"&#20803;&#32032;&#30340;&#20540;&#26159;&#65306;"</span> + number<span style="color: #50a14f;">[</span>i<span style="color: #50a14f;">]</span><span style="color: #a626a4;">)</span>;
+<span class="linenr"> 6: </span><span style="color: #4078f2;">}</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">2. foreach</span>
+<span class="linenr"> 9: </span><span style="color: #e45649;">for</span> <span style="color: #4078f2;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">val</span>:number<span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">10: </span>    System.out.print<span style="color: #a626a4;">(</span><span style="color: #50a14f;">"&#20803;&#32032;&#30340;&#20540;&#20381;&#27425;&#26159;&#65306;"</span>+val+<span style="color: #50a14f;">"\t"</span><span style="color: #a626a4;">)</span>;
+<span class="linenr">11: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+<span class="underline">2. 二维数组</span>
+</p>
+
+<p>
+在 Java 中二维数组被看作数组的数组，即二维数组为一个特殊的一维数组，其每个元素又是一个一维数组。
+</p>
+
+<p>
+除了一维数组和二维数组外，Java 中还支持更多维的数组，如三维数组、四维数组和五维数组等，它们都属于多维数组。
+</p>
+
+<p>
+<span class="underline">3. 不规则数组</span>
+</p>
+
+<p>
+Java 实际上没有多维数组，只有一维数组。多维数组被解释为是数组的数组，所以因此会衍生出一种不规则数组。
+</p>
+
+<p>
+规则的 4×3 二维数组有 12 个元素，而不规则数组就不一定了。如下代码静态初始化了一个不规则数组。
+</p>
+
+<pre class="example">
+int intArray[][] = {{1,2}, {11}, {21,22,23}, {31,32,33}};
+</pre>
+
+<p>
+动态初始化不规则数组比较麻烦，不能使用 <code>new int[4][3]</code> 语句，而是先初始化高维数组，然后再分别逐个初始化低维数组。代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #9ca0a4;">//</span><span style="color: #9ca0a4;">&#20808;&#21021;&#22987;&#21270;&#39640;&#32500;&#25968;&#32452;&#20026;4</span>
+<span class="linenr">2: </span><span style="color: #986801;">int</span> <span style="color: #6a1868;">intArray</span><span style="color: #4078f2;">[][]</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[</span>4<span style="color: #4078f2;">][]</span>;
+<span class="linenr">3: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#36880;&#19968;&#21021;&#22987;&#21270;&#20302;&#32500;&#25968;&#32452;</span>
+<span class="linenr">4: </span>intArray<span style="color: #4078f2;">[</span>0<span style="color: #4078f2;">]</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[</span>2<span style="color: #4078f2;">]</span>;
+<span class="linenr">5: </span>intArray<span style="color: #4078f2;">[</span>1<span style="color: #4078f2;">]</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[</span>1<span style="color: #4078f2;">]</span>;
+<span class="linenr">6: </span>intArray<span style="color: #4078f2;">[</span>2<span style="color: #4078f2;">]</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[</span>3<span style="color: #4078f2;">]</span>;
+<span class="linenr">7: </span>intArray<span style="color: #4078f2;">[</span>3<span style="color: #4078f2;">]</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">int</span><span style="color: #4078f2;">[</span>3<span style="color: #4078f2;">]</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org03fcaba" class="outline-2">
+<h2 id="org03fcaba">数组也是一种数据类型</h2>
+<div class="outline-text-2" id="text-org03fcaba">
+<p>
+Java 的数组要求所有的数组元素具有相同的数据类型。
+</p>
+
+<p>
+因此，在一个数组中，数组元素的类型是唯一的，即一个数组里只能存储一种数据类型的数据，而不能存储多种数据类型的数据。
+</p>
+
+<p>
+一旦数组的初始化完成，数组在内存中所占的空间将被固定下来，因此数组的长度将不可改变。即使把某个数组元素的数据清空，但它所占的空间依然被保留，依然属于该数组，数组的长度依然不变。
+</p>
+
+<p>
+Java 的数组既可以存储基本类型的数据，也可以存储引用类型的数据，只要所有的数组元素具有相同的类型即可。
+</p>
+
+<p>
+值得指出的是，数组也是一种数据类型，它本身是一种引用类型。例如 <code>int</code> 是一个基本类型，但 <code>int[]</code> （这是定义数组的一种方式）就是一种引用类型了。
+</p>
+
+<p>
+<code>int[]</code> 是一种类型吗？怎么使用这种类型呢？
+</p>
+
+<p>
+没错， <code>int[]</code> 就是一种数据类型，与 int 类型、String 类型相似，一样可以使用该类型来定义变量，也可以使用该类型进行类型转换等。 <code>int[]</code> 类型是一种引用类型，创建 <code>int[]</code> 类型的对象也就是创建数组，需要使用创建数组的语法。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3d62b89" class="outline-2">
+<h2 id="org3d62b89"><span class="todo TODO">TODO</span> Arrays 工具类</h2>
+<div class="outline-text-2" id="text-org3d62b89">
+<p>
+Arrays 类是一个工具类，其中包含了数组操作的很多方法。这个 Arrays 类里均为 <code>static</code> 修饰的方法（ <code>static</code> 修饰的方法可以直接通过类名调用），可以直接通过 <code>Arrays.xxx(xxx)</code> 的形式调用方法。
+</p>
+</div>
+
+<div id="outline-container-org0d48f59" class="outline-3">
+<h3 id="org0d48f59">数组比较</h3>
+<div class="outline-text-3" id="text-org0d48f59">
+<p>
+数组相等的条件下不仅要求数组元素的个数必须相等，而且要求对应位置的元素也相等，Arrays 类提供了 <code>equals()</code> 方法比较整个数组。
+</p>
+
+<pre class="example">
+Arrays.equals(arrayA, arrayB);
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org5fa5fcf" class="outline-3">
+<h3 id="org5fa5fcf">数组填充</h3>
+<div class="outline-text-3" id="text-org5fa5fcf">
+<p>
+Arrays 类提供了一个 <code>fill()</code> 方法，可以在指定位置进行数值填充。 <code>fill()</code> 方法虽然可以填充数组，但是它的功能有限制，只能使用同一个数值进行填充。
+</p>
+
+<pre class="example">
+Arrays.fill(array, value);
+</pre>
+
+<p>
+其中， <code>array</code> 表示数组， <code>value</code> 表示填充的值。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfe01000" class="outline-3">
+<h3 id="orgfe01000">数组查找</h3>
+<div class="outline-text-3" id="text-orgfe01000">
+<p>
+查找数组是指从数组中查询指定位置的元素，或者查询某元素在指定数组中的位置。
+</p>
+
+<p>
+使用 Arrays 类的 <code>binarySearch()</code> 方法可以实现数组的查找，该方法可使用二分搜索法指定数组，以获得指定对象，该方法返回要搜索元素的索引值。
+</p>
+
+<p>
+<code>binarySearch()</code> 方法有多种重载形式来满足不同类型数组的查找需要，常用的重载形式有两种。
+</p>
+
+<pre class="example">
+binarySearch(Object[] arr, Object key);
+// OR
+binarySearch(Object[] arr, int fromIndex, int toIndex, Object key);
+</pre>
+
+<p>
+如果 <code>key</code> 包含在数组中，则返回搜索值的索引；否则返回 <code>-1</code> 或 <code>-插入点</code> 。插入点指搜索键将要插入数组的位置，即第一个大于此键的元素索引。
+</p>
+
+<p>
+*注：在进行数组查询之前，必须对数组进行排序（可以使用 <code>sort()</code> 方法）。如果没有对数组进行排序，则结果是不确定的。如果数组包含多个带有指定值的元素，则无法确认找到的是哪一个。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org48e82b7" class="outline-3">
+<h3 id="org48e82b7">数组复制</h3>
+<div class="outline-text-3" id="text-org48e82b7">
+<p>
+所谓复制数组，是指将一个数组中的元素在另一个数组中进行复制。
+</p>
+
+<p>
+在 Java 中实现数组复制分别有以下 4 种方法：
+</p>
+<ul class="org-ul">
+<li>Arrays 类的 <code>copyOf()</code> 方法；</li>
+<li>Arrays 类的 <code>copyOfRange()</code> 方法；</li>
+<li>System 类的 <code>arraycopy()</code> 方法；</li>
+<li>Object 类的 <code>clone()</code> 方法。</li>
+</ul>
+
+<p>
+<span class="underline">1. 使用 copyOf() 方法和 copyOfRange() 方法</span>
+</p>
+
+<p>
+<code>copyOf()</code> 方法是复制数组至指定长度， <code>copyOfRange()</code> 方法则将指定数组的指定长度复制到一个新数组中。
+</p>
+
+<pre class="example">
+Arrays.copyOf(dataType[] srcArray, int length);
+</pre>
+
+<p>
+其中， <code>srcArray</code>  表示要进行复制的数组， <code>length</code> 表示复制后的新数组的长度。
+</p>
+
+<p>
+使用这种方法复制数组时，默认从原数组的第一个元素（索引值为 0 ）开始复制，目标数组的长度为 length 。如果 length 大于 <code>srcArray.length</code> ，则目标数组中采用默认值填充；如果 length 小于 <code>srcArray.length</code> ，则复制到第 <code>length</code> 个元素（索引值为 <code>length - 1</code> ）即止。
+</p>
+
+<p>
+*注意：目标数组如果已经存在，将会被重构。
+</p>
+
+<pre class="example">
+Arrays.copyOfRange(dataType[] srcArray, int startIndex, int endIndex)
+</pre>
+
+<p>
+其中：
+</p>
+<ul class="org-ul">
+<li><code>srcArray</code> 表示原数组；</li>
+<li><code>startIndex</code> 表示开始复制的起始索引，目标数组中将包含起始索引对应的元素，另外， <code>startIndex</code> 必须在 <code>0</code> 到 <code>srcArray.length</code> 之间；</li>
+<li><code>endIndex</code> 表示终止索引，目标数组中将不包含终止索引对应的元素， <code>endIndex</code> 必须大于等于 <code>startIndex</code> ，可以大于 <code>srcArray.length</code> ，如果大于 <code>srcArray.length</code> ，则目标数组中使用默认值填充。</li>
+</ul>
+
+<p>
+<span class="underline">2. 使用 arraycopy() 方法</span>
+</p>
+
+<p>
+<code>arraycopy()</code> 方法位于 <code>java.lang.System</code> 类中，其语法形式如下：
+</p>
+
+<pre class="example">
+System.arraycopy(dataType[] arcArray, int srcIndex, int destArray, int destIndex, int length)
+</pre>
+
+<p>
+其中：
+</p>
+<ul class="org-ul">
+<li><code>srcArray</code> 表示原始数组；</li>
+<li><code>srcIndex</code> 表示开始复制的起始索引；</li>
+<li><code>destArray</code> 表示目标数组；</li>
+<li><code>destIndex</code> 表示目标数组中的起始索引；</li>
+<li><code>length</code> 表示要复制的数组的长度。</li>
+</ul>
+
+<p>
+使用此方法复制数组时， <code>length+srcIndex</code> 必须小于等于 <code>srcArray.length</code> ，同时 <code>length+destIndex</code> 必须小于等于 <code>destArray.length</code> 。
+</p>
+
+<p>
+*注：目标数组必须已经存在，且不会被重构，相当于替换目标数组中的部分元素。
+</p>
+
+<p>
+<span class="underline">3. 使用 clone() 方法</span>
+</p>
+
+<p>
+<code>clone()</code> 方法也可以实现复制数组，该方法是类 Object 中的方法，可以创建一个有单独内存空间的对象。
+</p>
+
+<p>
+<code>clone()</code> 方法的返回值是 Object 类型，要使用强制类型转换为适当的类型。示例语句如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #986801;">int</span><span style="color: #4078f2;">[]</span> <span style="color: #6a1868;">targetArray</span> = <span style="color: #4078f2;">(</span><span style="color: #986801;">int</span><span style="color: #a626a4;">[]</span><span style="color: #4078f2;">)</span>sourceArray.clone<span style="color: #4078f2;">()</span>;
+</pre>
+</div>
+
+<p>
+*注：目标数组如果已经存在，将会被重构。
+</p>
+
+<blockquote>
+<p>
+*注：以上几种方法都是浅拷贝。浅拷贝只是复制了对象的引用地址，两个对象指向同一个内存地址，修改其中任意的值，另一个值都会随之变化；深拷贝是将对象及值复制过来，两个对象修改其中任意的值，另一个值不会改变。
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgfb174cb" class="outline-3">
+<h3 id="orgfb174cb">数组排序</h3>
+<div class="outline-text-3" id="text-orgfb174cb">
+<p>
+Java 语言中使用 Arrays 类提供的 <code>sort()</code> 方法来对数组进行排序。
+</p>
+
+<p>
+<span class="underline">1. 升序</span>
+</p>
+
+<p>
+使用 <code>java.util.Arrays</code> 类中的 <code>sort()</code> 方法对数组进行升序：
+</p>
+<ol class="org-ol">
+<li>导入 <code>java.util.Arrays</code> 包；</li>
+<li>使用 <code>Arrays.sort(数组名)</code> 语法对数组进行排序，排序规则是从小到大，即升序。</li>
+</ol>
+
+<p>
+<span class="underline">2. 降序</span>
+</p>
+
+<p>
+在 Java 语言中使用 <code>sort()</code> 实现降序两种方法。
+</p>
+
+<p>
+<span class="underline">2.1 利用 <code>Collections.reverseOrder()</code> 方法（Collections 是一个包装类）</span>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #4078f2;">(</span><span style="color: #986801;">String</span><span style="color: #a626a4;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">2: </span>    <span style="color: #986801;">Integer</span><span style="color: #a626a4;">[]</span> <span style="color: #6a1868;">arr</span> = <span style="color: #a626a4;">{</span>9, 8, 7, 2, 3, 4, 1, 0, 6, 5<span style="color: #a626a4;">}</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#25968;&#32452;&#31867;&#22411;&#20026; Integer</span>
+<span class="linenr">3: </span>    Arrays.sort<span style="color: #a626a4;">(</span>arr, Collections.reverseOrder<span style="color: #50a14f;">()</span><span style="color: #a626a4;">)</span>;
+<span class="linenr">4: </span>
+<span class="linenr">5: </span>    <span style="color: #e45649;">for</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">item</span> : arr<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">6: </span>        System.out.print<span style="color: #50a14f;">(</span>item + <span style="color: #50a14f;">" "</span><span style="color: #50a14f;">)</span>;
+<span class="linenr">7: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">8: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">9: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 9 8 7 6 5 4 3 2 1 0</span>
+</pre>
+</div>
+
+<p>
+<span class="underline">2.2 实现 <code>Comparator</code> 接口的复写 <code>compare()</code> 方法</span>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#27880;&#24847;&#65292;&#35201;&#24819;&#25913;&#21464;&#40664;&#35748;&#30340;&#25490;&#21015;&#39034;&#24207;&#65292;&#19981;&#33021;&#20351;&#29992;&#22522;&#26412;&#31867;&#22411;&#65288;int, double, char&#65289;&#32780;&#35201;&#20351;&#29992;&#23427;&#20204;&#23545;&#23601;&#30340;&#31867;</span>
+<span class="linenr"> 4: </span>        <span style="color: #986801;">Integer</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">arr</span> = <span style="color: #50a14f;">{</span>9, 8, 7, 2, 3, 4, 1, 0, 6, 5<span style="color: #50a14f;">}</span>;
+<span class="linenr"> 5: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23450;&#20041;&#19968;&#20010;&#33258;&#23450;&#20041;&#31867; MyComparator &#30340;&#23545;&#35937;</span>
+<span class="linenr"> 6: </span>        <span style="color: #986801;">Comparator</span> <span style="color: #6a1868;">cmp</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">MyComparator</span><span style="color: #50a14f;">()</span>;
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>        Array.sort<span style="color: #50a14f;">(</span>arr, cmp<span style="color: #50a14f;">)</span>;
+<span class="linenr"> 9: </span>        <span style="color: #e45649;">for</span> <span style="color: #50a14f;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">item</span> : arr<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+<span class="linenr">10: </span>            System.out.print<span style="color: #da8548;">(</span>item + <span style="color: #50a14f;">" "</span><span style="color: #da8548;">)</span>;
+<span class="linenr">11: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">12: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">13: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">14: </span>
+<span class="linenr">15: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616; Comparator &#25509;&#21475;</span>
+<span class="linenr">16: </span><span style="color: #e45649;">class</span> <span style="color: #986801;">MyComparator</span> <span style="color: #e45649;">implements</span> <span style="color: #986801;">Comparator</span><span style="color: #4078f2;">&lt;</span><span style="color: #986801;">Integer</span><span style="color: #4078f2;">&gt;</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">17: </span>    <span style="color: #b751b6;">@Override</span>
+<span class="linenr">18: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">int</span> <span style="color: #a626a4;">compare</span><span style="color: #a626a4;">(</span><span style="color: #986801;">Integer</span> <span style="color: #6a1868;">o1</span>, <span style="color: #986801;">Integer</span> <span style="color: #6a1868;">o2</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">19: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#22914;&#26524; o1 &#23567;&#20110; o2 &#65292;&#23601;&#36820;&#22238;&#27491;&#20540;&#65307;</span>
+<span class="linenr">20: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#22914;&#26524; o1 &#22823;&#20110; o2 &#65292;&#23601;&#36820;&#22238;&#36127;&#20540;&#65307;</span>
+<span class="linenr">21: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#22914;&#27492;&#65292;&#39072;&#20498;&#19968;&#19979;&#65292;&#23601;&#21487;&#20197;&#23454;&#29616;&#38477;&#24207;&#25490;&#24207;&#20102;&#65292;&#21453;&#20043;&#21363;&#21487;&#33258;&#23450;&#20041;&#21319;&#24207;&#25490;&#24207;&#20102;</span>
+<span class="linenr">22: </span>        <span style="color: #e45649;">return</span> o2 - o1;
+<span class="linenr">23: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">24: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">25: </span>
+<span class="linenr">26: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 9 8 7 6 5 4 3 2 1 0</span>
+</pre>
+</div>
+
+<p>
+<b>*注：使用以上两种方法时，数组必须是包装类型，否则编译不通过。</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2ed83ef" class="outline-3">
+<h3 id="org2ed83ef">冒泡排序</h3>
+<div class="outline-text-3" id="text-org2ed83ef">
+<p>
+i.e. Bubble Sort
+</p>
+
+<p>
+冒泡排序的 <span class="underline">基本思想</span> 是：对比相邻的元素值，如果满足条件就交换元素值，把较小的元素值移到数组前面，把大的元素值移动到数组后面（也就是交换两个元素的位置），这样数组就像气泡一样从底部上升到顶部。
+</p>
+
+<p>
+冒泡排序的算法比较简单，排序的结果稳定，但时间效率不太高。
+</p>
+
+<p>
+Java 中的冒泡排序在双层循环中实现，其中外层循环控制排序轮数，总循环次数为要排序数组的长度减 1 ；而内层循环主要用于对比相邻元素的大小，以确定是否交换位置，对比和交换次数依排序轮数而减少。
+</p>
+
+<p>
+来看个例子吧。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #4078f2;">(</span><span style="color: #986801;">String</span><span style="color: #a626a4;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #4078f2;">)</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #986801;">double</span><span style="color: #a626a4;">[]</span> <span style="color: #6a1868;">score</span> = <span style="color: #a626a4;">{</span>80, 78, 92, 65, 59, 100<span style="color: #a626a4;">}</span>;
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>    <span style="color: #e45649;">for</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">i</span> = 0; i &lt; score.<span style="color: #986801;">length</span> - 1; i++<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 5: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#27604;&#36739;&#30456;&#20449;&#20004;&#20010;&#20803;&#32032;&#65292;&#36739;&#22823;&#30340;&#25968;&#24448;&#21518;&#20882;&#27873;</span>
+<span class="linenr"> 6: </span>        <span style="color: #e45649;">for</span> <span style="color: #50a14f;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">j</span> = 0; j &lt; score.<span style="color: #986801;">length</span> - 1 - i; j++<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+<span class="linenr"> 7: </span>            <span style="color: #e45649;">if</span> <span style="color: #da8548;">(</span>score<span style="color: #b751b6;">[</span>j<span style="color: #b751b6;">]</span> &gt; score<span style="color: #b751b6;">[</span>j + 1<span style="color: #b751b6;">]</span><span style="color: #da8548;">)</span> <span style="color: #da8548;">{</span>
+<span class="linenr"> 8: </span>                <span style="color: #986801;">double</span> <span style="color: #6a1868;">temp</span> = score<span style="color: #b751b6;">[</span>j + 1<span style="color: #b751b6;">]</span>;
+<span class="linenr"> 9: </span>                score<span style="color: #b751b6;">[</span>j + 1<span style="color: #b751b6;">]</span> = score<span style="color: #b751b6;">[</span>j<span style="color: #b751b6;">]</span>;
+<span class="linenr">10: </span>                score<span style="color: #b751b6;">[</span>j<span style="color: #b751b6;">]</span> = temp;
+<span class="linenr">11: </span>            <span style="color: #da8548;">}</span>
+<span class="linenr">12: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">13: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">14: </span>
+<span class="linenr">15: </span>    <span style="color: #e45649;">for</span> <span style="color: #a626a4;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">s</span> : score<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">16: </span>        System.out.println<span style="color: #50a14f;">(</span>s<span style="color: #50a14f;">)</span>;
+<span class="linenr">17: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">18: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">19: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; 59 65 78 80 92 100</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4c7dee0" class="outline-3">
+<h3 id="org4c7dee0"><span class="todo TODO">TODO</span> 快速排序</h3>
+<div class="outline-text-3" id="text-org4c7dee0">
+<p>
+i.e. Quick Sort
+</p>
+
+<p>
+快速排序是对冒泡排序的一种改进，是一种排序执行效率很高的排序算法。
+</p>
+
+<p>
+快速排序的 <span class="underline">基本思想</span> ：通过一趟排序，将要排序的数据分隔成独立的两部分，其中一部分的所有数据比另外一部分的所有数据都要小，然后按照此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此使整个数据变成有序序列。
+</p>
+
+<p>
+具体做法：假设要对某个数组进行排序，首先需要任意选取一个数据（通常选用第一个数据）作为关键数据，然后将所有比它小的数都放到它的前面，所有比它大的数都放到它的后面。这个过程称为一趟快速排序；递归调用此过程，即可实现数据的快速排序。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org872b538" class="outline-3">
+<h3 id="org872b538"><span class="todo TODO">TODO</span> 选择排序</h3>
+<div class="outline-text-3" id="text-org872b538">
+<p>
+选择排序是指每一趟从待排序的数据中选出最大（或最小）的一个元素，顺序放在已排好序的数列的最后，直到全部待排序的数据元素排完。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org95f5fe2" class="outline-3">
+<h3 id="org95f5fe2"><span class="todo TODO">TODO</span> 插入排序</h3>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-09-18 Fri 19:37</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2021-02-23 Tue 14:31</p>
+<p class="validation"><a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a></p>
+</div>
+</body>
 </html>

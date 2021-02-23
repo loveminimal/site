@@ -1,236 +1,236 @@
 <!DOCTYPE html>
 <html lang="zh">
-  <head>
-    <!-- 2021-02-23 Tue 11:11 -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>注解</title>
-    <meta name="generator" content="Org mode">
-    <meta name="author" content="Jack Liu">
-    <link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
-    <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
-    <script type="module" src="/themes/main.js" defer></script>
-  </head>
-  <body>
-    <div id="content">
-      <h1 class="title">注解</h1>
-      <div id="table-of-contents">
-        <h2>Table of Contents</h2>
-        <div id="text-table-of-contents">
-          <ul>
-            <li><a href="#org389e341">简介</a></li>
-            <li><a href="#org4aebf9f">基本注解</a>
-              <ul>
-                <li><a href="#org2b61678">@Override</a></li>
-                <li><a href="#org1df7e54">@Deprecated</a></li>
-                <li><a href="#orgfb78164">@SuppressWarnings</a></li>
-                <li><a href="#org0bc9e1f"><span class="todo TODO">TODO</span> @SafeVarargs</a></li>
-                <li><a href="#org94e538c"><span class="todo TODO">TODO</span> @FunctionalInterface</a></li>
-              </ul>
-            </li>
-            <li><a href="#orga307a0d"><span class="todo TODO">TODO</span> 元注解作用及使用</a></li>
-            <li><a href="#org40f7f19"><span class="todo TODO">TODO</span> 自定义注解</a></li>
-          </ul>
-        </div>
-      </div>
-      <p>
-        从 Java 1.5 开始，Java 增加了对元数据的支持，也就是注解。
-      </p>
+<head>
+<!-- 2021-02-23 Tue 14:30 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>注解</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
+           <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
+           <script type="module" src="/themes/main.js" defer></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">注解</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org389e341">简介</a></li>
+<li><a href="#org4aebf9f">基本注解</a>
+<ul>
+<li><a href="#org2b61678">@Override</a></li>
+<li><a href="#org1df7e54">@Deprecated</a></li>
+<li><a href="#orgfb78164">@SuppressWarnings</a></li>
+<li><a href="#org0bc9e1f"><span class="todo TODO">TODO</span> @SafeVarargs</a></li>
+<li><a href="#org94e538c"><span class="todo TODO">TODO</span> @FunctionalInterface</a></li>
+</ul>
+</li>
+<li><a href="#orga307a0d"><span class="todo TODO">TODO</span> 元注解作用及使用</a></li>
+<li><a href="#org40f7f19"><span class="todo TODO">TODO</span> 自定义注解</a></li>
+</ul>
+</div>
+</div>
+<p>
+从 Java 1.5 开始，Java 增加了对元数据的支持，也就是注解。
+</p>
 
-      <p>
-        注解与注释是有一定区别的，可以把注解理解为代码里的特殊标记，这些标记可以在编译、类加载和运行时被读取，并执行相应的处理。开发人员可以通过注解在不改变原有代码逻辑的情况下在源代码中嵌入补充信息。
-      </p>
+<p>
+注解与注释是有一定区别的，可以把注解理解为代码里的特殊标记，这些标记可以在编译、类加载和运行时被读取，并执行相应的处理。开发人员可以通过注解在不改变原有代码逻辑的情况下在源代码中嵌入补充信息。
+</p>
 
-      <div id="outline-container-org389e341" class="outline-2">
-        <h2 id="org389e341">简介</h2>
-        <div class="outline-text-2" id="text-org389e341">
-          <p>
-            从 Java 1.5 开始可以在源代码中嵌入一些补充信息，这种补充信息称为 <span class="underline">注解</span> （Annotation）。
-          </p>
+<div id="outline-container-org389e341" class="outline-2">
+<h2 id="org389e341">简介</h2>
+<div class="outline-text-2" id="text-org389e341">
+<p>
+从 Java 1.5 开始可以在源代码中嵌入一些补充信息，这种补充信息称为 <span class="underline">注解</span> （Annotation）。
+</p>
 
-          <p>
-            注解是 Java 平台中非常重要的一部分，它是以 <code>@</code> 开头的，如方法重写时使用过的 <code>@Override</code> 。注解并不能改变程序的运行结果，也不会影响程序运行的性能。有些注解可以在编译时给用户提示或警告，有的注解可以在运行时读写字节码文件信息。
-          </p>
+<p>
+注解是 Java 平台中非常重要的一部分，它是以 <code>@</code> 开头的，如方法重写时使用过的 <code>@Override</code> 。注解并不能改变程序的运行结果，也不会影响程序运行的性能。有些注解可以在编译时给用户提示或警告，有的注解可以在运行时读写字节码文件信息。
+</p>
 
-          <p>
-            注解可以用元数据这个词来描述，即一种描述数据的数据，所以可以说注解就是源代码的元数据。
-          </p>
+<p>
+注解可以用元数据这个词来描述，即一种描述数据的数据，所以可以说注解就是源代码的元数据。
+</p>
 
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr">1: </span><span style="color: #b751b6;">@Override</span>
-              <span class="linenr">2: </span><span style="color: #e45649;">public</span> <span style="color: #986801;">String</span> <span style="color: #a626a4;">toString</span><span style="color: #4078f2;">()</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr">3: </span>    <span style="color: #e45649;">return</span> <span style="color: #50a14f;">"C &#35821;&#35328;&#20013;&#25991;&#32593;"</span>;
-              <span class="linenr">4: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #b751b6;">@Override</span>
+<span class="linenr">2: </span><span style="color: #e45649;">public</span> <span style="color: #986801;">String</span> <span style="color: #a626a4;">toString</span><span style="color: #4078f2;">()</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">3: </span>    <span style="color: #e45649;">return</span> <span style="color: #50a14f;">"C &#35821;&#35328;&#20013;&#25991;&#32593;"</span>;
+<span class="linenr">4: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
 
-          <p>
-            上述代码中，如果不使用 <code>@Override</code> 注解标记代码，程序也能够正常执行。那为什么还要使用呢？有什么好处？
-          </p>
+<p>
+上述代码中，如果不使用 <code>@Override</code> 注解标记代码，程序也能够正常执行。那为什么还要使用呢？有什么好处？
+</p>
 
-          <p>
-            事实上，使用 <code>@Override</code> 注解就相当于告诉编译器这个方法是一个重写方法，如果父类中不存在该方法，编译器便会报错，提示该方法没有重写父类中的方法（可以防止不小心拼写错误造成麻烦）。
-          </p>
+<p>
+事实上，使用 <code>@Override</code> 注解就相当于告诉编译器这个方法是一个重写方法，如果父类中不存在该方法，编译器便会报错，提示该方法没有重写父类中的方法（可以防止不小心拼写错误造成麻烦）。
+</p>
 
-          <p>
-            注解常见的作用有以下几种：
-          </p>
+<p>
+注解常见的作用有以下几种：
+</p>
 
-          <ul class="org-ul">
-            <li>生成帮助文档。这是最常见的，也是 Java 最早提供的注解，常用的有 <code>@see、@param</code> 和 <code>@return</code> 等；</li>
-            <li>跟踪代码依赖性，实现替代配置文件的功能。比较常见的是 Spring 2.5 开始的基于注解配置，作用就是减少配置；</li>
-          </ul>
+<ul class="org-ul">
+<li>生成帮助文档。这是最常见的，也是 Java 最早提供的注解，常用的有 <code>@see、@param</code> 和 <code>@return</code> 等；</li>
+<li>跟踪代码依赖性，实现替代配置文件的功能。比较常见的是 Spring 2.5 开始的基于注解配置，作用就是减少配置；</li>
+</ul>
 
-          <p>
-            *注：现在的框架基本都使用了这种配置来减少配置文件的数量。
-          </p>
+<p>
+*注：现在的框架基本都使用了这种配置来减少配置文件的数量。
+</p>
 
-          <ul class="org-ul">
-            <li>在编译时进行格式检查。如把 <code>@Override</code> 注解放在方法前，就能检查出这个方法是不是重写了父类方法。</li>
-          </ul>
+<ul class="org-ul">
+<li>在编译时进行格式检查。如把 <code>@Override</code> 注解放在方法前，就能检查出这个方法是不是重写了父类方法。</li>
+</ul>
 
-          <p>
-            <b>无论是哪一种注解，本质上都是一种数据类型，是一种接口类型。</b>
-          </p>
+<p>
+<b>无论是哪一种注解，本质上都是一种数据类型，是一种接口类型。</b>
+</p>
 
-          <p>
-            到 Java 8 为止，Java 8 提供了 11 个内置注解，其中有 5 个基本注解，它们来自 <code>java.lang</code> 包；有 6 个是元注解，来自于 <code>java.lang.annotaion</code> 包，自定义注解会用到元注解。
-          </p>
+<p>
+到 Java 8 为止，Java 8 提供了 11 个内置注解，其中有 5 个基本注解，它们来自 <code>java.lang</code> 包；有 6 个是元注解，来自于 <code>java.lang.annotaion</code> 包，自定义注解会用到元注解。
+</p>
 
-          <p>
-            <b>*注：元注解就是负责注解其他注解的注解。</b>
-          </p>
-        </div>
-      </div>
+<p>
+<b>*注：元注解就是负责注解其他注解的注解。</b>
+</p>
+</div>
+</div>
 
-      <div id="outline-container-org4aebf9f" class="outline-2">
-        <h2 id="org4aebf9f">基本注解</h2>
-        <div class="outline-text-2" id="text-org4aebf9f">
-          <p>
-            基本注解包括： <code>@Override、@Deprecated、@SuppressWarnings、@SafeVarargs</code> 和 <code>@FunctionalInterface</code> 。
-          </p>
-        </div>
+<div id="outline-container-org4aebf9f" class="outline-2">
+<h2 id="org4aebf9f">基本注解</h2>
+<div class="outline-text-2" id="text-org4aebf9f">
+<p>
+基本注解包括： <code>@Override、@Deprecated、@SuppressWarnings、@SafeVarargs</code> 和 <code>@FunctionalInterface</code> 。
+</p>
+</div>
 
-        <div id="outline-container-org2b61678" class="outline-3">
-          <h3 id="org2b61678">@Override</h3>
-          <div class="outline-text-3" id="text-org2b61678">
-            <p>
-              Java 中 <code>@Override</code> 注解是用来指定方法重写的，只能修饰方法并且只能用于方法重写，不能修饰其它的元素，它可以强制一个子类必须重写父类方法或者实现接口的方法。
-            </p>
-          </div>
-        </div>
+<div id="outline-container-org2b61678" class="outline-3">
+<h3 id="org2b61678">@Override</h3>
+<div class="outline-text-3" id="text-org2b61678">
+<p>
+Java 中 <code>@Override</code> 注解是用来指定方法重写的，只能修饰方法并且只能用于方法重写，不能修饰其它的元素，它可以强制一个子类必须重写父类方法或者实现接口的方法。
+</p>
+</div>
+</div>
 
-        <div id="outline-container-org1df7e54" class="outline-3">
-          <h3 id="org1df7e54">@Deprecated</h3>
-          <div class="outline-text-3" id="text-org1df7e54">
-            <p>
-              Java 中 <code>@Deprecated</code> 可以用来注解类、接口、成员方法和成员变量等，用于表示某个元素（类、方法等）已过时。当其他程序使用已过时的元素时，编译器将会给出警告。
-            </p>
+<div id="outline-container-org1df7e54" class="outline-3">
+<h3 id="org1df7e54">@Deprecated</h3>
+<div class="outline-text-3" id="text-org1df7e54">
+<p>
+Java 中 <code>@Deprecated</code> 可以用来注解类、接口、成员方法和成员变量等，用于表示某个元素（类、方法等）已过时。当其他程序使用已过时的元素时，编译器将会给出警告。
+</p>
 
-            <p>
-              Java 9 为 <code>@Deprecated</code> 注解增加了以下两个属性：
-            </p>
-            <ul class="org-ul">
-              <li><code>forRemoval</code> ：该 boolean 类型的属性指定该 API 在将来是否会被删除；</li>
-              <li><code>since</code> ：该 String 类型的属性指定该 API 从哪个版本被标记为过时。</li>
-            </ul>
+<p>
+Java 9 为 <code>@Deprecated</code> 注解增加了以下两个属性：
+</p>
+<ul class="org-ul">
+<li><code>forRemoval</code> ：该 boolean 类型的属性指定该 API 在将来是否会被删除；</li>
+<li><code>since</code> ：该 String 类型的属性指定该 API 从哪个版本被标记为过时。</li>
+</ul>
 
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr"> 2: </span>    <span style="color: #b751b6;">@Deprecated</span><span style="color: #a626a4;">(</span>since = <span style="color: #50a14f;">"9"</span>, forRemoval = <span style="color: #b751b6;">true</span><span style="color: #a626a4;">)</span>
-                <span class="linenr"> 3: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">print</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr"> 4: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#36825;&#37324;&#26159; C &#35821;&#35328;&#20013;&#25991;&#32593;&#65281;"</span><span style="color: #50a14f;">)</span>;
-                <span class="linenr"> 5: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr"> 6: </span><span style="color: #4078f2;">}</span>
-                <span class="linenr"> 7: </span>
-                <span class="linenr"> 8: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Deprecated</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr"> 9: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr">10: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#19979;&#38754;&#20351;&#29992; print() &#26041;&#27861;&#26102;&#20250;&#34987;&#32534;&#35793;&#22120;&#35686;&#21578;</span>
-                <span class="linenr">11: </span>        <span style="color: #e45649;">new</span> <span style="color: #986801;">Test</span><span style="color: #50a14f;">()</span>.print<span style="color: #50a14f;">()</span>;
-                <span class="linenr">12: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">13: </span><span style="color: #4078f2;">}</span>
-              </pre>
-            </div>
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #b751b6;">@Deprecated</span><span style="color: #a626a4;">(</span>since = <span style="color: #50a14f;">"9"</span>, forRemoval = <span style="color: #b751b6;">true</span><span style="color: #a626a4;">)</span>
+<span class="linenr"> 3: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">print</span><span style="color: #a626a4;">()</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 4: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#36825;&#37324;&#26159; C &#35821;&#35328;&#20013;&#25991;&#32593;&#65281;"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr"> 5: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr"> 6: </span><span style="color: #4078f2;">}</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Deprecated</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 9: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">10: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#19979;&#38754;&#20351;&#29992; print() &#26041;&#27861;&#26102;&#20250;&#34987;&#32534;&#35793;&#22120;&#35686;&#21578;</span>
+<span class="linenr">11: </span>        <span style="color: #e45649;">new</span> <span style="color: #986801;">Test</span><span style="color: #50a14f;">()</span>.print<span style="color: #50a14f;">()</span>;
+<span class="linenr">12: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">13: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
 
-            <p>
-              注： <code>@Deprecated</code> 的作用与文档注释中的 <code>@deprecated</code> 标记的作用基本相同，但它们的用法不同，前者是 Java 5 才支持的注解，无须放在文档注释语法（ <code>/** ... */</code> 部分）中，而是直接用于修饰程序中的程序单元，如方法、类和接口等。
-            </p>
-          </div>
-        </div>
+<p>
+注： <code>@Deprecated</code> 的作用与文档注释中的 <code>@deprecated</code> 标记的作用基本相同，但它们的用法不同，前者是 Java 5 才支持的注解，无须放在文档注释语法（ <code>/** ... */</code> 部分）中，而是直接用于修饰程序中的程序单元，如方法、类和接口等。
+</p>
+</div>
+</div>
 
-        <div id="outline-container-orgfb78164" class="outline-3">
-          <h3 id="orgfb78164">@SuppressWarnings</h3>
-          <div class="outline-text-3" id="text-orgfb78164">
-            <p>
-              i.e. 抑制编译器警告
-            </p>
+<div id="outline-container-orgfb78164" class="outline-3">
+<h3 id="orgfb78164">@SuppressWarnings</h3>
+<div class="outline-text-3" id="text-orgfb78164">
+<p>
+i.e. 抑制编译器警告
+</p>
 
-            <p>
-              Java 中的 <code>@SuppressWarnings</code> 注解指示被该注解修饰的程序元素（以及该程序元素中的所有子元素）取消显示指定的编译器警告，且会一起作用于该程序元素的所有子元素。
-            </p>
+<p>
+Java 中的 <code>@SuppressWarnings</code> 注解指示被该注解修饰的程序元素（以及该程序元素中的所有子元素）取消显示指定的编译器警告，且会一起作用于该程序元素的所有子元素。
+</p>
 
-            <p>
-              例如，使用 <code>@SuppressWarnings</code> 修饰某个类取消显示某个编译器警告，同时又修饰该类里的某个方法取消显示另一个编译器警告，那么该方法将会同时取消显示这两个编译器警告。
-            </p>
+<p>
+例如，使用 <code>@SuppressWarnings</code> 修饰某个类取消显示某个编译器警告，同时又修饰该类里的某个方法取消显示另一个编译器警告，那么该方法将会同时取消显示这两个编译器警告。
+</p>
 
-            <p>
-              通常情况下，如果程序中使用没有泛型限制的集合将会引起编译器警告，为了避免这种编译器警告，可以使用 <code>@SuppressWarnings</code> 注解来消除这些警告。
-            </p>
+<p>
+通常情况下，如果程序中使用没有泛型限制的集合将会引起编译器警告，为了避免这种编译器警告，可以使用 <code>@SuppressWarnings</code> 注解来消除这些警告。
+</p>
 
-            <p>
-              注解的使用有以下三种：
-            </p>
-            <ul class="org-ul">
-              <li>抑制单类型的警告： <code>@SuppressWarnings("unchecked")</code> ；</li>
-              <li>抑制多类型的警告： <code>@SuppressWarnings("unchecked", "rawtypes")</code> ；</li>
-              <li>抑制所有类型的警告： <code>@SuppressWarnings("all")</code> 。</li>
-            </ul>
+<p>
+注解的使用有以下三种：
+</p>
+<ul class="org-ul">
+<li>抑制单类型的警告： <code>@SuppressWarnings("unchecked")</code> ；</li>
+<li>抑制多类型的警告： <code>@SuppressWarnings("unchecked", "rawtypes")</code> ；</li>
+<li>抑制所有类型的警告： <code>@SuppressWarnings("all")</code> 。</li>
+</ul>
 
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">HelloWorld</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr">2: </span>    <span style="color: #b751b6;">@SuppressWranings</span><span style="color: #a626a4;">(</span><span style="color: #50a14f;">{</span><span style="color: #50a14f;">"deprecation"</span><span style="color: #50a14f;">}</span><span style="color: #a626a4;">)</span>
-                <span class="linenr">3: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr">4: </span>        <span style="color: #986801;">Person</span> <span style="color: #6a1868;">p</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Person</span><span style="color: #50a14f;">()</span>;
-                <span class="linenr">5: </span>        p.setNameAndAge<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"C &#35821;&#35328;&#20013;&#25991;&#32593;"</span>, 20<span style="color: #50a14f;">)</span>;
-                <span class="linenr">6: </span>        p.name = <span style="color: #50a14f;">"Java Tutor"</span>;
-                <span class="linenr">7: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">8: </span><span style="color: #4078f2;">}</span>
-              </pre>
-            </div>
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">HelloWorld</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">2: </span>    <span style="color: #b751b6;">@SuppressWranings</span><span style="color: #a626a4;">(</span><span style="color: #50a14f;">{</span><span style="color: #50a14f;">"deprecation"</span><span style="color: #50a14f;">}</span><span style="color: #a626a4;">)</span>
+<span class="linenr">3: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">4: </span>        <span style="color: #986801;">Person</span> <span style="color: #6a1868;">p</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">Person</span><span style="color: #50a14f;">()</span>;
+<span class="linenr">5: </span>        p.setNameAndAge<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"C &#35821;&#35328;&#20013;&#25991;&#32593;"</span>, 20<span style="color: #50a14f;">)</span>;
+<span class="linenr">6: </span>        p.name = <span style="color: #50a14f;">"Java Tutor"</span>;
+<span class="linenr">7: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">8: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
 
-            <p>
-              上述代码第 2 行使用 <code>@SuppressWarnings({ "deprecation" })</code> 注解了 <code>main</code> 方法，抑制过期方法警告。
-            </p>
-          </div>
-        </div>
+<p>
+上述代码第 2 行使用 <code>@SuppressWarnings({ "deprecation" })</code> 注解了 <code>main</code> 方法，抑制过期方法警告。
+</p>
+</div>
+</div>
 
-        <div id="outline-container-org0bc9e1f" class="outline-3">
-          <h3 id="org0bc9e1f"><span class="todo TODO">TODO</span> @SafeVarargs</h3>
-        </div>
+<div id="outline-container-org0bc9e1f" class="outline-3">
+<h3 id="org0bc9e1f"><span class="todo TODO">TODO</span> @SafeVarargs</h3>
+</div>
 
-        <div id="outline-container-org94e538c" class="outline-3">
-          <h3 id="org94e538c"><span class="todo TODO">TODO</span> @FunctionalInterface</h3>
-        </div>
-      </div>
+<div id="outline-container-org94e538c" class="outline-3">
+<h3 id="org94e538c"><span class="todo TODO">TODO</span> @FunctionalInterface</h3>
+</div>
+</div>
 
-      <div id="outline-container-orga307a0d" class="outline-2">
-        <h2 id="orga307a0d"><span class="todo TODO">TODO</span> 元注解作用及使用</h2>
-        <div class="outline-text-2" id="text-orga307a0d">
-          <p>
-            元注解包括 <code>@Documented、@Target、@Retention、@Inherited</code> 和 <code>@Repeatable、@Native</code> 等 6 个注解，这些注解都可以在 <code>java.lang.annotation</code> 包中找到。
-          </p>
-        </div>
-      </div>
+<div id="outline-container-orga307a0d" class="outline-2">
+<h2 id="orga307a0d"><span class="todo TODO">TODO</span> 元注解作用及使用</h2>
+<div class="outline-text-2" id="text-orga307a0d">
+<p>
+元注解包括 <code>@Documented、@Target、@Retention、@Inherited</code> 和 <code>@Repeatable、@Native</code> 等 6 个注解，这些注解都可以在 <code>java.lang.annotation</code> 包中找到。
+</p>
+</div>
+</div>
 
-      <div id="outline-container-org40f7f19" class="outline-2">
-        <h2 id="org40f7f19"><span class="todo TODO">TODO</span> 自定义注解</h2>
-      </div>
-    </div>
-    <div id="postamble" class="status">
-      <p class="date">Date: 2020-10-03 Sat 09:45</p>
-      <p class="author">Author: Jack Liu</p>
-      <p class="date">Created: 2021-02-23 Tue 11:11</p>
-      <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
-    </div>
-  </body>
+<div id="outline-container-org40f7f19" class="outline-2">
+<h2 id="org40f7f19"><span class="todo TODO">TODO</span> 自定义注解</h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-10-03 Sat 09:45</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2021-02-23 Tue 14:30</p>
+<p class="validation"><a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a></p>
+</div>
+</body>
 </html>

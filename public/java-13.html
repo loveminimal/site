@@ -1,686 +1,686 @@
 <!DOCTYPE html>
 <html lang="zh">
-  <head>
-    <!-- 2021-02-23 Tue 11:11 -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>输入/输出流</title>
-    <meta name="generator" content="Org mode">
-    <meta name="author" content="Jack Liu">
-    <link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
-    <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
-    <script type="module" src="/themes/main.js" defer></script>
-  </head>
-  <body>
-    <div id="content">
-      <h1 class="title">输入/输出流</h1>
-      <div id="table-of-contents">
-        <h2>Table of Contents</h2>
-        <div id="text-table-of-contents">
-          <ul>
-            <li><a href="#org945177b">流的概念</a>
-              <ul>
-                <li><a href="#org081a62a">什么是输入/输出流</a></li>
-                <li><a href="#orgf86b5a9">输入流</a></li>
-                <li><a href="#org3d118cb">输出流</a></li>
-              </ul>
-            </li>
-            <li><a href="#orgeaaab25">系统流</a></li>
-            <li><a href="#org88a501a"><span class="todo TODO">TODO</span> 字符编码</a></li>
-            <li><a href="#org3045eeb">File 类</a>
-              <ul>
-                <li><a href="#orgfe89925">获取文件属性</a></li>
-                <li><a href="#orgaeff3a8">创建和删除文件</a></li>
-                <li><a href="#org79815d6">创建和删除目录</a></li>
-                <li><a href="#org685b10b">遍历目录</a></li>
-              </ul>
-            </li>
-            <li><a href="#org2504827"><span class="todo TODO">TODO</span> 字节流的使用</a></li>
-            <li><a href="#org7b03843"><span class="todo TODO">TODO</span> 字符流的使用</a></li>
-            <li><a href="#org87127cd"><span class="todo TODO">TODO</span> 转换流</a></li>
-            <li><a href="#org81765c9"><span class="todo TODO">TODO</span> 保存图书信息</a></li>
-          </ul>
-        </div>
-      </div>
-      <p>
-        在变量、数组、对象和集合中存储的数据是暂时存在的，一旦程序结束它们就会丢失。为以能够永久地保存程序创建的数据，需要将其保存到磁盘文件中，这样就可以在其他程序中使用它们。Java 的 I/O （输入输出）技术可以将数据保存到文本文件和二进制文件中，以达到永久保存数据的要求。
-      </p>
-
-      <div id="outline-container-org945177b" class="outline-2">
-        <h2 id="org945177b">流的概念</h2>
-        <div class="outline-text-2" id="text-org945177b">
-          <p>
-            在 Java 中所有数据都是使用流读写的。流是一组有序的数据序列，将数据从一个地方带到另一个地方。根据数据流向的不同，可以分为输入流（Input）和输出流（Output）两种。
-          </p>
-
-          <p>
-            在学习输入和输出流之前，我们要明白为什么应用程序需要输入和输出流。
-          </p>
-
-          <p>
-            我们平时用的 Office 软件，对于 Word、Excel 和 PPT 文件，我们需要打开文件并读取这些文本，和编辑输入一些文本，这都需要利用输入和输出的功能。
-          </p>
-
-          <p>
-            我们经常使用 <code>System.out.println</code> 方法，它就是一个输出方法。
-          </p>
-        </div>
-
-        <div id="outline-container-org081a62a" class="outline-3">
-          <h3 id="org081a62a">什么是输入/输出流</h3>
-          <div class="outline-text-3" id="text-org081a62a">
-            <p>
-              <b>Java 程序通过流来完成输入/输出，所有的输入/输出以流的形式处理。</b>
-            </p>
-
-            <p>
-              <span class="underline">输入</span> 就是将数据从各种输入设备（包括文件、键盘等）中读取到内存中， <span class="underline">输出</span> 则正好相反，是将数据写入到各种输出设备（比如文件、显式器、磁盘等）。
-            </p>
-
-            <p>
-              数据流是 Java 进行 I/O 操作的对象，它按照不同的标准可以分为不同的类别：
-            </p>
-            <ul class="org-ul">
-              <li>按照流的方向主要分为输入流和输出流两大类；</li>
-              <li>按照数据单位的不同分为字节流和字符流；</li>
-              <li>按照功能可以分为节点流和处理流。</li>
-            </ul>
-
-            <p>
-              数据流的处理只能按照数据序列的顺序来进行，即前一个数据处理完之后才能处理后一个数据。数据流以输入流的形式被程序获取，再以输出流的形式将数据输出到其它设备。
-            </p>
-
-            <img
-              src="/images/java-11.png"
-              width="360"
-              height=""
-              style=""
-              title=""
-              />
-
-            <img
-              src="/images/java-12.png"
-              width="360"
-              height=""
-              style="float: right;"
-              title=""
-              />
-          </div>
-        </div>
-
-        <div id="outline-container-orgf86b5a9" class="outline-3">
-          <h3 id="orgf86b5a9">输入流</h3>
-          <div class="outline-text-3" id="text-orgf86b5a9">
-            <p>
-              Java 流相关的类都封装在 <code>java.io</code> 包中，而且每个数据流都是一个对象。所有输入流都是 InputStream 抽象类（字节输入流）和 Reader 抽象类（字符输入流）的子类。其中 InputStream 类是字节输入流的抽象类，是所有字节输入流的父类，其层次结构如图所示：
-            </p>
-
-            <img
-              src="/images/java-13.png"
-              width=""
-              height=""
-              style=""
-              title=""
-              />
-
-            <p>
-              InputStream 类中所有方法遇到错误时都会引发 IOException 异常。
-            </p>
-
-            <table>
-              <caption class="t-above"><span class="table-number">Table 1:</span> InputStream 类常用方法</caption>
-
-              <colgroup>
-                <col  class="org-left">
-
-                <col  class="org-left">
-              </colgroup>
-              <thead>
-                <tr>
-                  <th scope="col" class="org-left">名称</th>
-                  <th scope="col" class="org-left">作用</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="org-left"><code>int read()</code></td>
-                  <td class="org-left">从输入流读入一个 8 字节的数据，将它转换一个 0~255 的整数，返回一个整数，如果遇到输入流的结尾返回 -1</td>
-                </tr>
-
-                <tr>
-                  <td class="org-left"><code>int read(byte[] b)</code></td>
-                  <td class="org-left">从输入流读取若干字节的数据保存到参数 b 指定的字节数组中，返回的字节数表示读取的字节数，如果遇到输入流的结尾返回 -1</td>
-                </tr>
-
-                <tr>
-                  <td class="org-left"><code>int read(byte[] b, int off, int len)</code></td>
-                  <td class="org-left">从输入流读取若干字节的数据保存到参数 b 指定的字节数组中，其中 off 是指在数组中开始保存数据位置的起始下标，len 是指读取字节的位数。返回的是实际读取的字节数，如果遇到输入流的结尾返回 -1</td>
-                </tr>
-
-                <tr>
-                  <td class="org-left"><code>void close()</code></td>
-                  <td class="org-left">关闭数据流，当完成对数据流的操作之后需要关闭数据流</td>
-                </tr>
-
-                <tr>
-                  <td class="org-left"><code>int available()</code></td>
-                  <td class="org-left">返回右以从数据源读取的数据流的位数</td>
-                </tr>
-
-                <tr>
-                  <td class="org-left"><code>skip(long n)</code></td>
-                  <td class="org-left">从输入流跳过参数 n 指定的字节数目</td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr>
-                  <td class="org-left"><code>boolean markSupported()</code></td>
-                  <td class="org-left">判断输入流是否可以重复读取，如果可以就返回 true</td>
-                </tr>
-
-                <tr>
-                  <td class="org-left"><code>void mark(int readLimit)</code></td>
-                  <td class="org-left">如果输入流是否可被重复读取，从流的当前位置开始设置标记， readLimit 指定可以设置标记的字节数</td>
-                </tr>
-
-                <tr>
-                  <td class="org-left"><code>void reset()</code></td>
-                  <td class="org-left">使输入流重新定位到刚才被标记的位置，这样可以重新读取标记过和数据</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <p>
-              上述最后 3 个方法一般会结合在一起使用，首先使用 <code>markSupported()</code> 判断，如果可以重复读取，则使用 <code>mark(int readLimit)</code> 方法进行标记，标记完成之后可以使用 <code>read()</code> 方法读取标记范围内的字节数，最后使用 <code>reset()</code> 方法使输入流重新定位到标记的位置，继而完成重复读取操作。
-            </p>
-
-            <p>
-              Java 中字符是 Unicode 编码，即双字节的，而 InputStream 是用来处理字节的，在处理字符文本时不是很方便。这时可以使用 Java 的文本输入流 Reader 类，该类是字符输入流的抽象类，即所有字符输入流的实现都是它的子类，该类的方法与 InputStream 类的方法类似。
-            </p>
-          </div>
-        </div>
-
-        <div id="outline-container-org3d118cb" class="outline-3">
-          <h3 id="org3d118cb">输出流</h3>
-          <div class="outline-text-3" id="text-org3d118cb">
-            <p>
-              在 Java 中所有输出流都是 OutputStream 抽象类（字节输出流）和 Writer 抽象类（字符输出流）的子类。其中 OutputStream 类是字节输出流的抽象类，是所有字节输出流的父类。
-            </p>
-
-            <img
-              src="/images/java-14.png"
-              width=""
-              height=""
-              style=""
-              title=""
-              />
-
-            <p>
-              OutputStream 类是所有字节输出流的超类，用于以二进制的形式将数据写入目标设备，该类是抽象类，不能被实例化。
-            </p>
-
-            <table>
-              <caption class="t-above"><span class="table-number">Table 2:</span> OutputStream 类的常用方法</caption>
-
-              <colgroup>
-                <col  class="org-left">
-
-                <col  class="org-left">
-              </colgroup>
-              <thead>
-                <tr>
-                  <th scope="col" class="org-left">名称</th>
-                  <th scope="col" class="org-left">作用</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="org-left"><code>int write(b)</code></td>
-                  <td class="org-left">将指定字节的数据写入到输出流</td>
-                </tr>
-
-                <tr>
-                  <td class="org-left"><code>int write(byte[] b)</code></td>
-                  <td class="org-left">将指定字节数组的内容写入输出流</td>
-                </tr>
-
-                <tr>
-                  <td class="org-left"><code>int write(byte[] b, int off, int len)</code></td>
-                  <td class="org-left">将指定字节数组从 off 位置开始的 len 字节的内容写入输出流</td>
-                </tr>
-
-                <tr>
-                  <td class="org-left"><code>close()</code></td>
-                  <td class="org-left">关闭数据流，当完成对数据流的操作之后需要关闭数据流</td>
-                </tr>
-
-                <tr>
-                  <td class="org-left"><code>flush()</code></td>
-                  <td class="org-left">刷新输出流，强行将缓冲区写入输出流</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div id="outline-container-orgeaaab25" class="outline-2">
-        <h2 id="orgeaaab25">系统流</h2>
-        <div class="outline-text-2" id="text-orgeaaab25">
-          <p>
-            每个 Java 程序运行时都带有一个系统流，系统流对应的类为 <code>java.lang.System</code> 。System 类封装了 Java 程序运行时的 3 个系统流，分别通过 <code>in、out</code> 和 <code>err</code> 变量来引用：
-          </p>
-          <ul class="org-ul">
-            <li><code>System.in</code> ：标准输入流，默认设备是键盘；</li>
-            <li><code>System.out</code> ：标准输出流，默认设备是控制台；</li>
-            <li><code>System.err</code> ：标准错误流，默认设备是控制台。</li>
-          </ul>
-
-          <p>
-            以上变量的作用域为 public 和 static ，因此在程序的任何部分都不需引用 System 对象就可以使用它们。
-          </p>
-
-          <p>
-            来看一个例子吧，下面的程序演示了如何使用 <code>System.in</code> 读取字节数组，使用 <code>System.out</code> 输出字节数组：
-          </p>
-
-          <div class="org-src-container">
-            <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
-              <span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-              <span class="linenr"> 3: </span>        <span style="color: #986801;">byte</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">byteData</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">byte</span><span style="color: #50a14f;">[</span>100<span style="color: #50a14f;">]</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#22768;&#26126;&#19968;&#20010;&#23383;&#33410;&#25968;&#32452;</span>
-              <span class="linenr"> 4: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#35831;&#36755;&#20837;&#33521;&#25991;&#65306;"</span><span style="color: #50a14f;">)</span>;
-              <span class="linenr"> 5: </span>        <span style="color: #e45649;">try</span> <span style="color: #50a14f;">{</span>
-              <span class="linenr"> 6: </span>            System.in.read<span style="color: #da8548;">(</span>byteData<span style="color: #da8548;">)</span>;
-              <span class="linenr"> 7: </span>        <span style="color: #50a14f;">}</span> <span style="color: #e45649;">catch</span> <span style="color: #50a14f;">(</span><span style="color: #986801;">IOException</span> <span style="color: #6a1868;">e</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
-              <span class="linenr"> 8: </span>            e.printStackTrace<span style="color: #da8548;">()</span>;
-              <span class="linenr"> 9: </span>        <span style="color: #50a14f;">}</span>
-              <span class="linenr">10: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#24744;&#36755;&#20837;&#30340;&#20869;&#23481;&#22914;&#19979;&#65306;"</span><span style="color: #50a14f;">)</span>;
-              <span class="linenr">11: </span>        <span style="color: #e45649;">for</span> <span style="color: #50a14f;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">i</span> = 0; i &lt; byteData.<span style="color: #986801;">length</span>; i++<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
-              <span class="linenr">12: </span>            System.out.println<span style="color: #da8548;">(</span><span style="color: #b751b6;">(</span><span style="color: #986801;">char</span><span style="color: #b751b6;">)</span> byteData<span style="color: #b751b6;">[</span>i<span style="color: #b751b6;">]</span><span style="color: #da8548;">)</span>;
-              <span class="linenr">13: </span>        <span style="color: #50a14f;">}</span>
-              <span class="linenr">14: </span>    <span style="color: #a626a4;">}</span>
-              <span class="linenr">15: </span><span style="color: #4078f2;">}</span>
-            </pre>
-          </div>
-
-          <p>
-            <code>System.in</code> 是 InputStream 类的一个对象，因此上述代码的 <code>System.in.read()</code> 方法实际是访问 InputStream 类定义的 <code>read()</code> 方法。该方法可以从键盘读取一个或多个字符，对于 <code>System.out</code> 输出流主要用于将指定内容输出到控制台。
-          </p>
-
-          <p>
-            <code>System.out</code> 和 <code>System.err</code> 是 PrintStream 类的对象。因为 printStream 是一个从 OutputStream 派生的输出流，所以它还执行低级别的 <code>write()</code> 方法。因此， <code>System.out</code> 还可以调用 <code>write()</code> 方法实现控制台输出。
-          </p>
-
-          <p>
-            <code>write()</code> 方法的简单形式如下：
-          </p>
-
-          <pre class="example">
-            void write(int byteval) throws IOException
-          </pre>
-
-          <p>
-            该方法通过 <code>byteval</code> 参数向文件写入指定的字节。在实际操作中， <code>print()</code> 方法和 <code>println()</code> 方法比 <code>write()</code> 方法更常用。
-          </p>
-
-          <p>
-            *注：尽管它们通常用于对控制台进行读取和写入字符，但是这些都是字节流。因为预定义流是没有引入字符流的 Java 原始规范的一部分，所以它们不是字符流而是字节流，但是在 Java 中可以将它们打包到基于字符的流中使用。
-          </p>
-        </div>
-      </div>
-
-      <div id="outline-container-org88a501a" class="outline-2">
-        <h2 id="org88a501a"><span class="todo TODO">TODO</span> 字符编码</h2>
-      </div>
-
-      <div id="outline-container-org3045eeb" class="outline-2">
-        <h2 id="org3045eeb">File 类</h2>
-        <div class="outline-text-2" id="text-org3045eeb">
-          <p>
-            在 Java 中， <b>File 类是 <code>java.io</code> 包中唯一代表磁盘文件本身的对象</b> ，也就是说，如果希望在程序中操作文件和目录，则都可以通过 File 类来完成。File 类定义了一些方法来操作文件，比如新建、删除、重命名文件和目录等。
-          </p>
-
-          <p>
-            File 类不能访问文件内容本身，如果需要访问文件内容本身，则需要使用输入/输出流。
-          </p>
-
-          <p>
-            File 类提供了如下三种形式构造方法：
-          </p>
-          <ul class="org-ul">
-            <li><code>File(String path)</code> ：如果 <code>path</code> 是实际存在的路径，则该 <code>File</code> 对象表示的是目录；如果 <code>path</code> 是文件名，则该 <code>File</code> 对象表示的是文件；</li>
-            <li><code>File(String path, String name)</code> ： <code>path</code> 是路径名， <code>name</code> 是文件名；</li>
-            <li><code>File(File dir, String name)</code> ： <code>dir</code> 是路径对象， <code>name</code> 是文件名。</li>
-          </ul>
-
-          <p>
-            使用任意一个构造方法都可以创建一个 <code>File</code> 对象，然后调用其提供的方法对文件进行操作。
-          </p>
-
-          <table>
-            <caption class="t-above"><span class="table-number">Table 3:</span> File 类的常用方法</caption>
-
-            <colgroup>
-              <col  class="org-left">
-
-              <col  class="org-left">
-            </colgroup>
-            <thead>
-              <tr>
-                <th scope="col" class="org-left">方法名称</th>
-                <th scope="col" class="org-left">说明</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="org-left"><code>boolean canRead()</code></td>
-                <td class="org-left">测试应用程序是否能从指定的文件中进行读取</td>
-              </tr>
-
-              <tr>
-                <td class="org-left"><code>boolean canWrite()</code></td>
-                <td class="org-left">测试应用程序是否能定当前文件</td>
-              </tr>
-
-              <tr>
-                <td class="org-left"><code>boolean delete()</code></td>
-                <td class="org-left">删除当前对象指定的文件</td>
-              </tr>
-
-              <tr>
-                <td class="org-left"><code>boolean exists()</code></td>
-                <td class="org-left">测试当前 File 是否存在</td>
-              </tr>
-
-              <tr>
-                <td class="org-left"><code>String getAbsolutePath()</code></td>
-                <td class="org-left">返回由该对象表示的文件的绝对路径名</td>
-              </tr>
-
-              <tr>
-                <td class="org-left"><code>String getName()</code></td>
-                <td class="org-left">返回表示当前对象的文件名或路径名（如果中路径，则返回最后一级子路径名）</td>
-              </tr>
-
-              <tr>
-                <td class="org-left"><code>String getParent()</code></td>
-                <td class="org-left">返回当前 File 对象所对应目录（最后一级子目录）的父目录名</td>
-              </tr>
-
-              <tr>
-                <td class="org-left"><code>boolean isAbsolute()</code></td>
-                <td class="org-left">测试当前 File 对象表示的文件是否为一个绝对路径名（该方法消除了不同平台的差异）</td>
-              </tr>
-
-              <tr>
-                <td class="org-left"><code>boolean isDirectory()</code></td>
-                <td class="org-left">测试当前 File 对象表示的文件是否为一个路径</td>
-              </tr>
-
-              <tr>
-                <td class="org-left"><code>boolean isFile()</code></td>
-                <td class="org-left">测试当前 File 对象表示的文件是否为一个“普通”文件</td>
-              </tr>
-
-              <tr>
-                <td class="org-left"><code>long lastModified()</code></td>
-                <td class="org-left">返回当前 File 对象表示的文件最后修改的时间</td>
-              </tr>
-
-              <tr>
-                <td class="org-left"><code>long length()</code></td>
-                <td class="org-left">返回当前 File 对象指定的路径长度</td>
-              </tr>
-
-              <tr>
-                <td class="org-left"><code>String[] list()</code></td>
-                <td class="org-left">返回当前 File 对象指定的路径文件列表</td>
-              </tr>
-
-              <tr>
-                <td class="org-left"><code>String[] list(FilenameFilter)</code></td>
-                <td class="org-left">返回当前 File 对象指定的目录中满足指定过滤器的文件列表</td>
-              </tr>
-
-              <tr>
-                <td class="org-left"><code>boolean mkdir()</code></td>
-                <td class="org-left">创建一个目录，它的路径名由当前 File 对象指定</td>
-              </tr>
-
-              <tr>
-                <td class="org-left"><code>boolean renameTo(File)</code></td>
-                <td class="org-left">将当前 file 对象指定的文件更名为给定参数 File 指定的路径名</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <p>
-            File 类中有以下两个常用常量：
-          </p>
-          <ul class="org-ul">
-            <li><code>public static final String pathSeparator</code> ：指的是分隔连续多个路径字符串的分隔符，Windows 下指 <code>;</code> ，如 <code>java -cp test.jar;abc.jar HelloWorld</code> ；</li>
-            <li><code>public static final String separator</code> ：用来分隔同一个路径字符串中的目录的，Windows 下指 <code>/</code> ，如 <code>C:/Program Files/Common Files</code> 。</li>
-          </ul>
-
-          <note>
-            注意：可以看到 File 类的常量定义的命名规则不符合标准命名规则，常量名没有全部大写，这是因为 Java 的发展经过了一段相当长的时间，而命名规范也是逐步形成的，File 类出现较早，所以当时并没有对命名规范有严格的要求，这些都属于 Java 的历史遗留问题。
-          </note>
-
-          <p>
-            Windows 的路径分隔符使用反斜线 <code>\</code> ，而 Java 程序中的反斜线表示转义字符，所以如果需要在 Windows 的路径下包括反斜线，则应该使用两条反斜线或直接使用斜线 <code>/</code> 也可以。Java 程序支持将斜线当成平台无关的路径分隔符。
-          </p>
-
-          <p>
-            例如，假设在 Windows 操作系统中有一文件 <code>D:\javaspace\hello.java</code> ，在 Java 中使用的时候，其路径的写法应该为 <code>D:/javaspace/hello.java</code> 或者 <code>D:\\javaspace\\hello.java</code> 。
-          </p>
-        </div>
-
-        <div id="outline-container-orgfe89925" class="outline-3">
-          <h3 id="orgfe89925">获取文件属性</h3>
-          <div class="outline-text-3" id="text-orgfe89925">
-            <p>
-              在 Java 中获取文件属性信息的第一步是先创建一个 File 类对象并指向一个已存在的文件，然后再调用上表中的方法进行操作。
-            </p>
-
-            <p>
-              假设有一个文件位于 <code>C:\windows\notepad.exe</code> 。
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr"> 3: </span>        <span style="color: #986801;">String</span> <span style="color: #6a1868;">path</span> = <span style="color: #50a14f;">"C:/windows/"</span>;            <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#25351;&#23450;&#25991;&#20214;&#25152;&#22312;&#30340;&#30446;&#24405;</span>
-                <span class="linenr"> 4: </span>        <span style="color: #986801;">File</span> <span style="color: #6a1868;">f</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">File</span><span style="color: #50a14f;">(</span>path, <span style="color: #50a14f;">"notepad.exe"</span><span style="color: #50a14f;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#24314;&#31435; File &#30446;&#24405;&#65292;&#24182;&#35774;&#23450;&#30001; f &#21464;&#37327;&#24341;&#29992;</span>
-                <span class="linenr"> 5: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"C:\\windows\\notepad.exe&#25991;&#20214;&#20449;&#24687;&#22914;&#19979;&#65306;"</span><span style="color: #50a14f;">)</span>;
-                <span class="linenr"> 6: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"============================================"</span><span style="color: #50a14f;">)</span>;
-                <span class="linenr"> 7: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#25991;&#20214;&#38271;&#24230;&#65306;"</span> + f.length<span style="color: #da8548;">()</span> + <span style="color: #50a14f;">"&#23383;&#33410;"</span><span style="color: #50a14f;">)</span>;
-                <span class="linenr"> 8: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#25991;&#20214;&#25110;&#32773;&#30446;&#24405;&#65306;"</span> + <span style="color: #da8548;">(</span>f.isFile<span style="color: #b751b6;">()</span> ? <span style="color: #50a14f;">"&#26159;&#25991;&#20214;"</span> : <span style="color: #50a14f;">"&#19981;&#26159;&#25991;&#20214;"</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>;
-                <span class="linenr"> 9: </span>        ...
-                <span class="linenr">10: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#32477;&#23545;&#36335;&#24452;&#65306;"</span> + f.getAbsolutePath<span style="color: #da8548;">()</span><span style="color: #50a14f;">)</span>;
-                <span class="linenr">11: </span>
-                <span class="linenr">12: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; C:\windows\notepad.exe&#25991;&#20214;&#20449;&#24687;&#22914;&#19979;&#65306;</span>
-                <span class="linenr">13: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; ============================================</span>
-                <span class="linenr">14: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; &#25991;&#20214;&#38271;&#24230;&#65306;193536&#23383;&#33410;</span>
-                <span class="linenr">15: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; &#25991;&#20214;&#25110;&#32773;&#30446;&#24405;&#65306;&#26159;&#25991;&#20214;</span>
-                <span class="linenr">16: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">...</span>
-                <span class="linenr">17: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; &#32477;&#23545;&#36335;&#24452;&#65306;C:\windows\notepad.exe</span>
-                <span class="linenr">18: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">19: </span><span style="color: #4078f2;">}</span>
-              </pre>
-            </div>
-          </div>
-        </div>
-
-        <div id="outline-container-orgaeff3a8" class="outline-3">
-          <h3 id="orgaeff3a8">创建和删除文件</h3>
-          <div class="outline-text-3" id="text-orgaeff3a8">
-            <p>
-              File 类不仅可以获取已知文件的属性信息，还可以在指定路径创建文件，以及删除一个文件。创建文件需要调用 <code>createNewFile()</code> 方法，删除文件需要调用 <code>delete()</code> 方法。
-            </p>
-
-            <p>
-              *注：无论是创建还是删除文件通常都先调用 <code>exists()</code> 方法判断文件是否存在。
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #e45649;">throws</span> <span style="color: #986801;">IOException</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr"> 3: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">File f = new File("C:\\test.txt");             // &#65288;&#19981;&#25512;&#33616;&#65289; &#21019;&#24314;&#25351;&#21521;&#25991;&#20214;&#30340; File &#25991;&#20214;</span>
-                <span class="linenr"> 4: </span>        <span style="color: #986801;">String</span> <span style="color: #6a1868;">path</span> = <span style="color: #50a14f;">"C:"</span> + File.separator + <span style="color: #50a14f;">"test.txt"</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#65288;&#25512;&#33616;&#65289;&#25340;&#20945;&#20986;&#21487;&#20197;&#36866;&#24212;&#25805;&#20316;&#31995;&#32479;&#30340;&#36335;&#24452;</span>
-                <span class="linenr"> 5: </span>        <span style="color: #986801;">Fiel</span> <span style="color: #6a1868;">f</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">File</span><span style="color: #50a14f;">(</span>path<span style="color: #50a14f;">)</span>;
-                <span class="linenr"> 6: </span>
-                <span class="linenr"> 7: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>f.exists<span style="color: #da8548;">()</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>       <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21028;&#26029;&#25991;&#20214;&#26159;&#21542;&#23384;&#22312;</span>
-                <span class="linenr"> 8: </span>            f.delete<span style="color: #da8548;">()</span>;         <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23384;&#22312;&#21017;&#20808;&#21024;&#38500;</span>
-                <span class="linenr"> 9: </span>        <span style="color: #50a14f;">}</span>
-                <span class="linenr">10: </span>        f.createNewFile<span style="color: #50a14f;">()</span>;      <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20877;&#21019;&#24314;</span>
-                <span class="linenr">11: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">12: </span><span style="color: #4078f2;">}</span>
-              </pre>
-            </div>
-
-            <p>
-              <b>注意，在操作文件时一定要使用 <code>File.separator</code> 表示分隔符</b> （为了更好地移植跨平台）。
-            </p>
-          </div>
-        </div>
-
-        <div id="outline-container-org79815d6" class="outline-3">
-          <h3 id="org79815d6">创建和删除目录</h3>
-          <div class="outline-text-3" id="text-org79815d6">
-            <p>
-              直接用示例来说明吧。
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr"> 3: </span>        <span style="color: #986801;">String</span> <span style="color: #6a1868;">path</span> = <span style="color: #50a14f;">"C:"</span> + File.separator + <span style="color: #50a14f;">"config"</span> + File.separator; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#25351;&#23450;&#30446;&#24405;&#20301;&#32622;</span>
-                <span class="linenr"> 4: </span>        <span style="color: #986801;">File</span> <span style="color: #6a1868;">f</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">File</span><span style="color: #50a14f;">(</span>path<span style="color: #50a14f;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21019;&#24314; File &#23545;&#35937;</span>
-                <span class="linenr"> 5: </span>
-                <span class="linenr"> 6: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>f.exists<span style="color: #da8548;">()</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
-                <span class="linenr"> 7: </span>            f.delete<span style="color: #da8548;">()</span>;
-                <span class="linenr"> 8: </span>        <span style="color: #50a14f;">}</span>
-                <span class="linenr"> 9: </span>        f.mkdir<span style="color: #50a14f;">()</span>;               <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21019;&#24314;&#30446;&#24405;</span>
-                <span class="linenr">10: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">11: </span><span style="color: #4078f2;">}</span>
-              </pre>
-            </div>
-          </div>
-        </div>
-
-        <div id="outline-container-org685b10b" class="outline-3">
-          <h3 id="org685b10b">遍历目录</h3>
-          <div class="outline-text-3" id="text-org685b10b">
-            <p>
-              通过遍历目录可以在指定目录中查找文件，或者显示所有的文件列表。
-            </p>
-
-            <p>
-              File 类的 <code>list()</code> 方法提供了遍历目录功能，该方法有如下两种重载形式。
-            </p>
-
-            <p>
-              <span class="underline">1. String[] list()</span>
-            </p>
-
-            <p>
-              该方法表示返回由 File 对象表示目录中所有文件和子目录名称组成的字符串数组，如果调用的 File 对象不是目录，则返回 <code>null</code> 。
-            </p>
-
-            <p>
-              *注： <code>list()</code> 方法返回的数组中仅包含文件名称，而不包含路径。但不保证所得数组中相同字符串将以特定顺序出现，特别是不保证它们按字母顺序出现。
-            </p>
-
-            <p>
-              <span class="underline">2. String[] list(FilenameFilter filter)</span>
-            </p>
-
-            <p>
-              该方法的作用与 <code>list()</code> 方法相同，不同的是返回数组中仅包含符合 <code>filter</code> 过滤器的文件和目录，如果 <code>filter</code> 为 <code>null</code> ，则接受所有名称。
-            </p>
-
-            <p>
-              假设要遍历 C 盘根目录下的所有文件和目录，并显示文件或目录名称、类型及大小，使用 <code>list()</code> 方法的实现代码如下：
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr"> 3: </span>        <span style="color: #986801;">String</span> <span style="color: #6a1868;">path</span> = <span style="color: #50a14f;">"C:"</span> + File.separator;
-                <span class="linenr"> 4: </span>        <span style="color: #986801;">File</span> <span style="color: #6a1868;">f</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">File</span><span style="color: #50a14f;">(</span>path<span style="color: #50a14f;">)</span>;
-                <span class="linenr"> 5: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#25991;&#20214;&#21517;&#31216;\t\t&#25991;&#20214;&#31867;&#22411;\t\t&#25991;&#20214;&#22823;&#23567;"</span><span style="color: #50a14f;">)</span>;
-                <span class="linenr"> 6: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"================================"</span><span style="color: #50a14f;">)</span>;
-                <span class="linenr"> 7: </span>        <span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">fileList</span> = f.list<span style="color: #50a14f;">()</span>;               <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#35843;&#29992;&#19981;&#24102;&#21442;&#25968;&#30340; list() &#26041;&#27861;</span>
-                <span class="linenr"> 8: </span>        <span style="color: #e45649;">for</span> <span style="color: #50a14f;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">i</span> = 0; i &lt; fileList.<span style="color: #986801;">length</span>; i++<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span> <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#36941;&#21382;&#36820;&#22238;&#30340;&#23383;&#31526;&#25968;&#32452;</span>
-                <span class="linenr"> 9: </span>            System.out.println<span style="color: #da8548;">(</span>fileList<span style="color: #b751b6;">[</span>i<span style="color: #b751b6;">]</span> + <span style="color: #50a14f;">"\t\t"</span><span style="color: #da8548;">)</span>;
-                <span class="linenr">10: </span>            System.out.println<span style="color: #da8548;">(</span><span style="color: #b751b6;">(</span><span style="color: #e45649;">new</span> <span style="color: #986801;">File</span><span style="color: #986801;">(</span><span style="color: #4db5bd;">(</span><span style="color: #50a14f;">"C:"</span> + File.separator<span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span>, fileList<span style="color: #986801;">[</span>i<span style="color: #986801;">]</span><span style="color: #b751b6;">)</span>.isFile<span style="color: #b751b6;">()</span> ? <span style="color: #50a14f;">"&#25991;&#20214;"</span> + <span style="color: #50a14f;">"\t\t"</span> : <span style="color: #50a14f;">"&#25991;&#20214;&#22841;"</span> + <span style="color: #50a14f;">"\t\t"</span><span style="color: #da8548;">)</span>;
-                <span class="linenr">11: </span>            System.out.println<span style="color: #da8548;">(</span><span style="color: #b751b6;">(</span><span style="color: #e45649;">new</span> <span style="color: #986801;">File</span><span style="color: #986801;">(</span><span style="color: #4db5bd;">(</span><span style="color: #50a14f;">"C:"</span> + File.separator<span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span>, fileList<span style="color: #986801;">[</span>i<span style="color: #986801;">]</span><span style="color: #b751b6;">)</span>.length<span style="color: #b751b6;">()</span> + <span style="color: #50a14f;">"&#23383;&#33410;"</span><span style="color: #da8548;">)</span>;
-                <span class="linenr">12: </span>        <span style="color: #50a14f;">}</span>
-                <span class="linenr">13: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">14: </span><span style="color: #4078f2;">}</span>
-                <span class="linenr">15: </span>
-                <span class="linenr">16: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; &#25991;&#20214;&#21517;&#31216;  &#25991;&#20214;&#31867;&#22411;  &#25991;&#20214;&#22823;&#23567;</span>
-                <span class="linenr">17: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; ===================================================</span>
-                <span class="linenr">18: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; $Recycle.Bin  &#25991;&#20214;&#22841;  4096&#23383;&#33410;</span>
-                <span class="linenr">19: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; Documents and Settings  &#25991;&#20214;&#22841;  0&#23383;&#33410;</span>
-                <span class="linenr">20: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">...</span>
-                <span class="linenr">21: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; news.template  &#25991;&#20214;  417&#23383;&#33410;</span>
-                <span class="linenr">22: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">...</span>
-              </pre>
-            </div>
-
-            <p>
-              假设希望只列出目录下的某些文件，这就需要调用过滤器的 <code>list()</code> 方法。首先，需要创建文件过滤器，该过滤器必须实现 <code>java.io.FilenameFilter</code> 掊，并在 <code>accept()</code> 方法中指定允许的文件类型。
-            </p>
-
-            <p>
-              如下所示允许 SYS、TXT 和 BAK 格式文件的过滤器实现代码：
-            </p>
-
-            <div class="org-src-container">
-              <pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">ImageFilter</span> <span style="color: #e45649;">implements</span> <span style="color: #986801;">FilenameFilter</span> <span style="color: #4078f2;">{</span>
-                <span class="linenr">2: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616; FilenameFileter &#25509;&#21475;</span>
-                <span class="linenr">3: </span>    <span style="color: #b751b6;">@Override</span>
-                <span class="linenr">4: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">boolean</span> <span style="color: #a626a4;">accept</span><span style="color: #a626a4;">(</span><span style="color: #986801;">File</span> <span style="color: #6a1868;">dir</span>, <span style="color: #986801;">String</span> <span style="color: #6a1868;">name</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
-                <span class="linenr">5: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#25351;&#23450;&#20801;&#35768;&#30340;&#25991;&#20214;&#31867;&#22411;</span>
-                <span class="linenr">6: </span>        <span style="color: #e45649;">return</span> name.endsWith<span style="color: #50a14f;">(</span><span style="color: #50a14f;">".sys"</span><span style="color: #50a14f;">)</span> || name.endsWith<span style="color: #50a14f;">(</span><span style="color: #50a14f;">".txt"</span><span style="color: #50a14f;">)</span> || name.endsWith<span style="color: #50a14f;">(</span><span style="color: #50a14f;">".bak"</span><span style="color: #50a14f;">)</span>;
-                <span class="linenr">7: </span>    <span style="color: #a626a4;">}</span>
-                <span class="linenr">8: </span><span style="color: #4078f2;">}</span>
-              </pre>
-            </div>
-
-            <p>
-              上述代码创建的过滤器名称为 ImageFilter ，拉下来只需要将该名称传递给 <code>list()</code> 方法即可实现筛选文件。如下所示：
-            </p>
-
-            <pre class="example">
-              String[] fileList = f.list(new ImageFilter());
-            </pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="outline-container-org2504827" class="outline-2">
-        <h2 id="org2504827"><span class="todo TODO">TODO</span> 字节流的使用</h2>
-      </div>
-
-      <div id="outline-container-org7b03843" class="outline-2">
-        <h2 id="org7b03843"><span class="todo TODO">TODO</span> 字符流的使用</h2>
-      </div>
-
-      <div id="outline-container-org87127cd" class="outline-2">
-        <h2 id="org87127cd"><span class="todo TODO">TODO</span> 转换流</h2>
-      </div>
-
-      <div id="outline-container-org81765c9" class="outline-2">
-        <h2 id="org81765c9"><span class="todo TODO">TODO</span> 保存图书信息</h2>
-      </div>
-    </div>
-    <div id="postamble" class="status">
-      <p class="date">Date: 2020-10-02 Fri 15:09</p>
-      <p class="author">Author: Jack Liu</p>
-      <p class="date">Created: 2021-02-23 Tue 11:11</p>
-      <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
-    </div>
-  </body>
+<head>
+<!-- 2021-02-23 Tue 14:30 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>输入/输出流</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Jack Liu">
+<link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
+           <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
+           <script type="module" src="/themes/main.js" defer></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">输入/输出流</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org945177b">流的概念</a>
+<ul>
+<li><a href="#org081a62a">什么是输入/输出流</a></li>
+<li><a href="#orgf86b5a9">输入流</a></li>
+<li><a href="#org3d118cb">输出流</a></li>
+</ul>
+</li>
+<li><a href="#orgeaaab25">系统流</a></li>
+<li><a href="#org88a501a"><span class="todo TODO">TODO</span> 字符编码</a></li>
+<li><a href="#org3045eeb">File 类</a>
+<ul>
+<li><a href="#orgfe89925">获取文件属性</a></li>
+<li><a href="#orgaeff3a8">创建和删除文件</a></li>
+<li><a href="#org79815d6">创建和删除目录</a></li>
+<li><a href="#org685b10b">遍历目录</a></li>
+</ul>
+</li>
+<li><a href="#org2504827"><span class="todo TODO">TODO</span> 字节流的使用</a></li>
+<li><a href="#org7b03843"><span class="todo TODO">TODO</span> 字符流的使用</a></li>
+<li><a href="#org87127cd"><span class="todo TODO">TODO</span> 转换流</a></li>
+<li><a href="#org81765c9"><span class="todo TODO">TODO</span> 保存图书信息</a></li>
+</ul>
+</div>
+</div>
+<p>
+在变量、数组、对象和集合中存储的数据是暂时存在的，一旦程序结束它们就会丢失。为以能够永久地保存程序创建的数据，需要将其保存到磁盘文件中，这样就可以在其他程序中使用它们。Java 的 I/O （输入输出）技术可以将数据保存到文本文件和二进制文件中，以达到永久保存数据的要求。
+</p>
+
+<div id="outline-container-org945177b" class="outline-2">
+<h2 id="org945177b">流的概念</h2>
+<div class="outline-text-2" id="text-org945177b">
+<p>
+在 Java 中所有数据都是使用流读写的。流是一组有序的数据序列，将数据从一个地方带到另一个地方。根据数据流向的不同，可以分为输入流（Input）和输出流（Output）两种。
+</p>
+
+<p>
+在学习输入和输出流之前，我们要明白为什么应用程序需要输入和输出流。
+</p>
+
+<p>
+我们平时用的 Office 软件，对于 Word、Excel 和 PPT 文件，我们需要打开文件并读取这些文本，和编辑输入一些文本，这都需要利用输入和输出的功能。
+</p>
+
+<p>
+我们经常使用 <code>System.out.println</code> 方法，它就是一个输出方法。
+</p>
+</div>
+
+<div id="outline-container-org081a62a" class="outline-3">
+<h3 id="org081a62a">什么是输入/输出流</h3>
+<div class="outline-text-3" id="text-org081a62a">
+<p>
+<b>Java 程序通过流来完成输入/输出，所有的输入/输出以流的形式处理。</b>
+</p>
+
+<p>
+<span class="underline">输入</span> 就是将数据从各种输入设备（包括文件、键盘等）中读取到内存中， <span class="underline">输出</span> 则正好相反，是将数据写入到各种输出设备（比如文件、显式器、磁盘等）。
+</p>
+
+<p>
+数据流是 Java 进行 I/O 操作的对象，它按照不同的标准可以分为不同的类别：
+</p>
+<ul class="org-ul">
+<li>按照流的方向主要分为输入流和输出流两大类；</li>
+<li>按照数据单位的不同分为字节流和字符流；</li>
+<li>按照功能可以分为节点流和处理流。</li>
+</ul>
+
+<p>
+数据流的处理只能按照数据序列的顺序来进行，即前一个数据处理完之后才能处理后一个数据。数据流以输入流的形式被程序获取，再以输出流的形式将数据输出到其它设备。
+</p>
+
+<img
+src="/images/java-11.png"
+width="360"
+height=""
+style=""
+title=""
+/>
+
+<img
+src="/images/java-12.png"
+width="360"
+height=""
+style="float: right;"
+title=""
+/>
+</div>
+</div>
+
+<div id="outline-container-orgf86b5a9" class="outline-3">
+<h3 id="orgf86b5a9">输入流</h3>
+<div class="outline-text-3" id="text-orgf86b5a9">
+<p>
+Java 流相关的类都封装在 <code>java.io</code> 包中，而且每个数据流都是一个对象。所有输入流都是 InputStream 抽象类（字节输入流）和 Reader 抽象类（字符输入流）的子类。其中 InputStream 类是字节输入流的抽象类，是所有字节输入流的父类，其层次结构如图所示：
+</p>
+
+<img
+src="/images/java-13.png"
+width=""
+height=""
+style=""
+title=""
+/>
+
+<p>
+InputStream 类中所有方法遇到错误时都会引发 IOException 异常。
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 1:</span> InputStream 类常用方法</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">名称</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>int read()</code></td>
+<td class="org-left">从输入流读入一个 8 字节的数据，将它转换一个 0~255 的整数，返回一个整数，如果遇到输入流的结尾返回 -1</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>int read(byte[] b)</code></td>
+<td class="org-left">从输入流读取若干字节的数据保存到参数 b 指定的字节数组中，返回的字节数表示读取的字节数，如果遇到输入流的结尾返回 -1</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>int read(byte[] b, int off, int len)</code></td>
+<td class="org-left">从输入流读取若干字节的数据保存到参数 b 指定的字节数组中，其中 off 是指在数组中开始保存数据位置的起始下标，len 是指读取字节的位数。返回的是实际读取的字节数，如果遇到输入流的结尾返回 -1</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>void close()</code></td>
+<td class="org-left">关闭数据流，当完成对数据流的操作之后需要关闭数据流</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>int available()</code></td>
+<td class="org-left">返回右以从数据源读取的数据流的位数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>skip(long n)</code></td>
+<td class="org-left">从输入流跳过参数 n 指定的字节数目</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>boolean markSupported()</code></td>
+<td class="org-left">判断输入流是否可以重复读取，如果可以就返回 true</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>void mark(int readLimit)</code></td>
+<td class="org-left">如果输入流是否可被重复读取，从流的当前位置开始设置标记， readLimit 指定可以设置标记的字节数</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>void reset()</code></td>
+<td class="org-left">使输入流重新定位到刚才被标记的位置，这样可以重新读取标记过和数据</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+上述最后 3 个方法一般会结合在一起使用，首先使用 <code>markSupported()</code> 判断，如果可以重复读取，则使用 <code>mark(int readLimit)</code> 方法进行标记，标记完成之后可以使用 <code>read()</code> 方法读取标记范围内的字节数，最后使用 <code>reset()</code> 方法使输入流重新定位到标记的位置，继而完成重复读取操作。
+</p>
+
+<p>
+Java 中字符是 Unicode 编码，即双字节的，而 InputStream 是用来处理字节的，在处理字符文本时不是很方便。这时可以使用 Java 的文本输入流 Reader 类，该类是字符输入流的抽象类，即所有字符输入流的实现都是它的子类，该类的方法与 InputStream 类的方法类似。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3d118cb" class="outline-3">
+<h3 id="org3d118cb">输出流</h3>
+<div class="outline-text-3" id="text-org3d118cb">
+<p>
+在 Java 中所有输出流都是 OutputStream 抽象类（字节输出流）和 Writer 抽象类（字符输出流）的子类。其中 OutputStream 类是字节输出流的抽象类，是所有字节输出流的父类。
+</p>
+
+<img
+src="/images/java-14.png"
+width=""
+height=""
+style=""
+title=""
+/>
+
+<p>
+OutputStream 类是所有字节输出流的超类，用于以二进制的形式将数据写入目标设备，该类是抽象类，不能被实例化。
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 2:</span> OutputStream 类的常用方法</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">名称</th>
+<th scope="col" class="org-left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>int write(b)</code></td>
+<td class="org-left">将指定字节的数据写入到输出流</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>int write(byte[] b)</code></td>
+<td class="org-left">将指定字节数组的内容写入输出流</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>int write(byte[] b, int off, int len)</code></td>
+<td class="org-left">将指定字节数组从 off 位置开始的 len 字节的内容写入输出流</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>close()</code></td>
+<td class="org-left">关闭数据流，当完成对数据流的操作之后需要关闭数据流</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>flush()</code></td>
+<td class="org-left">刷新输出流，强行将缓冲区写入输出流</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgeaaab25" class="outline-2">
+<h2 id="orgeaaab25">系统流</h2>
+<div class="outline-text-2" id="text-orgeaaab25">
+<p>
+每个 Java 程序运行时都带有一个系统流，系统流对应的类为 <code>java.lang.System</code> 。System 类封装了 Java 程序运行时的 3 个系统流，分别通过 <code>in、out</code> 和 <code>err</code> 变量来引用：
+</p>
+<ul class="org-ul">
+<li><code>System.in</code> ：标准输入流，默认设备是键盘；</li>
+<li><code>System.out</code> ：标准输出流，默认设备是控制台；</li>
+<li><code>System.err</code> ：标准错误流，默认设备是控制台。</li>
+</ul>
+
+<p>
+以上变量的作用域为 public 和 static ，因此在程序的任何部分都不需引用 System 对象就可以使用它们。
+</p>
+
+<p>
+来看一个例子吧，下面的程序演示了如何使用 <code>System.in</code> 读取字节数组，使用 <code>System.out</code> 输出字节数组：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #986801;">byte</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">byteData</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">byte</span><span style="color: #50a14f;">[</span>100<span style="color: #50a14f;">]</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#22768;&#26126;&#19968;&#20010;&#23383;&#33410;&#25968;&#32452;</span>
+<span class="linenr"> 4: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#35831;&#36755;&#20837;&#33521;&#25991;&#65306;"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr"> 5: </span>        <span style="color: #e45649;">try</span> <span style="color: #50a14f;">{</span>
+<span class="linenr"> 6: </span>            System.in.read<span style="color: #da8548;">(</span>byteData<span style="color: #da8548;">)</span>;
+<span class="linenr"> 7: </span>        <span style="color: #50a14f;">}</span> <span style="color: #e45649;">catch</span> <span style="color: #50a14f;">(</span><span style="color: #986801;">IOException</span> <span style="color: #6a1868;">e</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+<span class="linenr"> 8: </span>            e.printStackTrace<span style="color: #da8548;">()</span>;
+<span class="linenr"> 9: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">10: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#24744;&#36755;&#20837;&#30340;&#20869;&#23481;&#22914;&#19979;&#65306;"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr">11: </span>        <span style="color: #e45649;">for</span> <span style="color: #50a14f;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">i</span> = 0; i &lt; byteData.<span style="color: #986801;">length</span>; i++<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+<span class="linenr">12: </span>            System.out.println<span style="color: #da8548;">(</span><span style="color: #b751b6;">(</span><span style="color: #986801;">char</span><span style="color: #b751b6;">)</span> byteData<span style="color: #b751b6;">[</span>i<span style="color: #b751b6;">]</span><span style="color: #da8548;">)</span>;
+<span class="linenr">13: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">14: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">15: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+<code>System.in</code> 是 InputStream 类的一个对象，因此上述代码的 <code>System.in.read()</code> 方法实际是访问 InputStream 类定义的 <code>read()</code> 方法。该方法可以从键盘读取一个或多个字符，对于 <code>System.out</code> 输出流主要用于将指定内容输出到控制台。
+</p>
+
+<p>
+<code>System.out</code> 和 <code>System.err</code> 是 PrintStream 类的对象。因为 printStream 是一个从 OutputStream 派生的输出流，所以它还执行低级别的 <code>write()</code> 方法。因此， <code>System.out</code> 还可以调用 <code>write()</code> 方法实现控制台输出。
+</p>
+
+<p>
+<code>write()</code> 方法的简单形式如下：
+</p>
+
+<pre class="example">
+void write(int byteval) throws IOException
+</pre>
+
+<p>
+该方法通过 <code>byteval</code> 参数向文件写入指定的字节。在实际操作中， <code>print()</code> 方法和 <code>println()</code> 方法比 <code>write()</code> 方法更常用。
+</p>
+
+<p>
+*注：尽管它们通常用于对控制台进行读取和写入字符，但是这些都是字节流。因为预定义流是没有引入字符流的 Java 原始规范的一部分，所以它们不是字符流而是字节流，但是在 Java 中可以将它们打包到基于字符的流中使用。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org88a501a" class="outline-2">
+<h2 id="org88a501a"><span class="todo TODO">TODO</span> 字符编码</h2>
+</div>
+
+<div id="outline-container-org3045eeb" class="outline-2">
+<h2 id="org3045eeb">File 类</h2>
+<div class="outline-text-2" id="text-org3045eeb">
+<p>
+在 Java 中， <b>File 类是 <code>java.io</code> 包中唯一代表磁盘文件本身的对象</b> ，也就是说，如果希望在程序中操作文件和目录，则都可以通过 File 类来完成。File 类定义了一些方法来操作文件，比如新建、删除、重命名文件和目录等。
+</p>
+
+<p>
+File 类不能访问文件内容本身，如果需要访问文件内容本身，则需要使用输入/输出流。
+</p>
+
+<p>
+File 类提供了如下三种形式构造方法：
+</p>
+<ul class="org-ul">
+<li><code>File(String path)</code> ：如果 <code>path</code> 是实际存在的路径，则该 <code>File</code> 对象表示的是目录；如果 <code>path</code> 是文件名，则该 <code>File</code> 对象表示的是文件；</li>
+<li><code>File(String path, String name)</code> ： <code>path</code> 是路径名， <code>name</code> 是文件名；</li>
+<li><code>File(File dir, String name)</code> ： <code>dir</code> 是路径对象， <code>name</code> 是文件名。</li>
+</ul>
+
+<p>
+使用任意一个构造方法都可以创建一个 <code>File</code> 对象，然后调用其提供的方法对文件进行操作。
+</p>
+
+<table>
+<caption class="t-above"><span class="table-number">Table 3:</span> File 类的常用方法</caption>
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">方法名称</th>
+<th scope="col" class="org-left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>boolean canRead()</code></td>
+<td class="org-left">测试应用程序是否能从指定的文件中进行读取</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>boolean canWrite()</code></td>
+<td class="org-left">测试应用程序是否能定当前文件</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>boolean delete()</code></td>
+<td class="org-left">删除当前对象指定的文件</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>boolean exists()</code></td>
+<td class="org-left">测试当前 File 是否存在</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>String getAbsolutePath()</code></td>
+<td class="org-left">返回由该对象表示的文件的绝对路径名</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>String getName()</code></td>
+<td class="org-left">返回表示当前对象的文件名或路径名（如果中路径，则返回最后一级子路径名）</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>String getParent()</code></td>
+<td class="org-left">返回当前 File 对象所对应目录（最后一级子目录）的父目录名</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>boolean isAbsolute()</code></td>
+<td class="org-left">测试当前 File 对象表示的文件是否为一个绝对路径名（该方法消除了不同平台的差异）</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>boolean isDirectory()</code></td>
+<td class="org-left">测试当前 File 对象表示的文件是否为一个路径</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>boolean isFile()</code></td>
+<td class="org-left">测试当前 File 对象表示的文件是否为一个“普通”文件</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>long lastModified()</code></td>
+<td class="org-left">返回当前 File 对象表示的文件最后修改的时间</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>long length()</code></td>
+<td class="org-left">返回当前 File 对象指定的路径长度</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>String[] list()</code></td>
+<td class="org-left">返回当前 File 对象指定的路径文件列表</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>String[] list(FilenameFilter)</code></td>
+<td class="org-left">返回当前 File 对象指定的目录中满足指定过滤器的文件列表</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>boolean mkdir()</code></td>
+<td class="org-left">创建一个目录，它的路径名由当前 File 对象指定</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>boolean renameTo(File)</code></td>
+<td class="org-left">将当前 file 对象指定的文件更名为给定参数 File 指定的路径名</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+File 类中有以下两个常用常量：
+</p>
+<ul class="org-ul">
+<li><code>public static final String pathSeparator</code> ：指的是分隔连续多个路径字符串的分隔符，Windows 下指 <code>;</code> ，如 <code>java -cp test.jar;abc.jar HelloWorld</code> ；</li>
+<li><code>public static final String separator</code> ：用来分隔同一个路径字符串中的目录的，Windows 下指 <code>/</code> ，如 <code>C:/Program Files/Common Files</code> 。</li>
+</ul>
+
+<note>
+注意：可以看到 File 类的常量定义的命名规则不符合标准命名规则，常量名没有全部大写，这是因为 Java 的发展经过了一段相当长的时间，而命名规范也是逐步形成的，File 类出现较早，所以当时并没有对命名规范有严格的要求，这些都属于 Java 的历史遗留问题。
+</note>
+
+<p>
+Windows 的路径分隔符使用反斜线 <code>\</code> ，而 Java 程序中的反斜线表示转义字符，所以如果需要在 Windows 的路径下包括反斜线，则应该使用两条反斜线或直接使用斜线 <code>/</code> 也可以。Java 程序支持将斜线当成平台无关的路径分隔符。
+</p>
+
+<p>
+例如，假设在 Windows 操作系统中有一文件 <code>D:\javaspace\hello.java</code> ，在 Java 中使用的时候，其路径的写法应该为 <code>D:/javaspace/hello.java</code> 或者 <code>D:\\javaspace\\hello.java</code> 。
+</p>
+</div>
+
+<div id="outline-container-orgfe89925" class="outline-3">
+<h3 id="orgfe89925">获取文件属性</h3>
+<div class="outline-text-3" id="text-orgfe89925">
+<p>
+在 Java 中获取文件属性信息的第一步是先创建一个 File 类对象并指向一个已存在的文件，然后再调用上表中的方法进行操作。
+</p>
+
+<p>
+假设有一个文件位于 <code>C:\windows\notepad.exe</code> 。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #986801;">String</span> <span style="color: #6a1868;">path</span> = <span style="color: #50a14f;">"C:/windows/"</span>;            <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#25351;&#23450;&#25991;&#20214;&#25152;&#22312;&#30340;&#30446;&#24405;</span>
+<span class="linenr"> 4: </span>        <span style="color: #986801;">File</span> <span style="color: #6a1868;">f</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">File</span><span style="color: #50a14f;">(</span>path, <span style="color: #50a14f;">"notepad.exe"</span><span style="color: #50a14f;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#24314;&#31435; File &#30446;&#24405;&#65292;&#24182;&#35774;&#23450;&#30001; f &#21464;&#37327;&#24341;&#29992;</span>
+<span class="linenr"> 5: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"C:\\windows\\notepad.exe&#25991;&#20214;&#20449;&#24687;&#22914;&#19979;&#65306;"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr"> 6: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"============================================"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr"> 7: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#25991;&#20214;&#38271;&#24230;&#65306;"</span> + f.length<span style="color: #da8548;">()</span> + <span style="color: #50a14f;">"&#23383;&#33410;"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr"> 8: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#25991;&#20214;&#25110;&#32773;&#30446;&#24405;&#65306;"</span> + <span style="color: #da8548;">(</span>f.isFile<span style="color: #b751b6;">()</span> ? <span style="color: #50a14f;">"&#26159;&#25991;&#20214;"</span> : <span style="color: #50a14f;">"&#19981;&#26159;&#25991;&#20214;"</span><span style="color: #da8548;">)</span><span style="color: #50a14f;">)</span>;
+<span class="linenr"> 9: </span>        ...
+<span class="linenr">10: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#32477;&#23545;&#36335;&#24452;&#65306;"</span> + f.getAbsolutePath<span style="color: #da8548;">()</span><span style="color: #50a14f;">)</span>;
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; C:\windows\notepad.exe&#25991;&#20214;&#20449;&#24687;&#22914;&#19979;&#65306;</span>
+<span class="linenr">13: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; ============================================</span>
+<span class="linenr">14: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; &#25991;&#20214;&#38271;&#24230;&#65306;193536&#23383;&#33410;</span>
+<span class="linenr">15: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; &#25991;&#20214;&#25110;&#32773;&#30446;&#24405;&#65306;&#26159;&#25991;&#20214;</span>
+<span class="linenr">16: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">...</span>
+<span class="linenr">17: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; &#32477;&#23545;&#36335;&#24452;&#65306;C:\windows\notepad.exe</span>
+<span class="linenr">18: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">19: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaeff3a8" class="outline-3">
+<h3 id="orgaeff3a8">创建和删除文件</h3>
+<div class="outline-text-3" id="text-orgaeff3a8">
+<p>
+File 类不仅可以获取已知文件的属性信息，还可以在指定路径创建文件，以及删除一个文件。创建文件需要调用 <code>createNewFile()</code> 方法，删除文件需要调用 <code>delete()</code> 方法。
+</p>
+
+<p>
+*注：无论是创建还是删除文件通常都先调用 <code>exists()</code> 方法判断文件是否存在。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #e45649;">throws</span> <span style="color: #986801;">IOException</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">File f = new File("C:\\test.txt");             // &#65288;&#19981;&#25512;&#33616;&#65289; &#21019;&#24314;&#25351;&#21521;&#25991;&#20214;&#30340; File &#25991;&#20214;</span>
+<span class="linenr"> 4: </span>        <span style="color: #986801;">String</span> <span style="color: #6a1868;">path</span> = <span style="color: #50a14f;">"C:"</span> + File.separator + <span style="color: #50a14f;">"test.txt"</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#65288;&#25512;&#33616;&#65289;&#25340;&#20945;&#20986;&#21487;&#20197;&#36866;&#24212;&#25805;&#20316;&#31995;&#32479;&#30340;&#36335;&#24452;</span>
+<span class="linenr"> 5: </span>        <span style="color: #986801;">Fiel</span> <span style="color: #6a1868;">f</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">File</span><span style="color: #50a14f;">(</span>path<span style="color: #50a14f;">)</span>;
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>f.exists<span style="color: #da8548;">()</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>       <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21028;&#26029;&#25991;&#20214;&#26159;&#21542;&#23384;&#22312;</span>
+<span class="linenr"> 8: </span>            f.delete<span style="color: #da8548;">()</span>;         <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23384;&#22312;&#21017;&#20808;&#21024;&#38500;</span>
+<span class="linenr"> 9: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">10: </span>        f.createNewFile<span style="color: #50a14f;">()</span>;      <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20877;&#21019;&#24314;</span>
+<span class="linenr">11: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">12: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+<b>注意，在操作文件时一定要使用 <code>File.separator</code> 表示分隔符</b> （为了更好地移植跨平台）。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org79815d6" class="outline-3">
+<h3 id="org79815d6">创建和删除目录</h3>
+<div class="outline-text-3" id="text-org79815d6">
+<p>
+直接用示例来说明吧。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #986801;">String</span> <span style="color: #6a1868;">path</span> = <span style="color: #50a14f;">"C:"</span> + File.separator + <span style="color: #50a14f;">"config"</span> + File.separator; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#25351;&#23450;&#30446;&#24405;&#20301;&#32622;</span>
+<span class="linenr"> 4: </span>        <span style="color: #986801;">File</span> <span style="color: #6a1868;">f</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">File</span><span style="color: #50a14f;">(</span>path<span style="color: #50a14f;">)</span>; <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21019;&#24314; File &#23545;&#35937;</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>        <span style="color: #e45649;">if</span> <span style="color: #50a14f;">(</span>f.exists<span style="color: #da8548;">()</span><span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span>
+<span class="linenr"> 7: </span>            f.delete<span style="color: #da8548;">()</span>;
+<span class="linenr"> 8: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr"> 9: </span>        f.mkdir<span style="color: #50a14f;">()</span>;               <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21019;&#24314;&#30446;&#24405;</span>
+<span class="linenr">10: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">11: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org685b10b" class="outline-3">
+<h3 id="org685b10b">遍历目录</h3>
+<div class="outline-text-3" id="text-org685b10b">
+<p>
+通过遍历目录可以在指定目录中查找文件，或者显示所有的文件列表。
+</p>
+
+<p>
+File 类的 <code>list()</code> 方法提供了遍历目录功能，该方法有如下两种重载形式。
+</p>
+
+<p>
+<span class="underline">1. String[] list()</span>
+</p>
+
+<p>
+该方法表示返回由 File 对象表示目录中所有文件和子目录名称组成的字符串数组，如果调用的 File 对象不是目录，则返回 <code>null</code> 。
+</p>
+
+<p>
+*注： <code>list()</code> 方法返回的数组中仅包含文件名称，而不包含路径。但不保证所得数组中相同字符串将以特定顺序出现，特别是不保证它们按字母顺序出现。
+</p>
+
+<p>
+<span class="underline">2. String[] list(FilenameFilter filter)</span>
+</p>
+
+<p>
+该方法的作用与 <code>list()</code> 方法相同，不同的是返回数组中仅包含符合 <code>filter</code> 过滤器的文件和目录，如果 <code>filter</code> 为 <code>null</code> ，则接受所有名称。
+</p>
+
+<p>
+假设要遍历 C 盘根目录下的所有文件和目录，并显示文件或目录名称、类型及大小，使用 <code>list()</code> 方法的实现代码如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">Test</span> <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>    <span style="color: #e45649;">public</span> <span style="color: #e45649;">static</span> <span style="color: #986801;">void</span> <span style="color: #a626a4;">main</span><span style="color: #a626a4;">(</span><span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">args</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr"> 3: </span>        <span style="color: #986801;">String</span> <span style="color: #6a1868;">path</span> = <span style="color: #50a14f;">"C:"</span> + File.separator;
+<span class="linenr"> 4: </span>        <span style="color: #986801;">File</span> <span style="color: #6a1868;">f</span> = <span style="color: #e45649;">new</span> <span style="color: #986801;">File</span><span style="color: #50a14f;">(</span>path<span style="color: #50a14f;">)</span>;
+<span class="linenr"> 5: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"&#25991;&#20214;&#21517;&#31216;\t\t&#25991;&#20214;&#31867;&#22411;\t\t&#25991;&#20214;&#22823;&#23567;"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr"> 6: </span>        System.out.println<span style="color: #50a14f;">(</span><span style="color: #50a14f;">"================================"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr"> 7: </span>        <span style="color: #986801;">String</span><span style="color: #50a14f;">[]</span> <span style="color: #6a1868;">fileList</span> = f.list<span style="color: #50a14f;">()</span>;               <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#35843;&#29992;&#19981;&#24102;&#21442;&#25968;&#30340; list() &#26041;&#27861;</span>
+<span class="linenr"> 8: </span>        <span style="color: #e45649;">for</span> <span style="color: #50a14f;">(</span><span style="color: #986801;">int</span> <span style="color: #6a1868;">i</span> = 0; i &lt; fileList.<span style="color: #986801;">length</span>; i++<span style="color: #50a14f;">)</span> <span style="color: #50a14f;">{</span> <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#36941;&#21382;&#36820;&#22238;&#30340;&#23383;&#31526;&#25968;&#32452;</span>
+<span class="linenr"> 9: </span>            System.out.println<span style="color: #da8548;">(</span>fileList<span style="color: #b751b6;">[</span>i<span style="color: #b751b6;">]</span> + <span style="color: #50a14f;">"\t\t"</span><span style="color: #da8548;">)</span>;
+<span class="linenr">10: </span>            System.out.println<span style="color: #da8548;">(</span><span style="color: #b751b6;">(</span><span style="color: #e45649;">new</span> <span style="color: #986801;">File</span><span style="color: #986801;">(</span><span style="color: #4db5bd;">(</span><span style="color: #50a14f;">"C:"</span> + File.separator<span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span>, fileList<span style="color: #986801;">[</span>i<span style="color: #986801;">]</span><span style="color: #b751b6;">)</span>.isFile<span style="color: #b751b6;">()</span> ? <span style="color: #50a14f;">"&#25991;&#20214;"</span> + <span style="color: #50a14f;">"\t\t"</span> : <span style="color: #50a14f;">"&#25991;&#20214;&#22841;"</span> + <span style="color: #50a14f;">"\t\t"</span><span style="color: #da8548;">)</span>;
+<span class="linenr">11: </span>            System.out.println<span style="color: #da8548;">(</span><span style="color: #b751b6;">(</span><span style="color: #e45649;">new</span> <span style="color: #986801;">File</span><span style="color: #986801;">(</span><span style="color: #4db5bd;">(</span><span style="color: #50a14f;">"C:"</span> + File.separator<span style="color: #4db5bd;">)</span><span style="color: #986801;">)</span>, fileList<span style="color: #986801;">[</span>i<span style="color: #986801;">]</span><span style="color: #b751b6;">)</span>.length<span style="color: #b751b6;">()</span> + <span style="color: #50a14f;">"&#23383;&#33410;"</span><span style="color: #da8548;">)</span>;
+<span class="linenr">12: </span>        <span style="color: #50a14f;">}</span>
+<span class="linenr">13: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">14: </span><span style="color: #4078f2;">}</span>
+<span class="linenr">15: </span>
+<span class="linenr">16: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; &#25991;&#20214;&#21517;&#31216;  &#25991;&#20214;&#31867;&#22411;  &#25991;&#20214;&#22823;&#23567;</span>
+<span class="linenr">17: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; ===================================================</span>
+<span class="linenr">18: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; $Recycle.Bin  &#25991;&#20214;&#22841;  4096&#23383;&#33410;</span>
+<span class="linenr">19: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; Documents and Settings  &#25991;&#20214;&#22841;  0&#23383;&#33410;</span>
+<span class="linenr">20: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">...</span>
+<span class="linenr">21: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#8594; news.template  &#25991;&#20214;  417&#23383;&#33410;</span>
+<span class="linenr">22: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">...</span>
+</pre>
+</div>
+
+<p>
+假设希望只列出目录下的某些文件，这就需要调用过滤器的 <code>list()</code> 方法。首先，需要创建文件过滤器，该过滤器必须实现 <code>java.io.FilenameFilter</code> 掊，并在 <code>accept()</code> 方法中指定允许的文件类型。
+</p>
+
+<p>
+如下所示允许 SYS、TXT 和 BAK 格式文件的过滤器实现代码：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="linenr">1: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">ImageFilter</span> <span style="color: #e45649;">implements</span> <span style="color: #986801;">FilenameFilter</span> <span style="color: #4078f2;">{</span>
+<span class="linenr">2: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#29616; FilenameFileter &#25509;&#21475;</span>
+<span class="linenr">3: </span>    <span style="color: #b751b6;">@Override</span>
+<span class="linenr">4: </span>    <span style="color: #e45649;">public</span> <span style="color: #986801;">boolean</span> <span style="color: #a626a4;">accept</span><span style="color: #a626a4;">(</span><span style="color: #986801;">File</span> <span style="color: #6a1868;">dir</span>, <span style="color: #986801;">String</span> <span style="color: #6a1868;">name</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
+<span class="linenr">5: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#25351;&#23450;&#20801;&#35768;&#30340;&#25991;&#20214;&#31867;&#22411;</span>
+<span class="linenr">6: </span>        <span style="color: #e45649;">return</span> name.endsWith<span style="color: #50a14f;">(</span><span style="color: #50a14f;">".sys"</span><span style="color: #50a14f;">)</span> || name.endsWith<span style="color: #50a14f;">(</span><span style="color: #50a14f;">".txt"</span><span style="color: #50a14f;">)</span> || name.endsWith<span style="color: #50a14f;">(</span><span style="color: #50a14f;">".bak"</span><span style="color: #50a14f;">)</span>;
+<span class="linenr">7: </span>    <span style="color: #a626a4;">}</span>
+<span class="linenr">8: </span><span style="color: #4078f2;">}</span>
+</pre>
+</div>
+
+<p>
+上述代码创建的过滤器名称为 ImageFilter ，拉下来只需要将该名称传递给 <code>list()</code> 方法即可实现筛选文件。如下所示：
+</p>
+
+<pre class="example">
+String[] fileList = f.list(new ImageFilter());
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2504827" class="outline-2">
+<h2 id="org2504827"><span class="todo TODO">TODO</span> 字节流的使用</h2>
+</div>
+
+<div id="outline-container-org7b03843" class="outline-2">
+<h2 id="org7b03843"><span class="todo TODO">TODO</span> 字符流的使用</h2>
+</div>
+
+<div id="outline-container-org87127cd" class="outline-2">
+<h2 id="org87127cd"><span class="todo TODO">TODO</span> 转换流</h2>
+</div>
+
+<div id="outline-container-org81765c9" class="outline-2">
+<h2 id="org81765c9"><span class="todo TODO">TODO</span> 保存图书信息</h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2020-10-02 Fri 15:09</p>
+<p class="author">Author: Jack Liu</p>
+<p class="date">Created: 2021-02-23 Tue 14:30</p>
+<p class="validation"><a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a></p>
+</div>
+</body>
 </html>
