@@ -12,7 +12,7 @@ then
 
     rm -rf "public/themes" && cp -r "themes" "public/"
     rm -rf "public/images" && cp -r "images" "public/"
-    # rm -rf "public/user.config.js" && cp -r "user.config.js" "public/"
+    rm -rf "public/user.config.js" && cp -r "user.config.js" "public/"
 
     echo -e "\e[1;42mDONE\e[0m\n"
 fi

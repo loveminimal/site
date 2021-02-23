@@ -1,6 +1,6 @@
 'use strict';
 import './assets/jquery.min.js';
-import USERCONFIG from './assets/user.config.js';
+import USERCONFIG from '../user.config.js';
 
 // Init global variables
 // ------------------------------------------------------------------
