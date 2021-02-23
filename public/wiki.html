@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2021-02-23 Tue 14:32 -->
+<!-- 2021-02-23 Tue 15:28 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wiki</title>
@@ -20,6 +20,8 @@
 <ul>
 <li><a href="#orgd640e15">WIKI</a>
 <ul>
+<li><a href="#orgaec8755">GitHub 图片不加载问题</a></li>
+<li><a href="#org9032793">vue/cli 3 切换为 dart-sass</a></li>
 <li><a href="#orgf7f8cfe">glob</a></li>
 <li><a href="#orgb6930f1">设计模式准则</a></li>
 <li><a href="#org4048368">文件的描述符和重定向</a></li>
@@ -48,6 +50,69 @@
 <div id="outline-container-orgd640e15" class="outline-2">
 <h2 id="orgd640e15">WIKI</h2>
 <div class="outline-text-2" id="text-orgd640e15">
+</div>
+
+<div id="outline-container-orgaec8755" class="outline-3">
+<h3 id="orgaec8755">GitHub 图片不加载问题</h3>
+<div class="outline-text-3" id="text-orgaec8755">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">[2021-01-25 Mon 14:20]</span></span>
+</p>
+
+<p>
+修改 <code>C:\Windows\System32\drivers\etc\hosts</code> 文件，尾部添加如下内容：
+</p>
+
+<pre class="example">
+# GitHub Start
+192.30.253.112    Build software better, together
+192.30.253.119    gist.github.com
+151.101.184.133    assets-cdn.github.com
+151.101.184.133    raw.githubusercontent.com
+151.101.184.133    gist.githubusercontent.com
+151.101.184.133    cloud.githubusercontent.com
+151.101.184.133    camo.githubusercontent.com
+151.101.184.133	   avatars.githubusercontent.com
+# GitHub End
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org9032793" class="outline-3">
+<h3 id="org9032793">vue/cli 3 切换为 dart-sass</h3>
+<div class="outline-text-3" id="text-org9032793">
+<p>
+<span class="timestamp-wrapper"><span class="timestamp">[2021-01-06 Wed 17:55]</span></span>
+</p>
+
+<p>
+首先，安装包 ：
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr">1: </span>npm i sass sass-loader -D
+<span class="linenr">2: </span><span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">or</span>
+<span class="linenr">3: </span>yarn add sass sass-loader -DE
+</pre>
+</div>
+
+<p>
+然后，修改 <code>vue.config.js</code> ，增加如下配置：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="linenr"> 1: </span>module.exports = <span style="color: #4078f2;">{</span>
+<span class="linenr"> 2: </span>  css: <span style="color: #a626a4;">{</span>
+<span class="linenr"> 3: </span>    loaderOptions: <span style="color: #50a14f;">{</span>
+<span class="linenr"> 4: </span>      sass: <span style="color: #da8548;">{</span>
+<span class="linenr"> 5: </span>        implementation: require<span style="color: #b751b6;">(</span><span style="color: #50a14f;">'sass'</span><span style="color: #b751b6;">)</span>, <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">This line must in sass option</span>
+<span class="linenr"> 6: </span>      <span style="color: #da8548;">}</span>,
+<span class="linenr"> 7: </span>    <span style="color: #50a14f;">}</span>,
+<span class="linenr"> 8: </span>  <span style="color: #a626a4;">}</span>
+<span class="linenr"> 9: </span><span style="color: #9ca0a4;">//</span><span style="color: #9ca0a4;">...</span>
+<span class="linenr">10: </span><span style="color: #4078f2;">}</span>;
+</pre>
+</div>
+</div>
 </div>
 
 <div id="outline-container-orgf7f8cfe" class="outline-3">
@@ -1233,7 +1298,7 @@ windows 下 <span class="underline">刷新 DNS</span> 的方法：打开 cmd →
 <div id="postamble" class="status">
 <p class="date">Date: 2020-01-28 Tue 14:02</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2021-02-23 Tue 14:32</p>
+<p class="date">Created: 2021-02-23 Tue 15:28</p>
 <p class="validation"><a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a></p>
 </div>
 </body>

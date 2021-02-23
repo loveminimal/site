@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2021-02-23 Tue 14:31 -->
+<!-- 2021-02-23 Tue 15:27 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>网络编程</title>
@@ -29,16 +29,16 @@
 </li>
 <li><a href="#orgbbf1f20">TCP 编程</a>
 <ul>
-<li><a href="#orgeaf3e92">服务器端</a></li>
-<li><a href="#org86186ad">客户端</a></li>
+<li><a href="#orge3911c6">服务器端</a></li>
+<li><a href="#org1857c5b">客户端</a></li>
 <li><a href="#orgcc6daa1">Socket 流</a></li>
 <li><a href="#org3d0a9de">TCP 编程小结</a></li>
 </ul>
 </li>
 <li><a href="#org07609ce">UDP 编程</a>
 <ul>
-<li><a href="#orge3911c6">服务器端</a></li>
-<li><a href="#org1857c5b">客户端</a></li>
+<li><a href="#orgea6505a">服务器端</a></li>
+<li><a href="#org72189f4">客户端</a></li>
 <li><a href="#org3bc23d6">UDP 编程小结</a></li>
 </ul>
 </li>
@@ -437,9 +437,9 @@ QQ: 101.202.99.2:1304
 </ul>
 </div>
 
-<div id="outline-container-orgeaf3e92" class="outline-3">
-<h3 id="orgeaf3e92">服务器端</h3>
-<div class="outline-text-3" id="text-orgeaf3e92">
+<div id="outline-container-orge3911c6" class="outline-3">
+<h3 id="orge3911c6">服务器端</h3>
+<div class="outline-text-3" id="text-orge3911c6">
 <p>
 要全用 Socket 编程，我们首先要编写服务器端程序。
 </p>
@@ -551,9 +551,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-org86186ad" class="outline-3">
-<h3 id="org86186ad">客户端</h3>
-<div class="outline-text-3" id="text-org86186ad">
+<div id="outline-container-org1857c5b" class="outline-3">
+<h3 id="org1857c5b">客户端</h3>
+<div class="outline-text-3" id="text-org1857c5b">
 <p>
 相比服务器端，客户端程序就要简单很多。一个典型的客户端程序如下：
 </p>
@@ -673,9 +673,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </p>
 </div>
 
-<div id="outline-container-orge3911c6" class="outline-3">
-<h3 id="orge3911c6">服务器端</h3>
-<div class="outline-text-3" id="text-orge3911c6">
+<div id="outline-container-orgea6505a" class="outline-3">
+<h3 id="orgea6505a">服务器端</h3>
+<div class="outline-text-3" id="text-orgea6505a">
 <p>
 在服务器端，使用 UDP 也需要监听指定的端口，Java 提供了 <code>DatagramSocket</code> 来实现这个功能，代码如下：
 </p>
@@ -755,9 +755,9 @@ Java 标准库提供了 <code>ServerSocket</code> 来实现对指定 IP 和指�
 </div>
 </div>
 
-<div id="outline-container-org1857c5b" class="outline-3">
-<h3 id="org1857c5b">客户端</h3>
-<div class="outline-text-3" id="text-org1857c5b">
+<div id="outline-container-org72189f4" class="outline-3">
+<h3 id="org72189f4">客户端</h3>
+<div class="outline-text-3" id="text-org72189f4">
 <p>
 和服务端相比，客户端使用 UDP 时，只需要直接向服务器端发送 UDP 包，然后接收返回的 UDP 包：
 </p>
@@ -1024,7 +1024,7 @@ title=""
 <div id="postamble" class="status">
 <p class="date">Date: 2020-10-05 Mon 09:53</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2021-02-23 Tue 14:31</p>
+<p class="date">Created: 2021-02-23 Tue 15:27</p>
 <p class="validation"><a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a></p>
 </div>
 </body>
