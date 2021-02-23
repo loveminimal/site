@@ -5,7 +5,7 @@
 
 #+BEGIN_EXPORT html
 <img
-src="/images/her/her-0.jpg"
+src="images/her/her-0.jpg"
 width="360"
 height=""
 style="float: right;"
@@ -66,7 +66,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/her/her-1.jpg"
+src="images/her/her-1.jpg"
 width=""
 height=""
 style=""

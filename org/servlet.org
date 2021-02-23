@@ -9,7 +9,7 @@ JavaEE 是什么？它并不是一个软件产品，更多的是一种软件架�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-29.png"
+src="images/java-29.png"
 width=""
 height=""
 style="float: right; margin-left: 16px;"
@@ -122,7 +122,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-30.jpg"
+src="images/java-30.jpg"
 width=""
 height=""
 style=""
@@ -176,7 +176,7 @@ JavaEE 提供了 Servlet API，我们使用 Servlet API 编写自己的 Servlet 
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-31.png"
+src="images/java-31.png"
 width=""
 height=""
 style=""
@@ -362,7 +362,7 @@ Tomcat 实际上也是一个 Java 程序，我们看看 Tomcat 的启动流程�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-32.png"
+src="images/java-32.png"
 width=""
 height=""
 style=""
@@ -395,7 +395,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-33.jpg"
+src="images/java-33.jpg"
 width="200"
 height=""
 style="float: left;margin-right: 10px;"
@@ -429,7 +429,7 @@ Servlet 应用程序的体系结构如下：
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-34.gif"
+src="images/java-34.gif"
 width=""
 height=""
 style=""
@@ -481,7 +481,7 @@ HttpServlet 主要有两大功能，具体如下：
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-35.png"
+src="images/java-35.png"
 width="510"
 height=""
 style=""
@@ -678,7 +678,7 @@ Servlet 容器根据资源文件相对于 Web 应用的路径，返回关联资�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-36.png"
+src="images/java-36.png"
 width="600"
 height=""
 style=""
@@ -729,7 +729,7 @@ Request 对象不仅可以获取一系列数据，还可以通过属性传递数
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-37.png"
+src="images/java-37.png"
 width="420"
 height=""
 style=""
@@ -811,7 +811,7 @@ public void sendRedirect(java.lang.String.location) throws java.io.IOException
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-38.png"
+src="images/java-38.png"
 width="550"
 height=""
 style=""
@@ -913,7 +913,7 @@ _3. 运行项目并查看结果_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-39.png"
+src="images/java-39.png"
 width="500"
 height=""
 style=""
@@ -931,7 +931,7 @@ request.setCharacterEncoding("utf-8");    // 设置 request 对象的解码方�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-40.gif"
+src="images/java-40.gif"
 width="500"
 height=""
 style=""
@@ -957,7 +957,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-41.gif"
+src="images/java-41.gif"
 width="600"
 height=""
 style=""

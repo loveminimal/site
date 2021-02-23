@@ -1,678 +1,869 @@
 <!DOCTYPE html>
 <html lang="zh">
-<head>
-<!-- 2021-02-23 Tue 15:25 -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ajax</title>
-<meta name="generator" content="Org mode">
-<meta name="author" content="Jack Liu">
-<link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
-           <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
-           <script type="module" src="/themes/main.js" defer></script>
-</head>
-<body>
-<div id="content">
-<h1 class="title">Ajax</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org634cbd2">什么是 Ajax</a></li>
-<li><a href="#orgec6e066">*进程、线程</a>
-<ul>
-<li><a href="#orgddc6435">单线程的 JS</a></li>
-<li><a href="#orga42831e">多线程的浏览器</a></li>
-</ul>
-</li>
-<li><a href="#org657585c">*JavaScript 运行机制</a>
-<ul>
-<li><a href="#org7f6b530">为什么 JS 是单线程</a></li>
-<li><a href="#org86ff99d">任务队列</a></li>
-<li><a href="#orgb50d74c">事件和回调函数</a></li>
-<li><a href="#org992af36">Event Loop</a></li>
-<li><a href="#org7da74d8">定时器</a></li>
-<li><a href="#org6302f06">NodeJS 的 Event Loop</a></li>
-</ul>
-</li>
-<li><a href="#orga49ae62">Ajax 异步的原理</a></li>
-<li><a href="#org91bb2e3">Ajax 的请求过程</a>
-<ul>
-<li><a href="#org12297f1">创建 XMLHttpRequest 对象</a></li>
-<li><a href="#org67fbdb8">XHR 请求</a></li>
-<li><a href="#orgaa91b33">XHR 响应</a></li>
-</ul>
-</li>
-<li><a href="#org2079df6">*HTTP 协议</a>
-<ul>
-<li><a href="#orgc6c4687">HTTP 消息结构</a></li>
-<li><a href="#org7020274">HTTP 请求方法</a></li>
-<li><a href="#orga6cc9a0">HTTP 响应头信息</a></li>
-</ul>
-</li>
-<li><a href="#org5e9ff63">jQuery 中的 Ajax</a></li>
-<li><a href="#orga92bd5b">Axios</a>
-<ul>
-<li><a href="#orga59280c">Axios 起步</a></li>
-<li><a href="#org5f6d4d4">Axios 请求配置</a></li>
-<li><a href="#orgd193598">Axios 响应结构</a></li>
-<li><a href="#orga8ca275">配置默认值</a></li>
-<li><a href="#orga5e528e">拦截器</a></li>
-<li><a href="#orgad5ea44">*使用 application/x-www-form-urlencoded 格式</a></li>
-<li><a href="#org7f66932">框架、插件</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
+    <head>
+        <!-- 2021-02-23 Tue 15:25 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Ajax</title>
+        <meta name="generator" content="Org mode" />
+        <meta name="author" content="Jack Liu" />
+        <link
+            rel="shortcut icon"
+            href="/themes/assets/rose-red.png"
+            type="image/x-icon"
+        />
+        <link rel="stylesheet" href="/themes/style.css" type="text/css" />
+        <script type="module" src="/themes/main.js" defer></script>
+    </head>
+    <body>
+        <div id="content">
+            <h1 class="title">Ajax</h1>
+            <div id="table-of-contents">
+                <h2>Table of Contents</h2>
+                <div id="text-table-of-contents">
+                    <ul>
+                        <li><a href="#org634cbd2">什么是 Ajax</a></li>
+                        <li>
+                            <a href="#orgec6e066">*进程、线程</a>
+                            <ul>
+                                <li><a href="#orgddc6435">单线程的 JS</a></li>
+                                <li>
+                                    <a href="#orga42831e">多线程的浏览器</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#org657585c">*JavaScript 运行机制</a>
+                            <ul>
+                                <li>
+                                    <a href="#org7f6b530">为什么 JS 是单线程</a>
+                                </li>
+                                <li><a href="#org86ff99d">任务队列</a></li>
+                                <li>
+                                    <a href="#orgb50d74c">事件和回调函数</a>
+                                </li>
+                                <li><a href="#org992af36">Event Loop</a></li>
+                                <li><a href="#org7da74d8">定时器</a></li>
+                                <li>
+                                    <a href="#org6302f06"
+                                        >NodeJS 的 Event Loop</a
+                                    >
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="#orga49ae62">Ajax 异步的原理</a></li>
+                        <li>
+                            <a href="#org91bb2e3">Ajax 的请求过程</a>
+                            <ul>
+                                <li>
+                                    <a href="#org12297f1"
+                                        >创建 XMLHttpRequest 对象</a
+                                    >
+                                </li>
+                                <li><a href="#org67fbdb8">XHR 请求</a></li>
+                                <li><a href="#orgaa91b33">XHR 响应</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#org2079df6">*HTTP 协议</a>
+                            <ul>
+                                <li><a href="#orgc6c4687">HTTP 消息结构</a></li>
+                                <li><a href="#org7020274">HTTP 请求方法</a></li>
+                                <li>
+                                    <a href="#orga6cc9a0">HTTP 响应头信息</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="#org5e9ff63">jQuery 中的 Ajax</a></li>
+                        <li>
+                            <a href="#orga92bd5b">Axios</a>
+                            <ul>
+                                <li><a href="#orga59280c">Axios 起步</a></li>
+                                <li>
+                                    <a href="#org5f6d4d4">Axios 请求配置</a>
+                                </li>
+                                <li>
+                                    <a href="#orgd193598">Axios 响应结构</a>
+                                </li>
+                                <li><a href="#orga8ca275">配置默认值</a></li>
+                                <li><a href="#orga5e528e">拦截器</a></li>
+                                <li>
+                                    <a href="#orgad5ea44"
+                                        >*使用 application/x-www-form-urlencoded
+                                        格式</a
+                                    >
+                                </li>
+                                <li><a href="#org7f66932">框架、插件</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-<div id="outline-container-org634cbd2" class="outline-2">
-<h2 id="org634cbd2">什么是 Ajax</h2>
-<div class="outline-text-2" id="text-org634cbd2">
-<img
-src="/images/ajax-1.png"
-width="600"
-height=""
-style=""
-title=""
-/>
+            <div id="outline-container-org634cbd2" class="outline-2">
+                <h2 id="org634cbd2">什么是 Ajax</h2>
+                <div class="outline-text-2" id="text-org634cbd2">
+                    <img
+                        src="images/ajax-1.png"
+                        width="600"
+                        height=""
+                        style=""
+                        title=""
+                    />
 
-<p>
-AJAX（Asynchronous JavaScript and XML），是一种异步请求数据的 Web 开发技术。它不是新的编程语言，而是一种使用现有标准的新方法。其最大的优点是在不重新加载整个页面的情况下，可以与服务器交换数据并更新部分网页内容。
-</p>
+                    <p>
+                        AJAX（Asynchronous JavaScript and
+                        XML），是一种异步请求数据的 Web
+                        开发技术。它不是新的编程语言，而是一种使用现有标准的新方法。其最大的优点是在不重新加载整个页面的情况下，可以与服务器交换数据并更新部分网页内容。
+                    </p>
 
-<p>
-*注：AJAX 不需要任何浏览器插件，但需要用户允许JavaScript在浏览器上执行。
-</p>
-</div>
-</div>
+                    <p>
+                        *注：AJAX
+                        不需要任何浏览器插件，但需要用户允许JavaScript在浏览器上执行。
+                    </p>
+                </div>
+            </div>
 
-<div id="outline-container-orgec6e066" class="outline-2">
-<h2 id="orgec6e066">*进程、线程<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-orgec6e066">
-<essay>
-在讲述 AJAX 之前，有必要先了解一些进程和线程方面的知识。
-</essay>
+            <div id="outline-container-orgec6e066" class="outline-2">
+                <h2 id="orgec6e066">
+                    *进程、线程<sup
+                        ><a id="fnr.1" class="footref" href="#fn.1">1</a></sup
+                    >
+                </h2>
+                <div class="outline-text-2" id="text-orgec6e066">
+                    <essay>
+                        在讲述 AJAX 之前，有必要先了解一些进程和线程方面的知识。
+                    </essay>
 
-<p>
-进程（process）和线程（thread）是操作系统的基本概念，比较抽象，不易掌握。
-</p>
+                    <p>
+                        进程（process）和线程（thread）是操作系统的基本概念，比较抽象，不易掌握。
+                    </p>
 
-<p>
-对于操作系统，一个任务就是一个 <span class="underline">进程</span> （process），比如打开一个浏览器就是启动一个浏览器进程，打开一个记事本就启动了一个记事本进程，打开两个记事本就是启动了两个记事本进程。
-</p>
+                    <p>
+                        对于操作系统，一个任务就是一个
+                        <span class="underline">进程</span>
+                        （process），比如打开一个浏览器就是启动一个浏览器进程，打开一个记事本就启动了一个记事本进程，打开两个记事本就是启动了两个记事本进程。
+                    </p>
 
-<p>
-有些进程不止同时只做一件事，比如 Word ，它可以同时进行打字、拼写检查、打印等事情。
-</p>
+                    <p>
+                        有些进程不止同时只做一件事，比如 Word
+                        ，它可以同时进行打字、拼写检查、打印等事情。
+                    </p>
 
-<p>
-在一个进程内部，要同时干多件事，就需要同时运行多个“子任务”，我们把进程内的这些“子任务”称为 <span class="underline">线程</span> （Thread）。
-</p>
+                    <p>
+                        在一个进程内部，要同时干多件事，就需要同时运行多个“子任务”，我们把进程内的这些“子任务”称为
+                        <span class="underline">线程</span> （Thread）。
+                    </p>
 
-<p>
-*注：一个进程至少有一个线程。
-</p>
+                    <p>*注：一个进程至少有一个线程。</p>
 
-<essay>
-哈哈，线程才是真正做事的喽。
-</essay>
+                    <essay> 哈哈，线程才是真正做事的喽。 </essay>
 
-<p>
-线程是最小的执行单元，而进程由至少一个线程组成。如何调度进程和线程，完全由操作系统决定，程序自己不能决定什么时候执行，执行多长时间。
-</p>
+                    <p>
+                        线程是最小的执行单元，而进程由至少一个线程组成。如何调度进程和线程，完全由操作系统决定，程序自己不能决定什么时候执行，执行多长时间。
+                    </p>
 
-<p>
-多进程和多线程的程序涉及到同步、数据共享的问题，编写进来更复杂。
-</p>
+                    <p>
+                        多进程和多线程的程序涉及到同步、数据共享的问题，编写进来更复杂。
+                    </p>
 
-<blockquote>
-<p>
-阮一峰老师写过一篇 <a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html">进程与线程的一个简单解释</a> 也不错，浅显易懂，推荐一下。
-</p>
-</blockquote>
+                    <blockquote>
+                        <p>
+                            阮一峰老师写过一篇
+                            <a
+                                href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html"
+                                >进程与线程的一个简单解释</a
+                            >
+                            也不错，浅显易懂，推荐一下。
+                        </p>
+                    </blockquote>
 
-<p>
-操作系统的设计，可以归结为三点：
-</p>
-<ol class="org-ol">
-<li>以多进程形式，允许多个任务同时进行；</li>
-<li>以多线程形式，允许单个任务分成不同的部分进行；</li>
-<li>提供协调机制，一方面防止进程之间和线程之间产生冲突，另一方面允许进程之间和线程之间共享资源。</li>
-</ol>
+                    <p>操作系统的设计，可以归结为三点：</p>
+                    <ol class="org-ol">
+                        <li>以多进程形式，允许多个任务同时进行；</li>
+                        <li>以多线程形式，允许单个任务分成不同的部分进行；</li>
+                        <li>
+                            提供协调机制，一方面防止进程之间和线程之间产生冲突，另一方面允许进程之间和线程之间共享资源。
+                        </li>
+                    </ol>
 
-<p>
-由此，也就容易理解，如果有很多任务需要执行，不外乎三种解决办法：
-</p>
-<ol class="org-ol">
-<li><b>排队</b> 。因为一个进程一次只能执行一个任务，只好等前面的任务执行完了，再执行后面的任务；</li>
-<li><b>新建进程</b> 。使用 fork 命令，为每个任务新建一个进程；</li>
-<li><b>新建线程</b> 。因为进程太耗费资源，所以如今的程序往往允许一个进程包含多个线程，由线程去完成任务。</li>
-</ol>
+                    <p>
+                        由此，也就容易理解，如果有很多任务需要执行，不外乎三种解决办法：
+                    </p>
+                    <ol class="org-ol">
+                        <li>
+                            <b>排队</b>
+                            。因为一个进程一次只能执行一个任务，只好等前面的任务执行完了，再执行后面的任务；
+                        </li>
+                        <li>
+                            <b>新建进程</b> 。使用 fork
+                            命令，为每个任务新建一个进程；
+                        </li>
+                        <li>
+                            <b>新建线程</b>
+                            。因为进程太耗费资源，所以如今的程序往往允许一个进程包含多个线程，由线程去完成任务。
+                        </li>
+                    </ol>
 
-<p>
-*注：一般情况下，一个进程一次只能执行一个任务（即包含一个线程）。
-</p>
-</div>
+                    <p>
+                        *注：一般情况下，一个进程一次只能执行一个任务（即包含一个线程）。
+                    </p>
+                </div>
 
-<div id="outline-container-orgddc6435" class="outline-3">
-<h3 id="orgddc6435">单线程的 JS</h3>
-<div class="outline-text-3" id="text-orgddc6435">
-<p>
-以 JavaScript 语言为例，它是一种单线程语言，所有任务都在一个线程上完成，任务只好排队喽。一旦遇到大量任务或者遇到一个耗时的任务，网页就会出现“假死”（JavaScript 停不下来，也就无法响应用户的行为）。
-</p>
+                <div id="outline-container-orgddc6435" class="outline-3">
+                    <h3 id="orgddc6435">单线程的 JS</h3>
+                    <div class="outline-text-3" id="text-orgddc6435">
+                        <p>
+                            以 JavaScript
+                            语言为例，它是一种单线程语言，所有任务都在一个线程上完成，任务只好排队喽。一旦遇到大量任务或者遇到一个耗时的任务，网页就会出现“假死”（JavaScript
+                            停不下来，也就无法响应用户的行为）。
+                        </p>
 
-<img
-src="/images/ajax-2.png"
-width="360"
-height=""
-style="float: right; margin-left: 8px;"
-title=""
-/>
+                        <img
+                            src="images/ajax-2.png"
+                            width="360"
+                            height=""
+                            style="float: right; margin-left: 8px"
+                            title=""
+                        />
 
-<p>
-<b>那么，JavaScript 是如何解决这个问题的呢？</b> 事件循环（Event Loop）。
-</p>
+                        <p>
+                            <b>那么，JavaScript 是如何解决这个问题的呢？</b>
+                            事件循环（Event Loop）。
+                        </p>
 
-<blockquote>
-<p>
-Event Loop 是一个程序结构，用于等待和发送消息和事件。
-</p>
-</blockquote>
+                        <blockquote>
+                            <p>
+                                Event Loop
+                                是一个程序结构，用于等待和发送消息和事件。
+                            </p>
+                        </blockquote>
 
-<p>
-简单说，就是在程序中设置两个线程：一个负责程序本身的运行，称为“主线程”；另一个负责主线程与其他线程（主要是各种 I/O 操作）的通信，被称为“Event Loop 线程”（或“消息线程”）。
-</p>
+                        <p>
+                            简单说，就是在程序中设置两个线程：一个负责程序本身的运行，称为“主线程”；另一个负责主线程与其他线程（主要是各种
+                            I/O 操作）的通信，被称为“Event Loop
+                            线程”（或“消息线程”）。
+                        </p>
 
-<p>
-如右图所示，主线程的绿色部分，表示运行时间，橙色部分表示空闲时间。每当遇到I/O的时候，主线程就让Event Loop线程去通知相应的I/O程序，然后接着往后运行，所以不存在红色的等待时间。等到I/O程序完成操作，Event Loop线程再把结果返回主线程。主线程就调用事先设定的回调函数，完成整个任务。
-</p>
+                        <p>
+                            如右图所示，主线程的绿色部分，表示运行时间，橙色部分表示空闲时间。每当遇到I/O的时候，主线程就让Event
+                            Loop线程去通知相应的I/O程序，然后接着往后运行，所以不存在红色的等待时间。等到I/O程序完成操作，Event
+                            Loop线程再把结果返回主线程。主线程就调用事先设定的回调函数，完成整个任务。
+                        </p>
 
-<p>
-不难看出，由于多出了橙色的空闲时间，所以主线程得以运行更多的任务，这就提高了效率。这种运行模式称为“异步模式”（asynchronous I/O）或“非堵塞模式”（non-blocking mode）。
-</p>
+                        <p>
+                            不难看出，由于多出了橙色的空闲时间，所以主线程得以运行更多的任务，这就提高了效率。这种运行模式称为“异步模式”（asynchronous
+                            I/O）或“非堵塞模式”（non-blocking mode）。
+                        </p>
 
-<p>
-<b>这正是 JavaScript 语言的运行方式</b> 。
-</p>
+                        <p><b>这正是 JavaScript 语言的运行方式</b> 。</p>
 
-<p>
-我们前面说过了，执行多任务的话，还可以新建进程或线程，为什么 JavaScript 是单线程，难道不能实现多线程吗？有兴趣的话，可以自己去捉摸一下。
-</p>
-</div>
-</div>
+                        <p>
+                            我们前面说过了，执行多任务的话，还可以新建进程或线程，为什么
+                            JavaScript
+                            是单线程，难道不能实现多线程吗？有兴趣的话，可以自己去捉摸一下。
+                        </p>
+                    </div>
+                </div>
 
-<div id="outline-container-orga42831e" class="outline-3">
-<h3 id="orga42831e">多线程的浏览器<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></h3>
-<div class="outline-text-3" id="text-orga42831e">
-<p>
-前面我们已经大概了解了进程和线程，稍微回顾下相关概念。
-</p>
+                <div id="outline-container-orga42831e" class="outline-3">
+                    <h3 id="orga42831e">
+                        多线程的浏览器<sup
+                            ><a id="fnr.2" class="footref" href="#fn.2"
+                                >2</a
+                            ></sup
+                        >
+                    </h3>
+                    <div class="outline-text-3" id="text-orga42831e">
+                        <p>
+                            前面我们已经大概了解了进程和线程，稍微回顾下相关概念。
+                        </p>
 
-<p>
-处理器（CPU）是计算机的核心，其负责承担计算机的计算任务。
-</p>
+                        <p>
+                            处理器（CPU）是计算机的核心，其负责承担计算机的计算任务。
+                        </p>
 
-<p>
-进程是一个具有一定独立功能的程序在一个数据集上的一次动态执行的过程，是操作系统进行资源分配和调度的一个独立单位，是应用程序运行的载体。
-</p>
+                        <p>
+                            进程是一个具有一定独立功能的程序在一个数据集上的一次动态执行的过程，是操作系统进行资源分配和调度的一个独立单位，是应用程序运行的载体。
+                        </p>
 
-<p>
-*注：任一时刻，一个单核 CPU 只能运行一个进程，其他进程则处于非运行状态。
-</p>
+                        <p>
+                            *注：任一时刻，一个单核 CPU
+                            只能运行一个进程，其他进程则处于非运行状态。
+                        </p>
 
-<p>
-线程是程序执行中单一和顺序流程，是程序执行的最小单元。
-</p>
+                        <p>
+                            线程是程序执行中单一和顺序流程，是程序执行的最小单元。
+                        </p>
 
-<p>
-<b>那么，进程和线程是什么关系呢？</b>
-</p>
+                        <p>
+                            <b>那么，进程和线程是什么关系呢？</b>
+                        </p>
 
-<p>
-（1）进程是操作系统分配资源的最小单位，线程是程序执行的最小单位；
-</p>
+                        <p>
+                            （1）进程是操作系统分配资源的最小单位，线程是程序执行的最小单位；
+                        </p>
 
-<p>
-（2）一个进程由一个或多个线程组成，线程是一个进程中代码的不同执行路线；
-</p>
+                        <p>
+                            （2）一个进程由一个或多个线程组成，线程是一个进程中代码的不同执行路线；
+                        </p>
 
-<p>
-（3）进程之间相互独立，但同一个进程下和各个线程之间共享程序的内存空间（包括代码段、数据集、堆等）及一些进程级的资源（如打开文件和信号）；
-</p>
+                        <p>
+                            （3）进程之间相互独立，但同一个进程下和各个线程之间共享程序的内存空间（包括代码段、数据集、堆等）及一些进程级的资源（如打开文件和信号）；
+                        </p>
 
-<p>
-（4）调试和切换：线程上下文切换比进程上下文切换要快得多。
-</p>
+                        <p>
+                            （4）调试和切换：线程上下文切换比进程上下文切换要快得多。
+                        </p>
 
-<img
-src="/images/ajax-3.png"
-width="160"
-height=""
-style="float: right; margin-left: 8px;"
-title=""
-/>
+                        <img
+                            src="images/ajax-3.png"
+                            width="160"
+                            height=""
+                            style="float: right; margin-left: 8px"
+                            title=""
+                        />
 
-<p>
-<b>浏览器内核</b> 是通过取得页面内容、整理信息（应用 CSS）、计算和组合最终输出可视化的图像结果，通常也被称为渲染引擎。
-</p>
+                        <p>
+                            <b>浏览器内核</b> 是通过取得页面内容、整理信息（应用
+                            CSS）、计算和组合最终输出可视化的图像结果，通常也被称为渲染引擎。
+                        </p>
 
-<p>
-Chrome 浏览器为每个 tab 页面单独启用进程，在浏览器中打开一个网页相当于新起了一个进程（进程内有自己的多线程）。
-</p>
+                        <p>
+                            Chrome 浏览器为每个 tab
+                            页面单独启用进程，在浏览器中打开一个网页相当于新起了一个进程（进程内有自己的多线程）。
+                        </p>
 
-<p>
-浏览器内核是多线程，在内核控制下各线程相互配合以保持同步，一个浏览器通常由以下常驻线程组成：
-</p>
+                        <p>
+                            浏览器内核是多线程，在内核控制下各线程相互配合以保持同步，一个浏览器通常由以下常驻线程组成：
+                        </p>
 
-<pre class="example">
+                        <pre class="example">
 - GUI 渲染线程；
 - JS 引擎线程；
 - 事件触发线程；
 - 定时触发线程；
 - 异步 http 请求线程。
-</pre>
+</pre
+                        >
 
-<p>
-下面我们分别来了解下浏览器的这些常驻线程。
-</p>
+                        <p>下面我们分别来了解下浏览器的这些常驻线程。</p>
 
-<p>
-<span class="underline">1. GUI 渲染线程</span>
-</p>
+                        <p>
+                            <span class="underline">1. GUI 渲染线程</span>
+                        </p>
 
-<p>
-GUI 渲染线程负责渲染浏览器界面 HTML 元素，解析 HTML、CSS，构建 DOM  树和 RenderObject 树，布局和绘制等。
-</p>
+                        <p>
+                            GUI 渲染线程负责渲染浏览器界面 HTML 元素，解析
+                            HTML、CSS，构建 DOM 树和 RenderObject
+                            树，布局和绘制等。
+                        </p>
 
-<p>
-当界面需要重绘（Repaint）或由于某种操作引发回流（重排 reflow）时，该线程就会执行。
-</p>
+                        <p>
+                            当界面需要重绘（Repaint）或由于某种操作引发回流（重排
+                            reflow）时，该线程就会执行。
+                        </p>
 
-<p>
-在 JavaScript 引擎运行脚本期间，GUI 渲染线程都是处于挂起状态的，GUI 更新会被保存在一个队列中等到 JS 引擎空闲时立即被执行。
-</p>
+                        <p>
+                            在 JavaScript 引擎运行脚本期间，GUI
+                            渲染线程都是处于挂起状态的，GUI
+                            更新会被保存在一个队列中等到 JS
+                            引擎空闲时立即被执行。
+                        </p>
 
-<p>
-<span class="underline">2. JavaScript 引擎线程</span>
-</p>
+                        <p>
+                            <span class="underline"
+                                >2. JavaScript 引擎线程</span
+                            >
+                        </p>
 
-<p>
-JavaScript 引擎，也可以称为 JS 内核，主要负责处理 JavaScript 脚本程序，如 V8 引擎。
-</p>
+                        <p>
+                            JavaScript 引擎，也可以称为 JS 内核，主要负责处理
+                            JavaScript 脚本程序，如 V8 引擎。
+                        </p>
 
-<p>
-JS 引擎一直等待着任务队列中的任务的到来，然后加以处理，一个 Tab 页面（render 进程）中无论什么时候都只有一个 JS 线程在运行 JS 程序（因为 JS 是单线程的啊）。
-</p>
+                        <p>
+                            JS
+                            引擎一直等待着任务队列中的任务的到来，然后加以处理，一个
+                            Tab 页面（render 进程）中无论什么时候都只有一个 JS
+                            线程在运行 JS 程序（因为 JS 是单线程的啊）。
+                        </p>
 
-<p>
-<b>*注：GUI 渲染线程和 JavaScript 引擎线程互斥！</b>
-</p>
+                        <p>
+                            <b>*注：GUI 渲染线程和 JavaScript 引擎线程互斥！</b>
+                        </p>
 
-<p>
-但是，为什么要互斥呢？
-</p>
+                        <p>但是，为什么要互斥呢？</p>
 
-<p>
-由于 JavaScript 中可操纵 DOM 的，如果在修改这些元素同时渲染界面（即 JavaScript 线程和 GUI 线程同时运行），那么渲染线程前后获得的元素数据就可能不一致了。因此，为了防止渲染出现不可预期的结果，浏览器就设置 GUI 渲染线程与 JavaScript 引擎为互斥的关系了。
-</p>
+                        <p>
+                            由于 JavaScript 中可操纵 DOM
+                            的，如果在修改这些元素同时渲染界面（即 JavaScript
+                            线程和 GUI
+                            线程同时运行），那么渲染线程前后获得的元素数据就可能不一致了。因此，为了防止渲染出现不可预期的结果，浏览器就设置
+                            GUI 渲染线程与 JavaScript 引擎为互斥的关系了。
+                        </p>
 
-<p>
-<span class="underline">3. 事件触发线程</span>
-</p>
+                        <p>
+                            <span class="underline">3. 事件触发线程</span>
+                        </p>
 
-<p>
-当一个事件被触发时该线程会把事件添加到待处理队列的队尾，等待 JS 引擎的处理。
-</p>
+                        <p>
+                            当一个事件被触发时该线程会把事件添加到待处理队列的队尾，等待
+                            JS 引擎的处理。
+                        </p>
 
-<p>
-这些事件可以是当前执行的代码块，如定时任务，也可以是来自浏览器内核的其他线程，如鼠标点击、AJAX 异步请求等，但由于 JS 的单线程关系，所有这些事件都得排队等待 JS 引擎处理。
-</p>
+                        <p>
+                            这些事件可以是当前执行的代码块，如定时任务，也可以是来自浏览器内核的其他线程，如鼠标点击、AJAX
+                            异步请求等，但由于 JS
+                            的单线程关系，所有这些事件都得排队等待 JS 引擎处理。
+                        </p>
 
-<p>
-<span class="underline">4. 定时触发器线程</span>
-</p>
+                        <p>
+                            <span class="underline">4. 定时触发器线程</span>
+                        </p>
 
-<p>
-浏览器定时计数器并不是由 JavaScript 引擎计数的，因为 JavaScript 引擎是单线程的，如果处于阻塞线程状态就会影响计时的准确。
-</p>
+                        <p>
+                            浏览器定时计数器并不是由 JavaScript 引擎计数的，因为
+                            JavaScript
+                            引擎是单线程的，如果处于阻塞线程状态就会影响计时的准确。
+                        </p>
 
-<p>
-通过单独线程来计时并触发定时（计时完毕后，添加到事件队列中，等待 JS 引擎空闲后执行）。
-</p>
+                        <p>
+                            通过单独线程来计时并触发定时（计时完毕后，添加到事件队列中，等待
+                            JS 引擎空闲后执行）。
+                        </p>
 
-<p>
-*注：W3C 在 HTML 标准中规定 <code>setTimeout</code> 中低于 4ms 的时间间隔算为 4ms 。
-</p>
+                        <p>
+                            *注：W3C 在 HTML 标准中规定
+                            <code>setTimeout</code> 中低于 4ms 的时间间隔算为
+                            4ms 。
+                        </p>
 
-<p>
-<span class="underline">5. 异步 http 请求线程</span>
-</p>
+                        <p>
+                            <span class="underline">5. 异步 http 请求线程</span>
+                        </p>
 
-<p>
-XMLHttpRequest 在连接后是通过浏览器新开一个线程请求，在检测到状态变更时，如果设置有回调函数，异步线程就产生状态变更事件，将这个回调放入事件队列中，再由 JavaScript 引擎执行。
-</p>
-</div>
-</div>
-</div>
+                        <p>
+                            XMLHttpRequest
+                            在连接后是通过浏览器新开一个线程请求，在检测到状态变更时，如果设置有回调函数，异步线程就产生状态变更事件，将这个回调放入事件队列中，再由
+                            JavaScript 引擎执行。
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-<div id="outline-container-org657585c" class="outline-2">
-<h2 id="org657585c">*JavaScript 运行机制<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
-<div class="outline-text-2" id="text-org657585c">
-<essay>
-学习一门语言，再怎么了解它的运行机制都是不为过的。
-</essay>
+            <div id="outline-container-org657585c" class="outline-2">
+                <h2 id="org657585c">
+                    *JavaScript 运行机制<sup
+                        ><a id="fnr.3" class="footref" href="#fn.3">3</a></sup
+                    >
+                </h2>
+                <div class="outline-text-2" id="text-org657585c">
+                    <essay>
+                        学习一门语言，再怎么了解它的运行机制都是不为过的。
+                    </essay>
 
-<p>
-在了解 AJAX 之前，我们再通过以下几个方面，来加强一下对 JavaScript 的运行机制的认识。
-</p>
+                    <p>
+                        在了解 AJAX 之前，我们再通过以下几个方面，来加强一下对
+                        JavaScript 的运行机制的认识。
+                    </p>
 
-<pre class="example">
+                    <pre class="example">
 - JavaScript 是单线程的；
 - 任务队列；
 - 事件和回调函数；
 - Event Loop ；
 - 定时器；
 - NodeJS 中的 Event Loop 。
-</pre>
-</div>
+</pre
+                    >
+                </div>
 
-<div id="outline-container-org7f6b530" class="outline-3">
-<h3 id="org7f6b530">为什么 JS 是单线程</h3>
-<div class="outline-text-3" id="text-org7f6b530">
-<p>
-JavaScript 语言的一大特点就是单线程，即同一时间只能做一件事。前面我们已经讲述过为什么 JavaScript 不能有多个线程（多线程能提高效率啊），我们这里再稍微赘述一下。
-</p>
+                <div id="outline-container-org7f6b530" class="outline-3">
+                    <h3 id="org7f6b530">为什么 JS 是单线程</h3>
+                    <div class="outline-text-3" id="text-org7f6b530">
+                        <p>
+                            JavaScript
+                            语言的一大特点就是单线程，即同一时间只能做一件事。前面我们已经讲述过为什么
+                            JavaScript
+                            不能有多个线程（多线程能提高效率啊），我们这里再稍微赘述一下。
+                        </p>
 
-<p>
-原来，JavaScript 的单线程，与它的用途有关。
-</p>
+                        <p>原来，JavaScript 的单线程，与它的用途有关。</p>
 
-<p>
-作为浏览器的脚本语言，JavaScript 的主要用途是与用户互动，以及操作 DOM 。这决定了它只能是单线程，否则会带来很复杂的同步问题。比如，假定 JavaScript 同时有两个线程，一个线程在某个 DOM 节点上添加内容，另一个线程删除了这个节点，这时浏览器应该以哪个线程为准？
-</p>
+                        <p>
+                            作为浏览器的脚本语言，JavaScript
+                            的主要用途是与用户互动，以及操作 DOM
+                            。这决定了它只能是单线程，否则会带来很复杂的同步问题。比如，假定
+                            JavaScript 同时有两个线程，一个线程在某个 DOM
+                            节点上添加内容，另一个线程删除了这个节点，这时浏览器应该以哪个线程为准？
+                        </p>
 
-<p>
-所以，为了避免复杂性，从一诞生，JavaScript 就是单线程，这已经成了这门语言的核心特征。
-</p>
+                        <p>
+                            所以，为了避免复杂性，从一诞生，JavaScript
+                            就是单线程，这已经成了这门语言的核心特征。
+                        </p>
 
-<p>
-为了利用多核 CPU 的计算能力，HTML5 提出了 Web Worker 标准，允许 JavaScript 脚本创建多个线程，但是子线程完全受主线程控制，且不得操作 DOM 。所以，这个新标准并没有改变 JavaScript 单线程的本质。
-</p>
-</div>
-</div>
+                        <p>
+                            为了利用多核 CPU 的计算能力，HTML5 提出了 Web Worker
+                            标准，允许 JavaScript
+                            脚本创建多个线程，但是子线程完全受主线程控制，且不得操作
+                            DOM 。所以，这个新标准并没有改变 JavaScript
+                            单线程的本质。
+                        </p>
+                    </div>
+                </div>
 
-<div id="outline-container-org86ff99d" class="outline-3">
-<h3 id="org86ff99d">任务队列</h3>
-<div class="outline-text-3" id="text-org86ff99d">
-<p>
-单线程就意味着，所有任务需要排队，前一个任务结束，才会执行后一个任务。如果前一个任务耗时很长，后一个任务就不得不一直等着。
-</p>
+                <div id="outline-container-org86ff99d" class="outline-3">
+                    <h3 id="org86ff99d">任务队列</h3>
+                    <div class="outline-text-3" id="text-org86ff99d">
+                        <p>
+                            单线程就意味着，所有任务需要排队，前一个任务结束，才会执行后一个任务。如果前一个任务耗时很长，后一个任务就不得不一直等着。
+                        </p>
 
-<p>
-如果排队是因为计算量大，CPU 忙不过来，倒也算了，但是多数时候 CPU 是闲着的，因为 I/O 设备很慢（比如 Ajax 操作从网络读取数据），不得不等着结果出来，再往下执行。
-</p>
+                        <p>
+                            如果排队是因为计算量大，CPU
+                            忙不过来，倒也算了，但是多数时候 CPU 是闲着的，因为
+                            I/O 设备很慢（比如 Ajax
+                            操作从网络读取数据），不得不等着结果出来，再往下执行。
+                        </p>
 
-<essay>
-明显对 CPU “压榨”的不够啊，嘿嘿……
-</essay>
+                        <essay> 明显对 CPU “压榨”的不够啊，嘿嘿…… </essay>
 
-<p>
-JavaScript 语言的设计者意识到，这时主线程完全可以不管 I/O 设备，挂起处于等待中的任务，先运行排在后面的任务。等待 I/O 设备返回了结果，再回过头，把挂起的任务继续执行下去。
-</p>
+                        <p>
+                            JavaScript
+                            语言的设计者意识到，这时主线程完全可以不管 I/O
+                            设备，挂起处于等待中的任务，先运行排在后面的任务。等待
+                            I/O
+                            设备返回了结果，再回过头，把挂起的任务继续执行下去。
+                        </p>
 
-<p>
-于是，所有任务可以分成两种： <span class="underline">同步任务</span> （synchronous）和 <span class="underline">异步任务</span> （asynchronous）。
-</p>
+                        <p>
+                            于是，所有任务可以分成两种：
+                            <span class="underline">同步任务</span>
+                            （synchronous）和
+                            <span class="underline">异步任务</span>
+                            （asynchronous）。
+                        </p>
 
-<p>
-同步任务指的是，在主线程上排队执行的任务，只有前一个任务执行完毕，才能执行后一个任务。
-</p>
+                        <p>
+                            同步任务指的是，在主线程上排队执行的任务，只有前一个任务执行完毕，才能执行后一个任务。
+                        </p>
 
-<p>
-异步任务指的是，不进入主线程，而进入“任务队列”（task queue）的任务，只有“任务队列”通知主线程，某个异步任务可以执行了，该任务才会进入主线程执行。
-</p>
+                        <p>
+                            异步任务指的是，不进入主线程，而进入“任务队列”（task
+                            queue）的任务，只有“任务队列”通知主线程，某个异步任务可以执行了，该任务才会进入主线程执行。
+                        </p>
 
-<img
-src="/images/ajax-4.jpg"
-width="460"
-height=""
-style="float: right; margin-left: 8px;"
-title=""
-/>
+                        <img
+                            src="images/ajax-4.jpg"
+                            width="460"
+                            height=""
+                            style="float: right; margin-left: 8px"
+                            title=""
+                        />
 
-<p>
-具体来说，异步执行的运行机制如下：
-</p>
+                        <p>具体来说，异步执行的运行机制如下：</p>
 
-<p>
-（1）所有同步任务都在主线程上执行，形成一个执行栈（execution context stack）。
-</p>
+                        <p>
+                            （1）所有同步任务都在主线程上执行，形成一个执行栈（execution
+                            context stack）。
+                        </p>
 
-<p>
-（2）主线程之外，还存在一个“任务队列”（task queue）。只要异步任务有了运行结果，就在“任务队列”这中放置一个事件。
-</p>
+                        <p>
+                            （2）主线程之外，还存在一个“任务队列”（task
+                            queue）。只要异步任务有了运行结果，就在“任务队列”这中放置一个事件。
+                        </p>
 
-<p>
-（3）一旦“执行栈”中的所有同步任务执行完毕，系统就会读取“任务队列”，看看里面哪些事件。那些对应的异步任务，于是结束等待状态，进入执行栈，开妈执行。
-</p>
+                        <p>
+                            （3）一旦“执行栈”中的所有同步任务执行完毕，系统就会读取“任务队列”，看看里面哪些事件。那些对应的异步任务，于是结束等待状态，进入执行栈，开妈执行。
+                        </p>
 
-<p>
-（4）主线程不断重复上面的第三步。
-</p>
+                        <p>（4）主线程不断重复上面的第三步。</p>
 
-<p>
-<b>只要主线程空了，就会去读取“任务队列”，这就是 JavaScript 的运行机制，且这个过程会不断重复。</b>
-</p>
-</div>
-</div>
+                        <p>
+                            <b
+                                >只要主线程空了，就会去读取“任务队列”，这就是
+                                JavaScript 的运行机制，且这个过程会不断重复。</b
+                            >
+                        </p>
+                    </div>
+                </div>
 
-<div id="outline-container-orgb50d74c" class="outline-3">
-<h3 id="orgb50d74c">事件和回调函数</h3>
-<div class="outline-text-3" id="text-orgb50d74c">
-<p>
-“任务队列”是一个事件的队列（也可以理解成消息的队列），I/O 设备完成一项任务，就在“任务队列”中添加一个事件，表示相关的异步任务可以进入“执行栈”了。主线程读取“任务队列”，就是读取里面有哪些事件。
-</p>
+                <div id="outline-container-orgb50d74c" class="outline-3">
+                    <h3 id="orgb50d74c">事件和回调函数</h3>
+                    <div class="outline-text-3" id="text-orgb50d74c">
+                        <p>
+                            “任务队列”是一个事件的队列（也可以理解成消息的队列），I/O
+                            设备完成一项任务，就在“任务队列”中添加一个事件，表示相关的异步任务可以进入“执行栈”了。主线程读取“任务队列”，就是读取里面有哪些事件。
+                        </p>
 
-<p>
-“任务队列”中的事件，除了 I/O 设备的事件以外，还包括一些用户产生的事件（比如鼠标点击、页面滚动等等）。只要指定过回调函数，这些事件发生时就会进入“任务队列”，等待主线程读取。
-</p>
+                        <p>
+                            “任务队列”中的事件，除了 I/O
+                            设备的事件以外，还包括一些用户产生的事件（比如鼠标点击、页面滚动等等）。只要指定过回调函数，这些事件发生时就会进入“任务队列”，等待主线程读取。
+                        </p>
 
-<p>
-所谓“回调函数”（callback），就是那些会被主线程挂起来的代码。异步任务必须指定回调函数，当主线程开始异步任务，就是执行对应的回调函数。
-</p>
+                        <p>
+                            所谓“回调函数”（callback），就是那些会被主线程挂起来的代码。异步任务必须指定回调函数，当主线程开始异步任务，就是执行对应的回调函数。
+                        </p>
 
-<p>
-“任务队列”是一个先进先出的数据结构，排在前面的事件，优先被主线程读取。主线程的读取过程基本上的自动的，只要执行栈一清空，“任务队列”上第一位的事件就自动进入主线程。但是，由于存在后文提到的“定时器”功能，主线程首先要检查一下执行时间，某些事件只有到了规定的时间，才能返回主线程。
-</p>
-</div>
-</div>
+                        <p>
+                            “任务队列”是一个先进先出的数据结构，排在前面的事件，优先被主线程读取。主线程的读取过程基本上的自动的，只要执行栈一清空，“任务队列”上第一位的事件就自动进入主线程。但是，由于存在后文提到的“定时器”功能，主线程首先要检查一下执行时间，某些事件只有到了规定的时间，才能返回主线程。
+                        </p>
+                    </div>
+                </div>
 
-<div id="outline-container-org992af36" class="outline-3">
-<h3 id="org992af36">Event Loop</h3>
-<div class="outline-text-3" id="text-org992af36">
-<p>
-主线程从“任务队列”中读取事件，这个过程是循环不断的，所以整个的这种运行机制又称为 Event Loop （事件循环）。
-</p>
+                <div id="outline-container-org992af36" class="outline-3">
+                    <h3 id="org992af36">Event Loop</h3>
+                    <div class="outline-text-3" id="text-org992af36">
+                        <p>
+                            主线程从“任务队列”中读取事件，这个过程是循环不断的，所以整个的这种运行机制又称为
+                            Event Loop （事件循环）。
+                        </p>
 
-<img
-src="/images/ajax-5.png"
-width="400"
-height=""
-style="float: left; margin-right: 8px;"
-title=""
-/>
+                        <img
+                            src="images/ajax-5.png"
+                            width="400"
+                            height=""
+                            style="float: left; margin-right: 8px"
+                            title=""
+                        />
 
-<p>
-如左图中，主线程运行的时候，产生堆（heap）和栈（stack），栈中的代码调用各种外部 API，它们在“任务队列”中加入各种事件（click，load，done）。只要栈中的代码执行完毕，主线程就会去读取“任务队列”，依次执行那些事件所对应的回调函数。
-</p>
+                        <p>
+                            如左图中，主线程运行的时候，产生堆（heap）和栈（stack），栈中的代码调用各种外部
+                            API，它们在“任务队列”中加入各种事件（click，load，done）。只要栈中的代码执行完毕，主线程就会去读取“任务队列”，依次执行那些事件所对应的回调函数。
+                        </p>
 
-<p>
-<b>执行栈中的代码（同步任务），总是在读取“任务队列”（异步任务）之前执行。</b>
-</p>
-</div>
-</div>
+                        <p>
+                            <b
+                                >执行栈中的代码（同步任务），总是在读取“任务队列”（异步任务）之前执行。</b
+                            >
+                        </p>
+                    </div>
+                </div>
 
-<div id="outline-container-org7da74d8" class="outline-3">
-<h3 id="org7da74d8">定时器</h3>
-<div class="outline-text-3" id="text-org7da74d8">
-<p>
-除了放置异步任务的事件，“任务队列”还可以放置定时事件，即指定某些代码在多少时间之后执行。这叫做“定时器”（timer）功能，也就是定时执行的代码。
-</p>
+                <div id="outline-container-org7da74d8" class="outline-3">
+                    <h3 id="org7da74d8">定时器</h3>
+                    <div class="outline-text-3" id="text-org7da74d8">
+                        <p>
+                            除了放置异步任务的事件，“任务队列”还可以放置定时事件，即指定某些代码在多少时间之后执行。这叫做“定时器”（timer）功能，也就是定时执行的代码。
+                        </p>
 
-<p>
-定时器功能主要由 <code>setTimeout()</code> 和 <code>setInterval()</code> 这两个函数来完成，它们的内部运行机制完全一样，区别在于前者指定的代码是一次性执行，后者则为反复执行。
-</p>
+                        <p>
+                            定时器功能主要由 <code>setTimeout()</code> 和
+                            <code>setInterval()</code>
+                            这两个函数来完成，它们的内部运行机制完全一样，区别在于前者指定的代码是一次性执行，后者则为反复执行。
+                        </p>
 
-<p>
-语法如下：
-</p>
-<pre class="example">
+                        <p>语法如下：</p>
+                        <pre class="example">
 setTimeout(fn, time)
-</pre>
+</pre
+                        >
 
-<p>
-HTML5 标准规定了 <code>setTimeout()</code> 的第二个参数的最小值（最短间隔），不得低于 4ms ，如果低于这个值，就会自动增加。
-</p>
+                        <p>
+                            HTML5 标准规定了
+                            <code>setTimeout()</code>
+                            的第二个参数的最小值（最短间隔），不得低于 4ms
+                            ，如果低于这个值，就会自动增加。
+                        </p>
 
-<p>
-*注： <code>setTimeout()</code> 只是将事件插入了“任务队列”，必须等到当前代码（执行栈）执行完，主线程才会去执行它指定的回调函数。要是当前代码耗时很长，有可能要等很久，所以并没有办法保证，回调函数一定会在 <code>setTimeout()</code> 指定的时间执行。
-</p>
-</div>
-</div>
+                        <p>
+                            *注：
+                            <code>setTimeout()</code>
+                            只是将事件插入了“任务队列”，必须等到当前代码（执行栈）执行完，主线程才会去执行它指定的回调函数。要是当前代码耗时很长，有可能要等很久，所以并没有办法保证，回调函数一定会在
+                            <code>setTimeout()</code> 指定的时间执行。
+                        </p>
+                    </div>
+                </div>
 
-<div id="outline-container-org6302f06" class="outline-3">
-<h3 id="org6302f06">NodeJS 的 Event Loop</h3>
-<div class="outline-text-3" id="text-org6302f06">
-<p>
-NodeJS 也是单线程的 Event Loop，但是它的运行机制不同于浏览器环境。
-</p>
+                <div id="outline-container-org6302f06" class="outline-3">
+                    <h3 id="org6302f06">NodeJS 的 Event Loop</h3>
+                    <div class="outline-text-3" id="text-org6302f06">
+                        <p>
+                            NodeJS 也是单线程的 Event
+                            Loop，但是它的运行机制不同于浏览器环境。
+                        </p>
 
-<img
-src="/images/ajax-6.png"
-width="500"
-height=""
-style=""
-title=""
-/>
+                        <img
+                            src="images/ajax-6.png"
+                            width="500"
+                            height=""
+                            style=""
+                            title=""
+                        />
 
-<p>
-根据上图，NodeJS 的运行机制如下：
-</p>
+                        <p>根据上图，NodeJS 的运行机制如下：</p>
 
-<pre class="example">
+                        <pre class="example">
 1. V8 引擎解析 JavaScript 脚本；
 2. 解析后的代码，调用 Node API；
 3. libuv 库负责 Node API 的执行；
 4. V8 引擎再将结果返回给用户。
-</pre>
+</pre
+                        >
 
-<p>
-其中， <code>libuv</code> 将不同的任务分配给不同的线程，形成一个 Event Loop ，以异步的方式将任务的执行结果返回给 V8 引擎。
-</p>
+                        <p>
+                            其中，
+                            <code>libuv</code>
+                            将不同的任务分配给不同的线程，形成一个 Event Loop
+                            ，以异步的方式将任务的执行结果返回给 V8 引擎。
+                        </p>
 
-<p>
-除了 <code>setTimeout</code> 和 <code>setInterval</code> 这两个方法，NodeJS 还提供了另外两个与“任务队列”有关的方法： <code>process.nextTick</code> 和 <code>setImmediate</code> ，它们可以帮助我们加深对“任务队列”的理解。
-</p>
+                        <p>
+                            除了 <code>setTimeout</code> 和
+                            <code>setInterval</code> 这两个方法，NodeJS
+                            还提供了另外两个与“任务队列”有关的方法：
+                            <code>process.nextTick</code> 和
+                            <code>setImmediate</code>
+                            ，它们可以帮助我们加深对“任务队列”的理解。
+                        </p>
 
-<p>
-<code>process.nextTick</code> 方法可以在当前“执行栈”的尾部 &#x2013; 下一次 Event Loop （主线程读取“任务队列”）之前 &#x2013; 触发回调函数。也就是说， <b>它指定的任务总是发生在所有异步任务之前。</b>
-</p>
+                        <p>
+                            <code>process.nextTick</code>
+                            方法可以在当前“执行栈”的尾部 &#x2013; 下一次 Event
+                            Loop （主线程读取“任务队列”）之前 &#x2013;
+                            触发回调函数。也就是说，
+                            <b>它指定的任务总是发生在所有异步任务之前。</b>
+                        </p>
 
-<p>
-<code>setImmediate</code> 方法则是当前“任务队列”的尾部添加事件，也就是说，它指定的任务总是在下一次 Event Loop 时执行，这与 <code>setTimeout(fn, 0)</code> 很像。
-</p>
+                        <p>
+                            <code>setImmediate</code>
+                            方法则是当前“任务队列”的尾部添加事件，也就是说，它指定的任务总是在下一次
+                            Event Loop 时执行，这与
+                            <code>setTimeout(fn, 0)</code> 很像。
+                        </p>
 
-<p>
-*注：如果有多个 <code>process.nextTick</code> 语句（不管它们是否嵌套），将全部在当前“执行栈”执行。即多个 <code>process.nextTick</code> 语句总是在当前“执行栈”一次执行完。
-</p>
+                        <p>
+                            *注：如果有多个
+                            <code>process.nextTick</code>
+                            语句（不管它们是否嵌套），将全部在当前“执行栈”执行。即多个
+                            <code>process.nextTick</code>
+                            语句总是在当前“执行栈”一次执行完。
+                        </p>
 
-<p>
-由于 <code>process.nextTick</code> 指定的回调函数是在本次"事件循环"触发，而 <code>setImmediate</code> 指定的是在下次"事件循环"触发，所以很显然，前者总是比后者发生得早，而且执行效率也高（因为不用检查"任务队列"）。
-</p>
-</div>
-</div>
-</div>
+                        <p>
+                            由于
+                            <code>process.nextTick</code>
+                            指定的回调函数是在本次"事件循环"触发，而
+                            <code>setImmediate</code>
+                            指定的是在下次"事件循环"触发，所以很显然，前者总是比后者发生得早，而且执行效率也高（因为不用检查"任务队列"）。
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-<div id="outline-container-orga49ae62" class="outline-2">
-<h2 id="orga49ae62">Ajax 异步的原理</h2>
-<div class="outline-text-2" id="text-orga49ae62">
-<essay>
-Hmm... 终于讲到 Ajax 了……
-</essay>
+            <div id="outline-container-orga49ae62" class="outline-2">
+                <h2 id="orga49ae62">Ajax 异步的原理</h2>
+                <div class="outline-text-2" id="text-orga49ae62">
+                    <essay> Hmm... 终于讲到 Ajax 了…… </essay>
 
-<p>
-在正式了解 Ajax 之前，我们先来看看它的原理。前面的章节中，我们了解了浏览器的多线程：GUI 渲染线程、JavaScript 引擎线程、事件触发线程、Http 请求线程、定时器触发线程。
-</p>
+                    <p>
+                        在正式了解 Ajax
+                        之前，我们先来看看它的原理。前面的章节中，我们了解了浏览器的多线程：GUI
+                        渲染线程、JavaScript 引擎线程、事件触发线程、Http
+                        请求线程、定时器触发线程。
+                    </p>
 
-<p>
-对于一个 Ajax 请求：
-</p>
+                    <p>对于一个 Ajax 请求：</p>
 
-<p>
-（1）JavaScript 引擎首先生成 XMLHttpRequest 实例对象， <code>open</code> 过后再调用 <code>send</code> 方法。至此，所有的语句都是同步执行。
-</p>
+                    <p>
+                        （1）JavaScript 引擎首先生成 XMLHttpRequest 实例对象，
+                        <code>open</code> 过后再调用
+                        <code>send</code> 方法。至此，所有的语句都是同步执行。
+                    </p>
 
-<p>
-（2）但是从 <code>send</code> 内部开始，浏览器为将要发生的网络请求创建了新的 Http 请求线程，这个线程独立于 JavaScript 引擎线程，于是网络请求异步被发送出去了。另一方面，JavaScript 引擎并不会等待 Ajax 发起的 Http 请求收到结果，而是直接顺序往下执行。
-</p>
+                    <p>
+                        （2）但是从
+                        <code>send</code>
+                        内部开始，浏览器为将要发生的网络请求创建了新的 Http
+                        请求线程，这个线程独立于 JavaScript
+                        引擎线程，于是网络请求异步被发送出去了。另一方面，JavaScript
+                        引擎并不会等待 Ajax 发起的 Http
+                        请求收到结果，而是直接顺序往下执行。
+                    </p>
 
-<p>
-（3）当 Http 请求收到 response 后，浏览器事件触发线程捕获到了 Ajax 的回调事件，该回调事件并不会立即被执行，而是以先进先出的方式添加到任务队列的末尾，等到 JavaScript 引擎空闲时，任务队列中排队的任务将会依次被执行，循环读取事件。这些事件回调包括 <code>setTimeout、setInterval、click、ajax 异步请求</code> 等。
-</p>
+                    <p>
+                        （3）当 Http 请求收到 response
+                        后，浏览器事件触发线程捕获到了 Ajax
+                        的回调事件，该回调事件并不会立即被执行，而是以先进先出的方式添加到任务队列的末尾，等到
+                        JavaScript
+                        引擎空闲时，任务队列中排队的任务将会依次被执行，循环读取事件。这些事件回调包括
+                        <code
+                            >setTimeout、setInterval、click、ajax 异步请求</code
+                        >
+                        等。
+                    </p>
 
-<p>
-（4）在回调事件内部，有可能对 DOM 进行操作，此时浏览器便会挂起 JavaScript 引擎线程，转而执行 GUI 渲染线程，进行页面重绘（repaint）或者回流（reflow）。当 JavaScript 引擎重新执行时，GUI 渲染线程又会被挂起，GUI 更新将被保存起来，等到 JavaScript 引擎空闲时立即被执行。
-</p>
+                    <p>
+                        （4）在回调事件内部，有可能对 DOM
+                        进行操作，此时浏览器便会挂起 JavaScript
+                        引擎线程，转而执行 GUI
+                        渲染线程，进行页面重绘（repaint）或者回流（reflow）。当
+                        JavaScript 引擎重新执行时，GUI 渲染线程又会被挂起，GUI
+                        更新将被保存起来，等到 JavaScript 引擎空闲时立即被执行。
+                    </p>
 
-<p>
-GUI 渲染线程和 JavaScript 引擎线程是互斥的。其他线程相互之间，都是可能并行执行的，Ajax 并没有破坏 JavaScript 的单线程机制。
-</p>
-</div>
-</div>
+                    <p>
+                        GUI 渲染线程和 JavaScript
+                        引擎线程是互斥的。其他线程相互之间，都是可能并行执行的，Ajax
+                        并没有破坏 JavaScript 的单线程机制。
+                    </p>
+                </div>
+            </div>
 
-<div id="outline-container-org91bb2e3" class="outline-2">
-<h2 id="org91bb2e3">Ajax 的请求过程</h2>
-<div class="outline-text-2" id="text-org91bb2e3">
-<img
-src="/images/ajax-7.png"
-width="500"
-height=""
-style="float: right; margin-left: 8px;"
-title=""
-/>
+            <div id="outline-container-org91bb2e3" class="outline-2">
+                <h2 id="org91bb2e3">Ajax 的请求过程</h2>
+                <div class="outline-text-2" id="text-org91bb2e3">
+                    <img
+                        src="images/ajax-7.png"
+                        width="500"
+                        height=""
+                        style="float: right; margin-left: 8px"
+                        title=""
+                    />
 
-<ol class="org-ol">
-<li>创建 <code>XMLHttpRequest</code> 对象；</li>
-<li>浏览器与服务器建立连接 <code>open</code> ；</li>
-<li>设置超时，回调函数；</li>
-<li>浏览器向服务器发送请求 <code>send</code> ；</li>
-<li>服务器向浏览器响应请求，客户端获取异步调用返回的数据；</li>
-<li>实现局部刷新。</li>
-</ol>
+                    <ol class="org-ol">
+                        <li>创建 <code>XMLHttpRequest</code> 对象；</li>
+                        <li>浏览器与服务器建立连接 <code>open</code> ；</li>
+                        <li>设置超时，回调函数；</li>
+                        <li>浏览器向服务器发送请求 <code>send</code> ；</li>
+                        <li>
+                            服务器向浏览器响应请求，客户端获取异步调用返回的数据；
+                        </li>
+                        <li>实现局部刷新。</li>
+                    </ol>
 
-<p>
-下面我们就按照这个过程来逐步地认识一下 Ajax 喽。
-</p>
-</div>
+                    <p>下面我们就按照这个过程来逐步地认识一下 Ajax 喽。</p>
+                </div>
 
-<div id="outline-container-org12297f1" class="outline-3">
-<h3 id="org12297f1">创建 XMLHttpRequest 对象</h3>
-<div class="outline-text-3" id="text-org12297f1">
-<p>
-<b>*注：以下 XMLHttpRequest 均简写为 XHR。</b>
-</p>
+                <div id="outline-container-org12297f1" class="outline-3">
+                    <h3 id="org12297f1">创建 XMLHttpRequest 对象</h3>
+                    <div class="outline-text-3" id="text-org12297f1">
+                        <p>
+                            <b>*注：以下 XMLHttpRequest 均简写为 XHR。</b>
+                        </p>
 
-<p>
-所有现代浏览器均支持 <code>XMLHttpRequest</code> 对象（IE5 和 IE6 使用 <code>ActiveXObject</code> ）。
-</p>
+                        <p>
+                            所有现代浏览器均支持
+                            <code>XMLHttpRequest</code> 对象（IE5 和 IE6 使用
+                            <code>ActiveXObject</code> ）。
+                        </p>
 
-<p>
-为了应对所有的现代浏览器，包括 IE5 和 IE6，请检查浏览器是否支持 <code>XMLHttpRequest</code> 对象。如果支持，则创建 <code>XMLHttpRequest</code> 对象。如果不支持，则创建 <code>ActiveXObject</code> ，我们不妨自己封装一个函数来实现获取 XHR 对象的目的，如下：
-</p>
+                        <p>
+                            为了应对所有的现代浏览器，包括 IE5 和
+                            IE6，请检查浏览器是否支持
+                            <code>XMLHttpRequest</code> 对象。如果支持，则创建
+                            <code>XMLHttpRequest</code> 对象。如果不支持，则创建
+                            <code>ActiveXObject</code>
+                            ，我们不妨自己封装一个函数来实现获取 XHR
+                            对象的目的，如下：
+                        </p>
 
-<div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #e45649;">function</span> <span style="color: #a626a4;">getXHR</span><span style="color: #4078f2;">()</span> <span style="color: #4078f2;">{</span>
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-js"
+                            ><span class="linenr"> 1: </span><span style="color: #e45649;">function</span> <span style="color: #a626a4;">getXHR</span><span style="color: #4078f2;">()</span> <span style="color: #4078f2;">{</span>
 <span class="linenr"> 2: </span>    <span style="color: #e45649;">var</span> <span style="color: #6a1868;">xhr</span>
 <span class="linenr"> 3: </span>
 <span class="linenr"> 4: </span>    <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span>window.XMLHttpRequest<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
@@ -686,22 +877,26 @@ title=""
 <span class="linenr">12: </span>    <span style="color: #e45649;">return</span> xhr
 <span class="linenr">13: </span><span style="color: #4078f2;">}</span>
 </pre>
-</div>
-</div>
-</div>
+                        </div>
+                    </div>
+                </div>
 
-<div id="outline-container-org67fbdb8" class="outline-3">
-<h3 id="org67fbdb8">XHR 请求</h3>
-<div class="outline-text-3" id="text-org67fbdb8">
-<p>
-其中，2、3、4 三步都为 XHR 请求，我们放在一起来讲述。
-</p>
+                <div id="outline-container-org67fbdb8" class="outline-3">
+                    <h3 id="org67fbdb8">XHR 请求</h3>
+                    <div class="outline-text-3" id="text-org67fbdb8">
+                        <p>
+                            其中，2、3、4 三步都为 XHR
+                            请求，我们放在一起来讲述。
+                        </p>
 
-<p>
-XHR 对象用于和服务器交换数据，如需将请求发送到服务器，使用 XHR 对象的 <code>open()</code> 和 <code>send()</code> 方法即可，如下：
-</p>
+                        <p>
+                            XHR
+                            对象用于和服务器交换数据，如需将请求发送到服务器，使用
+                            XHR 对象的 <code>open()</code> 和
+                            <code>send()</code> 方法即可，如下：
+                        </p>
 
-<pre class="example">
+                        <pre class="example">
 open(method, url, async)
 
 # 规定请求的类型、URL以及是否异步处理请求
@@ -713,14 +908,15 @@ send([data])
 
 # 将请求发送到服务器
 # - data：可选，仅用于 POST 请求
-</pre>
+</pre
+                        >
 
-<p>
-来看个实例：
-</p>
+                        <p>来看个实例：</p>
 
-<div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">GET</span>
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-js"
+                            ><span class="linenr"> 1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">GET</span>
 <span class="linenr"> 2: </span>xhr.open<span style="color: #4078f2;">(</span><span style="color: #50a14f;">'GET'</span>, <span style="color: #50a14f;">'/try/ajax/demo_get'</span>, <span style="color: #b751b6;">true</span><span style="color: #4078f2;">)</span>
 <span class="linenr"> 3: </span>xhr.send<span style="color: #4078f2;">()</span>
 <span class="linenr"> 4: </span>
@@ -734,14 +930,22 @@ send([data])
 <span class="linenr">12: </span>xhr.setRequestHeader<span style="color: #4078f2;">(</span><span style="color: #50a14f;">'Content-type'</span>, <span style="color: #50a14f;">'application/x-www-form-urlencode'</span><span style="color: #4078f2;">)</span>
 <span class="linenr">13: </span>xhr.send<span style="color: #4078f2;">(</span><span style="color: #50a14f;">'fname=Jack&amp;lname=Liu'</span><span style="color: #4078f2;">)</span>
 </pre>
-</div>
+                        </div>
 
-<p>
-XHR 对象如果要用于 AJAX 的话，其 <code>open()</code> 方法的 <code>async</code> 参数必须设置为 <code>true</code> ，当使用 <code>async=true</code> 时，请规定在响应处于 <code>onreadystatechange</code> 事件中的就绪状态时执行的函数：
-</p>
+                        <p>
+                            XHR 对象如果要用于 AJAX 的话，其
+                            <code>open()</code> 方法的
+                            <code>async</code> 参数必须设置为
+                            <code>true</code> ，当使用
+                            <code>async=true</code> 时，请规定在响应处于
+                            <code>onreadystatechange</code>
+                            事件中的就绪状态时执行的函数：
+                        </p>
 
-<div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span>xhr.open<span style="color: #4078f2;">(</span><span style="color: #50a14f;">'GET'</span>, <span style="color: #50a14f;">'/try/ajax/ajax_info.txt'</span>, <span style="color: #b751b6;">true</span><span style="color: #4078f2;">)</span>
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-js"
+                            ><span class="linenr">1: </span>xhr.open<span style="color: #4078f2;">(</span><span style="color: #50a14f;">'GET'</span>, <span style="color: #50a14f;">'/try/ajax/ajax_info.txt'</span>, <span style="color: #b751b6;">true</span><span style="color: #4078f2;">)</span>
 <span class="linenr">2: </span>xhr.onreadystatechange = <span style="color: #e45649;">function</span><span style="color: #4078f2;">()</span> <span style="color: #4078f2;">{</span>
 <span class="linenr">3: </span>    <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span>xhr.readyState == 4 &amp;&amp; xhr.status == 200<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
 <span class="linenr">4: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">xhr.reponseText</span>
@@ -750,641 +954,877 @@ XHR 对象如果要用于 AJAX 的话，其 <code>open()</code> 方法的 <code>
 <span class="linenr">7: </span><span style="color: #4078f2;">}</span>
 <span class="linenr">8: </span>xhr.send<span style="color: #4078f2;">()</span>
 </pre>
-</div>
-</div>
-</div>
+                        </div>
+                    </div>
+                </div>
 
-<div id="outline-container-orgaa91b33" class="outline-3">
-<h3 id="orgaa91b33">XHR 响应</h3>
-<div class="outline-text-3" id="text-orgaa91b33">
-<p>
-如需获得来自服务器的响应，请使用 XHR 对象的 <code>responseText</code> （字符串形式的响应数据）或 <code>responseXML</code> （XML 形式的响应数据）属性。
-</p>
+                <div id="outline-container-orgaa91b33" class="outline-3">
+                    <h3 id="orgaa91b33">XHR 响应</h3>
+                    <div class="outline-text-3" id="text-orgaa91b33">
+                        <p>
+                            如需获得来自服务器的响应，请使用 XHR 对象的
+                            <code>responseText</code> （字符串形式的响应数据）或
+                            <code>responseXML</code> （XML
+                            形式的响应数据）属性。
+                        </p>
 
-<p>
-当请求被发送到服务器时，我们需要执行一些基于响应的任务，每当 <code>readyState</code> 改变时，就会触发 <code>onreadystatechange</code> 事件，其中， <code>readyState</code> 属性存有 XHR 的状态信息。
-</p>
+                        <p>
+                            当请求被发送到服务器时，我们需要执行一些基于响应的任务，每当
+                            <code>readyState</code> 改变时，就会触发
+                            <code>onreadystatechange</code> 事件，其中，
+                            <code>readyState</code> 属性存有 XHR 的状态信息。
+                        </p>
 
-<table>
+                        <table>
+                            <colgroup>
+                                <col class="org-left" />
 
-<colgroup>
-<col  class="org-left">
+                                <col class="org-left" />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="org-left">属性</th>
+                                    <th scope="col" class="org-left">描述</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>onreadystatechange</code>
+                                    </td>
+                                    <td class="org-left">
+                                        存储函数（或函数名），每当
+                                        <code>readyState</code>
+                                        属性改变时，就会调用该函数
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>readyState</code>
+                                    </td>
+                                    <td class="org-left">存有 XHR 的状态：</td>
+                                </tr>
 
-<col  class="org-left">
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">属性</th>
-<th scope="col" class="org-left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left"><code>onreadystatechange</code></td>
-<td class="org-left">存储函数（或函数名），每当 <code>readyState</code> 属性改变时，就会调用该函数</td>
-</tr>
-</tbody>
-<tbody>
-<tr>
-<td class="org-left"><code>readyState</code></td>
-<td class="org-left">存有 XHR 的状态：</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">&#xa0;</td>
+                                    <td class="org-left">
+                                        <code>0</code> ：请求未初始化
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left"><code>0</code> ：请求未初始化</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">&#xa0;</td>
+                                    <td class="org-left">
+                                        <code>1</code> ：服务器连接已建立
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left"><code>1</code> ：服务器连接已建立</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">&#xa0;</td>
+                                    <td class="org-left">
+                                        <code>2</code> ：请求已接收
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left"><code>2</code> ：请求已接收</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">&#xa0;</td>
+                                    <td class="org-left">
+                                        <code>3</code> ：请求处理中
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left"><code>3</code> ：请求处理中</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">&#xa0;</td>
+                                    <td class="org-left">
+                                        <code>4</code>
+                                        ：请求已完成，且响应已就绪
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>status</code>
+                                    </td>
+                                    <td class="org-left">
+                                        <code>200</code> ：OK
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left"><code>4</code> ：请求已完成，且响应已就绪</td>
-</tr>
-</tbody>
-<tbody>
-<tr>
-<td class="org-left"><code>status</code></td>
-<td class="org-left"><code>200</code> ：OK</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">&#xa0;</td>
+                                    <td class="org-left">
+                                        <code>404</code> :未找到页面
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left"><code>404</code> :未找到页面</td>
-</tr>
-</tbody>
-</table>
+                        <p>
+                            当 <code>readyState</code> 等于
+                            <code>4</code> 且状态为
+                            <code>200</code> 时，表示响应已就绪。
+                        </p>
 
-<p>
-当 <code>readyState</code> 等于 <code>4</code> 且状态为 <code>200</code> 时，表示响应已就绪。
-</p>
-
-<div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span>xhr.onreadystatechange = <span style="color: #e45649;">function</span><span style="color: #4078f2;">()</span> <span style="color: #4078f2;">{</span>
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-js"
+                            ><span class="linenr">1: </span>xhr.onreadystatechange = <span style="color: #e45649;">function</span><span style="color: #4078f2;">()</span> <span style="color: #4078f2;">{</span>
 <span class="linenr">2: </span>    <span style="color: #e45649;">if</span> <span style="color: #a626a4;">(</span>xhr.readyState == 4 &amp;&amp; xhr.status == 200<span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
 <span class="linenr">3: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">...</span>
 <span class="linenr">4: </span>    <span style="color: #a626a4;">}</span>
 <span class="linenr">5: </span><span style="color: #4078f2;">}</span>
 </pre>
-</div>
+                        </div>
 
-<p>
-*注： <code>onreadystatechange</code> 事件被触发 4 次（0 - 4），分别是： <code>0-1、1-2、2-3、3-4</code> 对应着 <code>readyState</code> 的每个变化。
-</p>
-</div>
-</div>
-</div>
+                        <p>
+                            *注： <code>onreadystatechange</code> 事件被触发 4
+                            次（0 - 4），分别是：
+                            <code>0-1、1-2、2-3、3-4</code> 对应着
+                            <code>readyState</code> 的每个变化。
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-<div id="outline-container-org2079df6" class="outline-2">
-<h2 id="org2079df6">*HTTP 协议</h2>
-<div class="outline-text-2" id="text-org2079df6">
-<essay>
-我们已经初步了解 AJAX 了，深入地话，就需要进一步认识一下 HTTP 协议喽。
-</essay>
+            <div id="outline-container-org2079df6" class="outline-2">
+                <h2 id="org2079df6">*HTTP 协议</h2>
+                <div class="outline-text-2" id="text-org2079df6">
+                    <essay>
+                        我们已经初步了解 AJAX 了，深入地话，就需要进一步认识一下
+                        HTTP 协议喽。
+                    </essay>
 
-<p>
-HTTP 协议（HyperText Transfer Protocol，超文本传输协议），是一个基于 TCP/IP 通信协议来传递数据（HTML 文件、图片、查询结果等）的协议。
-</p>
+                    <p>
+                        HTTP 协议（HyperText Transfer
+                        Protocol，超文本传输协议），是一个基于 TCP/IP
+                        通信协议来传递数据（HTML
+                        文件、图片、查询结果等）的协议。
+                    </p>
 
-<img
-src="/images/ajax-8.gif"
-width="300"
-height=""
-style="float: right; margin-left: 8px;"
-title=""
-/>
+                    <img
+                        src="images/ajax-8.gif"
+                        width="300"
+                        height=""
+                        style="float: right; margin-left: 8px"
+                        title=""
+                    />
 
-<p>
-HTTP 协议工作于“客户端-服务端”架构上，如浏览器（HTTP 客户端）通过 URL 向 WEB 服务器（ HTTP 服务端）发送所有请求。
-</p>
+                    <p>
+                        HTTP 协议工作于“客户端-服务端”架构上，如浏览器（HTTP
+                        客户端）通过 URL 向 WEB 服务器（ HTTP
+                        服务端）发送所有请求。
+                    </p>
 
-<p>
-<b>HTTP 三点注意事项：</b>
-</p>
+                    <p>
+                        <b>HTTP 三点注意事项：</b>
+                    </p>
 
-<p>
-（1）HTTP 是无连接：无连接的含义是限制每次连接只处理一个请求，采用这种方式可以节省传输时间。服务器处理完客户的请求，并收到客户的应答后，即断开连接。
-</p>
+                    <p>
+                        （1）HTTP
+                        是无连接：无连接的含义是限制每次连接只处理一个请求，采用这种方式可以节省传输时间。服务器处理完客户的请求，并收到客户的应答后，即断开连接。
+                    </p>
 
-<essay>
-无连接？？？
-</essay>
+                    <essay> 无连接？？？ </essay>
 
-<p>
-（2）HTTP 是媒体独立的：只要客户端和服务器 <b>知道如何处理</b> 的数据内容，任何类型的数据都可以通过 HTTP 发送，客户端以及服务器指定使用适合的 MIME-type 内容类型。
-</p>
+                    <p>
+                        （2）HTTP 是媒体独立的：只要客户端和服务器
+                        <b>知道如何处理</b> 的数据内容，任何类型的数据都可以通过
+                        HTTP 发送，客户端以及服务器指定使用适合的 MIME-type
+                        内容类型。
+                    </p>
 
-<p>
-（3）HTTP 是无状态：HTTP 协议是无状态协议。 <span class="underline">无状态</span> 是指协议对于事务处理没有记忆能力，缺少状态意味着如果后续处理需要前面的信息，则它 <b>必须重传</b> ，这样可能导致每次连接传送的数据量增大；另一方面，在服务器不需要先前信息时它的应答就较快。
-</p>
-</div>
+                    <p>
+                        （3）HTTP 是无状态：HTTP 协议是无状态协议。
+                        <span class="underline">无状态</span>
+                        是指协议对于事务处理没有记忆能力，缺少状态意味着如果后续处理需要前面的信息，则它
+                        <b>必须重传</b>
+                        ，这样可能导致每次连接传送的数据量增大；另一方面，在服务器不需要先前信息时它的应答就较快。
+                    </p>
+                </div>
 
-<div id="outline-container-orgc6c4687" class="outline-3">
-<h3 id="orgc6c4687">HTTP 消息结构</h3>
-<div class="outline-text-3" id="text-orgc6c4687">
-<p>
-HTTP 是基于“客户端/服务端”的架构模型，通过一个可靠的链接来交换信息，是一个 <b>无状态的请求/响应</b> 协议。
-</p>
+                <div id="outline-container-orgc6c4687" class="outline-3">
+                    <h3 id="orgc6c4687">HTTP 消息结构</h3>
+                    <div class="outline-text-3" id="text-orgc6c4687">
+                        <p>
+                            HTTP
+                            是基于“客户端/服务端”的架构模型，通过一个可靠的链接来交换信息，是一个
+                            <b>无状态的请求/响应</b> 协议。
+                        </p>
 
-<p>
-一个 HTTP 客户端，是一个应用程序，如 Web 浏览器或其他任何客户端，它通过连接服务器达到向服务器发送一个或多个 HTTP 请求的目的。
-</p>
+                        <p>
+                            一个 HTTP 客户端，是一个应用程序，如 Web
+                            浏览器或其他任何客户端，它通过连接服务器达到向服务器发送一个或多个
+                            HTTP 请求的目的。
+                        </p>
 
-<p>
-一个 HTTP 服务器，同样是一个应用程序，通常是一个 Web 服务器，如 Apache、Nginx 或 IIS 服务器等，它通过接收客户端的请求并向客户端发送 HTTP 响应数据。
-</p>
+                        <p>
+                            一个 HTTP 服务器，同样是一个应用程序，通常是一个 Web
+                            服务器，如 Apache、Nginx 或 IIS
+                            服务器等，它通过接收客户端的请求并向客户端发送 HTTP
+                            响应数据。
+                        </p>
 
-<p>
-一个可靠的链接，HTTP 使用 URI（Uniform Resource Identifiers，统一资源标识符）来传输数据和建立连接。
-</p>
+                        <p>
+                            一个可靠的链接，HTTP 使用 URI（Uniform Resource
+                            Identifiers，统一资源标识符）来传输数据和建立连接。
+                        </p>
 
-<p>
-<span class="underline">1. 客户端请求消息</span>
-</p>
+                        <p>
+                            <span class="underline">1. 客户端请求消息</span>
+                        </p>
 
-<img
-src="/images/ajax-9.png"
-width="460"
-height=""
-style="float: right; margin-left: 8px;"
-title=""
-/>
+                        <img
+                            src="images/ajax-9.png"
+                            width="460"
+                            height=""
+                            style="float: right; margin-left: 8px"
+                            title=""
+                        />
 
-<p>
-客户端发送一个 HTTP 请求到服务器的请求消息包括以下格式：
-</p>
-<ul class="org-ul">
-<li>请求行（request line）；</li>
-<li>请求头部（header）；</li>
-<li>空行；</li>
-<li>请求数据。</li>
-</ul>
+                        <p>
+                            客户端发送一个 HTTP
+                            请求到服务器的请求消息包括以下格式：
+                        </p>
+                        <ul class="org-ul">
+                            <li>请求行（request line）；</li>
+                            <li>请求头部（header）；</li>
+                            <li>空行；</li>
+                            <li>请求数据。</li>
+                        </ul>
 
-<p>
-<span class="underline">2. 服务器响应消息</span>
-</p>
+                        <p>
+                            <span class="underline">2. 服务器响应消息</span>
+                        </p>
 
-<img
-src="/images/ajax-10.jpg"
-width="600"
-height=""
-style=""
-title=""
-/>
+                        <img
+                            src="images/ajax-10.jpg"
+                            width="600"
+                            height=""
+                            style=""
+                            title=""
+                        />
 
-<p>
-HTTP 响应也由四个部分组成，分别是：状态行、消息报头、空行和响应正文。
-</p>
-</div>
-</div>
+                        <p>
+                            HTTP
+                            响应也由四个部分组成，分别是：状态行、消息报头、空行和响应正文。
+                        </p>
+                    </div>
+                </div>
 
-<div id="outline-container-org7020274" class="outline-3">
-<h3 id="org7020274">HTTP 请求方法</h3>
-<div class="outline-text-3" id="text-org7020274">
-<table>
-<caption class="t-above"><span class="table-number">Table 1:</span> HTTP 请求方法</caption>
+                <div id="outline-container-org7020274" class="outline-3">
+                    <h3 id="org7020274">HTTP 请求方法</h3>
+                    <div class="outline-text-3" id="text-org7020274">
+                        <table>
+                            <caption class="t-above">
+                                <span class="table-number">Table 1:</span>
+                                HTTP 请求方法
+                            </caption>
 
-<colgroup>
-<col  class="org-left">
+                            <colgroup>
+                                <col class="org-left" />
 
-<col  class="org-left">
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">方法</th>
-<th scope="col" class="org-left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left"><code>GET</code></td>
-<td class="org-left">请求指定的页面信息，并返回实体主体</td>
-</tr>
+                                <col class="org-left" />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="org-left">方法</th>
+                                    <th scope="col" class="org-left">描述</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="org-left"><code>GET</code></td>
+                                    <td class="org-left">
+                                        请求指定的页面信息，并返回实体主体
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>HEAD</code></td>
-<td class="org-left">类似于 <code>GET</code> ，只不过返回的响应中没有具体的内容，用于获取报头</td>
-</tr>
+                                <tr>
+                                    <td class="org-left"><code>HEAD</code></td>
+                                    <td class="org-left">
+                                        类似于
+                                        <code>GET</code>
+                                        ，只不过返回的响应中没有具体的内容，用于获取报头
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>POST</code></td>
-<td class="org-left">向指定资源提交数据进行处理请求（如提交表单或者上传文件），数据被包含在请求体中</td>
-</tr>
-</tbody>
-<tbody>
-<tr>
-<td class="org-left"><code>PUT</code></td>
-<td class="org-left">从客户端向服务器传送的数据取代指定的文档的内容</td>
-</tr>
+                                <tr>
+                                    <td class="org-left"><code>POST</code></td>
+                                    <td class="org-left">
+                                        向指定资源提交数据进行处理请求（如提交表单或者上传文件），数据被包含在请求体中
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <td class="org-left"><code>PUT</code></td>
+                                    <td class="org-left">
+                                        从客户端向服务器传送的数据取代指定的文档的内容
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>DELETE</code></td>
-<td class="org-left">请求服务器删除指定的页面</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>DELETE</code>
+                                    </td>
+                                    <td class="org-left">
+                                        请求服务器删除指定的页面
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>CONNECT</code></td>
-<td class="org-left">HTTP/1.1 协议中预留给能够将连接改为管道方式的代理服务器</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>CONNECT</code>
+                                    </td>
+                                    <td class="org-left">
+                                        HTTP/1.1
+                                        协议中预留给能够将连接改为管道方式的代理服务器
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>OPTIONS</code></td>
-<td class="org-left">允许客户端服务器的性能</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>OPTIONS</code>
+                                    </td>
+                                    <td class="org-left">
+                                        允许客户端服务器的性能
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-<div id="outline-container-orga6cc9a0" class="outline-3">
-<h3 id="orga6cc9a0">HTTP 响应头信息</h3>
-<div class="outline-text-3" id="text-orga6cc9a0">
-<table>
+                <div id="outline-container-orga6cc9a0" class="outline-3">
+                    <h3 id="orga6cc9a0">HTTP 响应头信息</h3>
+                    <div class="outline-text-3" id="text-orga6cc9a0">
+                        <table>
+                            <colgroup>
+                                <col class="org-left" />
 
-<colgroup>
-<col  class="org-left">
+                                <col class="org-left" />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="org-left">
+                                        响应头信息
+                                    </th>
+                                    <th scope="col" class="org-left">说明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="org-left"><code>Allow</code></td>
+                                    <td class="org-left">
+                                        服务器支持哪些请求方法（如
+                                        <code>GET、POST</code> 等）
+                                    </td>
+                                </tr>
 
-<col  class="org-left">
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">响应头信息</th>
-<th scope="col" class="org-left">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left"><code>Allow</code></td>
-<td class="org-left">服务器支持哪些请求方法（如 <code>GET、POST</code> 等）</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>Content-Encoding</code>
+                                    </td>
+                                    <td class="org-left">
+                                        文档的编码（Encode）方法
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>Content-Encoding</code></td>
-<td class="org-left">文档的编码（Encode）方法</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>Content-Length</code>
+                                    </td>
+                                    <td class="org-left">
+                                        表示内容长度（只有当浏览器 使用持久 HTTP
+                                        连接时才需要这个数据）
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>Content-Length</code></td>
-<td class="org-left">表示内容长度（只有当浏览器 使用持久 HTTP 连接时才需要这个数据）</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>Content-Type</code>
+                                    </td>
+                                    <td class="org-left">
+                                        表示后面的档属于什么 MIME 类型
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>Content-Type</code></td>
-<td class="org-left">表示后面的档属于什么 MIME 类型</td>
-</tr>
+                                <tr>
+                                    <td class="org-left"><code>Date</code></td>
+                                    <td class="org-left">
+                                        当前的 GMT 时间，可以用
+                                        <code>setDateHeader</code>
+                                        来设置这个头以避免转换时间格式的麻烦
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>Date</code></td>
-<td class="org-left">当前的 GMT 时间，可以用 <code>setDateHeader</code> 来设置这个头以避免转换时间格式的麻烦</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>Expires</code>
+                                    </td>
+                                    <td class="org-left">
+                                        应该在什么时候认为文档已经过期，从而不再缓存它
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>Expires</code></td>
-<td class="org-left">应该在什么时候认为文档已经过期，从而不再缓存它</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>Last-Modified</code>
+                                    </td>
+                                    <td class="org-left">文档的最后改动时间</td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>Last-Modified</code></td>
-<td class="org-left">文档的最后改动时间</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>Location</code>
+                                    </td>
+                                    <td class="org-left">
+                                        表示福州市应当到哪里支提取文档。通常不是直接设置的
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>Location</code></td>
-<td class="org-left">表示福州市应当到哪里支提取文档。通常不是直接设置的</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>Refresh</code>
+                                    </td>
+                                    <td class="org-left">
+                                        表示浏览器应该在多少时间之后刷新文档，以秒计
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>Refresh</code></td>
-<td class="org-left">表示浏览器应该在多少时间之后刷新文档，以秒计</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>Server</code>
+                                    </td>
+                                    <td class="org-left">
+                                        服务器名字。Servlet
+                                        一般不设置这个值，面是由 Web
+                                        服务器自己设置
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>Server</code></td>
-<td class="org-left">服务器名字。Servlet 一般不设置这个值，面是由 Web 服务器自己设置</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>Set-Cookie</code>
+                                    </td>
+                                    <td class="org-left">
+                                        设置和页面关联的 Cookie
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>Set-Cookie</code></td>
-<td class="org-left">设置和页面关联的 Cookie</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>WWW-Authenticate</code>
+                                    </td>
+                                    <td class="org-left">
+                                        客户应该在
+                                        <code>Authorization</code>
+                                        中提供什么类型的授权信息
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-<tr>
-<td class="org-left"><code>WWW-Authenticate</code></td>
-<td class="org-left">客户应该在 <code>Authorization</code> 中提供什么类型的授权信息</td>
-</tr>
-</tbody>
-</table>
+                        <p>
+                            <span class="underline">1. Content-Type</span>
+                        </p>
 
-<p>
-<span class="underline">1. Content-Type</span>
-</p>
+                        <p>
+                            其中，
+                            <code>Content-Type</code>
+                            （内容类型），用于定义网络文件的类型和网页的编码，决定浏览器将以什么形式、什么编码读取这个文件。也就是说，
+                            <code>Content-Type</code>
+                            标头告诉客户端实际返回的内容的内容类型。
+                        </p>
 
-<p>
-其中， <code>Content-Type</code> （内容类型），用于定义网络文件的类型和网页的编码，决定浏览器将以什么形式、什么编码读取这个文件。也就是说， <code>Content-Type</code> 标头告诉客户端实际返回的内容的内容类型。
-</p>
+                        <p>语法格式如下：</p>
 
-<p>
-语法格式如下：
-</p>
-
-<pre class="example">
+                        <pre class="example">
 Content-Type: text/html; charset=utf-8
 Content-Type: multipart/form-data; boundary=something
-</pre>
+</pre
+                        >
 
-<table>
-<caption class="t-above"><span class="table-number">Table 2:</span> 常见的媒体格式类型</caption>
+                        <table>
+                            <caption class="t-above">
+                                <span class="table-number">Table 2:</span>
+                                常见的媒体格式类型
+                            </caption>
 
-<colgroup>
-<col  class="org-left">
+                            <colgroup>
+                                <col class="org-left" />
 
-<col  class="org-left">
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">类型</th>
-<th scope="col" class="org-left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left"><code>text/html</code></td>
-<td class="org-left">HTML 格式</td>
-</tr>
+                                <col class="org-left" />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="org-left">类型</th>
+                                    <th scope="col" class="org-left">描述</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>text/html</code>
+                                    </td>
+                                    <td class="org-left">HTML 格式</td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>text/plain</code></td>
-<td class="org-left">纯文本格式</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>text/plain</code>
+                                    </td>
+                                    <td class="org-left">纯文本格式</td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>text/xml</code></td>
-<td class="org-left">XML 格式</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>text/xml</code>
+                                    </td>
+                                    <td class="org-left">XML 格式</td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>image/gif</code></td>
-<td class="org-left">gif 图片格式</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>image/gif</code>
+                                    </td>
+                                    <td class="org-left">gif 图片格式</td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>image/jpeg</code></td>
-<td class="org-left">jpg 图片格式</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>image/jpeg</code>
+                                    </td>
+                                    <td class="org-left">jpg 图片格式</td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>image/png</code></td>
-<td class="org-left">png 图片格式</td>
-</tr>
-</tbody>
-<tbody>
-<tr>
-<td class="org-left"><b>以 application 开头的媒体格式类型</b></td>
-<td class="org-left">&#xa0;</td>
-</tr>
-</tbody>
-<tbody>
-<tr>
-<td class="org-left"><code>application/xhtml+xml</code></td>
-<td class="org-left">XHTML 格式</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>image/png</code>
+                                    </td>
+                                    <td class="org-left">png 图片格式</td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <td class="org-left">
+                                        <b>以 application 开头的媒体格式类型</b>
+                                    </td>
+                                    <td class="org-left">&#xa0;</td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>application/xhtml+xml</code>
+                                    </td>
+                                    <td class="org-left">XHTML 格式</td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>application/xml</code></td>
-<td class="org-left">XML 格式</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>application/xml</code>
+                                    </td>
+                                    <td class="org-left">XML 格式</td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>application/atom+xml</code></td>
-<td class="org-left">Atom XML 聚合格式</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>application/atom+xml</code>
+                                    </td>
+                                    <td class="org-left">Atom XML 聚合格式</td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>application/json</code></td>
-<td class="org-left">JSON 数据格式</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>application/json</code>
+                                    </td>
+                                    <td class="org-left">JSON 数据格式</td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>application/pdf</code></td>
-<td class="org-left">pdf 格式</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>application/pdf</code>
+                                    </td>
+                                    <td class="org-left">pdf 格式</td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>application/msword</code></td>
-<td class="org-left">Word 文档格式</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>application/msword</code>
+                                    </td>
+                                    <td class="org-left">Word 文档格式</td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>application/octet-stream</code></td>
-<td class="org-left">二进制流数据（如常见的文件下载）</td>
-</tr>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>application/octet-stream</code>
+                                    </td>
+                                    <td class="org-left">
+                                        二进制流数据（如常见的文件下载）
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>application/x-www-form-urlencoded</code></td>
-<td class="org-left">表单默认的提交数据的格式</td>
-</tr>
-</tbody>
-<tbody>
-<tr>
-<td class="org-left"><code>application/form-data</code></td>
-<td class="org-left">需要在表单中进行文件上传时，就需要使用该格式</td>
-</tr>
-</tbody>
-</table>
+                                <tr>
+                                    <td class="org-left">
+                                        <code
+                                            >application/x-www-form-urlencoded</code
+                                        >
+                                    </td>
+                                    <td class="org-left">
+                                        表单默认的提交数据的格式
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <td class="org-left">
+                                        <code>application/form-data</code>
+                                    </td>
+                                    <td class="org-left">
+                                        需要在表单中进行文件上传时，就需要使用该格式
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-<p>
-<span class="underline">2. HTTP 状态码</span>
-</p>
+                        <p>
+                            <span class="underline">2. HTTP 状态码</span>
+                        </p>
 
-<p>
-i.e. HTTP Status Code
-</p>
+                        <p>i.e. HTTP Status Code</p>
 
-<p>
-当浏览者访问一个网页时，浏览者的浏览器会向网页所在服务器发出请求。当 <b>浏览器接收并显示网页前</b> ，此网页所在的服务器会返回一个包含 HTTP 状态码的信息头（server header）用以响应浏览器的请求。
-</p>
+                        <p>
+                            当浏览者访问一个网页时，浏览者的浏览器会向网页所在服务器发出请求。当
+                            <b>浏览器接收并显示网页前</b>
+                            ，此网页所在的服务器会返回一个包含 HTTP
+                            状态码的信息头（server
+                            header）用以响应浏览器的请求。
+                        </p>
 
-<p>
-<span class="underline">HTTP 状态码</span> 由三个十进制数字组成，其中，第一个数字定义了状态码的类型，后两个数字没有分类的作用，总共分为 5 种类型：
-</p>
+                        <p>
+                            <span class="underline">HTTP 状态码</span>
+                            由三个十进制数字组成，其中，第一个数字定义了状态码的类型，后两个数字没有分类的作用，总共分为
+                            5 种类型：
+                        </p>
 
-<table>
-<caption class="t-above"><span class="table-number">Table 3:</span> HTTP 状态码分类</caption>
+                        <table>
+                            <caption class="t-above">
+                                <span class="table-number">Table 3:</span>
+                                HTTP 状态码分类
+                            </caption>
 
-<colgroup>
-<col  class="org-left">
+                            <colgroup>
+                                <col class="org-left" />
 
-<col  class="org-left">
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">分类</th>
-<th scope="col" class="org-left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left"><code>1**</code></td>
-<td class="org-left">信息，服务器收到请求，需要请求者继续执行操作</td>
-</tr>
+                                <col class="org-left" />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="org-left">分类</th>
+                                    <th scope="col" class="org-left">描述</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="org-left"><code>1**</code></td>
+                                    <td class="org-left">
+                                        信息，服务器收到请求，需要请求者继续执行操作
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>2**</code></td>
-<td class="org-left">成功，操作被成功接收并处理</td>
-</tr>
+                                <tr>
+                                    <td class="org-left"><code>2**</code></td>
+                                    <td class="org-left">
+                                        成功，操作被成功接收并处理
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>3**</code></td>
-<td class="org-left">重定向，需要进一步的操作以完成请求</td>
-</tr>
+                                <tr>
+                                    <td class="org-left"><code>3**</code></td>
+                                    <td class="org-left">
+                                        重定向，需要进一步的操作以完成请求
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>4**</code></td>
-<td class="org-left">客户端错误，请求包含语法错误或无法完成请求</td>
-</tr>
+                                <tr>
+                                    <td class="org-left"><code>4**</code></td>
+                                    <td class="org-left">
+                                        客户端错误，请求包含语法错误或无法完成请求
+                                    </td>
+                                </tr>
 
-<tr>
-<td class="org-left"><code>5**</code></td>
-<td class="org-left">服务器错误，服务器在处理请求的过程中发生了错误</td>
-</tr>
-</tbody>
-</table>
+                                <tr>
+                                    <td class="org-left"><code>5**</code></td>
+                                    <td class="org-left">
+                                        服务器错误，服务器在处理请求的过程中发生了错误
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-<p>
-下面是常见的状态码：
-</p>
-<ul class="org-ul">
-<li>200 - 请求成功；</li>
-<li>301 - 资源（网页等）被永久转移到其它 URL；</li>
-<li>404 - 请求的资源（网页等）不存在；</li>
-<li>500 - 内部服务器错误。</li>
-</ul>
-</div>
-</div>
-</div>
+                        <p>下面是常见的状态码：</p>
+                        <ul class="org-ul">
+                            <li>200 - 请求成功；</li>
+                            <li>301 - 资源（网页等）被永久转移到其它 URL；</li>
+                            <li>404 - 请求的资源（网页等）不存在；</li>
+                            <li>500 - 内部服务器错误。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-<div id="outline-container-org5e9ff63" class="outline-2">
-<h2 id="org5e9ff63">jQuery 中的 Ajax<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup></h2>
-<div class="outline-text-2" id="text-org5e9ff63">
-<p>
-jQuery 提供多个与 AJAX 有关的方法。
-</p>
+            <div id="outline-container-org5e9ff63" class="outline-2">
+                <h2 id="org5e9ff63">
+                    jQuery 中的 Ajax<sup
+                        ><a id="fnr.4" class="footref" href="#fn.4">4</a></sup
+                    >
+                </h2>
+                <div class="outline-text-2" id="text-org5e9ff63">
+                    <p>jQuery 提供多个与 AJAX 有关的方法。</p>
 
-<p>
-通过 jQuery AJAX 方法，您能够使用 HTTP Get 和 HTTP Post 从远程服务器上请求文本、HTML、XML 或 JSON - 同时您能够把这些外部数据直接载入网页的被选元素中。
-</p>
+                    <p>
+                        通过 jQuery AJAX 方法，您能够使用 HTTP Get 和 HTTP Post
+                        从远程服务器上请求文本、HTML、XML 或 JSON -
+                        同时您能够把这些外部数据直接载入网页的被选元素中。
+                    </p>
 
-<blockquote>
-<p>
-编写常规的 AJAX 代码并不容易，因为不同的浏览器对 AJAX 的实现并不相同。这意味着您必须编写额外的代码对浏览器进行测试。不过，jQuery 团队为我们解决了这个难题，我们只需要一行简单的代码，就可以实现 AJAX 功能。
-</p>
-</blockquote>
+                    <blockquote>
+                        <p>
+                            编写常规的 AJAX 代码并不容易，因为不同的浏览器对
+                            AJAX
+                            的实现并不相同。这意味着您必须编写额外的代码对浏览器进行测试。不过，jQuery
+                            团队为我们解决了这个难题，我们只需要一行简单的代码，就可以实现
+                            AJAX 功能。
+                        </p>
+                    </blockquote>
 
-<essay>
-jQuery 也算是 DOM 时代的霸主了……
-</essay>
+                    <essay> jQuery 也算是 DOM 时代的霸主了…… </essay>
 
-<p>
-在现代 Web 项目中，我们已经很少使用 jQuery 做主力了，除非你要和万恶的 IE 打交道，我们这里只稍微认识一下 jQuery 中 Ajax 的一般应用。
-</p>
+                    <p>
+                        在现代 Web 项目中，我们已经很少使用 jQuery
+                        做主力了，除非你要和万恶的 IE
+                        打交道，我们这里只稍微认识一下 jQuery 中 Ajax
+                        的一般应用。
+                    </p>
 
-<table>
+                    <table>
+                        <colgroup>
+                            <col class="org-left" />
 
-<colgroup>
-<col  class="org-left">
+                            <col class="org-left" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th scope="col" class="org-left">方法</th>
+                                <th scope="col" class="org-left">描述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="org-left"><code>$.ajax()</code></td>
+                                <td class="org-left">执行异步 AJAX 请求</td>
+                            </tr>
 
-<col  class="org-left">
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">方法</th>
-<th scope="col" class="org-left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left"><code>$.ajax()</code></td>
-<td class="org-left">执行异步 AJAX 请求</td>
-</tr>
+                            <tr>
+                                <td class="org-left">
+                                    <code>$.ajaxSetup()</code>
+                                </td>
+                                <td class="org-left">
+                                    为将来的 AJAX 请求设置默认值
+                                </td>
+                            </tr>
 
-<tr>
-<td class="org-left"><code>$.ajaxSetup()</code></td>
-<td class="org-left">为将来的 AJAX 请求设置默认值</td>
-</tr>
+                            <tr>
+                                <td class="org-left">
+                                    <code>$.ajaxStart()</code>
+                                </td>
+                                <td class="org-left">
+                                    规定第一个 AJAX 请求开始时运行的函数
+                                </td>
+                            </tr>
 
-<tr>
-<td class="org-left"><code>$.ajaxStart()</code></td>
-<td class="org-left">规定第一个 AJAX 请求开始时运行的函数</td>
-</tr>
+                            <tr>
+                                <td class="org-left">
+                                    <code>$.ajaxStop()</code>
+                                </td>
+                                <td class="org-left">
+                                    规定所有的 AJAX 请求完成时运行的函数
+                                </td>
+                            </tr>
 
-<tr>
-<td class="org-left"><code>$.ajaxStop()</code></td>
-<td class="org-left">规定所有的 AJAX 请求完成时运行的函数</td>
-</tr>
+                            <tr>
+                                <td class="org-left">
+                                    <code>$.ajaxSend()</code>
+                                </td>
+                                <td class="org-left">
+                                    规定 AJAX 请求发送之前运行的函数
+                                </td>
+                            </tr>
 
-<tr>
-<td class="org-left"><code>$.ajaxSend()</code></td>
-<td class="org-left">规定 AJAX 请求发送之前运行的函数</td>
-</tr>
+                            <tr>
+                                <td class="org-left">
+                                    <code>$.ajaxSuccess()</code>
+                                </td>
+                                <td class="org-left">
+                                    规定 AJAX 请求成功完成时运行的函数
+                                </td>
+                            </tr>
 
-<tr>
-<td class="org-left"><code>$.ajaxSuccess()</code></td>
-<td class="org-left">规定 AJAX 请求成功完成时运行的函数</td>
-</tr>
+                            <tr>
+                                <td class="org-left">
+                                    <code>$.ajaxError()</code>
+                                </td>
+                                <td class="org-left">
+                                    规定 AJAX 请求失败时运行的函数
+                                </td>
+                            </tr>
 
-<tr>
-<td class="org-left"><code>$.ajaxError()</code></td>
-<td class="org-left">规定 AJAX 请求失败时运行的函数</td>
-</tr>
+                            <tr>
+                                <td class="org-left"><code>$.load()</code></td>
+                                <td class="org-left">
+                                    从服务器加载数据，并把返回的数据放置到指定的元素中
+                                </td>
+                            </tr>
 
-<tr>
-<td class="org-left"><code>$.load()</code></td>
-<td class="org-left">从服务器加载数据，并把返回的数据放置到指定的元素中</td>
-</tr>
+                            <tr>
+                                <td class="org-left">
+                                    <code>$.serialize()</code>
+                                </td>
+                                <td class="org-left">
+                                    编码表单元素集为字符串以便提交
+                                </td>
+                            </tr>
 
-<tr>
-<td class="org-left"><code>$.serialize()</code></td>
-<td class="org-left">编码表单元素集为字符串以便提交</td>
-</tr>
+                            <tr>
+                                <td class="org-left">&#x2026;</td>
+                                <td class="org-left">&#xa0;</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-<tr>
-<td class="org-left">&#x2026;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-</tbody>
-</table>
+                    <p>&#x2026;</p>
+                </div>
+            </div>
 
-<p>
-&#x2026;
-</p>
-</div>
-</div>
+            <div id="outline-container-orga92bd5b" class="outline-2">
+                <h2 id="orga92bd5b">
+                    Axios<sup
+                        ><a id="fnr.5" class="footref" href="#fn.5">5</a></sup
+                    >
+                </h2>
+                <div class="outline-text-2" id="text-orga92bd5b">
+                    <essay> 来看看这个比较火热的 Ajax 封装库吧。 </essay>
 
-<div id="outline-container-orga92bd5b" class="outline-2">
-<h2 id="orga92bd5b">Axios<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup></h2>
-<div class="outline-text-2" id="text-orga92bd5b">
-<essay>
-来看看这个比较火热的 Ajax 封装库吧。
-</essay>
+                    <p>
+                        Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和
+                        NodeJS 中，它具有以下特性：
+                    </p>
 
-<p>
-Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 NodeJS 中，它具有以下特性：
-</p>
-
-<pre class="example">
+                    <pre class="example">
 - 从浏览器中创建 XMLHttpRequests
 - 从 NodeJS 创建 http 请求
 - 支持 Promise API
@@ -1393,45 +1833,58 @@ Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 NodeJS 中
 - 取消请求
 - 自动转换 JSON 数据
 - 客户端支持防御 XSRF
-</pre>
+</pre
+                    >
 
-<p>
-*注：Axios 依赖原生的 ES6 Promise 实现而被支持，如果你的环境不支持 ES6 Promise ，可以使用 <a href="https://github.com/jakearchibald/es6-promise">polyfill</a> 。
-</p>
-</div>
+                    <p>
+                        *注：Axios 依赖原生的 ES6 Promise
+                        实现而被支持，如果你的环境不支持 ES6 Promise ，可以使用
+                        <a href="https://github.com/jakearchibald/es6-promise"
+                            >polyfill</a
+                        >
+                        。
+                    </p>
+                </div>
 
-<div id="outline-container-orga59280c" class="outline-3">
-<h3 id="orga59280c">Axios 起步</h3>
-<div class="outline-text-3" id="text-orga59280c">
-<p>
-先安装喽……
-</p>
+                <div id="outline-container-orga59280c" class="outline-3">
+                    <h3 id="orga59280c">Axios 起步</h3>
+                    <div class="outline-text-3" id="text-orga59280c">
+                        <p>先安装喽……</p>
 
-<pre class="example">
+                        <pre class="example">
 npm install axios                                                 # NPM
 &lt;script src="https://unpkg.com/axios/dist/axios.min.js"&gt;&lt;/script&gt; # CDN
-</pre>
+</pre
+                        >
 
-<essay>
-我们提供 JavaScript 软件包的时候，一般也需要提供 NPM 和 CDN 两种分发方式。
-</essay>
+                        <essay>
+                            我们提供 JavaScript 软件包的时候，一般也需要提供 NPM
+                            和 CDN 两种分发方式。
+                        </essay>
 
-<p>
-在项目（模块化开发）中，我们一般通过如下两种方式引入 axios ：
-</p>
+                        <p>
+                            在项目（模块化开发）中，我们一般通过如下两种方式引入
+                            axios ：
+                        </p>
 
-<div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #e45649;">import</span> axios from <span style="color: #50a14f;">'axios'</span>       <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">ES6 Module</span>
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-js"
+                            ><span class="linenr">1: </span><span style="color: #e45649;">import</span> axios from <span style="color: #50a14f;">'axios'</span>       <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">ES6 Module</span>
 <span class="linenr">2: </span><span style="color: #e45649;">const</span> <span style="color: #6a1868;">axios</span> = require<span style="color: #4078f2;">(</span><span style="color: #50a14f;">'axios'</span><span style="color: #4078f2;">)</span>  <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">CommonJS Module</span>
 </pre>
-</div>
+                        </div>
 
-<p>
-当我们引入 <code>axios</code> 之后，会默认导出一个 axios 实例，一般情况下就可以满足需求了。可以通过向 <code>axios</code> 传递相关配置来创建请求，如下：
-</p>
+                        <p>
+                            当我们引入 <code>axios</code> 之后，会默认导出一个
+                            axios 实例，一般情况下就可以满足需求了。可以通过向
+                            <code>axios</code> 传递相关配置来创建请求，如下：
+                        </p>
 
-<div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #e45649;">import</span> axios from <span style="color: #50a14f;">'axios'</span>
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-js"
+                            ><span class="linenr"> 1: </span><span style="color: #e45649;">import</span> axios from <span style="color: #50a14f;">'axios'</span>
 <span class="linenr"> 2: </span>
 <span class="linenr"> 3: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">axios(config)</span>
 <span class="linenr"> 4: </span>axios<span style="color: #4078f2;">(</span><span style="color: #a626a4;">{</span>
@@ -1443,14 +1896,18 @@ npm install axios                                                 # NPM
 <span class="linenr">10: </span>    <span style="color: #50a14f;">}</span>
 <span class="linenr">11: </span><span style="color: #a626a4;">}</span><span style="color: #4078f2;">)</span>
 </pre>
-</div>
+                        </div>
 
-<p>
-当然，如果默认的 axios 实例不能满足要求时，可以使用自定义配置创建一个新的 axios 实例（如 <code>instance</code> ）：
-</p>
+                        <p>
+                            当然，如果默认的 axios
+                            实例不能满足要求时，可以使用自定义配置创建一个新的
+                            axios 实例（如 <code>instance</code> ）：
+                        </p>
 
-<div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #e45649;">import</span> axios from <span style="color: #50a14f;">'axios'</span>
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-js"
+                            ><span class="linenr">1: </span><span style="color: #e45649;">import</span> axios from <span style="color: #50a14f;">'axios'</span>
 <span class="linenr">2: </span>
 <span class="linenr">3: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">axios.create([config])</span>
 <span class="linenr">4: </span><span style="color: #e45649;">const</span> <span style="color: #6a1868;">instance</span> = axios.create<span style="color: #4078f2;">(</span><span style="color: #a626a4;">{</span>
@@ -1459,23 +1916,36 @@ npm install axios                                                 # NPM
 <span class="linenr">7: </span>    headers: <span style="color: #50a14f;">{</span><span style="color: #50a14f;">'X-Custom-Header'</span>&#65306; <span style="color: #50a14f;">'foobar'</span><span style="color: #50a14f;">}</span>
 <span class="linenr">8: </span><span style="color: #a626a4;">}</span><span style="color: #4078f2;">)</span>
 </pre>
-</div>
+                        </div>
 
-<p>
-*注：使用创建的 axios 实例请求时，请求的配置项将与实例的配置合并。
-</p>
-</div>
-</div>
+                        <p>
+                            *注：使用创建的 axios
+                            实例请求时，请求的配置项将与实例的配置合并。
+                        </p>
+                    </div>
+                </div>
 
-<div id="outline-container-org5f6d4d4" class="outline-3">
-<h3 id="org5f6d4d4">Axios 请求配置<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup></h3>
-<div class="outline-text-3" id="text-org5f6d4d4">
-<p>
-这些都是创建请求时可以用的配置选项， <b>只有 <code>url</code> 是必需的</b> ，如果没有指定的 <code>method</code> ，请求将默认使用 <code>get</code> 方法。
-</p>
+                <div id="outline-container-org5f6d4d4" class="outline-3">
+                    <h3 id="org5f6d4d4">
+                        Axios 请求配置<sup
+                            ><a id="fnr.6" class="footref" href="#fn.6"
+                                >6</a
+                            ></sup
+                        >
+                    </h3>
+                    <div class="outline-text-3" id="text-org5f6d4d4">
+                        <p>
+                            这些都是创建请求时可以用的配置选项，
+                            <b>只有 <code>url</code> 是必需的</b>
+                            ，如果没有指定的
+                            <code>method</code> ，请求将默认使用
+                            <code>get</code> 方法。
+                        </p>
 
-<div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #4078f2;">{</span>
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-js"
+                            ><span class="linenr"> 1: </span><span style="color: #4078f2;">{</span>
 <span class="linenr"> 2: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">url &#26159;&#29992;&#20110;&#35831;&#27714;&#30340;&#26381;&#21153;&#22120; URL</span>
 <span class="linenr"> 3: </span>    url: <span style="color: #50a14f;">'/user'</span>
 <span class="linenr"> 4: </span>
@@ -1502,19 +1972,19 @@ npm install axios                                                 # NPM
 <span class="linenr">25: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">...</span>
 <span class="linenr">26: </span><span style="color: #4078f2;">}</span>
 </pre>
-</div>
-</div>
-</div>
+                        </div>
+                    </div>
+                </div>
 
-<div id="outline-container-orgd193598" class="outline-3">
-<h3 id="orgd193598">Axios 响应结构</h3>
-<div class="outline-text-3" id="text-orgd193598">
-<p>
-某个请求的响应包含以下信息：
-</p>
+                <div id="outline-container-orgd193598" class="outline-3">
+                    <h3 id="orgd193598">Axios 响应结构</h3>
+                    <div class="outline-text-3" id="text-orgd193598">
+                        <p>某个请求的响应包含以下信息：</p>
 
-<div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #4078f2;">{</span>
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-js"
+                            ><span class="linenr"> 1: </span><span style="color: #4078f2;">{</span>
 <span class="linenr"> 2: </span>    <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">data &#30001;&#26381;&#21153;&#22120;&#25552;&#20379;&#30340;&#21709;&#24212;</span>
 <span class="linenr"> 3: </span>    data: <span style="color: #a626a4;">{}</span>,
 <span class="linenr"> 4: </span>
@@ -1536,14 +2006,16 @@ npm install axios                                                 # NPM
 <span class="linenr">20: </span>    request: <span style="color: #a626a4;">{}</span>
 <span class="linenr">21: </span><span style="color: #4078f2;">}</span>
 </pre>
-</div>
+                        </div>
 
-<p>
-使用 <code>then</code> 时，你将接收下面这样的响应：
-</p>
+                        <p>
+                            使用 <code>then</code> 时，你将接收下面这样的响应：
+                        </p>
 
-<div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span>axios.get<span style="color: #4078f2;">(</span><span style="color: #50a14f;">'/user/12345'</span><span style="color: #4078f2;">)</span>
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-js"
+                            ><span class="linenr">1: </span>axios.get<span style="color: #4078f2;">(</span><span style="color: #50a14f;">'/user/12345'</span><span style="color: #4078f2;">)</span>
 <span class="linenr">2: </span>    .then<span style="color: #4078f2;">(</span><span style="color: #e45649;">function</span> <span style="color: #a626a4;">(</span><span style="color: #6a1868;">response</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
 <span class="linenr">3: </span>        console.log<span style="color: #50a14f;">(</span>response.data<span style="color: #50a14f;">)</span>;
 <span class="linenr">4: </span>        console.log<span style="color: #50a14f;">(</span>response.status<span style="color: #50a14f;">)</span>;
@@ -1552,34 +2024,38 @@ npm install axios                                                 # NPM
 <span class="linenr">7: </span>        console.log<span style="color: #50a14f;">(</span>response.config<span style="color: #50a14f;">)</span>;
 <span class="linenr">8: </span>    <span style="color: #a626a4;">}</span><span style="color: #4078f2;">)</span>
 </pre>
-</div>
-</div>
-</div>
+                        </div>
+                    </div>
+                </div>
 
-<div id="outline-container-orga8ca275" class="outline-3">
-<h3 id="orga8ca275">配置默认值</h3>
-<div class="outline-text-3" id="text-orga8ca275">
-<p>
-你可以指定将被用在各个请求的配置默认值。
-</p>
+                <div id="outline-container-orga8ca275" class="outline-3">
+                    <h3 id="orga8ca275">配置默认值</h3>
+                    <div class="outline-text-3" id="text-orga8ca275">
+                        <p>你可以指定将被用在各个请求的配置默认值。</p>
 
-<p>
-<span class="underline">1. 全局的 axios 默认值</span>
-</p>
+                        <p>
+                            <span class="underline"
+                                >1. 全局的 axios 默认值</span
+                            >
+                        </p>
 
-<div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span>axios.defaults.baseURL = <span style="color: #50a14f;">'http://api.example.com'</span>;
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-js"
+                            ><span class="linenr">1: </span>axios.defaults.baseURL = <span style="color: #50a14f;">'http://api.example.com'</span>;
 <span class="linenr">2: </span>axios.defaults.headers.common<span style="color: #4078f2;">[</span><span style="color: #50a14f;">'Authorization'</span><span style="color: #4078f2;">]</span> = AUTH_TOKEN;
 <span class="linenr">3: </span>axios.defaults.headers.post<span style="color: #4078f2;">[</span><span style="color: #50a14f;">'Content-Type'</span><span style="color: #4078f2;">]</span> = <span style="color: #50a14f;">'application/x-www-form-urlencoded'</span>;
 </pre>
-</div>
+                        </div>
 
-<p>
-<span class="underline">2. 自定义实例默认值</span>
-</p>
+                        <p>
+                            <span class="underline">2. 自定义实例默认值</span>
+                        </p>
 
-<div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21019;&#24314;&#23454;&#20363;&#26102;&#35774;&#32622;&#37197;&#32622;&#40664;&#35748;&#20540;</span>
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-js"
+                            ><span class="linenr">1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#21019;&#24314;&#23454;&#20363;&#26102;&#35774;&#32622;&#37197;&#32622;&#40664;&#35748;&#20540;</span>
 <span class="linenr">2: </span><span style="color: #e45649;">const</span> <span style="color: #6a1868;">instance</span> = axios.create<span style="color: #4078f2;">(</span><span style="color: #a626a4;">{</span>
 <span class="linenr">3: </span>    baseURL: <span style="color: #50a14f;">'https://api.example.com'</span>
 <span class="linenr">4: </span><span style="color: #a626a4;">}</span><span style="color: #4078f2;">)</span>;
@@ -1587,18 +2063,24 @@ npm install axios                                                 # NPM
 <span class="linenr">6: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#23454;&#20363;&#21019;&#24314;&#20043;&#21518;&#21487;&#20462;&#25913;&#40664;&#35748;&#37197;&#32622;</span>
 <span class="linenr">7: </span>instance.defaults.headers.common<span style="color: #4078f2;">[</span><span style="color: #50a14f;">'Authorization'</span><span style="color: #4078f2;">]</span> = AUTH_TOKEN;
 </pre>
-</div>
+                        </div>
 
-<p>
-<span class="underline">3. 配置的优先顺序</span>
-</p>
+                        <p>
+                            <span class="underline">3. 配置的优先顺序</span>
+                        </p>
 
-<p>
-配置会以一个优先顺序进行合并。这个顺序是：在 <code>lib/defaults.js</code> 找到的库的默认值，然后是实例的 <code>defaults</code> 属性，最后是请求的 <code>config</code> 参数，后者将优先于前者。如下：
-</p>
+                        <p>
+                            配置会以一个优先顺序进行合并。这个顺序是：在
+                            <code>lib/defaults.js</code>
+                            找到的库的默认值，然后是实例的
+                            <code>defaults</code> 属性，最后是请求的
+                            <code>config</code> 参数，后者将优先于前者。如下：
+                        </p>
 
-<div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20351;&#29992;&#30001;&#24211;&#25552;&#20379;&#30340;&#37197;&#32622;&#40664;&#35748;&#20540;&#26469;&#21019;&#24314;&#23454;&#20363;</span>
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-js"
+                            ><span class="linenr"> 1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#20351;&#29992;&#30001;&#24211;&#25552;&#20379;&#30340;&#37197;&#32622;&#40664;&#35748;&#20540;&#26469;&#21019;&#24314;&#23454;&#20363;</span>
 <span class="linenr"> 2: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#27492;&#26102;&#36229;&#26102;&#37197;&#32622;&#30340;&#40664;&#35748;&#20540;&#26159; 0</span>
 <span class="linenr"> 3: </span><span style="color: #e45649;">const</span> <span style="color: #6a1868;">instance</span> = axios.create<span style="color: #4078f2;">()</span>;
 <span class="linenr"> 4: </span>
@@ -1611,19 +2093,22 @@ npm install axios                                                 # NPM
 <span class="linenr">11: </span>    timeout: 5000
 <span class="linenr">12: </span><span style="color: #a626a4;">}</span><span style="color: #4078f2;">)</span>;
 </pre>
-</div>
-</div>
-</div>
+                        </div>
+                    </div>
+                </div>
 
-<div id="outline-container-orga5e528e" class="outline-3">
-<h3 id="orga5e528e">拦截器</h3>
-<div class="outline-text-3" id="text-orga5e528e">
-<p>
-在请求或响应被 <code>then</code> 或 <code>catch</code> 处理前拦截它们。
-</p>
+                <div id="outline-container-orga5e528e" class="outline-3">
+                    <h3 id="orga5e528e">拦截器</h3>
+                    <div class="outline-text-3" id="text-orga5e528e">
+                        <p>
+                            在请求或响应被 <code>then</code> 或
+                            <code>catch</code> 处理前拦截它们。
+                        </p>
 
-<div class="org-src-container">
-<pre class="src src-js"><span class="linenr"> 1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#28155;&#21152;&#35831;&#27714;&#25318;&#25130;&#22120;</span>
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-js"
+                            ><span class="linenr"> 1: </span><span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#28155;&#21152;&#35831;&#27714;&#25318;&#25130;&#22120;</span>
 <span class="linenr"> 2: </span>axios.interceptors.request.use<span style="color: #4078f2;">(</span>
 <span class="linenr"> 3: </span>    <span style="color: #e45649;">function</span><span style="color: #a626a4;">(</span><span style="color: #6a1868;">config</span><span style="color: #a626a4;">)</span> <span style="color: #a626a4;">{</span>
 <span class="linenr"> 4: </span>        <span style="color: #9ca0a4;">// </span><span style="color: #9ca0a4;">&#22312;&#21457;&#36865;&#35831;&#27714;&#20043;&#21069;&#20570;&#20123;&#20160;&#20040;</span>
@@ -1647,69 +2132,155 @@ npm install axios                                                 # NPM
 <span class="linenr">22: </span>    <span style="color: #a626a4;">}</span>
 <span class="linenr">23: </span><span style="color: #4078f2;">)</span>;
 </pre>
-</div>
-</div>
-</div>
+                        </div>
+                    </div>
+                </div>
 
-<div id="outline-container-orgad5ea44" class="outline-3">
-<h3 id="orgad5ea44">*使用 application/x-www-form-urlencoded 格式</h3>
-<div class="outline-text-3" id="text-orgad5ea44">
-<p>
-默认情况下，axios 将 JavaScript 对象序列化为 JSON。要以 <code>application/x-www-form-urlencoded</code> 格式发送数据，使用 <code>qs</code> 库编码数据，如下：
-</p>
+                <div id="outline-container-orgad5ea44" class="outline-3">
+                    <h3 id="orgad5ea44">
+                        *使用 application/x-www-form-urlencoded 格式
+                    </h3>
+                    <div class="outline-text-3" id="text-orgad5ea44">
+                        <p>
+                            默认情况下，axios 将 JavaScript 对象序列化为
+                            JSON。要以
+                            <code>application/x-www-form-urlencoded</code>
+                            格式发送数据，使用
+                            <code>qs</code> 库编码数据，如下：
+                        </p>
 
-<div class="org-src-container">
-<pre class="src src-js"><span class="linenr">1: </span><span style="color: #e45649;">const</span> <span style="color: #6a1868;">qs</span> = require<span style="color: #4078f2;">(</span><span style="color: #50a14f;">'qs'</span><span style="color: #4078f2;">)</span>;
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-js"
+                            ><span class="linenr">1: </span><span style="color: #e45649;">const</span> <span style="color: #6a1868;">qs</span> = require<span style="color: #4078f2;">(</span><span style="color: #50a14f;">'qs'</span><span style="color: #4078f2;">)</span>;
 <span class="linenr">2: </span>axios.post<span style="color: #4078f2;">(</span><span style="color: #50a14f;">'/foo'</span>, qs.stringify<span style="color: #a626a4;">(</span><span style="color: #50a14f;">{</span> <span style="color: #50a14f;">'bar'</span>: 123 <span style="color: #50a14f;">}</span><span style="color: #a626a4;">)</span><span style="color: #4078f2;">)</span>;
 </pre>
-</div>
-</div>
-</div>
+                        </div>
+                    </div>
+                </div>
 
-<div id="outline-container-org7f66932" class="outline-3">
-<h3 id="org7f66932">框架、插件</h3>
-<div class="outline-text-3" id="text-org7f66932">
-<p>
-如果你想了解更多，请参考 <a href="https://www.w3cschool.cn/jquti/jquti-b4sf360b.html">W3Cschool Axios</a> 。
-</p>
-</div>
-</div>
-</div>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
+                <div id="outline-container-org7f66932" class="outline-3">
+                    <h3 id="org7f66932">框架、插件</h3>
+                    <div class="outline-text-3" id="text-org7f66932">
+                        <p>
+                            如果你想了解更多，请参考
+                            <a
+                                href="https://www.w3cschool.cn/jquti/jquti-b4sf360b.html"
+                                >W3Cschool Axios</a
+                            >
+                            。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div id="footnotes">
+                <h2 class="footnotes">Footnotes:</h2>
+                <div id="text-footnotes">
+                    <div class="footdef">
+                        <sup
+                            ><a id="fn.1" class="footnum" href="#fnr.1"
+                                >1</a
+                            ></sup
+                        >
+                        <div class="footpara">
+                            <p class="footpara">
+                                <a
+                                    href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017627212385376"
+                                    >https://www.liaoxuefeng.com/wiki/1016959663602400/1017627212385376</a
+                                >
+                            </p>
+                        </div>
+                    </div>
 
-<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017627212385376">https://www.liaoxuefeng.com/wiki/1016959663602400/1017627212385376</a>
-</p></div></div>
+                    <div class="footdef">
+                        <sup
+                            ><a id="fn.2" class="footnum" href="#fnr.2"
+                                >2</a
+                            ></sup
+                        >
+                        <div class="footpara">
+                            <p class="footpara">
+                                <a
+                                    href="https://www.cnblogs.com/gg-qq/p/11125652.html"
+                                    >https://www.cnblogs.com/gg-qq/p/11125652.html</a
+                                >
+                            </p>
+                        </div>
+                    </div>
 
-<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://www.cnblogs.com/gg-qq/p/11125652.html">https://www.cnblogs.com/gg-qq/p/11125652.html</a>
-</p></div></div>
+                    <div class="footdef">
+                        <sup
+                            ><a id="fn.3" class="footnum" href="#fnr.3"
+                                >3</a
+                            ></sup
+                        >
+                        <div class="footpara">
+                            <p class="footpara">
+                                <a
+                                    href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html"
+                                    >http://www.ruanyifeng.com/blog/2014/10/event-loop.html</a
+                                >
+                            </p>
+                        </div>
+                    </div>
 
-<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
-<a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html">http://www.ruanyifeng.com/blog/2014/10/event-loop.html</a>
-</p></div></div>
+                    <div class="footdef">
+                        <sup
+                            ><a id="fn.4" class="footnum" href="#fnr.4"
+                                >4</a
+                            ></sup
+                        >
+                        <div class="footpara">
+                            <p class="footpara">
+                                <a
+                                    href="https://www.runoob.com/jquery/jquery-ref-ajax.html"
+                                    >https://www.runoob.com/jquery/jquery-ref-ajax.html</a
+                                >
+                            </p>
+                        </div>
+                    </div>
 
-<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://www.runoob.com/jquery/jquery-ref-ajax.html">https://www.runoob.com/jquery/jquery-ref-ajax.html</a>
-</p></div></div>
+                    <div class="footdef">
+                        <sup
+                            ><a id="fn.5" class="footnum" href="#fnr.5"
+                                >5</a
+                            ></sup
+                        >
+                        <div class="footpara">
+                            <p class="footpara">
+                                <a
+                                    href="https://www.w3cschool.cn/jquti/jquti-kb3a35x1.html"
+                                    >https://www.w3cschool.cn/jquti/jquti-kb3a35x1.html</a
+                                >
+                            </p>
+                        </div>
+                    </div>
 
-<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://www.w3cschool.cn/jquti/jquti-kb3a35x1.html">https://www.w3cschool.cn/jquti/jquti-kb3a35x1.html</a>
-</p></div></div>
-
-<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://www.w3cschool.cn/jquti/jquti-rksl35xd.html">https://www.w3cschool.cn/jquti/jquti-rksl35xd.html</a>
-</p></div></div>
-
-</div>
-</div></div>
-<div id="postamble" class="status">
-<p class="date">Date: 2020-11-26 Thu 17:49</p>
-<p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2021-02-23 Tue 15:25</p>
-<p class="validation"><a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a></p>
-</div>
-</body>
+                    <div class="footdef">
+                        <sup
+                            ><a id="fn.6" class="footnum" href="#fnr.6"
+                                >6</a
+                            ></sup
+                        >
+                        <div class="footpara">
+                            <p class="footpara">
+                                <a
+                                    href="https://www.w3cschool.cn/jquti/jquti-rksl35xd.html"
+                                    >https://www.w3cschool.cn/jquti/jquti-rksl35xd.html</a
+                                >
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="postamble" class="status">
+            <p class="date">Date: 2020-11-26 Thu 17:49</p>
+            <p class="author">Author: Jack Liu</p>
+            <p class="date">Created: 2021-02-23 Tue 15:25</p>
+            <p class="validation">
+                <a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a>
+            </p>
+        </div>
+    </body>
 </html>

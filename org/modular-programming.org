@@ -45,7 +45,7 @@ _模块化编程_ （模块化程序设计），是指在进行程序设计时�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/mp-1.jpg"
+src="images/mp-1.jpg"
 width=""
 height=""
 style=""

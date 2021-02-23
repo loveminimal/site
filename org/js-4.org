@@ -40,7 +40,7 @@ _引用值_ ，则是由多个值构成的对象，是保存在内存中对象�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/js-1.jpg"
+src="images/js-1.jpg"
 width="200"
 height=""
 style=""
@@ -50,7 +50,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/js-2.jpg"
+src="images/js-2.jpg"
 width="540"
 height=""
 style="float: right; margin-left: 8px;"

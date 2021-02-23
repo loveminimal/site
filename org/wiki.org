@@ -5,7 +5,7 @@
 
 # #+BEGIN_EXPORT html
 # <img
-# src="/images/wiki.jpg"
+# src="images/wiki.jpg"
 # width="40%"
 # style="float: right; box-shadow: 3px 3px 5px #aaa; border-radius: 5px;"
 # />

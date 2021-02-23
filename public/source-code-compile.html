@@ -1,99 +1,131 @@
 <!DOCTYPE html>
 <html lang="zh">
-<head>
-<!-- 2021-02-23 Tue 15:27 -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>源码编译安装</title>
-<meta name="generator" content="Org mode">
-<meta name="author" content="Jack Liu">
-<link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
-           <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
-           <script type="module" src="/themes/main.js" defer></script>
-</head>
-<body>
-<div id="content">
-<h1 class="title">源码编译安装</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#orga24a3c1">如何编译安装</a></li>
-<li><a href="#orga4e0def">如何理解编译过程</a>
-<ul>
-<li><a href="#org46cd4dd">./configure</a></li>
-<li><a href="#orge401fa5">make</a></li>
-<li><a href="#orge36992e">*cmake</a></li>
-<li><a href="#org68fc19c">make install</a></li>
-</ul>
-</li>
-<li><a href="#org3351e15">扩展 - C/C++ 编译过程</a>
-<ul>
-<li><a href="#orgfcb3d22">相关名词</a></li>
-<li><a href="#org9c1f513">编译过程</a></li>
-<li><a href="#orgc1a1f32">链接过程</a></li>
-</ul>
-</li>
-<li><a href="#org8578b4d"><span class="todo TODO">TODO</span> 进阶 - Linux 下源码编译安装详解</a></li>
-</ul>
-</div>
-</div>
-<img
-src="/images/compile.png"
-width="600"
-style=""
-/>
+    <head>
+        <!-- 2021-02-23 Tue 15:27 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>源码编译安装</title>
+        <meta name="generator" content="Org mode" />
+        <meta name="author" content="Jack Liu" />
+        <link
+            rel="shortcut icon"
+            href="/themes/assets/rose-red.png"
+            type="image/x-icon"
+        />
+        <link rel="stylesheet" href="/themes/style.css" type="text/css" />
+        <script type="module" src="/themes/main.js" defer></script>
+    </head>
+    <body>
+        <div id="content">
+            <h1 class="title">源码编译安装</h1>
+            <div id="table-of-contents">
+                <h2>Table of Contents</h2>
+                <div id="text-table-of-contents">
+                    <ul>
+                        <li><a href="#orga24a3c1">如何编译安装</a></li>
+                        <li>
+                            <a href="#orga4e0def">如何理解编译过程</a>
+                            <ul>
+                                <li><a href="#org46cd4dd">./configure</a></li>
+                                <li><a href="#orge401fa5">make</a></li>
+                                <li><a href="#orge36992e">*cmake</a></li>
+                                <li><a href="#org68fc19c">make install</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#org3351e15">扩展 - C/C++ 编译过程</a>
+                            <ul>
+                                <li><a href="#orgfcb3d22">相关名词</a></li>
+                                <li><a href="#org9c1f513">编译过程</a></li>
+                                <li><a href="#orgc1a1f32">链接过程</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#org8578b4d"
+                                ><span class="todo TODO">TODO</span> 进阶 -
+                                Linux 下源码编译安装详解</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <img src="images/compile.png" width="600" style="" />
 
-<p>
-Linux 下源代码的编译安装，及其编译过程和可能遇到的问题。
-</p>
+            <p>Linux 下源代码的编译安装，及其编译过程和可能遇到的问题。</p>
 
-<div id="outline-container-orga24a3c1" class="outline-2">
-<h2 id="orga24a3c1">如何编译安装<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup></h2>
-<div class="outline-text-2" id="text-orga24a3c1">
-<p>
-下载源码包，解压、进入源代码目录后，执行以下命令：
-</p>
+            <div id="outline-container-orga24a3c1" class="outline-2">
+                <h2 id="orga24a3c1">
+                    如何编译安装<sup
+                        ><a id="fnr.1" class="footref" href="#fn.1">1</a></sup
+                    >
+                </h2>
+                <div class="outline-text-2" id="text-orga24a3c1">
+                    <p>下载源码包，解压、进入源代码目录后，执行以下命令：</p>
 
-<div class="org-src-container">
-<pre class="src src-sh"><span class="linenr">1: </span>./configure
+                    <div class="org-src-container">
+                        <pre
+                            class="src src-sh"
+                        ><span class="linenr">1: </span>./configure
 <span class="linenr">2: </span>make
 <span class="linenr">3: </span>make install
 <span class="linenr">4: </span><span style="color: #9ca0a4;"># </span><span style="color: #9ca0a4;">&#22810;&#25968;&#26102;&#20505;&#38656;&#35201; `sudo`</span>
 </pre>
-</div>
+                    </div>
 
-<p>
-以上是典型的使用 GNU 的 AUTOCONF 和 AUTOMAKE 产生的程序的安装步骤。
-</p>
-</div>
-</div>
+                    <p>
+                        以上是典型的使用 GNU 的 AUTOCONF 和 AUTOMAKE
+                        产生的程序的安装步骤。
+                    </p>
+                </div>
+            </div>
 
-<div id="outline-container-orga4e0def" class="outline-2">
-<h2 id="orga4e0def">如何理解编译过程<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> <sup>, </sup><sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup></h2>
-<div class="outline-text-2" id="text-orga4e0def">
-</div>
-<div id="outline-container-org46cd4dd" class="outline-3">
-<h3 id="org46cd4dd">./configure</h3>
-<div class="outline-text-3" id="text-org46cd4dd">
-<p>
-<code>configure</code> 脚本是用来检查当前安装平台的开发环境，比如是不是有 CC 或 GCC ，也用来供用户指定程序包的编译参数、启用特性、安装路径等等。
-</p>
+            <div id="outline-container-orga4e0def" class="outline-2">
+                <h2 id="orga4e0def">
+                    如何理解编译过程<sup
+                        ><a id="fnr.2" class="footref" href="#fn.2">2</a></sup
+                    >
+                    <sup>, </sup
+                    ><sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>
+                </h2>
+                <div class="outline-text-2" id="text-orga4e0def"></div>
+                <div id="outline-container-org46cd4dd" class="outline-3">
+                    <h3 id="org46cd4dd">./configure</h3>
+                    <div class="outline-text-3" id="text-org46cd4dd">
+                        <p>
+                            <code>configure</code>
+                            脚本是用来检查当前安装平台的开发环境，比如是不是有
+                            CC 或 GCC
+                            ，也用来供用户指定程序包的编译参数、启用特性、安装路径等等。
+                        </p>
 
-<p>
-<b>一般用来生成 <code>Makefile</code> ，为下一步的编译做准备。</b> 如下所示，可以通过在 <code>configure</code> 后加上参数来对安装进行控制，比如：
-</p>
+                        <p>
+                            <b
+                                >一般用来生成
+                                <code>Makefile</code>
+                                ，为下一步的编译做准备。</b
+                            >
+                            如下所示，可以通过在
+                            <code>configure</code>
+                            后加上参数来对安装进行控制，比如：
+                        </p>
 
-<div class="org-src-container">
-<pre class="src src-sh"><span class="linenr">1: </span>./configure --prefix=/usr
+                        <div class="org-src-container">
+                            <pre
+                                class="src src-sh"
+                            ><span class="linenr">1: </span>./configure --prefix=/usr
 </pre>
-</div>
+                        </div>
 
-<p>
-意味着将该软件安装在 <code>/usr</code> 下面，执行文件就会安装在 <code>/usr/bin</code> （而不是默认的 <code>/usr/local/bin</code> ），资源文件就会安装在 <code>/usr/share</code> （而不是默认的 <code>/usr/local/share</code> ）。
-</p>
+                        <p>
+                            意味着将该软件安装在
+                            <code>/usr</code> 下面，执行文件就会安装在
+                            <code>/usr/bin</code> （而不是默认的
+                            <code>/usr/local/bin</code> ），资源文件就会安装在
+                            <code>/usr/share</code> （而不是默认的
+                            <code>/usr/local/share</code> ）。
+                        </p>
 
-<pre class="example">
+                        <pre class="example">
 # 通用的几个选项
 --prefix=                      # 指定安装的路径
 --sysconfdir=                  # 指定配置文件目录
@@ -101,180 +133,314 @@ Linux 下源代码的编译安装，及其编译过程和可能遇到的问题�
 --disable-feature              # 禁用某个特性
 --with-function                # 启用某个功能
 --without-function             # 禁用某个功能
-</pre>
+</pre
+                        >
 
-<p>
-你可以通过 <code>./configure --help</code> 查看更多。
-</p>
-</div>
-</div>
+                        <p>
+                            你可以通过
+                            <code>./configure --help</code> 查看更多。
+                        </p>
+                    </div>
+                </div>
 
-<div id="outline-container-orge401fa5" class="outline-3">
-<h3 id="orge401fa5">make</h3>
-<div class="outline-text-3" id="text-orge401fa5">
-<p>
-<code>make</code> 是 Linux 开发套件里面自动化编译的一个控制程序。每个源代码都有专用的 <code>Makefile</code> ，在执行 <code>make</code> 时依据 <code>Makefile</code> 这个配置文件，调用指定的预处理器做处理、调用指定的编译器做处理、编译文件的顺序操作等。
-</p>
+                <div id="outline-container-orge401fa5" class="outline-3">
+                    <h3 id="orge401fa5">make</h3>
+                    <div class="outline-text-3" id="text-orge401fa5">
+                        <p>
+                            <code>make</code> 是 Linux
+                            开发套件里面自动化编译的一个控制程序。每个源代码都有专用的
+                            <code>Makefile</code> ，在执行
+                            <code>make</code> 时依据
+                            <code>Makefile</code>
+                            这个配置文件，调用指定的预处理器做处理、调用指定的编译器做处理、编译文件的顺序操作等。
+                        </p>
 
-<p>
-一般情况下，它所使用的 <code>Makefile</code> 控制代码是由 <code>configure</code> 这个设置脚本根据给定的参数和系统环境生成的。
-</p>
-</div>
-</div>
+                        <p>
+                            一般情况下，它所使用的
+                            <code>Makefile</code> 控制代码是由
+                            <code>configure</code>
+                            这个设置脚本根据给定的参数和系统环境生成的。
+                        </p>
+                    </div>
+                </div>
 
-<div id="outline-container-orge36992e" class="outline-3">
-<h3 id="orge36992e">*cmake<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup></h3>
-<div class="outline-text-3" id="text-orge36992e">
-<p>
-<code>cmake</code> 就是一个与 <code>make</code> 同级别的编译工具，只不过它依靠的不是 <code>Makefile</code> 作为编译规则，而是根据 <code>CMakeLists.txt</code> 来编译的。它比 <code>make</code> 更高级，可以根据不同平台、不同的编译器，通过编写 <code>CMakeLists.txt</code> ，可以控制生成的 <code>Makefile</code> ，从而控制编译过程。
-</p>
+                <div id="outline-container-orge36992e" class="outline-3">
+                    <h3 id="orge36992e">
+                        *cmake<sup
+                            ><a id="fnr.4" class="footref" href="#fn.4"
+                                >4</a
+                            ></sup
+                        >
+                    </h3>
+                    <div class="outline-text-3" id="text-orge36992e">
+                        <p>
+                            <code>cmake</code> 就是一个与
+                            <code>make</code>
+                            同级别的编译工具，只不过它依靠的不是
+                            <code>Makefile</code> 作为编译规则，而是根据
+                            <code>CMakeLists.txt</code> 来编译的。它比
+                            <code>make</code>
+                            更高级，可以根据不同平台、不同的编译器，通过编写
+                            <code>CMakeLists.txt</code> ，可以控制生成的
+                            <code>Makefile</code> ，从而控制编译过程。
+                        </p>
 
-<img
-src="/images/cmake.png"
-width="600"
-style=""
-/>
+                        <img src="images/cmake.png" width="600" style="" />
 
-<p>
-如果有嵌套目录，子目录下可以有自己的 <code>CMakeLists.txt</code> 。
-</p>
-</div>
-</div>
+                        <p>
+                            如果有嵌套目录，子目录下可以有自己的
+                            <code>CMakeLists.txt</code> 。
+                        </p>
+                    </div>
+                </div>
 
-<div id="outline-container-org68fc19c" class="outline-3">
-<h3 id="org68fc19c">make install</h3>
-<div class="outline-text-3" id="text-org68fc19c">
-<p>
-这条命令用来进行安装（当然有些软件需要先运行 <code>make check</code> 或 <code>make test</code> 来进行一些测试），一般需要你有 root 权限（因为要向系统写入文件）。
-</p>
-<blockquote>
-<p>
-其实是一些脚本，根据 <code>Makefile</code> 文件中的设置将编译完成的文件安装到预定目录，如将创建出的二进制文件放到指定的二进制目录、库文件放到指定的库目录等等。
-</p>
-</blockquote>
-</div>
-</div>
-</div>
+                <div id="outline-container-org68fc19c" class="outline-3">
+                    <h3 id="org68fc19c">make install</h3>
+                    <div class="outline-text-3" id="text-org68fc19c">
+                        <p>
+                            这条命令用来进行安装（当然有些软件需要先运行
+                            <code>make check</code> 或
+                            <code>make test</code>
+                            来进行一些测试），一般需要你有 root
+                            权限（因为要向系统写入文件）。
+                        </p>
+                        <blockquote>
+                            <p>
+                                其实是一些脚本，根据
+                                <code>Makefile</code>
+                                文件中的设置将编译完成的文件安装到预定目录，如将创建出的二进制文件放到指定的二进制目录、库文件放到指定的库目录等等。
+                            </p>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
 
-<div id="outline-container-org3351e15" class="outline-2">
-<h2 id="org3351e15">扩展 - C/C++ 编译过程<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup></h2>
-<div class="outline-text-2" id="text-org3351e15">
-<img
-src="/images/c-compile.jpg"
-width="400"
-style=""
-/>
-</div>
+            <div id="outline-container-org3351e15" class="outline-2">
+                <h2 id="org3351e15">
+                    扩展 - C/C++ 编译过程<sup
+                        ><a id="fnr.5" class="footref" href="#fn.5">5</a></sup
+                    >
+                </h2>
+                <div class="outline-text-2" id="text-org3351e15">
+                    <img src="images/c-compile.jpg" width="400" style="" />
+                </div>
 
-<div id="outline-container-orgfcb3d22" class="outline-3">
-<h3 id="orgfcb3d22">相关名词</h3>
-<div class="outline-text-3" id="text-orgfcb3d22">
-<p>
-<span class="underline">编译</span> ，是读取源程序（字符流），对之进行词法和语法的分析，将高级语言转换为等效的汇编代码，再转换为机器代码，保存到目标文件 <code>*.obj</code> 中（如果编译通过）。
-</p>
+                <div id="outline-container-orgfcb3d22" class="outline-3">
+                    <h3 id="orgfcb3d22">相关名词</h3>
+                    <div class="outline-text-3" id="text-orgfcb3d22">
+                        <p>
+                            <span class="underline">编译</span>
+                            ，是读取源程序（字符流），对之进行词法和语法的分析，将高级语言转换为等效的汇编代码，再转换为机器代码，保存到目标文件
+                            <code>*.obj</code> 中（如果编译通过）。
+                        </p>
 
-<p>
-<span class="underline">链接</span> ，是将有关的目标文件（库文件、.o 文件）彼此互相连接，即在一个文件中引用的符号同在另一个文件中的定义连接起来，使得所有的这些目标文件成为一个能够被操作系统装入执行的统一整体。
-</p>
-</div>
-</div>
+                        <p>
+                            <span class="underline">链接</span>
+                            ，是将有关的目标文件（库文件、.o
+                            文件）彼此互相连接，即在一个文件中引用的符号同在另一个文件中的定义连接起来，使得所有的这些目标文件成为一个能够被操作系统装入执行的统一整体。
+                        </p>
+                    </div>
+                </div>
 
-<div id="outline-container-org9c1f513" class="outline-3">
-<h3 id="org9c1f513">编译过程</h3>
-<div class="outline-text-3" id="text-org9c1f513">
-<p>
-编译分为两个过程： <span class="underline">预处理阶段</span> 和 <span class="underline">编译、优化阶段</span> 。
-</p>
+                <div id="outline-container-org9c1f513" class="outline-3">
+                    <h3 id="org9c1f513">编译过程</h3>
+                    <div class="outline-text-3" id="text-org9c1f513">
+                        <p>
+                            编译分为两个过程：
+                            <span class="underline">预处理阶段</span> 和
+                            <span class="underline">编译、优化阶段</span> 。
+                        </p>
 
-<p>
-预处理阶段：
-</p>
-<ul class="org-ul">
-<li>宏 <code>#define</code> ；</li>
-<li>条件编译指令，如 <code>#ifdef, #ifndef, #else, #elif, #endif</code> 等；</li>
-<li>头文件包含 <code>#include &lt;iostream&gt;</code> ；</li>
-<li>特殊符号，如 <code>LINE</code> 标识被解释为当前行号， <code>FILE</code> 被解释为当前被编译的 C 源程序的名称。</li>
-</ul>
+                        <p>预处理阶段：</p>
+                        <ul class="org-ul">
+                            <li>宏 <code>#define</code> ；</li>
+                            <li>
+                                条件编译指令，如
+                                <code
+                                    >#ifdef, #ifndef, #else, #elif, #endif</code
+                                >
+                                等；
+                            </li>
+                            <li>
+                                头文件包含
+                                <code>#include &lt;iostream&gt;</code> ；
+                            </li>
+                            <li>
+                                特殊符号，如
+                                <code>LINE</code> 标识被解释为当前行号，
+                                <code>FILE</code> 被解释为当前被编译的 C
+                                源程序的名称。
+                            </li>
+                        </ul>
 
-<p>
-编译、优化阶段：
-</p>
-<ul class="org-ul">
-<li>针对代码优化，不依赖具体计算机；</li>
-<li>针对计算机的优化。</li>
-</ul>
+                        <p>编译、优化阶段：</p>
+                        <ul class="org-ul">
+                            <li>针对代码优化，不依赖具体计算机；</li>
+                            <li>针对计算机的优化。</li>
+                        </ul>
 
-<p>
-汇编把汇编语言代码翻译成目标机器指令，生成目标文件（ <code>.o</code> 或 <code>.obj</code> 文件），至少需要表提供 3 张表：
-</p>
-<ul class="org-ul">
-<li>导出符号表 - 该目标文件可以提供的符号及地址；</li>
-<li>未解决符号表 - 该目标文件告诉链接器哪些符号没找到地址；</li>
-<li>地址重定向表。</li>
-</ul>
+                        <p>
+                            汇编把汇编语言代码翻译成目标机器指令，生成目标文件（
+                            <code>.o</code> 或
+                            <code>.obj</code> 文件），至少需要表提供 3 张表：
+                        </p>
+                        <ul class="org-ul">
+                            <li>
+                                导出符号表 - 该目标文件可以提供的符号及地址；
+                            </li>
+                            <li>
+                                未解决符号表 -
+                                该目标文件告诉链接器哪些符号没找到地址；
+                            </li>
+                            <li>地址重定向表。</li>
+                        </ul>
 
-<p>
-链接的时候，链接器会为目标文件的 <b>未解决符号表</b> 里的符号在其他文件里寻找地址，但是每个目标文件的地址都是从 <code>0x0000</code> 开始的，这就导致直接将对方文件中符号拿过来用会是不正确的。为了区分不同的文件，链接器在链接时就会结每个目标文件的地址进行调整，如为 <code>.o</code> 导出的符号地址都加上起始地址。然而，因为加上了起始地址，符号在自身文件中的实际地址就不对了，需要再用一张 <b>地址重定向表</b> 记录符号相对自身文件的地址。
-</p>
-</div>
-</div>
+                        <p>
+                            链接的时候，链接器会为目标文件的
+                            <b>未解决符号表</b>
+                            里的符号在其他文件里寻找地址，但是每个目标文件的地址都是从
+                            <code>0x0000</code>
+                            开始的，这就导致直接将对方文件中符号拿过来用会是不正确的。为了区分不同的文件，链接器在链接时就会结每个目标文件的地址进行调整，如为
+                            <code>.o</code>
+                            导出的符号地址都加上起始地址。然而，因为加上了起始地址，符号在自身文件中的实际地址就不对了，需要再用一张
+                            <b>地址重定向表</b> 记录符号相对自身文件的地址。
+                        </p>
+                    </div>
+                </div>
 
-<div id="outline-container-orgc1a1f32" class="outline-3">
-<h3 id="orgc1a1f32">链接过程</h3>
-<div class="outline-text-3" id="text-orgc1a1f32">
-<p>
-链接方式分为：静态链接和动态链接。
-</p>
+                <div id="outline-container-orgc1a1f32" class="outline-3">
+                    <h3 id="orgc1a1f32">链接过程</h3>
+                    <div class="outline-text-3" id="text-orgc1a1f32">
+                        <p>链接方式分为：静态链接和动态链接。</p>
 
-<p>
-<span class="underline">静态链接</span> ，函数的代码将从其所在的静态链接库中被拷贝到最终的可执行程序中，这样该程序在被执行时这些代码将被装入到该进程的虚拟地址空间中。
-</p>
+                        <p>
+                            <span class="underline">静态链接</span>
+                            ，函数的代码将从其所在的静态链接库中被拷贝到最终的可执行程序中，这样该程序在被执行时这些代码将被装入到该进程的虚拟地址空间中。
+                        </p>
 
-<p>
-<span class="underline">动态链接</span> ，函数的代码被放到称作是动态链接库或共享对象的某个目标文件中。链接程序此时所做的只是在最终的可执行程序中记录下共享对象的名字以及其它少量的登记信息。在此可执行文件被执行时，动态链接库的全部内容将被映射到运行时相应进程的虚拟地址空间。动态链接程序将根据可执行程序中记录的信息找到相应的函数代码。
-</p>
-</div>
-</div>
-</div>
+                        <p>
+                            <span class="underline">动态链接</span>
+                            ，函数的代码被放到称作是动态链接库或共享对象的某个目标文件中。链接程序此时所做的只是在最终的可执行程序中记录下共享对象的名字以及其它少量的登记信息。在此可执行文件被执行时，动态链接库的全部内容将被映射到运行时相应进程的虚拟地址空间。动态链接程序将根据可执行程序中记录的信息找到相应的函数代码。
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-<div id="outline-container-org8578b4d" class="outline-2">
-<h2 id="org8578b4d"><span class="todo TODO">TODO</span> 进阶 - Linux 下源码编译安装详解<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup></h2>
-</div>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
+            <div id="outline-container-org8578b4d" class="outline-2">
+                <h2 id="org8578b4d">
+                    <span class="todo TODO">TODO</span> 进阶 - Linux
+                    下源码编译安装详解<sup
+                        ><a id="fnr.6" class="footref" href="#fn.6">6</a></sup
+                    >
+                </h2>
+            </div>
+            <div id="footnotes">
+                <h2 class="footnotes">Footnotes:</h2>
+                <div id="text-footnotes">
+                    <div class="footdef">
+                        <sup
+                            ><a id="fn.1" class="footnum" href="#fnr.1"
+                                >1</a
+                            ></sup
+                        >
+                        <div class="footpara">
+                            <p class="footpara">
+                                <a href="https://www.jianshu.com/p/39101098ebbe"
+                                    >https://www.jianshu.com/p/39101098ebbe</a
+                                >
+                            </p>
+                        </div>
+                    </div>
 
-<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://www.jianshu.com/p/39101098ebbe">https://www.jianshu.com/p/39101098ebbe</a>
-</p></div></div>
+                    <div class="footdef">
+                        <sup
+                            ><a id="fn.2" class="footnum" href="#fnr.2"
+                                >2</a
+                            ></sup
+                        >
+                        <div class="footpara">
+                            <p class="footpara">
+                                <a
+                                    href="https://my.oschina.net/surjur/blog/349464"
+                                    >https://my.oschina.net/surjur/blog/349464</a
+                                >
+                            </p>
+                        </div>
+                    </div>
 
-<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://my.oschina.net/surjur/blog/349464">https://my.oschina.net/surjur/blog/349464</a>
-</p></div></div>
+                    <div class="footdef">
+                        <sup
+                            ><a id="fn.3" class="footnum" href="#fnr.3"
+                                >3</a
+                            ></sup
+                        >
+                        <div class="footpara">
+                            <p class="footpara">
+                                <a
+                                    href="https://www.linuxidc.com/Linux/2018-12/155637.htm"
+                                    >https://www.linuxidc.com/Linux/2018-12/155637.htm</a
+                                >
+                            </p>
+                        </div>
+                    </div>
 
-<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://www.linuxidc.com/Linux/2018-12/155637.htm">https://www.linuxidc.com/Linux/2018-12/155637.htm</a>
-</p></div></div>
+                    <div class="footdef">
+                        <sup
+                            ><a id="fn.4" class="footnum" href="#fnr.4"
+                                >4</a
+                            ></sup
+                        >
+                        <div class="footpara">
+                            <p class="footpara">
+                                <a
+                                    href="https://www.cnblogs.com/benwu/articles/8436209.html"
+                                    >https://www.cnblogs.com/benwu/articles/8436209.html</a
+                                >
+                            </p>
+                        </div>
+                    </div>
 
-<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://www.cnblogs.com/benwu/articles/8436209.html">https://www.cnblogs.com/benwu/articles/8436209.html</a>
-</p></div></div>
+                    <div class="footdef">
+                        <sup
+                            ><a id="fn.5" class="footnum" href="#fnr.5"
+                                >5</a
+                            ></sup
+                        >
+                        <div class="footpara">
+                            <p class="footpara">
+                                <a
+                                    href="https://www.cnblogs.com/dongdongweiwu/p/4743709.html"
+                                    >https://www.cnblogs.com/dongdongweiwu/p/4743709.html</a
+                                >
+                            </p>
+                        </div>
+                    </div>
 
-<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://www.cnblogs.com/dongdongweiwu/p/4743709.html">https://www.cnblogs.com/dongdongweiwu/p/4743709.html</a>
-</p></div></div>
-
-<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://blog.csdn.net/u012501054/article/details/77880139">https://blog.csdn.net/u012501054/article/details/77880139</a>
-</p></div></div>
-
-</div>
-</div></div>
-<div id="postamble" class="status">
-<p class="date">Date: 2020-05-13 Wed 15:03</p>
-<p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2021-02-23 Tue 15:27</p>
-<p class="validation"><a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a></p>
-</div>
-</body>
+                    <div class="footdef">
+                        <sup
+                            ><a id="fn.6" class="footnum" href="#fnr.6"
+                                >6</a
+                            ></sup
+                        >
+                        <div class="footpara">
+                            <p class="footpara">
+                                <a
+                                    href="https://blog.csdn.net/u012501054/article/details/77880139"
+                                    >https://blog.csdn.net/u012501054/article/details/77880139</a
+                                >
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="postamble" class="status">
+            <p class="date">Date: 2020-05-13 Wed 15:03</p>
+            <p class="author">Author: Jack Liu</p>
+            <p class="date">Created: 2021-02-23 Tue 15:27</p>
+            <p class="validation">
+                <a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a>
+            </p>
+        </div>
+    </body>
 </html>

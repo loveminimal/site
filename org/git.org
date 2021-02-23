@@ -9,7 +9,7 @@
 
 #+BEGIN_EXPORT html
 <img
-src="/images/git-1.png"
+src="images/git-1.png"
 width=""
 height=""
 style=""

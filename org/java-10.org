@@ -28,7 +28,7 @@ Java 通过面向对象的方法来处理异常。在一个方法的运行过程
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-7.jpg"
+src="images/java-7.jpg"
 width="380"
 height=""
 style=""

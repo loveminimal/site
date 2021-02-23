@@ -454,7 +454,7 @@ StringBuffer、StringBuilder、String 对 =CharSequnce= 接口的实现过程不
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-6.png"
+src="images/java-6.png"
 width="400"
 height=""
 style=""

@@ -7,7 +7,7 @@
 
 #+BEGIN_EXPORT html
 <img
-src="/images/android-1.jpg"
+src="images/android-1.jpg"
 width="200"
 height=""
 style="float: right; margin-left: 8px;"
@@ -33,7 +33,7 @@ Android 应用程序一般使用 Android 软件开发工具包，采用 Java 语
 
 #+BEGIN_EXPORT html
 <img
-src="/images/android-2.png"
+src="images/android-2.png"
 width="500"
 height=""
 style=""
@@ -45,7 +45,7 @@ Android 的历史:
 
 #+BEGIN_EXPORT html
 <img
-src="/images/android-3.jpg"
+src="images/android-3.jpg"
 width="500"
 height=""
 style=""
@@ -74,7 +74,7 @@ Android 操作系统是一个软件组件的栈，在架构图中它大致可以
 
 #+BEGIN_EXPORT html
 <img
-src="/images/android-4.jpg"
+src="images/android-4.jpg"
 width="800"
 height=""
 style=""
@@ -221,7 +221,7 @@ _4. 应用程序_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/android-5.jpg"
+src="images/android-5.jpg"
 width=""
 height=""
 style="box-shadow: 0 0 2px #ccc;"
@@ -260,7 +260,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/android-6.jpg"
+src="images/android-6.jpg"
 width="400"
 height=""
 style="float: left; margin-right: 8px;"
@@ -270,7 +270,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/android-7.jpg"
+src="images/android-7.jpg"
 width="400"
 height=""
 style=""

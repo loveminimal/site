@@ -39,7 +39,7 @@
 
 #+BEGIN_EXPORT html
 <img
-src="/images/compiler-1.jpg"
+src="images/compiler-1.jpg"
 width="460"
 height=""
 style=""
@@ -61,7 +61,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/compiler-2.jpg"
+src="images/compiler-2.jpg"
 width="460"
 height=""
 style=""
@@ -99,7 +99,7 @@ Hmm... 有点抽象，所以需要具体的实践。
 
 #+BEGIN_EXPORT html
 <img
-src="/images/compiler-3.png"
+src="images/compiler-3.png"
 width="540"
 height=""
 style=""
@@ -112,7 +112,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/compiler-4.png"
+src="images/compiler-4.png"
 width="660"
 height=""
 style=""
@@ -135,7 +135,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/compiler-5.jpg"
+src="images/compiler-5.jpg"
 width="100%"
 height=""
 style=""
@@ -162,7 +162,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/compiler-6.png"
+src="images/compiler-6.png"
 width=""
 height=""
 style=""
@@ -178,7 +178,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/compiler-7.png"
+src="images/compiler-7.png"
 width="560"
 height=""
 style=""
@@ -194,7 +194,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/compiler-8.png"
+src="images/compiler-8.png"
 width="560"
 height=""
 style=""
@@ -215,7 +215,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/compiler-9.png"
+src="images/compiler-9.png"
 width="580"
 height=""
 style=""
@@ -227,7 +227,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/compiler-10.png"
+src="images/compiler-10.png"
 width="220"
 height=""
 style="float: right;"
@@ -247,7 +247,7 @@ title="中间代码生成"
 *** 5.代码优化
 #+BEGIN_EXPORT html
 <img
-src="/images/compiler-11.png"
+src="images/compiler-11.png"
 width="220"
 height=""
 style="float: right;"
@@ -267,7 +267,7 @@ title="代码优化"
 
 #+BEGIN_EXPORT html
 <img
-src="/images/compiler-12.png"
+src="images/compiler-12.png"
 width="460"
 height=""
 style=""

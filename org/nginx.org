@@ -21,7 +21,7 @@
 
 #+BEGIN_EXPORT html
 <img
-src="/images/nginx-3.png"
+src="images/nginx-3.png"
 width="400"
 height=""
 style=""
@@ -51,7 +51,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/nginx-4.png"
+src="images/nginx-4.png"
 width="560"
 height=""
 style=""
@@ -69,7 +69,7 @@ _1. 服务器性能不足的问题_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/nginx-5.png"
+src="images/nginx-5.png"
 width="560"
 height=""
 style=""
@@ -83,7 +83,7 @@ _2. 单点服务器挂掉的问题_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/nginx-6.png"
+src="images/nginx-6.png"
 width="560"
 height=""
 style=""
@@ -136,7 +136,7 @@ _1. 正向代理_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/nginx-7.png"
+src="images/nginx-7.png"
 width="460"
 height=""
 style=""
@@ -158,7 +158,7 @@ _2. 反向代理_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/nginx-8.png"
+src="images/nginx-8.png"
 width="520"
 height=""
 style=""
@@ -186,7 +186,7 @@ _3. 两者区别_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/nginx-9.png"
+src="images/nginx-9.png"
 width="560"
 height=""
 style=""
@@ -197,7 +197,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/nginx-10.png"
+src="images/nginx-10.png"
 width="560"
 height=""
 style=""
@@ -216,7 +216,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/nginx-1.jpg"
+src="images/nginx-1.jpg"
 width="260"
 height=""
 style="float: right; margin-left: 16px;"
@@ -368,7 +368,7 @@ Nginx 这么强劲，都有些什么应用场景呢？如下：
 
 #+BEGIN_EXPORT html
 <img
-src="/images/nginx-11.jpg"
+src="images/nginx-11.jpg"
 width="90%"
 height=""
 style="border: 2px solid #eee; padding: 16px 10% 16px 0;"
@@ -386,7 +386,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/nginx-12.jpg"
+src="images/nginx-12.jpg"
 width="500"
 height=""
 style="border: 2px solid #eee;"

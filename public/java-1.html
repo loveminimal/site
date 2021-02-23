@@ -1,263 +1,329 @@
 <!DOCTYPE html>
 <html lang="zh">
-<head>
-<!-- 2021-02-23 Tue 15:26 -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Java 程序简介</title>
-<meta name="generator" content="Org mode">
-<meta name="author" content="Jack Liu">
-<link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
-           <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
-           <script type="module" src="/themes/main.js" defer></script>
-</head>
-<body>
-<div id="content">
-<h1 class="title">Java 程序简介</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org07b2a22">什么是 Java 语言</a></li>
-<li><a href="#org67ec5f5">Java 语言的特点</a></li>
-<li><a href="#orgf4b7f1f">JDK、JRE、JVM</a></li>
-<li><a href="#orgc144056">Java 程序的运行过程</a></li>
-<li><a href="#org5636408">Java 的学习路线</a></li>
-</ul>
-</div>
-</div>
+    <head>
+        <!-- 2021-02-23 Tue 15:26 -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Java 程序简介</title>
+        <meta name="generator" content="Org mode" />
+        <meta name="author" content="Jack Liu" />
+        <link
+            rel="shortcut icon"
+            href="/themes/assets/rose-red.png"
+            type="image/x-icon"
+        />
+        <link rel="stylesheet" href="/themes/style.css" type="text/css" />
+        <script type="module" src="/themes/main.js" defer></script>
+    </head>
+    <body>
+        <div id="content">
+            <h1 class="title">Java 程序简介</h1>
+            <div id="table-of-contents">
+                <h2>Table of Contents</h2>
+                <div id="text-table-of-contents">
+                    <ul>
+                        <li><a href="#org07b2a22">什么是 Java 语言</a></li>
+                        <li><a href="#org67ec5f5">Java 语言的特点</a></li>
+                        <li><a href="#orgf4b7f1f">JDK、JRE、JVM</a></li>
+                        <li><a href="#orgc144056">Java 程序的运行过程</a></li>
+                        <li><a href="#org5636408">Java 的学习路线</a></li>
+                    </ul>
+                </div>
+            </div>
 
-<div id="outline-container-org07b2a22" class="outline-2">
-<h2 id="org07b2a22">什么是 Java 语言</h2>
-<div class="outline-text-2" id="text-org07b2a22">
-<img
-src="/images/java-0.png"
-width="50"
-height=""
-style="float: left; margin-right: 8px;"
-title=""
-/>
+            <div id="outline-container-org07b2a22" class="outline-2">
+                <h2 id="org07b2a22">什么是 Java 语言</h2>
+                <div class="outline-text-2" id="text-org07b2a22">
+                    <img
+                        src="images/java-0.png"
+                        width="50"
+                        height=""
+                        style="float: left; margin-right: 8px"
+                        title=""
+                    />
 
-<p>
-Java 是一门面向对象编程语言，不但可以用来开发网站后台、PC 客户端和 Android APP，还在数据分析、网络爬虫、云计算领域大显身手。
-</p>
+                    <p>
+                        Java
+                        是一门面向对象编程语言，不但可以用来开发网站后台、PC
+                        客户端和 Android
+                        APP，还在数据分析、网络爬虫、云计算领域大显身手。
+                    </p>
 
-<p>
-Java 还是一个平台，由 Java 虚拟机（Java Virtual Machine, JVM）和 Java 应用编程接口（Application Programming Interface, API）构成。
-</p>
+                    <p>
+                        Java 还是一个平台，由 Java 虚拟机（Java Virtual Machine,
+                        JVM）和 Java 应用编程接口（Application Programming
+                        Interface, API）构成。
+                    </p>
 
-<p>
-Java 应用编程接口为此提供了一个独立操作系统的标准接口，可分为基本部分和扩展部分。在硬件或操作系统平台上安装一个 Java 平台后，Java 应用程序就可运行。
-</p>
+                    <p>
+                        Java
+                        应用编程接口为此提供了一个独立操作系统的标准接口，可分为基本部分和扩展部分。在硬件或操作系统平台上安装一个
+                        Java 平台后，Java 应用程序就可运行。
+                    </p>
 
-<p>
-按应用范围，Java 可分为 3 个体系，即 Java SE、Java EE 和 Java ME。
-</p>
+                    <p>
+                        按应用范围，Java 可分为 3 个体系，即 Java SE、Java EE 和
+                        Java ME。
+                    </p>
 
-<p>
-<span class="underline">1. Java SE（平台标准版）</span>
-</p>
+                    <p>
+                        <span class="underline">1. Java SE（平台标准版）</span>
+                    </p>
 
-<p>
-i.e. Java Platform Standard Edition
-</p>
+                    <p>i.e. Java Platform Standard Edition</p>
 
-<p>
-Java SE 允许开发和部署在桌面、服务器、嵌入式环境和实时环境中使用的 Java 应用程序，Java SE 包含了支持 Java Web 服务开发的类，并为 Java EE 提供基础，如 Java 语言基础、JDBC 操作、I/O 操作、网络通信以及多线程等技术。
-</p>
+                    <p>
+                        Java SE
+                        允许开发和部署在桌面、服务器、嵌入式环境和实时环境中使用的
+                        Java 应用程序，Java SE 包含了支持 Java Web
+                        服务开发的类，并为 Java EE 提供基础，如 Java
+                        语言基础、JDBC 操作、I/O
+                        操作、网络通信以及多线程等技术。
+                    </p>
 
-<p>
-下图所示为 Java SE 的体系结构：
-</p>
+                    <p>下图所示为 Java SE 的体系结构：</p>
 
-<img
-src="/images/java-1.jpg"
-width="100%"
-height=""
-style=""
-title=""
-/>
+                    <img
+                        src="images/java-1.jpg"
+                        width="100%"
+                        height=""
+                        style=""
+                        title=""
+                    />
 
-<p>
-<span class="underline">2. Java EE（平台企业版）</span>
-</p>
+                    <p>
+                        <span class="underline">2. Java EE（平台企业版）</span>
+                    </p>
 
-<p>
-企业版本帮助开发和部署可移植、健壮、可伸缩且安全的服务器端 Java 应用程序。Java EE 是在 Java SE 基础上构建的，它提供 Web 服务、组件模型、管理和通信 API ，可以用来实现企业级的面向服务体系结构（Service Oriented Architecture, SOA）和 Web 2.0 应用程序。
-</p>
+                    <p>
+                        企业版本帮助开发和部署可移植、健壮、可伸缩且安全的服务器端
+                        Java 应用程序。Java EE 是在 Java SE 基础上构建的，它提供
+                        Web 服务、组件模型、管理和通信 API
+                        ，可以用来实现企业级的面向服务体系结构（Service Oriented
+                        Architecture, SOA）和 Web 2.0 应用程序。
+                    </p>
 
-<p>
-<span class="underline">3. Java ME（平台微型版）</span>
-</p>
+                    <p>
+                        <span class="underline">3. Java ME（平台微型版）</span>
+                    </p>
 
-<p>
-Java ME 为在移动设备和嵌入式设备（比如手机、PDA、电视机顶盒和打印机）上运行的应用程序提供一个健壮且灵活的环境。
-</p>
+                    <p>
+                        Java ME
+                        为在移动设备和嵌入式设备（比如手机、PDA、电视机顶盒和打印机）上运行的应用程序提供一个健壮且灵活的环境。
+                    </p>
 
-<p>
-Java ME 包括灵活的用户界面、健壮的安全模型、丰富的内置网络协议以及对可以动态下载的联网和离线应用程序。基于 Java ME 规范的应用程序 只需编写一次就可以用于许多设备，而且可以利用每个设备的本机功能。
-</p>
-</div>
-</div>
+                    <p>
+                        Java ME
+                        包括灵活的用户界面、健壮的安全模型、丰富的内置网络协议以及对可以动态下载的联网和离线应用程序。基于
+                        Java ME 规范的应用程序
+                        只需编写一次就可以用于许多设备，而且可以利用每个设备的本机功能。
+                    </p>
+                </div>
+            </div>
 
-<div id="outline-container-org67ec5f5" class="outline-2">
-<h2 id="org67ec5f5">Java 语言的特点</h2>
-<div class="outline-text-2" id="text-org67ec5f5">
-<p>
-Java 语言的风格很像 C 语言和 C++ 语言，是一种纯粹的面向对象语言，它继承了 C++ 语言面向对象的技术核心，但是拋弃了 C++ 的一些缺点，比如说容易引起错误的指针以及多继承等，同时也增加了垃圾回收机制，释放掉不被使用的内存空间，解决了管理内存空间的烦恼。
-</p>
+            <div id="outline-container-org67ec5f5" class="outline-2">
+                <h2 id="org67ec5f5">Java 语言的特点</h2>
+                <div class="outline-text-2" id="text-org67ec5f5">
+                    <p>
+                        Java 语言的风格很像 C 语言和 C++
+                        语言，是一种纯粹的面向对象语言，它继承了 C++
+                        语言面向对象的技术核心，但是拋弃了 C++
+                        的一些缺点，比如说容易引起错误的指针以及多继承等，同时也增加了垃圾回收机制，释放掉不被使用的内存空间，解决了管理内存空间的烦恼。
+                    </p>
 
-<p>
-Java 语言是一种分布式的面向对象语言，具有面向对象、平台无关性、简单性、解释执行、多线程、安全性等很多特点。
-</p>
+                    <p>
+                        Java
+                        语言是一种分布式的面向对象语言，具有面向对象、平台无关性、简单性、解释执行、多线程、安全性等很多特点。
+                    </p>
 
-<p>
-<span class="underline">1. 面向对象</span>
-</p>
+                    <p>
+                        <span class="underline">1. 面向对象</span>
+                    </p>
 
-<p>
-Java 是一种面向对象的语言，它对对象中的类、对象、继承、封装、多态、接口、包等均有很好的支持。
-</p>
+                    <p>
+                        Java
+                        是一种面向对象的语言，它对对象中的类、对象、继承、封装、多态、接口、包等均有很好的支持。
+                    </p>
 
-<p>
-为了简单起，Java 只支持类之间的单继承，但是可以使用接口来实现多继承。使用 Java 语言 开发程序，需要采用面向对象的思想设计程序和编写代码。
-</p>
+                    <p>
+                        为了简单起，Java
+                        只支持类之间的单继承，但是可以使用接口来实现多继承。使用
+                        Java 语言
+                        开发程序，需要采用面向对象的思想设计程序和编写代码。
+                    </p>
 
-<p>
-<span class="underline">2. 平台无关性</span>
-</p>
+                    <p>
+                        <span class="underline">2. 平台无关性</span>
+                    </p>
 
-<p>
-平台无关性的具体表现在于，Java 是“一次编写，到处运行（Write Once，Run any Where）”的语言，因此采用 Java 语言编写的程序具有很好的可移植性，而保证这一点的正是 Java 的虚拟机机制。
-</p>
+                    <p>
+                        平台无关性的具体表现在于，Java
+                        是“一次编写，到处运行（Write Once，Run any
+                        Where）”的语言，因此采用 Java
+                        语言编写的程序具有很好的可移植性，而保证这一点的正是
+                        Java 的虚拟机机制。
+                    </p>
 
-<p>
-Java 语言使用 Java 虚拟机机制屏蔽了具体平台的相关信息，使得 Java 语言编译的程序只需生成虚拟机上的目标代码，就可以在多种平台上不加修改地运行。
-</p>
+                    <p>
+                        Java 语言使用 Java
+                        虚拟机机制屏蔽了具体平台的相关信息，使得 Java
+                        语言编译的程序只需生成虚拟机上的目标代码，就可以在多种平台上不加修改地运行。
+                    </p>
 
-<p>
-<span class="underline">3. 简单性</span>
-</p>
+                    <p>
+                        <span class="underline">3. 简单性</span>
+                    </p>
 
-<p>
-Java 语言的语法与 C 语言和 C++ 语言很相近，使得很多程序员学起来很容易。对 Java 来说，它舍弃了很多 C++ 中难以理解的特性，如操作符的重载和多继承等，而且 Java 语言不使用指针，加入了垃圾回收机制，解决了程序员需要管理内存的问题，使编程变得更加简单。
-</p>
+                    <p>
+                        Java 语言的语法与 C 语言和 C++
+                        语言很相近，使得很多程序员学起来很容易。对 Java
+                        来说，它舍弃了很多 C++
+                        中难以理解的特性，如操作符的重载和多继承等，而且 Java
+                        语言不使用指针，加入了垃圾回收机制，解决了程序员需要管理内存的问题，使编程变得更加简单。
+                    </p>
 
-<p>
-<span class="underline">4. 解释执行</span>
-</p>
+                    <p>
+                        <span class="underline">4. 解释执行</span>
+                    </p>
 
-<p>
-Java 程序在 Java 平台运行时会被编译成字节码文件，然后可以在有 Java 环境的操作系统上运行。在运行文件时，Java 的解释器对这些字节码进行解释执行，执行过程中需要加入的类在连接阶段被载入到运行环境中。
-</p>
+                    <p>
+                        Java 程序在 Java
+                        平台运行时会被编译成字节码文件，然后可以在有 Java
+                        环境的操作系统上运行。在运行文件时，Java
+                        的解释器对这些字节码进行解释执行，执行过程中需要加入的类在连接阶段被载入到运行环境中。
+                    </p>
 
-<p>
-<span class="underline">5. 多线程</span>
-</p>
+                    <p>
+                        <span class="underline">5. 多线程</span>
+                    </p>
 
-<p>
-Java 语言是多线程的，这也是 Java 语言的一大特性，它必须由 Thread 类和它和子类来创建。Java 支持多个线程同时执行，并提供多线程之间的同步机制。任何一个线程都有自己的 <code>run()</code> 方法，要执行的方法就写在 <code>run()</code> 方法体内。
-</p>
+                    <p>
+                        Java 语言是多线程的，这也是 Java
+                        语言的一大特性，它必须由 Thread 类和它和子类来创建。Java
+                        支持多个线程同时执行，并提供多线程之间的同步机制。任何一个线程都有自己的
+                        <code>run()</code> 方法，要执行的方法就写在
+                        <code>run()</code> 方法体内。
+                    </p>
 
-<p>
-<span class="underline">6. 分布式</span>
-</p>
+                    <p>
+                        <span class="underline">6. 分布式</span>
+                    </p>
 
-<p>
-Java 语言支持 Internet 应用的开发，在 Java 的基本应用编程接口中就有一个网络应用编程接口，它提供了网编应用编程的类库，包括 URL、URLConnection、Socket 等。Java 的 RIM 机制也是开发分布式应用的重要手段。
-</p>
+                    <p>
+                        Java 语言支持 Internet 应用的开发，在 Java
+                        的基本应用编程接口中就有一个网络应用编程接口，它提供了网编应用编程的类库，包括
+                        URL、URLConnection、Socket 等。Java 的 RIM
+                        机制也是开发分布式应用的重要手段。
+                    </p>
 
-<p>
-<span class="underline">7. 健壮性</span>
-</p>
+                    <p>
+                        <span class="underline">7. 健壮性</span>
+                    </p>
 
-<p>
-Java 的强类型机制、异常处理、垃圾回收机制等都是 Java 健壮性的重要保证。对指针的丢弃是 Java 的一大进步，另外，Java 的异常机制也是健壮性的一大体现。
-</p>
+                    <p>
+                        Java 的强类型机制、异常处理、垃圾回收机制等都是 Java
+                        健壮性的重要保证。对指针的丢弃是 Java
+                        的一大进步，另外，Java 的异常机制也是健壮性的一大体现。
+                    </p>
 
-<p>
-<span class="underline">8. 高性能</span>
-</p>
+                    <p>
+                        <span class="underline">8. 高性能</span>
+                    </p>
 
-<p>
-Java 的高性能主要是相对其他高级脚本语言来说的，随着 JIT（Just in Time）的发展，Java 的运行速度也越来越高。
-</p>
+                    <p>
+                        Java 的高性能主要是相对其他高级脚本语言来说的，随着
+                        JIT（Just in Time）的发展，Java 的运行速度也越来越高。
+                    </p>
 
-<p>
-<span class="underline">9. 安全性</span>
-</p>
+                    <p>
+                        <span class="underline">9. 安全性</span>
+                    </p>
 
-<p>
-Java 通常被用在网络环境中，为此，Java 提供了一个安全机制以防止恶意代码的攻击。除了 Java 语言具有许多的安全特性以外，Java 还对通过网络下载的类增加一个安全防范机制，分配不同的名字空间以防替代本地的同名类，并包含安全管理机制。
-</p>
+                    <p>
+                        Java 通常被用在网络环境中，为此，Java
+                        提供了一个安全机制以防止恶意代码的攻击。除了 Java
+                        语言具有许多的安全特性以外，Java
+                        还对通过网络下载的类增加一个安全防范机制，分配不同的名字空间以防替代本地的同名类，并包含安全管理机制。
+                    </p>
 
-<p>
-Java 语言的众多特性使其在众多的编程语言中占有较大的市场份额，Java 语言对对象的支持和强大的 API 使得编程工作变得更加容易和快捷，大大降低了程序的开发成本。Java 的“一次编写，到处执行”正是它吸引众多商家和编程人员的一大优势。
-</p>
-</div>
-</div>
+                    <p>
+                        Java
+                        语言的众多特性使其在众多的编程语言中占有较大的市场份额，Java
+                        语言对对象的支持和强大的 API
+                        使得编程工作变得更加容易和快捷，大大降低了程序的开发成本。Java
+                        的“一次编写，到处执行”正是它吸引众多商家和编程人员的一大优势。
+                    </p>
+                </div>
+            </div>
 
-<div id="outline-container-orgf4b7f1f" class="outline-2">
-<h2 id="orgf4b7f1f">JDK、JRE、JVM</h2>
-<div class="outline-text-2" id="text-orgf4b7f1f">
-<blockquote>
-<p>
-任何语言或者软件的运行环境都需要环境，就像人要生活在空气中，鱼要活在水中，喜阴植物就不能放在阳光下暴晒一样，任何对象个体的存在都离不开其所需要的环境，编程语言亦是一样的。
-</p>
-</blockquote>
+            <div id="outline-container-orgf4b7f1f" class="outline-2">
+                <h2 id="orgf4b7f1f">JDK、JRE、JVM</h2>
+                <div class="outline-text-2" id="text-orgf4b7f1f">
+                    <blockquote>
+                        <p>
+                            任何语言或者软件的运行环境都需要环境，就像人要生活在空气中，鱼要活在水中，喜阴植物就不能放在阳光下暴晒一样，任何对象个体的存在都离不开其所需要的环境，编程语言亦是一样的。
+                        </p>
+                    </blockquote>
 
-<p>
-JDK、JVM 和 JRE 他们三个有什么区别呢？又有什么联系呢？
-</p>
+                    <p>
+                        JDK、JVM 和 JRE 他们三个有什么区别呢？又有什么联系呢？
+                    </p>
 
-<p>
-JDK（Java Development Kid, Java 开发开源工具包），是针对 Java 开发人员的产品，是整个 Java 的核心，包括了 Java 运行环境 JRE、Java 工具和 Java 基础类库。
-</p>
+                    <p>
+                        JDK（Java Development Kid, Java 开发开源工具包），是针对
+                        Java 开发人员的产品，是整个 Java 的核心，包括了 Java
+                        运行环境 JRE、Java 工具和 Java 基础类库。
+                    </p>
 
-<p>
-JRE（Java Virtual Environment, Java 运行环境），是运行 Java 程序所必须的环境的集合，包含 JVM 标准实现及 Java 核心类库。
-</p>
+                    <p>
+                        JRE（Java Virtual Environment, Java 运行环境），是运行
+                        Java 程序所必须的环境的集合，包含 JVM 标准实现及 Java
+                        核心类库。
+                    </p>
 
-<p>
-JVM（Java Virtual Machine, Java 虚拟机），是整个 Java 实现跨平台的最核心的部分，能够运行以 Java 语言写作的软件程序。
-</p>
+                    <p>
+                        JVM（Java Virtual Machine, Java 虚拟机），是整个 Java
+                        实现跨平台的最核心的部分，能够运行以 Java
+                        语言写作的软件程序。
+                    </p>
 
-<img
-src="/images/java-2.jpg"
-width="300"
-height=""
-style=""
-title=""
-/>
+                    <img
+                        src="images/java-2.jpg"
+                        width="300"
+                        height=""
+                        style=""
+                        title=""
+                    />
 
-<img
-src="/images/java-3.png"
-width="400"
-height=""
-style=""
-title=""
-/>
+                    <img
+                        src="images/java-3.png"
+                        width="400"
+                        height=""
+                        style=""
+                        title=""
+                    />
 
-<p>
-由图中可以看出：
-</p>
-<ul class="org-ul">
-<li>JDK = JRE + 多种 Java 开发工具；</li>
-<li>JRE = JVM + 各种类库；</li>
-<li>这三者的关系是一层层的嵌套关系，JDK &gt; JRE &gt; JVM 。</li>
-</ul>
-</div>
-</div>
+                    <p>由图中可以看出：</p>
+                    <ul class="org-ul">
+                        <li>JDK = JRE + 多种 Java 开发工具；</li>
+                        <li>JRE = JVM + 各种类库；</li>
+                        <li>
+                            这三者的关系是一层层的嵌套关系，JDK &gt; JRE &gt;
+                            JVM 。
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-<div id="outline-container-orgc144056" class="outline-2">
-<h2 id="orgc144056">Java 程序的运行过程</h2>
-<div class="outline-text-2" id="text-orgc144056">
-<essay>
-老规矩，先和这个世界打个招呼吧。
-</essay>
+            <div id="outline-container-orgc144056" class="outline-2">
+                <h2 id="orgc144056">Java 程序的运行过程</h2>
+                <div class="outline-text-2" id="text-orgc144056">
+                    <essay> 老规矩，先和这个世界打个招呼吧。 </essay>
 
-<div class="org-src-container">
-<pre class="src src-java"><span class="linenr"> 1: </span><span style="color: #9ca0a4;">/*</span>
+                    <div class="org-src-container">
+                        <pre
+                            class="src src-java"
+                        ><span class="linenr"> 1: </span><span style="color: #9ca0a4;">/*</span>
 <span class="linenr"> 2: </span><span style="color: #9ca0a4;"> * &#31532;&#19968;&#20010; Java &#31243;&#24207; HelloWorld.java</span>
 <span class="linenr"> 3: </span><span style="color: #9ca0a4;"> */</span>
 <span class="linenr"> 4: </span><span style="color: #e45649;">public</span> <span style="color: #e45649;">class</span> <span style="color: #986801;">HelloWorld</span> <span style="color: #4078f2;">{</span>
@@ -268,117 +334,165 @@ title=""
 <span class="linenr"> 9: </span>    <span style="color: #a626a4;">}</span>
 <span class="linenr">10: </span><span style="color: #4078f2;">}</span>
 </pre>
-</div>
+                    </div>
 
-<p>
-Java 程序的运行必须经过编写、编译和运行 3 个步骤：
-</p>
-<ol class="org-ol">
-<li>编写，是指在 Java 开发环境中进行程序代码的输入，最终形成后缀名为 <code>.java</code> 的 Java 源文件；</li>
-<li>编译，是指用 Java 编译器对源文件进行错误排查的过程，编译后将生成后缀名为 <code>.class</code> 的字节码文件，而不是像 C 语言那样生成可执行文件；</li>
-<li>运行，是指使用 Java 解释器将字节码文件翻译成机器代码，执行并显示结果。</li>
-</ol>
+                    <p>Java 程序的运行必须经过编写、编译和运行 3 个步骤：</p>
+                    <ol class="org-ol">
+                        <li>
+                            编写，是指在 Java
+                            开发环境中进行程序代码的输入，最终形成后缀名为
+                            <code>.java</code> 的 Java 源文件；
+                        </li>
+                        <li>
+                            编译，是指用 Java
+                            编译器对源文件进行错误排查的过程，编译后将生成后缀名为
+                            <code>.class</code> 的字节码文件，而不是像 C
+                            语言那样生成可执行文件；
+                        </li>
+                        <li>
+                            运行，是指使用 Java
+                            解释器将字节码文件翻译成机器代码，执行并显示结果。
+                        </li>
+                    </ol>
 
-<img
-src="/images/java-4.png"
-width="100%"
-height=""
-style=""
-title=""
-/>
+                    <img
+                        src="images/java-4.png"
+                        width="100%"
+                        height=""
+                        style=""
+                        title=""
+                    />
 
-<p>
-<span class="underline">字节码文件</span> 是一种和任何具体机器环境及操作系统环境无关的中间代码。它是一种二进制文件，是 Java 源文件由 Java 编译器编译后生成的目标代码文件。编程人员和计算机都无法直接读懂字节码文件，它必须由专用的 Java 解释器来解释执行，因此 Java 是一种在编译基础上进行解释运行的语言。
-</p>
+                    <p>
+                        <span class="underline">字节码文件</span>
+                        是一种和任何具体机器环境及操作系统环境无关的中间代码。它是一种二进制文件，是
+                        Java 源文件由 Java
+                        编译器编译后生成的目标代码文件。编程人员和计算机都无法直接读懂字节码文件，它必须由专用的
+                        Java 解释器来解释执行，因此 Java
+                        是一种在编译基础上进行解释运行的语言。
+                    </p>
 
-<p>
-<span class="underline">Java 解释器</span> 负责将字节码文件翻译成具体硬件环境和操作系统平台下的机器代码，以便执行。因此 Java 程序不能直接运行在现有的操作系统平台上，它必须运行在被称为 Java 虚拟机的软件平台之上。
-</p>
+                    <p>
+                        <span class="underline">Java 解释器</span>
+                        负责将字节码文件翻译成具体硬件环境和操作系统平台下的机器代码，以便执行。因此
+                        Java
+                        程序不能直接运行在现有的操作系统平台上，它必须运行在被称为
+                        Java 虚拟机的软件平台之上。
+                    </p>
 
-<p>
-<span class="underline">Java 虚拟机</span> （JVM）是运行 Java 程序的软件环境，Java 解释器是 Java 虚拟机的一部分。
-</p>
+                    <p>
+                        <span class="underline">Java 虚拟机</span> （JVM）是运行
+                        Java 程序的软件环境，Java 解释器是 Java 虚拟机的一部分。
+                    </p>
 
-<p>
-在运行 Java 程序时，首先会启动 JVM ，然后由它来负责执行 Java 的字节码程序，并且 Java 字节码程序只能运行于 JVM 上。
-</p>
+                    <p>
+                        在运行 Java 程序时，首先会启动 JVM ，然后由它来负责执行
+                        Java 的字节码程序，并且 Java 字节码程序只能运行于 JVM
+                        上。
+                    </p>
 
-<p>
-这样，利用 JVM 就可以把 Java 字节码程序和具体的硬件平台及操作系统分隔开来，只要在不同的计算机上安装了针对特定平台的 JVM ，Java 程序就可以运行，而不用考虑具体的硬件平台及操作系统环境，也不用考虑字节码文件是何种平台上生成的。
-</p>
+                    <p>
+                        这样，利用 JVM 就可以把 Java
+                        字节码程序和具体的硬件平台及操作系统分隔开来，只要在不同的计算机上安装了针对特定平台的
+                        JVM ，Java
+                        程序就可以运行，而不用考虑具体的硬件平台及操作系统环境，也不用考虑字节码文件是何种平台上生成的。
+                    </p>
 
-<p>
-JVM 把这种不同软硬件平台的具体差别隐藏起来，从而实现了真正的二进制代码级的跨平台移植。JVM 是 Java 平台架构的基础，Java 的跨平台特性正是通过在 JVM 中运行 Java 程序实现的。如下：
-</p>
+                    <p>
+                        JVM
+                        把这种不同软硬件平台的具体差别隐藏起来，从而实现了真正的二进制代码级的跨平台移植。JVM
+                        是 Java 平台架构的基础，Java 的跨平台特性正是通过在 JVM
+                        中运行 Java 程序实现的。如下：
+                    </p>
 
-<img
-src="/images/java-5.png"
-width="660"
-height=""
-style=""
-title=""
-/>
+                    <img
+                        src="images/java-5.png"
+                        width="660"
+                        height=""
+                        style=""
+                        title=""
+                    />
 
-<p>
-Java 语言这种“一次编写，到处运行”的方式，有效地解决了目前大多数高级程序设计语言需要针对不同系统来编译产生不同机器代码的问题，即硬件环境和操作平台的异构问题，大大降低了程序开发、维护和管理的开销。
-</p>
+                    <p>
+                        Java
+                        语言这种“一次编写，到处运行”的方式，有效地解决了目前大多数高级程序设计语言需要针对不同系统来编译产生不同机器代码的问题，即硬件环境和操作平台的异构问题，大大降低了程序开发、维护和管理的开销。
+                    </p>
 
-<p>
-*注意：Java 程序通过 JVM 可以实现跨平台特性，但 JVM 是不跨平台的。也就是说，不同操作系统之上的 JVM 是不同的，Windows 平台之上的 JVM 不能用在 Linux 平台，反之亦然。
-</p>
-</div>
-</div>
+                    <p>
+                        *注意：Java 程序通过 JVM 可以实现跨平台特性，但 JVM
+                        是不跨平台的。也就是说，不同操作系统之上的 JVM
+                        是不同的，Windows 平台之上的 JVM 不能用在 Linux
+                        平台，反之亦然。
+                    </p>
+                </div>
+            </div>
 
-<div id="outline-container-org5636408" class="outline-2">
-<h2 id="org5636408">Java 的学习路线</h2>
-<div class="outline-text-2" id="text-org5636408">
-<p>
-学习 Java 的第一步，就是制定自己的 Java 学习路线。对于学习 JavaSE 的读者，分为 JavaSE 初级、中级和高级水平，下面分别介绍达到这些水平需要掌握什么。
-</p>
+            <div id="outline-container-org5636408" class="outline-2">
+                <h2 id="org5636408">Java 的学习路线</h2>
+                <div class="outline-text-2" id="text-org5636408">
+                    <p>
+                        学习 Java 的第一步，就是制定自己的 Java
+                        学习路线。对于学习 JavaSE 的读者，分为 JavaSE
+                        初级、中级和高级水平，下面分别介绍达到这些水平需要掌握什么。
+                    </p>
 
-<p>
-<span class="underline">1. 初级水平</span>
-</p>
+                    <p>
+                        <span class="underline">1. 初级水平</span>
+                    </p>
 
-<p>
-JavaSE 初级水平要求掌握计算机入门：DOS 命令，什么是程序，如何配置 Java 环境，Java 编程的过程是怎样的，Java 有什么特点，程序是如何运行的。
-</p>
+                    <p>
+                        JavaSE 初级水平要求掌握计算机入门：DOS
+                        命令，什么是程序，如何配置 Java 环境，Java
+                        编程的过程是怎样的，Java 有什么特点，程序是如何运行的。
+                    </p>
 
-<p>
-编程基础：变量，基本数据类型，进制，转义字符，运算符，分支语句和循环语句等。方法与数组，还有彻底掌握面向对象的思想。
-</p>
+                    <p>
+                        编程基础：变量，基本数据类型，进制，转义字符，运算符，分支语句和循环语句等。方法与数组，还有彻底掌握面向对象的思想。
+                    </p>
 
-<p>
-如果能掌握这些，你已经入门 Java 语言了。
-</p>
+                    <p>如果能掌握这些，你已经入门 Java 语言了。</p>
 
-<p>
-<span class="underline">2. 中级水平</span>
-</p>
+                    <p>
+                        <span class="underline">2. 中级水平</span>
+                    </p>
 
-<p>
-JavaSE 中级水平是要求掌握 Eclipse 用法（编辑器）与异常处理技术，Debug 调试技术，Java 常用类库，文件与 IO ，集合框架，多线程并发技术，网络编程，反射和泛型特点，正则表达式，枚举和注解，XML 和 JSON ，GUI 事件处理，Web 前端开发基础和框架，Servlet 和 JSP 在 Web 后端的应用，MVC 和分层架构，以及项目开发流程及 CASE 工具的使用。
-</p>
+                    <p>
+                        JavaSE 中级水平是要求掌握 Eclipse
+                        用法（编辑器）与异常处理技术，Debug 调试技术，Java
+                        常用类库，文件与 IO
+                        ，集合框架，多线程并发技术，网络编程，反射和泛型特点，正则表达式，枚举和注解，XML
+                        和 JSON ，GUI 事件处理，Web 前端开发基础和框架，Servlet
+                        和 JSP 在 Web 后端的应用，MVC
+                        和分层架构，以及项目开发流程及 CASE 工具的使用。
+                    </p>
 
-<p>
-<span class="underline">3. 高级水平</span>
-</p>
+                    <p>
+                        <span class="underline">3. 高级水平</span>
+                    </p>
 
-<p>
-JavaSE 高级水平便是要掌握 Mybatis 框架，Spring 框架，使用 Hibernate 实现持久层 RESTful 架构和移动端接口，设计第三方接口和在线支付功能，MyBatis 的应用和 SSM 整合。
-</p>
+                    <p>
+                        JavaSE 高级水平便是要掌握 Mybatis 框架，Spring
+                        框架，使用 Hibernate 实现持久层 RESTful
+                        架构和移动端接口，设计第三方接口和在线支付功能，MyBatis
+                        的应用和 SSM 整合。
+                    </p>
 
-<p>
-分布式基础知识点：Linux 常见命令，JDK、tomcat 配置，Maven 私服，阿里云配置 redis 和 mysql 等，JVM 高级特性，JVM 性能监控和调优等等。主要都是向着 Web 开发方面的技术加深。
-</p>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2020-09-12 Sat 18:42</p>
-<p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2021-02-23 Tue 15:26</p>
-<p class="validation"><a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a></p>
-</div>
-</body>
+                    <p>
+                        分布式基础知识点：Linux 常见命令，JDK、tomcat
+                        配置，Maven 私服，阿里云配置 redis 和 mysql 等，JVM
+                        高级特性，JVM 性能监控和调优等等。主要都是向着 Web
+                        开发方面的技术加深。
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div id="postamble" class="status">
+            <p class="date">Date: 2020-09-12 Sat 18:42</p>
+            <p class="author">Author: Jack Liu</p>
+            <p class="date">Created: 2021-02-23 Tue 15:26</p>
+            <p class="validation">
+                <a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a>
+            </p>
+        </div>
+    </body>
 </html>

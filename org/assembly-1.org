@@ -127,7 +127,7 @@ _机器语言_ （machine language）是一种数字语言，专门设计成能�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/vm-0.gif"
+src="images/vm-0.gif"
 width="120"
 height=""
 style="float: left;"
@@ -149,7 +149,7 @@ _#. 特定的机器_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/vm-1.gif"
+src="images/vm-1.gif"
 width="160"
 height=""
 style="float: right;"
@@ -194,7 +194,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/binary-0.gif"
+src="images/binary-0.gif"
 width="300"
 height=""
 style=""
@@ -212,7 +212,7 @@ _1. 无符号二进制整数_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/binary-1.gif"
+src="images/binary-1.gif"
 width="300"
 height=""
 style=""
@@ -259,7 +259,7 @@ _3. 无符号十进制整数到二进制数的转换_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/binary-2.gif"
+src="images/binary-2.gif"
 width="360"
 height=""
 style=""
@@ -462,7 +462,7 @@ Microsoft Windows 近期版本使用了 UTF-16 ，其中的每个字符都有一
 
 #+BEGIN_EXPORT html
 <img
-src="/images/ascii-0.gif"
+src="images/ascii-0.gif"
 width=""
 height=""
 style=""
@@ -474,7 +474,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/ascii-1.gif"
+src="images/ascii-1.gif"
 width="130"
 height=""
 style="float: right;"
@@ -536,7 +536,7 @@ NOT 运算符将布尔值取反。用数学符号书写为 =¬X= ，其中，X �
 
 #+BEGIN_EXPORT html
 <img
-src="/images/and-0.gif"
+src="images/and-0.gif"
 width=""
 height=""
 style="float: right;"
@@ -561,7 +561,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/or-0.gif"
+src="images/or-0.gif"
 width=""
 height=""
 style="float: right;"
@@ -585,7 +585,7 @@ OR 运算符也是按位操作。在下例中，X 的每一位与 Y 的对应位
 
 #+BEGIN_EXPORT html
 <img
-src="/images/bol-0.gif"
+src="images/bol-0.gif"
 width=""
 height=""
 style="float: right;"

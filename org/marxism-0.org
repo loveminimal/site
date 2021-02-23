@@ -3,7 +3,7 @@
 
 #+BEGIN_EXPORT html
 <img
-src="/images/marxism.jpg"
+src="images/marxism.jpg"
 width="400"
 style="float: right; margin-left: 8px;"
 />
@@ -78,7 +78,7 @@ _1. 德国古典哲学_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/hegel.jpg"
+src="images/hegel.jpg"
 width="200"
 height=""
 style="float: right;"
@@ -100,7 +100,7 @@ title="黑格尔"
 
 #+BEGIN_EXPORT html
 <img
-src="/images/feuerbach.jpg"
+src="images/feuerbach.jpg"
 width="200"
 height=""
 style="float: left; margin-right: 8px;"
@@ -122,7 +122,7 @@ _2. 英国古典经济学_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/smith.jpg"
+src="images/smith.jpg"
 width="200"
 height=""
 style="float: left; margin-right: 8px;"
@@ -134,7 +134,7 @@ title="亚当·斯密"
 
 #+BEGIN_EXPORT html
 <img
-src="/images/ricardo.jpg"
+src="images/ricardo.jpg"
 width="190"
 height=""
 style="float: right;"
@@ -252,7 +252,7 @@ _3. 生物进化论_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/lenin.jpg"
+src="images/lenin.jpg"
 width="220"
 height=""
 style="float: left; margin-right: 8px;"
@@ -276,7 +276,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/maozhuxi.jpg"
+src="images/maozhuxi.jpg"
 width="300"
 height=""
 style="float: left; margin-right: 8px;"
@@ -288,7 +288,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/dengyeye.jpg"
+src="images/dengyeye.jpg"
 width="300"
 height=""
 style="float: right;"

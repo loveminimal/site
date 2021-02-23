@@ -3,7 +3,7 @@
 
 #+BEGIN_EXPORT html
 <img
-src="/images/test-1.jpg"
+src="images/test-1.jpg"
 width="600"
 height=""
 style=""
@@ -271,7 +271,7 @@ TestCafe 是一个基于端到端的 NodeJS 框架，旨在提供简单的设置
 
 #+BEGIN_EXPORT html
 <img
-src="/images/test-2.jpg"
+src="images/test-2.jpg"
 width="420"
 height=""
 style=""
@@ -281,7 +281,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/test-3.jpg"
+src="images/test-3.jpg"
 width="380"
 height=""
 style="float: right; margin-left: 8px;"

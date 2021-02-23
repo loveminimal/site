@@ -20,7 +20,7 @@ Java 集合类型分为 =Collection= 和 =Map= ，它们是 Java 集合的根接
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java/java-9.png"
+src="images/java/java-9.png"
 width="500"
 height=""
 style=""

@@ -19,7 +19,7 @@ _socket 通信技术_ 就是两台联网的计算机之间 *交换数据的技�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-21.jpg"
+src="images/java-21.jpg"
 width=""
 height=""
 style=""
@@ -81,7 +81,7 @@ TCP/IP（Transimission Control Protocol/Internet Protocol）即传输控制协�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-25.png"
+src="images/java-25.png"
 width="500"
 height=""
 style=""
@@ -94,7 +94,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-26.png"
+src="images/java-26.png"
 width="500"
 height=""
 style=""
@@ -114,7 +114,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-27.png"
+src="images/java-27.png"
 width="500"
 height=""
 style=""
@@ -294,7 +294,7 @@ _1. 流格式套接字（ =SOCK_STREAM= ）_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-22.gif"
+src="images/java-22.gif"
 width=""
 height=""
 style=""
@@ -344,7 +344,7 @@ _2. 数据报格式套接字（ =SOCK_DGRAM= ）_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-23.gif"
+src="images/java-23.gif"
 width=""
 height=""
 style=""
@@ -376,7 +376,7 @@ TCP 协议独立于 =write()/send()= 函数，数据有可能刚被写入缓冲�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/java-28.jpg"
+src="images/java-28.jpg"
 width=""
 height=""
 style=""

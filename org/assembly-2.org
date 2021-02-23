@@ -11,7 +11,7 @@
 
 #+BEGIN_EXPORT html
 <img
-src="/images/cpu-0.gif"
+src="images/cpu-0.gif"
 width="400"
 height=""
 style=""
@@ -47,7 +47,7 @@ CPU 通过主板上 CPU 插座的引脚与计算机其他部分相连，大部�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/cpu-1.gif"
+src="images/cpu-1.gif"
 width="360"
 height=""
 style=""
@@ -76,7 +76,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/cpu-2.gif"
+src="images/cpu-2.gif"
 width="360"
 height=""
 style=""
@@ -169,7 +169,7 @@ _2. 基本程序执行寄存器_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/cpu-3.gif"
+src="images/cpu-3.gif"
 width="230"
 height=""
 style=""
@@ -179,7 +179,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/cpu-4.gif"
+src="images/cpu-4.gif"
 width=""
 height=""
 style="float: right;"
@@ -264,7 +264,7 @@ FPU 中有 8 个浮点数据寄存器，分别命名为 ST（0-7），其他控�
 
 #+BEGIN_EXPORT html
 <img
-src="/images/cpu-5.gif"
+src="images/cpu-5.gif"
 width="280"
 height=""
 style=""
@@ -398,7 +398,7 @@ Intel P965 具有下述特性：
 
 #+BEGIN_EXPORT html
 <img
-src="/images/cpu-6.gif"
+src="images/cpu-6.gif"
 width="500"
 height=""
 style=""
@@ -448,7 +448,7 @@ _3. BIOS_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/cpu-7.gif"
+src="images/cpu-7.gif"
 width="150"
 height=""
 style="float: right;"
@@ -473,7 +473,7 @@ title=""
 
 #+BEGIN_EXPORT html
 <img
-src="/images/cpu-8.gif"
+src="images/cpu-8.gif"
 width="330"
 height=""
 style=""

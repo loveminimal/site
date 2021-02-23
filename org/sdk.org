@@ -7,7 +7,7 @@
 
 #+BEGIN_EXPORT html
 <img
-src="/images/sdk-1.jpg"
+src="images/sdk-1.jpg"
 width="400"
 height=""
 style="float: right; margin-left: 16px;"
@@ -71,7 +71,7 @@ _3. 少依赖，易扩展_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/sdk-2.jpg"
+src="images/sdk-2.jpg"
 width="500"
 height=""
 style=""
@@ -184,7 +184,7 @@ _3. 确定 SDK 的基础接口_
 
 #+BEGIN_EXPORT html
 <img
-src="/images/sdk-3.jpg"
+src="images/sdk-3.jpg"
 width="600"
 height=""
 style=""
