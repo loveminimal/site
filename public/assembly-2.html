@@ -1,1012 +1,1007 @@
 <!DOCTYPE html>
 <html lang="zh">
-<head>
-<!-- 2020-12-11 Fri 10:58 -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>x86 处理器架构</title>
-<meta name="generator" content="Org mode">
-<meta name="author" content="Jack Liu">
-<link rel="shortcut icon" href="/images/rose-red.png" type="image/x-icon" />
-<link rel="stylesheet" href="/css/animate.min.css" />
-<link rel="stylesheet" href="/css/all.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/darkreader.js"></script>
-<script src="/user.config.js"></script>
-<script src="/js/main.js"></script>
-</head>
-<body>
-<div id="content">
-<h1 class="title">x86 处理器架构</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org7340f8c">CPU 处理器架构和工作原理浅析</a>
-<ul>
-<li><a href="#orga92bd28">基本微机设计</a></li>
-<li><a href="#org5db8686">指令执行周期</a></li>
-<li><a href="#org3200a59">读取内存</a></li>
-<li><a href="#org5ca0f09">加载并执行程序</a></li>
-</ul>
-</li>
-<li><a href="#orgbd18e25">32位x86处理器架构</a>
-<ul>
-<li><a href="#orge0d6bee">操作模式</a></li>
-<li><a href="#orgc878e9e">基本执行环境</a></li>
-<li><a href="#org5e4bdeb">x86 内存管理</a></li>
-</ul>
-</li>
-<li><a href="#org12bac51">x86-64 处理器架构</a>
-<ul>
-<li><a href="#orga6f9302">64 位操作模式</a></li>
-<li><a href="#orgd204330">基本 64 位执行环境</a></li>
-</ul>
-</li>
-<li><a href="#org9922272">x86 计算机组件</a>
-<ul>
-<li><a href="#org252d4a1">主板</a></li>
-<li><a href="#org1a7a54f">内存</a></li>
-</ul>
-</li>
-<li><a href="#orgb69f267">I/O 输入输出系统</a>
-<ul>
-<li><a href="#org6854975">I/O 访问层次</a></li>
-<li><a href="#org42e5694">设备驱动程序</a></li>
-<li><a href="#org0e0e173">多层次编程</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-<p>
-汇编语言是学习计算机是如何工作的很好的工具，本章介绍与 x86 汇编语言相关的底层硬件知识，以及从程序员角度看到的主机系统，其中包括了所有的 Intel IA-32 和 Intel 64 处理器和高级微设备（AMD）处理器。还介绍了指令执行时处理器内部发生的一些基本操作，以及操作系统如何加载和执行程序，并通过样本主板布局来了解 x86 系统的硬件环境，最后还讨论了在应用程序与操作系统之间，层次化输入输出是如何工作的。
-</p>
-
-<div id="outline-container-org7340f8c" class="outline-2">
-<h2 id="org7340f8c">CPU 处理器架构和工作原理浅析</h2>
-<div class="outline-text-2" id="text-org7340f8c">
-</div>
-<div id="outline-container-orga92bd28" class="outline-3">
-<h3 id="orga92bd28">基本微机设计</h3>
-<div class="outline-text-3" id="text-orga92bd28">
-<p>
-下图给出了假想机的基本设计。中央处理单元（CPU）是进行算术和逻辑操作的部件，包含了有限数量的存储位置 &#x2013; <span class="underline">寄存器</span> （register），一个 <span class="underline">高频时钟</span> 、 一个 <span class="underline">控制单元</span> 和一个 <span class="underline">算术逻辑单元</span> 。
-</p>
-
-<img
-src="/images/cpu-0.gif"
-width="400"
-height=""
-style=""
-title=""
-/>
-
-<p>
-其中：
-</p>
-
-<ul class="org-ul">
-<li><span class="underline">时钟</span> （clock）对 CPU 内部操作与系统其他组件进行同步；</li>
-<li><span class="underline">控制单元</span> （control unit, CU）协调参与机器指令执行的步骤序列；</li>
-<li><span class="underline">算术逻辑单元</span> （arithmetic logic unit, ALU）执行算术运算，如加法和减法，以及逻辑运算。</li>
-</ul>
-
-<blockquote>
-<p>
-CPU 通过主板上 CPU 插座的引脚与计算机其他部分相连，大部分引脚连接的是数据总线、控制总线和地址总线。
-</p>
-</blockquote>
-
-<ul class="org-ul">
-<li><span class="underline">内存存储单元</span> （Memory Storage Unit）用于在程序运行时保存指令与数据，它接受来自 CPU 的数据请求，将数据从随机存储器（RAM）传输到 CPU ，并从 CPU 传输到内存。</li>
-</ul>
-
-<blockquote>
-<p>
-由于所有的数据处理都在 CPU 内进行，因此保存在内存中的程序在执行前需要被复制到 CPU 中，程序指令在复制到 CPU 时，可以一次复制一条，也可以一次复制多条。
-</p>
-</blockquote>
-
-<ul class="org-ul">
-<li><span class="underline">总线</span> （bus）是一组并行线，用于将数据从计算机一个部分传送到另一个部分。一个计算机系统通常包含四类总线：数据类、I/O 类、控制类和地址类。
-<ul class="org-ul">
-<li><span class="underline">数据总线</span> （data bus）在 CPU 和内存之间传输指令和数据；</li>
-<li><span class="underline">I/O 总线</span> 在 CPU 和系统输入/输出设备之间传输数据；</li>
-<li><span class="underline">控制总线</span> （control bus）用二进制信号对所有连接在系统总线上设备的行为进行同步；</li>
-<li>当前执行指令在 CPU 和内存之间传输数据时， <span class="underline">地址总线</span> （address bus）用于保持指令和数据的地址。</li>
-</ul></li>
-</ul>
-
-<p>
-时钟与 CPU 和系统总线相关的每一个操作都是由一个 <b>恒定速率的内部时钟脉冲</b> 来进行同步，机器指令的基本时间单位是机器周期（machine cycle）或时钟周期（clock cycle）。
-</p>
-
-<p>
-一个时钟周期的时长是一个完整时钟脉冲所需要的时间，下图中，一个时钟周期被描绘为两个相邻下降沿之间的时间：
-</p>
-
-<img
-src="/images/cpu-1.gif"
-width="360"
-height=""
-style=""
-title=""
-/>
-
-<p>
-时钟周期持续时间用时钟速度的倒数来计算，而时钟速度则用每秒振荡数来衡量。例如，一个每秒振荡 10 亿次（1GHz）的时钟，其时钟周期为 10 亿分之 1 秒（1 纳秒）。
-</p>
-
-<p>
-执行一条机器指令最少需要 1 个时钟周期，有几个需要的时钟则超过了 50 个（比如 8088 处理器中的乘法指令）。由于在 CPU、系统总线和内存电路之间存在速度差异，因此，需要访问内存的指令常常需要空时钟周期，也被称为等待状态（wait states）。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org5db8686" class="outline-3">
-<h3 id="org5db8686">指令执行周期</h3>
-<div class="outline-text-3" id="text-org5db8686">
-<p>
-一条机器指令不会神奇地一下就执行完成。CPU 在执行一条机器指令时，需要经过一系列预先定义好的步骤，这些步骤被称为 <span class="underline">指令执行周期</span> （instruction execution cycle）。
-</p>
-
-<p>
-假设现在指令指针寄存器中已经有了想要执行指令的地址，下面就是执行步骤：
-</p>
-<ol class="org-ol">
-<li>CPU 从被称为指令队列（instruction queue）的内存区域取得指令，之后立即增加指令指针的值；</li>
-<li>CPU 对指令的二进制位模式进行译码，这种位模式可能会表示该指令有操作数（输入值）；</li>
-<li>如果有操作数，CPU 就从寄存器和内存中取得操作数。有时，这步还包括了地址计算；</li>
-<li>使用步骤 3 得到的操作数，CPU 执行该指令。同时更新部分状态标志位，如零标志（Zero）、进位标志（Carry）和溢出标志（Overflow）；</li>
-<li>如果输出操作数也是该指令的一部分，则 CPU 还需要存放其执行结果。</li>
-</ol>
-
-<p>
-通常将上述听起来很复杂的过程简化为三个步骤：取指（Fetch）、译码（Decode）和执行（Execute）。操作数（operand）是指操作过程中输入或输出的值，例如，表达式 <code>Z=X+Y</code> 有两个输入操作数（X 和 Y），一个输出操作数（Z）。
-</p>
-
-<p>
-下图是一个典型 CPU 中的数据流框图，该图表现了在指令执行周期中相互交互部件之间的关系。
-</p>
-
-<img
-src="/images/cpu-2.gif"
-width="360"
-height=""
-style=""
-title=""
-/>
-
-<ul class="org-ul">
-<li>在从内存读取程序指令之前，将其地址放到地址总线上；</li>
-<li>然后，内存控制器将所需代码送到数据总线上，存入代码高速缓存（code cache）；</li>
-<li>指令指针的值决定下一条将要执行的指令；</li>
-<li>指令由指令译码器分析，并产生相应的数值信号送往控制单元，其协调 ALU 和浮点单元。</li>
-</ul>
-
-<p>
-虽然图中没有画出控制总线，但是其上传输的信号用系统时钟协调不同 CPU 部件之间的数据传输。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org3200a59" class="outline-3">
-<h3 id="org3200a59">读取内存</h3>
-<div class="outline-text-3" id="text-org3200a59">
-<p>
-作为一个常见现象，计算机从内存读取数据比从内部寄存器读取速度要慢很多。这是因为从内存读取一个值，需要经过下述步骤：
-</p>
-<ul class="org-ul">
-<li>将想要读取的值的地址放到地址总线上；</li>
-<li>设置处理器 RD （读取）引脚（改变 RD 的值）；</li>
-<li>等待一个时钟周期给存储器芯片进行响应；</li>
-<li>将数据从数据总线复制到目标操作数。</li>
-</ul>
-
-<p>
-上述每一步常常只需要一个时钟周期，时钟周期是基于处理器内固定速率时钟节拍的一种测量方法。计算机的 CPU 通常是用其时钟速率描述。例如，速率为 1.2GHz 意味着时钟节拍或振荡每秒 12 亿次。
-</p>
-
-<p>
-因此，考虑到每个时钟周期仅为 1/1 200 000 000 秒，4 个时钟周期也是非常快的。但是，与 CPU 寄存器相比，这个速度还是慢了，因为访问寄存器一般只需要 1 个时钟周期。
-</p>
-
-<p>
-幸运的是，CPU 设计者很早之前就已经指出，因为绝大多数程序都需要访问变量，计算机内存成为了速度瓶颈。他们想出了一个聪明的方法来减少读写内存的时间 &#x2013; 将大部分近期使用过的指令和数据存放在调整存储器 cache 中。
-</p>
-
-<p>
-其思想是，程序更可能希望反复访问相同的内存和指令，因此，cache 保存这些值就能使它们能被快速访问到。此外，当 CPU 开始执行一个程序时，它会预先将后续（比如）一千条指令加载到 cache 中，这个行为是基于这样一种假设，即这些指令很快就会被用到。
-</p>
-
-<p>
-如果这种情况重复发生在一个代码块中，则 cache 中就会有相同的指令。当处理器能够在 cache 存储器中发现想要的数据，则称为 cache 命中（cache hit） 。反之，如果 CPU 在 cache 中没有找到数据，则称为 cache 未命中（cache miss）。
-</p>
-
-<p>
-x86 系列中的 cache 存储器有两种类型：一级 cache （或主 cache）位于 CPU 上；二级 cache （或次 cache）速度略慢，通过高速数据总线与 CPU 相连。这两种 cache 以最佳方式一起工作。
-</p>
-
-<p>
-还有一个原因使得 cache 存储器比传统 RAM 速度快， cache 存储器是由一种被称为静态 RAM （static RAM）的特殊存储器芯片构成的，这种芯片比较贵，但是不需要为了保持其内容进行不断地刷新。另一方面，传统存储器，即动态 RAM（dynamic RAM），就需要持续刷新，速度慢一些，但是价格也更便宜。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org5ca0f09" class="outline-3">
-<h3 id="org5ca0f09">加载并执行程序</h3>
-<div class="outline-text-3" id="text-org5ca0f09">
-<p>
-在程序执行之前，需要用一种工具程序将其加载到内存，这种工具程序称为 <span class="underline">程序加载器</span> （program loader）。加载后，操作系统必须将 CPU 指向程序的入口，即程序开始执行的地址。具体步骤如下：
-</p>
-<ol class="org-ol">
-<li>操作系统（OS）在当前磁盘目录下搜索程序的文件名。如果找不到，则在预定目录列表（称为路径（path））下搜索文件名。当 OS 无法检索到文件名时，它会发出一个出错信息；</li>
-<li>如果程序文件被找到，OS 就访问磁盘目录中的程序文件基本信息，包括文件大小，及其在磁盘驱动器上的物理位置；</li>
-<li>OS 确定内存中下一个可使用的位置，将程序文件加载内存。为该程序分配内存块，并将程序大小和位置信息加入表中（有时称为描述符表（descriptor table））。另外，OS 可能调整程序内指针的值，使得它们包括程序数据地址；</li>
-<li>OS 开始执行程序的第一条机器指令（程序入口）。当程序开始执行后，就成为一个进程（process），OS 为这个进程分配一个标识号（进程 ID），用于在执行期间对其进行追踪；</li>
-<li>进程自动运行。OS 的工作是追踪进程的执行，并响应系统资源的请求。这些资源包括内存、磁盘文件和输入输出设备等；</li>
-<li>进程结束后，就会从内存中移除。</li>
-</ol>
-
-<p>
-不论使用哪个版本的 Microsoft Windows，按下 <code>Ctrl-Alt-Delete</code> 组合键，可以选择任务管理器（task manager）选项。在任务管理器窗口可以查看应用程序和进程列表。
-</p>
-
-<p>
-应用程序列表中列出了当前正在运行的完整程序名称，比如，Windows 浏览器，或者 Microsoft Visual C++。如果选择进程列表，则会看见一长串进程名。其中的每个进程都是一个独立于其他进程的，并处于运行中的小程序。
-</p>
-
-<p>
-可以连续追踪每个进程使用的 CPU 时间和内存容量。在某些情况下，选定一个进程名称后，按下 <code>Delete</code> 键就可以关闭该进程。
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgbd18e25" class="outline-2">
-<h2 id="orgbd18e25">32位x86处理器架构</h2>
-<div class="outline-text-2" id="text-orgbd18e25">
-<p>
-本节我们来了解一下 32 位 x86 处理器的基本架构特点，包括了 Intel IA-32 系列中的成员和所有 32 位 AMD 处理器。
-</p>
-</div>
-
-<div id="outline-container-orge0d6bee" class="outline-3">
-<h3 id="orge0d6bee">操作模式</h3>
-<div class="outline-text-3" id="text-orge0d6bee">
-<p>
-x86 处理器有三个主要的操作模式：保护模式、实地址模式和系统管理模式；以及一个子模式：虚拟 8086 模式，这是保护模式的特殊情况。
-</p>
-
-<p>
-<span class="underline">1. 保护模式（Protected Mode）</span>
-</p>
-
-<p>
-保护模式是处理器的原生状态，在这种模式下，所有的指令和特性都是可用的。分配给程序的独立内存区域被称为 <span class="underline">段</span> ，而处理器会阻止程序使用自身段范围之外的内存。
-</p>
-
-<p>
-<span class="underline">2. 虚拟 8086 模式（Virtual-8086 Mode）</span>
-</p>
-
-<p>
-保护模式下，处理器可以在一个安全的环境中，直接执行实地址模式软件，如 MS-DOS 程序。换句话说，如果一个程序崩溃了或是试图向系统内存区域写数据，都不会影响到同一时间执行的其他程序。现代操作系统可以同时执行多个独立的虚拟 8086 会话。
-</p>
-
-<p>
-<span class="underline">3. 实地址模式（Real-Address Mode）</span>
-</p>
-
-<p>
-实地址模式实现的是早期 Intel 处理器的编程环境，但是增加了一些其他的特性，如切换到其他模式的功能。当程序需要直接访问系统内存和硬件设备时，这种模式就很有用。
-</p>
-
-<p>
-<span class="underline">4. 系统管理模式（System Management Mode）</span>
-</p>
-
-<p>
-系统管理模式（SMM）向操作系统提供了实现诸如电源管理和系统安全等功能的机制。这些功能通常是由计算机制造商实现的，他们为了一个特定的系统设置而定制处理器。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgc878e9e" class="outline-3">
-<h3 id="orgc878e9e">基本执行环境</h3>
-<div class="outline-text-3" id="text-orgc878e9e">
-<p>
-<span class="underline">1. 地址空间</span>
-</p>
-
-<p>
-在 32 位保护模式下，一个任务或程序最大可以寻址 4GB 的线性地址空间。从 P6 处理器开始，一种被称为扩展物理寻址（extended physical addressing）技术使得可以被寻址和物理内存空间增加到 64GB 。
-</p>
-
-<p>
-与之相反，实地址模式程序只能寻址 1MB 空间。如果处理器在保护模式下运行多个虚拟 8086 程序，则每个程序只能拥有自己的 1MB 内存空间。
-</p>
-
-<p>
-<span class="underline">2. 基本程序执行寄存器</span>
-</p>
-
-<p>
-寄存器是直接位于 CPU 内的高速存储位置，其设计访问速度远高于传统存储器。例如，当一个循环处理为了速度进行优化时，其循环计数会保留在寄存器中而不是变量中。
-</p>
-
-<p>
-下面展示的是基本程序执行寄存器（basic program execution registers）：8 个通用寄存器，6 个段寄存器，一个处理器状态标志寄存器（EFLAGS），和一个指令指针寄存器（EIP）。
-</p>
-
-<img
-src="/images/cpu-3.gif"
-width="230"
-height=""
-style=""
-title=""
-/>
-
-<img
-src="/images/cpu-4.gif"
-width=""
-height=""
-style="float: right;"
-title="通用寄存器"
-/>
-
-<p>
-<span class="underline">2.1 通用寄存器</span>
-</p>
-
-<p>
-通用寄存器主要用于算术运算和数据传输。如右上，EAX 寄存器的低 16 位在作用时可以用 AX 表示。
-</p>
-
-<p>
-一些寄存器的组成部分可以处理 8 位的值。例如，AX 寄存器的高 8 位被称为 AH ，而低 8 位被称为 AL 。同样的重叠关系也存在于 EAX、EBX、ECX 和 EDX 寄存器中：
-</p>
-
-<table>
-
-<colgroup>
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">32 位</th>
-<th scope="col" class="org-left">16 位</th>
-<th scope="col" class="org-left">8 位（高）</th>
-<th scope="col" class="org-left">8 位（低）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">EAX</td>
-<td class="org-left">AX</td>
-<td class="org-left">AH</td>
-<td class="org-left">AL</td>
-</tr>
-
-<tr>
-<td class="org-left">EBX</td>
-<td class="org-left">BX</td>
-<td class="org-left">BH</td>
-<td class="org-left">BL</td>
-</tr>
-
-<tr>
-<td class="org-left">ECX</td>
-<td class="org-left">CX</td>
-<td class="org-left">CH</td>
-<td class="org-left">CL</td>
-</tr>
-
-<tr>
-<td class="org-left">EDX</td>
-<td class="org-left">DX</td>
-<td class="org-left">DH</td>
-<td class="org-left">DL</td>
-</tr>
-</tbody>
-</table>
-
-<p>
-其他通用寄存器只能用 32 位或 16 位名称来访问，如下表所示：
-</p>
-
-<table>
-
-<colgroup>
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-
-<col  class="org-left">
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">32 位</th>
-<th scope="col" class="org-left">16 位</th>
-<th scope="col" class="org-left">32 位</th>
-<th scope="col" class="org-left">16 位</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">ESI</td>
-<td class="org-left">SI</td>
-<td class="org-left">EBP</td>
-<td class="org-left">BP</td>
-</tr>
-
-<tr>
-<td class="org-left">EDI</td>
-<td class="org-left">DI</td>
-<td class="org-left">ESP</td>
-<td class="org-left">SP</td>
-</tr>
-</tbody>
-</table>
-
-<p>
-<span class="underline">2.2 特殊用法</span>
-</p>
-
-<p>
-某些通用指令寄存器有特殊用法：
-</p>
-<ul class="org-ul">
-<li>乘除指令默认使用 EAX ，它常常被称为扩展累加器（extended accumulator）寄存器；</li>
-<li>CPU 默认使用 ECX 为循环计数器；</li>
-<li>ESP 用于寻址堆栈（一种系统内存结构）数据，它极少用于一般算术运算和数据传输，通常被称为扩展堆栈指针（extended stack pointer）寄存器；</li>
-<li>ESI 和 EDI 用于高速存储器传输指令，有时也被称为扩展源变址（extended source index）寄存器和扩展目的的变址（extended destinations index）寄存器；</li>
-<li>高级语言通过 EBP 来引用堆栈中的函数参数和局部变量。除了高级编程，它不用于一般算术运算和数据传输，常常被称为扩展帧指针（extended frame pointer）寄存器。</li>
-</ul>
-
-<p>
-<span class="underline">2.3 段寄存器</span>
-</p>
-
-<p>
-实地址模式中，16 位段寄存器表示的是预先分配的内存区域的基址，这个内存区域称为 <span class="underline">段</span> 。保护模式中，段寄存器中存放的是段描述符表指针。一些段中存放程序指令（代码），其他段存放变量（数据），还有一个堆栈段存放的是局部函数变量和函数参数。
-</p>
-
-<p>
-<span class="underline">2.4 指令指针</span>
-</p>
-
-<p>
-指令指针（EIP）寄存器中包含下一条将要执行指令的地址。某些机器指令能控制 EIP ，使得程序分支转向到一个新位置。
-</p>
-
-<p>
-<span class="underline">2.5 EFLAGS 寄存器</span>
-</p>
-
-<p>
-EFLAGS（或 Flags）寄存器包含了独立的二进制位，用于控制 CPU 的操作，或是反映一些 CPU 的操作的结果，有些指令可以测试和控制这些单独的处理器标志。
-</p>
-
-<p>
-设置标志时，该标识位 = 1 ；清除（或重置）标识位时，该标志位 = 0 。
-</p>
-
-<p>
-<span class="underline">2.6 控制标志位</span>
-</p>
-
-<p>
-控制标志位控制 CPU 的操作。例如，它们能够使得 CPU 每执行一条指令后进入中断；在侦测到算术运算溢出时中断执行；进入虚拟 8086 模式，以及进入保护模式。
-</p>
-
-<p>
-程序能够通过设置 EFLAGS 寄存器中的单独位来控制 CPU 的操作，比如，方向标志位和中断标志位。
-</p>
-
-<p>
-<span class="underline">2.7 状态标志位</span>
-</p>
-
-<p>
-状态标志位反映了 CPU 执行的算术和逻辑操作的结果。其中包括：溢出位、符号位、零标志位、辅助进位标志位、奇偶校验位和进位标志位。下述说明中，标志位的缩写紧跟在标志位名称之后：
-</p>
-<ul class="org-ul">
-<li>进位标志位（CF），与目标位置相比，无符号算术运算结果太大时，设置该标志位；</li>
-<li>溢出标志位（OF），与目标位置相比，有符号算术运算结果太大或太小时，设置该标志位；</li>
-<li>符号标志位（SF），算术或逻辑操作产生负结果时，设置该标志位；</li>
-<li>零标志位（ZF），算术或逻辑操作产生的结果为零时，设置该标志位；</li>
-<li>辅助进位标志位（AC），算术操作在 8 位操作数中产生了位 3 向位 4 的进位时，设置该标志位；</li>
-<li>奇偶校验标志位（PF），结果的最低有效字节包含偶数个 1 时，设置该标志位，否则，清除该标志位。一般情况下，如果数据有可能被修改或损坏时，该标志位用于进行错误检测。</li>
-</ul>
-
-<p>
-<span class="underline">3. MMX 寄存器</span>
-</p>
-
-<p>
-在实现高级多媒体和通信应用时，MMX 技术提高了 Intel 处理器的性能。8 个 64 位 MMX 寄存器支持称为 SIMD（单指令，多数据，Single-Instruction，Multiple-Data）的特殊指令。
-</p>
-
-<p>
-顾名思义，MMX 指令对 MMX 寄存器中的数据值进行并行操作。虽然，它们看上去是独立寄存器，但是 MMX 寄存器实际上是浮点单元中使用的同样寄存器的别名。
-</p>
-
-<p>
-<span class="underline">4. XMM 寄存器</span>
-</p>
-
-<p>
-x86 结构还包括了 8 个 128 位 XMM 寄存器，它们被用于 SIMD 流扩展指令集。
-</p>
-
-<p>
-<span class="underline">#. 浮点单元</span>
-</p>
-
-<p>
-浮点单元（FPU，floating-point unit）执行高速浮点算术运算。之前为了这个目的，需要一个独立的协处理器芯片，从 Intel486 处理器开始，FPU 已经集成到主处理器芯片上。
-</p>
-
-<p>
-FPU 中有 8 个浮点数据寄存器，分别命名为 ST（0-7），其他控制寄存器和指针寄存器如下图所示：
-</p>
-
-<img
-src="/images/cpu-5.gif"
-width="280"
-height=""
-style=""
-title=""
-/>
-</div>
-</div>
-
-<div id="outline-container-org5e4bdeb" class="outline-3">
-<h3 id="org5e4bdeb">x86 内存管理</h3>
-<div class="outline-text-3" id="text-org5e4bdeb">
-<p>
-x86 处理器按照前面讨论的基本操作模式来管理内存。保护模式是最可靠、最强大的，但是它对应用程序直接访问系统硬件有着严格的限制。
-</p>
-
-<p>
-在实地址模式中，只能寻址 1MB 内存，地址从 <code>00000H</code> 到 <code>FFFFFH</code> 。处理器一次只能运行一个程序，但是可以暂时中断程序来处理来自外围设备的请求（各为中断（interrupt））。
-</p>
-
-<p>
-应用程序被允许访问内存的任何位置，包括那些直接与系统硬件相关的地址。MS-DOS 操作系统在实地址模式下运行，Windows 95 和 98 能够引导进入这种模式。
-</p>
-
-<p>
-在保护模式中，处理器可以同时运行多个程序，它为每个进程（运行中的程序）分配总共 4GB 的内存。每个程序都分配有自己的保留内存区域，程序之间禁止意外访问其他程序的代码和数据。MS-Windows 和 Linux 运行在保护模式下。
-</p>
-
-<p>
-在虚拟 8086 模式中，计算机运行在保护模式下，通过创建一个带有 1MB 地址空间的虚拟 8086 机器来模拟运行于实地址模式的 80x86 计算机。例如，在 Windows NT 和 2000 下，当打开一个命令窗口时，就创建了一个虚拟 8086 机器。同一时间可以运行多个这样的窗口，并且窗口之间都是受到保护的。
-</p>
-
-<p>
-在 Windows NT，2000 和 XP 系统中，某些需要直接使用计算机硬件的 MS-DOS 程序不能运行在虚拟 8086 模式下。
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org12bac51" class="outline-2">
-<h2 id="org12bac51">x86-64 处理器架构</h2>
-<div class="outline-text-2" id="text-org12bac51">
-<p>
-本节重点关注所有使用 x86-64 指令集的 64 位处理器的基本架构细节，这些处理器包括 Intel 64 和 AMD64 处理器系列，指令集是已讨论的 x86 指令集的 64 位扩展。以下为一些基本特征：
-</p>
-<ul class="org-ul">
-<li>向后兼容 x86 指令集；</li>
-<li>地址长度为 64 位，虚拟地址空间为 64 字节，按照当前芯片的实现情况，只能使用地址的低 48 位；</li>
-<li>可以使用 64 位通用寄存器，允许指令具有 64 位整数操作数；</li>
-<li>比 x86 多了 8 个通用寄存器；</li>
-<li>物理地址为 48 位，支持高达 256TB 的 RAM 。</li>
-</ul>
-
-<p>
-另一方面，当处理器运行于本机 64 位模式时，是不支持 16 位实模式或虚拟 8086 模式的。在传统模式（legacy mode）下，还是支持 16 位编程，但是在 Microsoft Windows 64 位版本中不可用。
-</p>
-
-<p>
-注意尽管 x86-64 指的是指令集，但是也可以将其看作是处理器类型。学习汇编语言时，没有必要考虑 x86-64 的处理器之间的硬件实现差异。
-</p>
-
-<p>
-第一个使用 x86-64 的 Intel 处理器是 Xeon ，之后还有许多其他的处理器，包括 Core i5 和 Core i7 。AMD 处理器中使用 x86-64 的例子有 Opteron 和 Athlon 64 。
-</p>
-
-<p>
-另一个为人所知的 64 位 Intel 架构是 IA-64 ，后来被称为 Itanium 。IA-64 指令集与 x86 和 x86-64 完全不同，Itanium 处理器通常用于高性能数据库和网络服务器。
-</p>
-</div>
-
-<div id="outline-container-orga6f9302" class="outline-3">
-<h3 id="orga6f9302">64 位操作模式</h3>
-<div class="outline-text-3" id="text-orga6f9302">
-<p>
-Intel 64 架构引入了一个新模式，称为 IA-32e 。从技术上看，这个模式包含两个子模式：兼容模式（compatibility mode）和 64 位模式（64-bit mode）。不过它们常常被看做是模式而不是子模式，因此，等来了解这两个模式。
-</p>
-
-<p>
-<span class="underline">1. 兼容模式</span>
-</p>
-
-<p>
-在兼容模式下，现有的 16 位与 32 位应用程序通常不用重新编译就可以运行。但是，16 位 Windows（Win16） 和 DOS 应用程序不能运行在 64 位 Microsoft Windows 下。
-</p>
-
-<p>
-与早期 Windows 版本不同，64 位 Windows 没有虚拟 DOS 机器子系统来利用处理器的功能切换到虚拟 8086 模式。
-</p>
-
-<p>
-<span class="underline">2. 64 位模式</span>
-</p>
-
-<p>
-在 64 位模式下，处理器执行的是使用 64 位线性地址空间的应用程序。这是 64 位 MS Windows 的原生模式，该模式能使用 64 位指令操作数。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgd204330" class="outline-3">
-<h3 id="orgd204330">基本 64 位执行环境</h3>
-<div class="outline-text-3" id="text-orgd204330">
-<p>
-64 位模式下，虽然处理器现在只能支持 48 位的地址，但是理论上，地址最大为 64 位。从寄存器来看，64 位模式与 32 位最主要的区别如下所示：
-</p>
-<ul class="org-ul">
-<li>16 个 64 位通用寄存器（32 位模式只有 8 个通用寄存器）；</li>
-<li>8 个 80 位浮点寄存器；</li>
-<li>1 个 64 位状态标志寄存器 RFLAGS（只使用低 32 位）；</li>
-<li>1 个 64 位指令指针寄存器 RIP 。</li>
-</ul>
-
-<p>
-32 位标志寄存器和指令指针寄存器分别称为 EFLAGS 和 EIP 。此外，还有一些 x86 处理器用于多媒体处理的特殊寄存器：
-</p>
-<ul class="org-ul">
-<li>8 个 64 位 MMX 寄存器；</li>
-<li>16 个 128 位 XMM 寄存器（32 位模式只有 8 个 XMM 寄存器）。</li>
-</ul>
-
-<p>
-<span class="underline">#. 通用寄存器</span>
-</p>
-
-<p>
-在《32 位 x86 处理器》一节中介绍 32 位处理器时介绍过通用寄存器，它们是算术运算、数据传输和循环遍历数据指令的基本操作数。通用寄存器可以访问 8 位、16 位、32 位或 64 位操作数（需使用特殊前缀）。
-</p>
-
-<p>
-64 位模式下，操作数的默认大小是 32 位，并且有 8 个通用寄存器。但是，给每条指令加上 REX （寄存器扩展）前缀后，操作数可以达到 64 位，可用通用寄存器的数量也增加到 16 个：32 位模式下的寄存器，再加上 8 个有标号的寄存器，R8 到 R15 。下表给出了 REX 前缀下可用的寄存器：
-</p>
-
-<table>
-
-<colgroup>
-<col  class="org-left">
-
-<col  class="org-left">
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">操作数大小</th>
-<th scope="col" class="org-left">可用寄存器</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">8 位</td>
-<td class="org-left">AL、BL、CL、DL、DIL、SIL、BPL、SPL、R8L、R9L、R10L、R11L、R12L、R13L、R14L、R15L</td>
-</tr>
-
-<tr>
-<td class="org-left">16 位</td>
-<td class="org-left">AX、BX、CX、DX、DI、SI、BP、SP、R8W、R9W、R10W、R11W、R12W、R13W、R14W、R15W</td>
-</tr>
-
-<tr>
-<td class="org-left">32 位</td>
-<td class="org-left">EAX、EBX、ECX、EDX、EDI、ESI、EBP、ESP、R8D、R9D、R10D、R11D、R12D、R13D、R14D、R15D</td>
-</tr>
-
-<tr>
-<td class="org-left">64 位</td>
-<td class="org-left">RAX、RBX、RCX、RDX、RDI、RSI、RBP、RSP、R8、R9、R10、R11、R12、R13、R14、R15</td>
-</tr>
-</tbody>
-</table>
-
-<p>
-还有一些需要记住的细节：
-</p>
-<ul class="org-ul">
-<li>64 位模式下，单条指令不能同时访问寄存器高字节，如 AH、BH、CH 和 DH ，以及新字节寄存器的低字节（如 DIL）；</li>
-<li>64 位模式下，32 位 EFLAGS 寄存器由 64 位 RELAGS 寄存器取代。这两个寄存器共享低 32 位，而 RFLAGS 的高 32 位是不使用的；</li>
-<li>32 位模式和 64 位模式具有相同的状态标志。</li>
-</ul>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org9922272" class="outline-2">
-<h2 id="org9922272">x86 计算机组件</h2>
-<div class="outline-text-2" id="text-org9922272">
-<p>
-本节首先通过检查典型主板配置以及围绕 CPU 的芯片组来了解 x86 如何与其他组件的集成，然后讨论内存、I/O 端口和通用设备接口，最后说明汇编语言程序怎样利用系统硬件、固件，并调用操作系统函数来实现不同访问层次的 I/O 操作。
-</p>
-</div>
-
-<div id="outline-container-org252d4a1" class="outline-3">
-<h3 id="org252d4a1">主板</h3>
-<div class="outline-text-3" id="text-org252d4a1">
-<p>
-<span class="underline">主板</span> 是微型计算机的心脏，它是一个平面电路板，其上集成了 CPU、支持处理器（芯片组（chipset））、主存、输入输出接口、电源接口和扩展插槽。
-</p>
-
-<p>
-各种组件通过总线即一组直接蚀刻在主板上的导线，进行互连。
-</p>
-
-<p>
-目前 PC 市场上有几十种主板，它们在扩展功能、集成部件和速度方面存在着差异。但是，下述组件一般都会出现在主板上：
-</p>
-<ul class="org-ul">
-<li>CPU 插座，根据其支持的处理器类型，插座具有不同的形状和尺寸；</li>
-<li>存储器插槽（SIMM 或 DIMM），用于直接插入小型内存条；</li>
-<li>BIOS（基本输入输出系统，basic input-output system）计算机芯片，保存系统软件；</li>
-<li>CMOS RAM ，用一个小型纽扣电池为其持续供电；</li>
-<li>大容量插槽设备接口，如硬盘和 CD-ROMS ；</li>
-<li>外部设备的 USB 接口；</li>
-<li>键盘和鼠标接口；</li>
-<li>PCI 总线接口，用于声卡、显卡、数据采集卡和其他输入输出设备。</li>
-</ul>
-
-<p>
-以下是可选组件：集成声音处理器；并行和串行设备接口； 集成网卡；用于高速显卡的 AGP 总线接口。
-</p>
-
-<p>
-典型系统中还有一些重要的支持处理器：
-</p>
-<ul class="org-ul">
-<li>浮点单元（FPU），处理浮点数和扩展整数运算；</li>
-<li>8284/82C84 时钟发生器，简称时钟，按照恒定速率振荡，时钟发生器同步 CPU 和计算机的其他部分；</li>
-<li>8259A 可编程中断控制器（PIC，Programmable Interrupt Controller），处理来自硬件设备的外部中断请求，包括键盘、系统时钟 和磁盘驱动器。这些设备能中断 CPU ，并使其立即响应它们的请求；</li>
-<li>8253 可编程间隔定时器/计数器（Programmable Interval Timer/Counter），每秒中断系统 18.2 次，更新系统日期和时钟，并控制扬声器。它还负责不断刷新内存，因为 RAM 存储器芯片保持其内容的时间只有几毫秒；</li>
-<li>8255 可编程并行端口（Programmable Parallel Port），使用 IEEE 并行端口将数据输入和输出计算机。该端口通常用于打印机，但是也可以用于其他输入输出设备。</li>
-</ul>
-
-<p>
-<span class="underline">1. PCI 和 PCI Express 总线架构</span>
-</p>
-
-<p>
-PCI（外部设备互联，Peripheral Component Interconnect）总线为 CPU 和其他系统设备提供了连接桥，这些设备包括硬盘驱动器、内存、显卡、声卡和网卡。
-</p>
-
-<p>
-最近，PCI Express 总线在设备、内存和处理器之间提供了双向串行连接。如同网络一样，它用独立的“通道”传送数据包。该总线得到显卡的广泛支持，能以较高速传输数据。
-</p>
-
-<p>
-<span class="underline">2. 主板芯片组</span>
-</p>
-
-<p>
-主板芯片组（motherboard chipset）是一组处理器芯片的集合，这些芯片被设计为在特定类型主板上一起工作。
-</p>
-
-<p>
-各种芯片组具有增强处理能力、多媒体功能或减少功耗等特性。以 Intel P965 Express 芯片组为例，该芯片组与 Intel Core2 Duo 或 Pentium D 处理器一起，用于桌面系统。
-</p>
-
-<p>
-Intel P965 具有下述特性：
-</p>
-<ul class="org-ul">
-<li>Intel 高速内存访问（Fast Memory Access）使用了最新内存控制中心（MCH），它可以 800MHz 时钟速度来访问双通道 DDR2 存储器；</li>
-<li>I/O 控制中心（Intel ICH8/R/DH）使用 Intel 矩阵存储技术（MST）来支持多个串行 ATA 设备（磁盘驱动器）；</li>
-<li>支持多个 USB 端口，多个 PCI Express 插槽，联网和 Intel 静音系统技术；</li>
-<li>高清晰音频芯片提供了数字声音功能。</li>
-</ul>
-
-<p>
-如下图所示，主板厂商以特定芯片为中心来制造产品。例如，ASUS 公司使用 P965 芯片组的 P5B-E P965 主板。
-</p>
-
-<img
-src="/images/cpu-6.gif"
-width="500"
-height=""
-style=""
-title=""
-/>
-</div>
-</div>
-
-<div id="outline-container-org1a7a54f" class="outline-3">
-<h3 id="org1a7a54f">内存</h3>
-<div class="outline-text-3" id="text-org1a7a54f">
-<p>
-基于 Intel 的系统使用的是几种基础类型内存：只读存储器（ROM）、可擦写可编程只读存储器（EPROM）、动态随机访问存储器（DRAM）、静态 RAM （SRAM）、图像随机存储器（VRAM）和互补金属氧化物半导体（CMOS）RAM：
-</p>
-<ul class="org-ul">
-<li>ROM 永久烧录在芯片上，并且不能擦除；</li>
-<li>EPROM 能用紫外线缓慢擦除，并且重新编程；</li>
-<li>DRAM 即通常有内存，在程序运行时保存程序和数据的部件。该部件价格便宜，但是每毫秒需要进行刷新，以避免丢失其内容。有些系统使用的是 ECC （错误检查和纠正）存储器；</li>
-<li>SRAM 主要用于价格高、速度快的 cache 存储器，它不需要刷新，CPU 的 cache 存储器就是由 SRAM 构成的；</li>
-<li>VRAM 保存视频数据，它是双端口的，允许一个端口持续刷新显示器，同时另一个端口将数据写到显示器；</li>
-<li>CMOS RAM 在系统主板上，保存系统设置信息，它由电池供电，因此当计算机电源关闭后，CMOS RAM 中的内容仍能保留。</li>
-</ul>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgb69f267" class="outline-2">
-<h2 id="orgb69f267">I/O 输入输出系统</h2>
-<div class="outline-text-2" id="text-orgb69f267">
-<p>
-由于计算机游戏与内存和 I/O 有着非常密切的关系，因此，它们推动计算机达到其最大性能。善于游戏编程的程序员通常很了解视频和音频硬件，并会优化代码的硬件特性。
-</p>
-</div>
-
-<div id="outline-container-org6854975" class="outline-3">
-<h3 id="org6854975">I/O 访问层次</h3>
-<div class="outline-text-3" id="text-org6854975">
-<p>
-应用程序通常从键盘和磁盘文件读取输入，而将输出写到显示器和文件中。完成 I/O 不需要直接访问硬件，相反，可以调用操作系统的函数。
-</p>
-
-<p>
-与虚拟机相似，I/O 也有不同的层次，主要有以下三个：高级语言函数、操作系统和 BIOS 。
-</p>
-
-<p>
-<span class="underline">1. 高级语言函数</span>
-</p>
-
-<p>
-高级编程语言，如 C++ 或 Java ，包含了执行输入输出的函数。由于这些函数要在各种不同的计算机系统中工作，并不依赖于任何一个操作系统，因此，这些函数具有可移植性。
-</p>
-
-<p>
-<span class="underline">2. 操作系统</span>
-</p>
-
-<p>
-程序员能够从被称为 API （应用程序编程接口，Application Programming Interface）的库中调用操作系统函数。操作系统提供高级操作，比如，向文件写入字符串，从键盘读取字符串，和分配内存块。
-</p>
-
-<p>
-<span class="underline">3. BIOS</span>
-</p>
-
-<p>
-基本输入输出系统是一组能够直接与硬件设备通信的低级子程序集合。BIOS 由计算机制造商安装并定制，以适应机器硬件，操作系统通常与 BIOS 通信。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org42e5694" class="outline-3">
-<h3 id="org42e5694">设备驱动程序</h3>
-<div class="outline-text-3" id="text-org42e5694">
-<p>
-设备驱动程序允许操作系统与硬件设备和系统 BIOS 直接通信。例如，设备驱动程序可能接收来自 OS 的请求来读取一些数据，而满足该请求的方法是，通过执行设备固件中代码，用设备特有的方式来读取数据。
-</p>
-
-<p>
-设备驱动程序有两种安装方法：一种是在特定硬件设备连接到系统之前，另一种是设备已连接并且识别之后。对于后一种方法，OS 识别设备名称和签名，然后在计算机上定位并安装设备驱动软件。
-</p>
-
-<p>
-现在，通过展示应用程序在屏幕上显示字符串的过程，来了解 I/O 层次结构如下所示。
-</p>
-
-<img
-src="/images/cpu-7.gif"
-width="150"
-height=""
-style="float: right;"
-title=""
-/>
-
-<p>
-该过程包含以下步骤：
-</p>
-<ul class="org-ul">
-<li>应用程序调用 HLL 库函数，将字符串写入标准输出；</li>
-<li>库函数（第 3 层）调用操作函数系统函数，传递一个字符串指针；</li>
-<li>操作系统函数（第 2 层）用循环的方法调用 BIOS 子程序，向其传递每个字符的 ASCII 码和颜色。操作系统调用另一个 BIOS 子程序，将光标移动到屏幕的下一个位置上；</li>
-<li>BIOS 子程序（第一层）接收一个字符，将其映射到一个特定的系统字体，并把该字符发送到与视频控制卡相连的硬件端口；</li>
-<li>视频控制卡（第 0 层）为视频显示产生定时硬件信号，来控制光栅扫描并显示像素。</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org0e0e173" class="outline-3">
-<h3 id="org0e0e173">多层次编程</h3>
-<div class="outline-text-3" id="text-org0e0e173">
-<p>
-汇编语言程序在输入输出编程领域有着强大的能力和灵活性，它们可以从以下访问层次进行选择：
-</p>
-<ul class="org-ul">
-<li>第 3 层：调用库函数来执行通用文本 I/O 和基于文件的 I/O ；</li>
-<li>第 2 层：调用操作系统函数来执行通用文本 I/O 和基于文件的 I/O 。如果 OS 使用了图形用户界面，它就能用与设备无头的方式来显示图形；</li>
-<li>第 1 层：调用 BIOS 函数来控制设备具体特性，如颜色、图形、声音、键盘输入和底层磁盘 I/O ；</li>
-<li>第 0 层：从硬件端口发送和接收数据，对特定设备拥有绝对控制权。这个方式没有广泛用于各种硬件设备，因此不具可移植性。不同设备通常使用不同硬件端口，因此，程序代码必须根据每个设备的特定类型来进行定制。</li>
-</ul>
-
-<img
-src="/images/cpu-8.gif"
-width="330"
-height=""
-style=""
-title=""
-/>
-
-<p>
-如何进行权衡？控制可移植性是重要的。
-</p>
-
-<p>
-第 2 层（OS）工作在任何一个运行同样操作系统的计算机上。如果 I/O 设备缺少某些功能，那么 OS 将尽可能接近预期结果。第 2 层速度并不特别快，因为每个 I/O 调用在执行前，都必须经过好几个层次。
-</p>
-
-<p>
-第 1 层（BIOS）在具有标准 BIOS 的所有系统上工作，但是在这些系统上不会产生同样的结果。例如，两台计算机可能会有不同分辨率的视频显示功能。在第 1 层上的程序员需要编写代码来检测用户的硬件设置，并调整输出格式来与之匹配。第 1 层的速度比第 2 层快，因为它与硬件之间只隔了一个层次。
-</p>
-
-<p>
-第 0 层（硬件）与通用设备一起工作，如串行端口；或是与由知名厂商生产的特殊 I/O 设备一起工作。这个层次上的程序必须扩展它们的编码逻辑来处理 I/O 设备的变化。实模式的游戏程序就是最好的例子，因为它们常常需要取得计算机的控制权。第 0 层的程序执行速度与硬件一样快。
-</p>
-
-<p>
-举个例子，假设要用音频控制设备来播放一个 WAV 文件。
-</p>
-
-<p>
-在 OS 层上，不需要了解已安装设备的类型，也不用关心设备卡的非标准特性。
-</p>
-
-<p>
-在 BIOS 上，要查询声卡（通过其已安装的设备驱动软件），找出它是否属于某一类具有已知功能的声卡。
-</p>
-
-<p>
-在硬件层上，需要对特定模式声卡的程序进行微调，以利用每个声卡的特性。
-</p>
-
-<p>
-通用操作系统极少允许应用程序直接访问系统硬件，因为这样会使得它几乎无法同时运行多个程序。相反，硬件只能由设备驱动程序按照严格控制的方式进行访问。
-</p>
-
-<p>
-另一方面，专业设备的小型操作系统则常常直接与硬件相连。这样做是为了减少操作系统代码占用的内存空间，并且这些操作系统几乎总是一次运行单个程序。Microsoft 最后一个允许程序直接访问硬件的操作系统是 MS-DOS ，它一次只能运行一个程序。
-</p>
-</div>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Date: 2020-09-11 Fri 14:42</p>
-<p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2020-12-11 Fri 10:58</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
-</div>
-</body>
+  <head>
+    <!-- 2021-02-23 Tue 11:10 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>x86 处理器架构</title>
+    <meta name="generator" content="Org mode">
+    <meta name="author" content="Jack Liu">
+    <link rel="shortcut icon" href="/themes/assets/rose-red.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/themes/style.css" type="text/css"  />
+    <script type="module" src="/themes/main.js" defer></script>
+  </head>
+  <body>
+    <div id="content">
+      <h1 class="title">x86 处理器架构</h1>
+      <div id="table-of-contents">
+        <h2>Table of Contents</h2>
+        <div id="text-table-of-contents">
+          <ul>
+            <li><a href="#orgb1f65fd">CPU 处理器架构和工作原理浅析</a>
+              <ul>
+                <li><a href="#org703f72b">基本微机设计</a></li>
+                <li><a href="#org9000299">指令执行周期</a></li>
+                <li><a href="#org6db0b4f">读取内存</a></li>
+                <li><a href="#org9cb3237">加载并执行程序</a></li>
+              </ul>
+            </li>
+            <li><a href="#orgb6ba0ce">32位x86处理器架构</a>
+              <ul>
+                <li><a href="#org59d00a3">操作模式</a></li>
+                <li><a href="#orgc6f4e12">基本执行环境</a></li>
+                <li><a href="#org40175fe">x86 内存管理</a></li>
+              </ul>
+            </li>
+            <li><a href="#orgf53a647">x86-64 处理器架构</a>
+              <ul>
+                <li><a href="#org1ebbddd">64 位操作模式</a></li>
+                <li><a href="#org14e8a5d">基本 64 位执行环境</a></li>
+              </ul>
+            </li>
+            <li><a href="#orgc0b81bc">x86 计算机组件</a>
+              <ul>
+                <li><a href="#org6a71928">主板</a></li>
+                <li><a href="#orgfdacc45">内存</a></li>
+              </ul>
+            </li>
+            <li><a href="#org9f8151c">I/O 输入输出系统</a>
+              <ul>
+                <li><a href="#org9424f59">I/O 访问层次</a></li>
+                <li><a href="#orgd78ae81">设备驱动程序</a></li>
+                <li><a href="#org50c93b2">多层次编程</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <p>
+        汇编语言是学习计算机是如何工作的很好的工具，本章介绍与 x86 汇编语言相关的底层硬件知识，以及从程序员角度看到的主机系统，其中包括了所有的 Intel IA-32 和 Intel 64 处理器和高级微设备（AMD）处理器。还介绍了指令执行时处理器内部发生的一些基本操作，以及操作系统如何加载和执行程序，并通过样本主板布局来了解 x86 系统的硬件环境，最后还讨论了在应用程序与操作系统之间，层次化输入输出是如何工作的。
+      </p>
+
+      <div id="outline-container-orgb1f65fd" class="outline-2">
+        <h2 id="orgb1f65fd">CPU 处理器架构和工作原理浅析</h2>
+        <div class="outline-text-2" id="text-orgb1f65fd">
+        </div>
+        <div id="outline-container-org703f72b" class="outline-3">
+          <h3 id="org703f72b">基本微机设计</h3>
+          <div class="outline-text-3" id="text-org703f72b">
+            <p>
+              下图给出了假想机的基本设计。中央处理单元（CPU）是进行算术和逻辑操作的部件，包含了有限数量的存储位置 &#x2013; <span class="underline">寄存器</span> （register），一个 <span class="underline">高频时钟</span> 、 一个 <span class="underline">控制单元</span> 和一个 <span class="underline">算术逻辑单元</span> 。
+            </p>
+
+            <img
+              src="/images/cpu-0.gif"
+              width="400"
+              height=""
+              style=""
+              title=""
+              />
+
+            <p>
+              其中：
+            </p>
+
+            <ul class="org-ul">
+              <li><span class="underline">时钟</span> （clock）对 CPU 内部操作与系统其他组件进行同步；</li>
+              <li><span class="underline">控制单元</span> （control unit, CU）协调参与机器指令执行的步骤序列；</li>
+              <li><span class="underline">算术逻辑单元</span> （arithmetic logic unit, ALU）执行算术运算，如加法和减法，以及逻辑运算。</li>
+            </ul>
+
+            <blockquote>
+              <p>
+                CPU 通过主板上 CPU 插座的引脚与计算机其他部分相连，大部分引脚连接的是数据总线、控制总线和地址总线。
+              </p>
+            </blockquote>
+
+            <ul class="org-ul">
+              <li><span class="underline">内存存储单元</span> （Memory Storage Unit）用于在程序运行时保存指令与数据，它接受来自 CPU 的数据请求，将数据从随机存储器（RAM）传输到 CPU ，并从 CPU 传输到内存。</li>
+            </ul>
+
+            <blockquote>
+              <p>
+                由于所有的数据处理都在 CPU 内进行，因此保存在内存中的程序在执行前需要被复制到 CPU 中，程序指令在复制到 CPU 时，可以一次复制一条，也可以一次复制多条。
+              </p>
+            </blockquote>
+
+            <ul class="org-ul">
+              <li><span class="underline">总线</span> （bus）是一组并行线，用于将数据从计算机一个部分传送到另一个部分。一个计算机系统通常包含四类总线：数据类、I/O 类、控制类和地址类。
+                <ul class="org-ul">
+                  <li><span class="underline">数据总线</span> （data bus）在 CPU 和内存之间传输指令和数据；</li>
+                  <li><span class="underline">I/O 总线</span> 在 CPU 和系统输入/输出设备之间传输数据；</li>
+                  <li><span class="underline">控制总线</span> （control bus）用二进制信号对所有连接在系统总线上设备的行为进行同步；</li>
+                  <li>当前执行指令在 CPU 和内存之间传输数据时， <span class="underline">地址总线</span> （address bus）用于保持指令和数据的地址。</li>
+              </ul></li>
+            </ul>
+
+            <p>
+              时钟与 CPU 和系统总线相关的每一个操作都是由一个 <b>恒定速率的内部时钟脉冲</b> 来进行同步，机器指令的基本时间单位是机器周期（machine cycle）或时钟周期（clock cycle）。
+            </p>
+
+            <p>
+              一个时钟周期的时长是一个完整时钟脉冲所需要的时间，下图中，一个时钟周期被描绘为两个相邻下降沿之间的时间：
+            </p>
+
+            <img
+              src="/images/cpu-1.gif"
+              width="360"
+              height=""
+              style=""
+              title=""
+              />
+
+            <p>
+              时钟周期持续时间用时钟速度的倒数来计算，而时钟速度则用每秒振荡数来衡量。例如，一个每秒振荡 10 亿次（1GHz）的时钟，其时钟周期为 10 亿分之 1 秒（1 纳秒）。
+            </p>
+
+            <p>
+              执行一条机器指令最少需要 1 个时钟周期，有几个需要的时钟则超过了 50 个（比如 8088 处理器中的乘法指令）。由于在 CPU、系统总线和内存电路之间存在速度差异，因此，需要访问内存的指令常常需要空时钟周期，也被称为等待状态（wait states）。
+            </p>
+          </div>
+        </div>
+
+        <div id="outline-container-org9000299" class="outline-3">
+          <h3 id="org9000299">指令执行周期</h3>
+          <div class="outline-text-3" id="text-org9000299">
+            <p>
+              一条机器指令不会神奇地一下就执行完成。CPU 在执行一条机器指令时，需要经过一系列预先定义好的步骤，这些步骤被称为 <span class="underline">指令执行周期</span> （instruction execution cycle）。
+            </p>
+
+            <p>
+              假设现在指令指针寄存器中已经有了想要执行指令的地址，下面就是执行步骤：
+            </p>
+            <ol class="org-ol">
+              <li>CPU 从被称为指令队列（instruction queue）的内存区域取得指令，之后立即增加指令指针的值；</li>
+              <li>CPU 对指令的二进制位模式进行译码，这种位模式可能会表示该指令有操作数（输入值）；</li>
+              <li>如果有操作数，CPU 就从寄存器和内存中取得操作数。有时，这步还包括了地址计算；</li>
+              <li>使用步骤 3 得到的操作数，CPU 执行该指令。同时更新部分状态标志位，如零标志（Zero）、进位标志（Carry）和溢出标志（Overflow）；</li>
+              <li>如果输出操作数也是该指令的一部分，则 CPU 还需要存放其执行结果。</li>
+            </ol>
+
+            <p>
+              通常将上述听起来很复杂的过程简化为三个步骤：取指（Fetch）、译码（Decode）和执行（Execute）。操作数（operand）是指操作过程中输入或输出的值，例如，表达式 <code>Z=X+Y</code> 有两个输入操作数（X 和 Y），一个输出操作数（Z）。
+            </p>
+
+            <p>
+              下图是一个典型 CPU 中的数据流框图，该图表现了在指令执行周期中相互交互部件之间的关系。
+            </p>
+
+            <img
+              src="/images/cpu-2.gif"
+              width="360"
+              height=""
+              style=""
+              title=""
+              />
+
+            <ul class="org-ul">
+              <li>在从内存读取程序指令之前，将其地址放到地址总线上；</li>
+              <li>然后，内存控制器将所需代码送到数据总线上，存入代码高速缓存（code cache）；</li>
+              <li>指令指针的值决定下一条将要执行的指令；</li>
+              <li>指令由指令译码器分析，并产生相应的数值信号送往控制单元，其协调 ALU 和浮点单元。</li>
+            </ul>
+
+            <p>
+              虽然图中没有画出控制总线，但是其上传输的信号用系统时钟协调不同 CPU 部件之间的数据传输。
+            </p>
+          </div>
+        </div>
+
+        <div id="outline-container-org6db0b4f" class="outline-3">
+          <h3 id="org6db0b4f">读取内存</h3>
+          <div class="outline-text-3" id="text-org6db0b4f">
+            <p>
+              作为一个常见现象，计算机从内存读取数据比从内部寄存器读取速度要慢很多。这是因为从内存读取一个值，需要经过下述步骤：
+            </p>
+            <ul class="org-ul">
+              <li>将想要读取的值的地址放到地址总线上；</li>
+              <li>设置处理器 RD （读取）引脚（改变 RD 的值）；</li>
+              <li>等待一个时钟周期给存储器芯片进行响应；</li>
+              <li>将数据从数据总线复制到目标操作数。</li>
+            </ul>
+
+            <p>
+              上述每一步常常只需要一个时钟周期，时钟周期是基于处理器内固定速率时钟节拍的一种测量方法。计算机的 CPU 通常是用其时钟速率描述。例如，速率为 1.2GHz 意味着时钟节拍或振荡每秒 12 亿次。
+            </p>
+
+            <p>
+              因此，考虑到每个时钟周期仅为 1/1 200 000 000 秒，4 个时钟周期也是非常快的。但是，与 CPU 寄存器相比，这个速度还是慢了，因为访问寄存器一般只需要 1 个时钟周期。
+            </p>
+
+            <p>
+              幸运的是，CPU 设计者很早之前就已经指出，因为绝大多数程序都需要访问变量，计算机内存成为了速度瓶颈。他们想出了一个聪明的方法来减少读写内存的时间 &#x2013; 将大部分近期使用过的指令和数据存放在调整存储器 cache 中。
+            </p>
+
+            <p>
+              其思想是，程序更可能希望反复访问相同的内存和指令，因此，cache 保存这些值就能使它们能被快速访问到。此外，当 CPU 开始执行一个程序时，它会预先将后续（比如）一千条指令加载到 cache 中，这个行为是基于这样一种假设，即这些指令很快就会被用到。
+            </p>
+
+            <p>
+              如果这种情况重复发生在一个代码块中，则 cache 中就会有相同的指令。当处理器能够在 cache 存储器中发现想要的数据，则称为 cache 命中（cache hit） 。反之，如果 CPU 在 cache 中没有找到数据，则称为 cache 未命中（cache miss）。
+            </p>
+
+            <p>
+              x86 系列中的 cache 存储器有两种类型：一级 cache （或主 cache）位于 CPU 上；二级 cache （或次 cache）速度略慢，通过高速数据总线与 CPU 相连。这两种 cache 以最佳方式一起工作。
+            </p>
+
+            <p>
+              还有一个原因使得 cache 存储器比传统 RAM 速度快， cache 存储器是由一种被称为静态 RAM （static RAM）的特殊存储器芯片构成的，这种芯片比较贵，但是不需要为了保持其内容进行不断地刷新。另一方面，传统存储器，即动态 RAM（dynamic RAM），就需要持续刷新，速度慢一些，但是价格也更便宜。
+            </p>
+          </div>
+        </div>
+
+        <div id="outline-container-org9cb3237" class="outline-3">
+          <h3 id="org9cb3237">加载并执行程序</h3>
+          <div class="outline-text-3" id="text-org9cb3237">
+            <p>
+              在程序执行之前，需要用一种工具程序将其加载到内存，这种工具程序称为 <span class="underline">程序加载器</span> （program loader）。加载后，操作系统必须将 CPU 指向程序的入口，即程序开始执行的地址。具体步骤如下：
+            </p>
+            <ol class="org-ol">
+              <li>操作系统（OS）在当前磁盘目录下搜索程序的文件名。如果找不到，则在预定目录列表（称为路径（path））下搜索文件名。当 OS 无法检索到文件名时，它会发出一个出错信息；</li>
+              <li>如果程序文件被找到，OS 就访问磁盘目录中的程序文件基本信息，包括文件大小，及其在磁盘驱动器上的物理位置；</li>
+              <li>OS 确定内存中下一个可使用的位置，将程序文件加载内存。为该程序分配内存块，并将程序大小和位置信息加入表中（有时称为描述符表（descriptor table））。另外，OS 可能调整程序内指针的值，使得它们包括程序数据地址；</li>
+              <li>OS 开始执行程序的第一条机器指令（程序入口）。当程序开始执行后，就成为一个进程（process），OS 为这个进程分配一个标识号（进程 ID），用于在执行期间对其进行追踪；</li>
+              <li>进程自动运行。OS 的工作是追踪进程的执行，并响应系统资源的请求。这些资源包括内存、磁盘文件和输入输出设备等；</li>
+              <li>进程结束后，就会从内存中移除。</li>
+            </ol>
+
+            <p>
+              不论使用哪个版本的 Microsoft Windows，按下 <code>Ctrl-Alt-Delete</code> 组合键，可以选择任务管理器（task manager）选项。在任务管理器窗口可以查看应用程序和进程列表。
+            </p>
+
+            <p>
+              应用程序列表中列出了当前正在运行的完整程序名称，比如，Windows 浏览器，或者 Microsoft Visual C++。如果选择进程列表，则会看见一长串进程名。其中的每个进程都是一个独立于其他进程的，并处于运行中的小程序。
+            </p>
+
+            <p>
+              可以连续追踪每个进程使用的 CPU 时间和内存容量。在某些情况下，选定一个进程名称后，按下 <code>Delete</code> 键就可以关闭该进程。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div id="outline-container-orgb6ba0ce" class="outline-2">
+        <h2 id="orgb6ba0ce">32位x86处理器架构</h2>
+        <div class="outline-text-2" id="text-orgb6ba0ce">
+          <p>
+            本节我们来了解一下 32 位 x86 处理器的基本架构特点，包括了 Intel IA-32 系列中的成员和所有 32 位 AMD 处理器。
+          </p>
+        </div>
+
+        <div id="outline-container-org59d00a3" class="outline-3">
+          <h3 id="org59d00a3">操作模式</h3>
+          <div class="outline-text-3" id="text-org59d00a3">
+            <p>
+              x86 处理器有三个主要的操作模式：保护模式、实地址模式和系统管理模式；以及一个子模式：虚拟 8086 模式，这是保护模式的特殊情况。
+            </p>
+
+            <p>
+              <span class="underline">1. 保护模式（Protected Mode）</span>
+            </p>
+
+            <p>
+              保护模式是处理器的原生状态，在这种模式下，所有的指令和特性都是可用的。分配给程序的独立内存区域被称为 <span class="underline">段</span> ，而处理器会阻止程序使用自身段范围之外的内存。
+            </p>
+
+            <p>
+              <span class="underline">2. 虚拟 8086 模式（Virtual-8086 Mode）</span>
+            </p>
+
+            <p>
+              保护模式下，处理器可以在一个安全的环境中，直接执行实地址模式软件，如 MS-DOS 程序。换句话说，如果一个程序崩溃了或是试图向系统内存区域写数据，都不会影响到同一时间执行的其他程序。现代操作系统可以同时执行多个独立的虚拟 8086 会话。
+            </p>
+
+            <p>
+              <span class="underline">3. 实地址模式（Real-Address Mode）</span>
+            </p>
+
+            <p>
+              实地址模式实现的是早期 Intel 处理器的编程环境，但是增加了一些其他的特性，如切换到其他模式的功能。当程序需要直接访问系统内存和硬件设备时，这种模式就很有用。
+            </p>
+
+            <p>
+              <span class="underline">4. 系统管理模式（System Management Mode）</span>
+            </p>
+
+            <p>
+              系统管理模式（SMM）向操作系统提供了实现诸如电源管理和系统安全等功能的机制。这些功能通常是由计算机制造商实现的，他们为了一个特定的系统设置而定制处理器。
+            </p>
+          </div>
+        </div>
+
+        <div id="outline-container-orgc6f4e12" class="outline-3">
+          <h3 id="orgc6f4e12">基本执行环境</h3>
+          <div class="outline-text-3" id="text-orgc6f4e12">
+            <p>
+              <span class="underline">1. 地址空间</span>
+            </p>
+
+            <p>
+              在 32 位保护模式下，一个任务或程序最大可以寻址 4GB 的线性地址空间。从 P6 处理器开始，一种被称为扩展物理寻址（extended physical addressing）技术使得可以被寻址和物理内存空间增加到 64GB 。
+            </p>
+
+            <p>
+              与之相反，实地址模式程序只能寻址 1MB 空间。如果处理器在保护模式下运行多个虚拟 8086 程序，则每个程序只能拥有自己的 1MB 内存空间。
+            </p>
+
+            <p>
+              <span class="underline">2. 基本程序执行寄存器</span>
+            </p>
+
+            <p>
+              寄存器是直接位于 CPU 内的高速存储位置，其设计访问速度远高于传统存储器。例如，当一个循环处理为了速度进行优化时，其循环计数会保留在寄存器中而不是变量中。
+            </p>
+
+            <p>
+              下面展示的是基本程序执行寄存器（basic program execution registers）：8 个通用寄存器，6 个段寄存器，一个处理器状态标志寄存器（EFLAGS），和一个指令指针寄存器（EIP）。
+            </p>
+
+            <img
+              src="/images/cpu-3.gif"
+              width="230"
+              height=""
+              style=""
+              title=""
+              />
+
+            <img
+              src="/images/cpu-4.gif"
+              width=""
+              height=""
+              style="float: right;"
+              title="通用寄存器"
+              />
+
+            <p>
+              <span class="underline">2.1 通用寄存器</span>
+            </p>
+
+            <p>
+              通用寄存器主要用于算术运算和数据传输。如右上，EAX 寄存器的低 16 位在作用时可以用 AX 表示。
+            </p>
+
+            <p>
+              一些寄存器的组成部分可以处理 8 位的值。例如，AX 寄存器的高 8 位被称为 AH ，而低 8 位被称为 AL 。同样的重叠关系也存在于 EAX、EBX、ECX 和 EDX 寄存器中：
+            </p>
+
+            <table>
+
+              <colgroup>
+                <col  class="org-left">
+
+                <col  class="org-left">
+
+                <col  class="org-left">
+
+                <col  class="org-left">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th scope="col" class="org-left">32 位</th>
+                  <th scope="col" class="org-left">16 位</th>
+                  <th scope="col" class="org-left">8 位（高）</th>
+                  <th scope="col" class="org-left">8 位（低）</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="org-left">EAX</td>
+                  <td class="org-left">AX</td>
+                  <td class="org-left">AH</td>
+                  <td class="org-left">AL</td>
+                </tr>
+
+                <tr>
+                  <td class="org-left">EBX</td>
+                  <td class="org-left">BX</td>
+                  <td class="org-left">BH</td>
+                  <td class="org-left">BL</td>
+                </tr>
+
+                <tr>
+                  <td class="org-left">ECX</td>
+                  <td class="org-left">CX</td>
+                  <td class="org-left">CH</td>
+                  <td class="org-left">CL</td>
+                </tr>
+
+                <tr>
+                  <td class="org-left">EDX</td>
+                  <td class="org-left">DX</td>
+                  <td class="org-left">DH</td>
+                  <td class="org-left">DL</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p>
+              其他通用寄存器只能用 32 位或 16 位名称来访问，如下表所示：
+            </p>
+
+            <table>
+
+              <colgroup>
+                <col  class="org-left">
+
+                <col  class="org-left">
+
+                <col  class="org-left">
+
+                <col  class="org-left">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th scope="col" class="org-left">32 位</th>
+                  <th scope="col" class="org-left">16 位</th>
+                  <th scope="col" class="org-left">32 位</th>
+                  <th scope="col" class="org-left">16 位</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="org-left">ESI</td>
+                  <td class="org-left">SI</td>
+                  <td class="org-left">EBP</td>
+                  <td class="org-left">BP</td>
+                </tr>
+
+                <tr>
+                  <td class="org-left">EDI</td>
+                  <td class="org-left">DI</td>
+                  <td class="org-left">ESP</td>
+                  <td class="org-left">SP</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p>
+              <span class="underline">2.2 特殊用法</span>
+            </p>
+
+            <p>
+              某些通用指令寄存器有特殊用法：
+            </p>
+            <ul class="org-ul">
+              <li>乘除指令默认使用 EAX ，它常常被称为扩展累加器（extended accumulator）寄存器；</li>
+              <li>CPU 默认使用 ECX 为循环计数器；</li>
+              <li>ESP 用于寻址堆栈（一种系统内存结构）数据，它极少用于一般算术运算和数据传输，通常被称为扩展堆栈指针（extended stack pointer）寄存器；</li>
+              <li>ESI 和 EDI 用于高速存储器传输指令，有时也被称为扩展源变址（extended source index）寄存器和扩展目的的变址（extended destinations index）寄存器；</li>
+              <li>高级语言通过 EBP 来引用堆栈中的函数参数和局部变量。除了高级编程，它不用于一般算术运算和数据传输，常常被称为扩展帧指针（extended frame pointer）寄存器。</li>
+            </ul>
+
+            <p>
+              <span class="underline">2.3 段寄存器</span>
+            </p>
+
+            <p>
+              实地址模式中，16 位段寄存器表示的是预先分配的内存区域的基址，这个内存区域称为 <span class="underline">段</span> 。保护模式中，段寄存器中存放的是段描述符表指针。一些段中存放程序指令（代码），其他段存放变量（数据），还有一个堆栈段存放的是局部函数变量和函数参数。
+            </p>
+
+            <p>
+              <span class="underline">2.4 指令指针</span>
+            </p>
+
+            <p>
+              指令指针（EIP）寄存器中包含下一条将要执行指令的地址。某些机器指令能控制 EIP ，使得程序分支转向到一个新位置。
+            </p>
+
+            <p>
+              <span class="underline">2.5 EFLAGS 寄存器</span>
+            </p>
+
+            <p>
+              EFLAGS（或 Flags）寄存器包含了独立的二进制位，用于控制 CPU 的操作，或是反映一些 CPU 的操作的结果，有些指令可以测试和控制这些单独的处理器标志。
+            </p>
+
+            <p>
+              设置标志时，该标识位 = 1 ；清除（或重置）标识位时，该标志位 = 0 。
+            </p>
+
+            <p>
+              <span class="underline">2.6 控制标志位</span>
+            </p>
+
+            <p>
+              控制标志位控制 CPU 的操作。例如，它们能够使得 CPU 每执行一条指令后进入中断；在侦测到算术运算溢出时中断执行；进入虚拟 8086 模式，以及进入保护模式。
+            </p>
+
+            <p>
+              程序能够通过设置 EFLAGS 寄存器中的单独位来控制 CPU 的操作，比如，方向标志位和中断标志位。
+            </p>
+
+            <p>
+              <span class="underline">2.7 状态标志位</span>
+            </p>
+
+            <p>
+              状态标志位反映了 CPU 执行的算术和逻辑操作的结果。其中包括：溢出位、符号位、零标志位、辅助进位标志位、奇偶校验位和进位标志位。下述说明中，标志位的缩写紧跟在标志位名称之后：
+            </p>
+            <ul class="org-ul">
+              <li>进位标志位（CF），与目标位置相比，无符号算术运算结果太大时，设置该标志位；</li>
+              <li>溢出标志位（OF），与目标位置相比，有符号算术运算结果太大或太小时，设置该标志位；</li>
+              <li>符号标志位（SF），算术或逻辑操作产生负结果时，设置该标志位；</li>
+              <li>零标志位（ZF），算术或逻辑操作产生的结果为零时，设置该标志位；</li>
+              <li>辅助进位标志位（AC），算术操作在 8 位操作数中产生了位 3 向位 4 的进位时，设置该标志位；</li>
+              <li>奇偶校验标志位（PF），结果的最低有效字节包含偶数个 1 时，设置该标志位，否则，清除该标志位。一般情况下，如果数据有可能被修改或损坏时，该标志位用于进行错误检测。</li>
+            </ul>
+
+            <p>
+              <span class="underline">3. MMX 寄存器</span>
+            </p>
+
+            <p>
+              在实现高级多媒体和通信应用时，MMX 技术提高了 Intel 处理器的性能。8 个 64 位 MMX 寄存器支持称为 SIMD（单指令，多数据，Single-Instruction，Multiple-Data）的特殊指令。
+            </p>
+
+            <p>
+              顾名思义，MMX 指令对 MMX 寄存器中的数据值进行并行操作。虽然，它们看上去是独立寄存器，但是 MMX 寄存器实际上是浮点单元中使用的同样寄存器的别名。
+            </p>
+
+            <p>
+              <span class="underline">4. XMM 寄存器</span>
+            </p>
+
+            <p>
+              x86 结构还包括了 8 个 128 位 XMM 寄存器，它们被用于 SIMD 流扩展指令集。
+            </p>
+
+            <p>
+              <span class="underline">#. 浮点单元</span>
+            </p>
+
+            <p>
+              浮点单元（FPU，floating-point unit）执行高速浮点算术运算。之前为了这个目的，需要一个独立的协处理器芯片，从 Intel486 处理器开始，FPU 已经集成到主处理器芯片上。
+            </p>
+
+            <p>
+              FPU 中有 8 个浮点数据寄存器，分别命名为 ST（0-7），其他控制寄存器和指针寄存器如下图所示：
+            </p>
+
+            <img
+              src="/images/cpu-5.gif"
+              width="280"
+              height=""
+              style=""
+              title=""
+              />
+          </div>
+        </div>
+
+        <div id="outline-container-org40175fe" class="outline-3">
+          <h3 id="org40175fe">x86 内存管理</h3>
+          <div class="outline-text-3" id="text-org40175fe">
+            <p>
+              x86 处理器按照前面讨论的基本操作模式来管理内存。保护模式是最可靠、最强大的，但是它对应用程序直接访问系统硬件有着严格的限制。
+            </p>
+
+            <p>
+              在实地址模式中，只能寻址 1MB 内存，地址从 <code>00000H</code> 到 <code>FFFFFH</code> 。处理器一次只能运行一个程序，但是可以暂时中断程序来处理来自外围设备的请求（各为中断（interrupt））。
+            </p>
+
+            <p>
+              应用程序被允许访问内存的任何位置，包括那些直接与系统硬件相关的地址。MS-DOS 操作系统在实地址模式下运行，Windows 95 和 98 能够引导进入这种模式。
+            </p>
+
+            <p>
+              在保护模式中，处理器可以同时运行多个程序，它为每个进程（运行中的程序）分配总共 4GB 的内存。每个程序都分配有自己的保留内存区域，程序之间禁止意外访问其他程序的代码和数据。MS-Windows 和 Linux 运行在保护模式下。
+            </p>
+
+            <p>
+              在虚拟 8086 模式中，计算机运行在保护模式下，通过创建一个带有 1MB 地址空间的虚拟 8086 机器来模拟运行于实地址模式的 80x86 计算机。例如，在 Windows NT 和 2000 下，当打开一个命令窗口时，就创建了一个虚拟 8086 机器。同一时间可以运行多个这样的窗口，并且窗口之间都是受到保护的。
+            </p>
+
+            <p>
+              在 Windows NT，2000 和 XP 系统中，某些需要直接使用计算机硬件的 MS-DOS 程序不能运行在虚拟 8086 模式下。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div id="outline-container-orgf53a647" class="outline-2">
+        <h2 id="orgf53a647">x86-64 处理器架构</h2>
+        <div class="outline-text-2" id="text-orgf53a647">
+          <p>
+            本节重点关注所有使用 x86-64 指令集的 64 位处理器的基本架构细节，这些处理器包括 Intel 64 和 AMD64 处理器系列，指令集是已讨论的 x86 指令集的 64 位扩展。以下为一些基本特征：
+          </p>
+          <ul class="org-ul">
+            <li>向后兼容 x86 指令集；</li>
+            <li>地址长度为 64 位，虚拟地址空间为 64 字节，按照当前芯片的实现情况，只能使用地址的低 48 位；</li>
+            <li>可以使用 64 位通用寄存器，允许指令具有 64 位整数操作数；</li>
+            <li>比 x86 多了 8 个通用寄存器；</li>
+            <li>物理地址为 48 位，支持高达 256TB 的 RAM 。</li>
+          </ul>
+
+          <p>
+            另一方面，当处理器运行于本机 64 位模式时，是不支持 16 位实模式或虚拟 8086 模式的。在传统模式（legacy mode）下，还是支持 16 位编程，但是在 Microsoft Windows 64 位版本中不可用。
+          </p>
+
+          <p>
+            注意尽管 x86-64 指的是指令集，但是也可以将其看作是处理器类型。学习汇编语言时，没有必要考虑 x86-64 的处理器之间的硬件实现差异。
+          </p>
+
+          <p>
+            第一个使用 x86-64 的 Intel 处理器是 Xeon ，之后还有许多其他的处理器，包括 Core i5 和 Core i7 。AMD 处理器中使用 x86-64 的例子有 Opteron 和 Athlon 64 。
+          </p>
+
+          <p>
+            另一个为人所知的 64 位 Intel 架构是 IA-64 ，后来被称为 Itanium 。IA-64 指令集与 x86 和 x86-64 完全不同，Itanium 处理器通常用于高性能数据库和网络服务器。
+          </p>
+        </div>
+
+        <div id="outline-container-org1ebbddd" class="outline-3">
+          <h3 id="org1ebbddd">64 位操作模式</h3>
+          <div class="outline-text-3" id="text-org1ebbddd">
+            <p>
+              Intel 64 架构引入了一个新模式，称为 IA-32e 。从技术上看，这个模式包含两个子模式：兼容模式（compatibility mode）和 64 位模式（64-bit mode）。不过它们常常被看做是模式而不是子模式，因此，等来了解这两个模式。
+            </p>
+
+            <p>
+              <span class="underline">1. 兼容模式</span>
+            </p>
+
+            <p>
+              在兼容模式下，现有的 16 位与 32 位应用程序通常不用重新编译就可以运行。但是，16 位 Windows（Win16） 和 DOS 应用程序不能运行在 64 位 Microsoft Windows 下。
+            </p>
+
+            <p>
+              与早期 Windows 版本不同，64 位 Windows 没有虚拟 DOS 机器子系统来利用处理器的功能切换到虚拟 8086 模式。
+            </p>
+
+            <p>
+              <span class="underline">2. 64 位模式</span>
+            </p>
+
+            <p>
+              在 64 位模式下，处理器执行的是使用 64 位线性地址空间的应用程序。这是 64 位 MS Windows 的原生模式，该模式能使用 64 位指令操作数。
+            </p>
+          </div>
+        </div>
+
+        <div id="outline-container-org14e8a5d" class="outline-3">
+          <h3 id="org14e8a5d">基本 64 位执行环境</h3>
+          <div class="outline-text-3" id="text-org14e8a5d">
+            <p>
+              64 位模式下，虽然处理器现在只能支持 48 位的地址，但是理论上，地址最大为 64 位。从寄存器来看，64 位模式与 32 位最主要的区别如下所示：
+            </p>
+            <ul class="org-ul">
+              <li>16 个 64 位通用寄存器（32 位模式只有 8 个通用寄存器）；</li>
+              <li>8 个 80 位浮点寄存器；</li>
+              <li>1 个 64 位状态标志寄存器 RFLAGS（只使用低 32 位）；</li>
+              <li>1 个 64 位指令指针寄存器 RIP 。</li>
+            </ul>
+
+            <p>
+              32 位标志寄存器和指令指针寄存器分别称为 EFLAGS 和 EIP 。此外，还有一些 x86 处理器用于多媒体处理的特殊寄存器：
+            </p>
+            <ul class="org-ul">
+              <li>8 个 64 位 MMX 寄存器；</li>
+              <li>16 个 128 位 XMM 寄存器（32 位模式只有 8 个 XMM 寄存器）。</li>
+            </ul>
+
+            <p>
+              <span class="underline">#. 通用寄存器</span>
+            </p>
+
+            <p>
+              在《32 位 x86 处理器》一节中介绍 32 位处理器时介绍过通用寄存器，它们是算术运算、数据传输和循环遍历数据指令的基本操作数。通用寄存器可以访问 8 位、16 位、32 位或 64 位操作数（需使用特殊前缀）。
+            </p>
+
+            <p>
+              64 位模式下，操作数的默认大小是 32 位，并且有 8 个通用寄存器。但是，给每条指令加上 REX （寄存器扩展）前缀后，操作数可以达到 64 位，可用通用寄存器的数量也增加到 16 个：32 位模式下的寄存器，再加上 8 个有标号的寄存器，R8 到 R15 。下表给出了 REX 前缀下可用的寄存器：
+            </p>
+
+            <table>
+
+              <colgroup>
+                <col  class="org-left">
+
+                <col  class="org-left">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th scope="col" class="org-left">操作数大小</th>
+                  <th scope="col" class="org-left">可用寄存器</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="org-left">8 位</td>
+                  <td class="org-left">AL、BL、CL、DL、DIL、SIL、BPL、SPL、R8L、R9L、R10L、R11L、R12L、R13L、R14L、R15L</td>
+                </tr>
+
+                <tr>
+                  <td class="org-left">16 位</td>
+                  <td class="org-left">AX、BX、CX、DX、DI、SI、BP、SP、R8W、R9W、R10W、R11W、R12W、R13W、R14W、R15W</td>
+                </tr>
+
+                <tr>
+                  <td class="org-left">32 位</td>
+                  <td class="org-left">EAX、EBX、ECX、EDX、EDI、ESI、EBP、ESP、R8D、R9D、R10D、R11D、R12D、R13D、R14D、R15D</td>
+                </tr>
+
+                <tr>
+                  <td class="org-left">64 位</td>
+                  <td class="org-left">RAX、RBX、RCX、RDX、RDI、RSI、RBP、RSP、R8、R9、R10、R11、R12、R13、R14、R15</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p>
+              还有一些需要记住的细节：
+            </p>
+            <ul class="org-ul">
+              <li>64 位模式下，单条指令不能同时访问寄存器高字节，如 AH、BH、CH 和 DH ，以及新字节寄存器的低字节（如 DIL）；</li>
+              <li>64 位模式下，32 位 EFLAGS 寄存器由 64 位 RELAGS 寄存器取代。这两个寄存器共享低 32 位，而 RFLAGS 的高 32 位是不使用的；</li>
+              <li>32 位模式和 64 位模式具有相同的状态标志。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div id="outline-container-orgc0b81bc" class="outline-2">
+        <h2 id="orgc0b81bc">x86 计算机组件</h2>
+        <div class="outline-text-2" id="text-orgc0b81bc">
+          <p>
+            本节首先通过检查典型主板配置以及围绕 CPU 的芯片组来了解 x86 如何与其他组件的集成，然后讨论内存、I/O 端口和通用设备接口，最后说明汇编语言程序怎样利用系统硬件、固件，并调用操作系统函数来实现不同访问层次的 I/O 操作。
+          </p>
+        </div>
+
+        <div id="outline-container-org6a71928" class="outline-3">
+          <h3 id="org6a71928">主板</h3>
+          <div class="outline-text-3" id="text-org6a71928">
+            <p>
+              <span class="underline">主板</span> 是微型计算机的心脏，它是一个平面电路板，其上集成了 CPU、支持处理器（芯片组（chipset））、主存、输入输出接口、电源接口和扩展插槽。
+            </p>
+
+            <p>
+              各种组件通过总线即一组直接蚀刻在主板上的导线，进行互连。
+            </p>
+
+            <p>
+              目前 PC 市场上有几十种主板，它们在扩展功能、集成部件和速度方面存在着差异。但是，下述组件一般都会出现在主板上：
+            </p>
+            <ul class="org-ul">
+              <li>CPU 插座，根据其支持的处理器类型，插座具有不同的形状和尺寸；</li>
+              <li>存储器插槽（SIMM 或 DIMM），用于直接插入小型内存条；</li>
+              <li>BIOS（基本输入输出系统，basic input-output system）计算机芯片，保存系统软件；</li>
+              <li>CMOS RAM ，用一个小型纽扣电池为其持续供电；</li>
+              <li>大容量插槽设备接口，如硬盘和 CD-ROMS ；</li>
+              <li>外部设备的 USB 接口；</li>
+              <li>键盘和鼠标接口；</li>
+              <li>PCI 总线接口，用于声卡、显卡、数据采集卡和其他输入输出设备。</li>
+            </ul>
+
+            <p>
+              以下是可选组件：集成声音处理器；并行和串行设备接口； 集成网卡；用于高速显卡的 AGP 总线接口。
+            </p>
+
+            <p>
+              典型系统中还有一些重要的支持处理器：
+            </p>
+            <ul class="org-ul">
+              <li>浮点单元（FPU），处理浮点数和扩展整数运算；</li>
+              <li>8284/82C84 时钟发生器，简称时钟，按照恒定速率振荡，时钟发生器同步 CPU 和计算机的其他部分；</li>
+              <li>8259A 可编程中断控制器（PIC，Programmable Interrupt Controller），处理来自硬件设备的外部中断请求，包括键盘、系统时钟 和磁盘驱动器。这些设备能中断 CPU ，并使其立即响应它们的请求；</li>
+              <li>8253 可编程间隔定时器/计数器（Programmable Interval Timer/Counter），每秒中断系统 18.2 次，更新系统日期和时钟，并控制扬声器。它还负责不断刷新内存，因为 RAM 存储器芯片保持其内容的时间只有几毫秒；</li>
+              <li>8255 可编程并行端口（Programmable Parallel Port），使用 IEEE 并行端口将数据输入和输出计算机。该端口通常用于打印机，但是也可以用于其他输入输出设备。</li>
+            </ul>
+
+            <p>
+              <span class="underline">1. PCI 和 PCI Express 总线架构</span>
+            </p>
+
+            <p>
+              PCI（外部设备互联，Peripheral Component Interconnect）总线为 CPU 和其他系统设备提供了连接桥，这些设备包括硬盘驱动器、内存、显卡、声卡和网卡。
+            </p>
+
+            <p>
+              最近，PCI Express 总线在设备、内存和处理器之间提供了双向串行连接。如同网络一样，它用独立的“通道”传送数据包。该总线得到显卡的广泛支持，能以较高速传输数据。
+            </p>
+
+            <p>
+              <span class="underline">2. 主板芯片组</span>
+            </p>
+
+            <p>
+              主板芯片组（motherboard chipset）是一组处理器芯片的集合，这些芯片被设计为在特定类型主板上一起工作。
+            </p>
+
+            <p>
+              各种芯片组具有增强处理能力、多媒体功能或减少功耗等特性。以 Intel P965 Express 芯片组为例，该芯片组与 Intel Core2 Duo 或 Pentium D 处理器一起，用于桌面系统。
+            </p>
+
+            <p>
+              Intel P965 具有下述特性：
+            </p>
+            <ul class="org-ul">
+              <li>Intel 高速内存访问（Fast Memory Access）使用了最新内存控制中心（MCH），它可以 800MHz 时钟速度来访问双通道 DDR2 存储器；</li>
+              <li>I/O 控制中心（Intel ICH8/R/DH）使用 Intel 矩阵存储技术（MST）来支持多个串行 ATA 设备（磁盘驱动器）；</li>
+              <li>支持多个 USB 端口，多个 PCI Express 插槽，联网和 Intel 静音系统技术；</li>
+              <li>高清晰音频芯片提供了数字声音功能。</li>
+            </ul>
+
+            <p>
+              如下图所示，主板厂商以特定芯片为中心来制造产品。例如，ASUS 公司使用 P965 芯片组的 P5B-E P965 主板。
+            </p>
+
+            <img
+              src="/images/cpu-6.gif"
+              width="500"
+              height=""
+              style=""
+              title=""
+              />
+          </div>
+        </div>
+
+        <div id="outline-container-orgfdacc45" class="outline-3">
+          <h3 id="orgfdacc45">内存</h3>
+          <div class="outline-text-3" id="text-orgfdacc45">
+            <p>
+              基于 Intel 的系统使用的是几种基础类型内存：只读存储器（ROM）、可擦写可编程只读存储器（EPROM）、动态随机访问存储器（DRAM）、静态 RAM （SRAM）、图像随机存储器（VRAM）和互补金属氧化物半导体（CMOS）RAM：
+            </p>
+            <ul class="org-ul">
+              <li>ROM 永久烧录在芯片上，并且不能擦除；</li>
+              <li>EPROM 能用紫外线缓慢擦除，并且重新编程；</li>
+              <li>DRAM 即通常有内存，在程序运行时保存程序和数据的部件。该部件价格便宜，但是每毫秒需要进行刷新，以避免丢失其内容。有些系统使用的是 ECC （错误检查和纠正）存储器；</li>
+              <li>SRAM 主要用于价格高、速度快的 cache 存储器，它不需要刷新，CPU 的 cache 存储器就是由 SRAM 构成的；</li>
+              <li>VRAM 保存视频数据，它是双端口的，允许一个端口持续刷新显示器，同时另一个端口将数据写到显示器；</li>
+              <li>CMOS RAM 在系统主板上，保存系统设置信息，它由电池供电，因此当计算机电源关闭后，CMOS RAM 中的内容仍能保留。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div id="outline-container-org9f8151c" class="outline-2">
+        <h2 id="org9f8151c">I/O 输入输出系统</h2>
+        <div class="outline-text-2" id="text-org9f8151c">
+          <p>
+            由于计算机游戏与内存和 I/O 有着非常密切的关系，因此，它们推动计算机达到其最大性能。善于游戏编程的程序员通常很了解视频和音频硬件，并会优化代码的硬件特性。
+          </p>
+        </div>
+
+        <div id="outline-container-org9424f59" class="outline-3">
+          <h3 id="org9424f59">I/O 访问层次</h3>
+          <div class="outline-text-3" id="text-org9424f59">
+            <p>
+              应用程序通常从键盘和磁盘文件读取输入，而将输出写到显示器和文件中。完成 I/O 不需要直接访问硬件，相反，可以调用操作系统的函数。
+            </p>
+
+            <p>
+              与虚拟机相似，I/O 也有不同的层次，主要有以下三个：高级语言函数、操作系统和 BIOS 。
+            </p>
+
+            <p>
+              <span class="underline">1. 高级语言函数</span>
+            </p>
+
+            <p>
+              高级编程语言，如 C++ 或 Java ，包含了执行输入输出的函数。由于这些函数要在各种不同的计算机系统中工作，并不依赖于任何一个操作系统，因此，这些函数具有可移植性。
+            </p>
+
+            <p>
+              <span class="underline">2. 操作系统</span>
+            </p>
+
+            <p>
+              程序员能够从被称为 API （应用程序编程接口，Application Programming Interface）的库中调用操作系统函数。操作系统提供高级操作，比如，向文件写入字符串，从键盘读取字符串，和分配内存块。
+            </p>
+
+            <p>
+              <span class="underline">3. BIOS</span>
+            </p>
+
+            <p>
+              基本输入输出系统是一组能够直接与硬件设备通信的低级子程序集合。BIOS 由计算机制造商安装并定制，以适应机器硬件，操作系统通常与 BIOS 通信。
+            </p>
+          </div>
+        </div>
+
+        <div id="outline-container-orgd78ae81" class="outline-3">
+          <h3 id="orgd78ae81">设备驱动程序</h3>
+          <div class="outline-text-3" id="text-orgd78ae81">
+            <p>
+              设备驱动程序允许操作系统与硬件设备和系统 BIOS 直接通信。例如，设备驱动程序可能接收来自 OS 的请求来读取一些数据，而满足该请求的方法是，通过执行设备固件中代码，用设备特有的方式来读取数据。
+            </p>
+
+            <p>
+              设备驱动程序有两种安装方法：一种是在特定硬件设备连接到系统之前，另一种是设备已连接并且识别之后。对于后一种方法，OS 识别设备名称和签名，然后在计算机上定位并安装设备驱动软件。
+            </p>
+
+            <p>
+              现在，通过展示应用程序在屏幕上显示字符串的过程，来了解 I/O 层次结构如下所示。
+            </p>
+
+            <img
+              src="/images/cpu-7.gif"
+              width="150"
+              height=""
+              style="float: right;"
+              title=""
+              />
+
+            <p>
+              该过程包含以下步骤：
+            </p>
+            <ul class="org-ul">
+              <li>应用程序调用 HLL 库函数，将字符串写入标准输出；</li>
+              <li>库函数（第 3 层）调用操作函数系统函数，传递一个字符串指针；</li>
+              <li>操作系统函数（第 2 层）用循环的方法调用 BIOS 子程序，向其传递每个字符的 ASCII 码和颜色。操作系统调用另一个 BIOS 子程序，将光标移动到屏幕的下一个位置上；</li>
+              <li>BIOS 子程序（第一层）接收一个字符，将其映射到一个特定的系统字体，并把该字符发送到与视频控制卡相连的硬件端口；</li>
+              <li>视频控制卡（第 0 层）为视频显示产生定时硬件信号，来控制光栅扫描并显示像素。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="outline-container-org50c93b2" class="outline-3">
+          <h3 id="org50c93b2">多层次编程</h3>
+          <div class="outline-text-3" id="text-org50c93b2">
+            <p>
+              汇编语言程序在输入输出编程领域有着强大的能力和灵活性，它们可以从以下访问层次进行选择：
+            </p>
+            <ul class="org-ul">
+              <li>第 3 层：调用库函数来执行通用文本 I/O 和基于文件的 I/O ；</li>
+              <li>第 2 层：调用操作系统函数来执行通用文本 I/O 和基于文件的 I/O 。如果 OS 使用了图形用户界面，它就能用与设备无头的方式来显示图形；</li>
+              <li>第 1 层：调用 BIOS 函数来控制设备具体特性，如颜色、图形、声音、键盘输入和底层磁盘 I/O ；</li>
+              <li>第 0 层：从硬件端口发送和接收数据，对特定设备拥有绝对控制权。这个方式没有广泛用于各种硬件设备，因此不具可移植性。不同设备通常使用不同硬件端口，因此，程序代码必须根据每个设备的特定类型来进行定制。</li>
+            </ul>
+
+            <img
+              src="/images/cpu-8.gif"
+              width="330"
+              height=""
+              style=""
+              title=""
+              />
+
+            <p>
+              如何进行权衡？控制可移植性是重要的。
+            </p>
+
+            <p>
+              第 2 层（OS）工作在任何一个运行同样操作系统的计算机上。如果 I/O 设备缺少某些功能，那么 OS 将尽可能接近预期结果。第 2 层速度并不特别快，因为每个 I/O 调用在执行前，都必须经过好几个层次。
+            </p>
+
+            <p>
+              第 1 层（BIOS）在具有标准 BIOS 的所有系统上工作，但是在这些系统上不会产生同样的结果。例如，两台计算机可能会有不同分辨率的视频显示功能。在第 1 层上的程序员需要编写代码来检测用户的硬件设置，并调整输出格式来与之匹配。第 1 层的速度比第 2 层快，因为它与硬件之间只隔了一个层次。
+            </p>
+
+            <p>
+              第 0 层（硬件）与通用设备一起工作，如串行端口；或是与由知名厂商生产的特殊 I/O 设备一起工作。这个层次上的程序必须扩展它们的编码逻辑来处理 I/O 设备的变化。实模式的游戏程序就是最好的例子，因为它们常常需要取得计算机的控制权。第 0 层的程序执行速度与硬件一样快。
+            </p>
+
+            <p>
+              举个例子，假设要用音频控制设备来播放一个 WAV 文件。
+            </p>
+
+            <p>
+              在 OS 层上，不需要了解已安装设备的类型，也不用关心设备卡的非标准特性。
+            </p>
+
+            <p>
+              在 BIOS 上，要查询声卡（通过其已安装的设备驱动软件），找出它是否属于某一类具有已知功能的声卡。
+            </p>
+
+            <p>
+              在硬件层上，需要对特定模式声卡的程序进行微调，以利用每个声卡的特性。
+            </p>
+
+            <p>
+              通用操作系统极少允许应用程序直接访问系统硬件，因为这样会使得它几乎无法同时运行多个程序。相反，硬件只能由设备驱动程序按照严格控制的方式进行访问。
+            </p>
+
+            <p>
+              另一方面，专业设备的小型操作系统则常常直接与硬件相连。这样做是为了减少操作系统代码占用的内存空间，并且这些操作系统几乎总是一次运行单个程序。Microsoft 最后一个允许程序直接访问硬件的操作系统是 MS-DOS ，它一次只能运行一个程序。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="postamble" class="status">
+      <p class="date">Date: 2020-09-11 Fri 14:42</p>
+      <p class="author">Author: Jack Liu</p>
+      <p class="date">Created: 2021-02-23 Tue 11:10</p>
+      <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+    </div>
+  </body>
 </html>
