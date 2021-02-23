@@ -1,6 +1,6 @@
 'use strict';
 import './assets/jquery.min.js';
-import USERCONFIG from '../user.config.js';
+import userconfig from '../user.config.js';
 
 // Init global variables
 // ------------------------------------------------------------------
@@ -154,28 +154,28 @@ $(document).ready(() => {
     });
 
     // Customize contacts way
-    $('.me .contact #weibo').attr('href', '//weibo.com/u/' + USERCONFIG.weibo);
-    $('.me #wechat img').attr('src', '/images/' + USERCONFIG.wechat);
-    $('.me .contact #email').attr('href', 'mailto:' + USERCONFIG.email);
+    $('.me .contact #weibo').attr('href', '//weibo.com/u/' + userconfig.weibo);
+    $('.me #wechat img').attr('src', '/images/' + userconfig.wechat);
+    $('.me .contact #email').attr('href', 'mailto:' + userconfig.email);
     $('.me .contact #github').attr(
         'href',
-        (USERCONFIG.gitee || '//github.com/') + USERCONFIG.github
+        (userconfig.gitee || '//github.com/') + userconfig.github
     );
     $('.me .contact #bilibili').attr(
         'href',
-        '//space.bilibili.com/' + USERCONFIG.bilibili
+        '//space.bilibili.com/' + userconfig.bilibili
     );
 
     // Customize page footer
     $('.validation').html(
         '<a href="http://beian.miit.gov.cn" target="_blank">' +
-            USERCONFIG.icp +
+            userconfig.icp +
             '</a>'
     ); // Update copyright.
     $('.timestamp-wrapper').parent().addClass('gtd-timestamp');
     $('#postamble .date')[1].innerText =
         'Updated: ' + $('#postamble .date')[1].innerText.substring(8);
-    $('#postamble .author')[0].innerText = 'Author: ' + USERCONFIG.author;
+    $('#postamble .author')[0].innerText = 'Author: ' + userconfig.author;
 
     // $('#postamble .date')[0].innerText = 'Created: ' + $('#postamble .date')[0].innerText.substring(5)
 
@@ -225,7 +225,7 @@ $(document).ready(() => {
         $('#postamble').css('display', 'none');
         $('body').append(
             '<a class="js-footer-slogan" href="http://beian.miit.gov.cn/" target="_blank">' +
-                USERCONFIG.icp +
+                userconfig.icp +
                 '</a>'
         );
         // $('body').append('<div class="js-footer-slogan">Talk is cheap, show me the code.</div>')
