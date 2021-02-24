@@ -258,6 +258,7 @@ function toggleColor() {
         DarkReader.disable();
 
         bls.del('isDark');
+        location.reload();
     }
 }
 
