@@ -26,4 +26,9 @@ export default {
             'web-developer-roadmap',
         ],
     },
+    // 加密的页面
+    encrypt: {
+        password: '123456',
+        pages: ['joker'],
+    },
 };

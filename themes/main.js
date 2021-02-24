@@ -6,6 +6,7 @@ import {
     isHome,
     isCurPage,
     initCardPages,
+    initEncryptedPages,
     browserRedirect,
     scrollToTop,
 } from './assets/utils.js';
@@ -17,26 +18,9 @@ let isMB = !isPC;
 let isZoom = false;
 
 // ------------------------------------------------------------------
-// Pages array of card style
-// ---------------------------------
-initCardPages(userconfig.card.pages, userconfig.card.activeAll);
-
 // Custom some special pages
-// ---------------------------------
-
-if (isCurPage('joker')) {
-    if (sessionStorage.getItem('pw')) {
-        console.log('Welcome, Sir.');
-    } else {
-        let passwd = prompt('Sorry, you have no permissions！');
-        if (passwd === 'just go out') {
-            console.log('Welcome, Sir.');
-            sessionStorage.setItem('pw', true);
-        } else {
-            window.location.pathname = '/';
-        }
-    }
-}
+initCardPages(userconfig.card.pages, userconfig.card.activeAll);
+initEncryptedPages(userconfig.encrypt.pages, userconfig.encrypt.password);
 
 // Customizations after DOM rendering
 // ------------------------------------------------------------------

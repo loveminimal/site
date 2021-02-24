@@ -77,10 +77,10 @@ export function isHome() {
 /**
  * Beautify item like `Idea`,
  * and you can Activate/Deactivate global card style.
- * @param { Array } CARDPAGES Card pages
+ * @param { Array } cardPages Card pages
  * @param { Boolean } isAllCardStyle Active global site card style
  */
-export function initCardPages(CARDPAGES, isAllCardStyle = false) {
+export function initCardPages(cardPages, isAllCardStyle = false) {
     if (isAllCardStyle) {
         $('.outline-2').each(function () {
             $(this).addClass('js-outline-2');
@@ -93,7 +93,7 @@ export function initCardPages(CARDPAGES, isAllCardStyle = false) {
         return;
     }
 
-    if (isCurPage(CARDPAGES)) {
+    if (isCurPage(cardPages)) {
         $('.outline-2').each(function () {
             $(this).addClass('js-outline-2');
         });
@@ -101,6 +101,22 @@ export function initCardPages(CARDPAGES, isAllCardStyle = false) {
         $('.outline-3').each(function () {
             $(this).addClass('js-outline-3');
         });
+    }
+}
+
+export function initEncryptedPages(encryptedPages, password) {
+    if (isCurPage(encryptedPages)) {
+        if (sessionStorage.getItem('pw')) {
+            console.log('Welcome, Sir.');
+        } else {
+            let _passwd = prompt('Sorry, you have no permissions！');
+            if (_passwd === password) {
+                console.log('Welcome, Sir.');
+                sessionStorage.setItem('pw', true);
+            } else {
+                window.location.pathname = '/';
+            }
+        }
     }
 }
 
