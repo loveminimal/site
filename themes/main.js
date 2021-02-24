@@ -15,14 +15,13 @@ let isPC = browserRedirect() === 'PC' ? true : false;
 let isMB = !isPC;
 
 let isZoom = false,
-    isCard = false,
     cent = '',
     topBtn = '';
 
 // ------------------------------------------------------------------
 // Pages array of card style
 // ---------------------------------
-let CARDPAGES = [
+const CARDPAGES = [
     'idea',
     'diary',
     'joker',
@@ -32,8 +31,6 @@ let CARDPAGES = [
     'web-developer-roadmap',
 ];
 
-// Beautify item like `Idea`
-// ---------------------------------
 initCardStyle(CARDPAGES);
 
 // Custom some special pages
