@@ -73,3 +73,33 @@ export function isHome() {
         return true;
     }
 }
+
+/**
+ * Beautify item like `Idea`,
+ * and you can Activate/Deactivate global card style.
+ * @param { Array } CARDPAGES Card pages
+ * @param { Boolean } isAllCardStyle Active global site card style
+ */
+export function initCardStyle(CARDPAGES, isAllCardStyle = false) {
+    if (isAllCardStyle) {
+        $('.outline-2').each(function () {
+            $(this).addClass('js-outline-2');
+        });
+
+        $('.outline-3').each(function () {
+            $(this).addClass('js-outline-3');
+        });
+
+        return;
+    }
+
+    if (isCurPage(CARDPAGES)) {
+        $('.outline-2').each(function () {
+            $(this).addClass('js-outline-2');
+        });
+
+        $('.outline-3').each(function () {
+            $(this).addClass('js-outline-3');
+        });
+    }
+}
