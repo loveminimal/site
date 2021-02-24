@@ -59,10 +59,17 @@ const TOC = $('#table-of-contents'),
     TITLE = $('.title'),
     CONTENT = $('#content');
 
-BODY.addClass('animated fadeIn slow'); // Add animate effects.
-TITLE.click(toggleColor); // Toggle color of site.
+// Add animate effects.
+BODY.addClass('animated fadeIn slow');
 
-createNavButton(); // Create nav button.
+// Toggle color of site.
+TITLE.click(toggleColor);
+
+// Create nav button, e.g. back Home.
+BODY.append(
+    `<div class="nav-btn" onclick="location.href = './index.html'">IDX ←</div>`
+);
+
 topBtn = createTopButton(); // Create top button.
 $(window).scroll(scrollToTop); // Calculate the scroll top distance.
 
@@ -373,19 +380,6 @@ function createTopButton() {
     });
     document.body.appendChild(_btn);
     return _btn;
-}
-
-// Create nav link, e.g. back Home.
-// ---------------------------------
-function createNavButton() {
-    $('<div></div>')
-        .text('IDX ←')
-        .addClass('nav-btn')
-        .appendTo('body')
-        .click(() => {
-            location.href = './index.html';
-            // history.go(-1);
-        });
 }
 
 // Scroll listener
