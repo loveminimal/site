@@ -13,23 +13,17 @@ import {
     scrollToTop,
 } from './assets/utils.js';
 
-// Init global variables
+// Some initial operations.
 // ------------------------------------------------------------------
-let isPC = browserRedirect() === 'PC' ? true : false;
-let isMB = !isPC;
-
-// ------------------------------------------------------------------
-// Custom some special pages
 initCardPages(userconfig.card.pages, userconfig.card.activeAll);
 initEncryptedPages(userconfig.encrypt.pages, userconfig.encrypt.password);
-
-// Image zoom
 initImageZoom();
 
-// Customizations after DOM rendering
+// Init global variables
 // ------------------------------------------------------------------
-// Set local variables
-// ---------------------------------
+const isPC = browserRedirect() === 'PC' ? true : false;
+const isMB = !isPC;
+
 const TOC = $('#table-of-contents');
 const BODY = $('body');
 const TITLE = $('.title');
@@ -37,24 +31,25 @@ const CONTENT = $('#content');
 
 // Add animate effects.
 // Create nav & top buttons.
-BODY.addClass('animated fadeIn slow')
-    .append(
-        `<div class="nav-btn" onclick="location.href = './index.html'">IDX ←</div>`
-    )
-    .append(
-        // instant, smooth, auto
-        `<div class="top-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">TOP ↑</div>`
-    );
+// ------------------------------------------------------------------
+BODY.addClass('animated fadeIn slow');
+BODY.append(
+    `<div class="nav-btn" onclick="location.href = './index.html'">IDX ←</div>`
+);
+// `behavior` - instant, smooth, auto
+BODY.append(
+    `<div class="top-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">TOP ↑</div>`
+);
+
+// Listen touch event in Moblie
+BODY.on('touchstart', touchStart);
+BODY.on('touchend', touchEnd);
 
 // Toggle color of site.
 TITLE.click(toggleColor);
 
 // Calculate the scroll top distance.
 $(window).scroll(() => scrollToTop($('.top-btn')[0]));
-
-// Listen touch event in Moblie
-BODY.on('touchstart', touchStart);
-BODY.on('touchend', touchEnd);
 
 // Hide directory when click it of Mobile.
 if (TOC) TOC.click(hideDir);
