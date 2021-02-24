@@ -6,9 +6,10 @@ import { isHome, isCurPage, browserRedirect } from './assets/utils.js';
 
 // Init global variables
 // ------------------------------------------------------------------
-let isPC = false,
-    isMB = false,
-    isZoom = false,
+let isPC = browserRedirect() === 'PC' ? true : false;
+let isMB = !isPC;
+
+let isZoom = false,
     isCard = false,
     cent = '',
     topBtn = '';
@@ -44,14 +45,6 @@ if (isCurPage('joker')) {
             window.location.pathname = '/';
         }
     }
-}
-
-// Diff PC and Mobile
-// ---------------------------------
-if (browserRedirect() == 'PC') {
-    isPC = true;
-} else {
-    isMB = true;
 }
 
 // Customizations after DOM rendering
