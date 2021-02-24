@@ -5,7 +5,7 @@ import userconfig from '../user.config.js';
 import {
     isHome,
     isCurPage,
-    initCardStyle,
+    initCardPages,
     browserRedirect,
     scrollToTop,
 } from './assets/utils.js';
@@ -14,23 +14,12 @@ import {
 // ------------------------------------------------------------------
 let isPC = browserRedirect() === 'PC' ? true : false;
 let isMB = !isPC;
-
 let isZoom = false;
 
 // ------------------------------------------------------------------
 // Pages array of card style
 // ---------------------------------
-const CARDPAGES = [
-    'idea',
-    'diary',
-    'joker',
-    'gtd',
-    'story',
-    'wiki',
-    'web-developer-roadmap',
-];
-
-initCardStyle(CARDPAGES);
+initCardPages(userconfig.card.pages, userconfig.card.activeAll);
 
 // Custom some special pages
 // ---------------------------------

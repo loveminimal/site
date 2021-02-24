@@ -80,7 +80,7 @@ export function isHome() {
  * @param { Array } CARDPAGES Card pages
  * @param { Boolean } isAllCardStyle Active global site card style
  */
-export function initCardStyle(CARDPAGES, isAllCardStyle = false) {
+export function initCardPages(CARDPAGES, isAllCardStyle = false) {
     if (isAllCardStyle) {
         $('.outline-2').each(function () {
             $(this).addClass('js-outline-2');
