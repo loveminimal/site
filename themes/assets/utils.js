@@ -164,6 +164,32 @@ export function initMouseClickAnimate() {
 }
 
 /**
+ * Zoom images.
+ */
+export function initImageZoom() {
+    let isZoom = false;
+
+    $('img').each(function (idx, ele) {
+        $(this).click(function () {
+            if (!isZoom) {
+                $('html').append(
+                    `<div class='img-wrapper animated pulse faster'>
+                        <img class='img-zoom' src=${ele.src} />
+                    </div>`
+                );
+
+                $('.img-wrapper').click(function () {
+                    $('.img-wrapper').remove();
+                    isZoom = false;
+                });
+
+                isZoom = true;
+            }
+        });
+    });
+}
+
+/**
  * Update cent of element's innerHHTML when page scroll
  * @param { Object } ele - DOM element
  */

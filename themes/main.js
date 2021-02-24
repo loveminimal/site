@@ -8,6 +8,7 @@ import {
     initCardPages,
     initEncryptedPages,
     initMouseClickAnimate,
+    initImageZoom,
     browserRedirect,
     scrollToTop,
 } from './assets/utils.js';
@@ -16,12 +17,14 @@ import {
 // ------------------------------------------------------------------
 let isPC = browserRedirect() === 'PC' ? true : false;
 let isMB = !isPC;
-let isZoom = false;
 
 // ------------------------------------------------------------------
 // Custom some special pages
 initCardPages(userconfig.card.pages, userconfig.card.activeAll);
 initEncryptedPages(userconfig.encrypt.pages, userconfig.encrypt.password);
+
+// Image zoom
+initImageZoom();
 
 // Customizations after DOM rendering
 // ------------------------------------------------------------------
@@ -184,29 +187,6 @@ $('pre').each(function () {
         setTimeout(function () {
             _this.removeClass('js-pre-dblclick');
         }, 10000);
-    });
-});
-
-// Image zoom
-// ---------------------------------
-$('img').each(function (idx, ele) {
-    $(this).click(function () {
-        if (!isZoom) {
-            $('html').append(
-                `
-                    <div class='img-wrapper animated pulse faster'>
-                        <img class='img-zoom' src=${ele.src} />
-                    </div>
-                    `
-            );
-
-            $('.img-wrapper').click(function () {
-                $('.img-wrapper').remove();
-                isZoom = false;
-            });
-
-            isZoom = true;
-        }
     });
 });
 
