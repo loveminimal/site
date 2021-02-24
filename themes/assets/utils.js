@@ -58,3 +58,18 @@ export function browserRedirect() {
         return 'PC';
     }
 }
+
+export function isHome() {
+    if (
+        [
+            '/public/index.html',
+            '/public/index',
+            '/public/',
+            '/index.html',
+            '/index',
+            '/',
+        ].includes(location.pathname)
+    ) {
+        return true;
+    }
+}

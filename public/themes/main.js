@@ -2,12 +2,11 @@
 import './assets/jquery.min.js';
 import './assets/darkreader.min.js';
 import userconfig from '../user.config.js';
-import { isCurPage, browserRedirect } from './assets/utils.js';
+import { isHome, isCurPage, browserRedirect } from './assets/utils.js';
 
 // Init global variables
 // ------------------------------------------------------------------
-let isHome = false,
-    isPC = false,
+let isPC = false,
     isMB = false,
     isZoom = false,
     isCard = false,
@@ -32,18 +31,6 @@ const CARDPAGES = [
 
 // Custom some special pages
 // ---------------------------------
-if (
-    [
-        '/public/index.html',
-        '/public/index',
-        '/public/',
-        '/index.html',
-        '/index',
-        '/',
-    ].includes(location.pathname)
-) {
-    isHome = true;
-}
 
 if (isCurPage('joker')) {
     if (sessionStorage.getItem('pw')) {
@@ -100,7 +87,7 @@ $(document).ready(() => {
 
     // Customize home page style
     // ---------------------------------
-    if (isHome) {
+    if (isHome()) {
         // Hide nav and top button in index page.
         CONTENT.addClass('js-home-content');
 
@@ -341,12 +328,6 @@ $(document).ready(() => {
 
         $('.org-ul').addClass('js-nav-bookmarks-container');
     }
-
-    // Custom content and postamble margin but home&nav of PC
-    //     if (isPC && (!isCurPage('nav') && !isHome)) {
-    //         $('#content').css('margin-left', '10%')
-    //         $('#postamble').css('margin-left', '10%')
-    //     }
 });
 
 // Resolve current theme color
