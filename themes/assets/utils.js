@@ -1,6 +1,7 @@
-// If `args` is current page
-// `args` - String or Array
-// ---------------------------------
+/**
+ * Judege whether `args` in current page.
+ * @param {Array | String} args - Pages array or page string.
+ */
 export function isCurPage(args) {
     if (typeof args === 'string') {
         if (
@@ -30,8 +31,9 @@ export function isCurPage(args) {
     }
 }
 
-// Diff device type
-// ---------------------------------
+/**
+ * Diff device type.
+ */
 export function browserRedirect() {
     let sUserAgent = navigator.userAgent.toLowerCase();
     let bIsIpad = sUserAgent.match(/ipad/i) == 'ipad';
@@ -59,6 +61,9 @@ export function browserRedirect() {
     }
 }
 
+/**
+ * Judge if current page is HOME page.
+ */
 export function isHome() {
     if (
         [
@@ -104,6 +109,11 @@ export function initCardPages(cardPages, isAllCardStyle = false) {
     }
 }
 
+/**
+ * To encrypted your pages.
+ * @param {Array} encryptedPages - Encrypted pages
+ * @param {String} password - Password
+ */
 export function initEncryptedPages(encryptedPages, password) {
     if (isCurPage(encryptedPages)) {
         if (sessionStorage.getItem('pw')) {
