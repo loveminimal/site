@@ -11,6 +11,7 @@ import {
     initImageZoom,
     browserRedirect,
     scrollToTop,
+    betterLocalStorage as bls,
 } from './assets/utils.js';
 
 // Some initial operations.
@@ -231,12 +232,9 @@ if (isCurPage('nav')) {
 
 // Resolve current theme color
 // ------------------------------------------------------------------
-let isDark = '';
-console.log(Boolean(isDark));
-console.log(Boolean(localStorage.getItem('isDark')));
+let isDark = false;
 
-if (Boolean(localStorage.getItem('isDark'))) {
-    console.log('localstorage...');
+if (bls.get('isDark')) {
     toggleColor();
 }
 // Encapsulation darkreader and bind it to title.
@@ -252,16 +250,13 @@ function toggleColor() {
         });
 
         isDark = true;
-        localStorage.setItem('isDark', isDark);
+        bls.set('isDark', isDark);
     } else {
         // ^ to light
         console.log('222222222');
         DarkReader.disable();
 
-        isDark = '';
-        localStorage.setItem('isDark', isDark);
-
-        location.reload();
+        bls.del('isDark');
     }
 }
 

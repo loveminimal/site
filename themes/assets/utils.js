@@ -205,3 +205,42 @@ export function scrollToTop(ele) {
     _cent = ('' + _cent).length < 2 ? '0' + _cent : _cent;
     ele.innerHTML = _cent + '% ↑';
 }
+
+/**
+ * Better localStorage which can remember the data type.
+ */
+export const betterLocalStorage = {
+    get(key) {
+        if (!localStorage.getItem(key)) {
+            return;
+        }
+        let [type, val] = localStorage.getItem(key).split('_');
+
+        if (type === 'str') {
+            return val;
+        }
+        if (type === 'bol') {
+            return Boolean(val);
+        }
+        if (type === 'obj') {
+            return JSON.parse(val);
+        }
+    },
+    set(key, val) {
+        if (typeof val === 'string') {
+            localStorage.setItem(key, 'str_' + val);
+            return;
+        }
+        if (typeof val === 'boolean') {
+            localStorage.setItem(key, 'bol_' + val);
+            return;
+        }
+        if (typeof val === 'object') {
+            localStorage.setItem(key, 'obj_' + JSON.stringify(val));
+            return;
+        }
+    },
+    del(key) {
+        localStorage.removeItem(key);
+    },
+};
