@@ -231,26 +231,34 @@ if (isCurPage('nav')) {
 
 // Resolve current theme color
 // ------------------------------------------------------------------
-let isDark = 'false';
-if (localStorage.getItem('isDark') == 'true') {
+let isDark = '';
+console.log(Boolean(isDark));
+console.log(Boolean(localStorage.getItem('isDark')));
+
+if (Boolean(localStorage.getItem('isDark'))) {
+    console.log('localstorage...');
     toggleColor();
 }
 // Encapsulation darkreader and bind it to title.
 // ---------------------------------
 function toggleColor() {
-    if (isDark === 'false') {
+    if (!isDark) {
+        // ^ Switch to dark
+        console.log('11111111111');
         DarkReader.enable({
             brightness: 100,
             contrast: 90,
             sepia: 10,
         });
 
-        isDark = 'true';
+        isDark = true;
         localStorage.setItem('isDark', isDark);
     } else {
+        // ^ to light
+        console.log('222222222');
         DarkReader.disable();
 
-        isDark = 'false';
+        isDark = '';
         localStorage.setItem('isDark', isDark);
 
         location.reload();
