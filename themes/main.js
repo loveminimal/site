@@ -32,21 +32,19 @@ const TOC = $('#table-of-contents'),
     CONTENT = $('#content');
 
 // Add animate effects.
-BODY.addClass('animated fadeIn slow');
+BODY.addClass('animated fadeIn slow')
+    // Create nav button
+    .append(
+        `<div class="nav-btn" onclick="location.href = './index.html'">IDX ←</div>`
+    )
+    // Create top button
+    .append(
+        // instant, smooth, auto
+        `<div class="top-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">TOP ↑</div>`
+    );
 
 // Toggle color of site.
 TITLE.click(toggleColor);
-
-// Create nav button, e.g. back Home.
-BODY.append(
-    `<div class="nav-btn" onclick="location.href = './index.html'">IDX ←</div>`
-);
-
-// Create top button
-BODY.append(
-    // instant, smooth, auto
-    `<div class="top-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">TOP ↑</div>`
-);
 
 // Calculate the scroll top distance.
 $(window).scroll(() => scrollToTop($('.top-btn')[0]));
@@ -55,7 +53,8 @@ $(window).scroll(() => scrollToTop($('.top-btn')[0]));
 BODY.on('touchstart', touchStart);
 BODY.on('touchend', touchEnd);
 
-if (TOC) TOC.click(hideDir); // Hide directory when click it of Mobile.
+// Hide directory when click it of Mobile.
+if (TOC) TOC.click(hideDir);
 if (isPC && TOC) {
     // Auto adjust TOC width to avoid it hover the main contents.
     let t_w = '' + -parseInt((TOC.width() / $(document).width()) * 100) + '%';
@@ -107,9 +106,9 @@ if (isHome()) {
     });
 
     // Open link in a new tab
-    // $('a').each(function() {
-    //     $(this).attr('target', '_blank')
-    // })
+    $('a').each(function () {
+        $(this).attr('target', '_blank');
+    });
 }
 
 // Customize annotations
@@ -144,8 +143,6 @@ $('.timestamp-wrapper').parent().addClass('gtd-timestamp');
 $('#postamble .date')[1].innerText =
     'Updated: ' + $('#postamble .date')[1].innerText.substring(8);
 $('#postamble .author')[0].innerText = 'Author: ' + userconfig.author;
-
-// $('#postamble .date')[0].innerText = 'Created: ' + $('#postamble .date')[0].innerText.substring(5)
 
 // Listen mousewheel event
 // ---------------------------------
