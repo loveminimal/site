@@ -7,6 +7,7 @@ import {
     isCurPage,
     initCardStyle,
     browserRedirect,
+    scrollToTop,
 } from './assets/utils.js';
 
 // Init global variables
@@ -14,9 +15,7 @@ import {
 let isPC = browserRedirect() === 'PC' ? true : false;
 let isMB = !isPC;
 
-let isZoom = false,
-    cent = '',
-    topBtn = '';
+let isZoom = false;
 
 // ------------------------------------------------------------------
 // Pages array of card style
@@ -70,8 +69,14 @@ BODY.append(
     `<div class="nav-btn" onclick="location.href = './index.html'">IDX ←</div>`
 );
 
-topBtn = createTopButton(); // Create top button.
-$(window).scroll(scrollToTop); // Calculate the scroll top distance.
+// Create top button
+BODY.append(
+    // instant, smooth, auto
+    `<div class="top-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">TOP ↑</div>`
+);
+
+// Calculate the scroll top distance.
+$(window).scroll(() => scrollToTop($('.top-btn')[0]));
 
 // Listen touch event in Moblie
 BODY.on('touchstart', touchStart);
@@ -356,30 +361,6 @@ function hideDir() {
             ele.style.opacity = 1;
         }
     }
-}
-
-// Create a button of scrolling to top
-// ---------------------------------
-function scrollToTop() {
-    let totalH = $(document).height(); // page height
-    let clientH = $(window).height(); // view height
-    let scrollH = $(document).scrollTop(); // scroll height
-
-    let _cent = parseInt((scrollH / (totalH - clientH)) * 100);
-    _cent = ('' + _cent).length < 2 ? '0' + _cent : _cent;
-    cent = _cent + '% ↑';
-    topBtn.innerHTML = cent;
-}
-
-function createTopButton() {
-    let _btn = document.createElement('div');
-    _btn.innerHTML = 'TOP ↑';
-    _btn.setAttribute('class', 'top-btn');
-    _btn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // instant, smooth, auto
-    });
-    document.body.appendChild(_btn);
-    return _btn;
 }
 
 // Scroll listener
