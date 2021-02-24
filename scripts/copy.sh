@@ -1,4 +1,9 @@
 #!/bin/sh
+# ------------------------------
+# Copy `themes, images` and `user.config.js` 
+# from ROOT to PUBLIC directory.
+# ROOT ==> PUBLIC
+# ------------------------------
 
 if [ -d "public" ]
 then
