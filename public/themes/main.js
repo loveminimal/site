@@ -5,75 +5,55 @@ import userconfig from '../user.config.js';
 import {
     isHome,
     isCurPage,
-    initCardStyle,
+    initCardPages,
+    initEncryptedPages,
+    initMouseClickAnimate,
+    initImageZoom,
     browserRedirect,
+    scrollToTop,
+    betterLocalStorage as bls,
 } from './assets/utils.js';
+
+// Some initial operations.
+// ------------------------------------------------------------------
+initCardPages(userconfig.card.pages, userconfig.card.activeAll);
+initEncryptedPages(userconfig.encrypt.pages, userconfig.encrypt.password);
+initImageZoom();
 
 // Init global variables
 // ------------------------------------------------------------------
-let isPC = browserRedirect() === 'PC' ? true : false;
-let isMB = !isPC;
+const isPC = browserRedirect() === 'PC' ? true : false;
+const isMB = !isPC;
 
-let isZoom = false,
-    isCard = false,
-    cent = '',
-    topBtn = '';
+const TOC = $('#table-of-contents');
+const BODY = $('body');
+const TITLE = $('.title');
+const CONTENT = $('#content');
 
+// Add animate effects.
+// Create nav & top buttons.
 // ------------------------------------------------------------------
-// Pages array of card style
-// ---------------------------------
-let CARDPAGES = [
-    'idea',
-    'diary',
-    'joker',
-    'gtd',
-    'story',
-    'wiki',
-    'web-developer-roadmap',
-];
-
-// Beautify item like `Idea`
-// ---------------------------------
-initCardStyle(CARDPAGES);
-
-// Custom some special pages
-// ---------------------------------
-
-if (isCurPage('joker')) {
-    if (sessionStorage.getItem('pw')) {
-        console.log('Welcome, Sir.');
-    } else {
-        let passwd = prompt('Sorry, you have no permissions！');
-        if (passwd === 'just go out') {
-            console.log('Welcome, Sir.');
-            sessionStorage.setItem('pw', true);
-        } else {
-            window.location.pathname = '/';
-        }
-    }
-}
-
-// Customizations after DOM rendering
-// ------------------------------------------------------------------
-// Set local variables
-// ---------------------------------
-const TOC = $('#table-of-contents'),
-    BODY = $('body'),
-    TITLE = $('.title'),
-    CONTENT = $('#content');
-
-BODY.addClass('animated fadeIn slow'); // Add animate effects.
-TITLE.click(toggleColor); // Toggle color of site.
-
-createNavButton(); // Create nav button.
-topBtn = createTopButton(); // Create top button.
-$(window).scroll(scrollToTop); // Calculate the scroll top distance.
+BODY.addClass('animated fadeIn slow');
+BODY.append(
+    `<div class="nav-btn" onclick="location.href = './index.html'">IDX ←</div>`
+);
+// `behavior` - instant, smooth, auto
+BODY.append(
+    `<div class="top-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">TOP ↑</div>`
+);
 
 // Listen touch event in Moblie
 BODY.on('touchstart', touchStart);
 BODY.on('touchend', touchEnd);
 
-if (TOC) TOC.click(hideDir); // Hide directory when click it of Mobile.
+// Toggle color of site.
+TITLE.click(toggleColor);
+
+// Calculate the scroll top distance.
+$(window).scroll(() => scrollToTop($('.top-btn')[0]));
+
+// Hide directory when click it of Mobile.
+if (TOC) TOC.click(hideDir);
 if (isPC && TOC) {
     // Auto adjust TOC width to avoid it hover the main contents.
     let t_w = '' + -parseInt((TOC.width() / $(document).width()) * 100) + '%';
@@ -82,7 +62,7 @@ if (isPC && TOC) {
     TOC.mouseleave(() => TOC.css('left', t_w));
 }
 
-// Customize home page style
+// Customize HOME page style
 // ---------------------------------
 if (isHome()) {
     // Hide nav and top button in index page.
@@ -125,12 +105,13 @@ if (isHome()) {
     });
 
     // Open link in a new tab
-    // $('a').each(function() {
-    //     $(this).attr('target', '_blank')
-    // })
+    $('a').each(function () {
+        $(this).attr('target', '_blank');
+    });
 }
 
 // Customize annotations
+// ------------------------------------------
 $('note').each(function () {
     $(this).addClass('js-note');
 });
@@ -140,6 +121,7 @@ $('essay').each(function () {
 });
 
 // Customize contacts way
+// -------------------------------------------
 $('.me .contact #weibo').attr('href', '//weibo.com/u/' + userconfig.weibo);
 $('.me #wechat img').attr('src', '/images/' + userconfig.wechat);
 $('.me .contact #email').attr('href', 'mailto:' + userconfig.email);
@@ -153,6 +135,7 @@ $('.me .contact #bilibili').attr(
 );
 
 // Customize page footer
+// -------------------------------------------
 $('.validation').html(
     '<a href="http://beian.miit.gov.cn" target="_blank">' +
         userconfig.icp +
@@ -162,8 +145,6 @@ $('.timestamp-wrapper').parent().addClass('gtd-timestamp');
 $('#postamble .date')[1].innerText =
     'Updated: ' + $('#postamble .date')[1].innerText.substring(8);
 $('#postamble .author')[0].innerText = 'Author: ' + userconfig.author;
-
-// $('#postamble .date')[0].innerText = 'Created: ' + $('#postamble .date')[0].innerText.substring(5)
 
 // Listen mousewheel event
 // ---------------------------------
@@ -178,43 +159,14 @@ document.addEventListener('mousewheel', scrollFunc);
 // Add mouse-click animation
 // ---------------------------------
 if (isPC) {
-    $(document).click((e) => {
-        let size = 120; // size of water block
-        BODY.append("<div class='water-animate'>"); // create a water block
-
-        $('.water-animate')
-            .css({
-                // init style
-                position: 'fixed', // set position as 'fixed'
-                left: e.clientX,
-                top: e.clientY,
-                borderRadius: size + 'px',
-                border: '2px solid #19f',
-                'z-index': -1,
-            })
-            .stop() // to stop non-end previous animate
-            .animate(
-                {
-                    width: size,
-                    height: size,
-                    left: e.clientX - size / 2,
-                    top: e.clientY - size / 2,
-                    opacity: '0',
-                },
-                'slow',
-                () => $('body .water-animate').remove()
-            );
-    });
+    initMouseClickAnimate();
 }
 
 if (isMB) {
     $('#postamble').css('display', 'none');
     $('body').append(
-        '<a class="js-footer-slogan" href="http://beian.miit.gov.cn/" target="_blank">' +
-            userconfig.icp +
-            '</a>'
+        `<a class="js-footer-slogan" href="http://beian.miit.gov.cn/" target="_blank">${userconfig.icp}</a>`
     );
-    // $('body').append('<div class="js-footer-slogan">Talk is cheap, show me the code.</div>')
     $('.me #wechat img').width('40%');
 }
 
@@ -234,29 +186,6 @@ $('pre').each(function () {
         setTimeout(function () {
             _this.removeClass('js-pre-dblclick');
         }, 10000);
-    });
-});
-
-// Image zoom
-// ---------------------------------
-$('img').each(function (idx, ele) {
-    $(this).click(function () {
-        if (!isZoom) {
-            $('html').append(
-                `
-                    <div class='img-wrapper animated pulse faster'>
-                        <img class='img-zoom' src=${ele.src} />
-                    </div>
-                    `
-            );
-
-            $('.img-wrapper').click(function () {
-                $('.img-wrapper').remove();
-                isZoom = false;
-            });
-
-            isZoom = true;
-        }
     });
 });
 
@@ -306,33 +235,29 @@ if (isCurPage('nav')) {
 
 // Resolve current theme color
 // ------------------------------------------------------------------
-let isDark = 'false';
+let isDark = false;
 
-if (localStorage.getItem('isDark') == 'true') {
+if (bls.get('isDark')) {
     toggleColor();
 }
-
-// Utils
-// ------------------------------------------------------------------
 // Encapsulation darkreader and bind it to title.
-// DarkReader - https://github.com/darkreader/darkreader
 // ---------------------------------
 function toggleColor() {
-    if (isDark === 'false') {
+    if (!isDark) {
+        // ^ Switch to dark
         DarkReader.enable({
             brightness: 100,
             contrast: 90,
             sepia: 10,
         });
 
-        isDark = 'true';
-        localStorage.setItem('isDark', isDark);
+        isDark = true;
+        bls.set('isDark', isDark);
     } else {
+        // ^ to light
         DarkReader.disable();
 
-        isDark = 'false';
-        localStorage.setItem('isDark', isDark);
-
+        bls.del('isDark');
         location.reload();
     }
 }
@@ -352,43 +277,6 @@ function hideDir() {
             ele.style.opacity = 1;
         }
     }
-}
-
-// Create a button of scrolling to top
-// ---------------------------------
-function scrollToTop() {
-    let totalH = $(document).height(); // page height
-    let clientH = $(window).height(); // view height
-    let scrollH = $(document).scrollTop(); // scroll height
-
-    let _cent = parseInt((scrollH / (totalH - clientH)) * 100);
-    _cent = ('' + _cent).length < 2 ? '0' + _cent : _cent;
-    cent = _cent + '% ↑';
-    topBtn.innerHTML = cent;
-}
-
-function createTopButton() {
-    let _btn = document.createElement('div');
-    _btn.innerHTML = 'TOP ↑';
-    _btn.setAttribute('class', 'top-btn');
-    _btn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // instant, smooth, auto
-    });
-    document.body.appendChild(_btn);
-    return _btn;
-}
-
-// Create nav link, e.g. back Home.
-// ---------------------------------
-function createNavButton() {
-    $('<div></div>')
-        .text('IDX ←')
-        .addClass('nav-btn')
-        .appendTo('body')
-        .click(() => {
-            location.href = './index.html';
-            // history.go(-1);
-        });
 }
 
 // Scroll listener

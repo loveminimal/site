@@ -1,6 +1,7 @@
-// If `args` is current page
-// `args` - String or Array
-// ---------------------------------
+/**
+ * Judege whether `args` in current page.
+ * @param {Array | String} args - Pages array or page string.
+ */
 export function isCurPage(args) {
     if (typeof args === 'string') {
         if (
@@ -30,8 +31,9 @@ export function isCurPage(args) {
     }
 }
 
-// Diff device type
-// ---------------------------------
+/**
+ * Diff device type.
+ */
 export function browserRedirect() {
     let sUserAgent = navigator.userAgent.toLowerCase();
     let bIsIpad = sUserAgent.match(/ipad/i) == 'ipad';
@@ -59,6 +61,9 @@ export function browserRedirect() {
     }
 }
 
+/**
+ * Judge if current page is HOME page.
+ */
 export function isHome() {
     if (
         [
@@ -77,10 +82,10 @@ export function isHome() {
 /**
  * Beautify item like `Idea`,
  * and you can Activate/Deactivate global card style.
- * @param { Array } CARDPAGES Card pages
+ * @param { Array } cardPages Card pages
  * @param { Boolean } isAllCardStyle Active global site card style
  */
-export function initCardStyle(CARDPAGES, isAllCardStyle = false) {
+export function initCardPages(cardPages, isAllCardStyle = false) {
     if (isAllCardStyle) {
         $('.outline-2').each(function () {
             $(this).addClass('js-outline-2');
@@ -93,7 +98,7 @@ export function initCardStyle(CARDPAGES, isAllCardStyle = false) {
         return;
     }
 
-    if (isCurPage(CARDPAGES)) {
+    if (isCurPage(cardPages)) {
         $('.outline-2').each(function () {
             $(this).addClass('js-outline-2');
         });
@@ -103,3 +108,139 @@ export function initCardStyle(CARDPAGES, isAllCardStyle = false) {
         });
     }
 }
+
+/**
+ * To encrypted your pages.
+ * @param {Array} encryptedPages - Encrypted pages
+ * @param {String} password - Password
+ */
+export function initEncryptedPages(encryptedPages, password) {
+    if (isCurPage(encryptedPages)) {
+        if (sessionStorage.getItem('pw')) {
+            console.log('Welcome, Sir.');
+        } else {
+            let _passwd = prompt('Sorry, you have no permissions！');
+            if (_passwd === password) {
+                console.log('Welcome, Sir.');
+                sessionStorage.setItem('pw', true);
+            } else {
+                window.location.pathname = '/';
+            }
+        }
+    }
+}
+
+/**
+ * Active mouse animate.
+ */
+export function initMouseClickAnimate() {
+    $(document).click((e) => {
+        let size = 120; // size of water block
+        $('body').append(`<div class='water-animate'></div>`); // create a water block
+
+        $('.water-animate')
+            .css({
+                // init style
+                position: 'fixed',
+                left: e.clientX,
+                top: e.clientY,
+                borderRadius: size + 'px',
+                border: '2px solid #19f',
+                'z-index': -1,
+            })
+            .stop() // to stop non-end previous animate
+            .animate(
+                {
+                    width: size,
+                    height: size,
+                    left: e.clientX - size / 2,
+                    top: e.clientY - size / 2,
+                    opacity: '0',
+                },
+                'slow',
+                () => $('body .water-animate').remove()
+            );
+    });
+}
+
+/**
+ * Zoom images.
+ */
+export function initImageZoom() {
+    let isZoom = false;
+
+    $('img').each(function (idx, ele) {
+        $(this).click(function () {
+            if (!isZoom) {
+                $('html').append(
+                    `<div class='img-wrapper animated pulse faster'>
+                        <img class='img-zoom' src=${ele.src} />
+                    </div>`
+                );
+
+                $('.img-wrapper').click(function () {
+                    $('.img-wrapper').remove();
+                    isZoom = false;
+                });
+
+                isZoom = true;
+            }
+        });
+    });
+}
+
+/**
+ * Update cent of element's innerHHTML when page scroll
+ * @param { Object } ele - DOM element
+ */
+export function scrollToTop(ele) {
+    // page height
+    let totalH = $(document).height();
+    // view height
+    let clientH = $(window).height();
+    // scroll height
+    let scrollH = $(document).scrollTop();
+
+    let _cent = parseInt((scrollH / (totalH - clientH)) * 100);
+    _cent = ('' + _cent).length < 2 ? '0' + _cent : _cent;
+    ele.innerHTML = _cent + '% ↑';
+}
+
+/**
+ * Better localStorage which can remember the data type.
+ */
+export const betterLocalStorage = {
+    get(key) {
+        if (!localStorage.getItem(key)) {
+            return;
+        }
+        let [type, val] = localStorage.getItem(key).split('_');
+
+        if (type === 'str') {
+            return val;
+        }
+        if (type === 'bol') {
+            return Boolean(val);
+        }
+        if (type === 'obj') {
+            return JSON.parse(val);
+        }
+    },
+    set(key, val) {
+        if (typeof val === 'string') {
+            localStorage.setItem(key, 'str_' + val);
+            return;
+        }
+        if (typeof val === 'boolean') {
+            localStorage.setItem(key, 'bol_' + val);
+            return;
+        }
+        if (typeof val === 'object') {
+            localStorage.setItem(key, 'obj_' + JSON.stringify(val));
+            return;
+        }
+    },
+    del(key) {
+        localStorage.removeItem(key);
+    },
+};
