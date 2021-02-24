@@ -62,7 +62,7 @@ if (isPC && TOC) {
     TOC.mouseleave(() => TOC.css('left', t_w));
 }
 
-// Customize home page style
+// Customize HOME page style
 // ---------------------------------
 if (isHome()) {
     // Hide nav and top button in index page.
@@ -111,6 +111,7 @@ if (isHome()) {
 }
 
 // Customize annotations
+// ------------------------------------------
 $('note').each(function () {
     $(this).addClass('js-note');
 });
@@ -120,6 +121,7 @@ $('essay').each(function () {
 });
 
 // Customize contacts way
+// -------------------------------------------
 $('.me .contact #weibo').attr('href', '//weibo.com/u/' + userconfig.weibo);
 $('.me #wechat img').attr('src', '/images/' + userconfig.wechat);
 $('.me .contact #email').attr('href', 'mailto:' + userconfig.email);
@@ -133,6 +135,7 @@ $('.me .contact #bilibili').attr(
 );
 
 // Customize page footer
+// -------------------------------------------
 $('.validation').html(
     '<a href="http://beian.miit.gov.cn" target="_blank">' +
         userconfig.icp +
@@ -242,7 +245,6 @@ if (bls.get('isDark')) {
 function toggleColor() {
     if (!isDark) {
         // ^ Switch to dark
-        console.log('11111111111');
         DarkReader.enable({
             brightness: 100,
             contrast: 90,
@@ -253,7 +255,6 @@ function toggleColor() {
         bls.set('isDark', isDark);
     } else {
         // ^ to light
-        console.log('222222222');
         DarkReader.disable();
 
         bls.del('isDark');
