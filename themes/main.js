@@ -7,6 +7,7 @@ import {
     isCurPage,
     initCardPages,
     initEncryptedPages,
+    initMouseClickAnimate,
     browserRedirect,
     scrollToTop,
 } from './assets/utils.js';
@@ -26,18 +27,17 @@ initEncryptedPages(userconfig.encrypt.pages, userconfig.encrypt.password);
 // ------------------------------------------------------------------
 // Set local variables
 // ---------------------------------
-const TOC = $('#table-of-contents'),
-    BODY = $('body'),
-    TITLE = $('.title'),
-    CONTENT = $('#content');
+const TOC = $('#table-of-contents');
+const BODY = $('body');
+const TITLE = $('.title');
+const CONTENT = $('#content');
 
 // Add animate effects.
+// Create nav & top buttons.
 BODY.addClass('animated fadeIn slow')
-    // Create nav button
     .append(
         `<div class="nav-btn" onclick="location.href = './index.html'">IDX ←</div>`
     )
-    // Create top button
     .append(
         // instant, smooth, auto
         `<div class="top-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">TOP ↑</div>`
@@ -157,43 +157,14 @@ document.addEventListener('mousewheel', scrollFunc);
 // Add mouse-click animation
 // ---------------------------------
 if (isPC) {
-    $(document).click((e) => {
-        let size = 120; // size of water block
-        BODY.append("<div class='water-animate'>"); // create a water block
-
-        $('.water-animate')
-            .css({
-                // init style
-                position: 'fixed', // set position as 'fixed'
-                left: e.clientX,
-                top: e.clientY,
-                borderRadius: size + 'px',
-                border: '2px solid #19f',
-                'z-index': -1,
-            })
-            .stop() // to stop non-end previous animate
-            .animate(
-                {
-                    width: size,
-                    height: size,
-                    left: e.clientX - size / 2,
-                    top: e.clientY - size / 2,
-                    opacity: '0',
-                },
-                'slow',
-                () => $('body .water-animate').remove()
-            );
-    });
+    initMouseClickAnimate();
 }
 
 if (isMB) {
     $('#postamble').css('display', 'none');
     $('body').append(
-        '<a class="js-footer-slogan" href="http://beian.miit.gov.cn/" target="_blank">' +
-            userconfig.icp +
-            '</a>'
+        `<a class="js-footer-slogan" href="http://beian.miit.gov.cn/" target="_blank">${userconfig.icp}</a>`
     );
-    // $('body').append('<div class="js-footer-slogan">Talk is cheap, show me the code.</div>')
     $('.me #wechat img').width('40%');
 }
 
@@ -286,15 +257,10 @@ if (isCurPage('nav')) {
 // Resolve current theme color
 // ------------------------------------------------------------------
 let isDark = 'false';
-
 if (localStorage.getItem('isDark') == 'true') {
     toggleColor();
 }
-
-// Utils
-// ------------------------------------------------------------------
 // Encapsulation darkreader and bind it to title.
-// DarkReader - https://github.com/darkreader/darkreader
 // ---------------------------------
 function toggleColor() {
     if (isDark === 'false') {
