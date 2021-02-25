@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<!-- 2021-02-23 Tue 17:43 -->
+<!-- 2021-02-25 Thu 09:41 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Git</title>
@@ -19,6 +19,11 @@
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#orgcd3dd77">序言</a></li>
+<li><a href="#org9de500d">FAQ</a>
+<ul>
+<li><a href="#orgfee0b4b">推送指定分支到远程分支上</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -46,11 +51,39 @@ title=""
 </essay>
 </div>
 </div>
+
+<div id="outline-container-org9de500d" class="outline-2">
+<h2 id="org9de500d">FAQ</h2>
+<div class="outline-text-2" id="text-org9de500d">
+</div>
+<div id="outline-container-orgfee0b4b" class="outline-3">
+<h3 id="orgfee0b4b">推送指定分支到远程分支上</h3>
+<div class="outline-text-3" id="text-orgfee0b4b">
+<p>
+如果你本地的分支名称和远程名称相同，则使用以下命令：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr">1: </span>git push origin branchName
+</pre>
+</div>
+
+<p>
+如果本地的分支跟远程的分支不一样，则指定本地和远程的分支的名称：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="linenr">1: </span>git push origin localBranchName:remoteBranchName
+</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2020-11-20 Fri 14:59</p>
 <p class="author">Author: Jack Liu</p>
-<p class="date">Created: 2021-02-23 Tue 17:43</p>
+<p class="date">Created: 2021-02-25 Thu 09:41</p>
 <p class="validation"><a href="http://beian.miit.gov.cn/">豫ICP备19025929号</a></p>
 </div>
 </body>

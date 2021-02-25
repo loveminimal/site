@@ -115,11 +115,11 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 <div class="me">
   <span><b>Contact me via :)</b><span>
   <div class="contact">
-    <a id="weibo" href="//weibo.com/u/6867589681" target="_blank"><i class="fab fa-weibo animated heartBeat delay-2s slower"></i></a>
-    <i class="wechat fab fa-weixin animated heartBeat delay-2s slower"></i>
-    <a id="email" href="mailto:loveminimal@outlook.com" target="_blank"><i class="fab fa-mailchimp animated heartBeat delay-2s slower"></i></a>
-    <a id="github" href="//github.com/loveminimal" target="_blank"><i class="fab fa-github animated heartBeat delay-2s slower"></i></a>
-    <a id="bilibili" href="//space.bilibili.com/11608450" target="_blank"><i class="fas fa-play-circle animated heartBeat delay-2s slower"></i></a>
+    <a id="weibo" href="//weibo.com/u/6867589681" target="_blank"><img src="images/bg/icons/weibo.svg" style="width: 22px; margin-right: 5px;" class="animated heartBeat delay-2s slower" /></a>
+    <img src="images/bg/icons/weixin.svg" style="width: 24px; margin-right: 5px;" class="wechat animated heartBeat delay-2s slower" />
+    <a id="email" href="mailto:loveminimal@outlook.com" target="_blank"><img src="images/bg/icons/mailchimp.svg" style="width: 22px; margin-right: 5px;" class="animated heartBeat delay-2s slower" /></a>
+    <a id="github" href="//github.com/loveminimal" target="_blank"><img src="images/bg/icons/git.svg" style="width: 21px; margin-right: 5px;" class="animated heartBeat delay-2s slower" /></a>
+    <a id="bilibili" href="//space.bilibili.com/11608450" target="_blank"><img src="images/bg/icons/bilibili.svg" style="width: 22px; margin-right: 5px;" class="animated heartBeat delay-2s slower" /></a>
   </div>
   <div id="wechat">
     <img src="images/bg/wechat.jpg" width="20%" style="" />
