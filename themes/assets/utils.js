@@ -169,6 +169,11 @@ export function initMouseClickAnimate() {
 export function initImageZoom() {
     let isZoom = false;
 
+    // Do not zoom in HOME page.
+    if (isHome()) {
+        return;
+    }
+
     $('img').each(function (idx, ele) {
         $(this).click(function () {
             if (!isZoom) {
