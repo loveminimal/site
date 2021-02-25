@@ -2,11 +2,10 @@
 @import './assets/init.taobao.css';
 
 /* Basic style */
-/* ****************************************************************** */
+/* ////////////////////////////////////////// */
 html {
     font-size: 100px;
 }
-/* html, body { height: 100%; } */
 
 /* Background options */
 body,
@@ -26,7 +25,6 @@ body,
     bottom: 0;
     left: 0;
     filter: blur(20px);
-    /* margin: -30px; */
     z-index: -1;
 }
 
@@ -40,10 +38,7 @@ body,
     padding: 0 0.16rem;
     line-height: 1.6;
     font-size: 0.16rem;
-    /* font-family: Monaco, Consolas, "kaiti"; */
     font-family: Consolas, Monaco, 'kaiti';
-
-    /* overflow: hidden; */
 }
 
 /* Self annotations */
@@ -51,13 +46,9 @@ body,
     position: absolute;
     right: -30%;
     width: 29.5%;
-    /* border: 2px solid #19f; */
-    /* box-shadow: 0 0 3px #369; */
-    /* border-radius: 5px; */
     padding: 6px;
     color: #666;
     box-sizing: border-box;
-    /* background-color: rgba(250, 250, 240, .9); */
     font-size: 12px;
 }
 
@@ -80,13 +71,13 @@ body,
 .js-essay::before {
     content: '✍';
     position: absolute;
-    font-size: 0.3rem;
+    font-size: 0.26rem;
     right: 0;
     top: -30px;
 }
 
 /* Page init style */
-/* ********************************* */
+/* ////////////////////////////////////////// */
 p {
     margin: 0.16rem 0;
 }
@@ -129,7 +120,7 @@ li > ol {
 }
 
 /* Footer sytle */
-/* ********************************* */
+/* ////////////////////////////////////////// */
 #content {
     padding-bottom: 0.32rem;
 }
@@ -165,7 +156,7 @@ li > ol {
 }
 
 /* Header style */
-/* ********************************* */
+/* ////////////////////////////////////////// */
 .title {
     width: 100%;
     margin: 0 0 0.32rem 0;
@@ -244,7 +235,7 @@ h6 code:last-child {
 }
 
 /* Image zoom style */
-/* ********************************* */
+/* ////////////////////////////////////////// */
 .img-wrapper {
     position: fixed;
     width: 100%;
@@ -262,7 +253,7 @@ h6 code:last-child {
 }
 
 /* Source code style */
-/* ********************************* */
+/* ////////////////////////////////////////// */
 code {
     color: #135;
     font-size: 0.14rem;
@@ -317,7 +308,7 @@ pre:hover .js-code-src {
 }
 
 /* Table style */
-/* ********************************* */
+/* ////////////////////////////////////////// */
 .t-above {
     margin: 0.06rem 0;
     color: #666;
@@ -362,7 +353,7 @@ td:last-child {
 }
 
 /* TOC style */
-/* ********************************* */
+/* ////////////////////////////////////////// */
 #table-of-contents {
     position: fixed;
     left: -16%;
@@ -403,7 +394,7 @@ td:last-child {
 }
 
 /* Contact Me style */
-/* ********************************* */
+/* ////////////////////////////////////////// */
 .me {
     margin-top: 0.48rem;
 }
@@ -420,7 +411,7 @@ td:last-child {
 }
 
 /* Customization button style */
-/* ********************************* */
+/* ////////////////////////////////////////// */
 .top-btn,
 .nav-btn {
     position: fixed;
@@ -454,7 +445,7 @@ td:last-child {
 }
 
 /* GTD style */
-/* ********************************* */
+/* ////////////////////////////////////////// */
 .todo {
     padding: 2px 6px;
     border-radius: 3px;
@@ -508,7 +499,7 @@ td:last-child {
 }
 
 /* Footnotes */
-/* ********************************* */
+/* ////////////////////////////////////////// */
 .footpara {
     display: inline;
     color: #333;
@@ -516,7 +507,7 @@ td:last-child {
 }
 
 /* Card theme style */
-/* ****************************************************************** */
+/* ////////////////////////////////////////// */
 /* Card all paragraphs */
 /* .js-outline-2, */
 .js-outline-3 {
@@ -535,7 +526,6 @@ td:last-child {
     background-color: rgba(255, 255, 255, 0.5);
 }
 .js-outline-3:nth-child(odd) pre {
-    /* border: 2px solid #ddd; */
     border: 2px solid rgba(234, 234, 234, 0.2);
 }
 .js-outline-3:nth-child(odd) .js-code-src {
@@ -559,7 +549,7 @@ td:last-child {
 }
 
 /* Navigations page style */
-/* ****************************************************************** */
+/* ////////////////////////////////////////// */
 .js-nav-body table {
     display: none;
 }
@@ -611,7 +601,7 @@ td:last-child {
 }
 
 /* Home page style */
-/* ****************************************************************** */
+/* ////////////////////////////////////////// */
 .js-home-content {
     background: url('../images/bg/bggirl.gif') no-repeat right;
 }
@@ -634,7 +624,7 @@ td:last-child {
 }
 
 /* Mobile UI */
-/* ****************************************************************** */
+/* ////////////////////////////////////////// */
 @media screen and (max-width: 1026px) {
     /* body, #content::before, #postamble::before { background: url('../images/bg/rose.jpg') center center / cover no-repeat fixed; } */
 
@@ -729,9 +719,7 @@ td:last-child {
         margin-bottom: 0.32rem;
         width: 100%;
         text-align: center;
-        /* font-style: oblique; */
         font-size: 0.14rem;
-        /* color: #666; */
     }
 
     .js-note,
