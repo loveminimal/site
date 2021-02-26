@@ -24,6 +24,7 @@ A [[./org-to-site-tutor.org][pure site]] based on org mode.
 | [[./git.org][Git]]                 |
 | [[./sdk.org][SDK]]                 |
 | [[./obs.org][OBS]]                 |
+| [[./shell.org][Shell Scripts]]       |
 
 | GTD             |
 |-----------------|

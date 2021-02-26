@@ -1,0 +1,6 @@
+#+DATE: <2021-02-26 Fri 11:11>
+#+TITLE: Shell Scripts
+
+** 参考资源
+
+- [ ] [[https://wangdoc.com/bash/index.html][Bash 脚本教程]]
