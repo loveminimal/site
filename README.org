@@ -4,7 +4,7 @@
 
 https://github.com/loveminimal/loveminimal.github.io/tree/source
 
----
+-----
 
 A simple site based on org mode.
 
