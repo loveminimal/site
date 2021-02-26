@@ -1,8 +1,0 @@
-#+DATE: <2019-12-28 Sat 23:28>
-#+TITLE: 404 Page
-
-[[https://www.rosesor.com/images/bg/views.gif]]
-
-You got lost : )
-
-*Just Go Home* → [[https://www.rosesor.com][Home Page]]

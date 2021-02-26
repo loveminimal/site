@@ -1,3 +1,5 @@
+!!! Access source code at https://github.com/loveminimal/loveminimal.github.io/tree/source
+
 A simple site based on org mode.
 
 [[./org/org-to-site-tutor.org][→ 中文说明（详细）]]
