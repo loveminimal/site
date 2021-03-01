@@ -8,8 +8,6 @@ https://github.com/loveminimal/loveminimal.github.io/tree/source
 
 A simple site based on org mode.
 
-[[./org/org-to-site-tutor.org][→ 中文说明（详细）]]
-
 ** Introduction
 
 Hexo and Hugo are also awesome static site generator, stable, flexible and simple. But as an emacser, you may feel bored, especially when it comes to *img showwing*. So I cannot have to try another way to construct my site, mainly for blog and wiki.
